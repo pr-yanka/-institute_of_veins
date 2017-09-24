@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace WpfApp2.ViewModels
 {
-    public class ViewModel
+    public class ViewModel1
     {
-        
+
     }
 }

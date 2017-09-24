@@ -12,7 +12,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WpfApp2.Model;
 using WpfApp2.ViewModels;
 
 namespace WpfApp2
@@ -22,8 +21,6 @@ namespace WpfApp2
     /// </summary>
     public partial class MainWindow : Window
     {
-        
-
         public static readonly DependencyProperty CurrentViewModelProperty = DependencyProperty.Register(
             "CurrentViewModel", typeof(object), typeof(MainWindow), new PropertyMetadata(default(object)));
 
@@ -35,18 +32,16 @@ namespace WpfApp2
 
         public MainWindow()
         {
-            CurrentViewModel = new ViewModelLogin();
-            object type = (CurrentViewModel.GetType());
+            CurrentViewModel = new ViewModel1();
             InitializeComponent();
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            object type = (CurrentViewModel.GetType());
-            if(CurrentViewModel == null || CurrentViewModel.GetType() == typeof(ViewModelLogin))
-                CurrentViewModel = new ViewModelRegistration();
+            if(CurrentViewModel == null || CurrentViewModel.GetType() == typeof(ViewModel1))
+                CurrentViewModel = new ViewModel2();
             else
-                CurrentViewModel = new ViewModelLogin();
+                CurrentViewModel = new ViewModel1();
                 
         }
     }
