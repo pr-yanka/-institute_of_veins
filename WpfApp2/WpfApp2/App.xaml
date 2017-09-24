@@ -1,0 +1,15 @@
+﻿    <!--
+    Когда пользователь нажимает кнопку лог ин во вью, когда вьюмодели выполняет аутентификацию проверкой данных прав в authentication service
+    в случае успешной валидации, сетится Identity property из CustomPrincipal instance связанные с текущим выполняемым потоком к экземпляру няшего CustomIdentity class
+    Чтобы это работало, надо настроить наше приложение под CustomPrincipal
+    Это делается единожды когда запускается приложение и переписывает OnStartup в App.xaml.cs и убирает StartupUri атрибут из документа XAML.-->
+
+<Application x:Class="WpfApp2.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+
+    </Application.Resources>
+</Application>
+

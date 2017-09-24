@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:WpfApp2.Templates">
+    
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="TemplateLogin.xaml"/>
+        <ResourceDictionary Source="TemplateRegistration.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+    
+    <local:MyTemplateSelector x:Key="MyTemplateSelector" 
+                              Template1="{StaticResource Template1}"
+                              Template2="{StaticResource Template2}"/>
+    
+</ResourceDictionary>
