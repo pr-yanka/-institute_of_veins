@@ -1,0 +1,49 @@
+﻿using JetBrains.Annotations;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using WpfApp2.ViewModels;
+
+namespace WpfApp2.Navigation
+{
+    public class NavigationController : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private List<ViewModelBase> _viewModels;
+
+        private ViewModelBase _currentViewModel;
+
+        public ViewModelBase CurrentViewModel {
+            get { return _currentViewModel; }
+            set { _currentViewModel = value; OnPropertyChanged(nameof(CurrentViewModel)); }
+        }
+
+        public NavigationController()
+        {
+            _viewModels = new List<ViewModelBase>
+            {
+                new ViewModel1(this),
+                new ViewModel2(this)
+            };
+
+            _currentViewModel = _viewModels.First();
+        }
+
+        public void NavigateTo<T>()
+        {
+            var target = _viewModels.FirstOrDefault(e => e.GetType() == typeof(T));
+
+            if (target != null)
+                CurrentViewModel = target;
+        }
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            //если PropertyChanged не нулевое - оно будет разбужено
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+}

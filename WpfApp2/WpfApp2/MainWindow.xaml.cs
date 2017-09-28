@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp2.Navigation;
 using WpfApp2.ViewModels;
 
 namespace WpfApp2
@@ -21,28 +22,12 @@ namespace WpfApp2
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static readonly DependencyProperty CurrentViewModelProperty = DependencyProperty.Register(
-            "CurrentViewModel", typeof(object), typeof(MainWindow), new PropertyMetadata(default(object)));
-
-        public object CurrentViewModel
-        {
-            get { return (object) GetValue(CurrentViewModelProperty); }
-            set { SetValue(CurrentViewModelProperty, value); }
-        }
+        public NavigationController Controller { get; }
 
         public MainWindow()
         {
-            CurrentViewModel = new ViewModel1();
+            Controller = new NavigationController();
             InitializeComponent();
-        }
-
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-        {
-            if(CurrentViewModel == null || CurrentViewModel.GetType() == typeof(ViewModel1))
-                CurrentViewModel = new ViewModel2();
-            else
-                CurrentViewModel = new ViewModel1();
-                
         }
     }
 }

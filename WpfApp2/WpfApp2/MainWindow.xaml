@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525"
+        Title="MainWindow" Height="600" Width="1200"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
     
     <Window.Resources>
@@ -22,10 +22,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
-        <ContentControl Content="{Binding CurrentViewModel}" ContentTemplateSelector="{StaticResource MyTemplateSelector}"/>
-        
-        <Button Grid.Row="1" Height="50" Content="Change" Click="ButtonBase_OnClick"/>
-        
+
+        <ContentControl Content="{Binding Controller.CurrentViewModel}" ContentTemplateSelector="{StaticResource MyTemplateSelector}"/>
     </Grid>
 </Window>
