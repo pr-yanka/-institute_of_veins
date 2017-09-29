@@ -4,21 +4,31 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Microsoft.Practices.Prism.Commands;
 using WpfApp2.Navigation;
 
 namespace WpfApp2.ViewModels
 {
     public class ViewModelLogin : ViewModelBase
     {
-        public ICommand MyCommand { get; }
+        public DelegateCommand ToRegistrationCommand { get; protected set; }
+        public DelegateCommand ToDashboardCommand { get; protected set; }
 
         public ViewModelLogin(NavigationController controller) : base(controller)
         {
-        }
+            ToRegistrationCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.NavigateTo<ViewModelRegistration>();
+                }
+            );
 
-        protected override void Executed(object sender, ExecutedRoutedEventArgs executedRoutedEventArgs)
-        {
-            Controller.NavigateTo<ViewModelRegistration>();
+            ToDashboardCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.NavigateTo<ViewModelDashboard>();
+                }
+            );
         }
     }
 }

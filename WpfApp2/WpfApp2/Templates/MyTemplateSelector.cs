@@ -11,18 +11,27 @@ namespace WpfApp2.Templates
 {
     public class MyTemplateSelector : DataTemplateSelector
     {
-        public DataTemplate Template1 { get; set; }
-        public DataTemplate Template2 { get; set; }
+        public DataTemplate TemplateLogin { get; set; }
+        public DataTemplate TemplateRegistration { get; set; }
+        public DataTemplate TemplateDashboard { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             if (item == null)
                 return null;
 
-            if (item.GetType() == typeof(ViewModelLogin))
-                return Template1;
+            if (item.GetType() == typeof(ViewModelDashboard))
+                return TemplateDashboard;
 
-            return Template2;
+            if (item.GetType() == typeof(ViewModelLogin))
+                return TemplateLogin;
+
+            if (item.GetType() == typeof(ViewModelRegistration))
+                return TemplateRegistration;
+
+            
+
+            return null;
         }
     }
 }

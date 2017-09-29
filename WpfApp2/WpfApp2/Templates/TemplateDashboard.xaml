@@ -16,14 +16,15 @@
             </TextBlock>
             <Label x:Name="label" Content="Ваша следущая операция назначена на 14:30" HorizontalAlignment="Left" Margin="0,38,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.338,0.401" Height="31" Width="760" Background="#19C500FF" />
             <Label Target="{Binding ElementName=TextArea}" Margin="254,38,423,435">
-                <Hyperlink RequestNavigate="MyHandler">(подробнее)</Hyperlink>
+                <Hyperlink >(подробнее)</Hyperlink>
             </Label>
             <Button x:Name="button" Content="Обследовать нового пациента" HorizontalAlignment="Left" Margin="10,91,0,0" VerticalAlignment="Top" Width="367" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
             <Button x:Name="button_Copy" Content="Обследовать существующего пациента" HorizontalAlignment="Left" Margin="382,91,0,0" VerticalAlignment="Top" Width="368" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy1" Content="Журнал пациентов" HorizontalAlignment="Left" Margin="10,147,0,0" VerticalAlignment="Top" Width="367" Height="43" Background="#FFAFB7F7" FontFamily="Franklin Gothic Medium" FontSize="20" Click="button_Copy1_Click"/>
-            <Button x:Name="button_Copy2" Content="Журнал обследований" HorizontalAlignment="Left" Margin="383,147,0,0" VerticalAlignment="Top" Width="367" Height="43" Background="#FFAFB7F7" FontFamily="Franklin Gothic Medium" FontSize="20" Click="button_Copy1_Click"/>
-            <Button x:Name="button_Copy3" Content="Журнал изменений" HorizontalAlignment="Left" Margin="10,209,0,0" VerticalAlignment="Top" Width="367" Height="43" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20" Click="button_Copy1_Click"/>
-            <Button x:Name="button_Copy4" Content="Управление данными" HorizontalAlignment="Left" Margin="382,209,0,0" VerticalAlignment="Top" Width="367" Height="43" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20" Click="button_Copy1_Click"/>
+            <Button x:Name="button_Copy1" Content="Журнал пациентов" HorizontalAlignment="Left" Margin="10,147,0,0" VerticalAlignment="Top" Width="367" Height="43" Background="#FFAFB7F7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Button x:Name="button_Copy2" Content="Журнал обследований" HorizontalAlignment="Left" Margin="383,147,0,0" VerticalAlignment="Top" Width="367" Height="43" Background="#FFAFB7F7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Button x:Name="button_Copy3" Content="Журнал изменений" HorizontalAlignment="Left" Margin="10,209,0,0" VerticalAlignment="Top" Width="367" Height="43" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Button x:Name="button_Copy4" Content="Управление данными" HorizontalAlignment="Left" Margin="382,209,0,0" VerticalAlignment="Top" Width="367" Height="43" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Button x:Name="button_Copy5" Content="Выйти из аккаунта" HorizontalAlignment="Left" Margin="202,309,0,0" VerticalAlignment="Top" Width="367" Height="43" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

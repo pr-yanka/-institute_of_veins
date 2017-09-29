@@ -25,7 +25,8 @@ namespace WpfApp2.Navigation
             _viewModels = new List<ViewModelBase>
             {
                 new ViewModelLogin(this),
-                new ViewModelRegistration(this)
+                new ViewModelRegistration(this),
+                new ViewModelDashboard(this)
             };
 
             _currentViewModel = _viewModels.First();

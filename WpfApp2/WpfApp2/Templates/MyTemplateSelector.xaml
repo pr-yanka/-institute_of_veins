@@ -5,10 +5,12 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="TemplateLogin.xaml"/>
         <ResourceDictionary Source="TemplateRegistration.xaml"/>
+        <ResourceDictionary Source="TemplateDashboard.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     
     <local:MyTemplateSelector x:Key="MyTemplateSelector" 
-                              Template1="{StaticResource Template1}"
-                              Template2="{StaticResource Template2}"/>
-    
+                              TemplateLogin="{StaticResource Template1}"
+                              TemplateRegistration="{StaticResource Template2}"
+                              TemplateDashboard="{StaticResource Template3}"/>
+
 </ResourceDictionary>

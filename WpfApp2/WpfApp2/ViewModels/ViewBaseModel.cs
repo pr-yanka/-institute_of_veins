@@ -14,9 +14,9 @@ namespace WpfApp2.Navigation
             Controller = controller;
             Navigate = new RoutedCommand("Navigate", typeof(ViewModelBase));
             //предоставляет доступ отовсюда - ибо команда становится статической и глобальной
-            CommandManager.RegisterClassCommandBinding(typeof(MainWindow), new CommandBinding(Navigate, Executed));
+            CommandManager.RegisterClassCommandBinding(typeof(MainWindow), new CommandBinding(Navigate));
         }
 
-        protected abstract void Executed(object sender, ExecutedRoutedEventArgs e);
+        //protected abstract void Executed(object sender, ExecutedRoutedEventArgs e);
     }
 }

@@ -9,8 +9,8 @@
             </TextBlock>
 
             <StackPanel Margin="110,250,10,10" HorizontalAlignment="Left">
-                <Button Margin="10,10,10,10" Background="Lavender" Content="Вернуться" Command="{Binding Path=Navigate}"/>
-                <Button Margin="10,10,10,10" Background="LightGreen" Content="Зарегистрироваться" Command="{Binding Path=Navigate}"/>
+                <Button Margin="10,10,10,10" Background="Lavender" Content="Вернуться" Command="{Binding Path=ToLoginCommand}"/>
+                <Button Margin="10,10,10,10" Background="LightGreen" Content="Зарегистрироваться" Command="{Binding Path=null}"/>
             </StackPanel>
         </Grid>
     </DataTemplate>
