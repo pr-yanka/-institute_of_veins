@@ -19,7 +19,7 @@ namespace WpfApp2.Templates
             if (item == null)
                 return null;
 
-            if (item.GetType() == typeof(ViewModel1))
+            if (item.GetType() == typeof(ViewModelLogin))
                 return Template1;
 
             return Template2;

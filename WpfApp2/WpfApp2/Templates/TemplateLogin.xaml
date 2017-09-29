@@ -3,16 +3,19 @@
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="Template1">
         <Grid>
-            <TextBlock Height="23" HorizontalAlignment="Left" Margin="10,10,0,0" Name="LoginHeading" Text="Login:" VerticalAlignment="Top" FontSize="17" FontStretch="ExtraCondensed"/>
+            <TextBlock Height="23" HorizontalAlignment="Left" Margin="10,10,0,0" Name="LoginHeading" Text="Войти в кабинет:" VerticalAlignment="Top" FontSize="17" FontStretch="ExtraCondensed"/>
             <TextBlock Height="50" HorizontalAlignment="Left" Margin="24,48,0,0" Name="textBlockHeading" VerticalAlignment="Top" FontSize="12" FontStyle="Italic" Padding="5">
-                Note: Please login here to view the features of this site. If you are new on this site then Register.
+                Добро пожаловать в Институт Вен!
             </TextBlock>
-            <TextBlock Height="23" HorizontalAlignment="Left" Margin="66,120,0,0" Name="textBlock1" Text="Email" VerticalAlignment="Top" Width="67" />
-            <TextBlock Height="23" HorizontalAlignment="Left" Margin="58,168,0,0" Name="textBlock2" Text="Password" VerticalAlignment="Top" Width="77" />
+            <TextBlock Height="23" HorizontalAlignment="Left" Margin="66,120,0,0" Name="textBlock1" Text="Имя" VerticalAlignment="Top" Width="67" />
+            <TextBlock Height="23" HorizontalAlignment="Left" Margin="58,168,0,0" Name="textBlock2" Text="Пароль" VerticalAlignment="Top" Width="77" />
             <TextBox Height="23" HorizontalAlignment="Left" Margin="118,115,0,0" Name="textBoxEmail" VerticalAlignment="Top" Width="247" />
             <PasswordBox Height="23" HorizontalAlignment="Left" Margin="118,168,0,0" Name="passwordBox1" VerticalAlignment="Top" Width="247" />
-            <Button Margin="118,115,0,0" Width="100" Height="20" Background="Lavender" Content="Registration" Command="{Binding Path=Navigate}"></Button>
-            <Button Margin="-118,-115,0,0" Width="200" Height="20" Background="LightGreen" Content="Log in" Command="{Binding Path=Navigate}"></Button>
+            <StackPanel Margin="110,250,10,10" HorizontalAlignment="Left">
+                <Button Margin="10,10,10,10" Background="Lavender" Content="У меня нет аккаунта" Command="{Binding Path=Navigate}"/>
+                <Button Margin="10,10,10,10" Background="LightGreen" Content="Войти" Command="{Binding Path=Navigate}"/>
+            </StackPanel>
+            
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

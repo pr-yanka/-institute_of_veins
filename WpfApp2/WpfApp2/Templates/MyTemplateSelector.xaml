@@ -3,8 +3,8 @@
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="Template1.xaml"/>
-        <ResourceDictionary Source="Template2.xaml"/>
+        <ResourceDictionary Source="TemplateLogin.xaml"/>
+        <ResourceDictionary Source="TemplateRegistration.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     
     <local:MyTemplateSelector x:Key="MyTemplateSelector" 

@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:WpfApp2.Templates">
+    <DataTemplate x:Key="Template2">
+        <Grid>
+            <TextBlock Height="23" HorizontalAlignment="Left" Margin="10,10,0,0" Name="LoginHeading" Text="Регистрация:" VerticalAlignment="Top" FontSize="17" FontStretch="ExtraCondensed"/>
+            <TextBlock Height="50" HorizontalAlignment="Left" Margin="24,48,0,0" Name="textBlockHeading" VerticalAlignment="Top" FontSize="12" FontStyle="Italic" Padding="5">
+                Функционал пока не определён.
+            </TextBlock>
+
+            <StackPanel Margin="110,250,10,10" HorizontalAlignment="Left">
+                <Button Margin="10,10,10,10" Background="Lavender" Content="Вернуться" Command="{Binding Path=Navigate}"/>
+                <Button Margin="10,10,10,10" Background="LightGreen" Content="Зарегистрироваться" Command="{Binding Path=Navigate}"/>
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

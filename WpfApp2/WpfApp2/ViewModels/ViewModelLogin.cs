@@ -8,17 +8,17 @@ using WpfApp2.Navigation;
 
 namespace WpfApp2.ViewModels
 {
-    public class ViewModel1 : ViewModelBase
+    public class ViewModelLogin : ViewModelBase
     {
         public ICommand MyCommand { get; }
 
-        public ViewModel1(NavigationController controller) : base(controller)
+        public ViewModelLogin(NavigationController controller) : base(controller)
         {
         }
 
         protected override void Executed(object sender, ExecutedRoutedEventArgs executedRoutedEventArgs)
         {
-            Controller.NavigateTo<ViewModel2>();
+            Controller.NavigateTo<ViewModelRegistration>();
         }
     }
 }

@@ -4,18 +4,18 @@ using WpfApp2.Navigation;
 
 namespace WpfApp2.ViewModels
 {
-    public class ViewModel2 : ViewModelBase
+    public class ViewModelRegistration : ViewModelBase
     {
         public  ICommand MyCommand { get; }
 
-        public ViewModel2(NavigationController controller) : base(controller)
+        public ViewModelRegistration(NavigationController controller) : base(controller)
         {
             
         }
 
         protected override void Executed(object sender, ExecutedRoutedEventArgs executedRoutedEventArgs)
         {
-            Controller.NavigateTo<ViewModel1>();
+            Controller.NavigateTo<ViewModelLogin>();
         }
 
         private string testString = "TEST YESS!!";
