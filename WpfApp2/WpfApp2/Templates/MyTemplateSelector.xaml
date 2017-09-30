@@ -6,11 +6,17 @@
         <ResourceDictionary Source="TemplateLogin.xaml"/>
         <ResourceDictionary Source="TemplateRegistration.xaml"/>
         <ResourceDictionary Source="TemplateDashboard.xaml"/>
+        <ResourceDictionary Source="TemplateCurrentPatient.xaml"/>
+        <ResourceDictionary Source="TemplateNewPatient.xaml"/>
+        <ResourceDictionary Source="TemplateTablePatients.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     
     <local:MyTemplateSelector x:Key="MyTemplateSelector" 
-                              TemplateLogin="{StaticResource Template1}"
-                              TemplateRegistration="{StaticResource Template2}"
-                              TemplateDashboard="{StaticResource Template3}"/>
+                              TemplateLogin="{StaticResource TemplateLogin}"
+                              TemplateRegistration="{StaticResource TemplateRegistration}"
+                              TemplateDashboard="{StaticResource TemplateDashboard}"
+                              TemplateCurrentPatient="{StaticResource TemplateCurrentPatient}"
+                              TemplateNewPatient="{StaticResource TemplateNewPatient}"
+                              TemplateTablePatients="{StaticResource TemplateTablePatients}" />
 
 </ResourceDictionary>

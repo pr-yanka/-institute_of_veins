@@ -14,6 +14,9 @@ namespace WpfApp2.Templates
         public DataTemplate TemplateLogin { get; set; }
         public DataTemplate TemplateRegistration { get; set; }
         public DataTemplate TemplateDashboard { get; set; }
+        public DataTemplate TemplateCurrentPatient { get; set; }
+        public DataTemplate TemplateNewPatient { get; set; }
+        public DataTemplate TemplateTablePatients { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -29,7 +32,14 @@ namespace WpfApp2.Templates
             if (item.GetType() == typeof(ViewModelRegistration))
                 return TemplateRegistration;
 
-            
+            if (item.GetType() == typeof(ViewModelCurrentPatient))
+                return TemplateCurrentPatient;
+
+            if (item.GetType() == typeof(ViewModelNewPatient))
+                return TemplateNewPatient;
+
+            if (item.GetType() == typeof(ViewModelTablePatients))
+                return TemplateTablePatients;
 
             return null;
         }
