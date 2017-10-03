@@ -81,8 +81,11 @@
     <Compile Include="Navigation\NavigationController.cs" />
     <Compile Include="ViewModels\ViewBaseModel.cs" />
     <Compile Include="Templates\MyTemplateSelector.cs" />
+    <Compile Include="ViewModels\ViewModelViewHistory.cs" />
+    <Compile Include="ViewModels\ViewModelAddPhysicalScreen1.cs" />
     <Compile Include="ViewModels\ViewModelCurrentPatient.cs" />
     <Compile Include="ViewModels\ViewModelDashboard.cs" />
+    <Compile Include="ViewModels\ViewModelEditPatient.cs" />
     <Compile Include="ViewModels\ViewModelLogin.cs" />
     <Compile Include="ViewModels\ViewModelNewPatient.cs" />
     <Compile Include="ViewModels\ViewModelRegistration.cs" />
@@ -99,6 +102,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Templates\TemplateAddPhysicalPage1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Templates\TemplateCurrentPatient.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -108,6 +115,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Templates\TemplateDashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Templates\TemplateEditPatient.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -124,6 +135,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Templates\TemplateTablePatients.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Templates\TemplateViewHistory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

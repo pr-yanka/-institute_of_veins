@@ -9,6 +9,9 @@
         <ResourceDictionary Source="TemplateCurrentPatient.xaml"/>
         <ResourceDictionary Source="TemplateNewPatient.xaml"/>
         <ResourceDictionary Source="TemplateTablePatients.xaml"/>
+        <ResourceDictionary Source="TemplateEditPatient.xaml"/>
+        <ResourceDictionary Source="TemplateViewHistory.xaml"/>
+        <ResourceDictionary Source="TemplateAddPhysicalPage1.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     
     <local:MyTemplateSelector x:Key="MyTemplateSelector" 
@@ -17,6 +20,9 @@
                               TemplateDashboard="{StaticResource TemplateDashboard}"
                               TemplateCurrentPatient="{StaticResource TemplateCurrentPatient}"
                               TemplateNewPatient="{StaticResource TemplateNewPatient}"
-                              TemplateTablePatients="{StaticResource TemplateTablePatients}" />
+                              TemplateTablePatients="{StaticResource TemplateTablePatients}"
+                              TemplateEditPatient="{StaticResource TemplateEditPatient}"
+                              TemplateViewHistory="{StaticResource TemplateViewHistory}"
+                              TemplateAddPhysicalPage1="{StaticResource TemplateAddPhysicalPage1}"/>
 
 </ResourceDictionary>

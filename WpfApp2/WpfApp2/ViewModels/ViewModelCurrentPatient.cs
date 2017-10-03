@@ -14,8 +14,9 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToTablePatientsCommand { get; protected set; }
         public DelegateCommand ToDashboardCommand { get; protected set; }
         public DelegateCommand ToNewOperationCommand { get; protected set; }
-        public DelegateCommand ToNewSurveyCommand { get; protected set; }
+        public DelegateCommand ToNewPhysicalCommand { get; protected set; }
         public DelegateCommand ToAddAnalysesCommand { get; protected set; }
+        public DelegateCommand ToViewHistoryCommand { get; protected set; }
 
         public ViewModelCurrentPatient(NavigationController controller) : base(controller)
         {
@@ -32,6 +33,26 @@ namespace WpfApp2.ViewModels
                     Controller.NavigateTo<ViewModelDashboard>();
                 }
             );
+
+            ToEditPatientCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.NavigateTo<ViewModelEditPatient>();
+                }
+            );
+
+            ToNewPhysicalCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.NavigateTo<ViewModelAddPhysicalScreen1>();
+                }
+                );
+
+            ToViewHistoryCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.NavigateTo<ViewModelViewHistory>();
+                });
         }
     }
 }

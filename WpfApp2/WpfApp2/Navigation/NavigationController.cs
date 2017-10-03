@@ -29,7 +29,10 @@ namespace WpfApp2.Navigation
                 new ViewModelDashboard(this),
                 new ViewModelCurrentPatient(this),
                 new ViewModelNewPatient(this),
-                new ViewModelTablePatients(this)
+                new ViewModelTablePatients(this),
+                new ViewModelAddPhysicalScreen1(this),
+                new ViewModelEditPatient(this),
+                new ViewModelViewHistory(this)
             };
 
             _currentViewModel = _viewModels.First();
