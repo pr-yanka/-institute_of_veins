@@ -12,8 +12,13 @@
         <ResourceDictionary Source="TemplateEditPatient.xaml"/>
         <ResourceDictionary Source="TemplateViewHistory.xaml"/>
         <ResourceDictionary Source="TemplateAddPhysicalPage1.xaml"/>
+        <ResourceDictionary Source="TemplateLegDescribe.xaml"/>
+        <ResourceDictionary Source="TemplateAddPhysicalPage1.xaml"/>
+        <ResourceDictionary Source="TemplateLegDescribe.xaml"/>
+        <ResourceDictionary Source="TemplateSymptomsAdd.xaml"/>
+        <ResourceDictionary Source="TemplateRecomendationAdd.xaml"/>
     </ResourceDictionary.MergedDictionaries>
-    
+
     <local:MyTemplateSelector x:Key="MyTemplateSelector" 
                               TemplateLogin="{StaticResource TemplateLogin}"
                               TemplateRegistration="{StaticResource TemplateRegistration}"
@@ -23,6 +28,8 @@
                               TemplateTablePatients="{StaticResource TemplateTablePatients}"
                               TemplateEditPatient="{StaticResource TemplateEditPatient}"
                               TemplateViewHistory="{StaticResource TemplateViewHistory}"
-                              TemplateAddPhysicalPage1="{StaticResource TemplateAddPhysicalPage1}"/>
-
+                              TemplateAddPhysicalPage1="{StaticResource TemplateAddPhysicalPage1}"
+                              TemplateLegDescribe="{StaticResource TemplateLegDescribe}"
+                              TemplateRecomendationsAdd="{StaticResource TemplateRecomendationAdd}"
+                              TemplateSymptomsAdd="{StaticResource TemplateSymptomsAdd}"/>
 </ResourceDictionary>

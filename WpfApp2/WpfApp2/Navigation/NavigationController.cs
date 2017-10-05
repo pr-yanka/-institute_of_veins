@@ -32,7 +32,10 @@ namespace WpfApp2.Navigation
                 new ViewModelTablePatients(this),
                 new ViewModelAddPhysicalScreen1(this),
                 new ViewModelEditPatient(this),
-                new ViewModelViewHistory(this)
+                new ViewModelViewHistory(this),
+                new ViewModelLegDescribe(this),
+                new ViewModelRecomendationsAdd(this),
+                new ViewModelSymptomsAdd(this)
             };
 
             _currentViewModel = _viewModels.First();

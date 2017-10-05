@@ -81,6 +81,9 @@
     <Compile Include="Navigation\NavigationController.cs" />
     <Compile Include="ViewModels\ViewBaseModel.cs" />
     <Compile Include="Templates\MyTemplateSelector.cs" />
+    <Compile Include="ViewModels\ViewModelLegDescribe.cs" />
+    <Compile Include="ViewModels\ViewModelRecomendationsAdd.cs" />
+    <Compile Include="ViewModels\ViewModelSymptomsAdd.cs" />
     <Compile Include="ViewModels\ViewModelViewHistory.cs" />
     <Compile Include="ViewModels\ViewModelAddPhysicalScreen1.cs" />
     <Compile Include="ViewModels\ViewModelCurrentPatient.cs" />
@@ -122,6 +125,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Templates\TemplateLegDescribe.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Templates\TemplateLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -130,7 +137,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Templates\TemplateRecomendationAdd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Templates\TemplateRegistration.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Templates\TemplateSymptomsAdd.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

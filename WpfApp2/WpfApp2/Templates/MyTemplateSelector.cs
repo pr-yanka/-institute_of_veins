@@ -20,6 +20,9 @@ namespace WpfApp2.Templates
         public DataTemplate TemplateAddPhysicalPage1 { get; set; }
         public DataTemplate TemplateEditPatient { get; set; }
         public DataTemplate TemplateViewHistory { get; set; }
+        public DataTemplate TemplateLegDescribe { get; set; }
+        public DataTemplate TemplateSymptomsAdd { get; set; }
+        public DataTemplate TemplateRecomendationsAdd { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -52,6 +55,15 @@ namespace WpfApp2.Templates
 
             if (item.GetType() == typeof(ViewModelViewHistory))
                 return TemplateViewHistory;
+
+            if (item.GetType() == typeof(ViewModelLegDescribe))
+                return TemplateLegDescribe;
+
+            if (item.GetType() == typeof(ViewModelSymptomsAdd))
+                return TemplateSymptomsAdd;
+
+            if (item.GetType() == typeof(ViewModelRecomendationsAdd))
+                return TemplateRecomendationsAdd;
 
             return null;
         }
