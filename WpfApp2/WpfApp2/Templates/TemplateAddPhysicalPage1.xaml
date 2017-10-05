@@ -11,27 +11,168 @@
                     </LinearGradientBrush.GradientStops>
                 </LinearGradientBrush>
             </Grid.Background>
-            <Button x:Name="button_Copy3" Content="Вернуться к пациенту" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="24,461,0,0" VerticalAlignment="Top" Width="334" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy1" Content="Выбрать другого пациента" Command="{Binding Path=ToTablePatients}" HorizontalAlignment="Left" Margin="24,66,0,0" VerticalAlignment="Top" Width="236" Height="29" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="16"/>
-            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="0,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}" Height="33" Width="760" FontSize="18" FontFamily="Segoe UI Semibold" TextAlignment="Center"><Run Text="Добавление обследования"/></TextBlock>
-            <Button x:Name="button_Copy" Content="Жалобы &gt;" HorizontalAlignment="Left" Margin="383,461,0,0" VerticalAlignment="Top" Width="334" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="0,121,0,0" TextWrapping="Wrap" Text="Жалобы" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}" Height="33" Width="760" FontSize="18" FontFamily="Segoe UI Semibold" TextAlignment="Center"/>
-            <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="271" Margin="24,172,0,0" VerticalAlignment="Top" Width="693">
-                <ListBoxItem/>
-                <ScrollViewer Height="256" Width="673">
-                    <StackPanel Orientation="Vertical">
-                        <CheckBox x:Name="checkBox" Content="наличие ощущения тяжести, быструю утомляемость, ночные судороги" Height="38" Width="616" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18"/>
-                        <CheckBox x:Name="checkBox2" Content=" наличие &quot;сосудистых звездочек&quot;" Height="38" Width="592" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18"/>
-                        <CheckBox x:Name="checkBox3" Content="наличие ретикулярных вен" Height="38" Width="592" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18"/>
-                        <CheckBox x:Name="checkBox4" Content="наличие &quot;сосудистых звездочек&quot; и &quot;вздувшихся&quot; вен" Height="38" Width="592" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18"/>
-                        <CheckBox x:Name="checkBox5" Content="наличие &quot;вздувшихся&quot; вен" Height="38" Width="592" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18"/>
-                        <CheckBox x:Name="checkBox6" Content=" отек и  наличие &quot;вздувшихся&quot; вен" Height="38" Width="592" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18"/>
-                        <CheckBox x:Name="checkBox7" Content="гиперпегментацию в области голени" Height="38" Width="592" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18"/>
-                        <TextBox x:Name="textBox"  FontSize="18" Text="Введите свою жалобу (после введения добавляется ещё одна такая строчка)"/>
-                    </StackPanel>
-                </ScrollViewer>
+            <Button x:Name="button_Copy3" Content="Вернуться к пациенту" HorizontalAlignment="Left" Margin="6,669,0,0" VerticalAlignment="Top" Width="334" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Button x:Name="button_Copy1" Content="Выбрать другого пациента" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top" Width="199" Height="29" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="16"/>
+            <Button x:Name="button_Copy" Content="Сохранить и назначить операцию" HorizontalAlignment="Left" Margin="345,669,0,0" VerticalAlignment="Top" Width="334" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="228,62,0,0" TextWrapping="Wrap" Text="Недашковская О.М. (21 год)" VerticalAlignment="Top" Width="322" FontSize="18"/>
+            <Separator HorizontalAlignment="Left" Height="16" Margin="0,91,0,0" VerticalAlignment="Top" Width="1036" RenderTransformOrigin="0.51,0.49"/>
+            <Separator HorizontalAlignment="Left" Height="16" Margin="0,41,0,0" VerticalAlignment="Top" Width="1036" RenderTransformOrigin="0.51,0.49"/>
+            <TextBlock x:Name="textBlock1_Copy" HorizontalAlignment="Center" Margin="396,16,424,667" TextWrapping="Wrap" VerticalAlignment="Center" Width="227" FontSize="18"><Run Text="Добавление "/><Run Text="обследования"/></TextBlock>
+            <TextBlock x:Name="textBlock1_Copy1" HorizontalAlignment="Center" Margin="25,107,898,576" TextWrapping="Wrap" VerticalAlignment="Center" Width="74" FontSize="18" Text="Жалобы"/>
+            <ListBox x:Name="listBox1" HorizontalAlignment="Left" Height="75" Margin="228,110,0,0" VerticalAlignment="Top" Width="509">
+                <ListBoxItem Content="Левая нижняя конечность не беспокоит."/>
+                <ListBoxItem Content="на боли и покраснение кожи в области &quot;вздувшихся&quot; вен правой нижней конечности"/>
+                <ListBoxItem Content="на наличие зажившей язвы, гиперпигментации, уплотнения кожи в области голени"/>
+                <ListBoxItem Content="на гиперпегментацию в области голени"/>
             </ListBox>
-            <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="274,67,0,0" TextWrapping="Wrap" Text="Недашковская О.М. (21 год)" VerticalAlignment="Top" Width="388" FontSize="18"/>
+            <Button x:Name="button_Copy2" Content="Добавить жалобы" HorizontalAlignment="Left" Margin="10,141,0,0" VerticalAlignment="Top" Width="199" Height="29" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="16"/>
+            <Separator HorizontalAlignment="Left" Height="16" Margin="0,190,0,0" VerticalAlignment="Top" Width="1036" RenderTransformOrigin="0.51,0.49"/>
+            <TextBlock x:Name="textBlock1_Copy2" HorizontalAlignment="Center" Margin="189,206,740,477" TextWrapping="Wrap" VerticalAlignment="Center" Width="118" FontSize="18" Text="Левая нога" TextAlignment="Center"/>
+            <Button x:Name="button_Copy33" Content="Обследовать левую ногу" HorizontalAlignment="Left" Margin="10,531,0,0" VerticalAlignment="Top" Width="495" Height="29" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="16"/>
+            <Button x:Name="button_Copy443" Content="Обследовать правую ногу" HorizontalAlignment="Left" Margin="543,531,0,0" VerticalAlignment="Top" Width="475" Height="29" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="16"/>
+            <TextBlock x:Name="textBlock1_Copy3" HorizontalAlignment="Center" Margin="737,206,140,477" TextWrapping="Wrap" VerticalAlignment="Center" Width="170" FontSize="18"><Run Text="Правая "/><Run Text="нога"/></TextBlock>
+
+            <ScrollViewer Margin="10,235,727,192" RenderTransformOrigin="0.5,0.5" FontSize="16">
+                <StackPanel Orientation="Vertical">
+                    <Expander Header="I.	СФС (Сафено-феморальное соустье)"  FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Separator Margin="10,0,10,0"/>
+                    <Expander Header="II.	БПВ на бедре (Большая подкожная вена)" FontSize="12">
+                        <StackPanel Orientation="Vertical">
+                            <Label HorizontalAlignment="Center" Content="Ход: гибридный ход" FontSize="12"/>
+                            <Label HorizontalAlignment="Center" Content="БПВ на бедре: без рефлюкса" FontSize="12"/>
+                        </StackPanel>
+                    </Expander>
+                    <Separator Margin="10,0,10,0"/>
+                    <Expander Header="III.	ПДСВ (Передняя добавочная сафенная вена)*"  FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Separator Margin="10,0,10,0"/>
+                    <Expander Header="IV.	ЗДСВ (Задняя добавочная сафенная вена)*"  FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Separator Margin="10,0,10,0"/>
+                    <Expander Header="V.	Перфоранты бедра и несафенные вены*" FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Separator Margin="10,0,10,0"/>
+                    <Expander Header="VI.	БПВ на голени" FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Separator Margin="10,0,10,0"/>
+                    <Expander Header="VII.	Перфоранты голени*" FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Separator Margin="10,0,10,0"/>
+                    <Expander Header="VIII.	СПС (Сафено-поплитеальное соустье)" FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Separator Margin="10,0,10,0"/>
+                    <Expander Header="IX.	МПВ (Малая подкожная вена)" FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Separator Margin="10,0,10,0"/>
+                    <Expander Header="X.	ТЕ МПВ (Бедренное продолжение малой подкожной вены)*" FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Separator Margin="0,0,0,0"/>
+                    <Expander Header="XI.	ППВ (Подколенная перфорантная вена)*" FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Separator Margin="10,0,10,0"/>
+                    <Expander Header="XII.	Примечание *" FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Separator Margin="10,0,10,0"/>
+                    <Expander Header="XIII.	Глубокие вены" FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Separator Margin="10,0,10,0"/>
+                    <Expander Header="XIV.	Диагноз" FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                </StackPanel>
+            </ScrollViewer>
+            <ScrollViewer Margin="543,235,15,192" RenderTransformOrigin="0.5,0.5" FontSize="16">
+                <StackPanel Orientation="Vertical">
+                    <Expander Header="I. СФС (Сафено-феморальное соустье)"  FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Separator Margin="10,0,10,0"/>
+                    <Expander Header="II. БПВ на бедре (Большая подкожная вена)" FontSize="12">
+                        <StackPanel Orientation="Vertical">
+                            <Label HorizontalAlignment="Center" Content="Ход: гибридный ход" FontSize="12"/>
+                            <Label HorizontalAlignment="Center" Content="БПВ на бедре: без рефлюкса" FontSize="12"/>
+                        </StackPanel>
+                    </Expander>
+                    <Separator Margin="10,0,10,0"/>
+                    <Expander Header="III. ПДСВ (Передняя добавочная сафенная вена)*"  FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Separator Margin="10,0,10,0"/>
+                    <Expander Header="IV. ЗДСВ (Задняя добавочная сафенная вена)*"  FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Separator Margin="10,0,10,0"/>
+                    <Expander Header="V. Перфоранты бедра и несафенные вены*" FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Separator Margin="10,0,10,0"/>
+                    <Expander Header="VI. БПВ на голени" FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Separator Margin="10,0,10,0"/>
+                    <Expander Header="VII. Перфоранты голени*" FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Separator Margin="10,0,10,0"/>
+                    <Expander Header="VIII. СПС (Сафено-поплитеальное соустье)" FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Separator Margin="10,0,10,0"/>
+                    <Expander Header="IX. МПВ (Малая подкожная вена)" FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Separator Margin="0,0,0,0"/>
+                    <Expander Header="X. ТЕ МПВ (Бедренное продолжение малой подкожной вены)*" FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Separator Margin="0,0,0,0"/>
+                    <Expander Header="XI. ППВ (Подколенная перфорантная вена)*" FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Separator Margin="10,0,10,0"/>
+                    <Expander Header="XII. Примечание *" FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Separator Margin="10,0,10,0"/>
+                    <Expander Header="XIII. Глубокие вены" FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Separator Margin="10,0,10,0"/>
+                    <Expander Header="XIV. Диагноз" FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                </StackPanel>
+            </ScrollViewer>
+            <Separator HorizontalAlignment="Left" Height="16" Margin="5,565,0,0" VerticalAlignment="Top" Width="1036" RenderTransformOrigin="0.51,0.49"/>
+            <TextBlock x:Name="textBlock1_Copy4" HorizontalAlignment="Center" Margin="10,578,942,256" TextWrapping="Wrap" VerticalAlignment="Center" Width="199" FontSize="18" Text="Рекомендации" TextAlignment="Center"/>
+            <ListBox x:Name="listBox1_Copy" HorizontalAlignment="Left" Height="75" Margin="228,578,0,0" VerticalAlignment="Top" Width="808">
+                <ListBoxItem Content="Рекомендаций пока нет."/>
+            </ListBox>
+            <Button x:Name="button_Copy4" Content="Добавить рекомендации" HorizontalAlignment="Left" Margin="10,609,0,0" VerticalAlignment="Top" Width="199" Height="29" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="16"/>
+            <TextBlock x:Name="textBlock1_Copy5" HorizontalAlignment="Left" Margin="532,62,0,0" TextWrapping="Wrap" Text="NB!" VerticalAlignment="Top" Width="43" FontSize="18"/>
+            <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="575,64,0,0" TextWrapping="Wrap" Text="Текст пометки" VerticalAlignment="Top" Width="461"/>
+            <TextBlock x:Name="textBlock1_Copy6" HorizontalAlignment="Left" Margin="749,107,0,0" TextWrapping="Wrap" Text="Вес:" VerticalAlignment="Top" Width="43" FontSize="18" RenderTransformOrigin="0.674,0.459"/>
+            <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Height="23" Margin="797,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="167" RenderTransformOrigin="0.586,0.435"/>
+            <TextBlock x:Name="textBlock1_Copy7" HorizontalAlignment="Left" Margin="969,107,0,0" TextWrapping="Wrap" Text="кг" VerticalAlignment="Top" Width="43" FontSize="18"/>
+            <TextBlock x:Name="textBlock1_Copy8" HorizontalAlignment="Left" Margin="749,136,0,0" TextWrapping="Wrap" Text="Рост:" VerticalAlignment="Top" Width="43" FontSize="18" RenderTransformOrigin="0.674,0.459"/>
+            <TextBox x:Name="textBox_Copy1" HorizontalAlignment="Left" Height="23" Margin="797,136,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="167"/>
+            <TextBlock x:Name="textBlock1_Copy9" HorizontalAlignment="Left" Margin="969,135,0,0" TextWrapping="Wrap" Text="см" VerticalAlignment="Top" Width="43" FontSize="18"/>
+            <TextBlock x:Name="textBlock1_Copy10" HorizontalAlignment="Left" Margin="749,164,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="109" FontSize="18" RenderTransformOrigin="0.674,0.459"><Run Text="ИМТ: "/><Run Text="0"/></TextBlock>
+            <Separator HorizontalAlignment="Left" Height="16" Margin="0,653,0,0" VerticalAlignment="Top" Width="1051" RenderTransformOrigin="0.51,0.49"/>
+            <Button x:Name="button_Copy5" Content="Сохранить (операция не нужна)" HorizontalAlignment="Left" Margin="684,669,0,0" VerticalAlignment="Top" Width="334" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>
