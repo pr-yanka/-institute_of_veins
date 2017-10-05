@@ -1,0 +1,31 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:WpfApp2.Templates">
+    <DataTemplate x:Key="TemplateRecomendationAdd">
+        <Grid Name="RootGrid" Margin="0,0,2,-50">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                    <LinearGradientBrush.GradientStops>
+                        <GradientStop Color="White" Offset="0.3" />
+                        <GradientStop Color="Azure" Offset=".8" />
+                    </LinearGradientBrush.GradientStops>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Button x:Name="button_Copy3" Content="Вернуться к обследованию" HorizontalAlignment="Left" Margin="24,461,0,0" VerticalAlignment="Top" Width="334" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="0,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}" Height="33" Width="760" FontSize="18" FontFamily="Segoe UI Semibold" TextAlignment="Center"><Run Text="Выбрать "/><Run Text="рекомендации"/></TextBlock>
+            <Button x:Name="button_Copy" Content="Готово" HorizontalAlignment="Left" Margin="383,461,0,0" VerticalAlignment="Top" Width="334" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <ScrollViewer Margin="0,57,10,168" RenderTransformOrigin="0.5,0.5" FontSize="16">
+                <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Height="448" Width="814">
+                    <CheckBox x:Name="checkBox5" Content="оперативное лечение в плановом порядке" Height="30" Width="788" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18" Margin="11,0"/>
+                    <CheckBox x:Name="checkBox6" Content="компрессионный трикотаж 2 класса компрессии (чулки)" Height="33" Width="788" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18" Margin="11,0"/>
+                    <CheckBox x:Name="checkBox7" Content="компрессионный трикотаж 2 класса компрессии (гольфы)" Height="29" Width="788" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18" Margin="11,0"/>
+                    <CheckBox x:Name="checkBox8" Content="двигательная активность (ходьба), ограничить поднятие тяжестей" Height="29" Width="788" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18" Margin="11,0"/>
+                    <CheckBox x:Name="checkBox9" Content="коррекция веса (консультация диетолога)" Height="29" Width="788" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18" Margin="11,0"/>
+                    <CheckBox x:Name="checkBox10" Content="наблюдение в динамике (через 6-12 мес)." Height="29" Width="788" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18" Margin="11,0"/>
+                    <CheckBox x:Name="checkBox11" Content="наблюдение в динамике" Height="29" Width="788" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18" Margin="11,0"/>
+                    <TextBox x:Name="textBox"  FontSize="18" Text="Введите свою рекомендацию (после введения добавляется ещё одна такая строчка)" Height="32" Margin="9,0"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

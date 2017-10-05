@@ -11,8 +11,8 @@
             <TextBlock Height="23" HorizontalAlignment="Left" Margin="449,211,0,0" x:Name="textBlock1" Text="Логин" VerticalAlignment="Top" Width="68" FontFamily="Source Sans Pro" FontSize="16" Foreground="#FF6A6A6A" />
             <TextBlock Height="23" HorizontalAlignment="Left" Margin="449,287,0,0" x:Name="textBlock2" Text="Пароль" VerticalAlignment="Top" Width="77" FontFamily="Source Sans Pro" FontSize="16" Foreground="#FF6A6A6A" RenderTransformOrigin="0.734,1.565" />
             <PasswordBox Height="34" HorizontalAlignment="Left" Margin="440,314,0,0" x:Name="passwordBox1" FontSize="18" Foreground="#FF8B8B8B" Cursor="Arrow" CaretBrush="#FC8B8B8B" VerticalAlignment="Top" Width="246" FontFamily="Source Sans Pro" BorderBrush="{x:Null}" />
-            <Button Margin="586,288,0,58" Background="#FFFF4545" Content="ВОЙТИ" Command="{Binding ToDashboardCommand}" BorderBrush="{x:Null}" Foreground="White" FontFamily="Source Sans Pro Semibold" FontSize="14" HorizontalAlignment="Left" Width="134" Height="40"/>
-            <Button Margin="430,288,0,58" Background="#FFB0E8EE" Content="Нет аккаунта?" Command="{Binding ToRegistrationCommand}" BorderBrush="{x:Null}" Foreground="#FF6D726C" FontFamily="Source Sans Pro Semibold" FontSize="14" HorizontalAlignment="Left" Width="134" Height="40"/>
+            <Button Margin="586,158,0,58" Background="#FFFF4545" Content="ВОЙТИ" Command="{Binding ToDashboardCommand}" BorderBrush="{x:Null}" Foreground="White" FontFamily="Source Sans Pro Semibold" FontSize="14" HorizontalAlignment="Left" Width="134" Height="40"/>
+            <Button Margin="430,158,0,58" Background="#FFB0E8EE" Content="Нет аккаунта?" Command="{Binding ToRegistrationCommand}" BorderBrush="{x:Null}" Foreground="#FF6D726C" FontFamily="Source Sans Pro Semibold" FontSize="14" HorizontalAlignment="Left" Width="134" Height="40"/>
 
         </Grid>
     </DataTemplate>

@@ -11,7 +11,7 @@
                     </LinearGradientBrush.GradientStops>
                 </LinearGradientBrush>
             </Grid.Background>
-            <TextBlock DockPanel.Dock="Top" FontFamily="/fonts/#Pescadero" FontSize="18pt" Margin="0,0,0,466" Height="38">
+            <TextBlock DockPanel.Dock="Top" FontFamily="/fonts/#Pescadero" FontSize="18pt" Margin="0,0,0,586" Height="38">
                 Здравствуйте, Оксана!
             </TextBlock>
             <Label x:Name="label" Content="Ваша следущая операция назначена на 14:30" HorizontalAlignment="Left" Margin="0,68,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.338,0.401" Height="31" Width="760" Background="#19C500FF" />
@@ -19,7 +19,6 @@
                 <Hyperlink >(подробнее)</Hyperlink>
             </Label>
             <Button x:Name="button" Content="Обследовать нового пациента" Command="{Binding Path=ToNewPatientCommand}" HorizontalAlignment="Left" Margin="10,91,0,0" VerticalAlignment="Top" Width="367" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy" Content="Обследовать существующего пациента" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="382,91,0,0" VerticalAlignment="Top" Width="368" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
             <Button x:Name="button_Copy1" Content="Журнал пациентов" Command="{Binding Path=ToTablePatientsCommand}" HorizontalAlignment="Left" Margin="10,147,0,0" VerticalAlignment="Top" Width="367" Height="43" Background="#FFAFB7F7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
             <Button x:Name="button_Copy2" Content="Журнал обследований" HorizontalAlignment="Left" Margin="383,147,0,0" VerticalAlignment="Top" Width="367" Height="43" Background="#FFAFB7F7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
             <Button x:Name="button_Copy3" Content="Журнал изменений" HorizontalAlignment="Left" Margin="10,209,0,0" VerticalAlignment="Top" Width="367" Height="43" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
