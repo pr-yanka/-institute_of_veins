@@ -14,9 +14,36 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToCurrentPatientCommand { get; protected set; }
         public DelegateCommand ToTablePatientsCommand { get; protected set; }
 
-        
+        public DelegateCommand ToPhysicalOverviewCommand { get; protected set; }
+        public DelegateCommand ToSymptomsAddCommand { get; protected set; }
+        public DelegateCommand ToLegDescribeCommand { get; protected set; }
+        public DelegateCommand ToAddRecomendationsCommand { get; protected set; }
+
+
         public ViewModelAddPhysicalScreen1(NavigationController controller) : base(controller)
         {
+
+            ToSymptomsAddCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.NavigateTo<ViewModelSymptomsAdd>();
+                }
+            );
+
+            ToLegDescribeCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.NavigateTo<ViewModelLegDescribe>();
+                }
+            );
+
+            ToAddRecomendationsCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.NavigateTo<ViewModelRecomendationsAdd>();
+                }
+            );
+
             ToDashboardCommand = new DelegateCommand(
                 () =>
                 {

@@ -12,8 +12,8 @@
             </LinearGradientBrush>
         </Grid.Background>
         <TextBlock DockPanel.Dock="Top" FontFamily="/fonts/#Pescadero" FontSize="18pt" Margin="24,30,-24,436" Height="38"><Run Text="Недашковская Ольга Дмитриев"/><Run Text="на"/></TextBlock>
-        <Button x:Name="button" Content="Добавить обследование" HorizontalAlignment="Left" Margin="24,391,0,0" VerticalAlignment="Top" Width="225" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-        <Button x:Name="button_Copy3" Content="Вернуться в главное меню" HorizontalAlignment="Left" Margin="24,448,0,0" VerticalAlignment="Top" Width="707" Height="43" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Button x:Name="button" Content="Добавить обследование" Command="{Binding Path=ToAddPhysicalCommand}" HorizontalAlignment="Left" Margin="24,391,0,0" VerticalAlignment="Top" Width="225" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Button x:Name="button_Copy3" Content="Вернуться в главное меню" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="24,448,0,0" VerticalAlignment="Top" Width="707" Height="43" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
         <ScrollViewer HorizontalAlignment="Left" Height="295" VerticalAlignment="Top" Width="707" Margin="24,68,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Foreground="Black">
             <Grid Height="263" Width="642">
                 <Grid.ColumnDefinitions>

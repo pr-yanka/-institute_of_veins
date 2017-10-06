@@ -11,10 +11,10 @@
                     </LinearGradientBrush.GradientStops>
                 </LinearGradientBrush>
             </Grid.Background>
-            <Button x:Name="button_Copy3" Content="Вернуться к обследованию" HorizontalAlignment="Left" Margin="24,461,0,0" VerticalAlignment="Top" Width="334" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="0,19,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}" Height="33" Width="760" FontSize="18" FontFamily="Segoe UI Semibold" TextAlignment="Center"><Run Text="Выбрать "/><Run Text="рекомендации"/></TextBlock>
-            <Button x:Name="button_Copy" Content="Готово" HorizontalAlignment="Left" Margin="383,461,0,0" VerticalAlignment="Top" Width="334" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <ScrollViewer Margin="0,57,10,168" RenderTransformOrigin="0.5,0.5" FontSize="16">
+            <Button x:Name="button_Copy3" Content="Вернуться к обследованию" Command="{Binding Path=ToAddPhysicalCommand}" HorizontalAlignment="Left" Margin="24,461,0,0" VerticalAlignment="Top" Width="334" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="0,19,0,300" TextWrapping="Wrap" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}" Height="33" Width="760" FontSize="18" FontFamily="Segoe UI Semibold" TextAlignment="Center"><Run Text="Выбрать "/><Run Text="рекомендации"/></TextBlock>
+            <Button x:Name="button_Copy" Content="Готово" Command="{Binding Path=ToAddPhysicalCommand}" HorizontalAlignment="Left" Margin="383,461,0,0" VerticalAlignment="Top" Width="334" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <ScrollViewer Margin="0,57,10,368" RenderTransformOrigin="0.5,0.5" FontSize="16">
                 <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Height="448" Width="814">
                     <CheckBox x:Name="checkBox5" Content="оперативное лечение в плановом порядке" Height="30" Width="788" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18" Margin="11,0"/>
                     <CheckBox x:Name="checkBox6" Content="компрессионный трикотаж 2 класса компрессии (чулки)" Height="33" Width="788" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="18" Margin="11,0"/>
