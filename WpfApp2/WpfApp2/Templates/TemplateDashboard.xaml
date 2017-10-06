@@ -3,27 +3,54 @@
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplateDashboard">
         <Grid Name="RootGrid">
-            <Grid.Background>
-                <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
-                    <LinearGradientBrush.GradientStops>
-                        <GradientStop Color="White" Offset="0.3" />
-                        <GradientStop Color="Azure" Offset=".8" />
-                    </LinearGradientBrush.GradientStops>
-                </LinearGradientBrush>
-            </Grid.Background>
-            <TextBlock DockPanel.Dock="Top" FontFamily="/fonts/#Pescadero" FontSize="18pt" Margin="0,0,0,586" Height="38">
-                Здравствуйте, Оксана!
-            </TextBlock>
-            <Label x:Name="label" Content="Ваша следущая операция назначена на 14:30" HorizontalAlignment="Left" Margin="0,68,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.338,0.401" Height="31" Width="760" Background="#19C500FF" />
-            <Label Target="{Binding ElementName=TextArea}" Margin="254,68,423,435">
-                <Hyperlink >(подробнее)</Hyperlink>
+            <Border BorderThickness="1" HorizontalAlignment="Left" Height="700" Margin="221,62,0,0" VerticalAlignment="Top" Width="756" Background="White" BorderBrush="#FFC9C9C9"></Border>
+            <TextBlock  FontSize="24" Margin="273,93,-273,589" Height="38" Foreground="#FFA81E1E" FontFamily="Segoe UI Light"><Run Text="Здравствуйте, Оксана!"/></TextBlock>
+            <Button x:Name="button_Copy1" Content="ЖУРНАЛ ПАЦИЕНТОВ" Command="{Binding ToTablePatientsCommand}" HorizontalAlignment="Left" Margin="7,107,0,0" VerticalAlignment="Top" Width="189" Height="43" Background="{x:Null}" FontSize="16" BorderBrush="{x:Null}" FontFamily="Segoe UI Light" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+            <Button x:Name="button_Copy2" Content="ЖУРНАЛ ОБСЛЕДОВАНИЙ" HorizontalAlignment="Left" Margin="7,150,0,0" VerticalAlignment="Top" Width="202" Height="43" Background="{x:Null}" FontSize="16" BorderBrush="{x:Null}" FontFamily="Segoe UI Light" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+            <Button x:Name="button_Copy3" Content="ЖУРНАЛ ИЗМЕНЕНИЙ" HorizontalAlignment="Left" Margin="7,193,0,0" VerticalAlignment="Top" Width="189" Height="43" Background="{x:Null}" FontSize="16" BorderBrush="{x:Null}" FontFamily="Segoe UI Light" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+            <Button x:Name="button_Copy4" Content="О ПРИЛОЖЕНИИ" HorizontalAlignment="Left" Margin="7,281,0,0" VerticalAlignment="Top" Width="189" Height="43" Background="{x:Null}" FontSize="16" BorderBrush="{x:Null}" FontFamily="Segoe UI Light" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+            <Button x:Name="button_Copy6" Content="КАЛЕНДАРЬ ОПЕРАЦИЙ" HorizontalAlignment="Left" Margin="7,238,0,0" VerticalAlignment="Top" Width="189" Height="43" Background="{x:Null}" FontSize="16" BorderBrush="{x:Null}" FontFamily="Segoe UI Light" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+
+            <Separator HorizontalAlignment="Left" Height="115" Margin="10,223,0,0" VerticalAlignment="Top" Width="199"/>
+            <Separator HorizontalAlignment="Left" Height="115" Margin="10,179,0,0" VerticalAlignment="Top" Width="199"/>
+            <Separator HorizontalAlignment="Left" Height="115" Margin="7,136,0,0" VerticalAlignment="Top" Width="199"/>
+            <Separator HorizontalAlignment="Left" Height="115" Margin="7,93,0,0" VerticalAlignment="Top" Width="199"/>
+            <Separator HorizontalAlignment="Left" Height="115" Margin="7,49,0,0" VerticalAlignment="Top" Width="199"/>
+
+            <Menu Height="61" VerticalAlignment="Top" Background="{x:Null}" HorizontalContentAlignment="Right">
+                <MenuItem Margin="1120,0,0,0">
+                    <MenuItem.Header>
+                        <Image Height="192" Source="pack://application:,,,/Images/account.png" Stretch="Fill" MaxWidth="55" MaxHeight="55"/>
+                    </MenuItem.Header>
+                    <MenuItem Header="НАСТРОЙКИ АККАУНТА" Background="WhiteSmoke" VerticalAlignment="Top" HorizontalAlignment="Left" Width="223" />
+                    <MenuItem Header="УПРАВЛЕНИЕ ДАННЫМИ" Background="WhiteSmoke" ></MenuItem>
+                    <Separator Background="#FF7DE2EA" />
+                    <MenuItem Header="ВЫХОД" Background="WhiteSmoke" Command="{Binding ToLoginCommand}" />
+                </MenuItem>
+            </Menu>
+            <Label x:Name="label" Content="        Ваша следущая операция назначена на 14:30" Margin="273,150,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.338,0.401" Height="31" Background="#FFFFF0F0" HorizontalAlignment="Left" Width="607" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" FontFamily="Segoe UI Light" FontSize="14" />
+            <Label Target="{Binding ElementName=TextArea}" Margin="592,150,231,353" FontFamily="Segoe UI Light" FontSize="14">
+                <Hyperlink >
+                    <Run Text="(подробнее)"/>
+                </Hyperlink>
             </Label>
-            <Button x:Name="button" Content="Обследовать нового пациента" Command="{Binding Path=ToNewPatientCommand}" HorizontalAlignment="Left" Margin="10,91,0,0" VerticalAlignment="Top" Width="367" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy1" Content="Журнал пациентов" Command="{Binding Path=ToTablePatientsCommand}" HorizontalAlignment="Left" Margin="10,147,0,0" VerticalAlignment="Top" Width="367" Height="43" Background="#FFAFB7F7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy2" Content="Журнал обследований" HorizontalAlignment="Left" Margin="383,147,0,0" VerticalAlignment="Top" Width="367" Height="43" Background="#FFAFB7F7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy3" Content="Журнал изменений" HorizontalAlignment="Left" Margin="10,209,0,0" VerticalAlignment="Top" Width="367" Height="43" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy4" Content="Управление данными" HorizontalAlignment="Left" Margin="382,209,0,0" VerticalAlignment="Top" Width="367" Height="43" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy5" Content="Выйти из аккаунта" Command="{Binding Path=ToLoginCommand}" HorizontalAlignment="Left" Margin="202,309,0,0" VerticalAlignment="Top" Width="367" Height="43" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Image Margin="43,50,685,430" Source="pack://application:,,,/Images/alert.png" MaxHeight="25"/>
+            <Button x:Name="button_Copy"  HorizontalAlignment="Left" Margin="601,222,0,0" VerticalAlignment="Top" Width="227" Height="153" Background="#FFDDF2F3" FontFamily="Segoe UI Symbol" FontSize="16" BorderBrush="{x:Null}" Foreground="#FF686868" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" UseLayoutRounding="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" FontStretch="Condensed">
+                <Image Margin="0,22,0,61" Source="pack://application:,,,/Images/patient.png" Stretch="Fill" Width="60" Height="60"/>
+            </Button>
+            <TextBlock HorizontalAlignment="Left" Margin="613,319,0,0" TextWrapping="Wrap" Text="ОБСЛЕДОВАНИЕ СУЩЕСТВУЮЩЕГО ПАЦИЕНТА" VerticalAlignment="Top" Width="202" Height="75" TextAlignment="Center" FontSize="14" Foreground="#FF404040"/>
+            <Button x:Name="button_Copy5" HorizontalAlignment="Left" Margin="342,431,0,0" VerticalAlignment="Top" Width="227" Height="153" Background="#FFDDF2F3" FontFamily="Segoe UI Symbol" FontSize="16" BorderBrush="{x:Null}" Foreground="#FF686868" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" UseLayoutRounding="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" FontStretch="Condensed">
+                <Image Margin="0,25,0,68" Source="pack://application:,,,/Images/view.png" Stretch="Fill" Width="54" Height="54"/>
+            </Button>
+            <Button x:Name="button_Copy7" HorizontalAlignment="Left" Margin="601,431,0,0" VerticalAlignment="Top" Width="227" Height="153" Background="#FFDDF2F3" FontFamily="Segoe UI Symbol" FontSize="16" BorderBrush="{x:Null}" Foreground="#FF686868" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" UseLayoutRounding="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" FontStretch="Condensed">
+                <Image Margin="0,26,0,67" Source="pack://application:,,,/Images/operation.png" Stretch="Fill" Width="54" Height="54"/>
+            </Button>
+            <Button x:Name="button" Command="{Binding ToNewPatientCommand}" HorizontalAlignment="Left" Margin="342,222,0,0" VerticalAlignment="Top" Width="227" Height="153" Background="#FFDDF2F3" FontFamily="Segoe UI Symbol" FontSize="16" BorderBrush="{x:Null}" Foreground="#FF686868" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" UseLayoutRounding="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" FontStretch="Condensed">
+                <Image Source="pack://application:,,,/Images/new.png" Width="50" Height="50" HorizontalAlignment="Left" Margin="0,24,0,69"/>
+            </Button>
+            <TextBlock HorizontalAlignment="Left" Margin="359,521,0,0" TextWrapping="Wrap" Text="ПОСМОТРЕТЬ ОБСЛЕДОВАНИЯ" VerticalAlignment="Top" Width="188" Height="47" TextAlignment="Center" FontSize="14" Foreground="#FF404040"/>
+            <TextBlock HorizontalAlignment="Left" Margin="627,521,0,0" TextWrapping="Wrap" Text="ПОСМОТРЕТЬ       ОПЕРАЦИИ" VerticalAlignment="Top" Width="188" Height="47" TextAlignment="Center" FontSize="14" Foreground="#FF404040"/>
+            <TextBlock HorizontalAlignment="Left" Margin="359,319,0,0" TextWrapping="Wrap" Text="ОБСЛЕДОВАНИЕ НОВОГО ПАЦИЕНТА" VerticalAlignment="Top" Width="188" Height="47" TextAlignment="Center" FontSize="14" Foreground="#FF404040"/>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

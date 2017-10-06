@@ -188,5 +188,13 @@
   <ItemGroup>
     <Resource Include="Images\veins-logo.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\account.png" />
+    <Resource Include="Images\alert.png" />
+    <Resource Include="Images\new.png" />
+    <Resource Include="Images\operation.png" />
+    <Resource Include="Images\patient.png" />
+    <Resource Include="Images\view.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
