@@ -35,7 +35,10 @@ namespace WpfApp2.Navigation
                 new ViewModelViewHistory(this),
                 new ViewModelLegDescribe(this),
                 new ViewModelRecomendationsAdd(this),
-                new ViewModelSymptomsAdd(this)
+                new ViewModelSymptomsAdd(this),
+                new ViewModelPhysicalTable(this),
+                new ViewModelOperationOverview(this),
+                new ViewModelCalendarOperations(this)
             };
 
             _currentViewModel = _viewModels.First();

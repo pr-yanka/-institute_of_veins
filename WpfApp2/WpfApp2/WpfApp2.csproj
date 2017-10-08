@@ -81,7 +81,10 @@
     <Compile Include="Navigation\NavigationController.cs" />
     <Compile Include="ViewModels\ViewBaseModel.cs" />
     <Compile Include="Templates\MyTemplateSelector.cs" />
+    <Compile Include="ViewModels\ViewModelCalendarOperations.cs" />
     <Compile Include="ViewModels\ViewModelLegDescribe.cs" />
+    <Compile Include="ViewModels\ViewModelOperationOverview.cs" />
+    <Compile Include="ViewModels\ViewModelPhysicalTable.cs" />
     <Compile Include="ViewModels\ViewModelRecomendationsAdd.cs" />
     <Compile Include="ViewModels\ViewModelSymptomsAdd.cs" />
     <Compile Include="ViewModels\ViewModelViewHistory.cs" />

@@ -23,6 +23,9 @@ namespace WpfApp2.Templates
         public DataTemplate TemplateLegDescribe { get; set; }
         public DataTemplate TemplateSymptomsAdd { get; set; }
         public DataTemplate TemplateRecomendationsAdd { get; set; }
+        public DataTemplate TemplatePhysicalTable { get; set; }
+        public DataTemplate TemplateOperationOverview { get; set; }
+        public DataTemplate TemplateCalendarOperations { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -64,6 +67,15 @@ namespace WpfApp2.Templates
 
             if (item.GetType() == typeof(ViewModelRecomendationsAdd))
                 return TemplateRecomendationsAdd;
+
+            if (item.GetType() == typeof(ViewModelPhysicalTable))
+                return TemplatePhysicalTable;
+
+            if (item.GetType() == typeof(ViewModelOperationOverview))
+                return TemplateOperationOverview;
+
+            if (item.GetType() == typeof(ViewModelCalendarOperations))
+                return TemplateCalendarOperations;
 
             return null;
         }

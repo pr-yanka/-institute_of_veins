@@ -17,6 +17,9 @@
         <ResourceDictionary Source="TemplateLegDescribe.xaml"/>
         <ResourceDictionary Source="TemplateSymptomsAdd.xaml"/>
         <ResourceDictionary Source="TemplateRecomendationAdd.xaml"/>
+        <ResourceDictionary Source="TemplatePhysicalTable.xaml"/>
+        <ResourceDictionary Source="TemplateOperationOverview.xaml"/>
+        <ResourceDictionary Source="TemplateCalendarOperations.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <local:MyTemplateSelector x:Key="MyTemplateSelector" 
@@ -31,5 +34,8 @@
                               TemplateAddPhysicalPage1="{StaticResource TemplateAddPhysicalPage1}"
                               TemplateLegDescribe="{StaticResource TemplateLegDescribe}"
                               TemplateRecomendationsAdd="{StaticResource TemplateRecomendationAdd}"
+                              TemplateCalendarOperations="{StaticResource TemplateCalendarOperations}"
+                              TemplateOperationOverview="{StaticResource TemplateOperationOverview}"
+                              TemplatePhysicalTable="{StaticResource TemplatePhysicalTable}"
                               TemplateSymptomsAdd="{StaticResource TemplateSymptomsAdd}"/>
 </ResourceDictionary>
