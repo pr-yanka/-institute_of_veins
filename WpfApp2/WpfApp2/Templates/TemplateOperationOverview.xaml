@@ -1,0 +1,28 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:WpfApp2.Templates">
+    <DataTemplate x:Key="TemplateOperationOverview">
+        <Grid>
+            <TextBlock HorizontalAlignment="Center" Margin="10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" FontSize="20" Foreground="#FF210A0A" Background="#FF899FCD" Width="897"><Run Text="Просмотр операции"/><Run Text="&#x9;&#x9;&#x9;&#x9;Недашковская Ольга Дмитриевна (21 год)"/></TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="10,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Width="244"><Run Text="Вид операции:"/><Run Text=" название"/></TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="302,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Width="579"><Run Text="Операция назначена на\операция успешно проведена"/><Run Text=" (дата и врем"/><Run Text="я)"/></TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="10,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Width="378"><Run Text="Операцию назначила Оксана Рябинская"/><Run Text=" согласно "/></TextBlock>
+            <Label Content="обследованию" HorizontalAlignment="Left" Margin="379,63,0,0" VerticalAlignment="Top" Foreground="#FF162081" FontSize="16" FontWeight="Bold"/>
+            <TextBlock HorizontalAlignment="Left" Margin="10,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Width="244" Text="Анестезик:"/>
+            <TextBlock HorizontalAlignment="Left" Margin="10,251,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Width="244" FontWeight="Bold"><Span><Run FlowDirection="RightToLeft" Text="NB"/></Span><Span><Run Text="!"/></Span></TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="406,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Width="244"><Run Text="Диагноз справа:"/></TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="10,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Width="244"><Run Text="Диагноз "/><Run Text="слева"/><Run Text=":"/></TextBlock>
+            <ScrollViewer HorizontalAlignment="Left" Height="100" Margin="10,120,0,0" VerticalAlignment="Top" Width="378"/>
+            <ScrollViewer HorizontalAlignment="Left" Height="100" Margin="406,124,0,0" VerticalAlignment="Top" Width="378"/>
+            <RichTextBox HorizontalAlignment="Left" Height="186" Margin="10,277,0,0" VerticalAlignment="Top" Width="378">
+                <FlowDocument>
+                    <Paragraph>
+                        <Run Text="комментарий к операции"/>
+                    </Paragraph>
+                </FlowDocument>
+            </RichTextBox>
+            <TextBlock HorizontalAlignment="Left" Margin="406,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Width="244" Text="Бригада:"/>
+            <ScrollViewer HorizontalAlignment="Left" Height="182" Margin="406,281,0,0" VerticalAlignment="Top" Width="378"/>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>
