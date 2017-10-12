@@ -82,6 +82,7 @@
     <Compile Include="ViewModels\ViewBaseModel.cs" />
     <Compile Include="Templates\MyTemplateSelector.cs" />
     <Compile Include="ViewModels\ViewModelCalendarOperations.cs" />
+    <Compile Include="ViewModels\ViewModelFullMenu.cs" />
     <Compile Include="ViewModels\ViewModelLegDescribe.cs" />
     <Compile Include="ViewModels\ViewModelOperationOverview.cs" />
     <Compile Include="ViewModels\ViewModelPhysicalTable.cs" />

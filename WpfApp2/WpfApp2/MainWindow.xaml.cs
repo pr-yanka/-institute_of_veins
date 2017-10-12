@@ -24,11 +24,12 @@ namespace WpfApp2
     public partial class MainWindow : Window
     {
         public NavigationController Controller { get; }
-        public ICommand Navigate { get; }
+        public ViewModelFullMenu CurrentNavigation { get; }
 
         public MainWindow()
         {
             Controller = new NavigationController();
+            CurrentNavigation = new ViewModelFullMenu(Controller);
 
             InitializeComponent();
         }
