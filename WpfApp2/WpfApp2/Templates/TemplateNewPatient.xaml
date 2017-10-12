@@ -2,8 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplateNewPatient">
-        <Grid>
-        <Grid.Background>
+        <Grid Margin="227,0,0,0" >
+            <Grid.Background>
             <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
                 <LinearGradientBrush.GradientStops>
                     <GradientStop Color="White" Offset="0.3" />

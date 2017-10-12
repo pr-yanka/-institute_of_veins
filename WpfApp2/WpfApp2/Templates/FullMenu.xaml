@@ -1,0 +1,36 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:WpfApp2.Templates">
+
+    <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    <DataTemplate x:Key="FullNavigation">
+        <Grid>
+            <Button x:Name="button_Copy1" Content="ЖУРНАЛ ПАЦИЕНТОВ" Command="{Binding ToTablePatientsCommand}" HorizontalAlignment="Left" Margin="7,107,0,0" VerticalAlignment="Top" Width="189" Height="43" Background="{x:Null}" FontSize="16" BorderBrush="{x:Null}" FontFamily="Segoe UI Light" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+            <Button x:Name="button_Copy2" Content="ЖУРНАЛ ОБСЛЕДОВАНИЙ" Command="{Binding ToPhysicalTableCommand}" HorizontalAlignment="Left" Margin="7,150,0,0" VerticalAlignment="Top" Width="202" Height="43" Background="{x:Null}" FontSize="16" BorderBrush="{x:Null}" FontFamily="Segoe UI Light" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+            <Button x:Name="button_Copy3" Content="ЖУРНАЛ ИЗМЕНЕНИЙ" HorizontalAlignment="Left" Margin="7,193,0,0" VerticalAlignment="Top" Width="189" Height="43" Background="{x:Null}" FontSize="16" BorderBrush="{x:Null}" FontFamily="Segoe UI Light" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+            <Button x:Name="button_Copy4" Content="О ПРИЛОЖЕНИИ" HorizontalAlignment="Left" Margin="7,281,0,0" VerticalAlignment="Top" Width="189" Height="43" Background="{x:Null}" FontSize="16" BorderBrush="{x:Null}" FontFamily="Segoe UI Light" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+            <Button x:Name="button_Copy6" Content="КАЛЕНДАРЬ ОПЕРАЦИЙ" Command="{Binding ToCalendarOperationsCommand}" HorizontalAlignment="Left" Margin="7,238,0,0" VerticalAlignment="Top" Width="189" Height="43" Background="{x:Null}" FontSize="16" BorderBrush="{x:Null}" FontFamily="Segoe UI Light" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+
+
+
+            <Separator HorizontalAlignment="Left" Height="115" Margin="10,223,0,0" VerticalAlignment="Top" Width="199"/>
+            <Separator HorizontalAlignment="Left" Height="115" Margin="10,179,0,0" VerticalAlignment="Top" Width="199"/>
+            <Separator HorizontalAlignment="Left" Height="115" Margin="7,136,0,0" VerticalAlignment="Top" Width="199"/>
+            <Separator HorizontalAlignment="Left" Height="115" Margin="7,93,0,0" VerticalAlignment="Top" Width="199"/>
+            <Separator HorizontalAlignment="Left" Height="115" Margin="7,49,0,0" VerticalAlignment="Top" Width="199"/>
+
+            <Menu Height="61" VerticalAlignment="Top" Background="{x:Null}" HorizontalContentAlignment="Right">
+                <MenuItem Margin="1120,0,0,0">
+                    <MenuItem.Header>
+                        <Image Height="192" Source="pack://application:,,,/Images/account.png" Stretch="Fill" MaxWidth="55" MaxHeight="55"/>
+                    </MenuItem.Header>
+                    <MenuItem Header="НАСТРОЙКИ АККАУНТА" Background="WhiteSmoke" VerticalAlignment="Top" HorizontalAlignment="Left" Width="223" />
+                    <MenuItem Header="УПРАВЛЕНИЕ ДАННЫМИ" Background="WhiteSmoke" ></MenuItem>
+                    <Separator Background="#FF7DE2EA" />
+                    <MenuItem Header="ВЫХОД" Background="WhiteSmoke" Command="{Binding ToLoginCommand}" />
+                </MenuItem>
+            </Menu>
+            <Border BorderThickness="1" HorizontalAlignment="Left" Height="700" Margin="221,62,0,0" VerticalAlignment="Top" Width="756" Background="White" BorderBrush="#FFC9C9C9"></Border>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

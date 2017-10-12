@@ -20,6 +20,8 @@ namespace WpfApp2.ViewModels
 
         public ViewModelCurrentPatient(NavigationController controller) : base(controller)
         {
+            base.HasNavigation = true;
+
             ToTablePatientsCommand = new DelegateCommand(
                 () =>
                 {

@@ -11,6 +11,7 @@ namespace WpfApp2.ViewModels
 
         public ViewModelRegistration(NavigationController controller) : base(controller)
         {
+            base.HasNavigation = false;
             ToLoginCommand = new DelegateCommand(
                 () =>
                 {

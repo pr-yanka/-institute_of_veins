@@ -14,6 +14,7 @@ namespace WpfApp2.ViewModels
 
         public ViewModelOperationOverview(NavigationController controller) : base(controller)
         {
+            base.HasNavigation = true;
             ToPhysicalCommand = new DelegateCommand(
                 () =>
                 {

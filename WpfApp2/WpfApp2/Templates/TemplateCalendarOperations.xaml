@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplateCalendarOperations">
-        <Grid Margin="0,80,0,0">
+        <Grid Margin="220,80,0,0">
             <TextBlock HorizontalAlignment="Center" Margin="10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Text="Календарь операций" FontSize="20" Foreground="#FF210A0A" Background="#FF899FCD" Width="897"/>
             <CheckBox Content="сортировать по дате&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" FontSize="16" Height="24" Width="185"/>
             <CheckBox Content="только мои операции&#xD;&#xA;" HorizontalAlignment="Left" Margin="195,41,0,0" VerticalAlignment="Top" FontSize="16" Height="24" Width="243"/>

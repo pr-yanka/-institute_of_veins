@@ -3,13 +3,6 @@
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplateTablePatients">
     <Grid>
-            <Border BorderThickness="1" HorizontalAlignment="Left" Height="700" Margin="221,62,0,0" VerticalAlignment="Top" Width="756" Background="White" BorderBrush="#FFC9C9C9"></Border>
-            <Button x:Name="button_Copy1" Content="ЖУРНАЛ ПАЦИЕНТОВ" Command="{Binding ToTablePatientsCommand}" HorizontalAlignment="Left" Margin="7,107,0,0" VerticalAlignment="Top" Width="189" Height="43" Background="{x:Null}" FontSize="16" BorderBrush="{x:Null}" FontFamily="Segoe UI Light" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
-            <Button x:Name="button_Copy2" Content="ЖУРНАЛ ОБСЛЕДОВАНИЙ" HorizontalAlignment="Left" Margin="7,150,0,0" VerticalAlignment="Top" Width="202" Height="43" Background="{x:Null}" FontSize="16" BorderBrush="{x:Null}" FontFamily="Segoe UI Light" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
-            <Button x:Name="button_Copy3" Content="ЖУРНАЛ ИЗМЕНЕНИЙ" HorizontalAlignment="Left" Margin="7,193,0,0" VerticalAlignment="Top" Width="189" Height="43" Background="{x:Null}" FontSize="16" BorderBrush="{x:Null}" FontFamily="Segoe UI Light" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
-            <Button x:Name="button_Copy4" Content="О ПРИЛОЖЕНИИ" HorizontalAlignment="Left" Margin="7,281,0,0" VerticalAlignment="Top" Width="189" Height="43" Background="{x:Null}" FontSize="16" BorderBrush="{x:Null}" FontFamily="Segoe UI Light" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
-            <Button x:Name="button_Copy6" Content="КАЛЕНДАРЬ ОПЕРАЦИЙ" HorizontalAlignment="Left" Margin="7,238,0,0" VerticalAlignment="Top" Width="189" Height="43" Background="{x:Null}" FontSize="16" BorderBrush="{x:Null}" FontFamily="Segoe UI Light" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
-
 
             <Menu Height="61" VerticalAlignment="Top" Background="{x:Null}" HorizontalContentAlignment="Right">
                 <MenuItem Margin="1120,0,0,0">

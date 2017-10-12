@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplatePhysicalTable">
-        <Grid Margin="0,80,0,0">
+        <Grid Margin="220,80,0,0">
             <TextBlock HorizontalAlignment="Center" Margin="10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Text="Обследования" FontSize="20" Foreground="#FF210A0A" Background="#FF899FCD" Width="897"/>
             <TextBlock HorizontalAlignment="Left" Margin="434,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="36" Width="267" FontSize="20" Text="Поиск по слову:"/>
             <CheckBox Content="сортировать по дате&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" FontSize="16" Height="24" Width="185"/>

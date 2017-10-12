@@ -15,6 +15,7 @@ namespace WpfApp2.ViewModels
 
         public ViewModelRecomendationsAdd(NavigationController controller) : base(controller)
         {
+            base.HasNavigation = false;
             ToAddPhysicalCommand = new DelegateCommand(
                 () =>
                 {

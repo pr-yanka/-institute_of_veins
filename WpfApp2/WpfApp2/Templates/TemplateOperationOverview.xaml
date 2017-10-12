@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplateOperationOverview">
-        <Grid Margin="0,80,0,0">
+        <Grid Margin="220,80,0,0">
             <TextBlock HorizontalAlignment="Center" Margin="10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" FontSize="20" Foreground="#FF210A0A" Background="#FF899FCD" Width="897"><Run Text="Просмотр операции"/><Run Text="&#x9;&#x9;&#x9;&#x9;Недашковская Ольга Дмитриевна (21 год)"/></TextBlock>
             <TextBlock HorizontalAlignment="Left" Margin="10,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Width="244"><Run Text="Вид операции:"/><Run Text=" название"/></TextBlock>
             <TextBlock HorizontalAlignment="Left" Margin="302,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Width="579"><Run Text="Операция назначена на\операция успешно проведена"/><Run Text=" (дата и врем"/><Run Text="я)"/></TextBlock>

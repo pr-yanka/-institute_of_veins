@@ -17,6 +17,8 @@ namespace WpfApp2.ViewModels
 
         public ViewModelDashboard(NavigationController controller) : base(controller)
         {
+            base.HasNavigation = true;
+
             ToOperationOverviewCommand = new DelegateCommand(
                 () =>
                 {

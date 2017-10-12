@@ -16,6 +16,8 @@ namespace WpfApp2.ViewModels
 
         public ViewModelCalendarOperations(NavigationController controller) : base(controller)
         {
+            base.HasNavigation = true;
+
             ToPhysicalCommand = new DelegateCommand(
                 () =>
                 {

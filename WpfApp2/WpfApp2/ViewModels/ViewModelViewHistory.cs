@@ -19,6 +19,7 @@ namespace WpfApp2.ViewModels
 
         public ViewModelViewHistory(NavigationController controller) : base(controller)
         {
+            base.HasNavigation = true;
             ToAddPhysicalCommand = new DelegateCommand(
                 () =>
                 {

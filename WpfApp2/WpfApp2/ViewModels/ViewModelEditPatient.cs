@@ -14,6 +14,8 @@ namespace WpfApp2.ViewModels
 
         public ViewModelEditPatient(NavigationController controller) : base(controller)
         {
+            base.HasNavigation = false;
+
             ToCurrentPatientCommand = new DelegateCommand(
                 () =>
                 {

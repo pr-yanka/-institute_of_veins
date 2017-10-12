@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,10 +24,12 @@ namespace WpfApp2
     public partial class MainWindow : Window
     {
         public NavigationController Controller { get; }
+        public ICommand Navigate { get; }
 
         public MainWindow()
         {
             Controller = new NavigationController();
+
             InitializeComponent();
         }
     }

@@ -6,8 +6,15 @@ namespace WpfApp2.Navigation
     public abstract class ViewModelBase
     {
         protected NavigationController Controller;
+        protected bool _hasNavigation = false; 
 
         public ICommand Navigate { get; }
+
+        public virtual bool HasNavigation
+        {
+            get { return _hasNavigation; }
+            set { _hasNavigation = value; }
+        }
 
         protected ViewModelBase(NavigationController controller)
         {

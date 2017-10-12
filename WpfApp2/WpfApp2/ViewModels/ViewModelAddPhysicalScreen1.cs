@@ -22,6 +22,7 @@ namespace WpfApp2.ViewModels
 
         public ViewModelAddPhysicalScreen1(NavigationController controller) : base(controller)
         {
+            base.HasNavigation = false;
 
             ToSymptomsAddCommand = new DelegateCommand(
                 () =>

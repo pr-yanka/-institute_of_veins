@@ -14,6 +14,7 @@ namespace WpfApp2.ViewModels
 
         public ViewModelLegDescribe(NavigationController controller) : base(controller)
         {
+            base.HasNavigation = false;
             ToAddPhysicalCommand = new DelegateCommand(
                 () =>
                 {
