@@ -20,6 +20,12 @@
         <ResourceDictionary Source="TemplatePhysicalTable.xaml"/>
         <ResourceDictionary Source="TemplateOperationOverview.xaml"/>
         <ResourceDictionary Source="TemplateCalendarOperations.xaml"/>
+        <ResourceDictionary Source="TemplatePathologyList.xaml"/>
+        <ResourceDictionary Source="TemplateAddPathology.xaml"/>
+        <ResourceDictionary Source="TemplateCreateOperation.xaml"/>
+        <ResourceDictionary Source="TemplateOperationResultOverview.xaml"/>
+        <ResourceDictionary Source="TemplateAddOperationResult.xaml"/>
+        <ResourceDictionary Source="TemplateEditOperation.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <local:MyTemplateSelector x:Key="MyTemplateSelector" 
@@ -37,5 +43,11 @@
                               TemplateCalendarOperations="{StaticResource TemplateCalendarOperations}"
                               TemplateOperationOverview="{StaticResource TemplateOperationOverview}"
                               TemplatePhysicalTable="{StaticResource TemplatePhysicalTable}"
+                              TemplatePathologyList="{StaticResource TemplatePathologyList}"
+                              TemplateAddPathology="{StaticResource TemplateAddPathology}"
+                              TemplateCreateOperation="{StaticResource TemplateCreateOperation}"
+                              TemplateOperationResultOverview="{StaticResource TemplateOperationResultOverview}"
+                              TemplateAddOperationResult="{StaticResource TemplateAddOperationResult}"
+                              TemplateEditOperation="{StaticResource TemplateEditOperation}"
                               TemplateSymptomsAdd="{StaticResource TemplateSymptomsAdd}"/>
 </ResourceDictionary>

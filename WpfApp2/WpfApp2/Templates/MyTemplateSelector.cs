@@ -26,6 +26,12 @@ namespace WpfApp2.Templates
         public DataTemplate TemplatePhysicalTable { get; set; }
         public DataTemplate TemplateOperationOverview { get; set; }
         public DataTemplate TemplateCalendarOperations { get; set; }
+        public DataTemplate TemplatePathologyList { get; set; }
+        public DataTemplate TemplateAddPathology { get; set; }
+        public DataTemplate TemplateCreateOperation { get; set; }
+        public DataTemplate TemplateOperationResultOverview { get; set; }
+        public DataTemplate TemplateAddOperationResult { get; set; }
+        public DataTemplate TemplateEditOperation { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
