@@ -10,7 +10,7 @@
                 </RadialGradientBrush>
             </Grid.Background>
             <Label x:Name="label" Content="Итоги операции" HorizontalAlignment="Left" Margin="214,10,0,0" VerticalAlignment="Top"/>
-            <Button x:Name="button_Copy1" Content="Сохранить" HorizontalAlignment="Left" Margin="262,274,0,0" VerticalAlignment="Top"  
+            <Button x:Name="button_Copy1" Content="Сохранить" Command="{Binding Path=ToOperationOverviewCommand}" HorizontalAlignment="Left" Margin="262,274,0,0" VerticalAlignment="Top"  
                     Width="158" Height="28"/>
             <Label x:Name="label1" Content="операция отменена\операция проведена\ожидание операции" HorizontalAlignment="Left"  
                    Margin="88,41,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.491,0.474"/>
@@ -32,7 +32,7 @@
             </RichTextBox>
             <Label x:Name="label1_Copy" Content="22 сентября 2017 года в 11:40" HorizontalAlignment="Left" Margin="170,62,0,0"  
                    VerticalAlignment="Top" RenderTransformOrigin="0.491,0.474"/>
-            <Button x:Name="button_Copy" Content="Возврат" HorizontalAlignment="Left" Margin="88,274,0,0"              
+            <Button x:Name="button_Copy" Command="{Binding Path=ToOperationOverviewCommand}" Content="Возврат" HorizontalAlignment="Left" Margin="88,274,0,0"              
                     VerticalAlignment="Top" Width="158" Height="28"/>
 
         </Grid>

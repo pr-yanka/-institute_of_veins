@@ -17,10 +17,18 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToNewPhysicalCommand { get; protected set; }
         public DelegateCommand ToAddAnalysesCommand { get; protected set; }
         public DelegateCommand ToViewHistoryCommand { get; protected set; }
+        public DelegateCommand ToPathologyListCommand { get; protected set; }
 
         public ViewModelCurrentPatient(NavigationController controller) : base(controller)
         {
             base.HasNavigation = true;
+
+            ToPathologyListCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.NavigateTo<ViewModelPathologyList>();
+                }
+            );
 
             ToTablePatientsCommand = new DelegateCommand(
                 () =>

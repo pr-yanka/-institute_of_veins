@@ -16,9 +16,6 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToRegistrationCommand { get; protected set; }
         public DelegateCommand ToDashboardCommand { get; protected set; }
 
-
-        public ICommand Navigate { get; }
-
         public ViewModelLogin(NavigationController controller) : base(controller)
         {
             HasNavigation = false;

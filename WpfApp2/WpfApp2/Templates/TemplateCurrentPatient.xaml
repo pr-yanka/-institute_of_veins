@@ -23,6 +23,7 @@
         <Button x:Name="button_Copy1" Content="Назначить операцию" HorizontalAlignment="Left" Margin="258,392,0,0" VerticalAlignment="Top" Width="235" Height="43" Background="#FF99B1F1" FontFamily="Franklin Gothic Medium" FontSize="20"/>
             <Button x:Name="button_Copy2" Content="Начать обследование" Command="{Binding Path=ToNewPhysicalCommand}" HorizontalAlignment="Left" Margin="10,392,0,0" VerticalAlignment="Top" Width="234" Height="43" Background="#FF98C8F0" FontFamily="Franklin Gothic Medium" FontSize="20"/>
         <Button x:Name="button_Copy5" Content="Добавить анализы" HorizontalAlignment="Left" Margin="507,392,0,0" VerticalAlignment="Top" Width="234" Height="43" Background="#FF819EEC" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Button x:Name="button_Copy51" Content="Патологии" Command="{Binding Path=ToPathologyListCommand}" HorizontalAlignment="Left" Margin="607,492,0,0" VerticalAlignment="Top" Width="234" Height="43" Background="#FF819EEC" FontFamily="Franklin Gothic Medium" FontSize="20"/>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

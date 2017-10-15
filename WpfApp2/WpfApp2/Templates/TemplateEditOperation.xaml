@@ -11,7 +11,7 @@
             </Grid.Background>
             <Label x:Name="label" Content="Редактирование операции" HorizontalAlignment="Left" Margin="224,12,0,0"  
                    VerticalAlignment="Top"/>
-            <Button x:Name="button_Copy1" Content="Вернуться" HorizontalAlignment="Left" Margin="136,393,0,0" VerticalAlignment="Top"  
+            <Button x:Name="button_Copy1" Command="{Binding Path=ToOperationOverviewCommand}" Content="Вернуться" HorizontalAlignment="Left" Margin="136,393,0,0" VerticalAlignment="Top"  
                     Width="158" Height="20"/>
             <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="202,43,0,0" TextWrapping="Wrap" Text="Тип операции"  
                        VerticalAlignment="Top"/>

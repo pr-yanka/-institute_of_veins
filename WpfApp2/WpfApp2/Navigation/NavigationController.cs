@@ -38,7 +38,13 @@ namespace WpfApp2.Navigation
                 new ViewModelSymptomsAdd(this),
                 new ViewModelPhysicalTable(this),
                 new ViewModelOperationOverview(this),
-                new ViewModelCalendarOperations(this)
+                new ViewModelCalendarOperations(this),
+                new ViewModelPathologyList(this),
+                new ViewModelAddPathology(this),
+                new ViewModelCreateOperation(this),
+                new ViewModelOperationOverview(this),
+                new ViewModelAddOperationResult(this),
+                new ViewModelEditOperation(this)
             };
 
             _currentViewModel = _viewModels.First();

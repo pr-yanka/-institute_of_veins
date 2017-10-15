@@ -10,7 +10,7 @@
                 </RadialGradientBrush>
             </Grid.Background>
             <Label x:Name="label" Content="Итоги операции" HorizontalAlignment="Left" Margin="262,10,0,0" VerticalAlignment="Top"/>
-            <Button x:Name="button_Copy1" Content="Сохранить" HorizontalAlignment="Left" Margin="262,274,0,0" VerticalAlignment="Top"  
+            <Button x:Name="button_Copy1" Command="{Binding Path=ToOperationOverviewCommand}" Content="Сохранить" HorizontalAlignment="Left" Margin="262,274,0,0" VerticalAlignment="Top"  
                     Width="158" Height="28" />
             <Label x:Name="label1" Content="Поздравляем с проведением операции!" HorizontalAlignment="Left"  
                    Margin="200,36,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.491,0.474"/>
@@ -24,7 +24,7 @@
                          Width="548">
                 <FlowDocument/>
             </RichTextBox>
-            <Button x:Name="button_Copy" Content="Возврат" HorizontalAlignment="Left" Margin="88,274,0,0"              
+            <Button x:Name="button_Copy" Command="{Binding Path=ToOperationOverviewCommand}" Content="Возврат" HorizontalAlignment="Left" Margin="88,274,0,0"              
                     VerticalAlignment="Top" Width="158" Height="28"/>
             <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="232,108,0,0" VerticalAlignment="Top" Width="349" Height="16"/>
             <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="33,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  

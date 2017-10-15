@@ -19,7 +19,9 @@
                     <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="комментарий"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button x:Name="button_Copy1" Content="Указать патологию" HorizontalAlignment="Left" Margin="186,270,0,0"  
+            <Button x:Name="button_Copy1" Command="{Binding Path=ToAddPathologyCommand}" Content="Указать патологию" HorizontalAlignment="Left" Margin="186,270,0,0"  
+                    VerticalAlignment="Top" Width="158" Height="31"/>
+            <Button x:Name="button_Copy2" Command="{Binding Path=ToPathologyListCommand}" Content="Возврат" HorizontalAlignment="Left" Margin="86,270,0,0"  
                     VerticalAlignment="Top" Width="158" Height="31"/>
         </Grid>
     </DataTemplate>

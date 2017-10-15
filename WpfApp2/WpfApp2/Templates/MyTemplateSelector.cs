@@ -83,6 +83,24 @@ namespace WpfApp2.Templates
             if (item.GetType() == typeof(ViewModelCalendarOperations))
                 return TemplateCalendarOperations;
 
+            if (item.GetType() == typeof(ViewModelPathologyList))
+                return TemplatePathologyList;
+
+            if (item.GetType() == typeof(ViewModelAddPathology))
+                return TemplateAddPathology;
+
+            if (item.GetType() == typeof(ViewModelCreateOperation))
+                return TemplateCreateOperation;
+
+            if (item.GetType() == typeof(ViewModelOperationResultOverview))
+                return TemplateOperationResultOverview;
+
+            if (item.GetType() == typeof(ViewModelAddOperationResult))
+                return TemplateAddOperationResult;
+
+            if (item.GetType() == typeof(ViewModelEditOperation))
+                return TemplateEditOperation;
+
             return null;
         }
     }
