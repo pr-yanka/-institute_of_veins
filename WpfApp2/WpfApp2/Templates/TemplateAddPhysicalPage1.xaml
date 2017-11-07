@@ -11,14 +11,13 @@
                     </LinearGradientBrush.GradientStops>
                 </LinearGradientBrush>
             </Grid.Background>
-            <Button x:Name="button_Copy3" Content="Вернуться к пациенту" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="6,669,0,0" VerticalAlignment="Top" Width="334" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Button x:Name="button_Copy3" Content="Вернуться к пациенту" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="29,684,0,0" VerticalAlignment="Top" Width="285" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
             <Button x:Name="button_Copy1" Content="Выбрать другого пациента" Command="{Binding Path=ToTablePatiensCommand}" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top" Width="199" Height="29" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="16"/>
-            <Button x:Name="button_Copy" Content="Завершить обследование" Command="{Binding Path=ToPhysicalOverviewCommand}" HorizontalAlignment="Left" Margin="345,669,0,0" VerticalAlignment="Top" Width="334" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
             <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="228,62,0,0" TextWrapping="Wrap" Text="Недашковская О.М. (21 год)" VerticalAlignment="Top" Width="322" FontSize="18"/>
             <Separator HorizontalAlignment="Left" Height="16" Margin="0,91,0,0" VerticalAlignment="Top" Width="1036" RenderTransformOrigin="0.51,0.49"/>
             <Separator HorizontalAlignment="Left" Height="16" Margin="0,41,0,0" VerticalAlignment="Top" Width="1036" RenderTransformOrigin="0.51,0.49"/>
-            <TextBlock x:Name="textBlock1_Copy" HorizontalAlignment="Center" Margin="396,16,424,667" TextWrapping="Wrap" VerticalAlignment="Center" Width="227" FontSize="18"><Run Text="Добавление "/><Run Text="обследования"/></TextBlock>
-            <TextBlock x:Name="textBlock1_Copy1" HorizontalAlignment="Center" Margin="25,107,898,576" TextWrapping="Wrap" VerticalAlignment="Center" Width="74" FontSize="18" Text="Жалобы"/>
+            <TextBlock x:Name="textBlock1_Copy" HorizontalAlignment="Center" Margin="382,10,407,703" TextWrapping="Wrap" VerticalAlignment="Center" Width="227" FontSize="18"><Run Text="Добавление "/><Run Text="обследования"/></TextBlock>
+            <TextBlock x:Name="textBlock1_Copy1" HorizontalAlignment="Center" Margin="67,107,875,606" TextWrapping="Wrap" VerticalAlignment="Center" Width="74" FontSize="18" Text="Жалобы"/>
             <ListBox x:Name="listBox1" HorizontalAlignment="Left" Height="75" Margin="228,110,0,0" VerticalAlignment="Top" Width="509">
                 <ListBoxItem Content="Левая нижняя конечность не беспокоит."/>
                 <ListBoxItem Content="на боли и покраснение кожи в области &quot;вздувшихся&quot; вен правой нижней конечности"/>
@@ -27,12 +26,12 @@
             </ListBox>
             <Button x:Name="button_Copy2" Content="Добавить жалобы" Command="{Binding Path=ToSymptomsAddCommand}" HorizontalAlignment="Left" Margin="10,141,0,0" VerticalAlignment="Top" Width="199" Height="29" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="16"/>
             <Separator HorizontalAlignment="Left" Height="16" Margin="0,190,0,0" VerticalAlignment="Top" Width="1036" RenderTransformOrigin="0.51,0.49"/>
-            <TextBlock x:Name="textBlock1_Copy2" HorizontalAlignment="Center" Margin="189,206,740,477" TextWrapping="Wrap" VerticalAlignment="Center" Width="118" FontSize="18" Text="Левая нога" TextAlignment="Center"/>
-            <Button x:Name="button_Copy33" Command="{Binding Path=ToLegDescribeCommand}" Content="Обследовать левую ногу" HorizontalAlignment="Left" Margin="10,531,0,0" VerticalAlignment="Top" Width="495" Height="29" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="16"/>
-            <Button x:Name="button_Copy443" Command="{Binding Path=ToLegDescribeCommand}" Content="Обследовать правую ногу" HorizontalAlignment="Left" Margin="543,531,0,0" VerticalAlignment="Top" Width="475" Height="29" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="16"/>
-            <TextBlock x:Name="textBlock1_Copy3" HorizontalAlignment="Center" Margin="737,206,140,477" TextWrapping="Wrap" VerticalAlignment="Center" Width="170" FontSize="18"><Run Text="Правая "/><Run Text="нога"/></TextBlock>
+            <TextBlock x:Name="textBlock1_Copy2" HorizontalAlignment="Center" Margin="173,206,725,507" TextWrapping="Wrap" VerticalAlignment="Center" Width="118" FontSize="18" Text="Левая нога" TextAlignment="Center"/>
+            <Button x:Name="button_Copy33" Command="{Binding Path=ToLegDescribeCommand}" Content="Назначить диагноз" HorizontalAlignment="Left" Margin="10,449,0,0" VerticalAlignment="Top" Width="491" Height="29" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="16"/>
+            <Button x:Name="button_Copy443" Command="{Binding Path=ToLegDescribeCommand}" Content="Назначить диагноз" HorizontalAlignment="Left" Margin="521,449,0,0" VerticalAlignment="Top" Width="475" Height="29" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="16"/>
+            <TextBlock x:Name="textBlock1_Copy3" HorizontalAlignment="Center" Margin="724,206,122,507" TextWrapping="Wrap" VerticalAlignment="Center" Width="170" FontSize="18"><Run Text="Правая "/><Run Text="нога"/></TextBlock>
 
-            <ScrollViewer Margin="10,235,727,192" RenderTransformOrigin="0.5,0.5" FontSize="16">
+            <ScrollViewer Margin="10,235,489,302" RenderTransformOrigin="0.5,0.5" FontSize="16">
                 <StackPanel Orientation="Vertical">
                     <Expander Header="I.	СФС (Сафено-феморальное соустье)"  FontSize="12">
                         <Grid Background="#FFE5E5E5"/>
@@ -81,7 +80,7 @@
                         <Grid Background="#FFE5E5E5"/>
                     </Expander>
                     <Separator Margin="10,0,10,0"/>
-                    <Expander Header="XII.	Примечание *" FontSize="12">
+                    <Expander Header="XII.	Примечание *" FontSize="12" Height="101">
                         <Grid Background="#FFE5E5E5"/>
                     </Expander>
                     <Separator Margin="10,0,10,0"/>
@@ -94,7 +93,7 @@
                     </Expander>
                 </StackPanel>
             </ScrollViewer>
-            <ScrollViewer Margin="543,235,15,192" RenderTransformOrigin="0.5,0.5" FontSize="16">
+            <ScrollViewer Margin="532,235,15,302" RenderTransformOrigin="0.5,0.5" FontSize="16">
                 <StackPanel Orientation="Vertical">
                     <Expander Header="I. СФС (Сафено-феморальное соустье)"  FontSize="12">
                         <Grid Background="#FFE5E5E5"/>
@@ -154,6 +153,18 @@
                     <Expander Header="XIV. Диагноз" FontSize="12">
                         <Grid Background="#FFE5E5E5"/>
                     </Expander>
+                    <Expander Header="С" FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Expander Header="E" FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Expander Header="A" FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
+                    <Expander Header="P" FontSize="12">
+                        <Grid Background="#FFE5E5E5"/>
+                    </Expander>
                 </StackPanel>
             </ScrollViewer>
             <Separator HorizontalAlignment="Left" Height="16" Margin="5,565,0,0" VerticalAlignment="Top" Width="1036" RenderTransformOrigin="0.51,0.49"/>
@@ -162,7 +173,7 @@
                 <ListBoxItem Content="Рекомендаций пока нет."/>
             </ListBox>
             <Button x:Name="button_Copy4" Content="Добавить рекомендации" Command="{Binding Path=ToAddRecomendationsCommand}" HorizontalAlignment="Left" Margin="10,609,0,0" VerticalAlignment="Top" Width="199" Height="29" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="16"/>
-            <TextBlock x:Name="textBlock1_Copy5" HorizontalAlignment="Left" Margin="532,62,0,0" TextWrapping="Wrap" Text="NB!" VerticalAlignment="Top" Width="43" FontSize="18"/>
+            <TextBlock x:Name="textBlock1_Copy5" HorizontalAlignment="Left" Margin="507,62,0,0" TextWrapping="Wrap" Text="NB!" VerticalAlignment="Top" Width="43" FontSize="18"/>
             <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="575,64,0,0" TextWrapping="Wrap" Text="Текст пометки" VerticalAlignment="Top" Width="461"/>
             <TextBlock x:Name="textBlock1_Copy6" HorizontalAlignment="Left" Margin="749,107,0,0" TextWrapping="Wrap" Text="Вес:" VerticalAlignment="Top" Width="43" FontSize="18" RenderTransformOrigin="0.674,0.459"/>
             <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Height="23" Margin="797,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="167" RenderTransformOrigin="0.586,0.435"/>
@@ -172,6 +183,18 @@
             <TextBlock x:Name="textBlock1_Copy9" HorizontalAlignment="Left" Margin="969,135,0,0" TextWrapping="Wrap" Text="см" VerticalAlignment="Top" Width="43" FontSize="18"/>
             <TextBlock x:Name="textBlock1_Copy10" HorizontalAlignment="Left" Margin="749,164,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="109" FontSize="18" RenderTransformOrigin="0.674,0.459"><Run Text="ИМТ: "/><Run Text="0"/></TextBlock>
             <Separator HorizontalAlignment="Left" Height="16" Margin="0,653,0,0" VerticalAlignment="Top" Width="1051" RenderTransformOrigin="0.51,0.49"/>
+            <Button x:Name="button_Copy5" Command="{Binding ToLegDescribeCommand}" Content="редактировать" HorizontalAlignment="Left" Margin="345,235,0,0" VerticalAlignment="Top" Width="156" Height="23" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="16"/>
+            <Button x:Name="button_Copy6" Command="{Binding ToLegDescribeCommand}" Content="редактировать" HorizontalAlignment="Left" Margin="345,258,0,0" VerticalAlignment="Top" Width="156" Height="23" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="16"/>
+            <Button x:Name="button_Copy7" Command="{Binding ToLegDescribeCommand}" Content="редактировать" HorizontalAlignment="Left" Margin="824,235,0,0" VerticalAlignment="Top" Width="156" Height="23" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="16"/>
+            <Button x:Name="button_Copy8" Command="{Binding ToLegDescribeCommand}" Content="редактировать" HorizontalAlignment="Left" Margin="824,258,0,0" VerticalAlignment="Top" Width="156" Height="23" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="16"/>
+            <ListBox x:Name="listBox1_Copy1" HorizontalAlignment="Left" Height="75" Margin="10,490,0,0" VerticalAlignment="Top" Width="491">
+                <ListBoxItem Content=""/>
+            </ListBox>
+            <ListBox x:Name="listBox1_Copy2" HorizontalAlignment="Left" Height="75" Margin="521,490,0,0" VerticalAlignment="Top" Width="475">
+                <ListBoxItem Content=""/>
+            </ListBox>
+            <Button x:Name="button_Copy9" Content="Завершить обследование" Command="{Binding ToPhysicalOverviewCommand}" HorizontalAlignment="Left" Margin="695,684,0,0" VerticalAlignment="Top" Width="285" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Button x:Name="button_Copy10" Content="Создать отчёт" Command="{Binding ToPhysicalOverviewCommand}" HorizontalAlignment="Left" Margin="357,684,0,0" VerticalAlignment="Top" Width="285" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>
