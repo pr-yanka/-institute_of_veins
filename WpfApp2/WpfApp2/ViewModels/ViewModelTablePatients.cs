@@ -12,6 +12,7 @@ namespace WpfApp2.ViewModels
     {
         public DelegateCommand ToDashboardCommand { get; protected set; }
         public DelegateCommand ToCurrentPatientCommand { get; protected set; }
+        public DelegateCommand ToHistoryOverviewCommand { get; protected set; }
 
         public ViewModelTablePatients(NavigationController controller) : base(controller)
         {
@@ -27,6 +28,13 @@ namespace WpfApp2.ViewModels
                 () =>
                 {
                     Controller.NavigateTo<ViewModelCurrentPatient>();
+                }
+            );
+
+            ToHistoryOverviewCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.NavigateTo<ViewModelViewHistory>();
                 }
             );
         }

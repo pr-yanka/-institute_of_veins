@@ -2,8 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplateTablePatients">
-    <Grid>
-
+        <Grid>
             <Menu Height="61" VerticalAlignment="Top" Background="{x:Null}" HorizontalContentAlignment="Right">
                 <MenuItem Margin="1120,0,0,0">
                     <MenuItem.Header>
@@ -16,47 +15,26 @@
                 </MenuItem>
             </Menu>
 
-            <Separator HorizontalAlignment="Left" Height="115" Margin="10,223,0,0" VerticalAlignment="Top" Width="199"/>
-            <Separator HorizontalAlignment="Left" Height="115" Margin="10,179,0,0" VerticalAlignment="Top" Width="199"/>
-            <Separator HorizontalAlignment="Left" Height="115" Margin="7,136,0,0" VerticalAlignment="Top" Width="199"/>
-            <Separator HorizontalAlignment="Left" Height="115" Margin="7,93,0,0" VerticalAlignment="Top" Width="199"/>
-            <Separator HorizontalAlignment="Left" Height="115" Margin="7,49,0,0" VerticalAlignment="Top" Width="199"/>
-
 
             <Button x:Name="button_Copy13" Content="В ГЛАВНОЕ МЕНЮ" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="751,651,0,0" VerticalAlignment="Top" Width="212" Height="43" Background="#FFF55532" FontFamily="Segoe UI Light" FontSize="16" BorderBrush="{x:Null}" Foreground="White"/>
             <TextBlock FontFamily="/fonts/#Pescadero" FontSize="18pt" Margin="308,10,309,456" Height="38" Text="Пациенты"/>
-            <DataGrid x:Name="dataGrid" HorizontalAlignment="Center" Margin="231,93,270,0" VerticalAlignment="Top" Height="541" Width="731" Background="#FFD4D4D4" FontSize="24"></DataGrid>
+            <DataGrid x:Name="dataGrid" HorizontalAlignment="Center" Margin="232,99,53,0" VerticalAlignment="Top" Height="541" Width="731" Background="#FFD4D4D4" FontSize="24"></DataGrid>
 
             <TextBlock Text="  Шабанов Андрей Ульянович" Height="32" Margin="233,0,0,514" Background="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="728" Foreground="#FF9B9B9B" FontSize="16"/>
             <TextBlock Text="  Волкова Анастасия Валериевна" Height="32" Margin="232,0,0,548" Background="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="728" Foreground="#FF9B9B9B" FontSize="16"/>
             <TextBlock Text="  Иванов Алексей Петрович" Height="32" Margin="232,0,0,582" Background="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="728" Foreground="#FF9B9B9B" FontSize="16"/>
-            <Image Margin="751,102,451,583" Source="pack://application:,,,/Images/view.png" Height="25" Width="25"/>
-            <Image Margin="751,137,451,548" Source="pack://application:,,,/Images/view.png" Height="25" Width="25"/>
-            <Image Margin="751,171,451,514" Source="pack://application:,,,/Images/view.png" Height="25" Width="25"/>
-            <Image Margin="794,102,407,582" Source="pack://application:,,,/Images/operation.png" Height="25" Width="25"/>
-            <Image Margin="794,137,407,548" Source="pack://application:,,,/Images/operation.png" Height="25" Width="25"/>
-            <Image Margin="794,171,407,515" Source="pack://application:,,,/Images/operation.png" Height="25" Width="25"/>
-            <Image Margin="839,102,367,586" Source="pack://application:,,,/Images/analize.png" Height="18" Width="18"/>
-            <Image Margin="839,137,367,551" Source="pack://application:,,,/Images/analize.png" Height="18" Width="18"/>
-            <Image Margin="839,171,367,517" Source="pack://application:,,,/Images/analize.png" Height="18" Width="18"/>
 
-            <Button x:Name="button_Copy14" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="918,99,0,0" VerticalAlignment="Top" Width="38" Height="32" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}">
+            <Button x:Name="button_Copy14" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="692,126,0,0" VerticalAlignment="Top" Width="38" Height="32" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}">
                 <Image Source="pack://application:,,,/Images/forward.png"  Stretch="Fill" Height="28" Width="28" RenderTransformOrigin="4.821,-0.714"/>
             </Button>
-            <Button x:Name="button_Copy10" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="918,134,0,0" VerticalAlignment="Top" Width="38" Height="32" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}">
-                <Image Source="pack://application:,,,/Images/forward.png"  Stretch="Fill" Height="28" Width="28" RenderTransformOrigin="4.821,-0.714"/>
-            </Button>
-            <Button x:Name="button_Copy8" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="918,167,0,0" VerticalAlignment="Top" Width="38" Height="32" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}">
+            <Button x:Name="button_Copy10" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="692,157,0,0" VerticalAlignment="Top" Width="38" Height="32" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}">
                 <Image Source="pack://application:,,,/Images/forward.png"  Stretch="Fill" Height="28" Width="28" RenderTransformOrigin="4.821,-0.714"/>
             </Button>
 
-            <Button x:Name="button_Copy7" HorizontalAlignment="Left" Margin="879,99,0,0" VerticalAlignment="Top" Width="32" Height="34" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" RenderTransformOrigin="0.508,-0.054" BorderBrush="{x:Null}">
+            <Button x:Name="button_Copy7" HorizontalAlignment="Left" Command="{Binding Path=ToHistoryOverviewCommand}" Margin="802,124,0,0" VerticalAlignment="Top" Width="32" Height="34" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" RenderTransformOrigin="0.508,-0.054" BorderBrush="{x:Null}">
                 <Image Source="pack://application:,,,/Images/history.png" Stretch="Fill" Height="25" Width="25"/>
             </Button>
-            <Button x:Name="button_Copy15" HorizontalAlignment="Left" Margin="879,134,0,0" VerticalAlignment="Top" Width="32" Height="34" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" RenderTransformOrigin="0.508,-0.054" BorderBrush="{x:Null}">
-                <Image Source="pack://application:,,,/Images/history.png" Stretch="Fill" Height="25" Width="25"/>
-            </Button>
-            <Button x:Name="button_Copy16" HorizontalAlignment="Left" Margin="879,167,0,0" VerticalAlignment="Top" Width="32" Height="34" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" RenderTransformOrigin="0.508,-0.054" BorderBrush="{x:Null}">
+            <Button x:Name="button_Copy15" HorizontalAlignment="Left" Command="{Binding Path=ToHistoryOverviewCommand}" Margin="802,157,0,0" VerticalAlignment="Top" Width="32" Height="34" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" RenderTransformOrigin="0.508,-0.054" BorderBrush="{x:Null}">
                 <Image Source="pack://application:,,,/Images/history.png" Stretch="Fill" Height="25" Width="25"/>
             </Button>
         </Grid>
