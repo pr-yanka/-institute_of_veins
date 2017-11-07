@@ -1,14 +1,14 @@
-﻿using System;
+﻿using Microsoft.Practices.Prism.Commands;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Practices.Prism.Commands;
 using WpfApp2.Navigation;
 
 namespace WpfApp2.ViewModels
 {
-    public class ViewModelAddPhysicalScreen1 : ViewModelBase
+    public class ViewModelPhysicalOverview : ViewModelBase
     {
         public DelegateCommand ToDashboardCommand { get; protected set; }
         public DelegateCommand ToCurrentPatientCommand { get; protected set; }
@@ -20,9 +20,10 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToAddRecomendationsCommand { get; protected set; }
 
 
-        public ViewModelAddPhysicalScreen1(NavigationController controller) : base(controller)
+        public ViewModelPhysicalOverview(NavigationController controller) : base(controller)
         {
             Controller = controller;
+
             base.HasNavigation = false;
 
             ToSymptomsAddCommand = new DelegateCommand(

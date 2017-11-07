@@ -32,6 +32,7 @@ namespace WpfApp2.Templates
         public DataTemplate TemplateOperationResultOverview { get; set; }
         public DataTemplate TemplateAddOperationResult { get; set; }
         public DataTemplate TemplateEditOperation { get; set; }
+        public DataTemplate TemplateAnalize { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -100,6 +101,12 @@ namespace WpfApp2.Templates
 
             if (item.GetType() == typeof(ViewModelEditOperation))
                 return TemplateEditOperation;
+
+            if (item.GetType() == typeof(ViewModelPhysicalOverview))
+                return TemplateAddPhysicalPage1;
+
+            if (item.GetType() == typeof(ViewModelAnalizeOverview))
+                return TemplateAnalize;
 
             return null;
         }

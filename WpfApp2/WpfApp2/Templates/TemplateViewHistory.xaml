@@ -32,12 +32,13 @@
         </ScrollViewer>
         <Label x:Name="label_Copy6" Content="20.09.2017" HorizontalAlignment="Center" Margin="256,172,362,0" VerticalAlignment="Top" FontSize="18" Height="34" Width="142"/>
         <Label x:Name="label_Copy7" Content="11.10.2017" HorizontalAlignment="Center" Margin="256,208,362,0" VerticalAlignment="Top" FontSize="18" Height="34" Width="142"/>
-        <Button x:Name="button_Copy" Content="Посмотреть" HorizontalAlignment="Left" Margin="398,97,0,0" VerticalAlignment="Top" Width="257" Height="29" Background="#FFBDD649" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-        <Button x:Name="button_Copy1" Content="Посмотреть" HorizontalAlignment="Left" Margin="398,135,0,0" VerticalAlignment="Top" Width="257" Height="29" Background="#FFBDD649" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-        <Button x:Name="button_Copy2" Content="Посмотреть" HorizontalAlignment="Left" Margin="398,172,0,0" VerticalAlignment="Top" Width="257" Height="29" Background="#FFBDD649" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+        <Button x:Name="button_Copy" Content="Посмотреть" Command="{Binding Path=ToPhysicalOverviewCommand}" HorizontalAlignment="Left" Margin="398,97,0,0" VerticalAlignment="Top" Width="257" Height="29" Background="#FFBDD649" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Button x:Name="button_Copy1" Content="Посмотреть" Command="{Binding Path=ToAnalizeOverviewCommand}" HorizontalAlignment="Left" Margin="398,135,0,0" VerticalAlignment="Top" Width="257" Height="29" Background="#FFBDD649" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Button x:Name="button_Copy2" Content="Посмотреть" Command="{Binding Path=ToOperationOverviewCommand}" HorizontalAlignment="Left" Margin="398,172,0,0" VerticalAlignment="Top" Width="257" Height="29" Background="#FFBDD649" FontFamily="Franklin Gothic Medium" FontSize="20"/>
         <Button x:Name="button_Copy5" Content="Посмотреть" HorizontalAlignment="Left" Margin="398,211,0,0" VerticalAlignment="Top" Width="257" Height="29" Background="#FFBDD649" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-        <Button x:Name="button_Copy4" Content="Добавить операцию" HorizontalAlignment="Left" Margin="506,391,0,0" VerticalAlignment="Top" Width="225" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-        <Button x:Name="button_Copy6" Content="Добавить анализы" HorizontalAlignment="Left" Margin="265,391,0,0" VerticalAlignment="Top" Width="225" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Button x:Name="button_Copy4" Content="Добавить операцию" Command="{Binding Path=ToAddOperationCommand}" HorizontalAlignment="Left" Margin="506,391,0,0" VerticalAlignment="Top" Width="225" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Button x:Name="button_Copy6" Content="Добавить анализы" Command="{Binding Path=ToAddAnalizeCommand}" HorizontalAlignment="Left" Margin="265,391,0,0" VerticalAlignment="Top" Width="225" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
     </Grid></DataTemplate>
 
 </ResourceDictionary>
+

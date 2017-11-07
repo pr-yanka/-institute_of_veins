@@ -25,6 +25,7 @@
         <ResourceDictionary Source="TemplateCreateOperation.xaml"/>
         <ResourceDictionary Source="TemplateOperationResultOverview.xaml"/>
         <ResourceDictionary Source="TemplateAddOperationResult.xaml"/>
+        <ResourceDictionary Source="TemplateAnalize.xaml"/>
         <ResourceDictionary Source="TemplateEditOperation.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
@@ -49,5 +50,6 @@
                               TemplateOperationResultOverview="{StaticResource TemplateOperationResultOverview}"
                               TemplateAddOperationResult="{StaticResource TemplateAddOperationResult}"
                               TemplateEditOperation="{StaticResource TemplateEditOperation}"
+                              TemplateAnalize="{StaticResource TemplateAnalize}"
                               TemplateSymptomsAdd="{StaticResource TemplateSymptomsAdd}"/>
 </ResourceDictionary>
