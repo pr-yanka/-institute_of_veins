@@ -31,5 +31,4 @@
                        FontFamily="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" Foreground="#FF10525D" Width="372" Text="Комментарий:"/>
         </Grid>
     </DataTemplate>
-
 </ResourceDictionary>
