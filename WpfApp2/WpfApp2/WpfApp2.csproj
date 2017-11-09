@@ -87,6 +87,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\AddOperation.xaml.cs">
+      <DependentUpon>AddOperation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AddReport.xaml.cs">
+      <DependentUpon>AddReport.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Navigation\NavigationController.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
@@ -118,6 +124,14 @@
     <Compile Include="ViewModels\ViewModelNewPatient.cs" />
     <Compile Include="ViewModels\ViewModelRegistration.cs" />
     <Compile Include="ViewModels\ViewModelTablePatients.cs" />
+    <Page Include="Controls\AddOperation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\AddReport.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ViewModels.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

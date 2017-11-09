@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="WpfApp2.Controls.AddReport"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApp2.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="300">
+    <Grid>
+        <Rectangle Fill="#FFDBDBF5" HorizontalAlignment="Left" Height="158" Stroke="Black" VerticalAlignment="Top" Width="300" Margin="0,0,0,-8"/>
+        <Button x:Name="button" Content="Создать отчёт" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="280" Height="42" Click="button_Click" Background="#FFC1EBF0"/>
+        <Button x:Name="button2" Content="Вернуться к обследованию" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top" Width="280" Height="42" Click="button_Click" Background="#FFC1EBF0"/>
+        <Button x:Name="button2_Copy" Content="закончить обследование" HorizontalAlignment="Left" Margin="10,104,0,0" VerticalAlignment="Top" Width="280" Height="42" Click="button_Click" Background="#FFC1EBF0"/>
+    </Grid>
+</UserControl>
