@@ -1,24 +1,23 @@
-﻿<Controls:MetroWindow x:Class="WpfApp2.MainWindow"
+﻿<Controls:MetroWindow x:Class="WpfApp2.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
         Title="MainWindow" Height="768" Width="1024"
-        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         DataContext="{Binding RelativeSource={RelativeSource Self}}" ResizeMode="NoResize" Background="#FFF7F7F7">
-
 
     <Controls:MetroWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Templates/MyTemplateSelector.xaml"/>
-                <ResourceDictionary Source="Templates/FullMenu.xaml"/>
+                <ResourceDictionary Source="/Templates/MyTemplateSelector.xaml"/>
+                <ResourceDictionary Source="/Templates/FullMenu.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Controls:MetroWindow.Resources>
-    
+
 
     <Grid>
         <Grid.RowDefinitions>
@@ -31,7 +30,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="142,38,0,0" TextWrapping="Wrap" Text="медицинский центр" VerticalAlignment="Top" Foreground="White" Height="23" Width="114" FontFamily="Segoe UI Symbol" FontSize="8"/>
         <!--Меню-->
         <ContentControl Content="{Binding CurrentNavigation}" ContentTemplate="{StaticResource FullNavigation}" Background="#FFF7F7F7"
-                        Visibility="{Binding Path=Controller.CurrentViewModel.HasNavigation, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVis}}">        
+                        Visibility="{Binding Path=Controller.CurrentViewModel.HasNavigation, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVis}}">
         </ContentControl>
 
         <ContentControl Content="{Binding Controller.CurrentViewModel}" ContentTemplateSelector="{StaticResource MyTemplateSelector}" Background="#FFF7F7F7">

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+using WpfApp2.Views;
 
 namespace WpfApp2.Navigation
 {

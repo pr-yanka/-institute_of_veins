@@ -15,8 +15,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfApp2.Navigation;
 using WpfApp2.ViewModels;
+using WpfApp2.WpfApplication1;
 
-namespace WpfApp2
+namespace WpfApp2.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -26,8 +27,21 @@ namespace WpfApp2
         public NavigationController Controller { get; }
         public ViewModelFullMenu CurrentNavigation { get; }
 
+        private ICommand openDialogCommand = null;
+        public ICommand OpenDialogCommand
+        {
+            get { return this.openDialogCommand; }
+            set { this.openDialogCommand = value; }
+        }
+
+        private void OnOpenDialog(object parameter)
+        {
+
+        }
+
         public MainWindow()
         {
+            this.openDialogCommand = new RelayCommand(OnOpenDialog);
             Controller = new NavigationController();
             CurrentNavigation = new ViewModelFullMenu(Controller);
 
