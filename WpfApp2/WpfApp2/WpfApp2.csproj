@@ -90,6 +90,8 @@
     <Compile Include="Navigation\NavigationController.cs" />
     <Compile Include="ViewModels\ViewBaseModel.cs" />
     <Compile Include="Templates\MyTemplateSelector.cs" />
+    <Compile Include="ViewModels\ViewModelAddAnalize.cs" />
+    <Compile Include="ViewModels\ViewModelAddOperation.cs" />
     <Compile Include="ViewModels\ViewModelAddOperationResult.cs" />
     <Compile Include="ViewModels\ViewModelAddPathology.cs" />
     <Compile Include="ViewModels\ViewModelAnalizeOverview.cs" />

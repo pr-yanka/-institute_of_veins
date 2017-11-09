@@ -16,6 +16,7 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToRegistrationCommand { get; protected set; }
         public DelegateCommand ToDashboardCommand { get; protected set; }
 
+
         public ViewModelLogin(NavigationController controller) : base(controller)
         {
             HasNavigation = false;
@@ -23,7 +24,12 @@ namespace WpfApp2.ViewModels
             ToRegistrationCommand = new DelegateCommand(
                 () =>
                 {
+                    //Controller.NavigateTo<ViewModelRegistration>();\
                     Controller.NavigateTo<ViewModelRegistration>();
+                    /* problem VMs:
+                      ViewModelPhysicalOverview
+                      ViewModelAddAnalize
+                     */
                 }
             );
 

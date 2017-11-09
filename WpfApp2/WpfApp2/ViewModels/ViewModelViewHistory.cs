@@ -16,10 +16,12 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToPhysicalOverviewCommand { get; protected set; }
         public DelegateCommand ToAnalizeOverviewCommand { get; protected set; }
         public DelegateCommand ToOperationOverviewCommand { get; protected set; }
+        public DelegateCommand ToAddOperationCommand { get; protected set; }
+        public DelegateCommand ToAddAnalizeCommand { get; protected set; }
 
         public ViewModelViewHistory(NavigationController controller) : base(controller)
         {
-            base.HasNavigation = true;
+            base.HasNavigation = false;
             ToAddPhysicalCommand = new DelegateCommand(
                 () =>
                 {
@@ -55,6 +57,19 @@ namespace WpfApp2.ViewModels
                 }
             );
 
+            ToAddOperationCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.NavigateTo<ViewModelAddOperation>();
+                }
+            );
+
+            ToAddAnalizeCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.NavigateTo<ViewModelAddAnalize>();
+                }
+            );
 
         }
     }

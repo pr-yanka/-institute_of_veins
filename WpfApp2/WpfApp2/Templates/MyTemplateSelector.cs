@@ -108,6 +108,12 @@ namespace WpfApp2.Templates
             if (item.GetType() == typeof(ViewModelAnalizeOverview))
                 return TemplateAnalize;
 
+            if (item.GetType() == typeof(ViewModelAddOperation))
+                return TemplateEditOperation;
+
+            if (item.GetType() == typeof(ViewModelAddAnalize))
+                return TemplateAnalize;
+
             return null;
         }
     }
