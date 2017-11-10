@@ -57,7 +57,7 @@ namespace WpfApp2.Templates
             if (item.GetType() == typeof(ViewModelTablePatients))
                 return TemplateTablePatients;
 
-            if (item.GetType() == typeof(ViewModelAddPhysicalScreen1))
+            if (item.GetType() == typeof(ViewModelAddPhysical))
                 return TemplateAddPhysicalPage1;
 
             if (item.GetType() == typeof(ViewModelEditPatient))

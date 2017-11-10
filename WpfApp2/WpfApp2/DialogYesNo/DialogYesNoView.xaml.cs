@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,27 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WpfApp2.Navigation;
-using WpfApp2.ViewModels;
-using WpfApp2.WpfApplication1;
 
-namespace WpfApp2.Views
+namespace WpfApp2.DialogYesNo
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for DialogYesNoView.xaml
     /// </summary>
-    public partial class MainWindow
+    public partial class DialogYesNoView : UserControl
     {
-        /*
-        public NavigationController Controller { get; }
-        public ViewModelFullMenu CurrentNavigation { get; }
-
-        private void OnOpenDialog(object parameter)
-        {
-
-        }*/
-
-        public MainWindow()
+        public DialogYesNoView()
         {
             InitializeComponent();
         }

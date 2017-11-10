@@ -172,7 +172,7 @@
             <ListBox x:Name="listBox1_Copy" HorizontalAlignment="Left" Height="75" Margin="228,578,0,0" VerticalAlignment="Top" Width="808">
                 <ListBoxItem Content="Рекомендаций пока нет."/>
             </ListBox>
-            <Button x:Name="button_Copy4" Content="Добавить рекомендации" Command="{Binding Path=ToAddRecomendationsCommand}" HorizontalAlignment="Left" Margin="10,609,0,0" VerticalAlignment="Top" Width="199" Height="29" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="16"/>
+            <Button x:Name="button_Copy4" Content="Добавить рекомендации" Command="{Binding ToAddRecomendationsCommand}" HorizontalAlignment="Left" Margin="10,609,0,0" VerticalAlignment="Top" Width="199" Height="29" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="16"/>
             <TextBlock x:Name="textBlock1_Copy5" HorizontalAlignment="Left" Margin="507,62,0,0" TextWrapping="Wrap" Text="NB!" VerticalAlignment="Top" Width="43" FontSize="18"/>
             <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="575,64,0,0" TextWrapping="Wrap" Text="Текст пометки" VerticalAlignment="Top" Width="461"/>
             <TextBlock x:Name="textBlock1_Copy6" HorizontalAlignment="Left" Margin="749,107,0,0" TextWrapping="Wrap" Text="Вес:" VerticalAlignment="Top" Width="43" FontSize="18" RenderTransformOrigin="0.674,0.459"/>
@@ -193,7 +193,7 @@
             <ListBox x:Name="listBox1_Copy2" HorizontalAlignment="Left" Height="75" Margin="521,490,0,0" VerticalAlignment="Top" Width="475">
                 <ListBoxItem Content=""/>
             </ListBox>
-            <Button x:Name="button_Copy9" Content="Завершить обследование" Command="{Binding ToPhysicalOverviewCommand}" HorizontalAlignment="Left" Margin="695,684,0,0" VerticalAlignment="Top" Width="285" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Button x:Name="button_Copy9" Content="Завершить обследование" Command="{Binding OpenDialogCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" HorizontalAlignment="Left" Margin="695,684,0,0" VerticalAlignment="Top" Width="285" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
             <Button x:Name="button_Copy10" Content="Создать отчёт" Command="{Binding ToPhysicalOverviewCommand}" HorizontalAlignment="Left" Margin="357,684,0,0" VerticalAlignment="Top" Width="285" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
         </Grid>
     </DataTemplate>

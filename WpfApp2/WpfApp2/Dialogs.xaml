@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:WpfApp2"
+                    xmlns:dialogYesNo="clr-namespace:WpfApp2.DialogYesNo"
+                    xmlns:dialogPreOperation="clr-namespace:WpfApp2.DialogPreOperation">
+    <DataTemplate DataType="{x:Type dialogYesNo:DialogYesNoViewModel}">
+        <dialogYesNo:DialogYesNoView></dialogYesNo:DialogYesNoView>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type dialogPreOperation:DialogPreOperationViewModel}">
+        <dialogPreOperation:DialogPreOperationView></dialogPreOperation:DialogPreOperationView>
+    </DataTemplate>
+</ResourceDictionary>

@@ -25,12 +25,14 @@ namespace WpfApp2.Navigation
             _viewModels = new List<ViewModelBase>
             {
                 new ViewModelLogin(this),
+                new ViewModelPhysicalOverview(this),
+                new ViewModelOperationOverview(this),
                 new ViewModelRegistration(this),
                 new ViewModelDashboard(this),
                 new ViewModelCurrentPatient(this),
                 new ViewModelNewPatient(this),
                 new ViewModelTablePatients(this),
-                new ViewModelAddPhysicalScreen1(this),
+                new ViewModelAddPhysical(this),
                 new ViewModelEditPatient(this),
                 new ViewModelViewHistory(this),
                 new ViewModelLegDescribe(this),
@@ -44,7 +46,9 @@ namespace WpfApp2.Navigation
                 new ViewModelCreateOperation(this),
                 new ViewModelOperationOverview(this),
                 new ViewModelAddOperationResult(this),
-                new ViewModelEditOperation(this)
+                new ViewModelEditOperation(this),
+                new ViewModelAddAnalize(this),
+                new ViewModelAddPhysical(this)
             };
 
             _currentViewModel = _viewModels.First();

@@ -18,7 +18,7 @@ namespace WpfApp2.ViewModels
             ToAddPhysicalCommand = new DelegateCommand(
                 () =>
                 {
-                    Controller.NavigateTo<ViewModelAddPhysicalScreen1>();
+                    Controller.NavigateTo<ViewModelAddPhysical>();
                 }
             );
         }

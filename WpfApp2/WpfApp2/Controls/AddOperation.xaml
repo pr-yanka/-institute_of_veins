@@ -8,8 +8,8 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Rectangle Fill="#FFDBDBF5" HorizontalAlignment="Left" Height="158" Stroke="Black" VerticalAlignment="Top" Width="300" Margin="0,0,0,-8"/>
-        <Button x:Name="button" Content="Нет" HorizontalAlignment="Left" Margin="10,96,0,0" VerticalAlignment="Top" Width="124" Height="42" Click="button_Click" Background="#FFC1EBF0"/>
-        <Button x:Name="button2" Content="Да" HorizontalAlignment="Left" Margin="166,96,0,0" VerticalAlignment="Top" Width="124" Height="42" Click="button_Click" Background="#FFC1EBF0"/>
+        <Button x:Name="button" Content="Нет" HorizontalAlignment="Left" Margin="10,96,0,0" VerticalAlignment="Top" Width="124" Height="42" Background="#FFC1EBF0"/>
+        <Button x:Name="button2" Content="Да" HorizontalAlignment="Left" Margin="166,96,0,0" VerticalAlignment="Top" Width="124" Height="42" Background="#FFC1EBF0"/>
         <Label x:Name="label" Content="Нужна операция?" HorizontalAlignment="Left" Margin="62,26,0,0" VerticalAlignment="Top" FontSize="20"/>
     </Grid>
 </UserControl>

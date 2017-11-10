@@ -6,8 +6,8 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
-        Title="MainWindow" Height="768" Width="1024"
-        DataContext="{Binding RelativeSource={RelativeSource Self}}" ResizeMode="NoResize" Background="#FFF7F7F7">
+        Title="Вход" Height="768" Width="1024"
+        DataContext="{StaticResource ResourceKey=MainWindowViewModel}" ResizeMode="NoResize" Background="#FFF7F7F7">
 
     <Controls:MetroWindow.Resources>
         <ResourceDictionary>
