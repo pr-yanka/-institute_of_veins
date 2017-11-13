@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using WpfApp2.DialogService;
 
-namespace WpfApp2.DialogPreOperation
+namespace WpfApp2.LegParts.DialogConfirmStructure
 {
-    class DialogPreOperationViewModel : DialogViewModelBase
+    class DialogConfirmStructureViewModel : DialogViewModelBase
     {
         private ICommand confirmCommand = null;
         public ICommand ConfirmCommand
@@ -25,7 +20,7 @@ namespace WpfApp2.DialogPreOperation
             set { returnCommand = value; }
         }
 
-        public DialogPreOperationViewModel()
+        public DialogConfirmStructureViewModel()
         {
             this.confirmCommand = new RelayCommand(OnReturnClicked);
             this.returnCommand = new RelayCommand(OnConfirmClicked);
