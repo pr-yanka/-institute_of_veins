@@ -17,11 +17,11 @@ namespace WpfApp2.LegParts
     /// <summary>
     /// Interaction logic for AddStructureWindow.xaml
     /// </summary>
-    public partial class AddStructureWindow : Window
+    public partial class AddStructureWindow : UserControl
     {
         public AddStructureWindow()
         {
-            InitializeComponent();
+
         }
     }
 }

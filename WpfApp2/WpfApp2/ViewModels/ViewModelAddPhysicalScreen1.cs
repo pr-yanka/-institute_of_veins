@@ -7,7 +7,6 @@ using Microsoft.Practices.Prism.Commands;
 using WpfApp2.Navigation;
 using System.Windows.Input;
 using WpfApp2.DialogPreOperation;
-using WpfApp2.WpfApplication1;
 using WpfApp2.DialogService;
 
 namespace WpfApp2.ViewModels
@@ -28,15 +27,6 @@ namespace WpfApp2.ViewModels
         {
             get { return this.openDialogCommand; }
             set { this.openDialogCommand = value; }
-        }
-
-      
-        private void OnOpenDialog(object parameter)
-        {
-            DialogViewModelBase vm =
-                new DialogYesNo.DialogYesNoViewModel("Question");
-            DialogResult result =
-                DialogService.DialogService.OpenDialog(vm, parameter as Window);
         }
 
         private void FinishAdding(object parameter)

@@ -10,14 +10,21 @@ namespace WpfApp2.ViewModels
 {
     public class ViewModelAddOperation : ViewModelBase
     {
-        public DelegateCommand ToCurrentPatient;
+        public DelegateCommand ToCurrentPatientCommand { get; protected set; }
+        public DelegateCommand ToOperationOverviewCommand { get; protected set; }
+
 
         public ViewModelAddOperation(NavigationController controller) : base(controller)
         {
             Controller = controller;
+            HasNavigation = false;
 
-            ToCurrentPatient = new DelegateCommand(
+            ToCurrentPatientCommand = new DelegateCommand(
                 () => { Controller.NavigateTo<ViewModelCurrentPatient>(); }
+            );
+
+            ToOperationOverviewCommand = new DelegateCommand(
+                () => { Controller.NavigateTo<ViewModelOperationOverview>(); }
             );
         }
     }

@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WpfApp2.Navigation;
-using WpfApp2.WpfApplication1;
 
 namespace WpfApp2.ViewModels
 {

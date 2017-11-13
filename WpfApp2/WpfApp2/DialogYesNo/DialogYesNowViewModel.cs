@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WpfApp2.DialogService;
-using WpfApp2.WpfApplication1;
 
 namespace WpfApp2.DialogYesNo
 {

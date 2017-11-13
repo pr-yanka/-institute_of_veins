@@ -11,6 +11,7 @@ namespace WpfApp2.ViewModels
     public class ViewModelOperationOverview : ViewModelBase
     {
         public DelegateCommand ToPhysicalCommand { get; protected set; }
+        public DelegateCommand ToCurrentPatientCommand { get; protected set; }
 
         public ViewModelOperationOverview(NavigationController controller) : base(controller)
         {
@@ -19,6 +20,13 @@ namespace WpfApp2.ViewModels
                 () =>
                 {
                     Controller.NavigateTo<ViewModelOperationOverview>();
+                }
+            );
+
+            ToCurrentPatientCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.NavigateTo<ViewModelCurrentPatient>();
                 }
             );
         }

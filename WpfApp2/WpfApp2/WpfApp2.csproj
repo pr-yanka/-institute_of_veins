@@ -113,9 +113,11 @@
     <Compile Include="LegParts\AddStructureWindow.xaml.cs">
       <DependentUpon>AddStructureWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LegParts\DialogConfirmStructure\DialogConfirmStructure.xaml.cs">
-      <DependentUpon>DialogConfirmStructure.xaml</DependentUpon>
+    <Compile Include="LegParts\DialogConfirmStructure\DialogConfirmStructureView.xaml.cs">
+      <DependentUpon>DialogConfirmStructureView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LegParts\DialogConfirmStructure\DialogConfirmStructureViewModel.cs" />
+    <Compile Include="LegParts\LegPartViewModel.cs" />
     <Compile Include="Navigation\NavigationController.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
@@ -175,7 +177,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LegParts\DialogConfirmStructure\DialogConfirmStructure.xaml">
+    <Page Include="LegParts\DialogConfirmStructure\DialogConfirmStructureView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

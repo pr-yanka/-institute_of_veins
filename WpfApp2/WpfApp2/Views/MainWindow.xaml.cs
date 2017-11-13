@@ -14,8 +14,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfApp2.Navigation;
-using WpfApp2.ViewModels;
-using WpfApp2.WpfApplication1;
 
 namespace WpfApp2.Views
 {

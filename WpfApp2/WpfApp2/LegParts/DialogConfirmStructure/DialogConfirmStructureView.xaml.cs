@@ -17,11 +17,11 @@ namespace WpfApp2.LegParts.DialogConfirmStructure
     /// <summary>
     /// Interaction logic for DialogConfirmStructure.xaml
     /// </summary>
-    public partial class DialogConfirmStructure : Window
+    public partial class DialogConfirmStructure : UserControl
     {
         public DialogConfirmStructure()
         {
-            InitializeComponent();
+
         }
     }
 }

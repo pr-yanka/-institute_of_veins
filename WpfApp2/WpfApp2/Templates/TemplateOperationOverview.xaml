@@ -28,6 +28,8 @@
             <TextBlock HorizontalAlignment="Left" Margin="406,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Width="244" Text="Бригада:"/>
             <ScrollViewer HorizontalAlignment="Left" Height="182" Margin="406,281,0,0" VerticalAlignment="Top" Width="378"/>
             <Button Content="Редактировать" Width="244" Height="80" Command="{Binding Path=ToEditOperationCommand}"></Button>
+            <Button x:Name="button_Copy2" Command="{Binding Path=ToCurrentPatientCommand}" Content="Вернуться к пациенту" HorizontalAlignment="Left" Margin="136,593,0,0" VerticalAlignment="Top"  
+                    Width="158" Height="20"/>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>
