@@ -27,7 +27,7 @@ namespace WpfApp2.ViewModels
             ToAddPathologyCommand = new DelegateCommand(
                 () =>
                 {
-                    Controller.NavigateTo<ViewModelAddPathology>();
+                    Controller.NavigateTo<ViewModelCurrentPatient>();
                 }
             );
         }

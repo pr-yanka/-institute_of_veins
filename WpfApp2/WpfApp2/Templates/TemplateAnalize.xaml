@@ -3,7 +3,7 @@
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplateAnalize">
         <Grid >
-        <Button x:Name="button_Copy13" Content="К ПАЦИЕНТУ" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="751,651,0,0" VerticalAlignment="Top" Width="212" Height="43" Background="#FFF55532" FontFamily="Segoe UI Light" FontSize="16" BorderBrush="{x:Null}" Foreground="White"/>
+            <Button x:Name="button_Copy13" Content="К ПАЦИЕНТУ" Command="{Binding Path=ToCurrentPatient}" HorizontalAlignment="Left" Margin="751,651,0,0" VerticalAlignment="Top" Width="212" Height="43" Background="#FFF55532" FontFamily="Segoe UI Light" FontSize="16" BorderBrush="{x:Null}" Foreground="White"/>
         <TextBlock FontFamily="/fonts/#Pescadero" FontSize="18pt" Margin="247,89,370,610" Height="38" Text="Анализы"/>
         <TextBlock FontFamily="/fonts/#Pescadero" FontSize="18pt" Margin="247,46,370,653" Height="38" Text="Шабанов Пёс Петрович"/>
         <TextBlock FontFamily="/fonts/#Pescadero" FontSize="18pt" Margin="247,89,370,610" Height="38" Text="Анализы"/>

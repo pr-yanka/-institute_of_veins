@@ -14,6 +14,7 @@ namespace WpfApp2.ViewModels
 
         public ViewModelAnalizeOverview(NavigationController controller) : base(controller)
         {
+            HasNavigation = true;
             Controller = controller;
 
             ToCurrentPatient = new DelegateCommand(

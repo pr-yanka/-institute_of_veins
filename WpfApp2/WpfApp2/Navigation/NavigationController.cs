@@ -48,7 +48,9 @@ namespace WpfApp2.Navigation
                 new ViewModelAddOperationResult(this),
                 new ViewModelEditOperation(this),
                 new ViewModelAddAnalize(this),
-                new ViewModelAddPhysical(this)
+                new ViewModelAddPhysical(this),
+                new ViewModelAnalizeOverview(this),
+                new ViewModelAddOperation(this)
             };
 
             _currentViewModel = _viewModels.First();
