@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using WpfApp2.LegParts;
 using WpfApp2.ViewModels;
 
 namespace WpfApp2.Navigation
@@ -48,7 +49,8 @@ namespace WpfApp2.Navigation
                 new ViewModelAddAnalize(this),
                 new ViewModelAddPhysical(this),
                 new ViewModelAnalizeOverview(this),
-                new ViewModelAddOperation(this)
+                new ViewModelAddOperation(this),
+                new LegPartViewModel(this)
             };
 
             _currentViewModel = _viewModels.First();

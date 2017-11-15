@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="WpfApp2.LegParts.LegPartMainTemplate">
+    <DataTemplate x:Key="LegPartTemplate">
+        <Grid Margin="20,20,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="33,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  
+                       FontFamily="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" Foreground="#FF10525D" Width="372" Text="Тут будет описание ножек" Grid.ColumnSpan="2"/>
+            <Button x:Name="AddButton" Command="{Binding RevertCommand}" Content="Вернуться к ноге" HorizontalAlignment="Left" Margin="60,638,0,0" VerticalAlignment="Top" Width="408" Background="#FFDBEDF7" FontSize="16" Grid.ColumnSpan="2"/>
+            <Button x:Name="AddButton_Copy" Command="{Binding SaveCommand}" Content="Сохранить" HorizontalAlignment="Left" Margin="513,638,0,0" VerticalAlignment="Top" Width="408" Background="#FFDBEDF7" FontSize="16" Grid.ColumnSpan="2"/>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

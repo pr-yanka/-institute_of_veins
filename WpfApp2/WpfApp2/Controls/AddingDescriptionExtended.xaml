@@ -24,7 +24,6 @@
             <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="37" Canvas.Left="10" Text="Первая часть:"/>
             <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="152" Canvas.Left="10"><Run Text="Вторая часть "/><Run Text="(не обязательно к заполнению):"/></TextBlock>
             <CheckBox x:Name="checkBox_Copy" Content="двойная размерность (х*х)" HorizontalAlignment="Left" IsChecked="{Binding HasSize}" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="132"/>
-
         </Canvas>
     </Grid>
 </controls:MetroWindow>

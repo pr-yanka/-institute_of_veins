@@ -133,9 +133,6 @@
       <DependentUpon>DialogYesNoView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DialogYesNo\DialogYesNowViewModel.cs" />
-    <Compile Include="LegParts\AddStructureWindow.xaml.cs">
-      <DependentUpon>AddStructureWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="LegParts\DialogConfirmStructure\DialogConfirmStructureView.xaml.cs">
       <DependentUpon>DialogConfirmStructureView.xaml</DependentUpon>
     </Compile>
@@ -207,11 +204,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LegParts\AddStructureWindow.xaml">
+    <Page Include="LegParts\DialogConfirmStructure\DialogConfirmStructureView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LegParts\DialogConfirmStructure\DialogConfirmStructureView.xaml">
+    <Page Include="LegParts\LegPartMainTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -8,6 +8,7 @@ using WpfApp2.Navigation;
 using System.Windows.Input;
 using WpfApp2.DialogPreOperation;
 using WpfApp2.DialogService;
+using WpfApp2.LegParts;
 
 namespace WpfApp2.ViewModels
 {
@@ -61,7 +62,7 @@ namespace WpfApp2.ViewModels
             ToLegDescribeCommand = new DelegateCommand(
                 () =>
                 {
-                    Controller.NavigateTo<ViewModelLegDescribe>();
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 

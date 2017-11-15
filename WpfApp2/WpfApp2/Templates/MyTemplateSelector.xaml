@@ -27,6 +27,7 @@
         <ResourceDictionary Source="TemplateAddOperationResult.xaml"/>
         <ResourceDictionary Source="TemplateAnalize.xaml"/>
         <ResourceDictionary Source="TemplateEditOperation.xaml"/>
+        <ResourceDictionary Source="/LegParts/LegPartMainTemplate.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <local:MyTemplateSelector x:Key="MyTemplateSelector" 
@@ -51,5 +52,6 @@
                               TemplateAddOperationResult="{StaticResource TemplateAddOperationResult}"
                               TemplateEditOperation="{StaticResource TemplateEditOperation}"
                               TemplateAnalize="{StaticResource TemplateAnalize}"
-                              TemplateSymptomsAdd="{StaticResource TemplateSymptomsAdd}"/>
+                              TemplateSymptomsAdd="{StaticResource TemplateSymptomsAdd}"
+                              LegPartMainTemplate="{StaticResource LegPartTemplate}"/>
 </ResourceDictionary>

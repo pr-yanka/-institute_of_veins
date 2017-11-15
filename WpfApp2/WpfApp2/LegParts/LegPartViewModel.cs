@@ -14,7 +14,8 @@ namespace WpfApp2.LegParts
 {
     public class LegPartViewModel : ViewModelBase
     {
-        public DelegateCommand ReturnToLeg { set; get; }
+        public DelegateCommand RevertCommand { set; get; }
+        public DelegateCommand SaveCommand { set; get; }
 
         private ICommand openDialogCommand = null;
         public ICommand OpenDialogCommand
@@ -23,12 +24,21 @@ namespace WpfApp2.LegParts
             set { this.openDialogCommand = value; }
         }
 
+        
+
         public LegPartViewModel(NavigationController controller) : base(controller)
         {
             _hasNavigation = false;
             Controller = controller;
 
-            ReturnToLeg = new DelegateCommand(
+            RevertCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.NavigateTo<ViewModelAddPhysical>();
+                }
+            );
+
+            SaveCommand = new DelegateCommand(
                 () =>
                 {
                     Controller.NavigateTo<ViewModelAddPhysical>();

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using WpfApp2.LegParts;
 using WpfApp2.ViewModels;
 
 namespace WpfApp2.Templates
@@ -33,6 +34,7 @@ namespace WpfApp2.Templates
         public DataTemplate TemplateAddOperationResult { get; set; }
         public DataTemplate TemplateEditOperation { get; set; }
         public DataTemplate TemplateAnalize { get; set; }
+        public DataTemplate LegPartMainTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -113,6 +115,9 @@ namespace WpfApp2.Templates
 
             if (item.GetType() == typeof(ViewModelAddAnalize))
                 return TemplateAnalize;
+
+            if (item.GetType() == typeof(LegPartViewModel))
+                return LegPartMainTemplate;
 
             return null;
         }
