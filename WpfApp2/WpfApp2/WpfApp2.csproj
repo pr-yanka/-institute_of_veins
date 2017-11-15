@@ -104,6 +104,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\AddingDescription.xaml.cs">
+      <DependentUpon>AddingDescription.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AddingDescriptionExtended.xaml.cs">
+      <DependentUpon>AddingDescriptionExtended.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\AddOperation.xaml.cs">
       <DependentUpon>AddOperation.xaml</DependentUpon>
     </Compile>
@@ -167,6 +173,14 @@
     <Compile Include="ViewModels\ViewModelNewPatient.cs" />
     <Compile Include="ViewModels\ViewModelRegistration.cs" />
     <Compile Include="ViewModels\ViewModelTablePatients.cs" />
+    <Page Include="Controls\AddingDescription.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\AddingDescriptionExtended.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\AddOperation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
