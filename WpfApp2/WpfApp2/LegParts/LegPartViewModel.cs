@@ -14,6 +14,8 @@ namespace WpfApp2.LegParts
 {
     public class LegPartViewModel : ViewModelBase
     {
+        public NavigationController LegController { get; }
+
         public DelegateCommand RevertCommand { set; get; }
         public DelegateCommand SaveCommand { set; get; }
 
@@ -30,6 +32,7 @@ namespace WpfApp2.LegParts
         {
             _hasNavigation = false;
             Controller = controller;
+            LegController = new NavigationController();
 
             RevertCommand = new DelegateCommand(
                 () =>

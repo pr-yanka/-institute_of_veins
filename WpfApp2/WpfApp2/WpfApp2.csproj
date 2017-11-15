@@ -138,9 +138,7 @@
     </Compile>
     <Compile Include="LegParts\DialogConfirmStructure\DialogConfirmStructureViewModel.cs" />
     <Compile Include="LegParts\LegPartViewModel.cs" />
-    <Compile Include="LegParts\Templates\BPVHipTemplate.xaml.cs">
-      <DependentUpon>BPVHipTemplate.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="LegParts\Templates\LegTemplateSelector.cs" />
     <Compile Include="Navigation\NavigationController.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
@@ -213,6 +211,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LegParts\Templates\BPVHipTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LegParts\Templates\LegTemplateSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

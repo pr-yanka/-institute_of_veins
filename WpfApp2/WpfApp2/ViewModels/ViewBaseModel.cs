@@ -10,6 +10,7 @@ namespace WpfApp2.Navigation
         protected bool _hasNavigation = false; 
 
         public ICommand Navigate { get; }
+        public ICommand LegNavigate { get; }
 
         public virtual bool HasNavigation
         {
@@ -23,6 +24,9 @@ namespace WpfApp2.Navigation
             Navigate = new RoutedCommand("Navigate", typeof(ViewModelBase));
             //предоставляет доступ отовсюда - ибо команда становится статической и глобальной
             CommandManager.RegisterClassCommandBinding(typeof(MainWindow), new CommandBinding(Navigate));
+            LegNavigate = new RoutedCommand("Navigate", typeof(ViewModelBase));
+            //предоставляет доступ отовсюда - ибо команда становится статической и глобальной
+            //CommandManager.RegisterClassCommandBinding(typeof(MainWindow), new CommandBinding(LegNavigate));
         }
 
         //protected abstract void Executed(object sender, ExecutedRoutedEventArgs e);
