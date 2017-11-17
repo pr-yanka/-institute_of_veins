@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WpfApp2.LegParts.DialogConfirmStructure;
+using WpfApp2.LegParts.VMs;
 using WpfApp2.Navigation;
 using WpfApp2.ViewModels;
 
@@ -14,7 +15,20 @@ namespace WpfApp2.LegParts
 {
     public class LegPartViewModel : ViewModelBase
     {
-        //public NavigationController LegController { get; }
+        private int _levelCount = 1;
+        public int LevelCount
+        {
+            get { return _levelCount; }
+            set { this._levelCount = value; }
+        }
+
+        public List<string> Source { get; } = new List<string>();
+        private List<LegSectionViewModel> _sections;
+        public List<LegSectionViewModel> LegSections
+        {
+            get { return _sections; }
+            set { _sections = value; }
+        }
 
         public DelegateCommand RevertCommand { set; get; }
         public DelegateCommand SaveCommand { set; get; }
@@ -29,9 +43,14 @@ namespace WpfApp2.LegParts
 
         public LegPartViewModel(NavigationController controller) : base(controller)
         {
+            LegSections = new List<LegSectionViewModel>();
+            for (int i = 0; i < 10; i++)
+            {
+                LegSections.Add(new BPVHipSectionViewModel());
+            }
+            //_sections = new List<BPVHipSectionViewModel>();
             _hasNavigation = false;
             Controller = controller;
-            //LegController = new NavigationController();
 
             RevertCommand = new DelegateCommand(
                 () =>

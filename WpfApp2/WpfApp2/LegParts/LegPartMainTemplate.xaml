@@ -5,14 +5,37 @@
         <ResourceDictionary Source="/LegParts/Templates/LegTemplateSelector.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     <DataTemplate x:Key="LegPartTemplate">
-        <Grid Margin="20,20,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0*"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <ContentControl Content="{Binding Controller.LegViewModel}" ContentTemplateSelector="{StaticResource LegTemplateSelector}" Background="#FFF7F7F7" Grid.ColumnSpan="2"/>
-            <Button x:Name="AddButton" Command="{Binding RevertCommand}" Content="Вернуться к ноге" HorizontalAlignment="Left" Margin="60,638,0,0" VerticalAlignment="Top" Width="408" Background="#FFDBEDF7" FontSize="16" Grid.ColumnSpan="2"/>
-            <Button x:Name="AddButton_Copy" Command="{Binding SaveCommand}" Content="Сохранить" HorizontalAlignment="Left" Margin="513,638,0,0" VerticalAlignment="Top" Width="408" Background="#FFDBEDF7" FontSize="16" Grid.ColumnSpan="2"/>
+        <Grid Margin="0,50,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+
+            <ListView ItemsSource="{Binding Path=Controller.LegViewModel.LegSections}" Margin="5,10,5,15" BorderBrush="Red" BorderThickness="1">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <ContentControl Content="{Binding}" ContentTemplateSelector="{StaticResource LegTemplateSelector}" Background="#FFF7F7F7" Grid.ColumnSpan="2"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <!--<ContentControl ContentTemplateSelector="{StaticResource LegTemplateSelector}" Background="#FFF7F7F7" Grid.ColumnSpan="2"/>-->
+            </ListView>
+
+            <!--<ContentControl Content="{Binding Controller.LegViewModel}" ContentTemplateSelector="{StaticResource LegTemplateSelector}" Background="#FFF7F7F7" Grid.ColumnSpan="2"/>-->
+            
+            <StackPanel Orientation="Horizontal" Grid.Row="1">
+                <Button x:Name="AddButton" Command="{Binding RevertCommand}" Content="Вернуться к ноге" HorizontalAlignment="Left" VerticalAlignment="Top" Width="408" Background="#FFDBEDF7" FontSize="16" Grid.ColumnSpan="2"/>
+                <Button x:Name="AddButton_Copy" Command="{Binding SaveCommand}" Content="Сохранить" HorizontalAlignment="Right"  VerticalAlignment="Top" Width="408" Background="#FFDBEDF7" FontSize="16" Grid.ColumnSpan="2"/>
+
+            </StackPanel>
+            
+            
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

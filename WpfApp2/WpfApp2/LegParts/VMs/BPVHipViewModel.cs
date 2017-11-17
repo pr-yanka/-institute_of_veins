@@ -11,6 +11,12 @@ namespace WpfApp2.LegParts.VMs
     {
         public BPVHipViewModel(NavigationController controller) : base(controller)
         {
-        }
+            LevelCount = 5;
+            //LegSections = new List<BPVHipSectionViewModel>();
+            /*for (int i = 0; i < LegSections.Count; i++)
+            {
+                LegSections.Add(new BPVHipSectionViewModel());
+            }*/
+        }    
     }
 }

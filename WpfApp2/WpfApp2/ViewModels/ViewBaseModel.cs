@@ -10,7 +10,6 @@ namespace WpfApp2.Navigation
         protected bool _hasNavigation = false; 
 
         public ICommand Navigate { get; }
-        public ICommand LegNavigate { get; }
 
         public virtual bool HasNavigation
         {

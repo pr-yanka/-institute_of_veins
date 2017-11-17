@@ -138,7 +138,9 @@
     </Compile>
     <Compile Include="LegParts\DialogConfirmStructure\DialogConfirmStructureViewModel.cs" />
     <Compile Include="LegParts\LegPartViewModel.cs" />
+    <Compile Include="LegParts\LegSectionViewModel.cs" />
     <Compile Include="LegParts\Templates\LegTemplateSelector.cs" />
+    <Compile Include="LegParts\VMs\BPVHipSectionViewModel.cs" />
     <Compile Include="LegParts\VMs\BPVHipViewModel.cs" />
     <Compile Include="Navigation\NavigationController.cs" />
     <Compile Include="RelayCommand.cs" />

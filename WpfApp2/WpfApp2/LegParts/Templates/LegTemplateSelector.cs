@@ -15,7 +15,7 @@ namespace WpfApp2.LegParts.Templates
             if (item == null)
                 return null;
 
-            if (item.GetType() == typeof(BPVHipViewModel))
+            if (item.GetType() == typeof(BPVHipViewMode))
                 return BPVHipTemplate;
 
             return null;
