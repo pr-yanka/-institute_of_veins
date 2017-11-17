@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using WpfApp2.LegParts;
+using WpfApp2.LegParts.VMs;
 using WpfApp2.ViewModels;
 
 namespace WpfApp2.Navigation
@@ -19,6 +20,16 @@ namespace WpfApp2.Navigation
         public ViewModelBase CurrentViewModel {
             get { return _currentViewModel; }
             set { _currentViewModel = value; OnPropertyChanged(nameof(CurrentViewModel)); }
+        }
+
+        private List<ViewModelBase> _legViewModels;
+
+        private ViewModelBase _legViewModel;
+
+        public ViewModelBase LegViewModel
+        {
+            get { return _legViewModel; }
+            set { _legViewModel = value; OnPropertyChanged(nameof(LegViewModel)); }
         }
 
         public NavigationController()
@@ -54,6 +65,13 @@ namespace WpfApp2.Navigation
             };
 
             _currentViewModel = _viewModels.First();
+
+            _legViewModels = new List<ViewModelBase>
+            {
+                new BPVHipViewModel(this)
+            };
+
+            _legViewModel = _legViewModels.First();
         }
 
         public void NavigateTo<T>()

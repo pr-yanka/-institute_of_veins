@@ -6,7 +6,7 @@ namespace WpfApp2.Navigation
 {
     public abstract class ViewModelBase
     {
-        protected NavigationController Controller;
+        public NavigationController Controller { get; protected set; }
         protected bool _hasNavigation = false; 
 
         public ICommand Navigate { get; }
@@ -24,7 +24,7 @@ namespace WpfApp2.Navigation
             Navigate = new RoutedCommand("Navigate", typeof(ViewModelBase));
             //предоставляет доступ отовсюда - ибо команда становится статической и глобальной
             CommandManager.RegisterClassCommandBinding(typeof(MainWindow), new CommandBinding(Navigate));
-            LegNavigate = new RoutedCommand("Navigate", typeof(ViewModelBase));
+            //LegNavigate = new RoutedCommand("Navigate", typeof(ViewModelBase));
             //предоставляет доступ отовсюда - ибо команда становится статической и глобальной
             //CommandManager.RegisterClassCommandBinding(typeof(MainWindow), new CommandBinding(LegNavigate));
         }

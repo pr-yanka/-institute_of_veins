@@ -10,7 +10,7 @@
                 <ColumnDefinition Width="0*"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <ContentControl Content="{Binding Controller.CurrentViewModel}" ContentTemplateSelector="{StaticResource LegTemplateSelector}" Background="#FFF7F7F7" Grid.ColumnSpan="2"/>
+            <ContentControl Content="{Binding Controller.LegViewModel}" ContentTemplateSelector="{StaticResource LegTemplateSelector}" Background="#FFF7F7F7" Grid.ColumnSpan="2"/>
             <Button x:Name="AddButton" Command="{Binding RevertCommand}" Content="Вернуться к ноге" HorizontalAlignment="Left" Margin="60,638,0,0" VerticalAlignment="Top" Width="408" Background="#FFDBEDF7" FontSize="16" Grid.ColumnSpan="2"/>
             <Button x:Name="AddButton_Copy" Command="{Binding SaveCommand}" Content="Сохранить" HorizontalAlignment="Left" Margin="513,638,0,0" VerticalAlignment="Top" Width="408" Background="#FFDBEDF7" FontSize="16" Grid.ColumnSpan="2"/>
         </Grid>

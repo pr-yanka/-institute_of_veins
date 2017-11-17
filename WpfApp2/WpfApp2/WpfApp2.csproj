@@ -120,10 +120,10 @@
     <Compile Include="Db\Models\BPVHip\BPVHipContext.cs" />
     <Compile Include="Db\Models\BPVHip\BPVRepository.cs" />
     <Compile Include="Db\Models\IRepository.cs" />
-    <Compile Include="DialogPreOperation\DialogPreOperationView.xaml.cs">
+    <Compile Include="Db\Models\DialogPreOperation\DialogPreOperationView.xaml.cs">
       <DependentUpon>DialogPreOperationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DialogPreOperation\DialogPreOperationViewModel.cs" />
+    <Compile Include="Db\Models\DialogPreOperation\DialogPreOperationViewModel.cs" />
     <Compile Include="DialogService\DialogResult.cs" />
     <Compile Include="DialogService\DialogViewModelBase.cs" />
     <Compile Include="DialogService\DialogWindow.xaml.cs">
@@ -139,6 +139,7 @@
     <Compile Include="LegParts\DialogConfirmStructure\DialogConfirmStructureViewModel.cs" />
     <Compile Include="LegParts\LegPartViewModel.cs" />
     <Compile Include="LegParts\Templates\LegTemplateSelector.cs" />
+    <Compile Include="LegParts\VMs\BPVHipViewModel.cs" />
     <Compile Include="Navigation\NavigationController.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
@@ -186,7 +187,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DialogPreOperation\DialogPreOperationView.xaml">
+    <Page Include="Db\Models\DialogPreOperation\DialogPreOperationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -374,8 +375,6 @@
     <Resource Include="Images\forward.png" />
     <Resource Include="Images\history.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="LegParts\VMs\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

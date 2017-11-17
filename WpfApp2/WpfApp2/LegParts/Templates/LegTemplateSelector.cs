@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using WpfApp2.LegParts;
+using WpfApp2.LegParts.VMs;
 using WpfApp2.ViewModels;
 
 namespace WpfApp2.LegParts.Templates
@@ -14,7 +15,7 @@ namespace WpfApp2.LegParts.Templates
             if (item == null)
                 return null;
 
-            if (item.GetType() == typeof(ViewModelDashboard))
+            if (item.GetType() == typeof(BPVHipViewModel))
                 return BPVHipTemplate;
 
             return null;
