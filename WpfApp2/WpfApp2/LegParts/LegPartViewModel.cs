@@ -15,7 +15,7 @@ namespace WpfApp2.LegParts
 {
     public class LegPartViewModel : ViewModelBase
     {
-        protected string _title = "bla bla";
+        protected string _title;
         public string Title
         {
             get { return _title; }

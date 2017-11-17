@@ -2,19 +2,25 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="WpfApp2.LegParts.LegPartMainTemplate.BPVHipTemplate">
     <DataTemplate x:Key="BPVHipTemplate">
-        <Grid Margin="10,0,10,0">
-            <ComboBox x:Name="firstLevelBlock" HorizontalAlignment="Left" Margin="107,10,0,0" VerticalAlignment="Top" Width="899"/>
-            <Separator HorizontalAlignment="Left" Height="14" VerticalAlignment="Top" Width="1016"/>
-            <Separator HorizontalAlignment="Left" Height="20" Margin="0,30,0,0" VerticalAlignment="Top" Width="1016"/>
-            <Separator HorizontalAlignment="Left" Height="19" Margin="0,120,0,0" VerticalAlignment="Top" Width="1016"/>
-            <TextBox x:Name="comment1Box" HorizontalAlignment="Left" Height="30" Margin="139,90,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="866" FontSize="16"/>
-            <TextBox x:Name="size1Box" HorizontalAlignment="Left" Height="23" Margin="64,60,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="47"/>
-            <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="43,10,0,0" TextWrapping="Wrap" Text="Выбор:" VerticalAlignment="Top" FontSize="18"/>
-            <Label x:Name="label" Content="1" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Height="39" Width="28" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" FontFamily="Georgia" Background="#FFD2E6F7" BorderThickness="1" BorderBrush="Black"/>
-            <Label x:Name="inches1Text_Copy" Content="Label" HorizontalAlignment="Left" Margin="10,50,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
-            <Label x:Name="inches1Text_Copy1" Content="Label" HorizontalAlignment="Left" Margin="116,50,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
-            <Label x:Name="inches1Text_Copy2" Content="Label" HorizontalAlignment="Left" Margin="168,50,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
-            <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="10,95,0,0" TextWrapping="Wrap" Text="Комментарий:" VerticalAlignment="Top" FontSize="18"/>
+        <Grid Margin="10,0,10,0" ShowGridLines="True">
+            <StackPanel Orientation="Vertical">
+                <DockPanel Margin="0,5,0,5" Width="Auto" LastChildFill="True">
+                    <Label x:Name="label" Content="1" HorizontalAlignment="Left" Margin="5,0,5,0" VerticalAlignment="Top" Height="30" Width="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" FontFamily="Georgia" Background="#FFD2E6F7" BorderThickness="1" BorderBrush="Black"/>
+                    <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="5,0,5,0" TextWrapping="Wrap" Text="Выбор:" VerticalAlignment="Top" FontSize="18"/>
+                    <ComboBox x:Name="firstLevelBlock" Margin="5,0,5,0" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
+                </DockPanel>
+                <DockPanel Width="Auto" LastChildFill="True" Margin="0,5,0,5">
+                    <Label x:Name="inches1Text_Copy1" Content="Текст1" HorizontalAlignment="Left" Margin="5,0,5,0" VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
+                    <TextBox x:Name="size1Box" HorizontalAlignment="Left" Height="23" Margin="5,0,5,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="47"/>
+                    <Label x:Name="inches1Text_Copy" Content="см" HorizontalAlignment="Left" Margin="5,0,5,0" VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
+                    <Label x:Name="inches1Text_Copy2" Content="Текст2" HorizontalAlignment="Left" Margin="5,0,5,0" VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
+                </DockPanel>
+                <DockPanel Width="Auto" LastChildFill="True" Margin="0,5,0,5">
+                    <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="5,0,5,0" TextWrapping="Wrap" Text="Комментарий:" VerticalAlignment="Top" FontSize="18"/>
+                    <TextBox x:Name="comment1Box" HorizontalAlignment="Stretch" Height="30" Margin="5,0,5,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="16"/>
+                </DockPanel>
+                <Separator Margin="0,5,0,5" HorizontalAlignment="Stretch" Height="14" VerticalAlignment="Top" />
+            </StackPanel>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

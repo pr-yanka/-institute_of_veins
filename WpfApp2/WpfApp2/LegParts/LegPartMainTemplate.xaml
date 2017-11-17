@@ -11,23 +11,21 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Vertical" Grid.Column="1">
-                <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="20,25,0,0" TextWrapping="Wrap" Text="{Binding Path=Controller.LegViewModel.Title}" VerticalAlignment="Top" FontSize="32"/>
-                <ListView ItemsSource="{Binding Path=Controller.LegViewModel.LegSections}" Margin="5,10,5,15">
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ListViewItem">
-                                        <ContentControl Content="{Binding}" ContentTemplateSelector="{StaticResource LegTemplateSelector}" Background="#FFF7F7F7" Grid.ColumnSpan="2"/>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ListView.ItemContainerStyle>
-                    <!--<ContentControl ContentTemplateSelector="{StaticResource LegTemplateSelector}" Background="#FFF7F7F7" Grid.ColumnSpan="2"/>-->
-                </ListView>
-            </StackPanel>
+            <TextBlock x:Name="textBlock" HorizontalAlignment="Center" Margin="0,20,0,0" TextWrapping="Wrap" Text="{Binding Path=Controller.LegViewModel.Title}" VerticalAlignment="Top" FontSize="28"/>
+            <ListView ItemsSource="{Binding Path=Controller.LegViewModel.LegSections}" Margin="5,65,5,15">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListViewItem">
+                                    <ContentControl Content="{Binding}" ContentTemplateSelector="{StaticResource LegTemplateSelector}" Background="#FFF7F7F7" Grid.ColumnSpan="2"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <!--<ContentControl ContentTemplateSelector="{StaticResource LegTemplateSelector}" Background="#FFF7F7F7" Grid.ColumnSpan="2"/>-->
+            </ListView>
             <!--<ContentControl Content="{Binding Controller.LegViewModel}" ContentTemplateSelector="{StaticResource LegTemplateSelector}" Background="#FFF7F7F7" Grid.ColumnSpan="2"/>-->
             
             <StackPanel Orientation="Horizontal" Grid.Row="1">
