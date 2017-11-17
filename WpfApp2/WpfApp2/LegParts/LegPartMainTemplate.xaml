@@ -11,7 +11,6 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-
             <ListView ItemsSource="{Binding Path=Controller.LegViewModel.LegSections}" Margin="5,10,5,15" BorderBrush="Red" BorderThickness="1">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">

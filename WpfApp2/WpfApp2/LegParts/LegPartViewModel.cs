@@ -23,12 +23,8 @@ namespace WpfApp2.LegParts
         }
 
         public List<string> Source { get; } = new List<string>();
-        private List<LegSectionViewModel> _sections;
-        public List<LegSectionViewModel> LegSections
-        {
-            get { return _sections; }
-            set { _sections = value; }
-        }
+        
+        public virtual List<LegSectionViewModel> LegSections { get; set; }
 
         public DelegateCommand RevertCommand { set; get; }
         public DelegateCommand SaveCommand { set; get; }
@@ -43,11 +39,6 @@ namespace WpfApp2.LegParts
 
         public LegPartViewModel(NavigationController controller) : base(controller)
         {
-            LegSections = new List<LegSectionViewModel>();
-            for (int i = 0; i < 10; i++)
-            {
-                LegSections.Add(new BPVHipSectionViewModel());
-            }
             //_sections = new List<BPVHipSectionViewModel>();
             _hasNavigation = false;
             Controller = controller;

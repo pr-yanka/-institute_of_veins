@@ -9,14 +9,21 @@ namespace WpfApp2.LegParts.VMs
 {
     public class BPVHipViewModel : LegPartViewModel
     {
+        private List<LegSectionViewModel> _sections;
+        public override List<LegSectionViewModel> LegSections
+        {
+            get { return _sections; }
+            set { _sections = value; }
+        }
+
         public BPVHipViewModel(NavigationController controller) : base(controller)
         {
             LevelCount = 5;
-            //LegSections = new List<BPVHipSectionViewModel>();
-            /*for (int i = 0; i < LegSections.Count; i++)
+            _sections = new List<LegSectionViewModel>();
+            for (int i = 0; i < LevelCount; i++)
             {
                 LegSections.Add(new BPVHipSectionViewModel());
-            }*/
+            }
         }    
     }
 }
