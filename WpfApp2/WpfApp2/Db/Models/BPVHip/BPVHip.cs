@@ -13,14 +13,14 @@ namespace WpfApp2.Db.Models
         public string Text2 { get; set; }
         public bool HasSize { get; set; }
         public string Size { get; set; }
-        public  int Level { get; set; }
+        public int Level { get; set; }
     }
 
     public class BPVHipEntry
     {
         public int Id { get; set; }
         //если в бд int - как тут хранить?
-        public BPVHipStructure Structure { get; set; }
+        public int BPVHipStructureID { get; set; }
         public string Comment { get; set; }
         public string Size { get; set; }
     }
@@ -34,11 +34,11 @@ namespace WpfApp2.Db.Models
     public class BPVHipEntryFull
     {
         public int Id { get; set; }
-        public BPVHipWay HipWay { get; set; }
-        public BPVHipEntry Entry1 { get; set; }
-        public BPVHipEntry Entry2 { get; set; }
-        public BPVHipEntry Entry3 { get; set; }
-        public BPVHipEntry Entry4 { get; set; }
-        public BPVHipEntry Entry5 { get; set; }
+        public int BPVHipWayID { get; set; }
+        public int BPVHipEntryId1 { get; set; }
+        public int BPVHipEntryId2 { get; set; }
+        public int BPVHipEntryId3 { get; set; }
+        public int BPVHipEntryId4 { get; set; }
+        public int BPVHipEntryId5 { get; set; }
     }
 }
