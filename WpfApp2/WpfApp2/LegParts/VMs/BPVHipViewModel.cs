@@ -24,6 +24,7 @@ namespace WpfApp2.LegParts.VMs
             {
                 LegSections.Add(new BPVHipSectionViewModel());
             }
+            _title = "БПВ на голень";
         }    
     }
 }

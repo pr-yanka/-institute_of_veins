@@ -15,6 +15,13 @@ namespace WpfApp2.LegParts
 {
     public class LegPartViewModel : ViewModelBase
     {
+        protected string _title = "bla bla";
+        public string Title
+        {
+            get { return _title; }
+            set { this._title = value; }
+        }
+
         private int _levelCount = 1;
         public int LevelCount
         {
