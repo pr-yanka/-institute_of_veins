@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace WpfApp2.LegParts
 {
-    public abstract class LegSectionViewModel
-    {
-
-    }
+    public abstract class LegSectionViewModel{
+        private int _listNumber;
+        public int ListNumber { get; set; }
+    };
 }

@@ -9,9 +9,9 @@ namespace WpfApp2.LegParts.VMs
 {
     public class BPVHipSectionViewModel : LegSectionViewModel
     {
-        public BPVHipSectionViewModel()
+        public BPVHipSectionViewModel(int number)
         {
-            
+            ListNumber = number;
         }
     }
 }

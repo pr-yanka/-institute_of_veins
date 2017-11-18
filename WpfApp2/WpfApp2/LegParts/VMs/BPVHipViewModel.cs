@@ -22,7 +22,7 @@ namespace WpfApp2.LegParts.VMs
             _sections = new List<LegSectionViewModel>();
             for (int i = 0; i < LevelCount; i++)
             {
-                LegSections.Add(new BPVHipSectionViewModel());
+                LegSections.Add(new BPVHipSectionViewModel(i + 1));
             }
             _title = "БПВ на голень";
         }    
