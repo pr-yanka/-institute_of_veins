@@ -7,7 +7,7 @@ using WpfApp2.Navigation;
 
 namespace WpfApp2.LegParts.VMs
 {
-    public class BPVHipViewModel : LegPartViewModel
+    public class SFSViewModel : LegPartViewModel
     {
         private List<LegSectionViewModel> _sections;
         public override List<LegSectionViewModel> LegSections
@@ -16,15 +16,15 @@ namespace WpfApp2.LegParts.VMs
             set { _sections = value; }
         }
 
-        public BPVHipViewModel(NavigationController controller) : base(controller)
+        public SFSViewModel(NavigationController controller) : base(controller)
         {
-            LevelCount = 5;
+            LevelCount = 6;
             _sections = new List<LegSectionViewModel>();
             for (int i = 0; i < LevelCount; i++)
             {
-                LegSections.Add(new BPVHipSectionViewModel(i + 1));
+                LegSections.Add(new SFSSectionViewModel(i + 1));
             }
-            _title = "Большая подкожная вена на голени";
-        }    
+            _title = "Сафенно-феморальное соустье";
+        }
     }
 }

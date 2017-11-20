@@ -143,6 +143,8 @@
     <Compile Include="LegParts\Templates\LegTemplateSelector.cs" />
     <Compile Include="LegParts\VMs\BPVHipSectionViewModel.cs" />
     <Compile Include="LegParts\VMs\BPVHipViewModel.cs" />
+    <Compile Include="LegParts\VMs\SFSSectionViewModel.cs" />
+    <Compile Include="LegParts\VMs\SFSViewModel.cs" />
     <Compile Include="Navigation\NavigationController.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
@@ -214,7 +216,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LegParts\Templates\BPVHipTemplate.xaml">
+    <Page Include="LegParts\Templates\StandartPartTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

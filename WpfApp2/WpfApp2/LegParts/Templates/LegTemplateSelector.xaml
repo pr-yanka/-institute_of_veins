@@ -3,9 +3,9 @@
                     xmlns:local="clr-namespace:WpfApp2.LegParts.Templates">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="BPVHipTemplate.xaml"/>
+        <ResourceDictionary Source="StandartPartTemplate.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <local:LegTemplateSelector x:Key="LegTemplateSelector" 
-                              BPVHipTemplate="{StaticResource BPVHipTemplate}"/>
+                              StandartTemplate="{StaticResource StandartPartTemplate}"/>
 </ResourceDictionary>

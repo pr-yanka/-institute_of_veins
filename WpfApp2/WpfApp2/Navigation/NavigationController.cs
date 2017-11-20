@@ -68,6 +68,7 @@ namespace WpfApp2.Navigation
 
             _legViewModels = new List<ViewModelBase>
             {
+                new SFSViewModel(this),
                 new BPVHipViewModel(this)
             };
 
