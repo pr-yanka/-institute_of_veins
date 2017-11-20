@@ -9,6 +9,7 @@ using System.Windows.Input;
 using WpfApp2.DialogPreOperation;
 using WpfApp2.DialogService;
 using WpfApp2.LegParts;
+using WpfApp2.LegParts.VMs;
 
 namespace WpfApp2.ViewModels
 {
@@ -20,7 +21,8 @@ namespace WpfApp2.ViewModels
 
         public DelegateCommand ToPhysicalOverviewCommand { get; protected set; }
         public DelegateCommand ToSymptomsAddCommand { get; protected set; }
-        public DelegateCommand ToLegDescribeCommand { get; protected set; }
+        public DelegateCommand ToBPVHipCommand { get; protected set; }
+        public DelegateCommand ToSFSCommand { get; protected set; }
         public DelegateCommand ToAddRecomendationsCommand { get; protected set; }
 
         private ICommand openDialogCommand = null;
@@ -59,9 +61,18 @@ namespace WpfApp2.ViewModels
                 }
             );
 
-            ToLegDescribeCommand = new DelegateCommand(
+            ToBPVHipCommand = new DelegateCommand(
                 () =>
                 {
+                    Controller.LegViewModel = new BPVHipViewModel(Controller);
+                    Controller.NavigateTo<LegPartViewModel>();
+                }
+            );
+
+            ToSFSCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.LegViewModel = new SFSViewModel(Controller);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );

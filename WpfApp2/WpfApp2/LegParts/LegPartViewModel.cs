@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using WpfApp2.LegParts.DialogConfirmStructure;
 using WpfApp2.LegParts.VMs;
@@ -16,6 +18,8 @@ namespace WpfApp2.LegParts
 {
     public class LegPartViewModel : ViewModelBase
     {
+        public bool PanelOpened { get; set; }
+
         protected string _title;
         public string Title
         {
@@ -49,8 +53,33 @@ namespace WpfApp2.LegParts
 
         public SizePanelViewModel CurrentPanelViewModel;
 
+        private UserControl _panel;
+        public UserControl Panel
+        {
+            set { _panel = value; }
+        }
+
+        public DelegateCommand AnimationCompleted {get; set; }
+
         private void OpenPanel(object parameter)
         {
+            Storyboard storyboard1 = new Storyboard();
+
+            DelegateCommand AnimationCompleted = new DelegateCommand(
+                () => { PanelOpened = true; }
+            );
+
+            ((UIElement)_panel).RenderTransform = (Transform)new TranslateTransform();
+            DoubleAnimation doubleAnimation1 = new DoubleAnimation();
+            doubleAnimation1.Duration = new Duration(new TimeSpan(0, 0, 2));
+            doubleAnimation1.To = -200;
+            doubleAnimation1.AutoReverse = true;
+            doubleAnimation1.RepeatBehavior = RepeatBehavior.Forever;
+
+            Storyboard.SetTarget((Timeline)doubleAnimation1, (DependencyObject)_panel.RenderTransform);
+            Storyboard.SetTargetProperty((Timeline)doubleAnimation1, new PropertyPath("X"));
+            ((ICollection<Timeline>)storyboard1.Children).Add((Timeline)doubleAnimation1);
+
             //переписать в хaml темплейт?
             /*
             if (e.ClickCount != 2)
@@ -70,6 +99,7 @@ namespace WpfApp2.LegParts
         public LegPartViewModel(NavigationController controller) : base(controller)
         {
             this._openPanelCommand = new RelayCommand(OpenPanel);
+            PanelOpened = false;
 
             //_sections = new List<BPVHipSectionViewModel>();
             _hasNavigation = false;
