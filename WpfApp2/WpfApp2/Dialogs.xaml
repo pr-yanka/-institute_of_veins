@@ -9,4 +9,5 @@
     <DataTemplate DataType="{x:Type dialogPreOperation:DialogPreOperationViewModel}">
         <dialogPreOperation:DialogPreOperationView></dialogPreOperation:DialogPreOperationView>
     </DataTemplate>
+
 </ResourceDictionary>

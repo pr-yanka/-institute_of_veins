@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 using WpfApp2.LegParts.DialogConfirmStructure;
 using WpfApp2.LegParts.VMs;
 using WpfApp2.Navigation;
@@ -42,10 +43,34 @@ namespace WpfApp2.LegParts
             get { return this.openDialogCommand; }
             set { this.openDialogCommand = value; }
         }
-        
+
+        private ICommand _openPanelCommand = null;
+        public ICommand OpenPanelCommand { set; get; }
+
+        public SizePanelViewModel CurrentPanelViewModel;
+
+        private void OpenPanel(object parameter)
+        {
+            //переписать в хaml темплейт?
+            /*
+            if (e.ClickCount != 2)
+                return;
+
+            Storyboard sb = this.FindResource("Open") as Storyboard;
+            sb.Completed += (o, args) =>
+            {
+                ShadowOverlay.Visibility = Visibility.Visible;
+                MainGrid.IsEnabled = false;
+            };
+            Storyboard.SetTarget(sb, this.newControl1);
+            sb.Begin();
+            */
+        }
 
         public LegPartViewModel(NavigationController controller) : base(controller)
         {
+            this._openPanelCommand = new RelayCommand(OpenPanel);
+
             //_sections = new List<BPVHipSectionViewModel>();
             _hasNavigation = false;
             Controller = controller;
@@ -64,6 +89,7 @@ namespace WpfApp2.LegParts
                 }
             );
 
+            CurrentPanelViewModel = new SizePanelViewModel(this.Controller);
         }
 
         private void FinishAdding(object parameter)

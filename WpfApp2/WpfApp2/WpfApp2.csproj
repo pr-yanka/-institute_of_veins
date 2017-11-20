@@ -120,25 +120,26 @@
     <Compile Include="Db\Models\BPVHip\BPVHipContext.cs" />
     <Compile Include="Db\Models\BPVHip\BPVRepository.cs" />
     <Compile Include="Db\Models\IRepository.cs" />
-    <Compile Include="Db\Models\DialogPreOperation\DialogPreOperationView.xaml.cs">
+    <Compile Include="Dialogs\DialogPreOperation\DialogPreOperationView.xaml.cs">
       <DependentUpon>DialogPreOperationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Db\Models\DialogPreOperation\DialogPreOperationViewModel.cs" />
+    <Compile Include="Dialogs\DialogPreOperation\DialogPreOperationViewModel.cs" />
     <Compile Include="DialogService\DialogResult.cs" />
     <Compile Include="DialogService\DialogViewModelBase.cs" />
     <Compile Include="DialogService\DialogWindow.xaml.cs">
       <DependentUpon>DialogWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DialogYesNo\DialogYesNoView.xaml.cs">
+    <Compile Include="Dialogs\DialogYesNo\DialogYesNoView.xaml.cs">
       <DependentUpon>DialogYesNoView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DialogYesNo\DialogYesNowViewModel.cs" />
-    <Compile Include="LegParts\DialogConfirmStructure\DialogConfirmStructureView.xaml.cs">
+    <Compile Include="Dialogs\DialogYesNo\DialogYesNowViewModel.cs" />
+    <Compile Include="Dialogs\DialogConfirmStructure\DialogConfirmStructureView.xaml.cs">
       <DependentUpon>DialogConfirmStructureView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="LegParts\DialogConfirmStructure\DialogConfirmStructureViewModel.cs" />
+    <Compile Include="Dialogs\DialogConfirmStructure\DialogConfirmStructureViewModel.cs" />
     <Compile Include="LegParts\LegPartViewModel.cs" />
     <Compile Include="LegParts\LegSectionViewModel.cs" />
+    <Compile Include="LegParts\SizePanelViewModel.cs" />
     <Compile Include="LegParts\Templates\LegTemplateSelector.cs" />
     <Compile Include="LegParts\VMs\BPVHipSectionViewModel.cs" />
     <Compile Include="LegParts\VMs\BPVHipViewModel.cs" />
@@ -189,7 +190,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Db\Models\DialogPreOperation\DialogPreOperationView.xaml">
+    <Page Include="Dialogs\DialogPreOperation\DialogPreOperationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -201,11 +202,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DialogYesNo\DialogYesNoView.xaml">
+    <Page Include="Dialogs\DialogYesNo\DialogYesNoView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="LegParts\DialogConfirmStructure\DialogConfirmStructureView.xaml">
+    <Page Include="Dialogs\DialogConfirmStructure\DialogConfirmStructureView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -218,6 +219,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LegParts\Templates\LegTemplateSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LegParts\Templates\RightPanelAnimation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

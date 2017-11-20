@@ -58,5 +58,7 @@ namespace WpfApp2.LegParts
                 else return Size.ToString() + "*" + Size2.ToString();
             }
         }
+
+
     };
 }
