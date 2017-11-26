@@ -137,6 +137,7 @@
       <DependentUpon>DialogConfirmStructureView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\DialogConfirmStructure\DialogConfirmStructureViewModel.cs" />
+    <Compile Include="LegParts\CommandFakeAnimation.cs" />
     <Compile Include="LegParts\LegPartViewModel.cs" />
     <Compile Include="LegParts\LegSectionViewModel.cs" />
     <Compile Include="LegParts\SizePanelViewModel.cs" />
