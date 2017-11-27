@@ -3,6 +3,11 @@
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplateAddPhysicalPage1">
         <Grid Name="RootGrid">
+            <Grid.Resources>
+                <DataTemplate x:Key="ExpanderHeaderTemplate">
+                    <Button Width="13" Height="26" Content="Редактировать"/>
+                </DataTemplate>
+            </Grid.Resources>
             <Grid.Background>
                 <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
                     <LinearGradientBrush.GradientStops>
@@ -31,20 +36,21 @@
             <Button x:Name="button_Copy443" Command="{Binding Path=ToLegDescribeCommand}" Content="Назначить диагноз" HorizontalAlignment="Left" Margin="521,449,0,0" VerticalAlignment="Top" Width="475" Height="29" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="16"/>
             <TextBlock x:Name="textBlock1_Copy3" HorizontalAlignment="Center" Margin="724,206,122,507" TextWrapping="Wrap" VerticalAlignment="Center" Width="170" FontSize="18"><Run Text="Правая "/><Run Text="нога"/></TextBlock>
 
-            <ScrollViewer Margin="10,235,489,302" RenderTransformOrigin="0.5,0.5" FontSize="16">
+            
+            <ScrollViewer Margin="10,235,489,342" RenderTransformOrigin="0.5,0.5" FontSize="16">
                 <StackPanel Orientation="Vertical">
-                    <Expander Header="I.	СФС (Сафено-феморальное соустье)"  FontSize="12">
+                    <Expander Header="I.	СФС (Сафено-феморальное соустье)"  FontSize="16" Height="30" >
                         <Grid Background="#FFE5E5E5"/>
                     </Expander>
                     <Separator Margin="10,0,10,0"/>
-                    <Expander Header="II.	БПВ на бедре (Большая подкожная вена)" FontSize="12">
+                    <Expander Header="II.	БПВ на бедре (Большая подкожная вена)" FontSize="16">
                         <StackPanel Orientation="Vertical">
                             <Label HorizontalAlignment="Center" Content="Ход: гибридный ход" FontSize="12"/>
                             <Label HorizontalAlignment="Center" Content="БПВ на бедре: без рефлюкса" FontSize="12"/>
                         </StackPanel>
                     </Expander>
                     <Separator Margin="10,0,10,0"/>
-                    <Expander Header="III.	ПДСВ (Передняя добавочная сафенная вена)*"  FontSize="12">
+                    <Expander Header="III.	ПДСВ (Передняя добавочная сафенная вена)*"  FontSize="16">
                         <Grid Background="#FFE5E5E5"/>
                     </Expander>
                     <Separator Margin="10,0,10,0"/>
@@ -167,6 +173,13 @@
                     </Expander>
                 </StackPanel>
             </ScrollViewer>
+
+            <Button x:Name="buttonSFS1" Command="{Binding ToBPVHipCommand}" Content="Заполнить" HorizontalAlignment="Left" Margin="385,237,0,0" VerticalAlignment="Top" Width="130" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+            <Button x:Name="buttonBPVHip1" Command="{Binding ToSFSCommand}" Content="Заполнить" HorizontalAlignment="Left" Margin="385,267,0,0" VerticalAlignment="Top" Width="130" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+            <Button x:Name="buttonSFS2" Command="{Binding ToBPVHipCommand}" Content="Редактировать" HorizontalAlignment="Left" Margin="860,237,0,0" VerticalAlignment="Top" Width="130" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+            <Button x:Name="buttonBPVHip2" Command="{Binding ToSFSCommand}" Content="Редактировать" HorizontalAlignment="Left" Margin="860,267,0,0" VerticalAlignment="Top" Width="130" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+
+
             <Separator HorizontalAlignment="Left" Height="16" Margin="5,565,0,0" VerticalAlignment="Top" Width="1036" RenderTransformOrigin="0.51,0.49"/>
             <TextBlock x:Name="textBlock1_Copy4" HorizontalAlignment="Center" Margin="10,578,942,256" TextWrapping="Wrap" VerticalAlignment="Center" Width="199" FontSize="18" Text="Рекомендации" TextAlignment="Center"/>
             <ListBox x:Name="listBox1_Copy" HorizontalAlignment="Left" Height="75" Margin="228,578,0,0" VerticalAlignment="Top" Width="808">
@@ -183,10 +196,7 @@
             <TextBlock x:Name="textBlock1_Copy9" HorizontalAlignment="Left" Margin="969,135,0,0" TextWrapping="Wrap" Text="см" VerticalAlignment="Top" Width="43" FontSize="18"/>
             <TextBlock x:Name="textBlock1_Copy10" HorizontalAlignment="Left" Margin="749,164,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="109" FontSize="18" RenderTransformOrigin="0.674,0.459"><Run Text="ИМТ: "/><Run Text="0"/></TextBlock>
             <Separator HorizontalAlignment="Left" Height="16" Margin="0,653,0,0" VerticalAlignment="Top" Width="1051" RenderTransformOrigin="0.51,0.49"/>
-            <Button x:Name="button_Copy5" Command="{Binding ToBPVHipCommand}" Content="редактировать" HorizontalAlignment="Left" Margin="345,235,0,0" VerticalAlignment="Top" Width="156" Height="23" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="16"/>
-            <Button x:Name="button_Copy6" Command="{Binding ToSFSCommand}" Content="редактировать" HorizontalAlignment="Left" Margin="345,258,0,0" VerticalAlignment="Top" Width="156" Height="23" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="16"/>
-            <Button x:Name="button_Copy7" Command="{Binding ToBPVHipCommand}" Content="редактировать" HorizontalAlignment="Left" Margin="824,235,0,0" VerticalAlignment="Top" Width="156" Height="23" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="16"/>
-            <Button x:Name="button_Copy8" Command="{Binding ToSFSCommand}" Content="редактировать" HorizontalAlignment="Left" Margin="824,258,0,0" VerticalAlignment="Top" Width="156" Height="23" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="16"/>
+            
             <ListBox x:Name="listBox1_Copy1" HorizontalAlignment="Left" Height="75" Margin="10,490,0,0" VerticalAlignment="Top" Width="491">
                 <ListBoxItem Content=""/>
             </ListBox>

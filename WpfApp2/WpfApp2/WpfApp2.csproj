@@ -138,6 +138,7 @@
       <DependentUpon>DialogConfirmStructureView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\DialogConfirmStructure\DialogConfirmStructureViewModel.cs" />
+    <Compile Include="LegParts\CommandFakeAnimation.cs" />
     <Compile Include="LegParts\LegPartViewModel.cs" />
     <Compile Include="LegParts\LegSectionViewModel.cs" />
     <Compile Include="LegParts\SizePanelViewModel.cs" />
@@ -215,6 +216,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LegParts\LegPartMainTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LegParts\Templates\ExpanderHeaderTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

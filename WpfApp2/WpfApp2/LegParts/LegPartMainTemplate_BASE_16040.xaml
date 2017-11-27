@@ -1,6 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local1="clr-namespace:WpfApp2.LegParts"
                     xmlns:local="WpfApp2.LegParts.LegPartMainTemplate">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/LegParts/Templates/LegTemplateSelector.xaml"/>
@@ -37,7 +36,7 @@
                 <Button x:Name="AddButton2" Content="Сохранить" HorizontalAlignment="Right"  VerticalAlignment="Top" Width="408" Background="#FFDBEDF7" FontSize="16" Grid.ColumnSpan="2"/>
             </StackPanel>
 
-            <Border Visibility="{Binding PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOverlay">
+            <Border Visibility="{Binding PanelOpened}" x:Name="ShadowOverlay">
                 <Border.Background>
                     <SolidColorBrush Color="Black" Opacity="0.78"/>
                 </Border.Background>
@@ -78,8 +77,6 @@
                                 Storyboard.TargetName="panelControl" 
                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
                                 Duration="0:0:01" From="0" To="-700" />
-                            <local1:CommandFakeAnimation Storyboard.TargetName="panelControl"  Duration="0:0:0" Command="{Binding Path=OpenPanelCommand, Mode=OneWay}"
-                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"/>
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>

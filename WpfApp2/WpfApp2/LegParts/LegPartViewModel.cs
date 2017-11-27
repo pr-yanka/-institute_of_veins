@@ -19,7 +19,6 @@ namespace WpfApp2.LegParts
     public class LegPartViewModel : ViewModelBase
     {
         public bool PanelOpened { get; set; }
-        public bool PanelOpened2 = true;
 
         protected string _title;
         public string Title
@@ -49,8 +48,8 @@ namespace WpfApp2.LegParts
             set { this.openDialogCommand = value; }
         }
 
-        private ICommand _openPanelCommand = null;
-        public ICommand OpenPanelCommand { set; get; }
+       // private ICommand _openPanelCommand = null;
+        public ICommand OpenPanelCommand { set; private get; }
 
         public SizePanelViewModel CurrentPanelViewModel;
 
@@ -62,8 +61,9 @@ namespace WpfApp2.LegParts
 
         public DelegateCommand AnimationCompleted {get; set; }
 
-        public void OpenPanel()
+        private void OpenPanel(object parameter)
         {
+            PanelOpened = true;
             /*Storyboard storyboard1 = new Storyboard();
 
             DelegateCommand AnimationCompleted = new DelegateCommand(
@@ -99,9 +99,9 @@ namespace WpfApp2.LegParts
 
         public LegPartViewModel(NavigationController controller) : base(controller)
         {
-            PanelOpened = false;
             //this._openPanelCommand = new RelayCommand(OpenPanel);
-            this._openPanelCommand = new DelegateCommand(OpenPanel);
+            OpenPanelCommand = new DelegateCommand(() => { PanelOpened = true; });
+            PanelOpened = false;
 
             //_sections = new List<BPVHipSectionViewModel>();
             _hasNavigation = false;
@@ -129,7 +129,5 @@ namespace WpfApp2.LegParts
             var vm = new DialogConfirmStructureViewModel();
             var result = DialogService.DialogService.OpenDialog(vm, parameter as Window);
         }
-
-        
 }
 }

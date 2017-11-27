@@ -1,7 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local1="clr-namespace:WpfApp2.LegParts"
-                    xmlns:local="WpfApp2.LegParts.LegPartMainTemplate">
+                    xmlns:local="WpfApp2.LegParts.LegPartMainTemplate"
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                    xmlns:local1="clr-namespace:WpfApp2.LegParts">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/LegParts/Templates/LegTemplateSelector.xaml"/>
         <ResourceDictionary Source="/LegParts/Templates/RightPanelAnimation.xaml"/>
@@ -37,7 +38,7 @@
                 <Button x:Name="AddButton2" Content="Сохранить" HorizontalAlignment="Right"  VerticalAlignment="Top" Width="408" Background="#FFDBEDF7" FontSize="16" Grid.ColumnSpan="2"/>
             </StackPanel>
 
-            <Border Visibility="{Binding PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOverlay">
+            <Border Visibility="{Binding PanelOpened2, Mode=TwoWay }" x:Name="ShadowOverlay">
                 <Border.Background>
                     <SolidColorBrush Color="Black" Opacity="0.78"/>
                 </Border.Background>
@@ -71,16 +72,15 @@
             </Border>
 
             <Grid.Triggers>
-                <EventTrigger RoutedEvent="Button.Click" SourceName="AddButton2">
+                <EventTrigger RoutedEvent="PreviewMouseDown" SourceName="AddButton2">
                     <BeginStoryboard Name="MyBeginStoryboard">
-                        <Storyboard>
+                        <Storyboard TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" local1:StoryboardHelper.CompletedCommand="{Binding Path=OpenPanelCommand}">
                             <DoubleAnimation 
                                 Storyboard.TargetName="panelControl" 
                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
                                 Duration="0:0:01" From="0" To="-700" />
-                            <local1:CommandFakeAnimation Storyboard.TargetName="panelControl"  Duration="0:0:0" Command="{Binding Path=OpenPanelCommand, Mode=OneWay}"
-                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"/>
                         </Storyboard>
+                        
                     </BeginStoryboard>
                 </EventTrigger>
             </Grid.Triggers>
