@@ -19,6 +19,7 @@ namespace WpfApp2.LegParts
     public class LegPartViewModel : ViewModelBase
     {
         public bool PanelOpened { get; set; }
+        public bool PanelOpened2 = true;
 
         protected string _title;
         public string Title
@@ -61,9 +62,9 @@ namespace WpfApp2.LegParts
 
         public DelegateCommand AnimationCompleted {get; set; }
 
-        private void OpenPanel(object parameter)
+        public void OpenPanel()
         {
-            Storyboard storyboard1 = new Storyboard();
+            /*Storyboard storyboard1 = new Storyboard();
 
             DelegateCommand AnimationCompleted = new DelegateCommand(
                 () => { PanelOpened = true; }
@@ -78,7 +79,7 @@ namespace WpfApp2.LegParts
 
             Storyboard.SetTarget((Timeline)doubleAnimation1, (DependencyObject)_panel.RenderTransform);
             Storyboard.SetTargetProperty((Timeline)doubleAnimation1, new PropertyPath("X"));
-            ((ICollection<Timeline>)storyboard1.Children).Add((Timeline)doubleAnimation1);
+            ((ICollection<Timeline>)storyboard1.Children).Add((Timeline)doubleAnimation1);*/
 
             //переписать в хaml темплейт?
             /*
@@ -98,8 +99,9 @@ namespace WpfApp2.LegParts
 
         public LegPartViewModel(NavigationController controller) : base(controller)
         {
-            this._openPanelCommand = new RelayCommand(OpenPanel);
             PanelOpened = false;
+            //this._openPanelCommand = new RelayCommand(OpenPanel);
+            this._openPanelCommand = new DelegateCommand(OpenPanel);
 
             //_sections = new List<BPVHipSectionViewModel>();
             _hasNavigation = false;
@@ -127,5 +129,7 @@ namespace WpfApp2.LegParts
             var vm = new DialogConfirmStructureViewModel();
             var result = DialogService.DialogService.OpenDialog(vm, parameter as Window);
         }
+
+        
 }
 }
