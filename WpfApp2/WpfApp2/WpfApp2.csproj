@@ -137,7 +137,6 @@
       <DependentUpon>DialogConfirmStructureView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\DialogConfirmStructure\DialogConfirmStructureViewModel.cs" />
-    <Compile Include="LegParts\CommandFakeAnimation.cs" />
     <Compile Include="LegParts\LegPartViewModel.cs" />
     <Compile Include="LegParts\LegSectionViewModel.cs" />
     <Compile Include="LegParts\SizePanelViewModel.cs" />
@@ -145,8 +144,14 @@
     <Compile Include="LegParts\Templates\LegTemplateSelector.cs" />
     <Compile Include="LegParts\VMs\BPVHipSectionViewModel.cs" />
     <Compile Include="LegParts\VMs\BPVHipViewModel.cs" />
+    <Compile Include="LegParts\VMs\HipPerforate.cs" />
+    <Compile Include="LegParts\VMs\HipPerforateSectionViewModel.cs" />
+    <Compile Include="LegParts\VMs\PDSVSectionViewModel.cs" />
+    <Compile Include="LegParts\VMs\PDSVViewModel.cs" />
     <Compile Include="LegParts\VMs\SFSSectionViewModel.cs" />
     <Compile Include="LegParts\VMs\SFSViewModel.cs" />
+    <Compile Include="LegParts\VMs\ZDSVSectionViewModel.cs" />
+    <Compile Include="LegParts\VMs\ZDSVViewModel.cs" />
     <Compile Include="Navigation\NavigationController.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />

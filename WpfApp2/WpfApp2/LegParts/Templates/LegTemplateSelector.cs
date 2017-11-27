@@ -15,6 +15,7 @@ namespace WpfApp2.LegParts.Templates
             if (item == null)
                 return null;
 
+            //тут ещё айди футляра
             if (item.GetType() == typeof(BPVHipSectionViewModel))
                 return StandartTemplate;
 
