@@ -48,8 +48,8 @@ namespace WpfApp2.LegParts
             set { this.openDialogCommand = value; }
         }
 
-        private ICommand _openPanelCommand = null;
-        public ICommand OpenPanelCommand { set; get; }
+       // private ICommand _openPanelCommand = null;
+        public ICommand OpenPanelCommand { set; private get; }
 
         public SizePanelViewModel CurrentPanelViewModel;
 
@@ -63,7 +63,8 @@ namespace WpfApp2.LegParts
 
         private void OpenPanel(object parameter)
         {
-            Storyboard storyboard1 = new Storyboard();
+            PanelOpened = true;
+            /*Storyboard storyboard1 = new Storyboard();
 
             DelegateCommand AnimationCompleted = new DelegateCommand(
                 () => { PanelOpened = true; }
@@ -78,7 +79,7 @@ namespace WpfApp2.LegParts
 
             Storyboard.SetTarget((Timeline)doubleAnimation1, (DependencyObject)_panel.RenderTransform);
             Storyboard.SetTargetProperty((Timeline)doubleAnimation1, new PropertyPath("X"));
-            ((ICollection<Timeline>)storyboard1.Children).Add((Timeline)doubleAnimation1);
+            ((ICollection<Timeline>)storyboard1.Children).Add((Timeline)doubleAnimation1);*/
 
             //переписать в хaml темплейт?
             /*
@@ -98,7 +99,8 @@ namespace WpfApp2.LegParts
 
         public LegPartViewModel(NavigationController controller) : base(controller)
         {
-            this._openPanelCommand = new RelayCommand(OpenPanel);
+            //this._openPanelCommand = new RelayCommand(OpenPanel);
+            OpenPanelCommand = new DelegateCommand(() => { PanelOpened = true; });
             PanelOpened = false;
 
             //_sections = new List<BPVHipSectionViewModel>();
