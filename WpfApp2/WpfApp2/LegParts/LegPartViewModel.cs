@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,9 +17,28 @@ using WpfApp2.ViewModels;
 
 namespace WpfApp2.LegParts
 {
-    public class LegPartViewModel : ViewModelBase
+    public class LegPartViewModel : ViewModelBase, INotifyPropertyChanged
     {
-        public bool PanelOpened { get; set; }
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        private bool _panelOpened = false;
+
+        public bool PanelOpened
+        {
+            get { return _panelOpened; }
+            set
+            {
+                _panelOpened = value;
+                OnPropertyChanged("PanelOpened");
+            }
+        }
 
         protected string _title;
         public string Title
@@ -61,7 +81,7 @@ namespace WpfApp2.LegParts
 
         public DelegateCommand AnimationCompleted {get; set; }
 
-        private void OpenPanel(object parameter)
+        private void OpenPanel()
         {
             PanelOpened = true;
             /*Storyboard storyboard1 = new Storyboard();

@@ -104,7 +104,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CommandFakeAnimation.cs" />
     <Compile Include="Controls\AddingDescription.xaml.cs">
       <DependentUpon>AddingDescription.xaml</DependentUpon>
     </Compile>

@@ -73,13 +73,12 @@
             <Grid.Triggers>
                 <EventTrigger RoutedEvent="Button.Click" SourceName="AddButton2">
                     <BeginStoryboard Name="MyBeginStoryboard">
-                        <Storyboard>
+                        <Storyboard TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" local1:StoryboardHelper.CompletedCommand="{Binding Path=OpenPanelCommand}">
                             <DoubleAnimation 
                                 Storyboard.TargetName="panelControl" 
                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
-                                Duration="0:0:01" From="0" To="-700" />
-                            <local1:CommandFakeAnimation Storyboard.TargetName="panelControl"  Duration="0:0:0" Command="{Binding Path=OpenPanelCommand, Mode=OneWay}"
-                                            Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"/>
+                                Duration="0:0:005" From="0" To="-700" />
+                            
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
