@@ -66,7 +66,7 @@
                         <CheckBox x:Name="checkBox" Content="есть поле для размерности" HorizontalAlignment="Left" IsChecked="{Binding Path=HasSize}" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="109"/>
                         <ComboBox x:Name="comboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="233" ItemsSource="{Binding Path=Dimentions}" Visibility="{Binding Path=HasSize, Converter={StaticResource BoolToVis}}" SelectedItem="{Binding SelectedItem}" Canvas.Left="199" Canvas.Top="113" Height="23"/>
                         <Button x:Name="button" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Canvas.Left="53" Canvas.Top="232"/>
-                        <Button x:Name="button_Copy" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding AddCommand}" Canvas.Left="249" Canvas.Top="232"/>
+                        <Button x:Name="ButtonAddStructure" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding AddCommand}" Canvas.Left="249" Canvas.Top="232"/>
                         <Separator Height="18" Margin="0" Canvas.Top="19" Width="442"/>
                         <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="37" Canvas.Left="10" Text="Первая часть:"/>
                         <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="152" Canvas.Left="10"><Run Text="Вторая часть "/><Run Text="(не обязательно к заполнению):"/></TextBlock>
@@ -77,13 +77,22 @@
 
             <Grid.Triggers>
                 <EventTrigger RoutedEvent="Button.Click" SourceName="AddButton2">
-                    <BeginStoryboard Name="MyBeginStoryboard">
+                    <BeginStoryboard Name="StartStoryboard">
                         <Storyboard SpeedRatio="12" TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" local1:StoryboardHelper.CompletedCommand="{Binding Path=OpenPanelCommand}">
                             <DoubleAnimation 
                                 Storyboard.TargetName="panelControl" 
                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
                                 Duration="0:0:005" From="0" To="-700" />
-
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Button.Click" SourceName="ButtonAddStructure">
+                    <BeginStoryboard Name="CloseStoryboard">
+                        <Storyboard SpeedRatio="12" TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" local1:StoryboardHelper.CompletedCommand="{Binding Path=ClosePanelCommand}">
+                            <DoubleAnimation 
+                                Storyboard.TargetName="panelControl" 
+                                Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                Duration="0:0:005" From="-700" To="0" />
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>

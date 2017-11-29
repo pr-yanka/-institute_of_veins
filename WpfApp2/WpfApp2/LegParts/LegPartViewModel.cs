@@ -90,6 +90,7 @@ namespace WpfApp2.LegParts
         }
 
         public ICommand OpenPanelCommand { set; private get; }
+        public ICommand ClosePanelCommand { set; private get; }
 
         public SizePanelViewModel CurrentPanelViewModel;
 
@@ -104,6 +105,7 @@ namespace WpfApp2.LegParts
         public LegPartViewModel(NavigationController controller) : base(controller)
         {
             OpenPanelCommand = new DelegateCommand(() => { PanelOpened = true; });
+            ClosePanelCommand = new DelegateCommand(() => { PanelOpened = false; });
             PanelOpened = false;
 
             //_sections = new List<BPVHipSectionViewModel>();
