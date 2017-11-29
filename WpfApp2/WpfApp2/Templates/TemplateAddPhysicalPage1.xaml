@@ -203,7 +203,7 @@
                 <ListBoxItem Content=""/>
             </ListBox>
             <Button x:Name="button_Copy9" Content="Завершить обследование" Command="{Binding OpenDialogCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" HorizontalAlignment="Left" Margin="695,684,0,0" VerticalAlignment="Top" Width="285" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy10" Content="Создать отчёт" Command="{Binding ToPhysicalOverviewCommand}" HorizontalAlignment="Left" Margin="357,684,0,0" VerticalAlignment="Top" Width="285" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Button x:Name="button_Copy10" Content="Заключение" Command="{Binding ToPhysicalOverviewCommand}" HorizontalAlignment="Left" Margin="357,684,0,0" VerticalAlignment="Top" Width="285" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

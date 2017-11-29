@@ -34,7 +34,7 @@
                    VerticalAlignment="Top" RenderTransformOrigin="0.491,0.474"/>
             <Button x:Name="button_Copy" Command="{Binding Path=ToOperationOverviewCommand}" Content="Возврат" HorizontalAlignment="Left" Margin="88,274,0,0"              
                     VerticalAlignment="Top" Width="158" Height="28"/>
-
+            <Button x:Name="button_Copy10" Content="Выписка" HorizontalAlignment="Left" Margin="357,684,0,0" VerticalAlignment="Top" Width="285" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
         </Grid>
     </DataTemplate>
 

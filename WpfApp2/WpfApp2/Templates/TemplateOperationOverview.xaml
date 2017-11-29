@@ -30,6 +30,7 @@
             <Button Content="Редактировать" Width="244" Height="80" Command="{Binding Path=ToEditOperationCommand}"></Button>
             <Button x:Name="button_Copy2" Command="{Binding Path=ToCurrentPatientCommand}" Content="Вернуться к пациенту" HorizontalAlignment="Left" Margin="136,593,0,0" VerticalAlignment="Top"  
                     Width="158" Height="20"/>
+            <Button x:Name="button_Copy10" Content="Предоперационный эпикриз" HorizontalAlignment="Left" Margin="357,684,0,0" VerticalAlignment="Top" Width="285" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>
