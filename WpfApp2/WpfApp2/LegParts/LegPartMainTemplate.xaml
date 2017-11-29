@@ -5,23 +5,28 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/LegParts/Templates/LegTemplateSelector.xaml"/>
         <ResourceDictionary Source="/LegParts/Templates/RightPanelAnimation.xaml"/>
+        <ResourceDictionary Source="/LegParts/Templates/StandartPartTemplate.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <DataTemplate x:Key="LegPartTemplate">
-        <Grid Margin="0,50,0,0">
+        <Grid Margin="0,80,0,0" ShowGridLines="True">
             <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock x:Name="textBlock" HorizontalAlignment="Center" Margin="0,20,0,0" TextWrapping="Wrap" Text="{Binding Path=Controller.LegViewModel.Title}" VerticalAlignment="Top" FontSize="28"/>
-            <ListView ItemsSource="{Binding Path=Controller.LegViewModel.LegSections}" Margin="5,65,5,15">
+            <TextBlock Grid.Row="0" x:Name="textBlock" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Margin="0,10,0,10" TextWrapping="Wrap" Text="{Binding Path=Controller.LegViewModel.Title}" FontSize="28"/>
+            <ContentControl Grid.Row="1" Content="{Binding Controller.LegViewModel}" VerticalAlignment="Center" Margin="0,10,0,10" ContentTemplateSelector="{StaticResource LegTemplateSelector}" Background="#FFF7F7F7"/>
+            <ListView Grid.Row="2" ItemsSource="{Binding Path=Controller.LegViewModel.LegSections}" Margin="5,10,5,10" ScrollViewer.VerticalScrollBarVisibility="Visible">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="ListViewItem">
-                                    <ContentControl Content="{Binding}" ContentTemplateSelector="{StaticResource LegTemplateSelector}" Background="#FFF7F7F7" Grid.ColumnSpan="2"/>
+                                    <!--<ContentControl Content="{Binding}" ContentTemplateSelector="{StaticResource LegTemplateSelector}" Background="#FFF7F7F7" Grid.ColumnSpan="2"/>-->
+                                    <ContentPresenter ContentTemplate="{StaticResource StandartPartTemplate}" Grid.ColumnSpan="2"/>
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
@@ -30,20 +35,20 @@
                 <!--<ContentControl ContentTemplateSelector="{StaticResource LegTemplateSelector}" Background="#FFF7F7F7" Grid.ColumnSpan="2"/>-->
             </ListView>
             <!--<ContentControl Content="{Binding Controller.LegViewModel}" ContentTemplateSelector="{StaticResource LegTemplateSelector}" Background="#FFF7F7F7" Grid.ColumnSpan="2"/>-->
-            
-            <StackPanel Orientation="Horizontal" Grid.Row="1">
+
+            <StackPanel Orientation="Horizontal" Grid.Row="3"  VerticalAlignment="Center">
                 <Button x:Name="AddButton" Command="{Binding RevertCommand}" Content="Вернуться к ноге" HorizontalAlignment="Left" VerticalAlignment="Top" Width="408" Background="#FFDBEDF7" FontSize="16" Grid.ColumnSpan="2"/>
                 <Button x:Name="AddButton_Copy" Command="{Binding SaveCommand}" Content="Сохранить" HorizontalAlignment="Right"  VerticalAlignment="Top" Width="408" Background="#FFDBEDF7" FontSize="16" Grid.ColumnSpan="2"/>
                 <Button x:Name="AddButton2" Content="Сохранить" HorizontalAlignment="Right"  VerticalAlignment="Top" Width="408" Background="#FFDBEDF7" FontSize="16" Grid.ColumnSpan="2"/>
             </StackPanel>
 
-            <Border Visibility="{Binding PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOverlay">
+            <Border Grid.RowSpan="4" Visibility="{Binding PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOverlay">
                 <Border.Background>
                     <SolidColorBrush Color="Black" Opacity="0.78"/>
                 </Border.Background>
             </Border>
 
-            <Border x:Name="panelControl" Margin="0,0,-450,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="450" Height="275" DataContext="{Binding CurrentPanelViewModel}" >
+            <Border x:Name="panelControl" Grid.RowSpan="4" Margin="0,0,-450,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="450" Height="275" DataContext="{Binding CurrentPanelViewModel}" >
                 <Border.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -73,12 +78,12 @@
             <Grid.Triggers>
                 <EventTrigger RoutedEvent="Button.Click" SourceName="AddButton2">
                     <BeginStoryboard Name="MyBeginStoryboard">
-                        <Storyboard TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" local1:StoryboardHelper.CompletedCommand="{Binding Path=OpenPanelCommand}">
+                        <Storyboard SpeedRatio="12" TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" local1:StoryboardHelper.CompletedCommand="{Binding Path=OpenPanelCommand}">
                             <DoubleAnimation 
                                 Storyboard.TargetName="panelControl" 
                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
                                 Duration="0:0:005" From="0" To="-700" />
-                            
+
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>

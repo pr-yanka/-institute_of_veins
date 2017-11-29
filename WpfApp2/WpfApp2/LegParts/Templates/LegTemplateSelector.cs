@@ -9,6 +9,7 @@ namespace WpfApp2.LegParts.Templates
     public class LegTemplateSelector : DataTemplateSelector
     {
         public DataTemplate StandartTemplate { get; set; }
+        public DataTemplate BPVHipTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -16,8 +17,8 @@ namespace WpfApp2.LegParts.Templates
                 return null;
 
             //тут ещё айди футляра
-            if (item.GetType() == typeof(BPVHipSectionViewModel))
-                return StandartTemplate;
+            if (item.GetType() == typeof(BPVHipViewModel))
+                return BPVHipTemplate;
 
             if (item.GetType() == typeof(SFSSectionViewModel))
                 return StandartTemplate;

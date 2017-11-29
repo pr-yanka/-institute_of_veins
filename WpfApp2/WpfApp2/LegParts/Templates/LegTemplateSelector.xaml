@@ -4,8 +4,10 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="StandartPartTemplate.xaml"/>
+        <ResourceDictionary Source="BPVHipTemplate.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
     <local:LegTemplateSelector x:Key="LegTemplateSelector" 
-                              StandartTemplate="{StaticResource StandartPartTemplate}"/>
+                              StandartTemplate="{StaticResource StandartPartTemplate}"
+                              BPVHipTemplate="{StaticResource BPVHipTemplate}"/>
 </ResourceDictionary>
