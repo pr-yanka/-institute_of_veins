@@ -174,11 +174,10 @@
                 </StackPanel>
             </ScrollViewer>
 
-            <Button x:Name="buttonSFS1" Command="{Binding ToBPVHipCommand}" Content="Заполнить" HorizontalAlignment="Left" Margin="385,237,0,0" VerticalAlignment="Top" Width="130" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
-            <Button x:Name="buttonBPVHip1" Command="{Binding ToSFSCommand}" Content="Заполнить" HorizontalAlignment="Left" Margin="385,267,0,0" VerticalAlignment="Top" Width="130" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
-            <Button x:Name="buttonSFS2" Command="{Binding ToBPVHipCommand}" Content="Редактировать" HorizontalAlignment="Left" Margin="860,237,0,0" VerticalAlignment="Top" Width="130" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
-            <Button x:Name="buttonBPVHip2" Command="{Binding ToSFSCommand}" Content="Редактировать" HorizontalAlignment="Left" Margin="860,267,0,0" VerticalAlignment="Top" Width="130" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
-
+            <Button x:Name="buttonSFS1" Command="{Binding ToLeftBPVHipCommand}" Content="{Binding Path=LeftSFS.ButtonText}" HorizontalAlignment="Left" Margin="385,237,0,0" VerticalAlignment="Top" Width="130" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+            <Button x:Name="buttonBPVHip1" Command="{Binding ToLeftSFSCommand}" Content="{Binding Path=LeftBPVHip.ButtonText}" HorizontalAlignment="Left" Margin="385,267,0,0" VerticalAlignment="Top" Width="130" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+            <Button x:Name="buttonSFS2" Command="{Binding ToRightSFSCommand}" Content="{Binding Path=RightSFS.ButtonText}" HorizontalAlignment="Left" Margin="860,237,0,0" VerticalAlignment="Top" Width="130" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+            <Button x:Name="buttonBPVHip2" Command="{Binding ToRightBPVHipCommand}" Content="{Binding Path=RightBPVHip.ButtonText}" HorizontalAlignment="Left" Margin="860,267,0,0" VerticalAlignment="Top" Width="130" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
 
             <Separator HorizontalAlignment="Left" Height="16" Margin="5,565,0,0" VerticalAlignment="Top" Width="1036" RenderTransformOrigin="0.51,0.49"/>
             <TextBlock x:Name="textBlock1_Copy4" HorizontalAlignment="Center" Margin="10,578,942,256" TextWrapping="Wrap" VerticalAlignment="Center" Width="199" FontSize="18" Text="Рекомендации" TextAlignment="Center"/>

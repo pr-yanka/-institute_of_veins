@@ -19,6 +19,27 @@ namespace WpfApp2.LegParts
 {
     public class LegPartViewModel : ViewModelBase, INotifyPropertyChanged
     {
+        private bool _isEmpty = true;
+        public bool IsEmpty {
+            get
+            {
+                return _isEmpty;
+            }
+            protected set {
+                _isEmpty = value;
+                OnPropertyChanged("IsEmpty");
+            }
+        }
+
+        public string ButtonText
+        {
+            get
+            {
+                if (!IsEmpty) return "Редактировать";
+                else return "Заполнить";
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string propertyName)
         {
@@ -68,7 +89,6 @@ namespace WpfApp2.LegParts
             set { this.openDialogCommand = value; }
         }
 
-       // private ICommand _openPanelCommand = null;
         public ICommand OpenPanelCommand { set; private get; }
 
         public SizePanelViewModel CurrentPanelViewModel;
@@ -81,45 +101,8 @@ namespace WpfApp2.LegParts
 
         public DelegateCommand AnimationCompleted {get; set; }
 
-        private void OpenPanel()
-        {
-            PanelOpened = true;
-            /*Storyboard storyboard1 = new Storyboard();
-
-            DelegateCommand AnimationCompleted = new DelegateCommand(
-                () => { PanelOpened = true; }
-            );
-
-            ((UIElement)_panel).RenderTransform = (Transform)new TranslateTransform();
-            DoubleAnimation doubleAnimation1 = new DoubleAnimation();
-            doubleAnimation1.Duration = new Duration(new TimeSpan(0, 0, 2));
-            doubleAnimation1.To = -200;
-            doubleAnimation1.AutoReverse = true;
-            doubleAnimation1.RepeatBehavior = RepeatBehavior.Forever;
-
-            Storyboard.SetTarget((Timeline)doubleAnimation1, (DependencyObject)_panel.RenderTransform);
-            Storyboard.SetTargetProperty((Timeline)doubleAnimation1, new PropertyPath("X"));
-            ((ICollection<Timeline>)storyboard1.Children).Add((Timeline)doubleAnimation1);*/
-
-            //переписать в хaml темплейт?
-            /*
-            if (e.ClickCount != 2)
-                return;
-
-            Storyboard sb = this.FindResource("Open") as Storyboard;
-            sb.Completed += (o, args) =>
-            {
-                ShadowOverlay.Visibility = Visibility.Visible;
-                MainGrid.IsEnabled = false;
-            };
-            Storyboard.SetTarget(sb, this.newControl1);
-            sb.Begin();
-            */
-        }
-
         public LegPartViewModel(NavigationController controller) : base(controller)
         {
-            //this._openPanelCommand = new RelayCommand(OpenPanel);
             OpenPanelCommand = new DelegateCommand(() => { PanelOpened = true; });
             PanelOpened = false;
 
@@ -130,6 +113,7 @@ namespace WpfApp2.LegParts
             RevertCommand = new DelegateCommand(
                 () =>
                 {
+                    IsEmpty = false;
                     Controller.NavigateTo<ViewModelAddPhysical>();
                 }
             );
@@ -137,6 +121,7 @@ namespace WpfApp2.LegParts
             SaveCommand = new DelegateCommand(
                 () =>
                 {
+                    IsEmpty = false;
                     Controller.NavigateTo<ViewModelAddPhysical>();
                 }
             );

@@ -21,8 +21,10 @@ namespace WpfApp2.ViewModels
 
         public DelegateCommand ToPhysicalOverviewCommand { get; protected set; }
         public DelegateCommand ToSymptomsAddCommand { get; protected set; }
-        public DelegateCommand ToBPVHipCommand { get; protected set; }
-        public DelegateCommand ToSFSCommand { get; protected set; }
+        public DelegateCommand ToRightBPVHipCommand { get; protected set; }
+        public DelegateCommand ToLeftBPVHipCommand { get; protected set; }
+        public DelegateCommand ToRightSFSCommand { get; protected set; }
+        public DelegateCommand ToLeftSFSCommand { get; protected set; }
         public DelegateCommand ToAddRecomendationsCommand { get; protected set; }
 
         private ICommand openDialogCommand = null;
@@ -31,6 +33,12 @@ namespace WpfApp2.ViewModels
             get { return this.openDialogCommand; }
             set { this.openDialogCommand = value; }
         }
+
+        public BPVHipViewModel LeftBPVHip { get; protected set; }
+        public SFSViewModel LeftSFS { get; protected set; }
+
+        public BPVHipViewModel RightBPVHip { get; protected set; }
+        public SFSViewModel RightSFS { get; protected set; }
 
         private void FinishAdding(object parameter)
         {
@@ -49,6 +57,12 @@ namespace WpfApp2.ViewModels
 
         public ViewModelAddPhysical(NavigationController controller) : base(controller)
         {
+            LeftBPVHip = new BPVHipViewModel(Controller);
+            RightBPVHip = new BPVHipViewModel(Controller);
+
+            LeftSFS = new SFSViewModel(Controller);
+            RightSFS = new SFSViewModel(Controller);
+
             Controller = controller;
             base.HasNavigation = false;
 
@@ -61,18 +75,34 @@ namespace WpfApp2.ViewModels
                 }
             );
 
-            ToBPVHipCommand = new DelegateCommand(
+            ToRightBPVHipCommand = new DelegateCommand(
                 () =>
                 {
-                    Controller.LegViewModel = new BPVHipViewModel(Controller);
+                    Controller.LegViewModel = RightBPVHip;
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
-            ToSFSCommand = new DelegateCommand(
+            ToLeftBPVHipCommand = new DelegateCommand(
                 () =>
                 {
-                    Controller.LegViewModel = new SFSViewModel(Controller);
+                    Controller.LegViewModel = LeftBPVHip;
+                    Controller.NavigateTo<LegPartViewModel>();
+                }
+            );
+
+            ToLeftSFSCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.LegViewModel = LeftSFS;
+                    Controller.NavigateTo<LegPartViewModel>();
+                }
+            );
+
+            ToRightSFSCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.LegViewModel = RightSFS;
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
