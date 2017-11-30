@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using WpfApp2.LegParts.DialogConfirmStructure;
 using WpfApp2.LegParts.VMs;
+using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 using WpfApp2.ViewModels;
 
@@ -27,9 +28,11 @@ namespace WpfApp2.LegParts
             }
             protected set {
                 _isEmpty = value;
-                OnPropertyChanged("IsEmpty");
+                OnPropertyChanged("IsEmpty");  
             }
         }
+
+        public LegSide CurrentLegSide { get; protected set; }
 
         public string ButtonText
         {
@@ -102,7 +105,7 @@ namespace WpfApp2.LegParts
 
         public DelegateCommand AnimationCompleted {get; set; }
 
-        public LegPartViewModel(NavigationController controller) : base(controller)
+        public void Initialization()
         {
             OpenPanelCommand = new DelegateCommand(() => { PanelOpened = true; });
             ClosePanelCommand = new DelegateCommand(() => { PanelOpened = false; });
@@ -110,7 +113,6 @@ namespace WpfApp2.LegParts
 
             //_sections = new List<BPVHipSectionViewModel>();
             _hasNavigation = false;
-            Controller = controller;
 
             RevertCommand = new DelegateCommand(
                 () =>
@@ -124,11 +126,35 @@ namespace WpfApp2.LegParts
                 () =>
                 {
                     IsEmpty = false;
+
+                    MessageBus.Default.Call("LegDataSaved", this, this.GetType());
                     Controller.NavigateTo<ViewModelAddPhysical>();
                 }
             );
 
             CurrentPanelViewModel = new SizePanelViewModel(this.Controller);
+        }
+
+        public LegPartViewModel(NavigationController controller, LegSide side) : base(controller)
+        {
+            Initialization();
+            CurrentLegSide = side;
+            //MessageBus.Default.Subscribe("LegPart", Handler);
+            
+            Controller = controller;       
+        }
+
+        public LegPartViewModel(NavigationController controller) : base(controller)
+        {
+            //MessageBus.Default.Subscribe("LegPart", Handler);
+            
+            //_sections = new List<BPVHipSectionViewModel>();
+            Controller = controller;
+        }
+
+        private void Handler(object sender, object data)
+        {
+            var vm = (LegPartViewModel) data;
         }
 
         private void FinishAdding(object parameter)

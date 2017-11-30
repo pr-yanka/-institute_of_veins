@@ -26,5 +26,16 @@ namespace WpfApp2.LegParts.VMs
             }
             _title = "Сафенно-феморальное соустье";
         }
+
+        public SFSViewModel(NavigationController controller, LegSide side) : base(controller, side)
+        {
+            LevelCount = 6;
+            _sections = new List<LegSectionViewModel>();
+            for (int i = 0; i < LevelCount; i++)
+            {
+                LegSections.Add(new SFSSectionViewModel(i + 1));
+            }
+            _title = "Сафенно-феморальное соустье";
+        }
     }
 }

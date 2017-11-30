@@ -16,7 +16,7 @@ namespace WpfApp2.LegParts.VMs
             set { _sections = value; }
         }
 
-        public HipPerforate(NavigationController controller) : base(controller)
+        public HipPerforate(NavigationController controller, LegSide side) : base(controller, side)
         {
             LevelCount = 5;
             _sections = new List<LegSectionViewModel>();

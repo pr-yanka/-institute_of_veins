@@ -39,17 +39,33 @@
             
             <ScrollViewer Margin="10,235,489,342" RenderTransformOrigin="0.5,0.5" FontSize="16">
                 <StackPanel Orientation="Vertical">
-                    <Expander Header="I.	СФС (Сафено-феморальное соустье)"  FontSize="16" Height="30" >
-                        <Grid Background="#FFE5E5E5"/>
+                    
+                    <Expander FontSize="16">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="I.	СФС (Сафено-феморальное соустье)" Width="330" HorizontalAlignment="Center" Margin="10,0,10,0"/>
+                                <Button x:Name="buttonBPVHip1" Command="{Binding ToLeftSFSCommand}" Content="{Binding Path=LeftSFS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+
+                        </StackPanel>
                     </Expander>
-                    <Separator Margin="10,0,10,0"/>
-                    <Expander Header="II.	БПВ на бедре (Большая подкожная вена)" FontSize="16">
+
+                    <Expander FontSize="16">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="II.	БПВ на бедре (Большая подкожная вена)" Width="330" HorizontalAlignment="Center" Margin="10,0,10,0"/>
+                                <Button x:Name="buttonSFS1" Command="{Binding ToLeftBPVHipCommand}" Content="{Binding Path=LeftBPVHip.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
                         <StackPanel Orientation="Vertical">
                             <Label HorizontalAlignment="Center" Content="Ход: гибридный ход" FontSize="12"/>
                             <Label HorizontalAlignment="Center" Content="БПВ на бедре: без рефлюкса" FontSize="12"/>
                         </StackPanel>
                     </Expander>
-                    <Separator Margin="10,0,10,0"/>
+
+                    <Separator/>
                     <Expander Header="III.	ПДСВ (Передняя добавочная сафенная вена)*"  FontSize="16">
                         <Grid Background="#FFE5E5E5"/>
                     </Expander>
@@ -174,8 +190,7 @@
                 </StackPanel>
             </ScrollViewer>
 
-            <Button x:Name="buttonSFS1" Command="{Binding ToLeftBPVHipCommand}" Content="{Binding Path=LeftSFS.ButtonText}" HorizontalAlignment="Left" Margin="385,237,0,0" VerticalAlignment="Top" Width="130" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
-            <Button x:Name="buttonBPVHip1" Command="{Binding ToLeftSFSCommand}" Content="{Binding Path=LeftBPVHip.ButtonText}" HorizontalAlignment="Left" Margin="385,267,0,0" VerticalAlignment="Top" Width="130" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+            
             <Button x:Name="buttonSFS2" Command="{Binding ToRightSFSCommand}" Content="{Binding Path=RightSFS.ButtonText}" HorizontalAlignment="Left" Margin="860,237,0,0" VerticalAlignment="Top" Width="130" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
             <Button x:Name="buttonBPVHip2" Command="{Binding ToRightBPVHipCommand}" Content="{Binding Path=RightBPVHip.ButtonText}" HorizontalAlignment="Left" Margin="860,267,0,0" VerticalAlignment="Top" Width="130" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
 

@@ -38,7 +38,7 @@
 
             <StackPanel Orientation="Horizontal" Grid.Row="3"  VerticalAlignment="Center">
                 <Button x:Name="AddButton" Command="{Binding RevertCommand}" Content="Вернуться к ноге" HorizontalAlignment="Left" VerticalAlignment="Top" Width="408" Background="#FFDBEDF7" FontSize="16" Grid.ColumnSpan="2"/>
-                <Button x:Name="AddButton_Copy" Command="{Binding SaveCommand}" Content="Сохранить" HorizontalAlignment="Right"  VerticalAlignment="Top" Width="408" Background="#FFDBEDF7" FontSize="16" Grid.ColumnSpan="2"/>
+                <Button x:Name="AddButton_Copy" Command="{Binding Controller.LegViewModel.SaveCommand}" Content="Сохранить" HorizontalAlignment="Right"  VerticalAlignment="Top" Width="408" Background="#FFDBEDF7" FontSize="16" Grid.ColumnSpan="2"/>
                 <Button x:Name="AddButton2" Content="Сохранить" HorizontalAlignment="Right"  VerticalAlignment="Top" Width="408" Background="#FFDBEDF7" FontSize="16" Grid.ColumnSpan="2"/>
             </StackPanel>
 

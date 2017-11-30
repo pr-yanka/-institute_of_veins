@@ -10,6 +10,7 @@ using WpfApp2.DialogPreOperation;
 using WpfApp2.DialogService;
 using WpfApp2.LegParts;
 using WpfApp2.LegParts.VMs;
+using WpfApp2.Messaging;
 
 namespace WpfApp2.ViewModels
 {
@@ -57,11 +58,12 @@ namespace WpfApp2.ViewModels
 
         public ViewModelAddPhysical(NavigationController controller) : base(controller)
         {
-            LeftBPVHip = new BPVHipViewModel(Controller);
-            RightBPVHip = new BPVHipViewModel(Controller);
+            MessageBus.Default.Subscribe("LegDataSaved", Handler);
+            LeftBPVHip = new BPVHipViewModel(Controller, LegSide.Left);
+            RightBPVHip = new BPVHipViewModel(Controller, LegSide.Right);
 
-            LeftSFS = new SFSViewModel(Controller);
-            RightSFS = new SFSViewModel(Controller);
+            LeftSFS = new SFSViewModel(Controller, LegSide.Left);
+            RightSFS = new SFSViewModel(Controller, LegSide.Right);
 
             Controller = controller;
             base.HasNavigation = false;
@@ -95,6 +97,7 @@ namespace WpfApp2.ViewModels
                 () =>
                 {
                     Controller.LegViewModel = LeftSFS;
+                    //MessageBus.Default.Call("LegPart", this, "blah");
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -134,6 +137,27 @@ namespace WpfApp2.ViewModels
                     Controller.NavigateTo<ViewModelCurrentPatient>();
                 }
             );
+        }
+
+        //кто присылает и что присылает
+        private void Handler(object sender, object data)
+        {
+            Type senderType = sender.GetType();
+            LegPartViewModel senderVM = (LegPartViewModel) sender;
+
+            //sender проверять какого типа
+            if (senderType == typeof(SFSViewModel))
+                if (senderVM.CurrentLegSide == LegSide.Left)
+                    LeftSFS = (SFSViewModel)sender;
+                else
+                    RightSFS = (SFSViewModel)sender;
+
+            if (senderType == typeof(BPVHipViewModel))
+                if (senderVM.CurrentLegSide == LegSide.Left)
+                    LeftBPVHip = (BPVHipViewModel)sender;
+                else
+                    RightBPVHip = (BPVHipViewModel)sender;
+
         }
     }
 }

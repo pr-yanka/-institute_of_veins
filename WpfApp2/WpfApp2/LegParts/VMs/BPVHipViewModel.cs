@@ -25,6 +25,17 @@ namespace WpfApp2.LegParts.VMs
                 LegSections.Add(new BPVHipSectionViewModel(i + 1));
             }
             _title = "Большая подкожная вена на голени";
-        }    
+        }
+
+        public BPVHipViewModel(NavigationController controller, LegSide side) : base(controller, side)
+        {
+            LevelCount = 5;
+            _sections = new List<LegSectionViewModel>();
+            for (int i = 0; i < LevelCount; i++)
+            {
+                LegSections.Add(new BPVHipSectionViewModel(i + 1));
+            }
+            _title = "Большая подкожная вена на голени";
+        }
     }
 }

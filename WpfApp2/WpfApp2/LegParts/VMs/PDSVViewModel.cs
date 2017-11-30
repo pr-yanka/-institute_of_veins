@@ -16,7 +16,7 @@ namespace WpfApp2.LegParts.VMs
             set { _sections = value; }
         }
 
-        public PDSVViewModel(NavigationController controller) : base(controller)
+        public PDSVViewModel(NavigationController controller, LegSide side) : base(controller, side)
         {
             LevelCount = 3;
             _sections = new List<LegSectionViewModel>();
