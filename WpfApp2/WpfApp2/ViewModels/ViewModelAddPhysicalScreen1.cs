@@ -22,10 +22,21 @@ namespace WpfApp2.ViewModels
 
         public DelegateCommand ToPhysicalOverviewCommand { get; protected set; }
         public DelegateCommand ToSymptomsAddCommand { get; protected set; }
+
         public DelegateCommand ToRightBPVHipCommand { get; protected set; }
         public DelegateCommand ToLeftBPVHipCommand { get; protected set; }
+
+        public DelegateCommand ToLeftPDSVCommand { get; protected set; }
+        public DelegateCommand ToLeftZDSVCommand { get; protected set; }
+        public DelegateCommand ToLeftPerforateCommand { get; protected set; }
+
         public DelegateCommand ToRightSFSCommand { get; protected set; }
         public DelegateCommand ToLeftSFSCommand { get; protected set; }
+
+        public DelegateCommand ToRightPDSVCommand { get; protected set; }
+        public DelegateCommand ToRightZDSVCommand { get; protected set; }
+        public DelegateCommand ToRightPerforateCommand { get; protected set; }
+
         public DelegateCommand ToAddRecomendationsCommand { get; protected set; }
 
         private ICommand openDialogCommand = null;
@@ -37,9 +48,15 @@ namespace WpfApp2.ViewModels
 
         public BPVHipViewModel LeftBPVHip { get; protected set; }
         public SFSViewModel LeftSFS { get; protected set; }
+        public PDSVViewModel LeftPDSV { get; protected set; }
+        public ZDSVViewModel LeftZDSV { get; protected set; }
+        public HipPerforateViewModel LeftPerforate { get; protected set; }
 
         public BPVHipViewModel RightBPVHip { get; protected set; }
         public SFSViewModel RightSFS { get; protected set; }
+        public PDSVViewModel RightPDSV { get; protected set; }
+        public ZDSVViewModel RightZDSV { get; protected set; }
+        public HipPerforateViewModel RightPerforate { get; protected set; }
 
         private void FinishAdding(object parameter)
         {
@@ -61,9 +78,15 @@ namespace WpfApp2.ViewModels
             MessageBus.Default.Subscribe("LegDataSaved", Handler);
             LeftBPVHip = new BPVHipViewModel(Controller, LegSide.Left);
             RightBPVHip = new BPVHipViewModel(Controller, LegSide.Right);
+            LeftPDSV = new PDSVViewModel(Controller, LegSide.Left);
+            LeftZDSV = new ZDSVViewModel(Controller, LegSide.Left);
+            LeftPerforate = new HipPerforateViewModel(Controller, LegSide.Left);
 
             LeftSFS = new SFSViewModel(Controller, LegSide.Left);
             RightSFS = new SFSViewModel(Controller, LegSide.Right);
+            RightPDSV = new PDSVViewModel(Controller, LegSide.Right);
+            RightZDSV = new ZDSVViewModel(Controller, LegSide.Right);
+            RightPerforate = new HipPerforateViewModel(Controller, LegSide.Right);
 
             Controller = controller;
             base.HasNavigation = false;
@@ -97,7 +120,6 @@ namespace WpfApp2.ViewModels
                 () =>
                 {
                     Controller.LegViewModel = LeftSFS;
-                    //MessageBus.Default.Call("LegPart", this, "blah");
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -106,6 +128,54 @@ namespace WpfApp2.ViewModels
                 () =>
                 {
                     Controller.LegViewModel = RightSFS;
+                    Controller.NavigateTo<LegPartViewModel>();
+                }
+            );
+
+            ToLeftPDSVCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.LegViewModel = LeftPDSV;
+                    Controller.NavigateTo<LegPartViewModel>();
+                }
+            );
+
+            ToRightPDSVCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.LegViewModel = RightPDSV;
+                    Controller.NavigateTo<LegPartViewModel>();
+                }
+            );
+
+            ToLeftZDSVCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.LegViewModel = LeftZDSV;
+                    Controller.NavigateTo<LegPartViewModel>();
+                }
+            );
+
+            ToRightSFSCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.LegViewModel = RightZDSV;
+                    Controller.NavigateTo<LegPartViewModel>();
+                }
+            );
+
+            ToLeftPerforateCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.LegViewModel = LeftPerforate;
+                    Controller.NavigateTo<LegPartViewModel>();
+                }
+            );
+
+            ToRightPerforateCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.LegViewModel = RightPerforate;
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );

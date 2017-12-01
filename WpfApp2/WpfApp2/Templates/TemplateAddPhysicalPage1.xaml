@@ -39,7 +39,6 @@
             
             <ScrollViewer Margin="10,235,512,342" RenderTransformOrigin="0.5,0.5" FontSize="16">
                 <StackPanel Orientation="Vertical">
-                    
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
@@ -64,20 +63,47 @@
                             <Label HorizontalAlignment="Center" Content="БПВ на бедре: без рефлюкса" FontSize="12"/>
                         </StackPanel>
                     </Expander>
-
                     <Separator/>
-                    <Expander Header="III.	ПДСВ (Передняя добавочная сафенная вена)*"  FontSize="16">
-                        <Grid Background="#FFE5E5E5"/>
+
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="III.	ПДСВ (Передняя добавочная сафенная вена)*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttonPDSV1" Command="{Binding ToLeftPDSVCommand}" Content="{Binding Path=LeftPDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+
+                        </StackPanel>
                     </Expander>
-                    <Separator Margin="10,0,10,0"/>
-                    <Expander Header="IV.	ЗДСВ (Задняя добавочная сафенная вена)*"  FontSize="12">
-                        <Grid Background="#FFE5E5E5"/>
+                    <Separator/>
+
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="IV.	ЗДСВ (Задняя добавочная сафенная вена)*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttonZDSV1" Command="{Binding ToLeftZDSVCommand}" Content="{Binding Path=LeftZDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+
+                        </StackPanel>
                     </Expander>
-                    <Separator Margin="10,0,10,0"/>
-                    <Expander Header="V.	Перфоранты бедра и несафенные вены*" FontSize="12">
-                        <Grid Background="#FFE5E5E5"/>
+                    <Separator/>
+
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="V.	Перфоранты бедра и несафенные вены*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttonPerforate1" Command="{Binding ToLeftPerforateCommand}" Content="{Binding Path=LeftPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+
+                        </StackPanel>
                     </Expander>
-                    <Separator Margin="10,0,10,0"/>
+                    <Separator/>
+
                     <Expander Header="VI.	БПВ на голени" FontSize="12">
                         <Grid Background="#FFE5E5E5"/>
                     </Expander>
@@ -143,17 +169,45 @@
                     </Expander>
 
                     <Separator/>
-                    <Expander Header="III. ПДСВ (Передняя добавочная сафенная вена)*"  FontSize="12">
-                        <Grid Background="#FFE5E5E5"/>
+
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="III.	ПДСВ (Передняя добавочная сафенная вена)*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttonPDSV2" Command="{Binding ToRightPDSVCommand}" Content="{Binding Path=RightPDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+
+                        </StackPanel>
                     </Expander>
-                    <Separator Margin="10,0,10,0"/>
-                    <Expander Header="IV. ЗДСВ (Задняя добавочная сафенная вена)*"  FontSize="12">
-                        <Grid Background="#FFE5E5E5"/>
+                    <Separator/>
+
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="IV.	ЗДСВ (Задняя добавочная сафенная вена)*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttonZDSV2" Command="{Binding ToRightZDSVCommand}" Content="{Binding Path=RightZDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+
+                        </StackPanel>
                     </Expander>
-                    <Separator Margin="10,0,10,0"/>
-                    <Expander Header="V. Перфоранты бедра и несафенные вены*" FontSize="12">
-                        <Grid Background="#FFE5E5E5"/>
+                    <Separator/>
+
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="V.	Перфоранты бедра и несафенные вены*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttonPerforate2" Command="{Binding ToRightPerforateCommand}" Content="{Binding Path=RightPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+
+                        </StackPanel>
                     </Expander>
+                    <Separator/>
                     <Separator Margin="10,0,10,0"/>
                     <Expander Header="VI. БПВ на голени" FontSize="12">
                         <Grid Background="#FFE5E5E5"/>

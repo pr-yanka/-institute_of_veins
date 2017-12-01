@@ -10,6 +10,7 @@ namespace WpfApp2.LegParts.Templates
     {
         public DataTemplate StandartTemplate { get; set; }
         public DataTemplate BPVHipTemplate { get; set; }
+        public DataTemplate EmptyTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -20,8 +21,17 @@ namespace WpfApp2.LegParts.Templates
             if (item.GetType() == typeof(BPVHipViewModel))
                 return BPVHipTemplate;
 
-            if (item.GetType() == typeof(SFSSectionViewModel))
-                return StandartTemplate;
+            if (item.GetType() == typeof(SFSViewModel))
+                return EmptyTemplate;
+
+            if (item.GetType() == typeof(HipPerforateViewModel))
+                return EmptyTemplate;
+
+            if (item.GetType() == typeof(PDSVViewModel))
+                return EmptyTemplate;
+
+            if (item.GetType() == typeof(ZDSVViewModel))
+                return EmptyTemplate;
 
             return null;
         }
