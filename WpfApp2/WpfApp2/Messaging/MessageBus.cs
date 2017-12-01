@@ -46,7 +46,6 @@ namespace WpfApp2.Messaging
         public void Subscribe(string name, Action<object, object> handler)
         {
             name = name.ToUpper();
-            //var weakRef = new WeakReference<Action<object, object>>(handler);
 
             List<Action<object, object>> handlers;
 
