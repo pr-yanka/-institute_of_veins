@@ -5,13 +5,13 @@
         <Grid>
 
             <Border BorderThickness="1" HorizontalAlignment="Left" Height="360" Margin="400,92,0,0" VerticalAlignment="Top" Width="353" Background="#FFB0E8EE"></Border>
-            <TextBox Height="34" HorizontalAlignment="Left" x:Name="textBoxEmail" VerticalAlignment="Top" Width="246" FontFamily="Source Sans Pro" BorderBrush="{x:Null}" FontSize="18" Foreground="#FF8B8B8B" Cursor="Arrow" CaretBrush="#FC8B8B8B" Margin="440,239,0,0" />
-            <TextBlock Height="23" HorizontalAlignment="Left" Margin="430,170,0,0" x:Name="LoginHeading" Text="Войти в кабинет:" VerticalAlignment="Top" FontSize="20" FontStretch="ExtraCondensed" FontFamily="Source Sans Pro" TextDecorations="{x:Null}" Foreground="#FF958585"/>
-            <TextBlock Height="49" HorizontalAlignment="Left" Margin="418,116,0,0" x:Name="textBlockHeading" VerticalAlignment="Top" FontSize="16" Padding="5" RenderTransformOrigin="1.955,1.44" Foreground="#FBFF4545" FontFamily="Source Sans Pro Semibold" TextDecorations="{x:Null}" LineHeight="6" TextAlignment="Center" Text="ДОБРО ПОЖАЛОВАТЬ В ИНСТИТУТ ВЕН!"/>
-            <TextBlock Height="23" HorizontalAlignment="Left" Margin="449,211,0,0" x:Name="textBlock1" Text="Логин" VerticalAlignment="Top" Width="68" FontFamily="Source Sans Pro" FontSize="16" Foreground="#FF6A6A6A" />
-            <TextBlock Height="23" HorizontalAlignment="Left" Margin="449,287,0,0" x:Name="textBlock2" Text="Пароль" VerticalAlignment="Top" Width="77" FontFamily="Source Sans Pro" FontSize="16" Foreground="#FF6A6A6A" RenderTransformOrigin="0.734,1.565" />
-            <PasswordBox Height="34" HorizontalAlignment="Left" Margin="440,314,0,0" x:Name="passwordBox1" FontSize="18" Foreground="#FF8B8B8B" Cursor="Arrow" CaretBrush="#FC8B8B8B" VerticalAlignment="Top" Width="246" FontFamily="Source Sans Pro" BorderBrush="{x:Null}" />
-            <Button Margin="586,158,0,58" Background="#FFFF4545" Content="ВОЙТИ" Command="{Binding ToDashboardCommand}" BorderBrush="{x:Null}" Foreground="White" FontFamily="Source Sans Pro Semibold" FontSize="14" HorizontalAlignment="Left" Width="134" Height="40"/>
+            <TextBox Height="34" HorizontalAlignment="Left" x:Name="textBoxEmail" VerticalAlignment="Top" Width="246" BorderBrush="{x:Null}" FontSize="18" Foreground="#FF8B8B8B" Cursor="Arrow" CaretBrush="#FC8B8B8B" Margin="440,239,0,0" />
+            <TextBlock Height="23" HorizontalAlignment="Left" Margin="430,170,0,0" x:Name="LoginHeading" Text="Войти в кабинет:" VerticalAlignment="Top" FontSize="20" FontStretch="ExtraCondensed" TextDecorations="{x:Null}" Foreground="#FF958585"/>
+            <TextBlock Height="49" HorizontalAlignment="Left" Margin="418,116,0,0" x:Name="textBlockHeading" VerticalAlignment="Top" FontSize="16" Padding="5" RenderTransformOrigin="1.955,1.44" Foreground="#FBFF4545" TextDecorations="{x:Null}" LineHeight="6" TextAlignment="Center" Text="ДОБРО ПОЖАЛОВАТЬ В ИНСТИТУТ ВЕН!"/>
+            <TextBlock Height="23" HorizontalAlignment="Left" Margin="449,211,0,0" x:Name="textBlock1" Text="Логин" VerticalAlignment="Top" Width="68" FontSize="16" Foreground="#FF6A6A6A" />
+            <TextBlock Height="23" HorizontalAlignment="Left" Margin="449,287,0,0" x:Name="textBlock2" Text="Пароль" VerticalAlignment="Top" Width="77" FontSize="16" Foreground="#FF6A6A6A" RenderTransformOrigin="0.734,1.565" />
+            <PasswordBox Height="34" HorizontalAlignment="Left" Margin="440,314,0,0" x:Name="passwordBox1" FontSize="18" Foreground="#FF8B8B8B" Cursor="Arrow" CaretBrush="#FC8B8B8B" VerticalAlignment="Top" Width="246" BorderBrush="{x:Null}" />
+            <Button Margin="586,158,0,58" Background="#FFFF4545" Content="ВОЙТИ" Command="{Binding ToDashboardCommand}" BorderBrush="{x:Null}" Foreground="White" FontSize="14" HorizontalAlignment="Left" Width="134" Height="40"/>
             <Button Margin="430,158,0,58" Background="#FFB0E8EE" Content="Нет аккаунта?" Command="{Binding ToRegistrationCommand}" BorderBrush="{x:Null}" Foreground="#FF6D726C" FontFamily="Source Sans Pro Semibold" FontSize="14" HorizontalAlignment="Left" Width="134" Height="40"/>
 
         </Grid>

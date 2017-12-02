@@ -17,6 +17,18 @@
                 <ResourceDictionary Source="ViewModels.xaml" />
                 <ResourceDictionary Source="Dialogs.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="Label">
+                <Setter Property="FontFamily" Value="Segoe UI Light"/>
+            </Style>
+
+            <Style TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="Segoe UI Light"/>
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="FontFamily" Value="Segoe UI "/>
+            </Style>
+
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>
