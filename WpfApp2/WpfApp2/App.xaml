@@ -27,8 +27,6 @@
             <Style TargetType="TextBox">
                 <Setter Property="FontFamily" Value="Segoe UI "/>
             </Style>
-
-
         </ResourceDictionary>
     </Application.Resources>
 </Application>

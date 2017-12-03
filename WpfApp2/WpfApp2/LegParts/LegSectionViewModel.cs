@@ -12,12 +12,12 @@ namespace WpfApp2.LegParts
         private int _listNumber;
         public int ListNumber { get; set; }
 
-        public List<BPVHipStructure> StructureSource = new List<BPVHipStructure>();
+        public List<LegPartStructure> StructureSource = new List<LegPartStructure>();
         //all values
 
         //selected value
-        private BPVHipStructure _selectedValue;
-        public BPVHipStructure SelectedValue { get; set; }
+        private LegPartStructure _selectedValue;
+        public LegPartStructure SelectedValue { get; set; }
 
         private bool _hasSize;
         //has size
