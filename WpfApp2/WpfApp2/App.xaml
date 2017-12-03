@@ -18,11 +18,11 @@
                 <ResourceDictionary Source="Dialogs.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Style TargetType="Label">
-                <Setter Property="FontFamily" Value="Segoe UI Light"/>
+                <Setter Property="FontFamily" Value="Source Sans Pro"/>
             </Style>
 
             <Style TargetType="TextBlock">
-                <Setter Property="FontFamily" Value="Segoe UI Light"/>
+                <Setter Property="FontFamily" Value="Source Sans Pro"/>
             </Style>
             <Style TargetType="TextBox">
                 <Setter Property="FontFamily" Value="Segoe UI "/>
