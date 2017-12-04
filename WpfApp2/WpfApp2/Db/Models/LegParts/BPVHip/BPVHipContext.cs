@@ -5,6 +5,6 @@ namespace WpfApp2.Db.Models.BPV
 {
     public class BPVHipContext : DbContext
     {
-        public DbSet<BPVHipEntryFull> BPVEntries { get; set; }
+        public DbSet<BPVHipStructureRepository.BPVHipEntryFull> BPVEntries { get; set; }
     }
 }

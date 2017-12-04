@@ -8,10 +8,10 @@ namespace WpfApp2.Db.Models
 {
     interface IRepository<T> where T : class
     {
-        IEnumerable<T> GetAll();
-        T Get(int id);
-        void Create(T item);
-        void Update(T item);
-        void Delete(int id);
+        IEnumerable<T> List { get; }
+        void Add(T entity);
+        void Delete(T entity);
+        void Update(T entity);
+        T FindById(int Id);
     }
 }

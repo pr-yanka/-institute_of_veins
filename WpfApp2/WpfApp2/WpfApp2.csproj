@@ -116,6 +116,7 @@
     <Compile Include="Controls\AddReport.xaml.cs">
       <DependentUpon>AddReport.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Db\Models\IEntity.cs" />
     <Compile Include="Db\Models\LegParts\BPVHip\BPVHip.cs" />
     <Compile Include="Db\Models\LegParts\BPVHip\BPVHipContext.cs" />
     <Compile Include="Db\Models\LegParts\BPVHip\BPVRepository.cs" />
