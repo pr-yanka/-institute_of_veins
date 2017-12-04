@@ -30,12 +30,20 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToLeftZDSVCommand { get; protected set; }
         public DelegateCommand ToLeftPerforateCommand { get; protected set; }
 
+        public DelegateCommand ToLeftTibiaPerforateCommand { get; protected set; }
+        public DelegateCommand ToLeftBPVTibiaCommand { get; protected set; }
+        public DelegateCommand ToLeftSPSCommand { get; protected set; }
+
         public DelegateCommand ToRightSFSCommand { get; protected set; }
         public DelegateCommand ToLeftSFSCommand { get; protected set; }
 
         public DelegateCommand ToRightPDSVCommand { get; protected set; }
         public DelegateCommand ToRightZDSVCommand { get; protected set; }
         public DelegateCommand ToRightPerforateCommand { get; protected set; }
+
+        public DelegateCommand ToRightTibiaPerforateCommand { get; protected set; }
+        public DelegateCommand ToRightBPVTibiaCommand { get; protected set; }
+        public DelegateCommand ToRightSPSCommand { get; protected set; }
 
         public DelegateCommand ToAddRecomendationsCommand { get; protected set; }
 
@@ -51,12 +59,18 @@ namespace WpfApp2.ViewModels
         public PDSVViewModel LeftPDSV { get; protected set; }
         public ZDSVViewModel LeftZDSV { get; protected set; }
         public HipPerforateViewModel LeftPerforate { get; protected set; }
+        public TibiaPerforateViewModel LeftTibiaPerforate { get; protected set; }
+        public BPVTibiaViewModel LeftBPVTibia { get; protected set; }
+        public SPSViewModel LeftSPS { get; protected set; }
 
         public BPVHipViewModel RightBPVHip { get; protected set; }
         public SFSViewModel RightSFS { get; protected set; }
         public PDSVViewModel RightPDSV { get; protected set; }
         public ZDSVViewModel RightZDSV { get; protected set; }
         public HipPerforateViewModel RightPerforate { get; protected set; }
+        public TibiaPerforateViewModel RightTibiaPerforate { get; protected set; }
+        public BPVTibiaViewModel RightBPVTibia { get; protected set; }
+        public SPSViewModel RightSPS { get; protected set; }
 
         private void FinishAdding(object parameter)
         {
@@ -76,17 +90,6 @@ namespace WpfApp2.ViewModels
         public ViewModelAddPhysical(NavigationController controller) : base(controller)
         {
             MessageBus.Default.Subscribe("LegDataSaved", Handler);
-            LeftBPVHip = new BPVHipViewModel(Controller, LegSide.Left);
-            RightBPVHip = new BPVHipViewModel(Controller, LegSide.Right);
-            LeftPDSV = new PDSVViewModel(Controller, LegSide.Left);
-            LeftZDSV = new ZDSVViewModel(Controller, LegSide.Left);
-            LeftPerforate = new HipPerforateViewModel(Controller, LegSide.Left);
-
-            LeftSFS = new SFSViewModel(Controller, LegSide.Left);
-            RightSFS = new SFSViewModel(Controller, LegSide.Right);
-            RightPDSV = new PDSVViewModel(Controller, LegSide.Right);
-            RightZDSV = new ZDSVViewModel(Controller, LegSide.Right);
-            RightPerforate = new HipPerforateViewModel(Controller, LegSide.Right);
 
             Controller = controller;
             base.HasNavigation = false;
@@ -100,13 +103,10 @@ namespace WpfApp2.ViewModels
                 }
             );
 
-            ToRightBPVHipCommand = new DelegateCommand(
-                () =>
-                {
-                    Controller.LegViewModel = RightBPVHip;
-                    Controller.NavigateTo<LegPartViewModel>();
-                }
-            );
+
+            //БПВ
+            LeftBPVHip = new BPVHipViewModel(Controller, LegSide.Left);
+            RightBPVHip = new BPVHipViewModel(Controller, LegSide.Right);
 
             ToLeftBPVHipCommand = new DelegateCommand(
                 () =>
@@ -116,21 +116,61 @@ namespace WpfApp2.ViewModels
                 }
             );
 
-            ToLeftSFSCommand = new DelegateCommand(
+            ToRightBPVHipCommand = new DelegateCommand(
                 () =>
                 {
-                    Controller.LegViewModel = LeftSFS;
+                    Controller.LegViewModel = RightBPVHip;
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
-            ToRightSFSCommand = new DelegateCommand(
+            //БПВ голень
+            //BPVTibia
+
+            LeftBPVTibia = new BPVTibiaViewModel(Controller, LegSide.Left);
+            RightBPVTibia = new BPVTibiaViewModel(Controller, LegSide.Right);
+
+            ToLeftBPVTibiaCommand = new DelegateCommand(
                 () =>
                 {
-                    Controller.LegViewModel = RightSFS;
+                    Controller.LegViewModel = LeftBPVTibia;
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
+
+            ToRightBPVTibiaCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.LegViewModel = RightBPVTibia;
+                    Controller.NavigateTo<LegPartViewModel>();
+                }
+            );
+
+            //Бедро перфорант
+
+            LeftPerforate = new HipPerforateViewModel(Controller, LegSide.Left);
+            RightPerforate = new HipPerforateViewModel(Controller, LegSide.Right);
+
+            ToLeftPerforateCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.LegViewModel = LeftPerforate;
+                    Controller.NavigateTo<LegPartViewModel>();
+                }
+            );
+
+            ToRightPerforateCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.LegViewModel = RightPerforate;
+                    Controller.NavigateTo<LegPartViewModel>();
+                }
+            );
+
+            //ПДСВ
+
+            LeftPDSV = new PDSVViewModel(Controller, LegSide.Left);
+            RightPDSV = new PDSVViewModel(Controller, LegSide.Right);
 
             ToLeftPDSVCommand = new DelegateCommand(
                 () =>
@@ -148,6 +188,74 @@ namespace WpfApp2.ViewModels
                 }
             );
 
+            //СФС
+
+            LeftSFS = new SFSViewModel(Controller, LegSide.Left);
+            RightSFS = new SFSViewModel(Controller, LegSide.Right);
+
+            ToLeftSFSCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.LegViewModel = LeftSFS;
+                    Controller.NavigateTo<LegPartViewModel>();
+                }
+            );
+
+            ToRightSFSCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.LegViewModel = RightSFS;
+                    Controller.NavigateTo<LegPartViewModel>();
+                }
+            );
+
+            //СПС
+
+            LeftSPS = new SPSViewModel(Controller, LegSide.Left);
+            RightSPS = new SPSViewModel(Controller, LegSide.Right);
+
+            ToLeftSPSCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.LegViewModel = LeftSPS;
+                    Controller.NavigateTo<LegPartViewModel>();
+                }
+            );
+
+            ToRightSPSCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.LegViewModel = RightSPS;
+                    Controller.NavigateTo<LegPartViewModel>();
+                }
+            );
+
+            //Перфорант голени
+
+            LeftTibiaPerforate = new TibiaPerforateViewModel(Controller, LegSide.Left);
+            RightTibiaPerforate = new TibiaPerforateViewModel(Controller, LegSide.Right);
+
+            ToLeftTibiaPerforateCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.LegViewModel = LeftTibiaPerforate;
+                    Controller.NavigateTo<LegPartViewModel>();
+                }
+            );
+
+            ToRightTibiaPerforateCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.LegViewModel = RightTibiaPerforate;
+                    Controller.NavigateTo<LegPartViewModel>();
+                }
+            );
+
+            //ЗДСВ
+
+            LeftZDSV = new ZDSVViewModel(Controller, LegSide.Left);
+            RightZDSV = new ZDSVViewModel(Controller, LegSide.Right);
+
             ToLeftZDSVCommand = new DelegateCommand(
                 () =>
                 {
@@ -156,7 +264,7 @@ namespace WpfApp2.ViewModels
                 }
             );
 
-            ToRightSFSCommand = new DelegateCommand(
+            ToRightZDSVCommand = new DelegateCommand(
                 () =>
                 {
                     Controller.LegViewModel = RightZDSV;
@@ -164,21 +272,7 @@ namespace WpfApp2.ViewModels
                 }
             );
 
-            ToLeftPerforateCommand = new DelegateCommand(
-                () =>
-                {
-                    Controller.LegViewModel = LeftPerforate;
-                    Controller.NavigateTo<LegPartViewModel>();
-                }
-            );
-
-            ToRightPerforateCommand = new DelegateCommand(
-                () =>
-                {
-                    Controller.LegViewModel = RightPerforate;
-                    Controller.NavigateTo<LegPartViewModel>();
-                }
-            );
+            //
 
             ToAddRecomendationsCommand = new DelegateCommand(
                 () =>

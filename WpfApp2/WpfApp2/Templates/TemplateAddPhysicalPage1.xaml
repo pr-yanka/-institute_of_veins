@@ -16,8 +16,8 @@
                     </LinearGradientBrush.GradientStops>
                 </LinearGradientBrush>
             </Grid.Background>
-            <Button x:Name="button_Copy3" Content="Вернуться к пациенту" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="29,684,0,0" VerticalAlignment="Top" Width="285" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy1" Content="Выбрать другого пациента" Command="{Binding Path=ToTablePatiensCommand}" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top" Width="199" Height="29" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="16"/>
+            <Button x:Name="button_Copy3" Content="Вернуться к пациенту" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="29,684,0,0" VerticalAlignment="Top" Width="285" Height="30" Background="#FFEAF7AF" FontSize="20"/>
+            <Button x:Name="button_Copy1" Content="Выбрать другого пациента" Command="{Binding Path=ToTablePatiensCommand}" HorizontalAlignment="Left" Margin="10,57,0,0" VerticalAlignment="Top" Width="199" Height="29" Background="#FFD6DAF7" FontSize="16"/>
             <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="228,62,0,0" TextWrapping="Wrap" Text="Недашковская О.М. (21 год)" VerticalAlignment="Top" Width="322" FontSize="18"/>
             <Separator HorizontalAlignment="Left" Height="16" Margin="0,91,0,0" VerticalAlignment="Top" Width="1036" RenderTransformOrigin="0.51,0.49"/>
             <Separator HorizontalAlignment="Left" Height="16" Margin="0,41,0,0" VerticalAlignment="Top" Width="1036" RenderTransformOrigin="0.51,0.49"/>
@@ -29,11 +29,11 @@
                 <ListBoxItem Content="на наличие зажившей язвы, гиперпигментации, уплотнения кожи в области голени"/>
                 <ListBoxItem Content="на гиперпегментацию в области голени"/>
             </ListBox>
-            <Button x:Name="button_Copy2" Content="Добавить жалобы" Command="{Binding Path=ToSymptomsAddCommand}" HorizontalAlignment="Left" Margin="10,141,0,0" VerticalAlignment="Top" Width="199" Height="29" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="16"/>
+            <Button x:Name="button_Copy2" Content="Добавить жалобы" Command="{Binding Path=ToSymptomsAddCommand}" HorizontalAlignment="Left" Margin="10,141,0,0" VerticalAlignment="Top" Width="199" Height="29" Background="#FF2DB03F" FontSize="16"/>
             <Separator HorizontalAlignment="Left" Height="16" Margin="0,190,0,0" VerticalAlignment="Top" Width="1036" RenderTransformOrigin="0.51,0.49"/>
             <TextBlock x:Name="textBlock1_Copy2" HorizontalAlignment="Center" Margin="173,206,725,507" TextWrapping="Wrap" VerticalAlignment="Center" Width="118" FontSize="18" Text="Левая нога" TextAlignment="Center"/>
-            <Button x:Name="button_Copy33" Command="{Binding Path=ToLegDescribeCommand}" Content="Назначить диагноз" HorizontalAlignment="Left" Margin="10,449,0,0" VerticalAlignment="Top" Width="491" Height="29" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="16"/>
-            <Button x:Name="button_Copy443" Command="{Binding Path=ToLegDescribeCommand}" Content="Назначить диагноз" HorizontalAlignment="Left" Margin="521,449,0,0" VerticalAlignment="Top" Width="475" Height="29" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="16"/>
+            <Button x:Name="button_Copy33" Command="{Binding Path=ToLegDescribeCommand}" Content="Назначить диагноз" HorizontalAlignment="Left" Margin="10,449,0,0" VerticalAlignment="Top" Width="491" Height="29" Background="#FF2DB03F" FontSize="16"/>
+            <Button x:Name="button_Copy443" Command="{Binding Path=ToLegDescribeCommand}" Content="Назначить диагноз" HorizontalAlignment="Left" Margin="521,449,0,0" VerticalAlignment="Top" Width="475" Height="29" Background="#FF2DB03F" FontSize="16"/>
             <TextBlock x:Name="textBlock1_Copy3" HorizontalAlignment="Center" Margin="724,206,122,507" TextWrapping="Wrap" VerticalAlignment="Center" Width="170" FontSize="18"><Run Text="Правая "/><Run Text="нога"/></TextBlock>
 
             
@@ -43,7 +43,7 @@
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="I.	СФС (Сафено-феморальное соустье)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="buttonBPVHip1" Command="{Binding ToLeftSFSCommand}" Content="{Binding Path=LeftSFS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+                                <Button x:Name="buttonSFS1" Command="{Binding ToLeftSFSCommand}" Content="{Binding Path=LeftSFS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
@@ -55,7 +55,7 @@
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="II.	БПВ на бедре (Большая подкожная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="buttonSFS1" Command="{Binding ToLeftBPVHipCommand}" Content="{Binding Path=LeftBPVHip.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+                                <Button x:Name="buttonBPVHip1" Command="{Binding ToLeftBPVHipCommand}" Content="{Binding Path=LeftBPVHip.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
@@ -69,7 +69,7 @@
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="III.	ПДСВ (Передняя добавочная сафенная вена)*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="buttonPDSV1" Command="{Binding ToLeftPDSVCommand}" Content="{Binding Path=LeftPDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+                                <Button x:Name="buttonPDSV1" Command="{Binding ToLeftPDSVCommand}" Content="{Binding Path=LeftPDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
@@ -82,7 +82,7 @@
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="IV.	ЗДСВ (Задняя добавочная сафенная вена)*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="buttonZDSV1" Command="{Binding ToLeftZDSVCommand}" Content="{Binding Path=LeftZDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+                                <Button x:Name="buttonZDSV1" Command="{Binding ToLeftZDSVCommand}" Content="{Binding Path=LeftZDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
@@ -95,7 +95,7 @@
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="V.	Перфоранты бедра и несафенные вены*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="buttonPerforate1" Command="{Binding ToLeftPerforateCommand}" Content="{Binding Path=LeftPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+                                <Button x:Name="buttonPerforate1" Command="{Binding ToLeftPerforateCommand}" Content="{Binding Path=LeftPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
@@ -104,18 +104,45 @@
                     </Expander>
                     <Separator/>
 
-                    <Expander Header="VI.	БПВ на голени" FontSize="12">
-                        <Grid Background="#FFE5E5E5"/>
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="VI.	БПВ на голени" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttonBPVTibia1" Command="{Binding ToLeftBPVTibiaCommand}" Content="{Binding Path=LeftBPVTibia.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+
+                        </StackPanel>
                     </Expander>
-                    <Separator Margin="10,0,10,0"/>
-                    <Expander Header="VII.	Перфоранты голени*" FontSize="12">
-                        <Grid Background="#FFE5E5E5"/>
+                    <Separator/>
+
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="VII.	Перфоранты голени*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttonPerforateTibia1" Command="{Binding ToLeftTibiaPerforateCommand}" Content="{Binding Path=LeftTibiaPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+
+                        </StackPanel>
                     </Expander>
-                    <Separator Margin="10,0,10,0"/>
-                    <Expander Header="VIII.	СПС (Сафено-поплитеальное соустье)" FontSize="12">
-                        <Grid Background="#FFE5E5E5"/>
+                    <Separator/>
+
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="VIII.	СПС (Сафено-поплитеальное соустье)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttonSPS1" Command="{Binding ToLeftSPSCommand}" Content="{Binding Path=LeftSPS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+
+                        </StackPanel>
                     </Expander>
-                    <Separator Margin="10,0,10,0"/>
+                    <Separator/>
+
                     <Expander Header="IX.	МПВ (Малая подкожная вена)" FontSize="12">
                         <Grid Background="#FFE5E5E5"/>
                     </Expander>
@@ -147,7 +174,7 @@
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="I.	СФС (Сафено-феморальное соустье)" Width="310" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="buttonBPVHip2" Command="{Binding ToRightSFSCommand}" Content="{Binding Path=RightSFS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+                                <Button x:Name="buttonBPVHip2" Command="{Binding ToRightSFSCommand}" Content="{Binding Path=RightSFS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
@@ -159,7 +186,7 @@
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="II.	БПВ на бедре (Большая подкожная вена)" Width="310" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="buttonSFS2" Command="{Binding ToRightBPVHipCommand}" Content="{Binding Path=RightBPVHip.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+                                <Button x:Name="buttonSFS2" Command="{Binding ToRightBPVHipCommand}" Content="{Binding Path=RightBPVHip.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
@@ -174,7 +201,7 @@
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="III.	ПДСВ (Передняя добавочная сафенная вена)*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="buttonPDSV2" Command="{Binding ToRightPDSVCommand}" Content="{Binding Path=RightPDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+                                <Button x:Name="buttonPDSV2" Command="{Binding ToRightPDSVCommand}" Content="{Binding Path=RightPDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
@@ -187,7 +214,7 @@
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="IV.	ЗДСВ (Задняя добавочная сафенная вена)*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="buttonZDSV2" Command="{Binding ToRightZDSVCommand}" Content="{Binding Path=RightZDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+                                <Button x:Name="buttonZDSV2" Command="{Binding ToRightZDSVCommand}" Content="{Binding Path=RightZDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
@@ -200,7 +227,7 @@
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="V.	Перфоранты бедра и несафенные вены*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="buttonPerforate2" Command="{Binding ToRightPerforateCommand}" Content="{Binding Path=RightPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="12"/>
+                                <Button x:Name="buttonPerforate2" Command="{Binding ToRightPerforateCommand}" Content="{Binding Path=RightPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#FF2DB03F" FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
@@ -266,7 +293,7 @@
             <ListBox x:Name="listBox1_Copy" HorizontalAlignment="Left" Height="75" Margin="228,578,0,0" VerticalAlignment="Top" Width="808">
                 <ListBoxItem Content="Рекомендаций пока нет."/>
             </ListBox>
-            <Button x:Name="button_Copy4" Content="Добавить рекомендации" Command="{Binding ToAddRecomendationsCommand}" HorizontalAlignment="Left" Margin="10,609,0,0" VerticalAlignment="Top" Width="199" Height="29" Background="#FF2DB03F" FontFamily="Franklin Gothic Medium" FontSize="16"/>
+            <Button x:Name="button_Copy4" Content="Добавить рекомендации" Command="{Binding ToAddRecomendationsCommand}" HorizontalAlignment="Left" Margin="10,609,0,0" VerticalAlignment="Top" Width="199" Height="29" Background="#FF2DB03F" FontSize="16"/>
             <TextBlock x:Name="textBlock1_Copy5" HorizontalAlignment="Left" Margin="507,62,0,0" TextWrapping="Wrap" Text="NB!" VerticalAlignment="Top" Width="43" FontSize="18"/>
             <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="575,64,0,0" TextWrapping="Wrap" Text="Текст пометки" VerticalAlignment="Top" Width="461"/>
             <TextBlock x:Name="textBlock1_Copy6" HorizontalAlignment="Left" Margin="749,107,0,0" TextWrapping="Wrap" Text="Вес:" VerticalAlignment="Top" Width="43" FontSize="18" RenderTransformOrigin="0.674,0.459"/>
@@ -284,8 +311,8 @@
             <ListBox x:Name="listBox1_Copy2" HorizontalAlignment="Left" Height="75" Margin="521,490,0,0" VerticalAlignment="Top" Width="475">
                 <ListBoxItem Content=""/>
             </ListBox>
-            <Button x:Name="button_Copy9" Content="Завершить обследование" Command="{Binding OpenDialogCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" HorizontalAlignment="Left" Margin="695,684,0,0" VerticalAlignment="Top" Width="285" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy10" Content="Заключение" Command="{Binding ToPhysicalOverviewCommand}" HorizontalAlignment="Left" Margin="357,684,0,0" VerticalAlignment="Top" Width="285" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Button x:Name="button_Copy9" Content="Завершить обследование" Command="{Binding OpenDialogCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" HorizontalAlignment="Left" Margin="695,684,0,0" VerticalAlignment="Top" Width="285" Height="30" Background="#FFEAF7AF" FontSize="20"/>
+            <Button x:Name="button_Copy10" Content="Заключение" Command="{Binding ToPhysicalOverviewCommand}" HorizontalAlignment="Left" Margin="357,684,0,0" VerticalAlignment="Top" Width="285" Height="30" Background="#FFEAF7AF" FontSize="20"/>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

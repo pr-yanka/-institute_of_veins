@@ -33,6 +33,15 @@ namespace WpfApp2.LegParts.Templates
             if (item.GetType() == typeof(ZDSVViewModel))
                 return EmptyTemplate;
 
+            if (item.GetType() == typeof(BPVTibiaViewModel))
+                return EmptyTemplate;
+
+            if (item.GetType() == typeof(TibiaPerforateViewModel))
+                return EmptyTemplate;
+
+            if (item.GetType() == typeof(SPSViewModel))
+                return EmptyTemplate;
+
             return null;
         }
     }

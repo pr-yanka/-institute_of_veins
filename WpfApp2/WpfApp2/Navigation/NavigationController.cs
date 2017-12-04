@@ -72,7 +72,10 @@ namespace WpfApp2.Navigation
                 new BPVHipViewModel(this),
                 new HipPerforateViewModel(this),
                 new PDSVViewModel(this),
-                new ZDSVViewModel(this)
+                new ZDSVViewModel(this),
+                new TibiaPerforateViewModel(this),
+                new BPVTibiaViewModel(this),
+                new SPSViewModel(this)
             };
 
             _legViewModel = _legViewModels.First();
