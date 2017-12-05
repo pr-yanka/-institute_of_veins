@@ -35,7 +35,8 @@ namespace WpfApp2.ViewModels
             {
                 bool exists = dbContext.Database.Exists();
             }
-            //var st = rep.Get(1);
+            rep = new BPVHipRepository(new BPVHipContext());
+            var st = rep.Get(1);
 
         }
     }
