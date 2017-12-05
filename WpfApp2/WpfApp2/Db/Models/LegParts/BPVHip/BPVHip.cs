@@ -41,20 +41,21 @@ namespace WpfApp2.Db.Models
         {
             get
             {
-                return _context.Structures;
+                //yield return _context.Structures;
+                return null;
             }
 
         }
 
         public void Add(BPVHipStructure entity)
         {
-            _context.Structures.Add(entity);
+            //_context.Structures.Add(entity);
             _context.SaveChanges();
         }
 
         public void Delete(BPVHipStructure entity)
         {
-            _context.Structures.Remove(entity);
+            //_context.Structures.Remove(entity);
             _context.SaveChanges();
         }
 
@@ -67,14 +68,16 @@ namespace WpfApp2.Db.Models
 
         public BPVHipStructure FindById(int Id)
         {
-            var result = (from r in _context.Structures where r.Id == Id select r).FirstOrDefault();
-            return result;
+            //var result = (from r in _context.Structures where r.Id == Id select r).FirstOrDefault();
+            //return result;
+            return null;
         }
+    }
 
         public class BPVHipEntry : LegPartEntry
-    {
+        {
         
-    }
+        }
 
     public class BPVHipWay
     {

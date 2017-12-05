@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
-using Microsoft.Practices.Prism.Commands;
+﻿using Microsoft.Practices.Prism.Commands;
 using WpfApp2.Navigation;
+using WpfApp2.Db.Models.BPV;
 
 namespace WpfApp2.ViewModels
 {
@@ -16,6 +9,7 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToRegistrationCommand { get; protected set; }
         public DelegateCommand ToDashboardCommand { get; protected set; }
 
+        public BPVHipRepository rep;
 
         public ViewModelLogin(NavigationController controller) : base(controller)
         {
@@ -35,6 +29,14 @@ namespace WpfApp2.ViewModels
                     Controller.NavigateTo<ViewModelDashboard>();
                 }
             );
+
+            //rep = new BPVHipRepository(new BPVHipContext());
+            using (BPVHipContext dbContext = new BPVHipContext())
+            {
+                bool exists = dbContext.Database.Exists();
+            }
+            //var st = rep.Get(1);
+
         }
     }
 }
