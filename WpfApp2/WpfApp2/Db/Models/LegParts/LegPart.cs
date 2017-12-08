@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace WpfApp2.Db.Models.LegParts
 {
-    public abstract class LegPartEntries
+    public interface LegPart
     {
-        public int EntryId1 { get; set; }
-        public int EntryId2 { get; set; }
+        LegPartEntries Entries { get; set; }
+        LegPartEntry Entry { get; set; }
+        LegPartStructure Structure { get; set; }
     }
 }

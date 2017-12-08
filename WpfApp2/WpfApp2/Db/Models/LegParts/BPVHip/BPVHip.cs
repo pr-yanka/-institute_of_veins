@@ -11,6 +11,11 @@ using WpfApp2.Db.Models.BPV;
 
 namespace WpfApp2.Db.Models
 {
+    public class BPVHip : LegPart
+    {
+
+    }
+
     [Table("БПВ_на_бедре_структура")]
     public partial class BPVHipStructure : IEntity
     {
@@ -32,6 +37,7 @@ namespace WpfApp2.Db.Models
         public int Level { get; set; }
     }
 
+    /*
     public class BPVHipStructureRepository : IRepository<BPVHipStructure>
     {
         private BPVHipContext _context;
@@ -76,13 +82,13 @@ namespace WpfApp2.Db.Models
             //return result;
             return null;
         }
-    }
+    }*/
 
-        public class BPVHipEntry : LegPartEntry
-        {
+    public class BPVHipEntry : LegPartEntry
+    {
         
-        }
-
+    }
+        
     public class BPVHipWay
     {
         public int Id { get; set; }

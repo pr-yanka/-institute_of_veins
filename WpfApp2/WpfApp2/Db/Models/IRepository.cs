@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace WpfApp2.Db.Models
 {
-    interface IRepository<T> where T : class
+    public interface IRepository<TEntity> where TEntity : class
     {
-        IEnumerable<T> GetAll { get; }
-        T Get(int Id);
+        IEnumerable<TEntity> GetAll { get; }
+        TEntity Get(int Id);
 
-        void Add(T entity);
-        void AddRange(T entities);
+        void Add(TEntity entity);
+        void AddRange(IEnumerable<TEntity> entities);
 
-        void Remove(T entity);
-        void RemoveRange(T entities);
+        void Remove(TEntity entity);
+        void RemoveRange(IEnumerable<TEntity> entities);
         
     }
 }

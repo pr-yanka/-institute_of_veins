@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace WpfApp2.Db.Models.LegParts
 {
-    public abstract class LegPartEntries
+    public interface ILegPartRepository : IRepository<LegPart>
     {
-        public int EntryId1 { get; set; }
-        public int EntryId2 { get; set; }
+
     }
 }
