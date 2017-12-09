@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql;
 
-namespace WpfApp2.Db.Models.BPV
+namespace WpfApp2.Db.Models
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {

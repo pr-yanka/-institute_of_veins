@@ -146,13 +146,18 @@
       <DependentUpon>AddReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="Db\Models\IEntity.cs" />
+    <Compile Include="Db\Models\IUnitOfWork.cs" />
+    <Compile Include="Db\Models\LegParts\BPVHipRepository.cs" />
     <Compile Include="Db\Models\LegParts\BPVHip\BPVHip.cs" />
     <Compile Include="Db\Models\LegParts\BPVHip\BPVHipContext.cs" />
-    <Compile Include="Db\Models\LegParts\BPVHip\BPVRepository.cs" />
+    <Compile Include="Db\Models\LegParts\ILegPartRepository.cs" />
+    <Compile Include="Db\Models\MySqlContext.cs" />
+    <Compile Include="Db\Models\Repository.cs" />
     <Compile Include="Db\Models\IRepository.cs" />
     <Compile Include="Db\Models\LegParts\LegPartEntries.cs" />
     <Compile Include="Db\Models\LegParts\LegPartEntry.cs" />
     <Compile Include="Db\Models\LegParts\LegPartStructure.cs" />
+    <Compile Include="Db\Models\UnitOfWork.cs" />
     <Compile Include="Dialogs\DialogPreOperation\DialogPreOperationView.xaml.cs">
       <DependentUpon>DialogPreOperationView.xaml</DependentUpon>
     </Compile>

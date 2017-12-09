@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.Prism.Commands;
 using WpfApp2.Navigation;
 using WpfApp2.Db.Models.BPV;
+using WpfApp2.Db.Models.LegParts;
 
 namespace WpfApp2.ViewModels
 {
@@ -31,12 +32,12 @@ namespace WpfApp2.ViewModels
             );
 
             //rep = new BPVHipRepository(new BPVHipContext());
-            using (BPVHipContext dbContext = new BPVHipContext())
-            {
-                bool exists = dbContext.Database.Exists();
-            }
-            rep = new BPVHipRepository(new BPVHipContext());
-            var st = rep.Get(1);
+            //using (BPVHipContext dbContext = new BPVHipContext())
+            //{
+            //    bool exists = dbContext.Database.Exists();
+            //}
+            //rep = new BPVHipRepository(new BPVHipContext());
+           // var st = rep.Get(1);
 
         }
     }

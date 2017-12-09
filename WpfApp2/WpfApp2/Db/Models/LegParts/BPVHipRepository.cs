@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WpfApp2.Db.Models;
+using WpfApp2.Db.Models.BPV;
 
 namespace WpfApp2.Db.Models.LegParts
 {
-    public class BPVHipRepository : ILegPartRepository, LegPart
+    public class BPVHipRepository : Repository<IEntity>, ILegPartRepository
     {
-        
+        public BPVHipRepository(DbContext context) : base(context)
+        {
+        }
 
         public LegPartEntries Entries
         {
@@ -36,14 +41,6 @@ namespace WpfApp2.Db.Models.LegParts
             }
         }
 
-        public IEnumerable<LegPart> GetAll
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         public LegPartStructure Structure
         {
             get
@@ -55,31 +52,6 @@ namespace WpfApp2.Db.Models.LegParts
             {
                 throw new NotImplementedException();
             }
-        }
-
-        public void Add(LegPart entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddRange(IEnumerable<LegPart> entities)
-        {
-            throw new NotImplementedException();
-        }
-
-        public LegPart Get(int Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Remove(LegPart entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveRange(IEnumerable<LegPart> entities)
-        {
-            throw new NotImplementedException();
         }
     }
 }

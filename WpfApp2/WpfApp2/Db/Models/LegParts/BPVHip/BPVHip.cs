@@ -11,9 +11,46 @@ using WpfApp2.Db.Models.BPV;
 
 namespace WpfApp2.Db.Models
 {
-    public class BPVHip : LegPart
+    public class BPVHip : ILegPartRepository
     {
+        public LegPartEntries Entries
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
 
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public LegPartEntry Entry
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public LegPartStructure Structure
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 
     [Table("БПВ_на_бедре_структура")]
