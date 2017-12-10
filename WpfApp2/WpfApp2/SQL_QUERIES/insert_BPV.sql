@@ -6,6 +6,8 @@ select * from БПВ_на_бедре_структура;
 
 INSERT INTO метрика(название) VALUES ('мм');
 
+INSERT INTO метрика(название) VALUES ('');
+
 select * from метрика;
 
 INSERT INTO вид_бпв_хода
