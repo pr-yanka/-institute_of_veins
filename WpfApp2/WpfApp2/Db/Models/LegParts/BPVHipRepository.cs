@@ -9,7 +9,7 @@ using WpfApp2.Db.Models.BPV;
 
 namespace WpfApp2.Db.Models.LegParts
 {
-    public class BPVHipRepository : Repository<IEntity>, ILegPartRepository
+    public class BPVHipRepository : Repository<BPVHipStructure>, ILegPartRepository
     {
         public BPVHipRepository(DbContext context) : base(context)
         {

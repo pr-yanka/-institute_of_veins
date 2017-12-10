@@ -11,7 +11,7 @@ namespace WpfApp2.Db.Models
     {
         private readonly MySqlContext _context;
 
-        public BPVHipRepository BPVHips { get; private set; }
+        public ILegPartRepository BPVHips { get; private set; }
 
         public UnitOfWork (MySqlContext context)
         {

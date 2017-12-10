@@ -1,7 +1,7 @@
 ﻿using Microsoft.Practices.Prism.Commands;
 using WpfApp2.Navigation;
-using WpfApp2.Db.Models.BPV;
 using WpfApp2.Db.Models.LegParts;
+using WpfApp2.Db.Models;
 
 namespace WpfApp2.ViewModels
 {
@@ -32,7 +32,11 @@ namespace WpfApp2.ViewModels
             );
 
             //rep = new BPVHipRepository(new BPVHipContext());
-            //using (BPVHipContext dbContext = new BPVHipContext())
+            using (var unitOfWork = new UnitOfWork(new MySqlContext()))
+            {
+                var result = unitOfWork.BPVHips.Get(1);
+            }
+
             //{
             //    bool exists = dbContext.Database.Exists();
             //}

@@ -9,7 +9,7 @@ namespace WpfApp2.Db.Models
 {
     public interface IUnitOfWork : IDisposable
     {
-        BPVHipRepository BPVHips { get; }
+        ILegPartRepository BPVHips { get; }
 
         int Complete();
     }
