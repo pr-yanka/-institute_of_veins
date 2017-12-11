@@ -13,6 +13,11 @@ namespace WpfApp2.Db.Models.LegParts
         public BPVHipRepository(DbContext context) : base(context)
         {
         }
-        
+
+        public IEnumerable<BPVHipStructure> FirstLevelStructures
+        {
+            get { return dbContext.Set<BPVHipStructure>().Where(bpvhip => bpvhip.Level == 1).ToList(); }
+        }
+
     }
 }

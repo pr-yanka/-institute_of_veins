@@ -12,5 +12,7 @@ namespace WpfApp2.Db.Models.LegParts.BPVHip
         public BPVComboRepository(DbContext context) : base(context)
         {
         }
-    }
+
+        
+        }
 }
