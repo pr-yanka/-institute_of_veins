@@ -146,10 +146,10 @@
       <DependentUpon>AddReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="Db\Models\IUnitOfWork.cs" />
-    <Compile Include="Db\Models\LegParts\BPVHipRepository.cs" />
+    <Compile Include="Db\Models\LegParts\BPVHip\BPVComboRepository.cs" />
+    <Compile Include="Db\Models\LegParts\BPVHip\BPVHipRepository.cs" />
     <Compile Include="Db\Models\LegParts\BPVHip\BPVHip.cs" />
-    <Compile Include="Db\Models\LegParts\BPVHip\BPVHipContext.cs" />
-    <Compile Include="Db\Models\LegParts\ILegPartRepository.cs" />
+    <Compile Include="Db\Models\LegParts\ILegPart.cs" />
     <Compile Include="Db\Models\MySqlContext.cs" />
     <Compile Include="Db\Models\Repository.cs" />
     <Compile Include="Db\Models\IRepository.cs" />

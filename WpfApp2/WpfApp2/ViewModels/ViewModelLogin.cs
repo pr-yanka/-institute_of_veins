@@ -35,6 +35,7 @@ namespace WpfApp2.ViewModels
             using (var unitOfWork = new UnitOfWork(new MySqlContext()))
             {
                 var result = unitOfWork.BPVHips.Get(1);
+                var result2 = unitOfWork.BPVCombos.Get(1);
             }
 
             //{
