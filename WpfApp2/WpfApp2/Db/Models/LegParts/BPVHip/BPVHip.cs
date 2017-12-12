@@ -18,23 +18,7 @@ namespace WpfApp2.Db.Models
     [Table("БПВ_на_бедре_структура")]
     public partial class BPVHipStructure :LegPartStructure, ILegPart
     {
-        [Key]
-        [Column("id")]
-        public int Id { get; set; }
-
-        [Column("название1")]
-        public string Text1 { get; set; }
-        [Column("название2")]
-        public string Text2 { get; set; }
-        [Required]
-        [Column("есть_метрика")]
-        public bool HasSize { get; set; }
-
-        [Column("id_метрики")]
-        public int? Size { get; set; }
-        [Required]
-        [Column("уровень_вложенности")]
-        public int Level { get; set; }
+        
     }
 
     [Table("БПВ_на_бедре_комбо")]
