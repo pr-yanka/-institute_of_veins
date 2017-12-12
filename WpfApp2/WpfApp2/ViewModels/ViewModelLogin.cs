@@ -31,16 +31,14 @@ namespace WpfApp2.ViewModels
                 }
             );
 
-            //rep = new BPVHipRepository(new BPVHipContext());
-            using (var unitOfWork = new UnitOfWork(new MySqlContext()))
+            var unitOfWork = new UnitOfWork(new MySqlContext());
+
+            var result = unitOfWork.BPVHips.Get(1);
+            foreach (var bpvhip in unitOfWork.BPVHips.FirstLevelStructures)
             {
-                var result = unitOfWork.BPVHips.Get(1);
-                foreach (var bpvhip in unitOfWork.BPVHips.FirstLevelStructures)
-                {
                     
-                }
-                var result2 = unitOfWork.BPVCombos.Get(1);
             }
+            var result2 = unitOfWork.BPVCombos.Get(1);
 
             //{
             //    bool exists = dbContext.Database.Exists();

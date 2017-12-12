@@ -13,5 +13,6 @@ namespace WpfApp2.LegParts.VMs
         {
             ListNumber = number;
         }
+
     }
 }

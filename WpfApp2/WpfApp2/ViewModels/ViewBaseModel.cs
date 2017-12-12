@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
+using WpfApp2.Db.Models;
 using WpfApp2.Views;
 
 namespace WpfApp2.Navigation
@@ -8,6 +9,8 @@ namespace WpfApp2.Navigation
     {
         public NavigationController Controller { get; protected set; }
         protected bool _hasNavigation = false; 
+
+        public IUnitOfWork Data { set; get; }
 
         public ICommand Navigate { get; }
 
@@ -23,6 +26,7 @@ namespace WpfApp2.Navigation
             Navigate = new RoutedCommand("Navigate", typeof(ViewModelBase));
             //предоставляет доступ отовсюда - ибо команда становится статической и глобальной
             CommandManager.RegisterClassCommandBinding(typeof(MainWindow), new CommandBinding(Navigate));
+            Data = new UnitOfWork(new MySqlContext());
             //LegNavigate = new RoutedCommand("Navigate", typeof(ViewModelBase));
             //предоставляет доступ отовсюда - ибо команда становится статической и глобальной
             //CommandManager.RegisterClassCommandBinding(typeof(MainWindow), new CommandBinding(LegNavigate));
