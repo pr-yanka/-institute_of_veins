@@ -22,7 +22,7 @@ namespace WpfApp2.LegParts.VMs
             _sections = new List<LegSectionViewModel>();
             for (int i = 0; i < LevelCount; i++)
             {
-                LegSections.Add(new BPVTibiaSectionViewModel(i + 1));
+                LegSections.Add(new BPVTibiaSectionViewModel(Controller, i + 1));
             }
             _title = "Большая подкожная вена на голени";
         }
@@ -33,7 +33,7 @@ namespace WpfApp2.LegParts.VMs
             _sections = new List<LegSectionViewModel>();
             for (int i = 0; i < LevelCount; i++)
             {
-                LegSections.Add(new BPVTibiaSectionViewModel(i + 1));
+                LegSections.Add(new BPVTibiaSectionViewModel(Controller, i + 1));
             }
             _title = "Большая подкожная вена на голени";
         }

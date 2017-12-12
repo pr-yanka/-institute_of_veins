@@ -5,14 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WpfApp2.Db.Models;
+using WpfApp2.Navigation;
 
 namespace WpfApp2.LegParts
 {
-    public abstract class LegSectionViewModel{
+    public abstract class LegSectionViewModel : ViewModelBase
+    {
         private int _listNumber;
         public int ListNumber { get; set; }
 
-        public List<LegPartStructure> StructureSource = new List<LegPartStructure>();
+        public List<LegPartStructure> StructureSource;
         //all values
 
         //selected value
@@ -45,6 +47,11 @@ namespace WpfApp2.LegParts
         public float Size { get; set; }
 
         private float _size2;
+
+        public LegSectionViewModel(NavigationController controller) : base(controller)
+        {
+        }
+
         public float Size2 { get; set; }
 
         public string SizeToText {

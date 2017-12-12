@@ -19,7 +19,6 @@ namespace WpfApp2.ViewModels
             ToRegistrationCommand = new DelegateCommand(
                 () =>
                 {
-                    //Controller.NavigateTo<ViewModelRegistration>();
                     Controller.NavigateTo<ViewModelRegistration>();
                 }
             );

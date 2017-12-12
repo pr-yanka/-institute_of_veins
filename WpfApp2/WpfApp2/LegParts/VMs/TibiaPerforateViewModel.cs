@@ -18,7 +18,7 @@ namespace WpfApp2.LegParts.VMs
             _sections = new List<LegSectionViewModel>();
             for (int i = 0; i < LevelCount; i++)
             {
-                LegSections.Add(new TibiaPerforateSectionViewModel(i + 1));
+                LegSections.Add(new TibiaPerforateSectionViewModel(Controller, i + 1));
             }
             _title = "Перфорант голени";
         }
@@ -29,7 +29,7 @@ namespace WpfApp2.LegParts.VMs
             _sections = new List<LegSectionViewModel>();
             for (int i = 0; i < LevelCount; i++)
             {
-                LegSections.Add(new TibiaPerforateSectionViewModel(i + 1));
+                LegSections.Add(new TibiaPerforateSectionViewModel(Controller, i + 1));
             }
             _title = "Перфорант голени";
         }

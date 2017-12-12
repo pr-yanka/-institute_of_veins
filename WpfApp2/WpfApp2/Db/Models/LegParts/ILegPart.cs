@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp2.Db.Models.LegParts
 {
-    public class ILegPart
+    public interface ILegPart
     {
     }
 }

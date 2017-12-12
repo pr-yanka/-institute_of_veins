@@ -22,7 +22,7 @@ namespace WpfApp2.LegParts.VMs
             _sections = new List<LegSectionViewModel>();
             for (int i = 0; i < LevelCount; i++)
             {
-                LegSections.Add(new ZDSVSectionViewModel(i + 1));
+                LegSections.Add(new ZDSVSectionViewModel(Controller, i + 1));
             }
             _title = "Задняя добавочная сафенная вена";
         }
@@ -33,7 +33,7 @@ namespace WpfApp2.LegParts.VMs
             _sections = new List<LegSectionViewModel>();
             for (int i = 0; i < LevelCount; i++)
             {
-                LegSections.Add(new ZDSVSectionViewModel(i + 1));
+                LegSections.Add(new ZDSVSectionViewModel(Controller, i + 1));
             }
             _title = "Задняя добавочная сафенная вена";
         }

@@ -22,7 +22,7 @@ namespace WpfApp2.LegParts.VMs
             _sections = new List<LegSectionViewModel>();
             for (int i = 0; i < LevelCount; i++)
             {
-                LegSections.Add(new HipPerforateSectionViewModel(i + 1));
+                LegSections.Add(new HipPerforateSectionViewModel(Controller, i + 1));
             }
             _title = "Перфорант бедра и несафенные вены";
         }
@@ -33,7 +33,7 @@ namespace WpfApp2.LegParts.VMs
             _sections = new List<LegSectionViewModel>();
             for (int i = 0; i < LevelCount; i++)
             {
-                LegSections.Add(new HipPerforateSectionViewModel(i + 1));
+                LegSections.Add(new HipPerforateSectionViewModel(Controller, i + 1));
             }
             _title = "Перфорант бедра и несафенные вены";
         }

@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WpfApp2.Navigation;
 
 namespace WpfApp2.LegParts.VMs
 {
     public class TibiaPerforateSectionViewModel : LegSectionViewModel
     {
-        public TibiaPerforateSectionViewModel(int number)
+        public TibiaPerforateSectionViewModel(NavigationController controller, int number) : base(controller)
         {
             ListNumber = number;
         }
