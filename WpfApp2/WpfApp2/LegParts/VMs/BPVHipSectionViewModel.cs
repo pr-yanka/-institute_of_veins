@@ -14,12 +14,7 @@ namespace WpfApp2.LegParts.VMs
         public BPVHipSectionViewModel(NavigationController controller, int number) : base(controller)
         {
             ListNumber = number;
-            StructureSource = new ObservableCollection<LegPartStructure>(base.Data.BPVHips.FirstLevelStructures.ToList());
-            StructureSource2 = new ObservableCollection<string>
-            {
-                "test 1",
-                "test 2"
-            };
+            StructureSource = new ObservableCollection<LegPartStructure>(base.Data.BPVHips.LevelStructures(number).ToList());
         }
 
     }

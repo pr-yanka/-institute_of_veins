@@ -16,7 +16,6 @@ namespace WpfApp2.LegParts
         public int ListNumber { get; set; }
 
         public ObservableCollection<LegPartStructure> StructureSource { get; protected set; }
-        public ObservableCollection<string> StructureSource2 { get; protected set; }
         //all values
 
         //selected value
@@ -52,12 +51,7 @@ namespace WpfApp2.LegParts
 
         public LegSectionViewModel(NavigationController controller) : base(controller)
         {
-            StructureSource = new ObservableCollection<LegPartStructure>(base.Data.BPVHips.FirstLevelStructures.ToList());
-            StructureSource2 = new ObservableCollection<string>
-            {
-                "test 1",
-                "test 2"
-            };
+            
         }
 
         public float Size2 { get; set; }

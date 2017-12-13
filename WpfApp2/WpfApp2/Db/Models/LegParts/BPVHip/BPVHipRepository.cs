@@ -14,10 +14,9 @@ namespace WpfApp2.Db.Models.LegParts
         {
         }
 
-        public IEnumerable<BPVHipStructure> FirstLevelStructures
+        public IEnumerable<BPVHipStructure> LevelStructures(int level)
         {
-            get { return dbContext.Set<BPVHipStructure>().Where(bpvhip => bpvhip.Level == 1).ToList(); }
+            return dbContext.Set<BPVHipStructure>().Where(bpvhip => bpvhip.Level == level).ToList();
         }
-
     }
 }
