@@ -9,7 +9,7 @@ namespace WpfApp2.LegParts.VMs
 {
     public class BPVTibiaSectionViewModel : LegSectionViewModel
     {
-        public BPVTibiaSectionViewModel(NavigationController controller, int number) : base(controller)
+        public BPVTibiaSectionViewModel(NavigationController controller, LegSectionViewModel prev, int number) : base(controller, prev)
         {
             ListNumber = number;
         }

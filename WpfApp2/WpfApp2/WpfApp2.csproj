@@ -184,7 +184,7 @@
     <Compile Include="LegParts\VMs\BPVHipViewModel.cs" />
     <Compile Include="LegParts\VMs\BPVTibiaSectionViewModel.cs" />
     <Compile Include="LegParts\VMs\BPVTibiaViewModel.cs" />
-    <Compile Include="LegParts\VMs\HipPerforate.cs" />
+    <Compile Include="LegParts\VMs\HipPerforateViewModel.cs" />
     <Compile Include="LegParts\VMs\HipPerforateSectionViewModel.cs" />
     <Compile Include="LegParts\VMs\PDSVSectionViewModel.cs" />
     <Compile Include="LegParts\VMs\PDSVViewModel.cs" />

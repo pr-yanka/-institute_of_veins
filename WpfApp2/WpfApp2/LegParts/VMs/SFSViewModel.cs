@@ -16,26 +16,26 @@ namespace WpfApp2.LegParts.VMs
             set { _sections = value; }
         }
 
-        public SFSViewModel(NavigationController controller) : base(controller)
+
+        public void Initialize()
         {
             LevelCount = 6;
             _sections = new List<LegSectionViewModel>();
             for (int i = 0; i < LevelCount; i++)
             {
-                LegSections.Add(new SFSSectionViewModel(Controller, i + 1));
+                if (i != 0)
+                    LegSections.Add(new SFSSectionViewModel(Controller, _sections[i - 1], i + 1));
+                else
+                    LegSections.Add(new SFSSectionViewModel(Controller, null, i + 1));
             }
             _title = "Сафенно-феморальное соустье";
         }
 
+        public SFSViewModel(NavigationController controller) : base(controller) { }
+
         public SFSViewModel(NavigationController controller, LegSide side) : base(controller, side)
         {
-            LevelCount = 6;
-            _sections = new List<LegSectionViewModel>();
-            for (int i = 0; i < LevelCount; i++)
-            {
-                LegSections.Add(new SFSSectionViewModel(Controller, i + 1));
-            }
-            _title = "Сафенно-феморальное соустье";
+            Initialize();
         }
     }
 }

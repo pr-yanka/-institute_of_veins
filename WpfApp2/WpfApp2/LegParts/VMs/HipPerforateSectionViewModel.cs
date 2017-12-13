@@ -9,7 +9,7 @@ namespace WpfApp2.LegParts.VMs
 {
     public class HipPerforateSectionViewModel : LegSectionViewModel
     {
-        public HipPerforateSectionViewModel(NavigationController controller, int number) : base(controller)
+        public HipPerforateSectionViewModel(NavigationController controller, LegSectionViewModel prev, int number) : base(controller, prev)
         {
             ListNumber = number;
         }

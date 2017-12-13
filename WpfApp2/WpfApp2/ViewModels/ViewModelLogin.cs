@@ -29,15 +29,6 @@ namespace WpfApp2.ViewModels
                     Controller.NavigateTo<ViewModelDashboard>();
                 }
             );
-
-            var unitOfWork = new UnitOfWork(new MySqlContext());
-
-            //{
-            //    bool exists = dbContext.Database.Exists();
-            //}
-            //rep = new BPVHipRepository(new BPVHipContext());
-           // var st = rep.Get(1);
-
         }
     }
 }

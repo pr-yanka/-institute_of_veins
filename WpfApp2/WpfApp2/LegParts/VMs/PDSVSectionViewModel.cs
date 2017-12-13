@@ -9,7 +9,7 @@ namespace WpfApp2.LegParts.VMs
 {
     public class PDSVSectionViewModel : LegSectionViewModel
     {
-        public PDSVSectionViewModel(NavigationController controller, int number) : base(controller)
+        public PDSVSectionViewModel(NavigationController controller, LegSectionViewModel prev, int number) : base(controller, prev)
         {
             ListNumber = number;
         }

@@ -49,9 +49,11 @@ namespace WpfApp2.LegParts
 
         private float _size2;
 
-        public LegSectionViewModel(NavigationController controller) : base(controller)
+        private LegSectionViewModel _previousSection;
+
+        public LegSectionViewModel(NavigationController controller, LegSectionViewModel prevSection) : base(controller)
         {
-            
+            _previousSection = prevSection;
         }
 
         public float Size2 { get; set; }
