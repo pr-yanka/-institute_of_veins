@@ -15,5 +15,11 @@ namespace WpfApp2.Db.Models
         public MySqlContext() : base("server=localhost;user=root;database=med_db;password=22222;") {
             
         }
+        /*
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<BPVHipStructure>().Ignore(t => t.Metrics);
+            base.OnModelCreating(modelBuilder);
+        }*/
     }
 }

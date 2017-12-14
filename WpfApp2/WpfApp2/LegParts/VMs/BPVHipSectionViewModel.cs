@@ -17,7 +17,7 @@ namespace WpfApp2.LegParts.VMs
             StructureSource = new ObservableCollection<LegPartDbStructure>(base.Data.BPVHips.LevelStructures(number).ToList());
             foreach (var structure in StructureSource)
             {
-                structure.Metrics = Data.Metrics.GetStr(structure.Id);
+                structure.Metrics = Data.Metrics.GetStr(structure.Size);
             }
         }
 
