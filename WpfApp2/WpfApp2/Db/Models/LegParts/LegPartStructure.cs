@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp2.Db.Models
 {
-    public abstract class LegPartStructure
+    public abstract class LegPartDbStructure
     {
         /*
         public int Id { get; set; }
@@ -39,6 +39,28 @@ namespace WpfApp2.Db.Models
         public override string ToString()
         {
             return Text1 + " " + Size + " " + Text2;
+        }
+    }
+
+    public abstract class LegPartStructure
+    {
+        private LegPartDbStructure _structure;
+
+        public LegPartStructure(LegPartDbStructure structure)
+        {
+            _structure = structure;
+        }
+
+        public int Id { get { return _structure.Id; } set { _structure.Id = value; } }
+        public string Text1 { get { return _structure.Text1; } set { _structure.Text1 = value; } }
+        public string Text2 { get { return _structure.Text2; } set { _structure.Text2 = value; } }
+        public bool HasSize { get {return _structure.HasSize; } set { _structure.HasSize = value; } }
+        public int Level { get { return _structure.Level; } set { _structure.Level = value; } }
+        public string Metrics { get; set; }
+
+        public override string ToString()
+        {
+            return Text1 + " " + Metrics + " " + Text2;
         }
     }
 }

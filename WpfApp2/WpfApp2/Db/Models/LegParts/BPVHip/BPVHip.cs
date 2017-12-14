@@ -16,7 +16,7 @@ namespace WpfApp2.Db.Models
     }
 
     [Table("БПВ_на_бедре_структура")]
-    public partial class BPVHipStructure :LegPartStructure, ILegPart
+    public partial class BPVHipStructure :LegPartDbStructure, ILegPart
     {
         
     }

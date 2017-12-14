@@ -14,12 +14,14 @@ namespace WpfApp2.Db.Models
 
         public BPVHipRepository BPVHips { get; private set; }
         public BPVComboRepository BPVCombos { get; private set; }
+        public MetricsRepository Metrics { get; }
 
         public UnitOfWork (MySqlContext context)
         {
             _context = context;
             BPVHips = new BPVHipRepository(_context);
             BPVCombos = new BPVComboRepository(_context);
+            Metrics = new MetricsRepository(_context);
         }
 
         public int Complete()

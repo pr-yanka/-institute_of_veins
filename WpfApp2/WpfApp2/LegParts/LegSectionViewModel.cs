@@ -15,12 +15,12 @@ namespace WpfApp2.LegParts
         private int _listNumber;
         public int ListNumber { get; set; }
 
-        public ObservableCollection<LegPartStructure> StructureSource { get; protected set; }
+        public ObservableCollection<LegPartDbStructure> StructureSource { get; protected set; }
         //all values
 
         //selected value
-        private LegPartStructure _selectedValue;
-        public LegPartStructure SelectedValue { get; set; }
+        private LegPartDbStructure _selectedValue;
+        public LegPartDbStructure SelectedValue { get; set; }
 
         private bool _hasSize;
         //has size
