@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using WpfApp2.Db.Models;
 using WpfApp2.Navigation;
 
 namespace WpfApp2.LegParts
 {
-    public abstract class LegSectionViewModel : ViewModelBase
+    public abstract class LegSectionViewModel : ViewModelBase, INotifyPropertyChanged
     {
         private int _listNumber;
         public int ListNumber { get; set; }
@@ -20,7 +22,17 @@ namespace WpfApp2.LegParts
 
         //selected value
         private LegPartDbStructure _selectedValue;
-        public LegPartDbStructure SelectedValue { get; set; }
+
+        public LegPartDbStructure SelectedValue
+        {
+            get { return _selectedValue; }
+            set
+            {
+                _selectedValue = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private bool _hasSize;
         //has size
@@ -51,9 +63,37 @@ namespace WpfApp2.LegParts
 
         private LegSectionViewModel _previousSection;
 
+        private Visibility _isVisible;
+        public Visibility IsVisible
+        {
+            get
+            {
+                if (_previousSection == null) return Visibility.Visible;
+                if (_previousSection.SelectedValue != null) return Visibility.Visible;
+                return Visibility.Hidden;
+            }
+            set {
+                _isVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
         public LegSectionViewModel(NavigationController controller, LegSectionViewModel prevSection) : base(controller)
         {
             _previousSection = prevSection;
+            if (prevSection != null)
+                prevSection.PropertyChanged += (e, args) =>
+                {
+                    if (prevSection.SelectedValue != null) IsVisible = Visibility.Visible;
+                    else IsVisible = Visibility.Hidden;;
+                };
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            //если PropertyChanged не нулевое - оно будет разбужено
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public float Size2 { get; set; }
@@ -69,7 +109,5 @@ namespace WpfApp2.LegParts
                 else return Size.ToString() + "*" + Size2.ToString();
             }
         }
-
-
-    };
+    }
 }

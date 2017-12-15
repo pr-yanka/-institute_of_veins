@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,7 +29,7 @@ namespace WpfApp2.LegParts
             }
             protected set {
                 _isEmpty = value;
-                OnPropertyChanged("IsEmpty");  
+                OnPropertyChanged();  
             }
         }
 
@@ -43,15 +44,6 @@ namespace WpfApp2.LegParts
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
         private bool _panelOpened = false;
 
         public bool PanelOpened
@@ -60,7 +52,7 @@ namespace WpfApp2.LegParts
             set
             {
                 _panelOpened = value;
-                OnPropertyChanged("PanelOpened");
+                OnPropertyChanged();
             }
         }
 
@@ -98,6 +90,14 @@ namespace WpfApp2.LegParts
         public SizePanelViewModel CurrentPanelViewModel;
 
         private UserControl _panel;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            //если PropertyChanged не нулевое - оно будет разбужено
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public UserControl Panel
         {
             set { _panel = value; }
