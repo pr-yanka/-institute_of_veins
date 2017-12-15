@@ -87,6 +87,17 @@ namespace WpfApp2.LegParts
                     if (prevSection.SelectedValue != null) IsVisible = Visibility.Visible;
                     else IsVisible = Visibility.Hidden;;
                 };
+            StructureSource = new ObservableCollection<LegPartDbStructure>();
+            var t = StructureSource.GetEnumerator().GetType().GetGenericTypeDefinition();
+        }
+
+        protected void AddCustomObject(Type structureType)
+        {           
+            var custom = (LegPartDbStructure)Activator.CreateInstance(structureType);
+            custom.Text1 = "Свой вариант ответа";
+            custom.HasSize = false;
+            custom.Custom = true;
+            StructureSource.Add(custom);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

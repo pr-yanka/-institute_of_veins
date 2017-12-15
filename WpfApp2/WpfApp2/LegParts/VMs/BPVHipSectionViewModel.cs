@@ -19,6 +19,7 @@ namespace WpfApp2.LegParts.VMs
             {
                 structure.Metrics = Data.Metrics.GetStr(structure.Size);
             }
+            AddCustomObject(typeof(BPVHipStructure));
         }
 
     }
