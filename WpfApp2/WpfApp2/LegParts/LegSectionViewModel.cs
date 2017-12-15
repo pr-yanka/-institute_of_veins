@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using WpfApp2.Db.Models;
 using WpfApp2.Navigation;
+using WpfApp2.Messaging;
 
 namespace WpfApp2.LegParts
 {
@@ -28,6 +29,11 @@ namespace WpfApp2.LegParts
             get { return _selectedValue; }
             set
             {
+                if ((_selectedValue == null && value.Custom) || (_selectedValue != null &&_selectedValue.Custom != value.Custom))
+                {
+                    if (value.Custom) MessageBus.Default.Call("OpenCustom", this, this.GetType());
+                    else MessageBus.Default.Call("CloseCustom", this, this.GetType());
+                }
                 _selectedValue = value;
                 OnPropertyChanged();
             }

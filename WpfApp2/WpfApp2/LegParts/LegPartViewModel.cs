@@ -105,11 +105,25 @@ namespace WpfApp2.LegParts
 
         public DelegateCommand AnimationCompleted {get; set; }
 
+        private void OpenHandler(object sender, object data)
+        {
+            PanelOpened = true;
+            //OpenPanelCommand.Execute(true);
+        }
+
+        private void CloseHandler(object sender, object data)
+        {
+            ClosePanelCommand.Execute(true);
+        }
+
         public void Initialization()
         {
             OpenPanelCommand = new DelegateCommand(() => { PanelOpened = true; });
             ClosePanelCommand = new DelegateCommand(() => { PanelOpened = false; });
             PanelOpened = false;
+            //when user picks custom structure
+            MessageBus.Default.Subscribe("OpenCustom", OpenHandler);
+            MessageBus.Default.Subscribe("CloseCustom", OpenHandler);
 
             //_sections = new List<BPVHipSectionViewModel>();
             _hasNavigation = false;
