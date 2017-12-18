@@ -105,9 +105,20 @@ namespace WpfApp2.LegParts
 
         public DelegateCommand AnimationCompleted {get; set; }
 
+        public static bool handled = false;
+        public UIElement ui;
+        //public Storyboard myS { get; set; }
         private void OpenHandler(object sender, object data)
         {
-            PanelOpened = true;
+            if (!handled)
+            {
+                
+                handled = true;
+                //var myS = (Storyboard) App.Current.FindResource("Open");
+                PanelOpened = true;
+                //myS.Begin();
+            }
+            
             //OpenPanelCommand.Execute(true);
         }
 
