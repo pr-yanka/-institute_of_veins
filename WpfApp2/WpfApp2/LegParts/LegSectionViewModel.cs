@@ -75,7 +75,7 @@ namespace WpfApp2.LegParts
             get
             {
                 if (_previousSection == null) return Visibility.Visible;
-                if (_previousSection.SelectedValue != null) return Visibility.Visible;
+                if (_previousSection.SelectedValue != null && !_previousSection.SelectedValue.ToNextPart) return Visibility.Visible;
                 return Visibility.Hidden;
             }
             set {
@@ -100,10 +100,21 @@ namespace WpfApp2.LegParts
         protected void AddCustomObject(Type structureType)
         {           
             var custom = (LegPartDbStructure)Activator.CreateInstance(structureType);
-            custom.Text1 = "Свой вариант ответа";
+            custom.Text1 = "Свой вариант ответа.";
             custom.HasSize = false;
             custom.Custom = true;
+            custom.ToNextPart = false;
             StructureSource.Add(custom);
+        }
+
+        protected void AddNextPartObject(Type structureType)
+        {
+            var next = (LegPartDbStructure)Activator.CreateInstance(structureType);
+            next.Text1 = "Переход к следующему разделу.";
+            next.HasSize = false;
+            next.Custom = false;
+            next.ToNextPart = true;
+            StructureSource.Add(next);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
