@@ -44,17 +44,7 @@ namespace WpfApp2.LegParts
             }
         }
 
-        private bool _panelOpened = false;
-
-        public bool PanelOpened
-        {
-            get { return _panelOpened; }
-            set
-            {
-                _panelOpened = value;
-                OnPropertyChanged();
-            }
-        }
+        
 
         protected string _title;
         public string Title
@@ -84,10 +74,10 @@ namespace WpfApp2.LegParts
             set { this.openDialogCommand = value; }
         }
 
-        public ICommand OpenPanelCommand { set; private get; }
-        public ICommand ClosePanelCommand { set; private get; }
+        public ICommand OpenPanelCommand { protected set; get; }
+        public ICommand ClosePanelCommand { protected set; get; }
 
-        public SizePanelViewModel CurrentPanelViewModel;
+        public SizePanelViewModel CurrentPanelViewModel { get; protected set; }
 
         private UserControl _panel;
 
@@ -115,26 +105,28 @@ namespace WpfApp2.LegParts
                 
                 handled = true;
                 //var myS = (Storyboard) App.Current.FindResource("Open");
-                PanelOpened = true;
+                CurrentPanelViewModel.PanelOpened = true;
                 //myS.Begin();
             }
             
             //OpenPanelCommand.Execute(true);
         }
 
+
         private void CloseHandler(object sender, object data)
         {
-            ClosePanelCommand.Execute(true);
+            CurrentPanelViewModel.PanelOpened = false;
         }
 
         public void Initialization()
         {
-            OpenPanelCommand = new DelegateCommand(() => { PanelOpened = true; });
-            ClosePanelCommand = new DelegateCommand(() => { PanelOpened = false; });
-            PanelOpened = false;
+            CurrentPanelViewModel = new SizePanelViewModel(this.Controller);
+            OpenPanelCommand = new DelegateCommand(() => { CurrentPanelViewModel.PanelOpened = true; });
+            ClosePanelCommand = new DelegateCommand(() => { CurrentPanelViewModel.PanelOpened = false; });
+            CurrentPanelViewModel.PanelOpened = false;
             //when user picks custom structure
             MessageBus.Default.Subscribe("OpenCustom", OpenHandler);
-            MessageBus.Default.Subscribe("CloseCustom", OpenHandler);
+            MessageBus.Default.Subscribe("CloseCustom", CloseHandler);
 
             //_sections = new List<BPVHipSectionViewModel>();
             _hasNavigation = false;
@@ -157,7 +149,7 @@ namespace WpfApp2.LegParts
                 }
             );
 
-            CurrentPanelViewModel = new SizePanelViewModel(this.Controller);
+            
         }
 
         public LegPartViewModel(NavigationController controller, LegSide side) : base(controller)

@@ -48,13 +48,32 @@
                 <Button x:Name="AddButton2" Content="Сохранить" HorizontalAlignment="Right"  VerticalAlignment="Top" Width="408" Background="#FFDBEDF7" FontSize="16" Grid.ColumnSpan="2"/>
             </StackPanel>
 
-            <Border Grid.RowSpan="4" Visibility="{Binding PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOverlay">
+            <Border Grid.RowSpan="4" Visibility="{Binding Path = Controller.LegViewModel.CurrentPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOverlay">
                 <Border.Background>
                     <SolidColorBrush Color="Black" Opacity="0.78"/>
                 </Border.Background>
             </Border>
 
-            <Border x:Name="panelControl" Grid.RowSpan="4" Margin="0,0,-450,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="450" Height="275" DataContext="{Binding CurrentPanelViewModel}" >
+            <Border x:Name="panelControl" Grid.RowSpan="4" Margin="-900,0,-450,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="450" Height="275" DataContext="{Binding Path=Controller.LegViewModel.CurrentPanelViewModel}" >
+
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path = PanelOpened}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard >
+                                        <Storyboard SpeedRatio="12" TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+                                            <DoubleAnimation
+                                                Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                                Duration="0:0:005" From="0" To="-700" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+
                 <Border.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -63,31 +82,8 @@
                         <TranslateTransform/>
                     </TransformGroup>
                 </Border.RenderTransform>
-                <Border.Style>
-                    <Style>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding PanelOpened}"
-                         Value="False">
-                                <DataTrigger.EnterActions>
-                                    <BeginStoryboard >
-                                        <Storyboard SpeedRatio="12" TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
-                                            <DoubleAnimation 
-                                    Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
-                                    Duration="0:0:005" From="0" To="-700" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </DataTrigger.EnterActions>
-
-                                <DataTrigger.ExitActions>
-                                    <!-- you could animate close too if you wanted -->
-                                </DataTrigger.ExitActions>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Border.Style>
 
                 <Grid>
-                    
                     <Canvas Background="#FFC6E8E6">
                         <TextBlock x:Name="textBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="135" FontSize="14" Canvas.Top="4"><Run Text="Добавить сво"/><Run Text="ё описание"/><Run Text=" "/><Run Text=" "/></TextBlock>
                         <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=Text1}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="61" />
@@ -104,22 +100,12 @@
                 </Grid>
             </Border>
 
-            
 
-            <!--<Grid.Triggers>
-                <EventTrigger RoutedEvent="Button.Click" SourceName="AddButton2">
-                    <BeginStoryboard Name="StartStoryboard">
-                        <Storyboard SpeedRatio="12" TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" local1:StoryboardHelper.CompletedCommand="{Binding Path=OpenPanelCommand}">
-                            <DoubleAnimation 
-                                Storyboard.TargetName="panelControl" 
-                                Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
-                                Duration="0:0:005" From="0" To="-700" />
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
+
+            <Grid.Triggers>
                 <EventTrigger RoutedEvent="Button.Click" SourceName="ButtonAddStructure">
                     <BeginStoryboard Name="CloseStoryboard">
-                        <Storyboard SpeedRatio="12" TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" local1:StoryboardHelper.CompletedCommand="{Binding Path=ClosePanelCommand}">
+                        <Storyboard SpeedRatio="12" TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" local1:StoryboardHelper.CompletedCommand="{Binding Path=Controller.LegViewModel.ClosePanelCommand}">
                             <DoubleAnimation 
                                 Storyboard.TargetName="panelControl" 
                                 Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
@@ -127,7 +113,7 @@
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
-            </Grid.Triggers>-->
+            </Grid.Triggers>
 
         </Grid>
     </DataTemplate>
