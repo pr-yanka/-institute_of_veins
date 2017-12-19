@@ -104,12 +104,8 @@ namespace WpfApp2.LegParts
             {
                 
                 handled = true;
-                //var myS = (Storyboard) App.Current.FindResource("Open");
                 CurrentPanelViewModel.PanelOpened = true;
-                //myS.Begin();
             }
-            
-            //OpenPanelCommand.Execute(true);
         }
 
 
@@ -121,12 +117,17 @@ namespace WpfApp2.LegParts
         public void Initialization()
         {
             CurrentPanelViewModel = new SizePanelViewModel(this.Controller);
-            OpenPanelCommand = new DelegateCommand(() => { CurrentPanelViewModel.PanelOpened = true; });
-            ClosePanelCommand = new DelegateCommand(() => { CurrentPanelViewModel.PanelOpened = false; });
+            OpenPanelCommand = new DelegateCommand(() => {
+                CurrentPanelViewModel.PanelOpened = true;
+            });
+            ClosePanelCommand = new DelegateCommand(() => {
+                CurrentPanelViewModel.PanelOpened = false;
+                handled = false;
+            });
             CurrentPanelViewModel.PanelOpened = false;
             //when user picks custom structure
             MessageBus.Default.Subscribe("OpenCustom", OpenHandler);
-            MessageBus.Default.Subscribe("CloseCustom", CloseHandler);
+            //MessageBus.Default.Subscribe("CloseCustom", CloseHandler);
 
             //_sections = new List<BPVHipSectionViewModel>();
             _hasNavigation = false;

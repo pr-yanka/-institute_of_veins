@@ -3,22 +3,19 @@
                     xmlns:local="clr-namespace:WpfApp2.LegParts.Templates">
     <BooleanToVisibilityConverter x:Key="BoolToVis" />
         <SolidColorBrush x:Key="GrayMaskColorBrush" Color="#88000000" Opacity="0.75"/>
-        <Storyboard x:Key="Open">
-        <DoubleAnimationUsingKeyFrames
-            Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="panelControl"
-            Storyboard.Target="{Binding Source={RelativeSource Mode=TemplatedParent}}">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:1.0" Value="-200"/>
-            </DoubleAnimationUsingKeyFrames>
+    <Storyboard x:Key="Open">
+        <Storyboard SpeedRatio="12" TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+            <DoubleAnimation
+                                                Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                                Duration="0:0:005" From="0" To="-700" />
         </Storyboard>
-    <Storyboard x:Key="Close">
-        <DoubleAnimationUsingKeyFrames
-            Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="panelControl"
-            Storyboard.Target="{Binding Source={RelativeSource Mode=TemplatedParent}}"
-            >
-            <EasingDoubleKeyFrame KeyTime="0" Value="-597"/>
-            <EasingDoubleKeyFrame KeyTime="0:0:1.0" Value="1"/>
-        </DoubleAnimationUsingKeyFrames>
     </Storyboard>
-    
+    <Storyboard x:Key="Close">
+        <Storyboard SpeedRatio="12" TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+            <DoubleAnimation
+                                                Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                                Duration="0:0:005" From="-700" To="0" />
+        </Storyboard>
+    </Storyboard>
+
 </ResourceDictionary>
