@@ -44,8 +44,6 @@ namespace WpfApp2.LegParts
             }
         }
 
-        
-
         protected string _title;
         public string Title
         {
