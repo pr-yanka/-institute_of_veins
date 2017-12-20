@@ -12,19 +12,11 @@ namespace WpfApp2.Db.Models
     {
         protected readonly DbContext dbContext;
 
-        IEnumerable<TEntity> GetAll
+        public IEnumerable<TEntity> GetAll
         {
             get
             {
                 return dbContext.Set<TEntity>().ToList();
-            }
-        }
-
-        IEnumerable<TEntity> IRepository<TEntity>.GetAll
-        {
-            get
-            {
-                throw new NotImplementedException();
             }
         }
 

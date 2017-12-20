@@ -94,8 +94,8 @@ namespace WpfApp2.LegParts
 
         public DelegateCommand AnimationCompleted {get; set; }
 
-        protected int _currentPartNum;
-        protected Type _senderType;
+        protected LegSectionViewModel _lastSender;
+        protected Type _lastSenderType;
 
         public static bool handled = false;
         public UIElement ui;
@@ -105,8 +105,8 @@ namespace WpfApp2.LegParts
             if (!handled)
             {
                 var currentPart = (LegSectionViewModel)sender;
-                _currentPartNum = currentPart.ListNumber;
-                _senderType = (Type)data;
+                _lastSender = (LegSectionViewModel)sender;
+                _lastSenderType = (Type)data;
                 handled = true;
                 CurrentPanelViewModel.PanelOpened = true;
             }
@@ -114,16 +114,22 @@ namespace WpfApp2.LegParts
 
         private LegPartDbStructure GetPanelStructure()
         {
-            var newStr = (LegPartDbStructure) Activator.CreateInstance(_senderType);
+
+            var newStr = (LegPartDbStructure) Activator.CreateInstance(_lastSender.SelectedValue.GetType());
             var panel = CurrentPanelViewModel;
             newStr.Text1 = panel.Text1;
             newStr.Text2 = panel.Text2;
             newStr.HasSize = panel.HasSize;
             if (panel.HasSize)
-                newStr.Size = panel.Size;
+            {
+                newStr.Size = panel.SelectedMetric.Id;
+                newStr.Metrics = panel.SelectedMetric.Str;
+            }
             else newStr.Size = null;
+            newStr.Level = _lastSender.ListNumber;
+            newStr.Custom = true;
+
             return newStr;
-            //LegPartDbStructure
         }
 
 
@@ -142,6 +148,9 @@ namespace WpfApp2.LegParts
             ClosePanelCommand = new DelegateCommand(() => {
                 CurrentPanelViewModel.PanelOpened = false;
                 handled = false;
+                var newStruct = GetPanelStructure();
+                _lastSender.StructureSource.Add(newStruct);
+                _lastSender.SelectedValue = newStruct;
             });
 
             CurrentPanelViewModel.PanelOpened = false;

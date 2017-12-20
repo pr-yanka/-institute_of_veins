@@ -39,8 +39,8 @@ namespace WpfApp2.LegParts
         public SizePanelViewModel(ViewModelBase parentVM) : base(parentVM.Controller)
         {
             _parentVM = parentVM;
-            Dimentions = new ObservableCollection<Metrics>();
-            Dimentions.Add(Data.Metrics.GetAll());
+            Dimentions = new ObservableCollection<Metrics>(Data.Metrics.GetAll);
+
         }
 
         private string _text1;
