@@ -99,13 +99,13 @@
                         <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=Text1}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="61" />
                         <TextBox x:Name="textBox2" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=Text2}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="173"/>
                         <CheckBox x:Name="checkBox" Content="есть поле для размерности" HorizontalAlignment="Left" IsChecked="{Binding Path=HasSize}" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="109"/>
-                        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" VerticalAlignment="Top" Width="233" ItemsSource="{Binding Path=Dimentions}" Visibility="{Binding Path=HasSize, Converter={StaticResource BoolToVis}}" SelectedItem="{Binding SelectedItem}" Canvas.Left="199" Canvas.Top="113" Height="23"/>
+                        <ComboBox x:Name="comboBox" Visibility="{Binding Path=HasSize, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="233" ItemsSource="{Binding Path=Dimentions}" SelectedItem="{Binding SelectedItem}" Canvas.Left="199" Canvas.Top="113" Height="23"/>
                         <Button x:Name="button" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Canvas.Left="53" Canvas.Top="232"/>
                         <Button x:Name="ButtonAddStructure" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding Controller.LegViewModel.ClosePanelCommand}" Canvas.Left="249" Canvas.Top="232"/>
                         <Separator Height="18" Margin="0" Canvas.Top="19" Width="442"/>
                         <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="37" Canvas.Left="10" Text="Первая часть:"/>
                         <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="152" Canvas.Left="10"><Run Text="Вторая часть "/><Run Text="(не обязательно к заполнению):"/></TextBlock>
-                        <CheckBox x:Name="checkBox_Copy" Content="двойная размерность (х*х)" Visibility="{Binding Path=DoubleSizeAvailable, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" IsChecked="{Binding HasSize}" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="132"/>
+                        <CheckBox x:Name="checkBox_Copy" Content="двойная размерность (х*х)" IsChecked="{Binding Path=HasDoubleSize}" Visibility="{Binding Path=DoubleSizeAvailable, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left"  VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="132"/>
                     </Canvas>
                 </Grid>
             </Border>

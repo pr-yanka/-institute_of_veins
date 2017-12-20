@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using WpfApp2.Db.Models;
 using WpfApp2.LegParts.DialogConfirmStructure;
 using WpfApp2.LegParts.VMs;
 using WpfApp2.Messaging;
@@ -93,6 +94,9 @@ namespace WpfApp2.LegParts
 
         public DelegateCommand AnimationCompleted {get; set; }
 
+        protected int _currentPartNum;
+        protected Type _senderType;
+
         public static bool handled = false;
         public UIElement ui;
         //public Storyboard myS { get; set; }
@@ -100,10 +104,26 @@ namespace WpfApp2.LegParts
         {
             if (!handled)
             {
-                
+                var currentPart = (LegSectionViewModel)sender;
+                _currentPartNum = currentPart.ListNumber;
+                _senderType = (Type)data;
                 handled = true;
                 CurrentPanelViewModel.PanelOpened = true;
             }
+        }
+
+        private LegPartDbStructure GetPanelStructure()
+        {
+            var newStr = (LegPartDbStructure) Activator.CreateInstance(_senderType);
+            var panel = CurrentPanelViewModel;
+            newStr.Text1 = panel.Text1;
+            newStr.Text2 = panel.Text2;
+            newStr.HasSize = panel.HasSize;
+            if (panel.HasSize)
+                newStr.Size = panel.Size;
+            else newStr.Size = null;
+            return newStr;
+            //LegPartDbStructure
         }
 
 
@@ -114,14 +134,16 @@ namespace WpfApp2.LegParts
 
         public void Initialization()
         {
-            CurrentPanelViewModel = new SizePanelViewModel(this.Controller);
+            CurrentPanelViewModel = new SizePanelViewModel(this);
             OpenPanelCommand = new DelegateCommand(() => {
                 CurrentPanelViewModel.PanelOpened = true;
             });
+
             ClosePanelCommand = new DelegateCommand(() => {
                 CurrentPanelViewModel.PanelOpened = false;
                 handled = false;
             });
+
             CurrentPanelViewModel.PanelOpened = false;
             //when user picks custom structure
             MessageBus.Default.Subscribe("OpenCustom", OpenHandler);
