@@ -45,6 +45,9 @@ namespace WpfApp2.Db.Models
         [NotMapped]
         public bool Custom { get; internal set; }
 
+        [NotMapped]
+        public bool ToNextPart { get; internal set; }
+
         public override string ToString()
         {
             return Text1 + " " + Metrics + " " + Text2;
@@ -52,6 +55,7 @@ namespace WpfApp2.Db.Models
 
         public LegPartDbStructure()
         {
+            ToNextPart = false;
             Custom = false;
         }
 }
