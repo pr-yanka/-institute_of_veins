@@ -12,7 +12,7 @@ namespace WpfApp2.Db.Models
     {
         protected readonly DbContext dbContext;
 
-        IEnumerable<TEntity> IRepository<TEntity>.GetAll
+        public IEnumerable<TEntity> GetAll
         {
             get
             {

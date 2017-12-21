@@ -35,6 +35,21 @@ namespace WpfApp2.LegParts
                     else MessageBus.Default.Call("CloseCustom", this, this.GetType());
                 }
                 _selectedValue = value;
+                if (_selectedValue == null)
+                {
+                    HasFirstPart = false;
+                    HasSecondPart = false;
+                    HasComment = false;
+                    HasSize = false;
+                    OnPropertyChanged();
+                    return;
+                }
+                    
+                if (_selectedValue.Text1 != "") HasFirstPart = true;
+                if (_selectedValue.Text2 != "") HasSecondPart = true;
+                if (_selectedValue.HasSize) HasSize = true;
+
+                HasComment = true;
                 OnPropertyChanged();
             }
         }
@@ -42,7 +57,18 @@ namespace WpfApp2.LegParts
 
         private bool _hasSize;
         //has size
-        public bool HasSize { get; set; }
+        public bool HasSize
+        {
+            get
+            {
+                return _hasSize;
+            }
+            set
+            {
+                _hasSize = value;
+                OnPropertyChanged();
+            }
+        }
 
         //has double size
         private bool _hasDoubleSize;
@@ -50,11 +76,47 @@ namespace WpfApp2.LegParts
 
         //has first part
         private bool _hasFirstPart;
-        public bool HasFirstPart { get; set; }
+        public bool HasFirstPart
+        {
+            get
+            {
+                return _hasFirstPart;
+            }
+            set
+            {
+                _hasFirstPart = value;
+                OnPropertyChanged();
+            }
+        }
 
         //has second part
         private bool _hasSecondPart;
-        public bool HasSecondPart { get; set; }
+        public bool HasSecondPart {
+            get
+            {
+                return _hasSecondPart;
+            }
+            set
+            {
+                _hasSecondPart = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _hasComment;
+        public bool HasComment
+        {
+            get
+            {
+                return _hasComment;
+            }
+            set
+            {
+                _hasComment = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         private string _text1;
         public string Text1 { get; set; }
@@ -64,6 +126,8 @@ namespace WpfApp2.LegParts
 
         private float _size;
         public float Size { get; set; }
+
+        public string Comment { get; set; }
 
         private float _size2;
 
@@ -137,5 +201,7 @@ namespace WpfApp2.LegParts
                 else return Size.ToString() + "*" + Size2.ToString();
             }
         }
+
+        
     }
 }

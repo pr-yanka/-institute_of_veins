@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using WpfApp2.Db.Models;
 using WpfApp2.LegParts.DialogConfirmStructure;
 using WpfApp2.LegParts.VMs;
 using WpfApp2.Messaging;
@@ -43,8 +44,6 @@ namespace WpfApp2.LegParts
                 else return "Заполнить";
             }
         }
-
-        
 
         protected string _title;
         public string Title
@@ -95,6 +94,9 @@ namespace WpfApp2.LegParts
 
         public DelegateCommand AnimationCompleted {get; set; }
 
+        protected LegSectionViewModel _lastSender;
+        protected Type _lastSenderType;
+
         public static bool handled = false;
         public UIElement ui;
         //public Storyboard myS { get; set; }
@@ -102,14 +104,32 @@ namespace WpfApp2.LegParts
         {
             if (!handled)
             {
-                
+                var currentPart = (LegSectionViewModel)sender;
+                _lastSender = (LegSectionViewModel)sender;
+                _lastSenderType = (Type)data;
                 handled = true;
-                //var myS = (Storyboard) App.Current.FindResource("Open");
                 CurrentPanelViewModel.PanelOpened = true;
-                //myS.Begin();
             }
-            
-            //OpenPanelCommand.Execute(true);
+        }
+
+        private LegPartDbStructure GetPanelStructure()
+        {
+
+            var newStr = (LegPartDbStructure) Activator.CreateInstance(_lastSender.SelectedValue.GetType());
+            var panel = CurrentPanelViewModel;
+            newStr.Text1 = panel.Text1;
+            newStr.Text2 = panel.Text2;
+            newStr.HasSize = panel.HasSize;
+            if (panel.HasSize)
+            {
+                newStr.Size = panel.SelectedMetric.Id;
+                newStr.Metrics = panel.SelectedMetric.Str;
+            }
+            else newStr.Size = null;
+            newStr.Level = _lastSender.ListNumber;
+            newStr.Custom = true;
+
+            return newStr;
         }
 
 
@@ -120,13 +140,23 @@ namespace WpfApp2.LegParts
 
         public void Initialization()
         {
-            CurrentPanelViewModel = new SizePanelViewModel(this.Controller);
-            OpenPanelCommand = new DelegateCommand(() => { CurrentPanelViewModel.PanelOpened = true; });
-            ClosePanelCommand = new DelegateCommand(() => { CurrentPanelViewModel.PanelOpened = false; });
+            CurrentPanelViewModel = new SizePanelViewModel(this);
+            OpenPanelCommand = new DelegateCommand(() => {
+                CurrentPanelViewModel.PanelOpened = true;
+            });
+
+            ClosePanelCommand = new DelegateCommand(() => {
+                CurrentPanelViewModel.PanelOpened = false;
+                handled = false;
+                var newStruct = GetPanelStructure();
+                _lastSender.StructureSource.Add(newStruct);
+                _lastSender.SelectedValue = newStruct;
+            });
+
             CurrentPanelViewModel.PanelOpened = false;
             //when user picks custom structure
             MessageBus.Default.Subscribe("OpenCustom", OpenHandler);
-            MessageBus.Default.Subscribe("CloseCustom", CloseHandler);
+            //MessageBus.Default.Subscribe("CloseCustom", CloseHandler);
 
             //_sections = new List<BPVHipSectionViewModel>();
             _hasNavigation = false;

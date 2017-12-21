@@ -15,6 +15,11 @@ namespace WpfApp2.Db.Models
         public int Id { set; get; }
         [Column("название")]
         public string Str { set; get; }
+
+        public override string ToString()
+        {
+            return Str;
+        }
     }
 
     public class MetricsRepository : Repository<Metrics>

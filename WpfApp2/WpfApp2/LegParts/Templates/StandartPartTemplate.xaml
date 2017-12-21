@@ -7,16 +7,16 @@
                 <DockPanel Margin="0,5,0,5" Width="Auto" LastChildFill="True">
                     <Label x:Name="label" Content="{Binding Path=ListNumber}" HorizontalAlignment="Left" Margin="5,0,5,0" VerticalAlignment="Top" Height="30" Width="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" FontFamily="Georgia" Background="#FFD2E6F7" BorderThickness="1" BorderBrush="Black"/>
                     <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="5,0,5,0" TextWrapping="Wrap" Text="Выбор:" VerticalAlignment="Top" FontSize="18"/>
-                    <ComboBox x:Name="firstLevelBlock" SelectedValue="{Binding Path=SelectedValue}" ItemsSource="{Binding Path=StructureSource}" Margin="5,0,5,0" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
+                    <ComboBox x:Name="firstLevelBlock"  SelectedValue="{Binding Path=SelectedValue}" ItemsSource="{Binding Path=StructureSource}" Margin="5,0,5,0" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
                 </DockPanel>
                 <DockPanel Width="Auto" LastChildFill="True" Margin="0,5,0,5">
-                    <Label x:Name="inches1Text_Copy1" Content="Текст1" HorizontalAlignment="Left" Margin="5,0,5,0" VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
-                    <TextBox x:Name="size1Box" HorizontalAlignment="Left" Height="23" Margin="5,0,5,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="47"/>
-                    <Label x:Name="inches1Text_Copy" Content="см" HorizontalAlignment="Left" Margin="5,0,5,0" VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
-                    <Label x:Name="inches1Text_Copy2" Content="Текст2" HorizontalAlignment="Left" Margin="5,0,5,0" VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
+                    <Label x:Name="inches1Text_Copy1" Content="{Binding Path=SelectedValue.Text1}" Visibility="{Binding Path=HasFirstPart, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Margin="5,0,5,0" VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
+                    <TextBox x:Name="size1Box" Text="" Visibility="{Binding Path = HasSize, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Height="23" Margin="5,0,5,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="47"/>
+                    <Label x:Name="inches1Text_Copy" Content="{Binding Path=SelectedValue.Metrics}" Visibility="{Binding Path = HasSize, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Margin="5,0,5,0" VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
+                    <Label x:Name="inches1Text_Copy2" Content="{Binding Path=SelectedValue.Text2}" Visibility="{Binding Path = HasSecondPart, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Margin="5,0,5,0" VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
                 </DockPanel>
-                <DockPanel Width="Auto" LastChildFill="True" Margin="0,5,0,5">
-                    <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="5,0,5,0" TextWrapping="Wrap" Text="Комментарий:" VerticalAlignment="Top" FontSize="18"/>
+                <DockPanel Width="Auto" LastChildFill="True" Margin="0,5,0,5" Visibility="{Binding Path = HasComment, Converter={StaticResource BoolToVis}}">
+                    <TextBlock x:Name="textBlock_Copy1" Visibility="{Binding Path = HasFirstPart, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Margin="5,0,5,0" TextWrapping="Wrap" Text="Комментарий:" VerticalAlignment="Top" FontSize="18"/>
                     <TextBox x:Name="comment1Box" HorizontalAlignment="Stretch" Height="30" Margin="5,0,5,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="16"/>
                 </DockPanel>
                 <Separator Margin="0,5,0,5" HorizontalAlignment="Stretch" Height="14" VerticalAlignment="Top" />
