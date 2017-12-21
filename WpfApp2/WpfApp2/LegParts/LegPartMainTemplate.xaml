@@ -105,7 +105,7 @@
                         <Separator Height="18" Margin="0" Canvas.Top="19" Width="442"/>
                         <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="37" Canvas.Left="10" Text="Первая часть:"/>
                         <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="152" Canvas.Left="10"><Run Text="Вторая часть "/><Run Text="(не обязательно к заполнению):"/></TextBlock>
-                        <CheckBox x:Name="checkBox_Copy" Content="двойная размерность (х*х)" IsChecked="{Binding Path=HasDoubleSize}" Visibility="{Binding Path=DoubleSizeAvailable, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left"  VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="132"/>
+                        <CheckBox x:Name="checkBox_Copy" Content="двойная размерность (х*х)" IsChecked="{Binding Path=DoubleSizeIsAvailable}" Visibility="{Binding Path=DoubleSizeIsAvailable, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left"  VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="132"/>
                     </Canvas>
                 </Grid>
             </Border>

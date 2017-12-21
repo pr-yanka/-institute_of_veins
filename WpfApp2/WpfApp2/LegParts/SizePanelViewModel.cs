@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using WpfApp2.Db.Models;
+using WpfApp2.LegParts.VMs;
 using WpfApp2.Navigation;
 
 namespace WpfApp2.LegParts
@@ -40,7 +41,10 @@ namespace WpfApp2.LegParts
         {
             _parentVM = parentVM;
             Dimentions = new ObservableCollection<Metrics>(Data.Metrics.GetAll);
-
+            //потому что я программист от бога
+            if (parentVM.GetType() == typeof(SFSViewModel) || parentVM.GetType() == typeof(SPSViewModel))
+                DoubleSizeAvailable = true;
+            else DoubleSizeAvailable = false;
         }
 
         private string _text1;

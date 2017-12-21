@@ -157,6 +157,7 @@
     <Compile Include="Db\Models\LegParts\LegPartEntries.cs" />
     <Compile Include="Db\Models\LegParts\LegPartEntry.cs" />
     <Compile Include="Db\Models\LegParts\LegPartStructure.cs" />
+    <Compile Include="Db\Models\SPS\SPS.cs" />
     <Compile Include="Db\Models\UnitOfWork.cs" />
     <Compile Include="Dialogs\DialogPreOperation\DialogPreOperationView.xaml.cs">
       <DependentUpon>DialogPreOperationView.xaml</DependentUpon>

@@ -164,7 +164,7 @@ namespace WpfApp2.LegParts
         protected void AddCustomObject(Type structureType)
         {           
             var custom = (LegPartDbStructure)Activator.CreateInstance(structureType);
-            custom.Text1 = "Свой вариант ответа.";
+            custom.Text1 = "Свой вариант ответа";
             custom.HasSize = false;
             custom.Custom = true;
             custom.ToNextPart = false;
@@ -174,7 +174,7 @@ namespace WpfApp2.LegParts
         protected void AddNextPartObject(Type structureType)
         {
             var next = (LegPartDbStructure)Activator.CreateInstance(structureType);
-            next.Text1 = "Переход к следующему разделу.";
+            next.Text1 = "Переход к следующему разделу";
             next.HasSize = false;
             next.Custom = false;
             next.ToNextPart = true;
