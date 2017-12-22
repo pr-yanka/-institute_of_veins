@@ -36,6 +36,7 @@ namespace WpfApp2.LegParts.VMs
         public SFSViewModel(NavigationController controller, LegSide side) : base(controller, side)
         {
             Initialize();
+            
         }
     }
 }

@@ -15,6 +15,7 @@ namespace WpfApp2.Db.Models
         public BPVHipRepository BPVHips { get; private set; }
         public BPVComboRepository BPVCombos { get; private set; }
         public MetricsRepository Metrics { get; }
+        public PatientsRepository Patients { get; }
 
         public UnitOfWork (MySqlContext context)
         {
@@ -22,6 +23,7 @@ namespace WpfApp2.Db.Models
             BPVHips = new BPVHipRepository(_context);
             BPVCombos = new BPVComboRepository(_context);
             Metrics = new MetricsRepository(_context);
+            Patients = new PatientsRepository(_context);
         }
 
         public int Complete()

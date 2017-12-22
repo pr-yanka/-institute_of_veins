@@ -152,6 +152,7 @@
     <Compile Include="Db\Models\LegParts\ILegPart.cs" />
     <Compile Include="Db\Models\MetricsRepository.cs" />
     <Compile Include="Db\Models\MySqlContext.cs" />
+    <Compile Include="Db\Models\PatientsRepository.cs" />
     <Compile Include="Db\Models\Repository.cs" />
     <Compile Include="Db\Models\IRepository.cs" />
     <Compile Include="Db\Models\LegParts\LegPartEntries.cs" />

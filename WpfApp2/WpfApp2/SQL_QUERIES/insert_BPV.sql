@@ -4,13 +4,6 @@ INSERT INTO БПВ_на_бедре_структура
 
 select * from БПВ_на_бедре_структура;
 
-INSERT INTO метрика(название) VALUES ('мм');
-
-INSERT INTO метрика(название) VALUES ('');
-
-INSERT INTO метрика(название) VALUES ('см');
-
-select * from метрика;
 
 INSERT INTO вид_бпв_хода
     (описание)

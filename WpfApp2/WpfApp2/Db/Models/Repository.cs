@@ -16,6 +16,7 @@ namespace WpfApp2.Db.Models
         {
             get
             {
+
                 return dbContext.Set<TEntity>().ToList();
             }
         }

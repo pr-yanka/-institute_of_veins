@@ -13,6 +13,7 @@ namespace WpfApp2.Db.Models
         BPVHipRepository BPVHips { get; }
         BPVComboRepository BPVCombos { get; }
         MetricsRepository Metrics { get; }
+        PatientsRepository Patients { get; }
 
         int Complete();
     }
