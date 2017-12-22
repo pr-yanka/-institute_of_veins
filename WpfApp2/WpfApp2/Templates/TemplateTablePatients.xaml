@@ -17,14 +17,23 @@
 
 
             <Button x:Name="button_Copy13" Content="В ГЛАВНОЕ МЕНЮ" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="751,651,0,0" VerticalAlignment="Top" Width="212" Height="43" Background="#FFF55532" FontFamily="Segoe UI Light" FontSize="16" BorderBrush="{x:Null}" Foreground="White"/>
-            <TextBlock FontFamily="/fonts/#Pescadero" FontSize="18pt" Margin="308,10,309,456" Height="38" Text="Пациенты"/>
-            
-            <DataGrid x:Name="dataGrid"
-                      HorizontalAlignment="Center" Margin="232,99,53,0" VerticalAlignment="Top" Height="541" Width="731" Background="#FFD4D4D4" FontSize="24"
+            <TextBlock FontFamily="/fonts/#Pescadero" FontSize="16pt" Margin="308,10,309,456" Height="38" Text="Пациенты"/>
+
+            <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Path=PatientsCollection}" x:Name="dataGrid"
+                      Margin="232,20,53,0" Height="500" Width="731" FontSize="14">
+                <DataGrid.Columns>
+                    <DataGridTextColumn  Header="Имя" Width="*" Binding="{Binding Name}" ></DataGridTextColumn>
+                    <DataGridTextColumn  Header="Фамилия" Width="*" Binding="{Binding Sirname}" ></DataGridTextColumn>
+                    <DataGridTextColumn  Header="Дата рождения" Width="*" Binding="{Binding Birthday}" ></DataGridTextColumn>
+                    <DataGridTextColumn  Header="Возраст" Width="*" Binding="{Binding Age}" ></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <!--<DataGrid.Columns x:Name="dataGrid" 
+                      HorizontalAlignment="Stretch" Margin="232,99,53,0" VerticalAlignment="Stretch" Height="541" Width="731" Background="#FFD4D4D4" FontSize="24"
                       ItemsSource="{Binding Path=PatientsCollection}"
                       >
-                
-            </DataGrid>
+
+            </DataGrid.Columns>-->
 
             <!--<TextBlock Text="  Шабанов Андрей Ульянович" Height="32" Margin="233,0,0,514" Background="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="728" Foreground="#FF9B9B9B" FontSize="16"/>
             <TextBlock Text="  Волкова Анастасия Валериевна" Height="32" Margin="232,0,0,548" Background="White" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="728" Foreground="#FF9B9B9B" FontSize="16"/>

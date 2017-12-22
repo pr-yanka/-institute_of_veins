@@ -34,7 +34,7 @@ namespace WpfApp2.Db.Models
 
         [Required]
         [Column("дата_рождения")]
-        public DateTime Bithday { set; get; }
+        public DateTime Birthday { set; get; }
 
         [Required]
         [Column("город_проживания")]
@@ -64,6 +64,11 @@ namespace WpfApp2.Db.Models
         [Required]
         [Column("электронная_почта")]
         public string Email { set; get; }
+
+        [NotMapped]
+        public int Age {
+            get { return DateTime.Now.Year - Birthday.Year; }
+        }
     }
 
     public class PatientsRepository : Repository<Patient>
