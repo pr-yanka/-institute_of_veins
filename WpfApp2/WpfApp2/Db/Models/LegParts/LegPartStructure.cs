@@ -48,6 +48,9 @@ namespace WpfApp2.Db.Models
         [NotMapped]
         public bool ToNextPart { get; internal set; }
 
+        [NotMapped]
+        public virtual bool HasDoubleMetric { get; }
+
         public override string ToString()
         {
             return Text1 + " " + Metrics + " " + Text2;

@@ -12,13 +12,14 @@ namespace WpfApp2.Db.Models
 {
     public class BPVHip
     {
-
+        
     }
 
     [Table("БПВ_на_бедре_структура")]
     public partial class BPVHipStructure :LegPartDbStructure, ILegPart
     {
-        
+        [NotMapped]
+        public override bool HasDoubleMetric { get { return false; } }
     }
 
     [Table("БПВ_на_бедре_комбо")]

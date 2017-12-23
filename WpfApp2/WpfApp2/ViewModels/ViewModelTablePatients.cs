@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Practices.Prism.Commands;
 using WpfApp2.Db.Models;
 using WpfApp2.Navigation;
+using System.Windows;
 
 namespace WpfApp2.ViewModels
 {
@@ -16,12 +17,20 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToCurrentPatientCommand { get; protected set; }
         public DelegateCommand ToHistoryOverviewCommand { get; protected set; }
 
-        public ObservableCollection<Patient> PatientsCollection { get; set; }
+
+        //public ObservableCollection<Patient> PatientsCollection { get; set; }
+        public List<Patient> Patients { get; set; }
 
         public ViewModelTablePatients(NavigationController controller) : base(controller)
         {
             base.HasNavigation = true;
-            PatientsCollection = new ObservableCollection<Patient>(Data.Patients.GetAll);
+
+            Patients = new List<Patient>(Data.Patients.GetAll);
+
+            /*Patients = new List<ViewModelPatient>();
+
+            foreach (var p in Data.Patients.GetAll)
+                Patients.Add( new ViewModelPatient( Controller, p));*/
 
             ToDashboardCommand = new DelegateCommand(
                 () =>

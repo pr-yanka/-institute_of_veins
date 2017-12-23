@@ -15,6 +15,9 @@ namespace WpfApp2.Db.Models.SPS
         [Required]
         [Column("двойная_метрика")]
         public bool DoubleMetric{ get; set; }
+
+        [NotMapped]
+        public override bool HasDoubleMetric { get { return true; } }
     }
 
     [Table("спс_комбо")]

@@ -218,6 +218,7 @@
     <Compile Include="ViewModels\ViewModelOperationOverview.cs" />
     <Compile Include="ViewModels\ViewModelOperationResultOverview.cs" />
     <Compile Include="ViewModels\ViewModelPathologyList.cs" />
+    <Compile Include="ViewModels\ViewModelPatient.cs" />
     <Compile Include="ViewModels\ViewModelPhysicalOverview.cs" />
     <Compile Include="ViewModels\ViewModelPhysicalTable.cs" />
     <Compile Include="ViewModels\ViewModelRecomendationsAdd.cs" />
@@ -292,6 +293,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LegParts\Templates\RightPanelAnimation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Templates\StandartPatientTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

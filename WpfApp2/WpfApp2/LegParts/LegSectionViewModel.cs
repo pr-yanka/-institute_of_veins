@@ -41,6 +41,7 @@ namespace WpfApp2.LegParts
                     HasSecondPart = false;
                     HasComment = false;
                     HasSize = false;
+                    HasDoubleSize = false;
                     OnPropertyChanged();
                     return;
                 }
@@ -48,6 +49,7 @@ namespace WpfApp2.LegParts
                 if (_selectedValue.Text1 != "") HasFirstPart = true;
                 if (_selectedValue.Text2 != "") HasSecondPart = true;
                 if (_selectedValue.HasSize) HasSize = true;
+                if (_selectedValue.HasDoubleMetric) HasDoubleSize = true;
 
                 HasComment = true;
                 OnPropertyChanged();
@@ -72,7 +74,17 @@ namespace WpfApp2.LegParts
 
         //has double size
         private bool _hasDoubleSize;
-        public bool HasDoubleSize { get; set; }
+        public bool HasDoubleSize {
+            get
+            {
+                return _hasDoubleSize;
+            }
+            set
+            {
+                _hasDoubleSize = value;
+                OnPropertyChanged();
+            }
+        }
 
         //has first part
         private bool _hasFirstPart;
