@@ -50,8 +50,8 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
-                                    <Button x:Name="button_Copy14" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Top" Width="38" Height="32" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}"/>
-                                    <Image Source="pack://application:,,,/Images/forward.png"  Stretch="Fill" Height="28" Width="28" RenderTransformOrigin="4.821,-0.714"/>
+                                    <Button x:Name="ToPatient" HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Top" Width="22" Height="22" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}"/>
+                                    <Image Source="pack://application:,,,/Images/forward.png"  Stretch="Fill" Height="20" Width="20" RenderTransformOrigin="4.821,-0.714"/>
                                 </Grid>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
