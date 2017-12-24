@@ -17,20 +17,22 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToCurrentPatientCommand { get; protected set; }
         public DelegateCommand ToHistoryOverviewCommand { get; protected set; }
 
-
-        //public ObservableCollection<Patient> PatientsCollection { get; set; }
-        public List<Patient> Patients { get; set; }
-
+        public List<ViewModelPatient> Patients { get; set; }
         public ViewModelTablePatients(NavigationController controller) : base(controller)
         {
             base.HasNavigation = true;
-
-            Patients = new List<Patient>(Data.Patients.GetAll);
+           
+            Patients = new List<ViewModelPatient>();
+            foreach(var patient in Data.Patients.GetAll)
+            {
+                Patients.Add(new ViewModelPatient(controller, patient));
+            }
 
             /*Patients = new List<ViewModelPatient>();
 
             foreach (var p in Data.Patients.GetAll)
                 Patients.Add( new ViewModelPatient( Controller, p));*/
+          
 
             ToDashboardCommand = new DelegateCommand(
                 () =>

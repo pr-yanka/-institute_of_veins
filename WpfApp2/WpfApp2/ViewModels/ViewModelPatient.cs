@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Practices.Prism.Commands;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,18 +12,28 @@ namespace WpfApp2.ViewModels
 {
     public class ViewModelPatient : ViewModelBase
     {
+        public DelegateCommand ToPatientCommand { get; protected set; }
         private Patient _patient;
 
         public ViewModelPatient(NavigationController controller, Patient patient) : base(controller)
         {
             _patient = patient;
+            ToPatientCommand = new DelegateCommand(
+              () =>
+              {
+                  int x = patient.Id;
+              }
+           );
         }
 
+       
+    
         public Patient CurrentPatient
         {
             get { return _patient; }
             set { _patient = value; }
         }
+       
 
         private void ToPatient(object sender, RoutedEventArgs e)
         {
