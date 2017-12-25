@@ -20,29 +20,29 @@
             <TextBlock FontFamily="/fonts/#Pescadero" FontSize="16pt" Margin="308,10,309,456" Height="38" Text="Пациенты"/>
 
             <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Path=Controller.CurrentViewModel.Patients}" x:Name="dataGrid" ScrollViewer.VerticalScrollBarVisibility="Visible"
-                      Margin="232,20,53,0" Height="500" Width="731" FontSize="14" >
+                      Margin="232,20,53,0" Height="500" Width="731" FontSize="14" HorizontalAlignment="Center">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Имя">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding CurrentPatient.Name}" />
+                                <TextBlock TextAlignment="Center" Text="{Binding CurrentPatient.Name}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding CurrentPatient.Name,Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}"></TextBlock>
+                                <TextBlock TextAlignment="Center" Text="{Binding CurrentPatient.Name,Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}"></TextBlock>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Возраст">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding CurrentPatient.Age}" />
+                                <TextBlock TextAlignment="Center" Text="{Binding CurrentPatient.Age}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                         <DataGridTemplateColumn.CellEditingTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding CurrentPatient.Name,Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}"></TextBlock>
+                                <TextBlock TextAlignment="Center" Text="{Binding CurrentPatient.Name,Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}"></TextBlock>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
@@ -50,8 +50,9 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
-                                    <Button x:Name="ToPatient" Command="{Binding Path=ToPatientCommand}" HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Top" Width="22" Height="22" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}"/>
-                                    <Image Source="pack://application:,,,/Images/forward.png"  Stretch="Fill" Height="20" Width="20" RenderTransformOrigin="4.821,-0.714"/>
+                                    <Button x:Name="ToPatient" Command="{Binding Path=ToPatientCommand}" HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}">
+                                        <Image Source="pack://application:,,,/Images/forward.png"></Image>
+                                    </Button>
                                 </Grid>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
