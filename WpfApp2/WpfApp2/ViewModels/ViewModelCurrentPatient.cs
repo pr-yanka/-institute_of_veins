@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Practices.Prism.Commands;
+using WpfApp2.Db.Models;
+using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 
 namespace WpfApp2.ViewModels
@@ -19,11 +21,35 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToViewHistoryCommand { get; protected set; }
         public DelegateCommand ToPathologyListCommand { get; protected set; }
         public DelegateCommand ToAddAnalizeCommand { get; protected set; }
-        
+
+        //protected int CurrentPatientID;  
+               
+        public string PatientBirthday { get; set; }
+
+        private Patient currentPatient;
+
+        public Patient CurrentPatient
+        {
+            get { return currentPatient; }
+            set { currentPatient = value; }
+        }
+
+        private void SetCurrentPatientID(object sender, object data)
+        {
+            
+            CurrentPatient = Data.Patients.Get((int)data);
+            PatientBirthday = CurrentPatient.Birthday.Day.ToString() + "." 
+            + CurrentPatient.Birthday.Month.ToString() + "." + CurrentPatient.Birthday.Year.ToString();
+
+        }
 
         public ViewModelCurrentPatient(NavigationController controller) : base(controller)
         {
+            MessageBus.Default.Subscribe("GetCurrentPatientId", SetCurrentPatientID);
+
             base.HasNavigation = true;
+
+
 
             ToNewOperationCommand = new DelegateCommand(
                 () =>

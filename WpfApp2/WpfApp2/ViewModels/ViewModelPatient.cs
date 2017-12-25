@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using WpfApp2.Db.Models;
+using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 
 namespace WpfApp2.ViewModels
@@ -21,7 +22,8 @@ namespace WpfApp2.ViewModels
             ToPatientCommand = new DelegateCommand(
               () =>
               {
-                  int x = patient.Id;
+                  MessageBus.Default.Call("OpenCurrentPatient", this, patient.Id);
+                  Controller.NavigateTo<ViewModelCurrentPatient>();
               }
            );
         }
