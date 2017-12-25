@@ -46,6 +46,17 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellEditingTemplate>
                     </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="История">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Button x:Name="ToHistory" Command="{Binding Path=ToPatientHistory}" HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}">
+                                        <Image Source="pack://application:,,,/Images/history.png"></Image>
+                                    </Button>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Перейти">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

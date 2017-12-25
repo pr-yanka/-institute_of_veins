@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Practices.Prism.Commands;
+using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 
 namespace WpfApp2.ViewModels
@@ -19,8 +20,17 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToAddOperationCommand { get; protected set; }
         public DelegateCommand ToAddAnalizeCommand { get; protected set; }
 
+        protected int CurrentPatientID;
+
+        private void SetCurrentPatientID(object sender, object data)
+        {
+            CurrentPatientID = (int)data;
+        }
+
         public ViewModelViewHistory(NavigationController controller) : base(controller)
         {
+
+            MessageBus.Default.Subscribe("OpenHistoryOfPatient", SetCurrentPatientID);
             base.HasNavigation = false;
             ToAddPhysicalCommand = new DelegateCommand(
                 () =>

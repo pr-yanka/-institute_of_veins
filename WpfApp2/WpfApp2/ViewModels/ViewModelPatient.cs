@@ -14,6 +14,7 @@ namespace WpfApp2.ViewModels
     public class ViewModelPatient : ViewModelBase
     {
         public DelegateCommand ToPatientCommand { get; protected set; }
+        public DelegateCommand ToPatientHistory { get; protected set; }
         private Patient _patient;
 
         public ViewModelPatient(NavigationController controller, Patient patient) : base(controller)
@@ -26,6 +27,13 @@ namespace WpfApp2.ViewModels
                   Controller.NavigateTo<ViewModelCurrentPatient>();
               }
            );
+            ToPatientHistory = new DelegateCommand(
+            () =>
+            {
+                MessageBus.Default.Call("OpenHistoryOfPatient", this, patient.Id);
+                Controller.NavigateTo<ViewModelViewHistory>();
+            }
+         );
         }
 
        
