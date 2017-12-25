@@ -296,9 +296,9 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Templates\StandartPatientTemplate.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Templates\TemplateLogin.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="ViewModels.xaml">
       <SubType>Designer</SubType>
@@ -364,7 +364,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Templates\TemplateLogin.xaml">
+    <Page Include="ViewModels\TemplateLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

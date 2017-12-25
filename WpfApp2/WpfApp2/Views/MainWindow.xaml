@@ -16,33 +16,27 @@
                 <ResourceDictionary Source="/Templates/MyTemplateSelector.xaml"/>
                 <ResourceDictionary Source="/Templates/FullMenu.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
-            
         </ResourceDictionary>
     </Controls:MetroWindow.Resources>
     <Grid>
-        
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="238*"/>
+            <ColumnDefinition Width="191*"/>
+            <ColumnDefinition Width="47*"/>
             <ColumnDefinition Width="271*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Rectangle Height="63" Stroke="#FF4FD5E0" VerticalAlignment="Top" Fill="#FF4FD5E0" RenderTransformOrigin="0.388,0.524" Grid.ColumnSpan="2"/>
-        <Image x:Name="veins_logo_jpg" Margin="-342,-23,472,676" Source="pack://application:,,,/Images/veins-logo.jpg" StretchDirection="DownOnly" MaxWidth="76" MaxHeight="76" MinWidth="76" MinHeight="76" RenderTransformOrigin="0.608,0.401" Height="86" VerticalAlignment="Bottom" Grid.ColumnSpan="2"/>
+        <Rectangle Height="63" Stroke="#FF4FD5E0" VerticalAlignment="Top" Fill="#FF4FD5E0" RenderTransformOrigin="0.388,0.524" Grid.ColumnSpan="3"/>
+        <Image x:Name="veins_logo_jpg" Margin="-342,0,476,676" Source="pack://application:,,,/Images/veins-logo.jpg" StretchDirection="DownOnly" MaxWidth="70" MaxHeight="70" MinWidth="76" MinHeight="76" RenderTransformOrigin="0.608,0.401" Height="63" VerticalAlignment="Bottom" Grid.ColumnSpan="3"/>
         <TextBlock FontFamily="Segoe UI Symbol" HorizontalAlignment="Left" Margin="142,11,0,0" TextWrapping="Wrap" Text="ИНСТИТУТ ВЕН" VerticalAlignment="Top" Foreground="White" Height="36" Width="70" FontSize="10" RenderTransformOrigin="0.5,0.528"/>
         <TextBlock FontFamily="Segoe UI Symbol" HorizontalAlignment="Left" Margin="142,38,0,0" TextWrapping="Wrap" Text="медицинский центр" VerticalAlignment="Top" Foreground="White" Height="23" Width="114" FontSize="8"/>
         <!--Меню-->
         <ContentControl Content="{Binding CurrentNavigation}" ContentTemplate="{StaticResource FullNavigation}" Background="#FFF7F7F7"
-                        Visibility="{Binding Path=Controller.CurrentViewModel.HasNavigation, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVis}}" Grid.ColumnSpan="2">
+                        Visibility="{Binding Path=Controller.CurrentViewModel.HasNavigation, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVis}}" Grid.ColumnSpan="3">
         </ContentControl>
-
-        <ContentControl Content="{Binding Controller.CurrentViewModel}" ContentTemplateSelector="{StaticResource MyTemplateSelector}" Background="#FFF7F7F7" Grid.ColumnSpan="2">
+        <ContentControl Content="{Binding Controller.CurrentViewModel}" ContentTemplateSelector="{StaticResource MyTemplateSelector}" Background="#FFF7F7F7" Grid.ColumnSpan="3">
         </ContentControl>
-
     </Grid>
-    
 </Controls:MetroWindow>
-    
