@@ -15,6 +15,10 @@ namespace WpfApp2.Db.Models
         MetricsRepository Metrics { get; }
         PatientsRepository Patients { get; }
 
+        ComplainsTypeRepository ComplainsTypes { get; }
+        RecomendationsTypeRepository RecomendationsTypes { get; }
+        DiagnosisTypeRepository DiagnosisTypes { get; }
+
         int Complete();
     }
 }
