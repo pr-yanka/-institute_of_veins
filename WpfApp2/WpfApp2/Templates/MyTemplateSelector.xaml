@@ -37,7 +37,7 @@
                               TemplateCurrentPatient="{StaticResource TemplateCurrentPatient}"
                               TemplateNewPatient="{StaticResource TemplateNewPatient}"
                               TemplateTablePatients="{StaticResource TemplateTablePatients}"
-                              TemplateEditPatient="{StaticResource TemplateEditPatient}"
+                              TemplateEditPatient="{StaticResource TemplateNewPatient}"
                               TemplateViewHistory="{StaticResource TemplateViewHistory}"
                               TemplateAddPhysicalPage1="{StaticResource TemplateAddPhysicalPage1}"
                               TemplateLegDescribe="{StaticResource TemplateLegDescribe}"
