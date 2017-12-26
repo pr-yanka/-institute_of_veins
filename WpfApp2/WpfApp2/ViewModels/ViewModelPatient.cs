@@ -26,7 +26,7 @@ namespace WpfApp2.ViewModels
                   MessageBus.Default.Call("OpenCurrentPatient", this, patient.Id);
                   Controller.NavigateTo<ViewModelCurrentPatient>();
               }
-           );
+            );
             ToPatientHistory = new DelegateCommand(
             () =>
             {

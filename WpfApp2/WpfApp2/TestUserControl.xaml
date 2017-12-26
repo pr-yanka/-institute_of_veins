@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="WpfApp2.TestUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApp2"
+             mc:Ignorable="d" 
+             d:DesignHeight="705" d:DesignWidth="1024">
+    <Grid Name="RootGrid">
+        <StackPanel Orientation="Vertical" Background="White">
+            <TextBlock x:Name="textBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Жалобы/диагноз/заключение" VerticalAlignment="Top" FontSize="28"/>
+            <DataGrid></DataGrid>
+            <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Center" >
+                <Button FontSize="16" Content="Добавить свою жалобу/диагноз/..." Background="GhostWhite"></Button>
+                <StackPanel Orientation="Horizontal">
+                    <Button FontSize="16" Content="Вернуться к обследованию" Background="GhostWhite" Width="515"></Button>
+                    <Button FontSize="16" Content="Сохранить" Background="GhostWhite" Width="509"></Button>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>
