@@ -61,7 +61,10 @@ namespace WpfApp2.Navigation
                 new ViewModelAddPhysical(this),
                 new ViewModelAnalizeOverview(this),
                 new ViewModelAddOperation(this),
-                new LegPartViewModel(this)
+                new LegPartViewModel(this),
+                new ViewModelComplainsList(this),
+                new ViewModelDiagnosisList(this),
+                new ViewModelRecomendationsList(this)
             };
 
             _currentViewModel = _viewModels.First();

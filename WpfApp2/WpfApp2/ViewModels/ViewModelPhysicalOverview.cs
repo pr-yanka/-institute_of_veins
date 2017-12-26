@@ -16,7 +16,7 @@ namespace WpfApp2.ViewModels
 
         public DelegateCommand ToPhysicalOverviewCommand { get; protected set; }
         public DelegateCommand ToSymptomsAddCommand { get; protected set; }
-        public DelegateCommand ToLegDescribeCommand { get; protected set; }
+        public DelegateCommand ToDiagnosisCommand { get; protected set; }
         public DelegateCommand ToAddRecomendationsCommand { get; protected set; }
 
 
@@ -29,21 +29,21 @@ namespace WpfApp2.ViewModels
             ToSymptomsAddCommand = new DelegateCommand(
                 () =>
                 {
-                    Controller.NavigateTo<ViewModelSymptomsAdd>();
+                    Controller.NavigateTo<ViewModelComplainsList>();
                 }
             );
 
-            ToLegDescribeCommand = new DelegateCommand(
+            ToDiagnosisCommand = new DelegateCommand(
                 () =>
                 {
-                    Controller.NavigateTo<ViewModelLegDescribe>();
+                    Controller.NavigateTo<ViewModelDiagnosisList>();
                 }
             );
 
             ToAddRecomendationsCommand = new DelegateCommand(
                 () =>
                 {
-                    Controller.NavigateTo<ViewModelRecomendationsAdd>();
+                    Controller.NavigateTo<ViewModelRecomendationsList>();
                 }
             );
 

@@ -11,14 +11,15 @@ namespace WpfApp2.ViewModels
     public class ViewModelSymptomsAdd : ViewModelBase
     {
         public DelegateCommand ToAddPhysicalCommand { get; protected set; }
+        public DelegateCommand ToSymptomsAddCommand { get; protected set; }
 
         public ViewModelSymptomsAdd(NavigationController controller) : base(controller)
         {
             base.HasNavigation = false;
-            ToAddPhysicalCommand = new DelegateCommand(
+            ToSymptomsAddCommand = new DelegateCommand(
                 () =>
                 {
-                    Controller.NavigateTo<ViewModelAddPhysical>();
+                    Controller.NavigateTo<ViewModelComplainsList>();
                 }
             );
         }

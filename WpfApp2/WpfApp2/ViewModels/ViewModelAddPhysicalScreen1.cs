@@ -47,6 +47,8 @@ namespace WpfApp2.ViewModels
 
         public DelegateCommand ToAddRecomendationsCommand { get; protected set; }
 
+        public DelegateCommand ToDiagnosisCommand { get; protected set; }
+
         private ICommand openDialogCommand = null;
         public ICommand OpenDialogCommand
         {
@@ -274,10 +276,24 @@ namespace WpfApp2.ViewModels
 
             //
 
+            ToSymptomsAddCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.NavigateTo<ViewModelComplainsList>();
+                }
+            );
+
+            ToDiagnosisCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.NavigateTo<ViewModelDiagnosisList>();
+                }
+            );
+
             ToAddRecomendationsCommand = new DelegateCommand(
                 () =>
                 {
-                    Controller.NavigateTo<ViewModelRecomendationsAdd>();
+                    Controller.NavigateTo<ViewModelRecomendationsList>();
                 }
             );
 

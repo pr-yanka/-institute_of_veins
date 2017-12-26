@@ -27,6 +27,7 @@
         <ResourceDictionary Source="TemplateAddOperationResult.xaml"/>
         <ResourceDictionary Source="TemplateAnalize.xaml"/>
         <ResourceDictionary Source="TemplateEditOperation.xaml"/>
+        <ResourceDictionary Source="TemplateCheckboxes.xaml"/>
         <ResourceDictionary Source="/LegParts/LegPartMainTemplate.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
@@ -53,5 +54,6 @@
                               TemplateEditOperation="{StaticResource TemplateEditOperation}"
                               TemplateAnalize="{StaticResource TemplateAnalize}"
                               TemplateSymptomsAdd="{StaticResource TemplateSymptomsAdd}"
+                              TemplateCheckboxes="{StaticResource TemplateCheckboxes}"
                               LegPartMainTemplate="{StaticResource LegPartTemplate}"/>
 </ResourceDictionary>

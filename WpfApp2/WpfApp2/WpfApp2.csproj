@@ -145,6 +145,8 @@
     <Compile Include="Controls\AddReport.xaml.cs">
       <DependentUpon>AddReport.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Db\Models\ComplainsTypeRepository.cs" />
+    <Compile Include="Db\Models\DiagnosisTypeRepository.cs" />
     <Compile Include="Db\Models\IUnitOfWork.cs" />
     <Compile Include="Db\Models\LegParts\BPVHip\BPVComboRepository.cs" />
     <Compile Include="Db\Models\LegParts\BPVHip\BPVHipRepository.cs" />
@@ -153,6 +155,7 @@
     <Compile Include="Db\Models\MetricsRepository.cs" />
     <Compile Include="Db\Models\MySqlContext.cs" />
     <Compile Include="Db\Models\PatientsRepository.cs" />
+    <Compile Include="Db\Models\RecomendationsTypeRepository.cs" />
     <Compile Include="Db\Models\Repository.cs" />
     <Compile Include="Db\Models\IRepository.cs" />
     <Compile Include="Db\Models\LegParts\LegPartEntries.cs" />
@@ -214,7 +217,9 @@
     <Compile Include="ViewModels\ViewModelAddPathology.cs" />
     <Compile Include="ViewModels\ViewModelAnalizeOverview.cs" />
     <Compile Include="ViewModels\ViewModelCalendarOperations.cs" />
+    <Compile Include="ViewModels\ViewModelComplainsList.cs" />
     <Compile Include="ViewModels\ViewModelCreateOperation.cs" />
+    <Compile Include="ViewModels\ViewModelDiagnosisList.cs" />
     <Compile Include="ViewModels\ViewModelEditOperation.cs" />
     <Compile Include="ViewModels\ViewModelFullMenu.cs" />
     <Compile Include="ViewModels\ViewModelLegDescribe.cs" />
@@ -225,6 +230,7 @@
     <Compile Include="ViewModels\ViewModelPhysicalOverview.cs" />
     <Compile Include="ViewModels\ViewModelPhysicalTable.cs" />
     <Compile Include="ViewModels\ViewModelRecomendationsAdd.cs" />
+    <Compile Include="ViewModels\ViewModelRecomendationsList.cs" />
     <Compile Include="ViewModels\ViewModelSymptomsAdd.cs" />
     <Compile Include="ViewModels\ViewModelViewHistory.cs" />
     <Compile Include="ViewModels\ViewModelAddPhysicalScreen1.cs" />
@@ -296,6 +302,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LegParts\Templates\RightPanelAnimation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Templates\TemplateCheckboxes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

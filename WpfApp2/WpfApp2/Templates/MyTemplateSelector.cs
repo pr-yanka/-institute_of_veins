@@ -35,6 +35,7 @@ namespace WpfApp2.Templates
         public DataTemplate TemplateEditOperation { get; set; }
         public DataTemplate TemplateAnalize { get; set; }
         public DataTemplate LegPartMainTemplate { get; set; }
+        public DataTemplate TemplateCheckboxes { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -118,6 +119,15 @@ namespace WpfApp2.Templates
 
             if (item.GetType() == typeof(LegPartViewModel))
                 return LegPartMainTemplate;
+
+            if (item.GetType() == typeof(ViewModelComplainsList))
+                return TemplateCheckboxes;
+
+            if (item.GetType() == typeof(ViewModelDiagnosisList))
+                return TemplateCheckboxes;
+
+            if (item.GetType() == typeof(ViewModelRecomendationsList))
+                return TemplateCheckboxes;
 
             return null;
         }
