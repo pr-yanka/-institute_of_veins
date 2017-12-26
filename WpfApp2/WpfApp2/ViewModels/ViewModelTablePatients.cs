@@ -18,29 +18,19 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToCurrentPatientCommand { get; protected set; }
         public DelegateCommand ToHistoryOverviewCommand { get; protected set; }
 
-  
+      
 
         protected int CurrentPatientID;
         private void SetCurrentPatientID(object sender, object data)
         {
             CurrentPatientID = (int)data;
             MessageBus.Default.Call("GetCurrentPatientId", this, CurrentPatientID);
-
-            //var currentPart = (LegSectionViewModel)sender;
-            //_lastSender = (LegSectionViewModel)sender;
-            //_lastSenderType = (Type)data;
-            //handled = true;
-            //CurrentPanelViewModel.PanelOpened = true;
         }
-
-
 
         public List<ViewModelPatient> Patients { get; set; }
         public ViewModelTablePatients(NavigationController controller) : base(controller)
         {
             base.HasNavigation = true;
-
-
 
             Patients = new List<ViewModelPatient>();
             foreach (var patient in Data.Patients.GetAll)

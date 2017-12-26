@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:WpfApp2.Templates">
+   
     <DataTemplate x:Key="TemplateNewPatient">
         <Grid Margin="227,0,0,0" >
             <Grid.Background>
@@ -11,15 +12,16 @@
                 </LinearGradientBrush.GradientStops>
             </LinearGradientBrush>
         </Grid.Background>
-        <TextBlock DockPanel.Dock="Top" FontFamily="/fonts/#Pescadero" FontSize="18pt" Margin="227,5,502,576" Height="38">
-            Добавление пациента
+
+            <TextBlock DockPanel.Dock="Top" FontFamily="/fonts/#Pescadero" Width="Auto" FontSize="18pt" Margin="227,5,502,576" Height="38" Text="Добавление пациента">
+         
         </TextBlock>
-        <Button x:Name="button" Content="Загрузить данные из регистратуры" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" Width="740" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+        <Button x:Name="button" Visibility="Hidden" Content="Загрузить данные из регистратуры" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" Width="740" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
             <Button x:Name="button_Copy3" Content="Вернуться в главное меню" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="24,451,0,0" VerticalAlignment="Top" Width="336" Height="43" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy4" Content="Добавить пациента" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="395,451,0,0" VerticalAlignment="Top" Width="336" Height="43" Background="#FFBDD649" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Button x:Name="button_Copy4" Content="{Binding Path=nameOfButton}"  Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="395,451,0,0" VerticalAlignment="Top" Width="336" Height="43" Background="#FFBDD649" FontFamily="Franklin Gothic Medium" FontSize="20"/>
         <Grid HorizontalAlignment="Left" Height="313" Margin="24,102,0,0" VerticalAlignment="Top" Width="707">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="186*"/>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="186*"/>
                 <ColumnDefinition Width="521*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -44,20 +46,23 @@
             <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="10,3,0,0" TextWrapping="Wrap" Text="Адрес проживания" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Width="166" Grid.RowSpan="3"/>
             <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="49,3,0,0" TextWrapping="Wrap" Text="Телефон" VerticalAlignment="Top" FontSize="16" Grid.Row="6" Width="104"/>
             <TextBlock x:Name="textBlock_Copy6" HorizontalAlignment="Left" Margin="61,0,0,0" TextWrapping="Wrap" Text="email" VerticalAlignment="Top" FontSize="16" Grid.Row="7" Width="83"/>
-            <TextBlock x:Name="textBlock_Copy7" HorizontalAlignment="Left" Margin="71,5,0,0" TextWrapping="Wrap" Text="???" VerticalAlignment="Top" FontSize="16" Grid.Row="8"/>
-            <TextBlock x:Name="textBlock_Copy8" HorizontalAlignment="Left" Margin="71,4,0,23" TextWrapping="Wrap" Text="???" FontSize="16" Grid.Row="9" Grid.RowSpan="2"/>
-            <TextBlock x:Name="textBlock_Copy9" HorizontalAlignment="Left" Margin="71,5,0,0" TextWrapping="Wrap" Text="???" VerticalAlignment="Top" FontSize="16" Grid.Row="10"/>
-            <TextBox x:Name="textBox" Grid.Column="1" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Width="511"/>
-            <TextBox x:Name="textBox_Copy" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="511" Grid.Row="1"/>
-            <TextBox x:Name="textBox_Copy1" Grid.Column="1" HorizontalAlignment="Left" Height="28" Margin="0,28,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="511" Grid.Row="1" Grid.RowSpan="2"/>
-            <ComboBox x:Name="comboBox" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" Width="106" Height="27"/>
-            <ComboBox x:Name="comboBox_Copy" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" Width="262" Height="27" Margin="111,0,0,0"/>
-            <TextBox x:Name="textBox_Copy2" Grid.Column="1" HorizontalAlignment="Left" Height="28" Margin="378,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="133" Grid.Row="3" Grid.RowSpan="2"/>
-            <ComboBox x:Name="comboBox_Copy1" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top" Width="106" Height="27" Margin="0,1,0,0"/>
-            <TextBox x:Name="textBox_Copy3" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="511" Grid.Row="5" Grid.RowSpan="2"/>
-            <TextBox x:Name="textBox_Copy4" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="511" Grid.Row="6" Margin="0,27,0,0" Grid.RowSpan="2"/>
-            <TextBox x:Name="textBox_Copy5" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="511" Grid.Row="6"/>
+
+                <TextBox  BorderBrush="{Binding Path=TextBoxNameB}"  x:Name="textBox" Text="{Binding Path=CurrentPatient.Name}" Grid.Column="1" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Width="511"/>
+                <TextBox BorderBrush="{Binding Path=TextBoxSurnameB}" x:Name="textBox_Copy" Text="{Binding Path=CurrentPatient.Sirname}" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="511" Grid.Row="1"/>
+                <TextBox BorderBrush="{Binding Path=TextBoxPatronimicB}" x:Name="textBox_Copy1"  Text="{Binding Path=CurrentPatient.Patronimic}" Grid.Column="1" HorizontalAlignment="Left" Height="28" Margin="0,28,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="511" Grid.Row="1" Grid.RowSpan="2"/>
+                <DatePicker x:Name="comboBox" SelectedDate="{Binding Path=CurrentPatient.Birthday}" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" Width="106" Height="27"/>
+                <ComboBox x:Name="comboBox_Copy1" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top" Width="106" Height="27" Margin="0,1,0,0" SelectedIndex="{Binding Path=GenderTypeNumber}" >
+                  <TextBlock>М</TextBlock>
+                  <TextBlock>Ж</TextBlock>
+                </ComboBox>
+                <TextBox Text="{Binding Path=CurrentPatient.City}" BorderBrush="{Binding Path=TextBoxCityB}" x:Name="textBox_Copy3" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Grid.Row="5"  Grid.RowSpan="2"/>
+                <TextBox Text="{Binding Path=CurrentPatient.Street}"  BorderBrush="{Binding Path=TextBoxStreetB}" x:Name="textBox_Copy31" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Grid.Row="5" Margin="105,0,0,0" Grid.RowSpan="2"/>
+                <TextBox Text="{Binding Path=CurrentPatient.House}" BorderBrush="{Binding Path=TextBoxHouseB}" x:Name="textBox_Copy32" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Grid.Row="5" Margin="215,0,0,0" Grid.RowSpan="2"/>
+                <TextBox Text="{Binding Path=CurrentPatientFlat}"  BorderBrush="{Binding Path=TextBoxFlatB}" x:Name="textBox_Copy33" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Grid.Row="5" Margin="325,0,0,0" Grid.RowSpan="2"/>
+                <TextBox Text="{Binding Path=CurrentPatient.Email}"  BorderBrush="{Binding Path=TextBoxEmailB}"  x:Name="textBox_Copy4" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="511" Grid.Row="6" Margin="0,27,0,0" Grid.RowSpan="2"/>
+                <TextBox Text="{Binding Path=CurrentPatient.Phone}"  BorderBrush="{Binding Path=TextBoxPhoneB}"   x:Name="textBox_Copy5" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="511" Grid.Row="6"/>
         </Grid>
         </Grid>
     </DataTemplate>
+    
 </ResourceDictionary>

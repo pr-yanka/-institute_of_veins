@@ -82,6 +82,7 @@ namespace WpfApp2.ViewModels
             ToEditPatientCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("GetCurrentPatientIdForEdit", this, currentPatient.Id);
                     Controller.NavigateTo<ViewModelEditPatient>();
                 }
             );
