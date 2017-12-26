@@ -29,7 +29,7 @@
                 <Image Source="pack://application:,,,/Images/new.png" Width="50" Height="50" HorizontalAlignment="Left" Margin="0,24,0,69"/>
             </Button>
             <TextBlock FontFamily="Source Sans Pro" HorizontalAlignment="Left" Margin="359,521,0,0" TextWrapping="Wrap" Text="ПОСМОТРЕТЬ ОБСЛЕДОВАНИЯ" VerticalAlignment="Top" Width="188" Height="47" TextAlignment="Center" FontSize="14" Foreground="#FF404040"/>
-            <TextBlock FontFamily="Source Sans Pro" HorizontalAlignment="Left" Margin="627,521,0,0" TextWrapping="Wrap" Text="ПОСМОТРЕТЬ             ОПЕРАЦИИ" VerticalAlignment="Top" Width="188" Height="47" TextAlignment="Center" FontSize="14" Foreground="#FF404040"/>
+            <TextBlock FontFamily="Source Sans Pro" HorizontalAlignment="Left" Margin="627,521,0,0" TextWrapping="Wrap" Text="ПОСМОТРЕТЬ ОПЕРАЦИИ" VerticalAlignment="Top" Width="188" Height="47" TextAlignment="Center" FontSize="14" Foreground="#FF404040"/>
             <TextBlock FontFamily="Source Sans Pro" HorizontalAlignment="Left" Margin="359,319,0,0" TextWrapping="Wrap" Text="ОБСЛЕДОВАНИЕ НОВОГО ПАЦИЕНТА" VerticalAlignment="Top" Width="188" Height="47" TextAlignment="Center" FontSize="14" Foreground="#FF404040"/>
         </Grid>
     </DataTemplate>

@@ -16,6 +16,9 @@ namespace WpfApp2.Db.Models
         public BPVComboRepository BPVCombos { get; private set; }
         public MetricsRepository Metrics { get; }
         public PatientsRepository Patients { get; }
+        public ComplainsTypeRepository ComplainsTypes { get; }
+        public RecomendationsTypeRepository RecomendationsTypes { get; }
+        public DiagnosisTypeRepository DiagnosisTypes { get; }
 
         public UnitOfWork (MySqlContext context)
         {
@@ -24,6 +27,9 @@ namespace WpfApp2.Db.Models
             BPVCombos = new BPVComboRepository(_context);
             Metrics = new MetricsRepository(_context);
             Patients = new PatientsRepository(_context);
+            ComplainsTypes = new ComplainsTypeRepository(_context);
+            RecomendationsTypes = new RecomendationsTypeRepository(_context);
+            DiagnosisTypes = new DiagnosisTypeRepository(_context);
         }
 
         public int Complete()
