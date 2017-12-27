@@ -3,7 +3,7 @@
                     xmlns:local="clr-namespace:WpfApp2.Templates">
    
     <DataTemplate x:Key="TemplateNewPatient">
-        <Grid Margin="227,0,0,0" >
+        <Grid Margin="227,67,0,0" >
             <Grid.Background>
             <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
                 <LinearGradientBrush.GradientStops>
@@ -13,10 +13,9 @@
             </LinearGradientBrush>
         </Grid.Background>
 
-            <TextBlock DockPanel.Dock="Top" FontFamily="/fonts/#Pescadero" Width="Auto" FontSize="18pt" Margin="227,5,502,576" Height="38" Text="Добавление пациента">
-         
-        </TextBlock>
-        <Button x:Name="button" Visibility="Hidden" Content="Загрузить данные из регистратуры" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" Width="740" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <TextBlock FontFamily="/fonts/#Pescadero" Width="Auto" FontSize="18pt" Margin="227,5,200,200" Height="Auto" Text="{Binding Path=TextHeader}"/>
+
+            <Button x:Name="button" Visibility="Hidden" Content="Загрузить данные из регистратуры" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" Width="740" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
             <Button x:Name="button_Copy3" Visibility="{Binding Path=Visibility}" Content="Вернуться в главное меню" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="24,451,0,0" VerticalAlignment="Top" Width="336" Height="43" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
             <Button x:Name="button_Copy4" Content="{Binding Path=nameOfButton}"  Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="395,451,0,0" VerticalAlignment="Top" Width="336" Height="43" Background="#FFBDD649" FontFamily="Franklin Gothic Medium" FontSize="20"/>
         <Grid HorizontalAlignment="Left" Height="313" Margin="24,102,0,0" VerticalAlignment="Top" Width="707">

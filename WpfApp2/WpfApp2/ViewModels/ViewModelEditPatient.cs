@@ -22,6 +22,9 @@ namespace WpfApp2.ViewModels
         private Patient currentPatient;
         private Visibility _visibility;
         public Visibility Visibility { get { return _visibility; } set { _visibility = value; OnPropertyChanged(); } }
+        private string _textHeader;
+        public string TextHeader { get { return _textHeader; } set { _textHeader = value; OnPropertyChanged(); } }
+
 
         private Brush _textBox_Name_B;
         private Brush _textBox_Surname_B;
@@ -170,7 +173,7 @@ namespace WpfApp2.ViewModels
         {
             base.HasNavigation = false;
             Visibility = Visibility.Visible;
-
+            TextHeader = "Редактирование пациента";
 
             nameOfButton = "Сохранить изменения";
             MessageBus.Default.Subscribe("GetCurrentPatientIdForEdit", SetCurrentPatientID);
