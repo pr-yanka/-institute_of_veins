@@ -9,7 +9,7 @@ namespace WpfApp2.Db.Models
     public class DiagnosisType
     {
         [Key]
-        [Column("id")]
+        [Column("id_вида")]
         public int Id { set; get; }
         [Column("описание")]
         public string Str { set; get; }
@@ -24,7 +24,7 @@ namespace WpfApp2.Db.Models
     {
         public DiagnosisTypeRepository(DbContext context) : base(context)
         {
-          
+            dbContext.Set<DiagnosisType>();
         }
     }
 }

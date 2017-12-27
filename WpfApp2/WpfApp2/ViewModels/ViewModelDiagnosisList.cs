@@ -30,9 +30,10 @@ namespace WpfApp2.ViewModels
 
         public ViewModelDiagnosisList(NavigationController controller) : base(controller)
         {
-            foreach(var DiagnosisTyoe in Data.DiagnosisTypes.GetAll)
+            DataSourceList = new List<DiagnosisDataSource>();
+            foreach (var DiagnosisType in Data.DiagnosisTypes.GetAll)
             {
-                DataSourceList.Add(new DiagnosisDataSource(DiagnosisTyoe));
+                DataSourceList.Add(new DiagnosisDataSource(DiagnosisType));
             }
 
             ToPhysicalCommand = new DelegateCommand(

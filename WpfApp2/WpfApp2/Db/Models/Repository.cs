@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql;
+using System.Data.Entity.Core;
 
 namespace WpfApp2.Db.Models
 {
@@ -28,7 +29,13 @@ namespace WpfApp2.Db.Models
 
         public TEntity Get(int id)
         {
-            return dbContext.Set<TEntity>().Find(id);
+            try  {
+                return dbContext.Set<TEntity>().Find(id);
+            }
+            catch (EntityCommandExecutionException ex)
+            {
+                return null;
+            }
         }
 
         public void Add(TEntity entry)

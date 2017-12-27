@@ -12,7 +12,7 @@ namespace WpfApp2.Db.Models
         public DbSet<BPVHipStructure> BPVHipStructures { get; set; }
         public DbSet<BPVHipCombo> BPVHipCombos { get; set; }
         public DbSet<Metrics> Metrics { get; set; }
-        public DbSet<Patient> Petients { get; set; }
+        public DbSet<Patient> Patients { get; set; }
         public DbSet<DiagnosisType> DiagnosisTypes { get; set; }
         public DbSet<RecomendationsType> RecomendationsTypes { get; set; }
         public DbSet<ComplainsType> ComplainsTypes { get; set; }
