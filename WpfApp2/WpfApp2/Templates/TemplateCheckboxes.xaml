@@ -5,7 +5,17 @@
         <Grid Name="RootGrid">
             <StackPanel Orientation="Vertical" Background="White">
                 <TextBlock x:Name="textBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Жалобы/диагноз/заключение" VerticalAlignment="Top" FontSize="28"/>
-                <DataGrid></DataGrid>
+                <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Path=Controller.CurrentViewModel.DataSourceList}">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Информацыя">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Center" Text="{Binding Data.Str}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Center" >
                     <Button FontSize="16" Content="Добавить свою жалобу/диагноз/..." Background="GhostWhite"></Button>
                     <StackPanel Orientation="Horizontal">

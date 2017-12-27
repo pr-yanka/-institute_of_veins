@@ -18,7 +18,11 @@ namespace WpfApp2.ViewModels
         private Patient currentPatient;
         private Visibility _visibility;
         public Visibility Visibility { get { return _visibility; } set { _visibility = value; OnPropertyChanged(); } }
+        private string _textHeader;
+        public string TextHeader { get { return _textHeader; } set { _textHeader = value; OnPropertyChanged(); } }
 
+
+       
 
         public string CurrentPatientFlat { get; set; }
 
@@ -157,6 +161,7 @@ namespace WpfApp2.ViewModels
             Visibility = Visibility.Hidden;
             SetAllFieldsDefault();
             nameOfButton = "Добавить пользователя";
+            TextHeader = "Добавление пациента";
             CurrentPatient = new Patient();
 
             CurrentPatient.Birthday = DateTime.Now;
