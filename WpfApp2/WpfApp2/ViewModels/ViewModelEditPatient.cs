@@ -16,9 +16,12 @@ namespace WpfApp2.ViewModels
 {
     public class ViewModelEditPatient : ViewModelBase, INotifyPropertyChanged
     {
+        public DelegateCommand ToDashboardCommand { get; protected set; }
         public string nameOfButton { get; set; }
         public DelegateCommand ToCurrentPatientCommand { get; protected set; }
         private Patient currentPatient;
+        private Visibility _visibility;
+        public Visibility Visibility { get { return _visibility; } set { _visibility = value; OnPropertyChanged(); } }
 
         private Brush _textBox_Name_B;
         private Brush _textBox_Surname_B;
@@ -31,28 +34,27 @@ namespace WpfApp2.ViewModels
         private Brush _textBox_Email_B;
         private int _genderTypeNumber;
 
-        public Patient CurrentPatient { get { return currentPatient; } set { currentPatient = value; OnPropertyChanged("CurrentPatient"); } }
+        public Patient CurrentPatient { get { return currentPatient; } set { currentPatient = value; OnPropertyChanged(); } }
 
-        public int GenderTypeNumber { get => _genderTypeNumber; set { _genderTypeNumber = value; OnPropertyChanged("GendeTypeNumber"); } }
+        public int GenderTypeNumber { get { return _genderTypeNumber; } set { _genderTypeNumber = value; OnPropertyChanged(); } }
 
-        public Brush TextBoxNameB { get => _textBox_Name_B; set { _textBox_Name_B = value; OnPropertyChanged("TextBox_Name_B"); } }
+        public Brush TextBoxNameB { get { return _textBox_Name_B; } set { _textBox_Name_B = value; OnPropertyChanged(); } }
 
-        public Brush TextBoxSurnameB { get => _textBox_Surname_B; set { _textBox_Surname_B = value; OnPropertyChanged("TextBox_Surname_B"); } }
+        public Brush TextBoxSurnameB { get { return _textBox_Surname_B; } set { _textBox_Surname_B = value; OnPropertyChanged(); } }
 
-        public Brush TextBoxPatronimicB { get => _textBox_Patronimic_B; set { _textBox_Patronimic_B = value; OnPropertyChanged("TextBox_Patronimic_B"); } }
+        public Brush TextBoxPatronimicB { get { return _textBox_Patronimic_B; } set { _textBox_Patronimic_B = value; OnPropertyChanged(); } }
 
-        public Brush TextBoxCityB { get => _textBox_City_B; set { _textBox_City_B = value; OnPropertyChanged("TextBox_City_B"); } }
+        public Brush TextBoxCityB { get { return _textBox_City_B; } set { _textBox_City_B = value; OnPropertyChanged(); } }
 
-        public Brush TextBoxStreetB { get => _textBox_Street_B; set { _textBox_Street_B = value; OnPropertyChanged("TextBox_Street_B"); } }
+        public Brush TextBoxStreetB { get { return _textBox_Street_B; } set { _textBox_Street_B = value; OnPropertyChanged(); } }
 
-        public Brush TextBoxHouseB { get => _textBox_House_B; set { _textBox_House_B = value; OnPropertyChanged("TextBox_House_B"); } }
+        public Brush TextBoxHouseB { get { return _textBox_House_B; } set { _textBox_House_B = value; OnPropertyChanged(); } }
 
-        public Brush TextBoxFlatB { get => _textBox_Flat_B; set { _textBox_Flat_B = value; OnPropertyChanged("TextBox_Flat_B"); } }
+        public Brush TextBoxFlatB { get { return _textBox_Flat_B; } set { _textBox_Flat_B = value; OnPropertyChanged(); } }
 
-        public Brush TextBoxPhoneB { get => _textBox_Phone_B; set { _textBox_Phone_B = value; OnPropertyChanged("TextBox_Phone_B"); } }
+        public Brush TextBoxPhoneB { get { return _textBox_Phone_B; } set { _textBox_Phone_B = value; OnPropertyChanged(); } }
 
-        public Brush TextBoxEmailB { get => _textBox_Email_B; set { _textBox_Email_B = value; OnPropertyChanged("TextBox_Email_B"); } }
-
+        public Brush TextBoxEmailB { get { return _textBox_Email_B; } set { _textBox_Email_B = value; OnPropertyChanged(); } }
 
         private bool TestRequiredFields()
         {
@@ -167,13 +169,18 @@ namespace WpfApp2.ViewModels
         public ViewModelEditPatient(NavigationController controller) : base(controller)
         {
             base.HasNavigation = false;
+            Visibility = Visibility.Visible;
 
-           
 
             nameOfButton = "Сохранить изменения";
             MessageBus.Default.Subscribe("GetCurrentPatientIdForEdit", SetCurrentPatientID);
             SetAllFieldsDefault();
-
+            ToDashboardCommand = new DelegateCommand(
+              () =>
+              {
+                  Controller.NavigateTo<ViewModelDashboard>();
+              }
+          );
             ToCurrentPatientCommand = new DelegateCommand(
                 () =>
                 {
