@@ -13,9 +13,13 @@ namespace WpfApp2.Db.Models
         public DbSet<BPVHipCombo> BPVHipCombos { get; set; }
         public DbSet<Metrics> Metrics { get; set; }
         public DbSet<Patient> Petients { get; set; }
+        public DbSet<DiagnosisType> DiagnosisTypes { get; set; }
+        public DbSet<RecomendationsType> RecomendationsTypes { get; set; }
+        public DbSet<ComplainsType> ComplainsTypes { get; set; }
         public MySqlContext() : base("server=localhost;user=root;database=med_db;password=22222;") {
             
         }
+
         /*
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
