@@ -11,6 +11,7 @@ using Microsoft.Practices.Prism.Commands;
 using WpfApp2.Db.Models;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
+using System.Windows.Media;
 
 namespace WpfApp2.ViewModels
 {
