@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using Microsoft.Practices.Prism.Commands;
 using WpfApp2.Navigation;
@@ -11,11 +9,32 @@ using WpfApp2.DialogService;
 using WpfApp2.LegParts;
 using WpfApp2.LegParts.VMs;
 using WpfApp2.Messaging;
+using WpfApp2.Db.Models;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace WpfApp2.ViewModels
 {
-    public class ViewModelAddPhysical : ViewModelBase
+    public class ViewModelAddPhysical : ViewModelBase, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            //если PropertyChanged не нулевое - оно будет разбужено
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private float _weight;
+        public float Weight { get { return _weight; } set { _weight = value; ITM = Weight / ((Growth / 100) * (Growth / 100)); OnPropertyChanged(); } }
+        private float _growth;
+        public float Growth { get { return _growth; } set { _growth = value; ITM = Weight / ((Growth / 100) * (Growth/100)); OnPropertyChanged(); } }
+
+        private double _itm;
+        public double ITM { get { return Math.Round(_itm,3) ; } set { _itm = value; OnPropertyChanged(); } }
+
+        private string _textTip;
+        public string TextTip { get { return _textTip; } set { _textTip = value; OnPropertyChanged();} }
+        public DelegateCommand ClickOnTextTip { get; protected set; }
         public DelegateCommand ToDashboardCommand { get; protected set; }
         public DelegateCommand ToCurrentPatientCommand { get; protected set; }
         public DelegateCommand ToTablePatientsCommand { get; protected set; }
@@ -49,6 +68,34 @@ namespace WpfApp2.ViewModels
 
         public DelegateCommand ToDiagnosisCommand { get; protected set; }
 
+        public Patient CurrentPatient { get; protected set; }
+        public string initials { get; protected set; }
+
+        public List<ComplainsDataSource> ComplainsList { get; set; }
+        public List<RecomendationsDataSource> RecomendationsList { get; set; }
+        public List<DiagnosisDataSource> DiagnosisList { get; set; }
+
+        private void SetComplainsList(object sender, object data)
+        {
+            ComplainsList = (List<ComplainsDataSource>)data;
+        }
+        private void SetRecomendationsList(object sender, object data)
+        {
+            RecomendationsList = (List<RecomendationsDataSource>)data;
+        }
+        private void SetDiagnosisList(object sender, object data)
+        {
+            DiagnosisList = (List<DiagnosisDataSource>)data;
+        }
+
+        private void SetCurrentPatientID(object sender, object data)
+        {
+
+            CurrentPatient = Data.Patients.Get((int)data);
+            initials = " "+CurrentPatient.Sirname.ToCharArray()[0].ToString()+". "+ CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
+
+        }
+
         private ICommand openDialogCommand = null;
         public ICommand OpenDialogCommand
         {
@@ -76,6 +123,7 @@ namespace WpfApp2.ViewModels
 
         private void FinishAdding(object parameter)
         {
+           
             DialogViewModelBase vm =
                 new DialogYesNo.DialogYesNoViewModel("Назначить операцию?");
             DialogResult result =
@@ -92,7 +140,12 @@ namespace WpfApp2.ViewModels
         public ViewModelAddPhysical(NavigationController controller) : base(controller)
         {
             MessageBus.Default.Subscribe("LegDataSaved", Handler);
+            MessageBus.Default.Subscribe("GetCurrentPatientIdForOperation", SetCurrentPatientID);
 
+            MessageBus.Default.Subscribe("SetRecomendationsList", SetRecomendationsList);
+            MessageBus.Default.Subscribe("SetDiagnosisList", SetDiagnosisList);
+            MessageBus.Default.Subscribe("SetComplainsList", SetComplainsList);
+            TextTip = "Текст пометки";
             Controller = controller;
             base.HasNavigation = false;
 
@@ -310,7 +363,13 @@ namespace WpfApp2.ViewModels
                     Controller.NavigateTo<ViewModelTablePatients>();
                 }
             );
-
+            ClickOnTextTip = new DelegateCommand(
+                () =>
+                {
+                    TextTip = "";
+                    //Controller.NavigateTo<ViewModelCurrentPatient>();
+                }
+            );
             ToCurrentPatientCommand = new DelegateCommand(
                 () =>
                 {
@@ -319,8 +378,10 @@ namespace WpfApp2.ViewModels
             );
         }
 
-        //кто присылает и что присылает
-        private void Handler(object sender, object data)
+
+        
+            //кто присылает и что присылает
+            private void Handler(object sender, object data)
         {
             Type senderType = sender.GetType();
             LegPartViewModel senderVM = (LegPartViewModel) sender;

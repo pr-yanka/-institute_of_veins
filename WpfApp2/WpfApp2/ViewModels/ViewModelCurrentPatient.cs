@@ -54,6 +54,7 @@ namespace WpfApp2.ViewModels
             ToNewOperationCommand = new DelegateCommand(
                 () =>
                 {
+                   
                     Controller.NavigateTo<ViewModelAddOperation>();
                 }
             );
@@ -90,6 +91,7 @@ namespace WpfApp2.ViewModels
             ToNewPhysicalCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("GetCurrentPatientIdForOperation", this, CurrentPatient.Id);
                     Controller.NavigateTo<ViewModelAddPhysical>();
                 }
                 );
