@@ -4,23 +4,30 @@
     <DataTemplate x:Key="TemplateCheckboxes">
         <Grid Name="RootGrid">
             <StackPanel Orientation="Vertical" Background="White">
-                <TextBlock x:Name="textBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Жалобы/диагноз/заключение" VerticalAlignment="Top" FontSize="28"/>
-                <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Path=Controller.CurrentViewModel.DataSourceList}">
+                <TextBlock x:Name="textBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Path=HeaderText}" VerticalAlignment="Top" FontSize="28"/>
+                <DataGrid  AutoGenerateColumns="False" ItemsSource="{Binding Path=Controller.CurrentViewModel.DataSourceList}">
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="Информацыя">
+                        <DataGridTemplateColumn >
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock TextAlignment="Center" Text="{Binding Data.Str}" />
+                                    <CheckBox IsChecked="{Binding Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock TextAlignment="Left" Width="Auto" Text="{Binding Path=Data.Str}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Center" >
-                    <Button FontSize="16" Content="Добавить свою жалобу/диагноз/..." Background="GhostWhite"></Button>
+                    <Button FontSize="16" Content="{Binding Path=AddButtonText}" Background="GhostWhite"></Button>
                     <StackPanel Orientation="Horizontal">
-                        <Button FontSize="16" Content="Вернуться к обследованию" Background="GhostWhite" Width="515"></Button>
-                        <Button FontSize="16" Content="Сохранить" Background="GhostWhite" Width="509"></Button>
+                        <Button FontSize="16" Content="Вернуться к обследованию" Command="{Binding Path=ToPhysicalCommand}" Background="GhostWhite" Width="515"></Button>
+                        <Button FontSize="16" Content="Сохранить" Command="{Binding Path=SaveChangesCommand}" Background="GhostWhite" Width="509"></Button>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>
