@@ -60,8 +60,6 @@ namespace WpfApp2.Db.Models
         [Column("телефон")]
         public string Phone { set; get; }
 
-
-        [Required]
         [Column("электронная_почта")]
         public string Email { set; get; }
 
