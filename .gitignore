@@ -289,3 +289,4 @@ __pycache__/
 sh.exe.stackdump
 *.xml
 *.config
+WpfApp2/WpfApp2/TestUserControl.xaml

@@ -2,37 +2,48 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplateCurrentPatient">
-        <Grid>
-            <Grid.Background>
-            <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
-                <LinearGradientBrush.GradientStops>
-                    <GradientStop Color="White" Offset="0.3" />
-                    <GradientStop Color="Azure" Offset=".8" />
-                </LinearGradientBrush.GradientStops>
-            </LinearGradientBrush>
-        </Grid.Background>
-            
-                <TextBlock DockPanel.Dock="Top" FontFamily="/fonts/#Pescadero" FontSize="18pt" Margin="189,-15,172,461" Height="38" > <TextBlock Text="{Binding Path=CurrentPatient.Name}" /><Run Text=" " /><TextBlock Text="{Binding Path=CurrentPatient.Sirname}" /><Run Text=" " /><TextBlock Text="{Binding Path=CurrentPatient.Patronimic}" /></TextBlock>
-            <Button x:Name="button" Content="Редактировать профиль" Command="{Binding Path=ToEditPatientCommand}" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" Width="347" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy3" Content="Вернуться в главное меню" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="10,451,0,0" VerticalAlignment="Top" Width="347" Height="43" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy4" Content="Посмотреть историю" Command="{Binding Path=ToViewHistoryCommand}" HorizontalAlignment="Left" Margin="373,43,0,0" VerticalAlignment="Top" Width="369" Height="43" Background="#FFF7DA21" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-           
-            <TextBlock x:Name="textBlock_ageAndBirthday" HorizontalAlignment="Left" Margin="255,91,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto" Text="{Binding Path=CurrentPatient.Age}"><TextBlock  Text=" лет ("/><TextBlock Text="{Binding Path=PatientBirthday}" /><TextBlock Text=")"/></TextBlock>
-            <TextBlock x:Name="textBlock_1" HorizontalAlignment="Left" Margin="255,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto" ><TextBlock  Text="Пол : "/><TextBlock Text="{Binding Path=CurrentPatient.Gender}" /></TextBlock>
-            <TextBlock x:Name="textBlock_phone" HorizontalAlignment="Left" Margin="255,156,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto"><Run Text="Телефон"/><Run Text=": "/><TextBlock Text="{Binding Path=CurrentPatient.Phone}"/><LineBreak/><Run/></TextBlock>
-            <TextBlock x:Name="textBlock_adres" HorizontalAlignment="Left" Margin="189,186,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto"><Run Text="Адрес: г."/>
+        <Grid Margin="210,70,0,0">
+            <TextBlock HorizontalAlignment="Center" FontFamily="/fonts/#Pescadero" FontSize="22pt" Height="38" VerticalAlignment="Top" > <TextBlock Text="{Binding Path=CurrentPatient.Name}" /><Run Text=" " /><TextBlock Text="{Binding Path=CurrentPatient.Sirname}" /><Run Text=" " /><TextBlock Text="{Binding Path=CurrentPatient.Patronimic}" /></TextBlock>
+            <Button x:Name="button" Content="Редактировать профиль" Command="{Binding Path=ToEditPatientCommand}" HorizontalAlignment="Left" Margin="19,61,0,0" VerticalAlignment="Top" Width="300" Height="41" FontFamily="Franklin Gothic Medium" FontSize="16" Background="#FFB8E2EC"/>
+            <Button x:Name="button_Copy4" Content="Посмотреть историю" Command="{Binding Path=ToViewHistoryCommand}" HorizontalAlignment="Left" Margin="420,61,0,0" VerticalAlignment="Top" Width="300" Height="41" FontFamily="Franklin Gothic Medium" FontSize="16" Background="#FFB8E2EC"/>
+
+            <StackPanel Orientation="Vertical" Margin="19,118,231,42">
+                <StackPanel Orientation="Horizontal" Height="29">
+                    <TextBlock x:Name="age" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto" ><TextBlock  Text="Возраст :" /></TextBlock>
+                    <TextBlock x:Name="textBlock_ageAndBirthday" HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto" Text="{Binding Path=CurrentPatient.Age}"><TextBlock  Text=" лет ("/><TextBlock Text="{Binding Path=PatientBirthday}" /><TextBlock Text=")"/></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="textBlock_1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto" ><InlineUIContainer>
+                    <TextBlock  Text="Пол : "/>
+                        </InlineUIContainer><InlineUIContainer>
+                    <TextBlock Text="{Binding CurrentPatient.Gender}" />
+                </InlineUIContainer></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="textBlock_phone" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto"><Run Text="Телефон"/><Run Text=": "/><TextBlock Text="{Binding Path=CurrentPatient.Phone}"/><LineBreak/><Run/></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="textBlock_adres" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto"><Run Text="Город:"/>
                 <TextBlock Text="{Binding Path=CurrentPatient.City}"/>
+                <TextBlock Text="улица"/>
                 <TextBlock Text="{Binding Path=CurrentPatient.Street}"/>
                 <TextBlock Text="{Binding Path=CurrentPatient.House}"/><Run Text=" кв. "/>
                 <TextBlock Text="{Binding Path=CurrentPatient.Flat}"/>
                 <LineBreak/><Run/></TextBlock>
-            <TextBlock x:Name="textBlock_email" HorizontalAlignment="Left" Margin="266,206,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="237" Text="{Binding Path=CurrentPatient.Email}"/>
-            
-                    <Button x:Name="button_Copy" Content="Остальные пациенты" Command="{Binding Path=ToTablePatientsCommand}" HorizontalAlignment="Left" Margin="373,451,0,0" VerticalAlignment="Top" Width="369" Height="43" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy1" Content="Назначить операцию"  Command="{Binding Path=ToNewOperationCommand}" HorizontalAlignment="Left" Margin="258,392,0,0" VerticalAlignment="Top" Width="235" Height="43" Background="#FF99B1F1" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy2" Content="Начать обследование" Command="{Binding Path=ToNewPhysicalCommand}" HorizontalAlignment="Left" Margin="10,392,0,0" VerticalAlignment="Top" Width="234" Height="43" Background="#FF98C8F0" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy5" Content="Добавить анализы" Command="{Binding Path=ToAddAnalizeCommand}" HorizontalAlignment="Left" Margin="507,392,0,0" VerticalAlignment="Top" Width="234" Height="43" Background="#FF819EEC" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy51" Content="Патологии" Command="{Binding Path=ToPathologyListCommand}" HorizontalAlignment="Left" Margin="607,492,0,0" VerticalAlignment="Top" Width="234" Height="43" Background="#FF819EEC" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Height="61">
+                    <TextBlock x:Name="email" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto" ><TextBlock  Text="Почта :" /></TextBlock>
+                    <TextBlock x:Name="textBlock_email" HorizontalAlignment="Left" Margin="266,206,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="237" Text="{Binding Path=CurrentPatient.Email}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                </StackPanel>
+            </StackPanel>
+
+            <Button x:Name="button_Copy" Content="Остальные пациенты" Command="{Binding Path=ToTablePatientsCommand}" HorizontalAlignment="Left" Margin="532,552,0,0" VerticalAlignment="Top" Width="234" Height="41" FontFamily="Franklin Gothic Medium" FontSize="16" Background="#FFD0EADD"/>
+            <Button x:Name="button_Copy1" Content="Назначить операцию"  Command="{Binding Path=ToNewOperationCommand}" HorizontalAlignment="Left" Margin="275,394,0,0" VerticalAlignment="Top" Width="235" Height="41" FontFamily="Franklin Gothic Medium" FontSize="16" Background="#FFB8E2EC"/>
+            <Button x:Name="button_Copy2" Content="Начать обследование" Command="{Binding Path=ToNewPhysicalCommand}" HorizontalAlignment="Left" Margin="21,394,0,0" VerticalAlignment="Top" Width="234" Height="41" FontFamily="Franklin Gothic Medium" FontSize="16" Background="#FFB8E2EC"/>
+            <Button x:Name="button_Copy5" Content="Добавить анализы" Command="{Binding Path=ToAddAnalizeCommand}" HorizontalAlignment="Left" Margin="532,394,0,0" VerticalAlignment="Top" Width="234" Height="41" FontFamily="Franklin Gothic Medium" FontSize="16" Background="#FFB8E2EC"/>
+            <Button x:Name="button_Copy51" Content="Патологии" Command="{Binding Path=ToPathologyListCommand}" HorizontalAlignment="Left" Margin="21,349,0,0" VerticalAlignment="Top" Width="234" Height="40" FontFamily="Franklin Gothic Medium" FontSize="16" Background="#FFB8E2EC"/>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>
