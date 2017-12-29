@@ -9,6 +9,8 @@ namespace WpfApp2.Db.Models
 {
     public class MySqlContext : DbContext
     {
+        public DbSet<AnalizeRepository> Analize { get; set; }
+        public DbSet<AnalizeTypeRepository> AnalizeType { get; set; }
         public DbSet<BPVHipStructure> BPVHipStructures { get; set; }
         public DbSet<BPVHipCombo> BPVHipCombos { get; set; }
         public DbSet<Metrics> Metrics { get; set; }

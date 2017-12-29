@@ -14,7 +14,8 @@ namespace WpfApp2.Db.Models
         BPVComboRepository BPVCombos { get; }
         MetricsRepository Metrics { get; }
         PatientsRepository Patients { get; }
-
+        AnalizeTypeRepository AnalizeType { get; }
+        AnalizeRepository Analize { get; }
         ComplainsTypeRepository ComplainsTypes { get; }
         RecomendationsTypeRepository RecomendationsTypes { get; }
         DiagnosisTypeRepository DiagnosisTypes { get; }
