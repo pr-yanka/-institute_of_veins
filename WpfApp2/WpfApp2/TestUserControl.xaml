@@ -8,81 +8,36 @@
              d:DesignHeight="705" d:DesignWidth="1024">
     <Grid Margin="0,80,0,0">
         <TextBlock HorizontalAlignment="Right" FontSize="22pt" Height="38" VerticalAlignment="Top" Text="Васючийка А.В."/>
-        <TextBlock HorizontalAlignment="Left" FontSize="22pt" Height="38" VerticalAlignment="Top" Text="Назначение операции" />
-        <Button x:Name="button_Copy1" Content="Вернуться к пациенту" HorizontalAlignment="Left" Margin="277,558,0,0" VerticalAlignment="Top"  
+        <TextBlock HorizontalAlignment="Left" FontSize="22pt" Height="38" VerticalAlignment="Top" Margin="10,0,0,0" ><Run Text="Просмотр"/><Run Text=" операции"/></TextBlock>
+        <Button x:Name="button_Copy1" Content="Вернуться к пациенту" HorizontalAlignment="Left" Margin="423,558,0,0" VerticalAlignment="Top"  
                     Width="215" Height="34"/>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="24,68,0,0" TextWrapping="Wrap" Text="Тип операции"  
-                       VerticalAlignment="Top" FontSize="18"/>
-        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="175,57,0,0" VerticalAlignment="Top" Width="251"  
-                      Height="40"/>
-        <Button x:Name="button_Copy" Content="Добавить новый тип" HorizontalAlignment="Left" Margin="442,57,0,0"              
-                    VerticalAlignment="Top" Width="158" Height="40"/>
-        <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="79,204,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top"><Run Text="Выб"/><Run Text="ерите"/><Run Text=" время"/></TextBlock>
-        <Calendar HorizontalAlignment="Left" Margin="79,274,0,0" VerticalAlignment="Top" Width="179" Height="157"  
-                      FontStretch="Expanded" FontSize="10">
-            <Calendar.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFE4EAF0" Offset="0"/>
-                    <GradientStop Color="#FFECF0F4" Offset="0.16"/>
-                    <GradientStop Color="#FFFCFCFD" Offset="0.425"/>
-                    <GradientStop Color="White" Offset="1"/>
-                </LinearGradientBrush>
-            </Calendar.Background>
-        </Calendar>
-        <ComboBox x:Name="comboBox_Copy" HorizontalAlignment="Left" Margin="79,232,0,0" VerticalAlignment="Top" Width="72">
-            <ComboBoxItem Content="1"/>
-            <ComboBoxItem Content="2"/>
-            <ComboBoxItem Content="3"/>
-            <ComboBoxItem Content="4"/>
-        </ComboBox>
-        <ComboBox x:Name="comboBox_Copy1" HorizontalAlignment="Left" Margin="186,232,0,0" VerticalAlignment="Top" Width="72"  
-                      RenderTransformOrigin="-0.091,2.227">
-            <ComboBoxItem Content="00"/>
-            <ComboBoxItem Content="10"/>
-            <ComboBoxItem Content="20"/>
-            <ComboBoxItem Content="30"/>
-            <ComboBoxItem Content="40"/>
-            <ComboBoxItem Content="50"/>
-        </ComboBox>
-        <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="175,208,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top" Text=":"/>
-        <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Margin="321,178,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top" Text="Список всех врачей" FontSize="16" Width="155" TextAlignment="Center"/>
-        <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="57,126,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top" FontSize="18"><Run Text="А"/><Run Text="нестезик"/></TextBlock>
-        <ComboBox x:Name="comboBox_Copy2" HorizontalAlignment="Left" Margin="175,117,0,0" VerticalAlignment="Top" Width="251" Height="42"/>
-        <Button x:Name="button_Copy2" Content="Добавить новый вид" HorizontalAlignment="Left" Margin="442,119,0,0"              
-                    VerticalAlignment="Top" Width="158" Height="40" />
-        <ScrollViewer HorizontalAlignment="Left" Height="220" Margin="331,211,0,0" VerticalAlignment="Top" Width="133"  
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="20,167,0,0" TextWrapping="Wrap"  
+                       VerticalAlignment="Top" FontSize="18" Height="44" Width="157"><Run Text="Тип операции"/><Run Text=":"/></TextBlock>
+        <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="20,130,0,0" TextWrapping="Wrap"  
+                       VerticalAlignment="Top" FontSize="18" Height="32" Width="147"><Run Text="А"/><Run Text="нестезик"/><Run Text=": "/></TextBlock>
+        <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="484,130,0,0" TextWrapping="Wrap"  
+                       VerticalAlignment="Top" FontSize="16"><Run Text="Б"/><Run Text="ригада"/></TextBlock>
+        <ScrollViewer HorizontalAlignment="Left" Height="375" Margin="423,161,0,0" VerticalAlignment="Top" Width="185"  
                           Foreground="Black" Background="#FFF1F9F9"/>
-        <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="498,178,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top" Text="Ваша бригада" FontSize="16"/>
-        <ScrollViewer HorizontalAlignment="Left" Height="220" Margin="484,211,0,0" VerticalAlignment="Top" Width="124"  
-                          Foreground="Black" Background="#FFF1F9F9"/>
-        <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="20,450,0,0" TextWrapping="Wrap"  
+        <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="20,211,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="NB!"/>
-        <RichTextBox x:Name="richTextBox" HorizontalAlignment="Left" Height="86" Margin="57,450,0,0" VerticalAlignment="Top"  
-                         Width="551">
+        <RichTextBox x:Name="richTextBox" HorizontalAlignment="Left" Height="295" Margin="20,241,0,0" VerticalAlignment="Top"  
+                         Width="375">
             <FlowDocument/>
         </RichTextBox>
-        <TextBlock x:Name="textBlock_Copy6" HorizontalAlignment="Left" Margin="659,70,0,0" TextWrapping="Wrap"  
+        <TextBlock x:Name="textBlock_Copy6" HorizontalAlignment="Left" Margin="663,132,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="Диагноз слева" FontSize="16"/>
-        <TextBlock x:Name="textBlock_Copy7" HorizontalAlignment="Left" Margin="841,70,0,0" TextWrapping="Wrap"  
+        <TextBlock x:Name="textBlock_Copy7" HorizontalAlignment="Left" Margin="848,130,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="Диагноз справа" RenderTransformOrigin="2.097,10.521" FontSize="16"/>
-        <Button x:Name="button_Copy3" Content="Назначить операцию" HorizontalAlignment="Left" Margin="554,558,0,0"              
+        <Button x:Name="button_Copy3" Content="Отменить операцию" HorizontalAlignment="Left" Margin="180,558,0,0"              
                     VerticalAlignment="Top" Width="215" Height="34" RenderTransformOrigin="0.502,0.471"/>
-        <ScrollViewer HorizontalAlignment="Left" Height="325" Margin="626,211,0,0" VerticalAlignment="Top" Width="179"  
+        <ScrollViewer HorizontalAlignment="Left" Height="375" Margin="626,161,0,0" VerticalAlignment="Top" Width="179"  
                           Foreground="Black" Background="#FFF1F9F9"/>
-        <ScrollViewer HorizontalAlignment="Left" Height="325" Margin="818,211,0,0" VerticalAlignment="Top" Width="183"  
+        <ScrollViewer HorizontalAlignment="Left" Height="375" Margin="818,161,0,0" VerticalAlignment="Top" Width="183"  
                           Foreground="Black" Background="#FFF1F9F9"/>
-        <Button x:Name="button_Copy4" Content="Выбрать диагноз" HorizontalAlignment="Left" Margin="622,102,0,0"              
-                    VerticalAlignment="Top" Width="183" Height="40" RenderTransformOrigin="0.497,0.15"/>
-        <Button x:Name="button_Copy5" Content="Взять из последнего&#xD;&#xA;обследования" HorizontalAlignment="Left"  
-                    Margin="622,157,0,0"             VerticalAlignment="Top" Width="183" Height="40"/>
-        <Button x:Name="button_Copy6" Content="Выбрать диагноз" HorizontalAlignment="Left" Margin="818,102,0,0"              
-                    VerticalAlignment="Top" Width="183" Height="40"/>
-        <Button x:Name="button_Copy7" Content="Взять из последнего&#xA;обследования" HorizontalAlignment="Left"  
-                    Margin="818,157,0,0"             VerticalAlignment="Top" Width="183" Height="40"/>
+        <TextBlock HorizontalAlignment="Left" FontSize="24" Height="38" VerticalAlignment="Top" Margin="45,38,0,0" Text="дата время" />
+        <TextBlock HorizontalAlignment="Left" FontSize="24" Height="33" VerticalAlignment="Top" Margin="0,76,0,0" Text="итоги ещё не добавлены!" Foreground="#FF5D140D" Width="1024" Background="#FFB9E0E6" TextAlignment="Center" />
+        <Button x:Name="button_Copy" Content="Добавить итоги" HorizontalAlignment="Left" Margin="663,558,0,0"              
+            VerticalAlignment="Top" Width="215" Height="34" RenderTransformOrigin="0.502,0.471"/>
     </Grid>
 </UserControl>
