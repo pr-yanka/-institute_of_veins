@@ -10,6 +10,13 @@ namespace WpfApp2.Db.Models
 {
     public interface IUnitOfWork : IDisposable
     {
+        OperationTypeRepository OperationType { get; }
+        OperationRepository Operation { get; }
+        AnestethicRepository Anestethic { get; }
+        DoctorRepository Doctor { get; }
+
+
+
         BPVHipRepository BPVHips { get; }
         BPVComboRepository BPVCombos { get; }
         MetricsRepository Metrics { get; }
