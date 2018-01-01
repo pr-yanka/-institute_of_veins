@@ -12,6 +12,11 @@ namespace WpfApp2.Db.Models
     {
         private readonly MySqlContext _context;
 
+        public OperationTypeRepository OperationType { get; }
+        public OperationRepository Operation { get; }
+        public AnestethicRepository Anestethic { get; }
+        public DoctorRepository Doctor { get; }
+
         public BPVHipRepository BPVHips { get; private set; }
         public BPVComboRepository BPVCombos { get; private set; }
         public MetricsRepository Metrics { get; }
@@ -22,9 +27,15 @@ namespace WpfApp2.Db.Models
         public RecomendationsTypeRepository RecomendationsTypes { get; }
         public DiagnosisTypeRepository DiagnosisTypes { get; }
 
-        public UnitOfWork (MySqlContext context)
+        public UnitOfWork(MySqlContext context)
         {
             _context = context;
+
+            OperationType = new OperationTypeRepository(_context);
+            Operation = new OperationRepository(_context);
+            Anestethic = new AnestethicRepository(_context);
+            Doctor = new DoctorRepository(_context);
+
             Analize = new AnalizeRepository(_context);
             AnalizeType = new AnalizeTypeRepository(_context);
             BPVHips = new BPVHipRepository(_context);
