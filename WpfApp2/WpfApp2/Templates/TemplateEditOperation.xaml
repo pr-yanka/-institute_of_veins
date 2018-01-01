@@ -56,58 +56,13 @@
             <ComboBox x:Name="comboBox_Copy2" HorizontalAlignment="Left" Margin="301,69,0,0" VerticalAlignment="Top" Width="146"/>
             <Button x:Name="button_Copy21" Content="Добавить новый вид" HorizontalAlignment="Left" Margin="460,69,0,0"              
                     VerticalAlignment="Top" Width="158" Height="23"/>
-            <DataGrid  HorizontalAlignment="Left" Height="128" Margin="202,117,0,0" VerticalAlignment="Top" Width="133"  
-                      HeadersVisibility="None"    Foreground="Black" Background="#FFF1F9F9" AutoGenerateColumns="False"
-                     ItemsSource="{Binding Path=Controller.CurrentViewModel.Doctors}" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" >
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn >
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <CheckBox IsChecked="{Binding Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn >
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock TextAlignment="Left" Width="Auto" Text="{Binding Path=Data.Sirname}" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn >
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock TextAlignment="Left" Width="Auto" Text="{Binding Path=initials}" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                 
-                </DataGrid.Columns>
-            </DataGrid>
+            <ScrollViewer HorizontalAlignment="Left" Height="128" Margin="202,117,0,0" VerticalAlignment="Top" Width="133"  
+                          Foreground="Black" Background="#FFF1F9F9"/>
             <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="371,96,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="Ваша бригада"/>
-            <DataGrid HorizontalAlignment="Left" Height="128" Margin="348,117,0,0" VerticalAlignment="Top" Width="124"  
-                          Foreground="Black" Background="#FFF1F9F9" AutoGenerateColumns="False"
-                     ItemsSource="{Binding Path=Controller.CurrentViewModel.DoctorsSelected}" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" >
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn >
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock TextAlignment="Left" Width="Auto" Text="{Binding Path=Data.Sirname}" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn >
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock TextAlignment="Left" Width="Auto" Text="{Binding Path=initials}" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-
-                </DataGrid.Columns>
-                </DataGrid>
-                <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="535,99,0,0" TextWrapping="Wrap"  
+            <ScrollViewer HorizontalAlignment="Left" Height="128" Margin="348,117,0,0" VerticalAlignment="Top" Width="124"  
+                          Foreground="Black" Background="#FFF1F9F9"/>
+            <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="535,99,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="NB!"/>
             <RichTextBox x:Name="richTextBox" HorizontalAlignment="Left" Height="126" Margin="483,119,0,0" VerticalAlignment="Top"  
                          Width="135">

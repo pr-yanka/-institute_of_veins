@@ -1,9 +1,3 @@
-
-CREATE TABLE `звания` (
-	`id` INT NOT NULL AUTO_INCREMENT,
-    `название` VARCHAR(30) NOT NULL UNIQUE,
-    PRIMARY KEY (`id`)
-);
 RENAME TABLE категории TO виды_категорий;
 
 RENAME TABLE звания TO виды_научных_званий;

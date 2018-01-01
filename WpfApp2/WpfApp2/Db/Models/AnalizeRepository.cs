@@ -15,7 +15,6 @@ namespace WpfApp2.Db.Models
         [Key]
         [Column("id")]
         public int Id { set; get; }
-        
         [Column("тип_анализа")]
         public int analyzeType { set; get; }
         [Column("дата")]
