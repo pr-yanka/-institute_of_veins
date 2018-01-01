@@ -105,6 +105,7 @@ namespace WpfApp2.ViewModels
             ToAddAnalizeCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("GetPatientForAnalize", this, CurrentPatient.Id);
                     Controller.NavigateTo<ViewModelAddAnalize>();
                 });
         }

@@ -3,11 +3,29 @@
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplateAnalize">
         <Grid >
-            <Button x:Name="button_Copy13" Content="К ПАЦИЕНТУ" Command="{Binding Path=ToCurrentPatient}" HorizontalAlignment="Left" Margin="751,651,0,0" VerticalAlignment="Top" Width="212" Height="43" Background="#FFF55532" FontFamily="Segoe UI Light" FontSize="16" BorderBrush="{x:Null}" Foreground="White"/>
-        <TextBlock FontFamily="/fonts/#Pescadero" FontSize="18pt" Margin="247,89,370,610" Height="38" Text="Анализы"/>
-        <TextBlock FontFamily="/fonts/#Pescadero" FontSize="18pt" Margin="247,46,370,653" Height="38" Text="Шабанов Пёс Петрович"/>
-        <TextBlock FontFamily="/fonts/#Pescadero" FontSize="18pt" Margin="247,89,370,610" Height="38" Text="Анализы"/>
-        <TextBlock FontFamily="/fonts/#Pescadero" FontSize="18pt" Margin="424,218,246,452"><Run Text="&lt;"/><Run Text="тут могла бы быть картинка"/><LineBreak/><Run Text="с вашими анализами"/><Run Text="&gt;"/></TextBlock>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="90"></RowDefinition>
+                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="35"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Content="Открыть анализ"  Grid.Column="0" Grid.Row="1" Width="212" Height="35" Grid.RowSpan="5" Command="{Binding Path=OpenAnalizePicture}" Background="#FFF55532" FontFamily="Segoe UI Light" FontSize="16" BorderBrush="{x:Null}" Foreground="White"></Button>
+            <TextBlock  Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3"  HorizontalAlignment="Center" FontFamily="/fonts/#Pescadero" FontSize="22pt" Height="38" VerticalAlignment="Top" > <TextBlock Text="{Binding Path=CurrentPatient.Name}" /><Run Text=" " /><TextBlock Text="{Binding Path=CurrentPatient.Sirname}" /><Run Text=" " /><TextBlock Text="{Binding Path=CurrentPatient.Patronimic}" /></TextBlock>
+            <TextBlock Grid.Column="1" Grid.Row="3"   FontFamily="/fonts/#Pescadero" FontSize="18pt" Height="25" Text="Тип :"/>
+            <TextBlock Grid.Column="2" Grid.Row="3"  FontFamily="/fonts/#Pescadero" FontSize="18pt" Height="auto" Text="{Binding Path=AnalizeType.Str}"/>
+            <TextBlock Grid.Column="1" Grid.Row="4"  FontFamily="/fonts/#Pescadero" FontSize="18pt" Height="25" Text="Дата :"/>
+            <DatePicker SelectedDate="{Binding Path=Analize.data}" Grid.Column="2" Grid.Row="4" Height="18" Width="140" HorizontalAlignment="Left"/>
+            <Button Grid.Column="2" Grid.Row="6" x:Name="button_Copy13" Content="{Binding Path=ButtonName}" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="212" Height="35" Background="#FFF55532" FontFamily="Segoe UI Light" FontSize="16" BorderBrush="{x:Null}" Foreground="White"/>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

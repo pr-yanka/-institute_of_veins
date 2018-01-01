@@ -3,6 +3,7 @@
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="TemplateAddAnalize.xaml"/>
         <ResourceDictionary Source="TemplateLogin.xaml"/>
         <ResourceDictionary Source="TemplateRegistration.xaml"/>
         <ResourceDictionary Source="TemplateDashboard.xaml"/>
@@ -32,6 +33,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <local:MyTemplateSelector x:Key="MyTemplateSelector" 
+                              TemplateAddAnalize="{StaticResource TemplateAddAnalize}"
                               TemplateLogin="{StaticResource TemplateLogin}"
                               TemplateRegistration="{StaticResource TemplateRegistration}"
                               TemplateDashboard="{StaticResource TemplateDashboard}"

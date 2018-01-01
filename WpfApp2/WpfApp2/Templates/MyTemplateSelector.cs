@@ -12,6 +12,7 @@ namespace WpfApp2.Templates
 {
     public class MyTemplateSelector : DataTemplateSelector
     {
+        public DataTemplate TemplateAddAnalize { get; set; }
         public DataTemplate TemplateLogin { get; set; }
         public DataTemplate TemplateRegistration { get; set; }
         public DataTemplate TemplateDashboard { get; set; }
@@ -41,6 +42,8 @@ namespace WpfApp2.Templates
         {
             if (item == null)
                 return null;
+
+
 
             if (item.GetType() == typeof(ViewModelDashboard))
                 return TemplateDashboard;
@@ -115,7 +118,7 @@ namespace WpfApp2.Templates
                 return TemplateEditOperation;
 
             if (item.GetType() == typeof(ViewModelAddAnalize))
-                return TemplateAnalize;
+                return TemplateAddAnalize;
 
             if (item.GetType() == typeof(LegPartViewModel))
                 return LegPartMainTemplate;
