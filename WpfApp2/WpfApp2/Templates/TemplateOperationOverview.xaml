@@ -2,35 +2,39 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplateOperationOverview">
-        <Grid Margin="220,80,0,0">
-            <TextBlock HorizontalAlignment="Center" Text="Просмотр операции" Margin="10,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" FontSize="20" Foreground="#FF210A0A" Background="#FF899FCD" Width="897"/>
-            <Label Target="{Binding ElementName=TextArea}" Margin="592,150,231,353" FontFamily="Segoe UI Light" FontSize="14">
-                <Hyperlink Command="{Binding Path=ToCurrentPatientOverviewCommand}">
-                    Недашковская Ольга Дмитриевна (21 год)
-                </Hyperlink>
-            </Label>
-            <TextBlock HorizontalAlignment="Left" Margin="10,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Width="244"><Run Text="Вид операции:"/><Run Text=" название"/></TextBlock>
-            <TextBlock HorizontalAlignment="Left" Margin="302,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Width="579"><Run Text="Операция назначена на\операция успешно проведена"/><Run Text=" (дата и врем"/><Run Text="я)"/></TextBlock>
-            <TextBlock HorizontalAlignment="Left" Margin="10,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Width="378"><Run Text="Операцию назначила Оксана Рябинская."/><Run Text=" согласно "/></TextBlock>
-            <TextBlock HorizontalAlignment="Left" Margin="10,225,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Width="244" Text="Анестезик:"/>
-            <TextBlock HorizontalAlignment="Left" Margin="10,251,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Width="244" FontWeight="Bold"><Span><Run FlowDirection="RightToLeft" Text="NB"/></Span><Span><Run Text="!"/></Span></TextBlock>
-            <TextBlock HorizontalAlignment="Left" Margin="406,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Width="244"><Run Text="Диагноз справа:"/></TextBlock>
-            <TextBlock HorizontalAlignment="Left" Margin="10,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Width="244"><Run Text="Диагноз "/><Run Text="слева"/><Run Text=":"/></TextBlock>
-            <ScrollViewer HorizontalAlignment="Left" Height="100" Margin="10,120,0,0" VerticalAlignment="Top" Width="378"/>
-            <ScrollViewer HorizontalAlignment="Left" Height="100" Margin="406,124,0,0" VerticalAlignment="Top" Width="378"/>
-            <RichTextBox HorizontalAlignment="Left" Height="186" Margin="10,277,0,0" VerticalAlignment="Top" Width="378">
-                <FlowDocument>
-                    <Paragraph>
-                        <Run Text="комментарий к операции"/>
-                    </Paragraph>
-                </FlowDocument>
+        <Grid Margin="0,80,0,0">
+            <TextBlock HorizontalAlignment="Right" FontSize="22pt" Height="38" VerticalAlignment="Top" Text="Васючийка А.В."/>
+            <TextBlock HorizontalAlignment="Left" FontSize="22pt" Height="38" VerticalAlignment="Top" Margin="10,0,0,0" ><Run Text="Просмотр"/><Run Text=" операции"/></TextBlock>
+            <Button x:Name="button_Copy1" Content="Вернуться к пациенту" HorizontalAlignment="Left" Margin="423,558,0,0" VerticalAlignment="Top"  
+                    Width="215" Height="34"/>
+            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="20,167,0,0" TextWrapping="Wrap"  
+                       VerticalAlignment="Top" FontSize="18" Height="44" Width="157"><Run Text="Тип операции"/><Run Text=":"/></TextBlock>
+            <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="20,130,0,0" TextWrapping="Wrap"  
+                       VerticalAlignment="Top" FontSize="18" Height="32" Width="147"><Run Text="А"/><Run Text="нестезик"/><Run Text=": "/></TextBlock>
+            <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="484,130,0,0" TextWrapping="Wrap"  
+                       VerticalAlignment="Top" FontSize="16"><Run Text="Б"/><Run Text="ригада"/></TextBlock>
+            <ScrollViewer HorizontalAlignment="Left" Height="375" Margin="423,161,0,0" VerticalAlignment="Top" Width="185"  
+                          Foreground="Black" Background="#FFF1F9F9"/>
+            <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="20,211,0,0" TextWrapping="Wrap"  
+                       VerticalAlignment="Top" Text="NB!"/>
+            <RichTextBox x:Name="richTextBox" HorizontalAlignment="Left" Height="295" Margin="20,241,0,0" VerticalAlignment="Top"  
+                         Width="375">
+                <FlowDocument/>
             </RichTextBox>
-            <TextBlock HorizontalAlignment="Left" Margin="406,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Width="244" Text="Бригада:"/>
-            <ScrollViewer HorizontalAlignment="Left" Height="182" Margin="406,281,0,0" VerticalAlignment="Top" Width="378"/>
-            <Button Content="Редактировать" Width="244" Height="80" Command="{Binding Path=ToEditOperationCommand}"></Button>
-            <Button x:Name="button_Copy2" Command="{Binding Path=ToCurrentPatientCommand}" Content="Вернуться к пациенту" HorizontalAlignment="Left" Margin="136,593,0,0" VerticalAlignment="Top"  
-                    Width="158" Height="20"/>
-            <Button x:Name="button_Copy10" Content="Предоперационный эпикриз" HorizontalAlignment="Left" Margin="357,684,0,0" VerticalAlignment="Top" Width="285" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <TextBlock x:Name="textBlock_Copy6" HorizontalAlignment="Left" Margin="663,132,0,0" TextWrapping="Wrap"  
+                       VerticalAlignment="Top" Text="Диагноз слева" FontSize="16"/>
+            <TextBlock x:Name="textBlock_Copy7" HorizontalAlignment="Left" Margin="848,130,0,0" TextWrapping="Wrap"  
+                       VerticalAlignment="Top" Text="Диагноз справа" RenderTransformOrigin="2.097,10.521" FontSize="16"/>
+            <Button x:Name="button_Copy3" Content="Отменить операцию" HorizontalAlignment="Left" Margin="180,558,0,0"              
+                    VerticalAlignment="Top" Width="215" Height="34" RenderTransformOrigin="0.502,0.471"/>
+            <ScrollViewer HorizontalAlignment="Left" Height="375" Margin="626,161,0,0" VerticalAlignment="Top" Width="179"  
+                          Foreground="Black" Background="#FFF1F9F9"/>
+            <ScrollViewer HorizontalAlignment="Left" Height="375" Margin="818,161,0,0" VerticalAlignment="Top" Width="183"  
+                          Foreground="Black" Background="#FFF1F9F9"/>
+            <TextBlock HorizontalAlignment="Left" FontSize="24" Height="38" VerticalAlignment="Top" Margin="45,38,0,0" Text="дата время" />
+            <TextBlock HorizontalAlignment="Left" FontSize="24" Height="33" VerticalAlignment="Top" Margin="0,76,0,0" Text="итоги ещё не добавлены!" Foreground="#FF5D140D" Width="1024" Background="#FFB9E0E6" TextAlignment="Center" />
+            <Button x:Name="button_Copy" Content="Добавить итоги" HorizontalAlignment="Left" Margin="663,558,0,0"              
+            VerticalAlignment="Top" Width="215" Height="34" RenderTransformOrigin="0.502,0.471"/>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>
