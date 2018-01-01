@@ -601,7 +601,7 @@ CREATE TABLE `анализы` (
 	`тип_анализа` INT NOT NULL,
 	`дата` DATE NOT NULL,
 	`id_пациента` INT NOT NULL,
-	`анализ` blob NOT NULL,
+	`анализ` LONGBLOB NOT NULL,
 	PRIMARY KEY (`id`)
 );
 
