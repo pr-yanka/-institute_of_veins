@@ -33,8 +33,16 @@ namespace WpfApp2.LegParts
             set
             {
                 _panelOpened = value;
+                if (value) ClearPanel();
                 OnPropertyChanged();
             }
+        }
+
+        public void ClearPanel()
+        {
+            Text1 = "";
+            Text2 = "";
+            HasSize = false;
         }
 
         public SizePanelViewModel(ViewModelBase parentVM) : base(parentVM.Controller)

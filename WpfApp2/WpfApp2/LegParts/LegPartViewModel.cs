@@ -149,16 +149,17 @@ namespace WpfApp2.LegParts
                 CurrentPanelViewModel.PanelOpened = false;
                 handled = false;
                 var newStruct = GetPanelStructure();
+                
                 _lastSender.StructureSource.Add(newStruct);
                 _lastSender.SelectedValue = newStruct;
+                _lastSender.DeleteCustom();
+
             });
 
             CurrentPanelViewModel.PanelOpened = false;
             //when user picks custom structure
             MessageBus.Default.Subscribe("OpenCustom", OpenHandler);
-            //MessageBus.Default.Subscribe("CloseCustom", CloseHandler);
 
-            //_sections = new List<BPVHipSectionViewModel>();
             _hasNavigation = false;
 
             RevertCommand = new DelegateCommand(

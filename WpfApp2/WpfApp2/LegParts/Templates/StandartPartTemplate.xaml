@@ -11,7 +11,7 @@
                 </DockPanel>
                 <DockPanel Width="Auto" LastChildFill="True" Margin="0,5,0,5">
                     <Label x:Name="inches1Text_Copy1" Content="{Binding Path=SelectedValue.Text1}" Visibility="{Binding Path=HasFirstPart, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Margin="5,0,5,0" VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
-                    <TextBox x:Name="size1Box" Text="" Visibility="{Binding Path = HasSize, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="30"/>
+                    <TextBox x:Name="size1Box" Text="" Visibility="{Binding Path = SelectedValue.HasSize, FallbackValue=Hidden, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="30"/>
                     <!--for 1*1 size-->
                     <Label x:Name="inches2Text_Copy" Content="*" Visibility="{Binding Path = HasDoubleSize, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
                     <TextBox x:Name="size2Box" Text="" Visibility="{Binding Path = HasDoubleSize, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="30"/>

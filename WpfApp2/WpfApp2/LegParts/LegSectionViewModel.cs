@@ -31,7 +31,7 @@ namespace WpfApp2.LegParts
             {
                 if ((_selectedValue == null && value.Custom) || (_selectedValue != null &&_selectedValue.Custom != value.Custom))
                 {
-                    if (value.Custom) MessageBus.Default.Call("OpenCustom", this, this.GetType());
+                    if (value.Custom && value.Text1 == _startCustomText) MessageBus.Default.Call("OpenCustom", this, this.GetType());
                     else MessageBus.Default.Call("CloseCustom", this, this.GetType());
                 }
                 _selectedValue = value;
@@ -173,14 +173,22 @@ namespace WpfApp2.LegParts
             var t = StructureSource.GetEnumerator().GetType().GetGenericTypeDefinition();
         }
 
+        public void DeleteCustom()
+        {
+            StructureSource.Remove(_customChoice);
+        }
+
+        private LegPartDbStructure _customChoice;
+        private string _startCustomText = "Свой вариант ответа";
+
         protected void AddCustomObject(Type structureType)
-        {           
-            var custom = (LegPartDbStructure)Activator.CreateInstance(structureType);
-            custom.Text1 = "Свой вариант ответа";
-            custom.HasSize = false;
-            custom.Custom = true;
-            custom.ToNextPart = false;
-            StructureSource.Add(custom);
+        {
+            _customChoice = (LegPartDbStructure)Activator.CreateInstance(structureType);
+            _customChoice.Text1 = _startCustomText;
+            _customChoice.HasSize = false;
+            _customChoice.Custom = true;
+            _customChoice.ToNextPart = false;
+            StructureSource.Add(_customChoice);
         }
 
         protected void AddNextPartObject(Type structureType)

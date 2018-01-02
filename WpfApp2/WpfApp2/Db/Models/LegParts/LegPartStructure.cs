@@ -30,7 +30,11 @@ namespace WpfApp2.Db.Models
 
         [Required]
         [Column("есть_метрика")]
-        public bool HasSize { get; set; }
+        public bool HasSize
+        {
+            get;
+            set;
+        }
 
         [Column("id_метрики")]
         public int? Size { get; set; }
