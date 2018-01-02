@@ -33,7 +33,6 @@ namespace WpfApp2.Templates
         public DataTemplate TemplateCreateOperation { get; set; }
         public DataTemplate TemplateOperationResultOverview { get; set; }
         public DataTemplate TemplateAddOperationResult { get; set; }
-        public DataTemplate TemplateEditOperation { get; set; }
         public DataTemplate TemplateAnalize { get; set; }
         public DataTemplate LegPartMainTemplate { get; set; }
         public DataTemplate TemplateCheckboxes { get; set; }
@@ -106,7 +105,7 @@ namespace WpfApp2.Templates
                 return TemplateAddOperationResult;
 
             if (item.GetType() == typeof(ViewModelEditOperation))
-                return TemplateEditOperation;
+                return TemplateCreateOperation;
 
             if (item.GetType() == typeof(ViewModelPhysicalOverview))
                 return TemplateAddPhysicalPage1;
@@ -115,7 +114,7 @@ namespace WpfApp2.Templates
                 return TemplateAnalize;
 
             if (item.GetType() == typeof(ViewModelAddOperation))
-                return TemplateEditOperation;
+                return TemplateCreateOperation;
 
             if (item.GetType() == typeof(ViewModelAddAnalize))
                 return TemplateAddAnalize;
