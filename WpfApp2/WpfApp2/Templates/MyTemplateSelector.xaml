@@ -19,13 +19,13 @@
         <ResourceDictionary Source="TemplateSymptomsAdd.xaml"/>
         <ResourceDictionary Source="TemplateRecomendationAdd.xaml"/>
         <ResourceDictionary Source="TemplatePhysicalTable.xaml"/>
-        <ResourceDictionary Source="TemplateOperationOverview.xaml"/>
+        <ResourceDictionary Source="Operation/TemplateOperationOverview.xaml"/>
         <ResourceDictionary Source="TemplateCalendarOperations.xaml"/>
         <ResourceDictionary Source="TemplatePathologyList.xaml"/>
         <ResourceDictionary Source="TemplateAddPathology.xaml"/>
-        <ResourceDictionary Source="TemplateCreateOperation.xaml"/>
-        <ResourceDictionary Source="TemplateOperationResultOverview.xaml"/>
-        <ResourceDictionary Source="TemplateAddOperationResult.xaml"/>
+        <ResourceDictionary Source="Operation/TemplateCreateOperation.xaml"/>
+        <ResourceDictionary Source="Operation/TemplateOperationResultOverview.xaml"/>
+        <ResourceDictionary Source="Operation/TemplateAddOperationResult.xaml"/>
         <ResourceDictionary Source="TemplateAnalize.xaml"/>
         <ResourceDictionary Source="TemplateEditOperation.xaml"/>
         <ResourceDictionary Source="TemplateCheckboxes.xaml"/>
