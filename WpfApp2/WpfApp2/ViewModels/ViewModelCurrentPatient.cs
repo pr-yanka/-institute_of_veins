@@ -54,7 +54,7 @@ namespace WpfApp2.ViewModels
             ToNewOperationCommand = new DelegateCommand(
                 () =>
                 {
-                   
+                    MessageBus.Default.Call("SetCurrentPatientForOperation", this, currentPatient.Id);
                     Controller.NavigateTo<ViewModelAddOperation>();
                 }
             );

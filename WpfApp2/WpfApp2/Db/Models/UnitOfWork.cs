@@ -11,6 +11,16 @@ namespace WpfApp2.Db.Models
     public class UnitOfWork : IUnitOfWork
     {
         private readonly MySqlContext _context;
+        public ExaminationRepository Examination { get; }
+
+        public BrigadeRepository Brigade { get; }
+        public DiagnosisRepository Diagnosis { get; }
+
+        public OperationTypeRepository OperationType { get; }
+        public OperationRepository Operation { get; }
+        public AnestethicRepository Anestethic { get; }
+        public DoctorRepository Doctor { get; }
+
 
         public BPVHipRepository BPVHips { get; private set; }
         public BPVComboRepository BPVCombos { get; private set; }
@@ -25,6 +35,17 @@ namespace WpfApp2.Db.Models
         public UnitOfWork (MySqlContext context)
         {
             _context = context;
+            Examination = new ExaminationRepository(_context);
+
+            Brigade = new BrigadeRepository(_context);
+            Diagnosis = new DiagnosisRepository(_context);
+
+
+            OperationType = new OperationTypeRepository(_context);
+            Operation = new OperationRepository(_context);
+            Anestethic = new AnestethicRepository(_context);
+            Doctor = new DoctorRepository(_context);
+
             Analize = new AnalizeRepository(_context);
             AnalizeType = new AnalizeTypeRepository(_context);
             BPVHips = new BPVHipRepository(_context);

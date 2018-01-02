@@ -130,6 +130,8 @@ namespace WpfApp2.Templates
 
             if (item.GetType() == typeof(ViewModelRecomendationsList))
                 return TemplateCheckboxes;
+            if (item.GetType() == typeof(ViewModelDiagnosisListForOperation))
+                return TemplateCheckboxes;
 
             return null;
         }

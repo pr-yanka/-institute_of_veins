@@ -62,6 +62,7 @@ namespace WpfApp2.Navigation
                 new ViewModelAnalizeOverview(this),
                 new ViewModelAddOperation(this),
                 new LegPartViewModel(this),
+               new ViewModelDiagnosisListForOperation(this),
                 new ViewModelComplainsList(this),
                 new ViewModelDiagnosisList(this),
                 new ViewModelRecomendationsList(this)

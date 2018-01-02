@@ -1,12 +1,7 @@
 ﻿using Microsoft.Practices.Prism.Commands;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls.Primitives;
 using WpfApp2.Db.Models;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
@@ -33,7 +28,7 @@ namespace WpfApp2.ViewModels
             set { _isChecked = value; OnPropertyChanged(); }
         }
         public DiagnosisType Data { get; set; }
-       
+
         public DiagnosisDataSource(DiagnosisType Diagnosis)
         {
             this.Data = Diagnosis;
@@ -43,6 +38,8 @@ namespace WpfApp2.ViewModels
 
     public class ViewModelDiagnosisList : ViewModelBase
     {
+
+        public string TextName { get; set; }
         public DelegateCommand ToPhysicalCommand { get; protected set; }
         public DelegateCommand SaveChangesCommand { get; protected set; }
         public string HeaderText { get; set; }
@@ -52,6 +49,7 @@ namespace WpfApp2.ViewModels
 
         public ViewModelDiagnosisList(NavigationController controller) : base(controller)
         {
+            TextName = "Вернуться к обследованию";
             HeaderText = "Диагнозы";
             AddButtonText = "Добавить диагноз";
             DataSourceList = new List<DiagnosisDataSource>();

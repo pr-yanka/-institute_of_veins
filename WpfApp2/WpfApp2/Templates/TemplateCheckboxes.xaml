@@ -26,7 +26,7 @@
                 <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Center" >
                     <Button FontSize="16" Content="{Binding Path=AddButtonText}" Background="GhostWhite"></Button>
                     <StackPanel Orientation="Horizontal">
-                        <Button FontSize="16" Content="Вернуться к обследованию" Command="{Binding Path=ToPhysicalCommand}" Background="GhostWhite" Width="515"></Button>
+                        <Button FontSize="16" Content="{Binding Path=TextName}" Command="{Binding Path=ToPhysicalCommand}" Background="GhostWhite" Width="515"></Button>
                         <Button FontSize="16" Content="Сохранить" Command="{Binding Path=SaveChangesCommand}" Background="GhostWhite" Width="509"></Button>
                     </StackPanel>
                 </StackPanel>
