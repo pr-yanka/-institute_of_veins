@@ -212,6 +212,7 @@
       <DependentUpon>TestUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\Panels\OperationTypePanelViewModel.cs" />
     <Compile Include="ViewModels\ViewBaseModel.cs" />
     <Compile Include="Templates\MyTemplateSelector.cs" />
     <Compile Include="ViewModels\ViewModelAddAnalize.cs" />

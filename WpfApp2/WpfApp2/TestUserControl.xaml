@@ -7,37 +7,50 @@
              mc:Ignorable="d" 
              d:DesignHeight="705" d:DesignWidth="1024">
     <Grid Margin="0,80,0,0">
-        <TextBlock HorizontalAlignment="Right" FontSize="22pt" Height="38" VerticalAlignment="Top" Text="Васючийка А.В."/>
-        <TextBlock HorizontalAlignment="Left" FontSize="22pt" Height="38" VerticalAlignment="Top" Margin="10,0,0,0" ><Run Text="Просмотр"/><Run Text=" операции"/></TextBlock>
-        <Button x:Name="button_Copy1" Content="Вернуться к пациенту" HorizontalAlignment="Left" Margin="423,558,0,0" VerticalAlignment="Top"  
-                    Width="215" Height="34"/>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="20,167,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top" FontSize="18" Height="44" Width="157"><Run Text="Тип операции"/><Run Text=":"/></TextBlock>
-        <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="20,130,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top" FontSize="18" Height="32" Width="147"><Run Text="А"/><Run Text="нестезик"/><Run Text=": "/></TextBlock>
-        <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="484,130,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top" FontSize="16"><Run Text="Б"/><Run Text="ригада"/></TextBlock>
-        <ScrollViewer HorizontalAlignment="Left" Height="375" Margin="423,161,0,0" VerticalAlignment="Top" Width="185"  
-                          Foreground="Black" Background="#FFF1F9F9"/>
-        <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="20,211,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top" Text="NB!"/>
-        <RichTextBox x:Name="richTextBox" HorizontalAlignment="Left" Height="295" Margin="20,241,0,0" VerticalAlignment="Top"  
-                         Width="375">
-            <FlowDocument/>
-        </RichTextBox>
-        <TextBlock x:Name="textBlock_Copy6" HorizontalAlignment="Left" Margin="663,132,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top" Text="Диагноз слева" FontSize="16"/>
-        <TextBlock x:Name="textBlock_Copy7" HorizontalAlignment="Left" Margin="848,130,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top" Text="Диагноз справа" RenderTransformOrigin="2.097,10.521" FontSize="16"/>
-        <Button x:Name="button_Copy3" Content="Отменить операцию" HorizontalAlignment="Left" Margin="180,558,0,0"              
-                    VerticalAlignment="Top" Width="215" Height="34" RenderTransformOrigin="0.502,0.471"/>
-        <ScrollViewer HorizontalAlignment="Left" Height="375" Margin="626,161,0,0" VerticalAlignment="Top" Width="179"  
-                          Foreground="Black" Background="#FFF1F9F9"/>
-        <ScrollViewer HorizontalAlignment="Left" Height="375" Margin="818,161,0,0" VerticalAlignment="Top" Width="183"  
-                          Foreground="Black" Background="#FFF1F9F9"/>
-        <TextBlock HorizontalAlignment="Left" FontSize="24" Height="38" VerticalAlignment="Top" Margin="45,38,0,0" Text="дата время" />
-        <TextBlock HorizontalAlignment="Left" FontSize="24" Height="33" VerticalAlignment="Top" Margin="0,76,0,0" Text="итоги ещё не добавлены!" Foreground="#FF5D140D" Width="1024" Background="#FFB9E0E6" TextAlignment="Center" />
-        <Button x:Name="button_Copy" Content="Добавить итоги" HorizontalAlignment="Left" Margin="663,558,0,0"              
-            VerticalAlignment="Top" Width="215" Height="34" RenderTransformOrigin="0.502,0.471"/>
+        <Border Grid.RowSpan="4" Visibility="{Binding Path = Controller.LegViewModel.CurrentPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOverlay">
+            <Border.Background>
+                <SolidColorBrush Color="Black" Opacity="0.78"/>
+            </Border.Background>
+        </Border>
+
+        <Border x:Name="panelControl" Grid.RowSpan="4" Margin="0,0,-450,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="450" Height="275" DataContext="{Binding Path=Controller.LegViewModel.CurrentOpTypePanelViewModel}" >
+            <Border.Style>
+                <Style TargetType="{x:Type Border}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=PanelOpened}" Value="True">
+                            <DataTrigger.EnterActions>
+                                <RemoveStoryboard BeginStoryboardName="AnimationCloseStoryboard"/>
+                                <BeginStoryboard Storyboard="{StaticResource Open}" x:Name="AnimationBeginStoryboard"/>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <RemoveStoryboard BeginStoryboardName="AnimationBeginStoryboard"/>
+                                <BeginStoryboard Storyboard="{StaticResource Close}" x:Name="AnimationCloseStoryboard"/>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+
+            <Border.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Border.RenderTransform>
+
+            <Grid>
+                <Canvas Background="#FFC6E8E6" Margin="0,0,0,29">
+                    <TextBlock x:Name="textBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="135" FontSize="18" Canvas.Top="10" Text="Новый тип операции"/>
+                    <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=Text1}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="61" />
+                    <Button x:Name="buttonCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Canvas.Left="60" Canvas.Top="200" Height="36"/>
+                    <Button x:Name="ButtonAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding ClosePanelCommand}" Canvas.Left="256" Canvas.Top="200" Height="36"/>
+                    <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="42" Canvas.Left="173" Text="Короткое название:"/>
+                    <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="124" Canvas.Left="173" Text="Длинное название:"/>
+                    <TextBox x:Name="textBox1_Copy" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Text1}" VerticalAlignment="Top" Width="422" Canvas.Top="143" RenderTransformOrigin="0.502,0.488" Canvas.Left="10" />
+                </Canvas>
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>
