@@ -217,9 +217,8 @@ namespace WpfApp2.ViewModels
                    // TextBoxMinute = Brushes.Red;
                    // TextBoxHour = Brushes.Red;
                     if (LeftDiagnosisList.Count == 0 || RightDiagnosisList.Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false)
-                    {
-                        
-                        MessageBox.Show("Не все заполнено");
+                    { 
+                        MessageBox.Show("Не всё заполнено");
                     }
                     else
                     {
