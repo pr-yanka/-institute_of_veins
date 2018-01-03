@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WpfApp2.Db.Models.LegParts;
-using System.Data.Entity;
 
 namespace WpfApp2.Db.Models
 {
@@ -20,10 +19,16 @@ namespace WpfApp2.Db.Models
     {
         [NotMapped]
         public override bool HasDoubleMetric { get { return false; } }
+
+        public virtual ICollection<BPVHipCombo> BPVs1 { get; set; } = new HashSet<BPVHipCombo>();
+        public virtual ICollection<BPVHipCombo> BPVs2 { get; set; } = new HashSet<BPVHipCombo>();
+        public virtual ICollection<BPVHipCombo> BPVs3 { get; set; } = new HashSet<BPVHipCombo>();
+        public virtual ICollection<BPVHipCombo> BPVs4 { get; set; } = new HashSet<BPVHipCombo>();
+        public virtual ICollection<BPVHipCombo> BPVs5 { get; set; } = new HashSet<BPVHipCombo>();
     }
 
     [Table("БПВ_на_бедре_комбо")]
-    public partial class BPVHipCombo : ILegPart
+    public partial class BPVHipCombo : LegPartCombo, ILegPart
     {
         [Key]
         [Column("id")]
@@ -33,17 +38,31 @@ namespace WpfApp2.Db.Models
         [Column("структура1")]
         public int IdStr1 { get; set; }
 
+        public virtual BPVHipStructure Str1 { get; set; }
+
         [Column("структура2")]
         public int? IdStr2 { get; set; }
 
+        public virtual BPVHipStructure Str2 { get; set; }
+
         [Column("структура3")]
         public int? IdStr3 { get; set; }
+        public virtual BPVHipStructure Str3 { get; set; }
 
         [Column("структура4")]
         public int? IdStr4 { get; set; }
+        public virtual BPVHipStructure Str4 { get; set; }
 
         [Column("структура5")]
         public int? IdStr5 { get; set; }
+        public virtual BPVHipStructure Str5 { get; set; }
+
+        public override string ToString()
+        {
+            return Str1.ToString();
+        }
+
+        
     }
 
     /*

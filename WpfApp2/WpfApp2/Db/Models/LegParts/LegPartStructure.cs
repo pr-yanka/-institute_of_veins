@@ -10,14 +10,6 @@ namespace WpfApp2.Db.Models
 {
     public abstract class LegPartDbStructure
     {
-        /*
-        public int Id { get; set; }
-        public string Text1 { get; set; }
-        public string Text2 { get; set; }
-        public bool HasSize { get; set; }
-        public string Size { get; set; }
-        public int Level { get; set; }*/
-
         [Key]
         [Column("id")]
         public int Id { get; set; }
@@ -65,5 +57,5 @@ namespace WpfApp2.Db.Models
             ToNextPart = false;
             Custom = false;
         }
-}
+    }
 }

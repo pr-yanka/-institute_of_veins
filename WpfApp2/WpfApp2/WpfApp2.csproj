@@ -160,6 +160,7 @@
     <Compile Include="Db\Models\LegParts\BPVHip\BPVHipRepository.cs" />
     <Compile Include="Db\Models\LegParts\BPVHip\BPVHip.cs" />
     <Compile Include="Db\Models\LegParts\ILegPart.cs" />
+    <Compile Include="Db\Models\LegParts\LegPartCombo.cs" />
     <Compile Include="Db\Models\MetricsRepository.cs" />
     <Compile Include="Db\Models\MySqlContext.cs" />
     <Compile Include="Db\Models\OperationRepository.cs" />
