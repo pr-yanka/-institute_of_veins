@@ -172,6 +172,7 @@ namespace WpfApp2.ViewModels
 
         public ViewModelAddOperation(NavigationController controller) : base(controller)
         {
+           
             TextBoxMinute = Brushes.Gray;
             TextBoxHour = Brushes.Gray;
             Minute = "0";
@@ -189,6 +190,7 @@ namespace WpfApp2.ViewModels
             Controller = controller;
             HasNavigation = false;
             Operation = new Operation();
+            Operation.Date = DateTime.Now;
             LeftDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
             RightDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
 
@@ -267,6 +269,7 @@ namespace WpfApp2.ViewModels
                     }
                 }
             );
+           
             ToLeftDiagCommand = new DelegateCommand(
                 () =>
                 {
