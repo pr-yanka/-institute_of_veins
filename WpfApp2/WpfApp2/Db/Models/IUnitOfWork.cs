@@ -10,6 +10,8 @@ namespace WpfApp2.Db.Models
 {
     public interface IUnitOfWork : IDisposable
     {
+
+        DiagnosisObsRepository DiagnosisObs { get; }
         ExaminationRepository Examination { get; }
 
         BrigadeRepository Brigade { get; }

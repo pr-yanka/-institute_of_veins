@@ -31,10 +31,11 @@ namespace WpfApp2.ViewModels
         public float Growth { get { return _growth; } set { _growth = value; ITM = Weight / ((Growth / 100) * (Growth/100)); OnPropertyChanged(); } }
 
         private double _itm;
-        public double ITM { get { return Math.Round(_itm,3) ; } set { _itm = value; OnPropertyChanged(); } }
+        public double ITM { get { return Math.Round(_itm,3) ; } set { if(Growth != 0 ) _itm = value; OnPropertyChanged(); } }
 
         private string _textTip;
         public string TextTip { get { return _textTip; } set { _textTip = value; OnPropertyChanged();} }
+        public DelegateCommand IMTCOUNT { get; protected set; }
         public DelegateCommand ClickOnTextTip { get; protected set; }
         public DelegateCommand ToDashboardCommand { get; protected set; }
         public DelegateCommand ToCurrentPatientCommand { get; protected set; }
@@ -299,7 +300,12 @@ namespace WpfApp2.ViewModels
 
             LeftSPS = new SPSViewModel(Controller, LegSide.Left);
             RightSPS = new SPSViewModel(Controller, LegSide.Right);
-
+            IMTCOUNT = new DelegateCommand(
+            () =>
+            {
+                ITM = Weight / ((Growth / 100) * (Growth / 100));
+            }
+          );
             ToLeftSPSCommand = new DelegateCommand(
                 () =>
                 {

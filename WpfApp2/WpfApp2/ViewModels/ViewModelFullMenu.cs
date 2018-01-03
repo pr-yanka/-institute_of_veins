@@ -15,11 +15,15 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToCalendarOperationsCommand { get; protected set; }
         public DelegateCommand ToPhysicalTableCommand { get; protected set; }
         public DelegateCommand ToTablePatientsCommand { get; protected set; }
-
+        public DelegateCommand ToMainMenuCommand { get; protected set; }
         public ViewModelFullMenu(NavigationController controller) : base(controller)
         {
             base.HasNavigation = false;
-
+            ToMainMenuCommand = new DelegateCommand(
+                () =>
+                {
+                    Controller.NavigateTo<ViewModelDashboard>();
+                });
             ToLoginCommand = new DelegateCommand(
                 () =>
                 {
