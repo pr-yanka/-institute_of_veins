@@ -10,6 +10,7 @@ namespace WpfApp2.Db.Models
 {
     public class UnitOfWork : IUnitOfWork
     {
+        public DiagnosisObsRepository DiagnosisObs { get; }
         private readonly MySqlContext _context;
         public ExaminationRepository Examination { get; }
 
@@ -35,6 +36,9 @@ namespace WpfApp2.Db.Models
         public UnitOfWork (MySqlContext context)
         {
             _context = context;
+
+            DiagnosisObs = new DiagnosisObsRepository(_context);
+
             Examination = new ExaminationRepository(_context);
 
             Brigade = new BrigadeRepository(_context);

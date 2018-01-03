@@ -11,6 +11,8 @@ namespace WpfApp2.Db.Models
     {
         public DbSet<Examination> Examination { get; set; }
 
+        public DbSet<DiagnosisObs> DiagnosisObs { get; set; }
+
         public DbSet<Brigade> Brigade { get; set; }
         public DbSet<Diagnosis> Diagnosis { get; set; }
 

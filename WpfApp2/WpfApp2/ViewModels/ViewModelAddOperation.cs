@@ -242,7 +242,7 @@ namespace WpfApp2.ViewModels
                         Data.Complete();
                         foreach (var diagnozL in LeftDiagnosisList)
                         {
-
+                            
                             Diagnosis buf = new Diagnosis();
                             buf.id_диагноз = diagnozL.Data.Id;
                             buf.id_операции = Operation.Id;
