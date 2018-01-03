@@ -148,8 +148,13 @@
     </Compile>
     <Compile Include="Db\Models\AnalizeRepository.cs" />
     <Compile Include="Db\Models\AnalizeTypeRepository.cs" />
+    <Compile Include="Db\Models\AnestethicRepository.cs" />
+    <Compile Include="Db\Models\BrigadeRepository.cs" />
     <Compile Include="Db\Models\ComplainsTypeRepository.cs" />
+    <Compile Include="Db\Models\DiagnosisRepository.cs" />
     <Compile Include="Db\Models\DiagnosisTypeRepository.cs" />
+    <Compile Include="Db\Models\DoctorRepository.cs" />
+    <Compile Include="Db\Models\ExaminationRepository.cs" />
     <Compile Include="Db\Models\IUnitOfWork.cs" />
     <Compile Include="Db\Models\LegParts\BPVHip\BPVComboRepository.cs" />
     <Compile Include="Db\Models\LegParts\BPVHip\BPVHipRepository.cs" />
@@ -157,6 +162,8 @@
     <Compile Include="Db\Models\LegParts\ILegPart.cs" />
     <Compile Include="Db\Models\MetricsRepository.cs" />
     <Compile Include="Db\Models\MySqlContext.cs" />
+    <Compile Include="Db\Models\OperationRepository.cs" />
+    <Compile Include="Db\Models\OperationTypeRepository.cs" />
     <Compile Include="Db\Models\PatientsRepository.cs" />
     <Compile Include="Db\Models\RecomendationsTypeRepository.cs" />
     <Compile Include="Db\Models\Repository.cs" />
@@ -224,6 +231,7 @@
     <Compile Include="ViewModels\ViewModelComplainsList.cs" />
     <Compile Include="ViewModels\ViewModelCreateOperation.cs" />
     <Compile Include="ViewModels\ViewModelDiagnosisList.cs" />
+    <Compile Include="ViewModels\ViewModelDiagnosisListForOperation.cs" />
     <Compile Include="ViewModels\ViewModelEditOperation.cs" />
     <Compile Include="ViewModels\ViewModelFullMenu.cs" />
     <Compile Include="ViewModels\ViewModelLegDescribe.cs" />
@@ -382,10 +390,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Templates\TemplateLegDescribe.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ViewModels\TemplateLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
