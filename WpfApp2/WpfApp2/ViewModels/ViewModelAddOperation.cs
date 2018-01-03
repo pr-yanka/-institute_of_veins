@@ -223,7 +223,7 @@ namespace WpfApp2.ViewModels
                     }
                     else
                     {
-                        Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, int.Parse(Minute), int.Parse(Hour), 0);
+                        Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, int.Parse(Hour), int.Parse(Minute), 0);
 
                         Operation.PatientId = CurrentPatient.Id;
                         Operation.AnestheticId = AnesteticSelected + 1;
