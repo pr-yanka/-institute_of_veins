@@ -151,6 +151,7 @@
     <Compile Include="Db\Models\AnestethicRepository.cs" />
     <Compile Include="Db\Models\BrigadeRepository.cs" />
     <Compile Include="Db\Models\ComplainsTypeRepository.cs" />
+    <Compile Include="Db\Models\DiagnosisObsRepository.cs" />
     <Compile Include="Db\Models\DiagnosisRepository.cs" />
     <Compile Include="Db\Models\DiagnosisTypeRepository.cs" />
     <Compile Include="Db\Models\DoctorRepository.cs" />
