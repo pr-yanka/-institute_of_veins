@@ -214,15 +214,17 @@ namespace WpfApp2.ViewModels
             ToOperationOverviewCommand = new DelegateCommand(
                 () =>
                 {
-                   // TextBoxMinute = Brushes.Red;
-                   // TextBoxHour = Brushes.Red;
-                    if (LeftDiagnosisList.Count == 0 || RightDiagnosisList.Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false)
-                    { 
-                        MessageBox.Show("Не всё заполнено");
-                    }
-                    else
-                    {
-                        Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, int.Parse(Hour), int.Parse(Minute), 0);
+                // TextBoxMinute = Brushes.Red;
+                // TextBoxHour = Brushes.Red;
+                if (LeftDiagnosisList.Count == 0 || RightDiagnosisList.Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false)
+                {
+
+                    MessageBox.Show("Не все заполнено");
+                }
+                else
+                {
+                    Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, int.Parse(Hour), int.Parse(Minute), 0);
+                    Operation.Time = Hour + ":" + Minute+":"+ 0;
 
                         Operation.PatientId = CurrentPatient.Id;
                         Operation.AnestheticId = AnesteticSelected + 1;
@@ -264,6 +266,7 @@ namespace WpfApp2.ViewModels
                         }
 
                         Data.Complete();
+                        Operation = new Operation();
                         Controller.NavigateTo<ViewModelOperationOverview>();
                     }
                 }

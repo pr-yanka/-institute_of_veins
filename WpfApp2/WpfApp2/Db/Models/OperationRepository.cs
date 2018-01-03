@@ -20,6 +20,8 @@ namespace WpfApp2.Db.Models
         public int PatientId { set; get; }
         [Column("дата_операции")]
         public DateTime Date { set; get; }
+        [Column("время_операции")]
+        public string Time { set; get; }
         [Column("id_вида_операции")]
         public int OperationTypeId { set; get; }
         [Column("id_вида_анестетика")]

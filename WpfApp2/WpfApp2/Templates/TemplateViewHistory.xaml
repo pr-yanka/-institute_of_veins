@@ -11,41 +11,32 @@
                     </LinearGradientBrush.GradientStops> 
             </LinearGradientBrush>
         </Grid.Background>
-            <TextBlock DockPanel.Dock="Top" FontFamily="/fonts/#Pescadero" FontSize="18pt" Margin="24,0,-24,536" Height="38"><TextBlock Text="{Binding Path=CurrentPatient.Name}"/><TextBlock Text="{Binding Path=initials}"/><Run Text="на"/></TextBlock>
+            <TextBlock DockPanel.Dock="Top" FontFamily="/fonts/#Pescadero" FontSize="18pt" Margin="24,0,-24,586" Height="38" Text="{Binding Path=CurrentPatient.Name}"><TextBlock Text="{Binding Path=initials}"/><Run Text="на"/></TextBlock>
             <Button x:Name="button" Content="Добавить обследование" Command="{Binding Path=ToAddPhysicalCommand}" HorizontalAlignment="Left" Margin="24,391,0,0" VerticalAlignment="Top" Width="225" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
             <Button x:Name="button_Copy3" Content="Вернуться в главное меню" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="24,448,0,0" VerticalAlignment="Top" Width="707" Height="43" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-        <ScrollViewer HorizontalAlignment="Left" Height="295" VerticalAlignment="Top" Width="707" Margin="24,68,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Foreground="Black">
-            <DataGrid Height="263" Width="642" AutoGenerateColumns="False" HeadersVisibility="None" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserResizeRows="False">
+        
+                <DataGrid HorizontalAlignment="Left" Height="295" VerticalAlignment="Top" Width="707" Margin="24,68,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Foreground="Black"  ItemsSource="{Binding Path=HistoryDataSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserResizeRows="False">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button  Content="22" />
+                                <Button  Content="{Binding Type}" Command="{Binding Path=Command}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
-                            <DataGridTemplateColumn.CellEditingTemplate >
-                                <DataTemplate>
-                                    <TextBlock TextAlignment="Center" Text="{Binding CurrentPatient.Name,Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}"></TextBlock>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellEditingTemplate>
+                           
                         </DataGridTemplateColumn>
-                        </DataGrid.Columns>
-                            <Label x:Name="label" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Height="10" Width="10"/>
-                <Label x:Name="label_Copy" Content="Обследование" HorizontalAlignment="Center" Margin="10,10,28,0" VerticalAlignment="Top" FontSize="18" Height="34" Width="142"/>
-                <Label x:Name="label_Copy1" Content="Анализы" HorizontalAlignment="Center" Margin="10,46,88,0" VerticalAlignment="Top" FontSize="18" Height="34" Width="82"/>
-                <Label x:Name="label_Copy2" Content="Операция" HorizontalAlignment="Center" Margin="10,85,44,0" VerticalAlignment="Top" FontSize="18" Height="34" Width="126"/>
-                <Label x:Name="label_Copy3" Content="Обследование" HorizontalAlignment="Center" Margin="10,124,28,0" VerticalAlignment="Top" FontSize="18" Height="34" Width="142"/>
-                <Label x:Name="label_Copy4" Content="16.09.2017" HorizontalAlignment="Center" Margin="25,12,24,0" VerticalAlignment="Top" FontSize="18" Height="34" Width="142" Grid.Column="1"/>
-                <Label x:Name="label_Copy5" Content="17.09.2017" HorizontalAlignment="Center" Margin="25,51,24,0" VerticalAlignment="Top" FontSize="18" Height="34" Width="142" Grid.Column="1"/>
-            </DataGrid>
-        </ScrollViewer>
-        <Label x:Name="label_Copy6" Content="20.09.2017" HorizontalAlignment="Center" Margin="256,172,362,0" VerticalAlignment="Top" FontSize="18" Height="34" Width="142"/>
-        <Label x:Name="label_Copy7" Content="11.10.2017" HorizontalAlignment="Center" Margin="256,208,362,0" VerticalAlignment="Top" FontSize="18" Height="34" Width="142"/>
-        <Button x:Name="button_Copy" Content="Посмотреть" Command="{Binding Path=ToPhysicalOverviewCommand}" HorizontalAlignment="Left" Margin="398,97,0,0" VerticalAlignment="Top" Width="257" Height="29" Background="#FFBDD649" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy1" Content="Посмотреть" Command="{Binding Path=ToAnalizeOverviewCommand}" HorizontalAlignment="Left" Margin="398,135,0,0" VerticalAlignment="Top" Width="257" Height="29" Background="#FFBDD649" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy2" Content="Посмотреть" Command="{Binding Path=ToOperationOverviewCommand}" HorizontalAlignment="Left" Margin="398,172,0,0" VerticalAlignment="Top" Width="257" Height="29" Background="#FFBDD649" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy5" Command="{Binding Path=ToPhysicalOverviewCommand}" Content="Посмотреть" HorizontalAlignment="Left" Margin="398,211,0,0" VerticalAlignment="Top" Width="257" Height="29" Background="#FFBDD649" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy4" Content="Добавить операцию" Command="{Binding Path=ToAddOperationCommand}" HorizontalAlignment="Left" Margin="506,391,0,0" VerticalAlignment="Top" Width="225" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <DatePickerTextBox IsReadOnly="True" Text="{Binding Date}"  />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+                            </DataGrid>
+       
+        <Button x:Name="button_Copy4" Content="Добавить операцию" Command="{Binding Path=ToAddOperationCommand}" HorizontalAlignment="Left" Margin="506,391,0,0" VerticalAlignment="Top" Width="225" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
             <Button x:Name="button_Copy6" Content="Добавить анализы" Command="{Binding Path=ToAddAnalizeCommand}" HorizontalAlignment="Left" Margin="265,391,0,0" VerticalAlignment="Top" Width="225" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
     </Grid></DataTemplate>
 

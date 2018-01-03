@@ -24,7 +24,7 @@ namespace WpfApp2.Db.Models
         public float OperationTypeId { set; get; }
         [Column("рост")]
         public float AnestheticId { set; get; }
-        [Column("id_обследования_правой_ноги!")]
+        [Column("id_обследования_правой_ноги")]
         public int? idRightLegExamination { set; get; }
         [Column("id_обследования_левой_ноги")]
         public int? idLeftLegExamination { set; get; }

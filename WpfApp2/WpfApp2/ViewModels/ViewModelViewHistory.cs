@@ -1,22 +1,14 @@
 ﻿using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using WpfApp2.Db.Models;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 
 namespace WpfApp2.ViewModels
 {
-    public class HistoryDataSource : INotifyPropertyChanged
+    public class HistoryDataSource 
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            //если PropertyChanged не нулевое - оно будет разбужено
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
         private DateTime _date;
         public DateTime Date
         {
@@ -25,15 +17,16 @@ namespace WpfApp2.ViewModels
                 return _date;
 
             }
-            set { _date = value; OnPropertyChanged(); }
+            set { _date = value; }
         }
+
         public DelegateCommand Command { get; protected set; }
         public string Type { get; set; }
 
         public HistoryDataSource(DelegateCommand Command, DateTime date, string Type)
         {
             this.Command = Command;
-            this.Date = Date;
+            this.Date = date;
             this.Type = Type;
 
         }
@@ -61,6 +54,42 @@ namespace WpfApp2.ViewModels
         {
             CurrentPatient = Data.Patients.Get((int)data);
             initials = " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
+            HistoryDataSource = new ObservableCollection<HistoryDataSource>();
+
+            foreach (var Operation in Data.Operation.GetAll)
+            {
+                if (Operation.PatientId == CurrentPatient.Id)
+                {
+                    DelegateCommand bufer = new DelegateCommand(
+                    () =>
+                    {
+                        //MessageBus.Default.Call("GetPatientForAnalizeOverview", this, CurrentPatient.Id);
+                        // MessageBus.Default.Call("GetAnalizeForAnalizeOverview", this, Operation.Id);
+                        Controller.NavigateTo<ViewModelOperationOverview>();
+                    }
+                );
+                    
+                    DateTime buf1 = DateTime.Parse(Operation.Time);
+                   
+                    HistoryDataSource.Add(new HistoryDataSource(bufer,new DateTime( Operation.Date.Year, Operation.Date.Month, Operation.Date.Day,buf1.Hour,buf1.Minute,buf1.Second), "Операция"));
+                }
+            }
+
+            foreach (var Obsled in Data.Examination.GetAll)
+            {
+                if (Obsled.PatientId == CurrentPatient.Id)
+                {
+                    DelegateCommand bufer = new DelegateCommand(
+                    () =>
+                    {
+                        // MessageBus.Default.Call("GetPatientForAnalizeOverview", this, CurrentPatient.Id);
+                        //MessageBus.Default.Call("GetAnalizeForAnalizeOverview", this, Analize.Id);
+                        //Controller.NavigateTo<ViewModelAnalizeOverview>();
+                    }
+                );
+                    HistoryDataSource.Add(new HistoryDataSource(bufer, Obsled.Date, "Обследование"));
+                }
+            }
 
             foreach (var Analize in Data.Analize.GetAll)
             {
@@ -74,16 +103,30 @@ namespace WpfApp2.ViewModels
                         Controller.NavigateTo<ViewModelAnalizeOverview>();
                     }
                 );
-                    HistoryDataSource buf = new HistoryDataSource(bufer, Analize.data, "Операция");
+                    HistoryDataSource.Add( new HistoryDataSource(bufer, Analize.data, "Анализ"));
                 }
             }
+            
+                
+                for (int i = 0; i < HistoryDataSource.Count; i++)
+                {
+                    for (int j = 0; j < HistoryDataSource.Count - i - 1; j++)
+                    {
+                        if (HistoryDataSource[j].Date < HistoryDataSource[j + 1].Date)
+                        {
+                        var temp = HistoryDataSource[j];
+                        HistoryDataSource[j] = HistoryDataSource[j + 1];
+                        HistoryDataSource[j + 1] = temp;
+                        }
+                    }
+                }
+            
         }
 
         public ViewModelViewHistory(NavigationController controller) : base(controller)
         {
 
-            HistoryDataSource = new ObservableCollection<ViewModels.HistoryDataSource>();
-
+        
            
 
             MessageBus.Default.Subscribe("OpenHistoryOfPatient", SetCurrentPatientID);
