@@ -1,16 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Practices.Prism.Commands;
+﻿using Microsoft.Practices.Prism.Commands;
+using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using WpfApp2.Db.Models;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 
 namespace WpfApp2.ViewModels
 {
+    public class HistoryDataSource : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            //если PropertyChanged не нулевое - оно будет разбужено
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        private DateTime _date;
+        public DateTime Date
+        {
+            get
+            {
+                return _date;
+
+            }
+            set { _date = value; OnPropertyChanged(); }
+        }
+        public DelegateCommand Command { get; protected set; }
+        public string Type { get; set; }
+
+        public HistoryDataSource(DelegateCommand Command, DateTime date, string Type)
+        {
+            this.Command = Command;
+            this.Date = Date;
+            this.Type = Type;
+
+        }
+    }
+
     public class ViewModelViewHistory : ViewModelBase
     {
+        public Patient CurrentPatient { get; set; }
+        public string initials { get; set; }
+
+        public ObservableCollection<HistoryDataSource> HistoryDataSource { get; set; }
+
         public DelegateCommand ToAddPhysicalCommand { get; protected set; }
         public DelegateCommand ToDashboardCommand { get; protected set; }
 
@@ -24,11 +59,32 @@ namespace WpfApp2.ViewModels
 
         private void SetCurrentPatientID(object sender, object data)
         {
-            CurrentPatientID = (int)data;
+            CurrentPatient = Data.Patients.Get((int)data);
+            initials = " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
+
+            foreach (var Analize in Data.Analize.GetAll)
+            {
+                if (Analize.patientId == CurrentPatient.Id)
+                {
+                    DelegateCommand bufer = new DelegateCommand(
+                    () =>
+                    {
+                        MessageBus.Default.Call("GetPatientForAnalizeOverview", this, CurrentPatient.Id);
+                        MessageBus.Default.Call("GetAnalizeForAnalizeOverview", this, Analize.Id);
+                        Controller.NavigateTo<ViewModelAnalizeOverview>();
+                    }
+                );
+                    HistoryDataSource buf = new HistoryDataSource(bufer, Analize.data, "Операция");
+                }
+            }
         }
 
         public ViewModelViewHistory(NavigationController controller) : base(controller)
         {
+
+            HistoryDataSource = new ObservableCollection<ViewModels.HistoryDataSource>();
+
+           
 
             MessageBus.Default.Subscribe("OpenHistoryOfPatient", SetCurrentPatientID);
             base.HasNavigation = false;

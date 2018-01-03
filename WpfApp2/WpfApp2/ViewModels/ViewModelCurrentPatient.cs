@@ -99,6 +99,7 @@ namespace WpfApp2.ViewModels
             ToViewHistoryCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("OpenHistoryOfPatient", this, CurrentPatient.Id);
                     Controller.NavigateTo<ViewModelViewHistory>();
                 });
 
