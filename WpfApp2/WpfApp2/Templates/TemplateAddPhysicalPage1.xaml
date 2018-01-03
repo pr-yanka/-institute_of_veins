@@ -22,7 +22,7 @@
                 <TextBlock x:Name="textBlock1" TextAlignment="Center" HorizontalAlignment="Left" Margin="228,3,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="543" FontSize="18" Height="28" FontFamily="Segoe UI Semibold" FontWeight="Bold"><TextBlock Text="{Binding Path=CurrentPatient.Name}" /><TextBlock Text="{Binding Path=initials}" /><TextBlock Text=" (" /><TextBlock Text="{Binding Path=CurrentPatient.Age}" /><TextBlock Text=")" /></TextBlock>
                 <Separator HorizontalAlignment="Left" Height="5" Margin="0,28,0,0" VerticalAlignment="Top" Width="1016" RenderTransformOrigin="0.51,0.49"/>
 
-                <ListBox x:Name="listBox1" ItemsSource="{Binding Path=ComplainsList}" HorizontalAlignment="Left" Height="97" Margin="505,62,0,0" VerticalAlignment="Top" Width="511" BorderThickness="1">
+            <ListBox x:Name="listBox1" ItemsSource="{Binding Path=ComplainsList}" HorizontalAlignment="Left" Height="97" Margin="505,62,0,0" VerticalAlignment="Top" Width="487" BorderThickness="1">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
 
@@ -31,14 +31,14 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <Button x:Name="button_Copy2" Content="Записать жалобы" Command="{Binding Path=ToSymptomsAddCommand}" HorizontalAlignment="Left" Margin="505,31,0,0" VerticalAlignment="Top" Width="511" Height="31" Background="AliceBlue" FontSize="14"/>
+            <Button x:Name="button_Copy2" Content="Записать жалобы" Command="{Binding Path=ToSymptomsAddCommand}" HorizontalAlignment="Left" Margin="505,31,0,0" VerticalAlignment="Top" Width="487" Height="31" Background="AliceBlue" FontSize="14"/>
                 <Separator HorizontalAlignment="Left" Height="16" Margin="0,154,0,0" VerticalAlignment="Top" Width="1016" RenderTransformOrigin="0.51,0.49"/>
                 <TextBlock x:Name="textBlock1_Copy2" HorizontalAlignment="Center" Margin="173,120,725,507" TextWrapping="Wrap" VerticalAlignment="Center" Width="118" FontSize="18" Text="Левая нога" TextAlignment="Center"/>
-            <Button x:Name="button_Copy443" Command="{Binding Path=ToRightDiagCommand}" Content="Поставить диагноз" HorizontalAlignment="Left" Margin="518,417,0,0" VerticalAlignment="Top" Width="496" Height="32" Background="Lavender" FontSize="14"/>
+            <Button x:Name="button_Copy443" Command="{Binding Path=ToRightDiagCommand}" Content="Поставить диагноз" HorizontalAlignment="Left" Margin="518,417,0,0" VerticalAlignment="Top" Width="487" Height="32" Background="Lavender" FontSize="14"/>
                 <TextBlock x:Name="textBlock1_Copy3" HorizontalAlignment="Center" Margin="724,120,122,507" TextWrapping="Wrap" VerticalAlignment="Center" Width="170" FontSize="18"><Run Text="Правая "/><Run Text="нога"/></TextBlock>
 
 
-                <ScrollViewer Margin="13,190,524,320" RenderTransformOrigin="0.5,0.5" FontSize="16">
+                <ScrollViewer Margin="3,190,524,320" RenderTransformOrigin="0.5,0.5" FontSize="16">
                     <StackPanel Orientation="Vertical">
                         <Expander FontSize="14">
                             <Expander.Header>
@@ -169,13 +169,13 @@
                         </Expander>
                     </StackPanel>
                 </ScrollViewer>
-                <ScrollViewer Margin="518,190,10,330" RenderTransformOrigin="0.5,0.5" FontSize="14">
+                <ScrollViewer Margin="518,190,10,320" RenderTransformOrigin="0.5,0.5" FontSize="16">
                     <StackPanel Orientation="Vertical">
                         <Expander>
-                            <Expander.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="I. СФС (Сафено-феморальное соустье)" Width="310" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                    <Button x:Name="buttonBPVHip2" Command="{Binding ToRightSFSCommand}" Content="{Binding Path=RightSFS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="I. СФС (Сафено-феморальное соустье)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button  x:Name="buttonBPVHip2" Command="{Binding ToRightSFSCommand}" Content="{Binding Path=RightSFS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
                                 </StackPanel>
                             </Expander.Header>
                             <StackPanel Orientation="Vertical">
@@ -185,8 +185,8 @@
                         <Separator/>
                         <Expander>
                             <Expander.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="II. БПВ на бедре (Большая подкожная вена)" Width="310" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                            <StackPanel  Orientation="Horizontal">
+                                    <TextBlock Text="II. БПВ на бедре (Большая подкожная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
                                     <Button x:Name="buttonSFS2" Command="{Binding ToRightBPVHipCommand}" Content="{Binding Path=RightBPVHip.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
                                 </StackPanel>
                             </Expander.Header>
@@ -291,7 +291,7 @@
 
                 <Separator HorizontalAlignment="Left" Height="6" Margin="0,574,0,0" VerticalAlignment="Top" Width="1024" RenderTransformOrigin="0.51,0.49" Background="Black"/>
                 <TextBlock x:Name="textBlock1_Copy4" HorizontalAlignment="Center" Margin="10,578,942,256" TextWrapping="Wrap" VerticalAlignment="Center" Width="199" FontSize="18" Text="Рекомендации" TextAlignment="Center"/>
-                <ListBox x:Name="listBox1_Copy" ItemsSource="{Binding Path=RecomendationsList}" HorizontalAlignment="Left" Height="87" Margin="13,608,0,0" VerticalAlignment="Top" Width="688" FontSize="14" BorderThickness="1">
+            <ListBox x:Name="listBox1_Copy" ItemsSource="{Binding Path=RecomendationsList}" HorizontalAlignment="Left" Height="127" Margin="13,608,0,0" VerticalAlignment="Top" Width="688" FontSize="14" BorderThickness="1">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
 
@@ -328,7 +328,7 @@
                 
                 </TextBlock>
 
-            <ListBox x:Name="listBox1_Copy1" ItemsSource="{Binding Path=LeftDiagnosisList}" HorizontalAlignment="Left" Height="127" Margin="13,449,0,0" VerticalAlignment="Top" Width="487" BorderThickness="1">
+            <ListBox x:Name="listBox1_Copy1" ItemsSource="{Binding Path=LeftDiagnosisList}" HorizontalAlignment="Left" Height="127" Margin="3,449,0,0" VerticalAlignment="Top" Width="487" BorderThickness="1">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
 
@@ -337,7 +337,7 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-            <ListBox x:Name="listBox1_Copy2" ItemsSource="{Binding Path=RightDiagnosisList}" HorizontalAlignment="Left" Height="127" Margin="518,449,0,0" VerticalAlignment="Top" Width="496" BorderThickness="1">
+            <ListBox x:Name="listBox1_Copy2" ItemsSource="{Binding Path=RightDiagnosisList}" HorizontalAlignment="Left" Height="127" Margin="518,449,0,0" VerticalAlignment="Top" Width="487" BorderThickness="1">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
 
@@ -352,7 +352,7 @@
                     <Button x:Name="button_Copy10" Margin="0,5,0,5" Content="Заключение" Command="{Binding ToPhysicalOverviewCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="297" Height="33" Background="Azure" FontSize="14"/>
                     <Button x:Name="button_Copy9" Margin="0,5,0,5" Content="Завершить обследование" Command="{Binding OpenDialogCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="297" Height="31" Background="Honeydew" FontSize="14"/>
                 </StackPanel>
-            <Button x:Name="button_Copy" Command="{Binding Path=ToLeftDiagCommand}" Content="Поставить диагноз" HorizontalAlignment="Left" Margin="13,417,0,0" VerticalAlignment="Top" Width="487" Height="32" Background="Lavender" FontSize="14"/>
+            <Button x:Name="button_Copy" Command="{Binding Path=ToLeftDiagCommand}" Content="Поставить диагноз" HorizontalAlignment="Left" Margin="3,417,0,0" VerticalAlignment="Top" Width="487" Height="32" Background="Lavender" FontSize="14"/>
             </Grid>
 
     </DataTemplate>
