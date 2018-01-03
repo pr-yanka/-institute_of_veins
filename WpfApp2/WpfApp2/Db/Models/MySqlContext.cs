@@ -34,11 +34,24 @@ namespace WpfApp2.Db.Models
             
         }
 
-        /*
+        
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<BPVHipStructure>().Ignore(t => t.Metrics);
-            base.OnModelCreating(modelBuilder);
-        }*/
+            // configures one-to-many relationship
+            modelBuilder.Entity<BPVHipCombo>()
+                .HasRequired<BPVHipStructure>(s => s.Str1).WithMany(g => g.BPVs1).HasForeignKey<int>(s => s.IdStr1);
+
+            modelBuilder.Entity<BPVHipCombo>()
+                .HasOptional<BPVHipStructure>(s => s.Str2).WithMany(g => g.BPVs2).HasForeignKey<int?>(s => s.IdStr2);
+
+            modelBuilder.Entity<BPVHipCombo>()
+                .HasOptional<BPVHipStructure>(s => s.Str3).WithMany(g => g.BPVs3).HasForeignKey<int?>(s => s.IdStr3);
+
+            modelBuilder.Entity<BPVHipCombo>()
+                .HasOptional<BPVHipStructure>(s => s.Str4).WithMany(g => g.BPVs4).HasForeignKey<int?>(s => s.IdStr4);
+
+            modelBuilder.Entity<BPVHipCombo>()
+                .HasOptional<BPVHipStructure>(s => s.Str5).WithMany(g => g.BPVs5).HasForeignKey<int?>(s => s.IdStr5);
+        }
     }
 }
