@@ -12,6 +12,7 @@ using WpfApp2.Messaging;
 using WpfApp2.Db.Models;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Collections.ObjectModel;
 
 namespace WpfApp2.ViewModels
 {
@@ -59,7 +60,8 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToRightPDSVCommand { get; protected set; }
         public DelegateCommand ToRightZDSVCommand { get; protected set; }
         public DelegateCommand ToRightPerforateCommand { get; protected set; }
-
+        public DelegateCommand ToLeftDiagCommand { get; protected set; }
+        public DelegateCommand ToRightDiagCommand { get; protected set; }
         public DelegateCommand ToRightTibiaPerforateCommand { get; protected set; }
         public DelegateCommand ToRightBPVTibiaCommand { get; protected set; }
         public DelegateCommand ToRightSPSCommand { get; protected set; }
@@ -74,6 +76,8 @@ namespace WpfApp2.ViewModels
         public List<ComplainsDataSource> ComplainsList { get; set; }
         public List<RecomendationsDataSource> RecomendationsList { get; set; }
         public List<DiagnosisDataSource> DiagnosisList { get; set; }
+        public ObservableCollection<DiagnosisDataSource> LeftDiagnosisList { get; set; }
+        public ObservableCollection<DiagnosisDataSource> RightDiagnosisList { get; set; }
 
         private void SetComplainsList(object sender, object data)
         {
@@ -135,12 +139,27 @@ namespace WpfApp2.ViewModels
                 result = DialogService.DialogService.OpenDialog(vm, parameter as Window);
             }
         }
+ 
+        private void SetRightDiagnosisList(object sender, object data)
+        {
+            RightDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
+            foreach (var diag in (List<DiagnosisDataSource>)data)
+            { RightDiagnosisList.Add(diag); }
+        }
+        private void SetLeftDiagnosisList(object sender, object data)
+        {
+            LeftDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
+            foreach (var diag in (List<DiagnosisDataSource>)data)
+            { LeftDiagnosisList.Add(diag); }
 
-
+        }
         public ViewModelAddPhysical(NavigationController controller) : base(controller)
         {
             MessageBus.Default.Subscribe("LegDataSaved", Handler);
             MessageBus.Default.Subscribe("GetCurrentPatientIdForOperation", SetCurrentPatientID);
+
+            MessageBus.Default.Subscribe("SetRightDiagnosisListForObsled", SetRightDiagnosisList);
+            MessageBus.Default.Subscribe("SetLeftDiagnosisListForObsled", SetLeftDiagnosisList);
 
             MessageBus.Default.Subscribe("SetRecomendationsList", SetRecomendationsList);
             MessageBus.Default.Subscribe("SetDiagnosisList", SetDiagnosisList);
@@ -157,7 +176,19 @@ namespace WpfApp2.ViewModels
                     Controller.NavigateTo<ViewModelSymptomsAdd>();
                 }
             );
-
+            ToLeftDiagCommand = new DelegateCommand(
+             () =>
+             {
+                 MessageBus.Default.Call("SetleftOrRightForObsled", this, "Left");
+                 Controller.NavigateTo<ViewModelDiagnosisList>();
+             }
+         );
+            ToRightDiagCommand = new DelegateCommand(
+               () =>
+               {
+                   MessageBus.Default.Call("SetleftOrRightForObsled", this, "Right");
+                   Controller.NavigateTo<ViewModelDiagnosisList>();
+               });
 
             //БПВ
             LeftBPVHip = new BPVHipViewModel(Controller, LegSide.Left);

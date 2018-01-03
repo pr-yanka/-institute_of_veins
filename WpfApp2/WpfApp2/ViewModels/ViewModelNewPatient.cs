@@ -15,6 +15,7 @@ namespace WpfApp2.ViewModels
         public string nameOfButton { get; set; }
         public DelegateCommand ToDashboardCommand { get; protected set; }
         public DelegateCommand ToCurrentPatientCommand { get; protected set; }
+        public DelegateCommand Changed { get; protected set; }
         private Patient currentPatient;
         private Visibility _visibility;
         public Visibility Visibility { get { return _visibility; } set { _visibility = value; OnPropertyChanged(); } }
@@ -22,9 +23,9 @@ namespace WpfApp2.ViewModels
         public string TextHeader { get { return _textHeader; } set { _textHeader = value; OnPropertyChanged(); } }
 
 
-       
 
-        public string CurrentPatientFlat { get; set; }
+        private string _currentPatientFlat;
+        public string CurrentPatientFlat { get { return _currentPatientFlat; } set { _currentPatientFlat = value; OnPropertyChanged(); } }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -32,6 +33,45 @@ namespace WpfApp2.ViewModels
             //если PropertyChanged не нулевое - оно будет разбужено
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        private string _name;
+        private string _surname;
+        private string _patronimic;
+        private DateTime _date;
+
+        private string _town;
+        private string _street;
+        private string _house;
+
+        private string _phone;
+        private string _email;
+
+
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                _name = value;
+
+                nameOfButton = "Сохранить изменения"; OnPropertyChanged();
+            }
+        }
+
+        public string Surname         { get { return _surname; } set { _surname = value;  OnPropertyChanged(); } }
+
+        public string Patronimic { get { return _patronimic; } set { _patronimic = value;  OnPropertyChanged(); } }
+      public DateTime Date         { get { return _date; } set { _date = value;  OnPropertyChanged(); } }
+
+
+        public string Town           { get { return _town; } set { _town = value;  OnPropertyChanged(); } }
+
+        public string Street          { get { return _street; } set { _street = value;  OnPropertyChanged(); } }
+        public string House         { get { return _house; } set { _house = value;  OnPropertyChanged(); } }
+
+
+        public string Phone              { get { return _phone; } set { _phone = value;  OnPropertyChanged(); } }
+
+        public string email                 { get { return _email; } set { _email = value;  OnPropertyChanged(); } }
 
         private Brush _textBox_Name_B;
         private Brush _textBox_Surname_B;
@@ -71,54 +111,49 @@ namespace WpfApp2.ViewModels
         {
             bool result = true;
 
-            if (String.IsNullOrWhiteSpace(CurrentPatient.Name))
+            if (String.IsNullOrWhiteSpace(Name))
             {
                 TextBoxNameB = Brushes.Red;
 
                 result = false;
             }
-            if (String.IsNullOrWhiteSpace(CurrentPatient.Sirname))
+            if (String.IsNullOrWhiteSpace(Surname))
             {
                 TextBoxSurnameB = Brushes.Red;
 
                 result = false;
             }
-            if (String.IsNullOrWhiteSpace(CurrentPatient.Patronimic))
+            if (String.IsNullOrWhiteSpace(Patronimic))
             {
                 TextBoxPatronimicB = Brushes.Red;
 
                 result = false;
             }
-            if (String.IsNullOrWhiteSpace(CurrentPatient.City))
+            if (String.IsNullOrWhiteSpace(Town))
             {
                 TextBoxCityB = Brushes.Red;
 
                 result = false;
             }
-            if (String.IsNullOrWhiteSpace(CurrentPatient.Street))
+            if (String.IsNullOrWhiteSpace(Street))
             {
                 TextBoxStreetB = Brushes.Red;
 
                 result = false;
             }
-            if (String.IsNullOrWhiteSpace(CurrentPatient.House))
+            if (String.IsNullOrWhiteSpace(House))
             {
                 TextBoxHouseB = Brushes.Red;
 
                 result = false;
             }
-            if (String.IsNullOrWhiteSpace(CurrentPatient.Phone))
+            if (String.IsNullOrWhiteSpace(Phone))
             {
                 TextBoxPhoneB = Brushes.Red;
 
                 result = false;
             }
-            if (String.IsNullOrWhiteSpace(CurrentPatient.Email))
-            {
-                TextBoxEmailB = Brushes.Red;
-
-                result = false;
-            }
+          
             int flatBuffer = 0;
             if (!int.TryParse(CurrentPatientFlat, out flatBuffer))
             {
@@ -158,18 +193,42 @@ namespace WpfApp2.ViewModels
         public ViewModelNewPatient(NavigationController controller) : base(controller)
         {
             base.HasNavigation = true;
-            Visibility = Visibility.Hidden;
+          //  Visibility = Visibility.Hidden;
             SetAllFieldsDefault();
+            
             nameOfButton = "Добавить пользователя";
             TextHeader = "Добавление пациента";
             CurrentPatient = new Patient();
 
             CurrentPatient.Birthday = DateTime.Now;
 
+            
+
             ToDashboardCommand = new DelegateCommand(
                 () =>
                 {
-                    Controller.NavigateTo<ViewModelDashboard>();
+                    CurrentPatientFlat = "";
+                    Name = "";
+
+                    Surname = "";
+
+
+                    Patronimic = "";
+                    Date = DateTime.Now;
+
+
+
+                    Town = "";
+
+                    Street = "";
+                    House = "";
+
+
+                    Phone = "";
+
+
+                    email = "";
+                    //Controller.NavigateTo<ViewModelDashboard>();
                 }
             );
 
@@ -179,11 +238,24 @@ namespace WpfApp2.ViewModels
 
                     //CurrentPatient.Name = "1";
                     //TextBox_Name_T = new System.Windows.Thickness(1, 1, 1, 1);
+                 
+                  
 
-                    
+                   
+                   
+                   
                     SetAllFieldsDefault();
                     if (TestRequiredFields())
                     {
+                        CurrentPatient.Name = Name;
+                        CurrentPatient.Sirname = Surname;
+                        CurrentPatient.Patronimic = Patronimic;
+                        CurrentPatient.Birthday = Date;
+                        CurrentPatient.City = Town;
+                        CurrentPatient.Street = Street;
+                        CurrentPatient.House = House;
+                        CurrentPatient.Phone = Phone;
+                        CurrentPatient.Email = email;
                         if (GenderTypeNumber == 0)
                         {
                             CurrentPatient.Gender = "м";

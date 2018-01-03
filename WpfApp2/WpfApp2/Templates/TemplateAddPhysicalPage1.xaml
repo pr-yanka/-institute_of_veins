@@ -34,7 +34,7 @@
                 <Button x:Name="button_Copy2" Content="Записать жалобы" Command="{Binding Path=ToSymptomsAddCommand}" HorizontalAlignment="Left" Margin="505,31,0,0" VerticalAlignment="Top" Width="511" Height="31" Background="AliceBlue" FontSize="14"/>
                 <Separator HorizontalAlignment="Left" Height="16" Margin="0,154,0,0" VerticalAlignment="Top" Width="1016" RenderTransformOrigin="0.51,0.49"/>
                 <TextBlock x:Name="textBlock1_Copy2" HorizontalAlignment="Center" Margin="173,120,725,507" TextWrapping="Wrap" VerticalAlignment="Center" Width="118" FontSize="18" Text="Левая нога" TextAlignment="Center"/>
-                <Button x:Name="button_Copy443" Command="{Binding Path=ToDiagnosisCommand}" Content="Поставить диагноз" HorizontalAlignment="Left" Margin="518,417,0,0" VerticalAlignment="Top" Width="496" Height="32" Background="Lavender" FontSize="14"/>
+            <Button x:Name="button_Copy443" Command="{Binding Path=ToRightDiagCommand}" Content="Поставить диагноз" HorizontalAlignment="Left" Margin="518,417,0,0" VerticalAlignment="Top" Width="496" Height="32" Background="Lavender" FontSize="14"/>
                 <TextBlock x:Name="textBlock1_Copy3" HorizontalAlignment="Center" Margin="724,120,122,507" TextWrapping="Wrap" VerticalAlignment="Center" Width="170" FontSize="18"><Run Text="Правая "/><Run Text="нога"/></TextBlock>
 
 
@@ -305,6 +305,7 @@
 
                 <TextBox x:Name="textBox"  HorizontalAlignment="Left" Height="78" Margin="56,76,0,0" TextWrapping="Wrap" Text="{Binding Path=TextTip}" VerticalAlignment="Top" Width="431" VerticalScrollBarVisibility="Auto">
                     <TextBox.InputBindings>
+                        
                         <MouseBinding MouseAction="LeftClick" Command="{Binding Path=ClickOnTextTip}"/>
                     </TextBox.InputBindings>
                 </TextBox>
@@ -316,7 +317,7 @@
                 <TextBlock x:Name="textBlock1_Copy9" HorizontalAlignment="Left" Margin="265,37,0,0" TextWrapping="Wrap" Text="см" VerticalAlignment="Top" Width="26" FontSize="18"/>
                 <TextBlock x:Name="textBlock1_Copy10" HorizontalAlignment="Left" Margin="343,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="auto" FontSize="18" RenderTransformOrigin="0.674,0.459"><Run Text="ИМТ: "/><TextBlock  Text="{Binding Path=ITM}"/></TextBlock>
 
-                <ListBox x:Name="listBox1_Copy1" ItemsSource="{Binding Path=DiagnosisList}" HorizontalAlignment="Left" Height="127" Margin="13,449,0,0" VerticalAlignment="Top" Width="487" BorderThickness="1">
+            <ListBox x:Name="listBox1_Copy1" ItemsSource="{Binding Path=LeftDiagnosisList}" HorizontalAlignment="Left" Height="127" Margin="13,449,0,0" VerticalAlignment="Top" Width="487" BorderThickness="1">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
 
@@ -325,7 +326,7 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
-                <ListBox x:Name="listBox1_Copy2" ItemsSource="{Binding Path=DiagnosisList}" HorizontalAlignment="Left" Height="127" Margin="518,449,0,0" VerticalAlignment="Top" Width="496" BorderThickness="1">
+            <ListBox x:Name="listBox1_Copy2" ItemsSource="{Binding Path=RightDiagnosisList}" HorizontalAlignment="Left" Height="127" Margin="518,449,0,0" VerticalAlignment="Top" Width="496" BorderThickness="1">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
 
@@ -340,7 +341,7 @@
                     <Button x:Name="button_Copy10" Margin="0,5,0,5" Content="Заключение" Command="{Binding ToPhysicalOverviewCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="297" Height="33" Background="Azure" FontSize="14"/>
                     <Button x:Name="button_Copy9" Margin="0,5,0,5" Content="Завершить обследование" Command="{Binding OpenDialogCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="297" Height="31" Background="Honeydew" FontSize="14"/>
                 </StackPanel>
-                <Button x:Name="button_Copy" Command="{Binding Path=ToRecomendationsCommand}" Content="Поставить диагноз" HorizontalAlignment="Left" Margin="13,417,0,0" VerticalAlignment="Top" Width="487" Height="32" Background="Lavender" FontSize="14"/>
+            <Button x:Name="button_Copy" Command="{Binding Path=ToLeftDiagCommand}" Content="Поставить диагноз" HorizontalAlignment="Left" Margin="13,417,0,0" VerticalAlignment="Top" Width="487" Height="32" Background="Lavender" FontSize="14"/>
             </Grid>
 
     </DataTemplate>

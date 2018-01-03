@@ -46,6 +46,20 @@ namespace WpfApp2.ViewModels
         public string AddButtonText { get; set; }
         //Жалобы/диагноз/заключение
         public List<DiagnosisDataSource> DataSourceList { get; set; }
+        private string ld;
+        private void SetDiagnosisList(object sender, object data)
+        {
+            ld = (string)data;
+            if (ld == "Left")
+            {
+                DataSourceList = LeftDiag;
+            }
+            else
+            { DataSourceList = RightDiag; }
+        }
+        //Жалобы/диагноз/заключение
+        public List<DiagnosisDataSource> LeftDiag { get; set; }
+        public List<DiagnosisDataSource> RightDiag { get; set; }
 
         public ViewModelDiagnosisList(NavigationController controller) : base(controller)
         {
@@ -53,15 +67,21 @@ namespace WpfApp2.ViewModels
             HeaderText = "Диагнозы";
             AddButtonText = "Добавить диагноз";
             DataSourceList = new List<DiagnosisDataSource>();
+            LeftDiag = new List<DiagnosisDataSource>();
+            RightDiag = new List<DiagnosisDataSource>();
+            MessageBus.Default.Subscribe("SetleftOrRightForObsled", SetDiagnosisList);
             foreach (var DiagnosisType in Data.DiagnosisTypes.GetAll)
             {
                 DataSourceList.Add(new DiagnosisDataSource(DiagnosisType));
+                LeftDiag.Add(new DiagnosisDataSource(DiagnosisType));
+                RightDiag.Add(new DiagnosisDataSource(DiagnosisType));
             }
 
             ToPhysicalCommand = new DelegateCommand(
                 () =>
                 {
                     List<DiagnosisDataSource> DataSourceListBuffer = new List<DiagnosisDataSource>();
+                    
                     foreach (var Data in DataSourceList)
                     {
                         if (Data.IsChecked == true)
@@ -69,7 +89,17 @@ namespace WpfApp2.ViewModels
                             DataSourceListBuffer.Add(Data);
                         }
                     }
-                    MessageBus.Default.Call("SetDiagnosisList", this, DataSourceListBuffer);
+                    if (ld == "Left")
+                    {
+                        MessageBus.Default.Call("SetLeftDiagnosisListForObsled", this, DataSourceListBuffer);
+                        LeftDiag = DataSourceList;
+                    }
+                    else
+                    {
+                        MessageBus.Default.Call("SetRightDiagnosisListForObsled", this, DataSourceListBuffer);
+                        RightDiag = DataSourceList;
+                    }
+                   // MessageBus.Default.Call("SetDiagnosisList", this, DataSourceListBuffer);
                     Controller.NavigateTo<ViewModelAddPhysical>();
                 }
             );

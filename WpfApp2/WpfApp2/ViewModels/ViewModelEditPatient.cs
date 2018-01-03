@@ -18,13 +18,51 @@ namespace WpfApp2.ViewModels
     public class ViewModelEditPatient : ViewModelBase, INotifyPropertyChanged
     {
         public DelegateCommand ToDashboardCommand { get; protected set; }
-        public string nameOfButton { get; set; }
+        public string _nameOfButton;
+        public string nameOfButton { get { return _nameOfButton; } set { _nameOfButton = value; OnPropertyChanged("nameOfButton"); } }
         public DelegateCommand ToCurrentPatientCommand { get; protected set; }
         private Patient currentPatient;
+        public DelegateCommand Changed { get; protected set; }
         private Visibility _visibility;
         public Visibility Visibility { get { return _visibility; } set { _visibility = value; OnPropertyChanged(); } }
         private string _textHeader;
         public string TextHeader { get { return _textHeader; } set { _textHeader = value; OnPropertyChanged(); } }
+
+
+        private string _name;
+        private string _surname;
+        private string _patronimic;
+        private DateTime _date;
+
+        private string _town;
+        private string _street;
+        private string _house; 
+
+        private string _phone;
+        private string _email;
+
+
+        public string Name { get { return _name; } set { _name = value;
+
+                nameOfButton = "Сохранить изменения"; OnPropertyChanged(); } }
+
+        public string Surname { get { return _surname; } set { _surname = value; nameOfButton = "Сохранить изменения"; OnPropertyChanged(); } }
+
+        public string Patronimic { get { return _patronimic; } set { _patronimic = value; nameOfButton = "Сохранить изменения"; OnPropertyChanged(); } }
+        public DateTime Date { get { return _date; } set { _date = value; nameOfButton = "Сохранить изменения"; OnPropertyChanged(); } }
+
+
+        public string Town { get { return _town; } set { _town = value; nameOfButton = "Сохранить изменения"; OnPropertyChanged(); } }
+
+        public string Street { get { return _street; } set { _street = value; nameOfButton = "Сохранить изменения"; OnPropertyChanged(); } }
+        public string House { get { return _house; } set { _house = value; nameOfButton = "Сохранить изменения"; OnPropertyChanged(); } }
+
+
+        public string Phone { get { return _phone; } set { _phone = value; nameOfButton = "Сохранить изменения"; OnPropertyChanged(); } }
+
+        public string email { get { return _email; } set { _email = value; nameOfButton = "Сохранить изменения"; OnPropertyChanged(); } }
+
+
 
 
         private Brush _textBox_Name_B;
@@ -37,10 +75,11 @@ namespace WpfApp2.ViewModels
         private Brush _textBox_Phone_B;
         private Brush _textBox_Email_B;
         private int _genderTypeNumber;
+       // public Patient CopyPatient { get; set; }
 
         public Patient CurrentPatient { get { return currentPatient; } set { currentPatient = value; OnPropertyChanged(); } }
 
-        public int GenderTypeNumber { get { return _genderTypeNumber; } set { _genderTypeNumber = value; OnPropertyChanged(); } }
+        public int GenderTypeNumber { get { return _genderTypeNumber; } set { _genderTypeNumber = value; nameOfButton = "Сохранить изменения"; OnPropertyChanged(); } }
 
         public Brush TextBoxNameB { get { return _textBox_Name_B; } set { _textBox_Name_B = value; OnPropertyChanged(); } }
 
@@ -64,54 +103,49 @@ namespace WpfApp2.ViewModels
         {
             bool result = true;
 
-            if (String.IsNullOrWhiteSpace(CurrentPatient.Name))
+            if (String.IsNullOrWhiteSpace(Name))
             {
                 TextBoxNameB = Brushes.Red;
 
                 result = false;
             }
-            if (String.IsNullOrWhiteSpace(CurrentPatient.Sirname))
+            if (String.IsNullOrWhiteSpace(Surname))
             {
                 TextBoxSurnameB = Brushes.Red;
 
                 result = false;
             }
-            if (String.IsNullOrWhiteSpace(CurrentPatient.Patronimic))
+            if (String.IsNullOrWhiteSpace(Patronimic))
             {
                 TextBoxPatronimicB = Brushes.Red;
 
                 result = false;
             }
-            if (String.IsNullOrWhiteSpace(CurrentPatient.City))
+            if (String.IsNullOrWhiteSpace(Town))
             {
                 TextBoxCityB = Brushes.Red;
 
                 result = false;
             }
-            if (String.IsNullOrWhiteSpace(CurrentPatient.Street))
+            if (String.IsNullOrWhiteSpace(Street))
             {
                 TextBoxStreetB = Brushes.Red;
 
                 result = false;
             }
-            if (String.IsNullOrWhiteSpace(CurrentPatient.House))
+            if (String.IsNullOrWhiteSpace(House))
             {
                 TextBoxHouseB = Brushes.Red;
 
                 result = false;
             }
-            if (String.IsNullOrWhiteSpace(CurrentPatient.Phone))
+            if (String.IsNullOrWhiteSpace(Phone))
             {
                 TextBoxPhoneB = Brushes.Red;
 
                 result = false;
             }
-            if (String.IsNullOrWhiteSpace(CurrentPatient.Email))
-            {
-                TextBoxEmailB = Brushes.Red;
-
-                result = false;
-            }
+            
             int flatBuffer = 0;
             if (!int.TryParse(CurrentPatientFlat, out flatBuffer))
             {
@@ -152,6 +186,26 @@ namespace WpfApp2.ViewModels
             CurrentPatientID = (int)data;
             CurrentPatient = Data.Patients.Get((int)data);
             CurrentPatientFlat = CurrentPatient.Flat.ToString();
+            Name = CurrentPatient.Name;
+
+            Surname = CurrentPatient.Sirname;
+
+
+            Patronimic = CurrentPatient.Patronimic;
+            Date = CurrentPatient.Birthday;
+
+
+
+            Town = CurrentPatient.City;
+
+            Street = CurrentPatient.Street;
+            House = CurrentPatient.House;
+
+
+            Phone = CurrentPatient.Phone;
+
+
+            email = CurrentPatient.Email;
             if (CurrentPatient.Gender == "м")
             {
                 GenderTypeNumber = 0;
@@ -160,37 +214,91 @@ namespace WpfApp2.ViewModels
             {
                 GenderTypeNumber = 1;
             }
+            //CopyPatient = CurrentPatient;
+            nameOfButton = "Вернуться к пациенту";
         }
 
-        public string CurrentPatientFlat { get; set; }
+        private string _currentPatientFlat;
+        public string CurrentPatientFlat { get { return _currentPatientFlat; } set { _currentPatientFlat = value; OnPropertyChanged(); } }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
+            //nameOfButton = "Сохранить изменения";
             //если PropertyChanged не нулевое - оно будет разбужено
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         public ViewModelEditPatient(NavigationController controller) : base(controller)
         {
+
+            //Date = DateTime.Now;
             base.HasNavigation = false;
             Visibility = Visibility.Visible;
             TextHeader = "Редактирование пациента";
 
-            nameOfButton = "Сохранить изменения";
+            nameOfButton = "Вернуться к пацыенту";
             MessageBus.Default.Subscribe("GetCurrentPatientIdForEdit", SetCurrentPatientID);
             SetAllFieldsDefault();
             ToDashboardCommand = new DelegateCommand(
               () =>
               {
-                  Controller.NavigateTo<ViewModelDashboard>();
+                  CurrentPatientFlat = CurrentPatient.Flat.ToString();
+                  Name = CurrentPatient.Name;
+
+                  Surname = CurrentPatient.Sirname;
+
+
+                  Patronimic = CurrentPatient.Patronimic;
+                  Date = CurrentPatient.Birthday;
+
+
+
+                  Town = CurrentPatient.City;
+
+                  Street = CurrentPatient.Street;
+                  House = CurrentPatient.House;
+
+
+                  Phone = CurrentPatient.Phone;
+
+
+                  email = CurrentPatient.Email;
+                  if (CurrentPatient.Gender == "м")
+                  {
+                      GenderTypeNumber = 0;
+                  }
+                  else
+                  {
+                      GenderTypeNumber = 1;
+                  }
+                 // CopyPatient = CurrentPatient;
+                  nameOfButton = "Вернуться к пациенту";
+
+                 // Controller.NavigateTo<ViewModelDashboard>();
               }
           );
+            Changed = new DelegateCommand(
+               () =>
+               {
+                   nameOfButton = "Сохранить изменения";
+               //    Controller.NavigateTo<ViewModelDashboard>();
+               }
+           );
             ToCurrentPatientCommand = new DelegateCommand(
                 () =>
                 {
-                SetAllFieldsDefault();
+                    SetAllFieldsDefault();
                     if (TestRequiredFields())
                     {
+                        CurrentPatient.Name = Name;
+                        CurrentPatient.Sirname = Surname;
+                        CurrentPatient.Patronimic = Patronimic;
+                        CurrentPatient.Birthday = Date;
+                        CurrentPatient.City = Town;
+                        CurrentPatient.Street = Street;
+                        CurrentPatient.House = House;
+                        CurrentPatient.Phone = Phone;
+                        CurrentPatient.Email = email;
                         if (GenderTypeNumber == 0)
                         {
                             CurrentPatient.Gender = "м";
