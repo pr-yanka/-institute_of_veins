@@ -30,8 +30,9 @@ namespace WpfApp2.ViewModels
             Analize.patientId = CurrentPatient.Id;
             Analize.data = DateTime.Now;
         }
-        public DelegateCommand OpenAnalizePicture { get; protected set; }
         public DelegateCommand ToCurrentPatient { get; protected set; }
+        public DelegateCommand OpenAnalizePicture { get; protected set; }
+        public DelegateCommand ToCurrentPatientRealy { get; protected set; }
 
         public ViewModelAddAnalize(NavigationController controller) : base(controller)
         {
@@ -63,6 +64,12 @@ namespace WpfApp2.ViewModels
                      Controller.NavigateTo<ViewModelAnalizeOverview>();
                      Analize = new Analize();
                  }
+             }
+         );
+            ToCurrentPatientRealy = new DelegateCommand(
+             () =>
+             {
+                 Controller.NavigateTo<ViewModelCurrentPatient>();
              }
          );
             OpenAnalizePicture = new DelegateCommand(
