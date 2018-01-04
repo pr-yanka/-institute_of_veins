@@ -13,7 +13,7 @@
         </Grid.Background>
             <TextBlock DockPanel.Dock="Top" FontFamily="/fonts/#Pescadero" FontSize="18pt" Margin="24,0,-24,586" Height="38" Text="{Binding Path=CurrentPatient.Name}"><TextBlock Text="{Binding Path=initials}"/><Run Text="на"/></TextBlock>
             <Button x:Name="button" Content="Добавить обследование" Command="{Binding Path=ToAddPhysicalCommand}" HorizontalAlignment="Left" Margin="24,391,0,0" VerticalAlignment="Top" Width="225" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy3" Content="Вернуться в главное меню" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="24,448,0,0" VerticalAlignment="Top" Width="707" Height="43" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Button x:Name="button_Copy3" Content="К ПАЦИЕНТУ" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="24,448,0,0" VerticalAlignment="Top" Width="707" Height="43" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
         
                 <DataGrid HorizontalAlignment="Left" Height="295" VerticalAlignment="Top" Width="707" Margin="24,68,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Foreground="Black"  ItemsSource="{Binding Path=HistoryDataSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserResizeRows="False">
                     <DataGrid.Columns>
