@@ -23,14 +23,16 @@ namespace WpfApp2.LegParts
     public class LegPartViewModel : ViewModelBase, INotifyPropertyChanged
     {
         private bool _isEmpty = true;
-        public bool IsEmpty {
+        public bool IsEmpty
+        {
             get
             {
                 return _isEmpty;
             }
-            protected set {
+            protected set
+            {
                 _isEmpty = value;
-                OnPropertyChanged();  
+                OnPropertyChanged();
             }
         }
 
@@ -60,7 +62,7 @@ namespace WpfApp2.LegParts
         }
 
         public List<string> Source { get; } = new List<string>();
-        
+
         public virtual List<LegSectionViewModel> LegSections { get; set; }
 
         public DelegateCommand RevertCommand { set; get; }
@@ -92,7 +94,7 @@ namespace WpfApp2.LegParts
             set { _panel = value; }
         }
 
-        public DelegateCommand AnimationCompleted {get; set; }
+        public DelegateCommand AnimationCompleted { get; set; }
 
         protected LegSectionViewModel _lastSender;
         protected Type _lastSenderType;
@@ -115,7 +117,7 @@ namespace WpfApp2.LegParts
         private LegPartDbStructure GetPanelStructure()
         {
 
-            var newStr = (LegPartDbStructure) Activator.CreateInstance(_lastSender.SelectedValue.GetType());
+            var newStr = (LegPartDbStructure)Activator.CreateInstance(_lastSender.SelectedValue.GetType());
             var panel = CurrentPanelViewModel;
             newStr.Text1 = panel.Text1;
             newStr.Text2 = panel.Text2;
@@ -149,7 +151,7 @@ namespace WpfApp2.LegParts
                 CurrentPanelViewModel.PanelOpened = false;
                 handled = false;
                 var newStruct = GetPanelStructure();
-                
+
                 _lastSender.StructureSource.Add(newStruct);
                 _lastSender.SelectedValue = newStruct;
                 _lastSender.DeleteCustom();
@@ -175,12 +177,23 @@ namespace WpfApp2.LegParts
                 {
                     IsEmpty = false;
 
+                    List<int?> ids = new List<int?>();
+
+                    foreach (var leg in LegSections)
+                    {
+                        //никогда так не делайте
+                        if (leg.IsVisible == Visibility.Visible && leg.ListNumber != 1 && leg.SelectedValue != null)
+                            ids.Add(leg.SelectedValue.Id);
+                    }
+
+                    var combo = Data.BPVCombos.FindCombo(LegSections[0].SelectedValue.Id, ids);
+
                     MessageBus.Default.Call("LegDataSaved", this, this.GetType());
                     Controller.NavigateTo<ViewModelAddPhysical>();
                 }
             );
 
-            
+
         }
 
         public LegPartViewModel(NavigationController controller, LegSide side) : base(controller)
@@ -188,21 +201,21 @@ namespace WpfApp2.LegParts
             Initialization();
             CurrentLegSide = side;
             //MessageBus.Default.Subscribe("LegPart", Handler);
-            
-            Controller = controller;       
+
+            Controller = controller;
         }
 
         public LegPartViewModel(NavigationController controller) : base(controller)
         {
             //MessageBus.Default.Subscribe("LegPart", Handler);
-            
+
             //_sections = new List<BPVHipSectionViewModel>();
             Controller = controller;
         }
 
         private void Handler(object sender, object data)
         {
-            var vm = (LegPartViewModel) data;
+            var vm = (LegPartViewModel)data;
         }
 
         private void FinishAdding(object parameter)
@@ -210,5 +223,5 @@ namespace WpfApp2.LegParts
             var vm = new DialogConfirmStructureViewModel();
             var result = DialogService.DialogService.OpenDialog(vm, parameter as Window);
         }
-}
+    }
 }
