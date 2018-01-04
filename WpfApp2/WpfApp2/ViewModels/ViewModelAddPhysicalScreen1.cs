@@ -403,6 +403,7 @@ namespace WpfApp2.ViewModels
             ClickOnTextTip = new DelegateCommand(
                 () =>
                 {
+                    if(TextTip == "Текст пометки")
                     TextTip = "";
                     //Controller.NavigateTo<ViewModelCurrentPatient>();
                 }

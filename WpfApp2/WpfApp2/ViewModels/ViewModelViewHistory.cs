@@ -65,6 +65,7 @@ namespace WpfApp2.ViewModels
                     {
                         //MessageBus.Default.Call("GetPatientForAnalizeOverview", this, CurrentPatient.Id);
                         // MessageBus.Default.Call("GetAnalizeForAnalizeOverview", this, Operation.Id);
+                        MessageBus.Default.Call("GetOperationForOverwiev", this, Operation.Id);
                         Controller.NavigateTo<ViewModelOperationOverview>();
                     }
                 );
@@ -169,6 +170,7 @@ namespace WpfApp2.ViewModels
             ToAddOperationCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("SetCurrentPatientForOperation", this,CurrentPatient.Id);
                     Controller.NavigateTo<ViewModelAddOperation>();
                 }
             );
@@ -176,6 +178,7 @@ namespace WpfApp2.ViewModels
             ToAddAnalizeCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("GetPatientForAnalize", this, CurrentPatient.Id);
                     Controller.NavigateTo<ViewModelAddAnalize>();
                 }
             );

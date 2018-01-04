@@ -266,8 +266,10 @@ namespace WpfApp2.ViewModels
                         }
 
                         Data.Complete();
-                        Operation = new Operation();
+                        
+                        MessageBus.Default.Call("GetOperationForOverwiev", this, Operation.Id);
                         Controller.NavigateTo<ViewModelOperationOverview>();
+                        Operation = new Operation();
                     }
                 }
             );

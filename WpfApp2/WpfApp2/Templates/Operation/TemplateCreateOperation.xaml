@@ -35,7 +35,7 @@
             <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Margin="138,182,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="Список всех врачей" FontSize="16" Width="155" TextAlignment="Center"/>
             <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="546,68,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top" FontSize="18"><Run Text="А"/><Run Text="нестезик"/></TextBlock>
+                       VerticalAlignment="Top" FontSize="18"><Run Text="А"/><Run Text="нестетик"/></TextBlock>
             <ComboBox x:Name="comboBox_Copy2"   HorizontalAlignment="Left" ItemsSource="{Binding Path=AnestethicTypes}" SelectedIndex="{Binding Path=AnesteticSelected}" Margin="546,109,0,0" VerticalAlignment="Top" Width="468" Height="40"/>
             <Button x:Name="button_Copy2" Content="Добавить новый вид" HorizontalAlignment="Left" Margin="688,62,0,0"              
                     VerticalAlignment="Top" Width="326" Height="36" />

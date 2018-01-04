@@ -3,35 +3,84 @@
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplateOperationOverview">
         <Grid Margin="0,80,0,0">
-            <TextBlock HorizontalAlignment="Right" FontSize="22pt" Height="38" VerticalAlignment="Top" Text="Васючийка А.В."/>
+            <TextBlock HorizontalAlignment="Right" FontSize="22pt" Height="38" VerticalAlignment="Top" Text="{Binding Path=CurrentPatient.Name}"><TextBlock Text="{Binding Path=initials}"></TextBlock></TextBlock>
             <TextBlock HorizontalAlignment="Left" FontSize="22pt" Height="38" VerticalAlignment="Top" Margin="10,0,0,0" ><Run Text="Просмотр"/><Run Text=" операции"/></TextBlock>
-            <Button x:Name="button_Copy1" Content="Вернуться к пациенту" HorizontalAlignment="Left" Margin="423,558,0,0" VerticalAlignment="Top"  
+            <Button x:Name="button_Copy1"  Command="{Binding Path=ToCurrentPatientCommand}" Content="Вернуться к пациенту" HorizontalAlignment="Left" Margin="423,558,0,0" VerticalAlignment="Top"  
                     Width="215" Height="34"/>
             <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="20,167,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top" FontSize="18" Height="44" Width="157"><Run Text="Тип операции"/><Run Text=":"/></TextBlock>
+                       VerticalAlignment="Top" FontSize="18" Height="44" Width="357"><Run Text="Тип операции"/><Run Text=":"/> <TextBlock Text="{Binding Path=OprTypeSelected}"></TextBlock></TextBlock>
             <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="20,130,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top" FontSize="18" Height="32" Width="147"><Run Text="А"/><Run Text="нестезик"/><Run Text=": "/></TextBlock>
-            <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="484,130,0,0" TextWrapping="Wrap"  
+                       VerticalAlignment="Top" FontSize="18" Height="32" Width="247"><Run Text="А"/><Run Text="нестетик"/><Run Text=": "/><TextBlock Text="{Binding Path=AnesteticSelected}"/></TextBlock>
+            <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="305,130,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" FontSize="16"><Run Text="Б"/><Run Text="ригада"/></TextBlock>
-            <ScrollViewer HorizontalAlignment="Left" Height="375" Margin="423,161,0,0" VerticalAlignment="Top" Width="185"  
-                          Foreground="Black" Background="#FFF1F9F9"/>
-            <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="20,211,0,0" TextWrapping="Wrap"  
+            <DataGrid HorizontalAlignment="Left" Height="375" Margin="305,161,0,0" VerticalAlignment="Top" Width="auto"  
+                          Foreground="Black"  
+                     ItemsSource="{Binding Path=Controller.CurrentViewModel.DoctorsSelected}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" >
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Left" Width="Auto" Text="{Binding Path=Data.Sirname}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Left" Width="Auto" Text="{Binding Path=initials}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+            <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="20,227,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="NB!"/>
-            <RichTextBox x:Name="richTextBox" HorizontalAlignment="Left" Height="295" Margin="20,241,0,0" VerticalAlignment="Top"  
-                         Width="375">
-                <FlowDocument/>
-            </RichTextBox>
-            <TextBlock x:Name="textBlock_Copy6" HorizontalAlignment="Left" Margin="663,132,0,0" TextWrapping="Wrap"  
+            <Border BorderThickness="1" BorderBrush="Black"  Width="230" HorizontalAlignment="Left" Height="276" Margin="20,261,0,0" VerticalAlignment="Top">
+                
+            
+            <TextBlock Text="{Binding Path=Operation.NB}" x:Name="richTextBox">
+               
+            </TextBlock>
+            </Border>
+            <TextBlock x:Name="textBlock_Copy6" HorizontalAlignment="Left" Margin="408,132,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="Диагноз слева" FontSize="16"/>
-            <TextBlock x:Name="textBlock_Copy7" HorizontalAlignment="Left" Margin="848,130,0,0" TextWrapping="Wrap"  
+            <TextBlock x:Name="textBlock_Copy7" HorizontalAlignment="Left" Margin="695,130,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="Диагноз справа" RenderTransformOrigin="2.097,10.521" FontSize="16"/>
             <Button x:Name="button_Copy3" Content="Отменить операцию" HorizontalAlignment="Left" Margin="180,558,0,0"              
                     VerticalAlignment="Top" Width="215" Height="34" RenderTransformOrigin="0.502,0.471"/>
-            <ScrollViewer HorizontalAlignment="Left" Height="375" Margin="626,161,0,0" VerticalAlignment="Top" Width="179"  
-                          Foreground="Black" Background="#FFF1F9F9"/>
-            <ScrollViewer HorizontalAlignment="Left" Height="375" Margin="818,161,0,0" VerticalAlignment="Top" Width="183"  
-                          Foreground="Black" Background="#FFF1F9F9"/>
-            <TextBlock HorizontalAlignment="Left" FontSize="24" Height="38" VerticalAlignment="Top" Margin="45,38,0,0" Text="дата время" />
+
+            <DataGrid  AutoGenerateColumns="False" HeadersVisibility="None" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" HorizontalAlignment="Left" Height="375" Margin="408,161,0,0" VerticalAlignment="Top" Width="289"  
+                          Foreground="Black" 
+                       ItemsSource="{Binding Path=Controller.CurrentViewModel.LeftDiagnosisList}">
+                <DataGrid.Columns>
+
+                    <DataGridTemplateColumn >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Padding="5,0,5,0" Text="{Binding  Data.Str}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    </DataGrid.Columns>
+            </DataGrid>
+            <DataGrid  AutoGenerateColumns="False" HeadersVisibility="None" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" HorizontalAlignment="Left" Height="375" Margin="710,161,0,0" VerticalAlignment="Top" Width="289"  
+                          Foreground="Black"
+                       ItemsSource="{Binding Path=Controller.CurrentViewModel.RightDiagnosisList}"   >
+                <DataGrid.Columns>
+
+                    <DataGridTemplateColumn >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Padding="5,0,5,0" Text="{Binding  Data.Str}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <TextBlock HorizontalAlignment="Left" FontSize="24" Height="38" VerticalAlignment="Top" Margin="45,38,0,0" Text="дата время" ><DatePickerTextBox Text="{Binding Path=Operation.Date}"></DatePickerTextBox></TextBlock>
             <TextBlock HorizontalAlignment="Left" FontSize="24" Height="33" VerticalAlignment="Top" Margin="0,76,0,0" Text="итоги ещё не добавлены!" Foreground="#FF5D140D" Width="1024" Background="#FFB9E0E6" TextAlignment="Center" />
             <Button x:Name="button_Copy" Content="Добавить итоги" HorizontalAlignment="Left" Margin="663,558,0,0"              
             VerticalAlignment="Top" Width="215" Height="34" RenderTransformOrigin="0.502,0.471"/>
