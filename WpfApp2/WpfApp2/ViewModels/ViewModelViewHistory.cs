@@ -38,7 +38,7 @@ namespace WpfApp2.ViewModels
         public string initials { get; set; }
 
         public ObservableCollection<HistoryDataSource> HistoryDataSource { get; set; }
-
+        public DelegateCommand ToCurrentPatientCommand { get; protected set; }
         public DelegateCommand ToAddPhysicalCommand { get; protected set; }
         public DelegateCommand ToDashboardCommand { get; protected set; }
 
@@ -127,11 +127,12 @@ namespace WpfApp2.ViewModels
         public ViewModelViewHistory(NavigationController controller) : base(controller)
         {
 
-        
-           
 
-            MessageBus.Default.Subscribe("OpenHistoryOfPatient", SetCurrentPatientID);
+
             base.HasNavigation = false;
+            HasNavigation = false;
+            MessageBus.Default.Subscribe("OpenHistoryOfPatient", SetCurrentPatientID);
+           
             ToAddPhysicalCommand = new DelegateCommand(
                 () =>
                 {
@@ -166,6 +167,13 @@ namespace WpfApp2.ViewModels
                     Controller.NavigateTo<ViewModelPhysicalOverview>();
                 }
             );
+            ToCurrentPatientCommand = new DelegateCommand(
+               () =>
+               {
+                   MessageBus.Default.Call("GetCurrentPatientId", this, CurrentPatient.Id);
+                   Controller.NavigateTo<ViewModelCurrentPatient>();
+               }
+           );
 
             ToAddOperationCommand = new DelegateCommand(
                 () =>
