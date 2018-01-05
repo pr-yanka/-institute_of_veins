@@ -80,18 +80,11 @@ namespace WpfApp2.LegParts
 
         public SizePanelViewModel CurrentPanelViewModel { get; protected set; }
 
-        private UserControl _panel;
-
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             //если PropertyChanged не нулевое - оно будет разбужено
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public UserControl Panel
-        {
-            set { _panel = value; }
         }
 
         public DelegateCommand AnimationCompleted { get; set; }

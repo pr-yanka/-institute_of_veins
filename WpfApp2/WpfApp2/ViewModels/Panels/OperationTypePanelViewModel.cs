@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Practices.Prism.Commands;
 using WpfApp2.Db.Models;
 using WpfApp2.LegParts.VMs;
 using WpfApp2.Navigation;
@@ -14,7 +15,7 @@ namespace WpfApp2.ViewModels.Panels
 {
     public class OperationTypePanelViewModel : ViewModelBase, INotifyPropertyChanged
     {
-        private ViewModelBase _parentVM;
+        public ViewModelBase ParentVM { get; protected set; }
 
         private bool _panelOpened = false;
 
@@ -35,10 +36,12 @@ namespace WpfApp2.ViewModels.Panels
             }
         }
 
+        
+
         public OperationTypePanelViewModel(ViewModelBase parentVM) : base(parentVM.Controller)
         {
-            _parentVM = parentVM;
-            //Dimentions = new ObservableCollection<Metrics>(Data.Metrics.GetAll);
+            ParentVM = parentVM;
+            
         }
 
         private string _shortText;
@@ -62,8 +65,19 @@ namespace WpfApp2.ViewModels.Panels
                 OnPropertyChanged();
             }
         }
-        //public ObservableCollection<Metrics> Dimentions { get; set; }
 
+        public OperationType GetPanelType()
+        {
+            var newType = new OperationType();
+            newType.LongName = LongText;
+            newType.ShortName = ShortText;
+            return newType;
+        }
 
+        internal void ClearPanel()
+        {
+            LongText = "";
+            ShortText = "";
+        }
     }
 }

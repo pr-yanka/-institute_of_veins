@@ -9,9 +9,12 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using WpfApp2.Db.Models;
+using WpfApp2.LegParts;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
+using WpfApp2.ViewModels.Panels;
 
 namespace WpfApp2.ViewModels
 {
@@ -82,6 +85,30 @@ namespace WpfApp2.ViewModels
 
         private ObservableCollection<DoctorDataSource> _doctorsSelected;
 
+        #region everyth connected with panel
+
+        public DelegateCommand RevertCommand { set; get; }
+        public DelegateCommand SaveCommand { set; get; }
+
+        public ICommand OpenPanelCommand { protected set; get; }
+
+        public OperationTypePanelViewModel CurrentPanelViewModel { get; protected set; }
+
+        public static bool Handled = false;
+        public UIElement UI;
+
+        public DelegateCommand NewOpTypeCommand { get; set; }
+
+        private void OpenHandler(object sender, object data)
+        {
+            if (!Handled)
+            {
+                Handled = true;
+                CurrentPanelViewModel.PanelOpened = true;
+            }
+        }
+
+        #endregion
 
 
 
@@ -219,7 +246,7 @@ namespace WpfApp2.ViewModels
                 if (LeftDiagnosisList.Count == 0 || RightDiagnosisList.Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false)
                 {
 
-                    MessageBox.Show("Не все заполнено");
+                    MessageBox.Show("Не всё заполнено!");
                 }
                 else
                 {
@@ -288,6 +315,28 @@ namespace WpfApp2.ViewModels
                    Controller.NavigateTo<ViewModelDiagnosisListForOperation>();
                }
            );
+
+            //for right oanel
+            CurrentPanelViewModel = new OperationTypePanelViewModel(this);
+            OpenPanelCommand = new DelegateCommand(() =>
+            {
+                CurrentPanelViewModel.ClearPanel();
+                CurrentPanelViewModel.PanelOpened = true;
+            });
+
+            SaveCommand = new DelegateCommand(() => {
+                CurrentPanelViewModel.PanelOpened = false;
+                Handled = false;
+                var newType = CurrentPanelViewModel.GetPanelType();
+                Data.OperationType.Add((newType));
+                Data.Complete();
+
+            });
+
+            RevertCommand = new DelegateCommand(() => {
+                CurrentPanelViewModel.PanelOpened = false;
+                Handled = false;
+            });
         }
     }
 }

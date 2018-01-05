@@ -95,9 +95,6 @@ namespace WpfApp2.Templates
             if (item.GetType() == typeof(ViewModelAddPathology))
                 return TemplateAddPathology;
 
-            if (item.GetType() == typeof(ViewModelCreateOperation))
-                return TemplateCreateOperation;
-
             if (item.GetType() == typeof(ViewModelOperationResultOverview))
                 return TemplateOperationResultOverview;
 

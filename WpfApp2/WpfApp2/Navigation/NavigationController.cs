@@ -54,7 +54,6 @@ namespace WpfApp2.Navigation
                 new ViewModelCalendarOperations(this),
                 new ViewModelPathologyList(this),
                 new ViewModelAddPathology(this),
-                new ViewModelCreateOperation(this),
                 new ViewModelAddOperationResult(this),
                 new ViewModelEditOperation(this),
                 new ViewModelAddAnalize(this),
