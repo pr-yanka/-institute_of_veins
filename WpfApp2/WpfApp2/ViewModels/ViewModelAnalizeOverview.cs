@@ -45,16 +45,12 @@ namespace WpfApp2.ViewModels
         public ViewModelAnalizeOverview(NavigationController controller) : base(controller)
         {
            
-            
-           
-            ButtonName = "К Пацыенту";
+            ButtonName = "К Пациенту";
             MessageBus.Default.Subscribe("GetPatientForAnalizeOverview", SetCurrentPatientID);
             MessageBus.Default.Subscribe("GetAnalizeForAnalizeOverview", SetCurrentAnalizeID);
             HasNavigation = false;
             Controller = controller;
 
-
-            
             OpenAnalizePicture = new DelegateCommand(
             () =>
             {
