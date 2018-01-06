@@ -12,6 +12,8 @@
             </LinearGradientBrush>
         </Grid.Background>
             <TextBlock DockPanel.Dock="Top" FontFamily="/fonts/#Pescadero" FontSize="18pt" Margin="24,0,-24,586" Height="38" Text="{Binding Path=CurrentPatient.Name}"><TextBlock Text="{Binding Path=initials}"/></TextBlock>
+            <CheckBox x:Name="button2" Content="Показывать отменённые операции" IsChecked="{Binding Path=isCanceledOprVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Right" Margin="380,17,0,0" VerticalAlignment="Top" Width="auto" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+
             <Button x:Name="button" Content="Добавить обследование" Command="{Binding Path=ToAddPhysicalCommand}" HorizontalAlignment="Left" Margin="24,391,0,0" VerticalAlignment="Top" Width="225" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
             <Button x:Name="button_Copy3" Content="К ПАЦИЕНТУ" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="24,448,0,0" VerticalAlignment="Top" Width="707" Height="43" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
         

@@ -2,39 +2,22 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplateOperationResultOverview">
-        <Grid Margin="220,80,0,0">
-            <Grid.Background>
-                <RadialGradientBrush>
-                    <GradientStop Color="#FFC7D0EA" Offset="0"/>
-                    <GradientStop Color="#FFEBF0FD" Offset="1"/>
-                </RadialGradientBrush>
-            </Grid.Background>
-            <Label x:Name="label" Content="Итоги операции" HorizontalAlignment="Left" Margin="214,10,0,0" VerticalAlignment="Top"/>
-            <Button x:Name="button_Copy1" Content="Сохранить" Command="{Binding Path=ToOperationOverviewCommand}" HorizontalAlignment="Left" Margin="262,274,0,0" VerticalAlignment="Top"  
-                    Width="158" Height="28"/>
-            <Label x:Name="label1" Content="операция отменена\операция проведена\ожидание операции" HorizontalAlignment="Left"  
-                   Margin="88,41,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.491,0.474"/>
-            <CheckBox x:Name="checkBox" Content="назначена дополнительная операция" HorizontalAlignment="Left" Margin="33,93,0,0"  
-                      VerticalAlignment="Top"/>
-            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="33,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  
-                       FontFamily="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" Foreground="#FF10525D"><Run Text="Запланированная  
-операция:"/><LineBreak/><Run Text="одна"/></TextBlock>
-            <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="286,119,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top" Foreground="#FF234A72"><Run Text="Проведённая "/><Run Text="операция:"/><LineBreak/><Run  
-                                                                                                                                       Text="вторая"/></TextBlock>
-            <RichTextBox x:Name="richTextBox" HorizontalAlignment="Left" Height="98" Margin="33,162,0,0" VerticalAlignment="Top"  
-                         Width="465">
-                <FlowDocument>
-                    <Paragraph>
-                        <Run Text="комментарий"/>
-                    </Paragraph>
-                </FlowDocument>
-            </RichTextBox>
-            <Label x:Name="label1_Copy" Content="22 сентября 2017 года в 11:40" HorizontalAlignment="Left" Margin="170,62,0,0"  
-                   VerticalAlignment="Top" RenderTransformOrigin="0.491,0.474"/>
-            <Button x:Name="button_Copy" Command="{Binding Path=ToOperationOverviewCommand}" Content="Возврат" HorizontalAlignment="Left" Margin="88,274,0,0"              
-                    VerticalAlignment="Top" Width="158" Height="28"/>
-            <Button x:Name="button_Copy10" Content="Выписка" HorizontalAlignment="Left" Margin="357,684,0,0" VerticalAlignment="Top" Width="285" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+        <Grid Margin="0,80,0,0">
+            <Label x:Name="label" Content="Итоги операции" HorizontalAlignment="Left" Margin="397,10,0,0" VerticalAlignment="Top" FontSize="24"/>
+          
+            <Label x:Name="label1" Content="{Binding Path=ResultOrOtmenaName}" HorizontalAlignment="Left"  
+                   Margin="209,70,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.491,0.474" FontSize="22"/>
+            <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="39,136,0,0" TextWrapping="Wrap"  
+                       VerticalAlignment="Top" Foreground="#FF234A72" FontSize="24" Width="603"><Run Text="Проведённая "/><Run Text="операция:"/><Run Text=" "/><TextBlock Text="{Binding Path=operationType}"/></TextBlock>
+            <TextBlock Visibility="{Binding Path=visibilityOfNextOP}"  x:Name="textBlock_Copy23" HorizontalAlignment="Left" Margin="39,136,0,0" TextWrapping="Wrap"  
+                       VerticalAlignment="Top" Foreground="#FF234A72" FontSize="24" Width="603"><Run Text="Запланированная "/><Run Text="операция:"/><Run Text=" "/><TextBlock Text="{Binding Path=PlanedOpr}"/></TextBlock>
+            <TextBlock Text="{Binding Path=comment}"  x:Name="richTextBox" HorizontalAlignment="Left" Height="125" Margin="39,216,0,0" VerticalAlignment="Top"  
+                         Width="946" FontSize="22">
+            </TextBlock>
+            <DatePickerTextBox IsReadOnly="True" x:Name="label1_Copy" Text="{Binding Path=Date}" HorizontalAlignment="Left" Margin="447,70,0,0"  
+                   VerticalAlignment="Top" RenderTransformOrigin="0.491,0.474" FontSize="22"/>
+            <Button x:Name="button_Copy" Command="{Binding Path=ToOperationCommand}" Content="Вернуться к операции" HorizontalAlignment="Left" Margin="119,541,0,0"              
+                    VerticalAlignment="Top" Width="300" Height="46" FontSize="22"/>
         </Grid>
     </DataTemplate>
 
