@@ -152,6 +152,7 @@ namespace WpfApp2.LegParts
             {
                 if (_previousSection == null) return Visibility.Visible;
                 if (_previousSection.SelectedValue != null && !_previousSection.SelectedValue.ToNextPart) return Visibility.Visible;
+                //SelectedValue = null;
                 return Visibility.Hidden;
             }
             set {

@@ -77,6 +77,7 @@ namespace WpfApp2.LegParts
 
         public ICommand OpenPanelCommand { protected set; get; }
         public ICommand ClosePanelCommand { protected set; get; }
+        public ICommand SavePanelCommand { protected set; get; }
 
         public SizePanelViewModel CurrentPanelViewModel { get; protected set; }
 
@@ -143,12 +144,19 @@ namespace WpfApp2.LegParts
             ClosePanelCommand = new DelegateCommand(() => {
                 CurrentPanelViewModel.PanelOpened = false;
                 handled = false;
+
+            });
+
+            SavePanelCommand = new DelegateCommand(() => {
+                CurrentPanelViewModel.PanelOpened = false;
+                handled = false;
                 var newStruct = GetPanelStructure();
+                newStruct.Custom = false;
+                Data.BPVHips.Add((BPVHipStructure)newStruct);
 
                 _lastSender.StructureSource.Add(newStruct);
                 _lastSender.SelectedValue = newStruct;
-                _lastSender.DeleteCustom();
-
+                //_lastSender.DeleteCustom();
             });
 
             CurrentPanelViewModel.PanelOpened = false;
@@ -175,14 +183,33 @@ namespace WpfApp2.LegParts
                     foreach (var leg in LegSections)
                     {
                         //никогда так не делайте
-                        if (leg.IsVisible == Visibility.Visible && leg.ListNumber != 1 && leg.SelectedValue != null)
+                        if (leg.IsVisible == Visibility.Visible && leg.ListNumber != 1 && leg.SelectedValue != null && leg.SelectedValue.Id != 0)
                             ids.Add(leg.SelectedValue.Id);
                     }
 
                     var combo = Data.BPVCombos.FindCombo(LegSections[0].SelectedValue.Id, ids);
+                    //если комбо не нашлось - значит оно кастомное, мы его запомним и отправим в базу на радость будущим пользователям
+                    if (combo == null)
+                    {
+                        var newCombo = new BPVHipCombo();
+                        newCombo.IdStr1 = LegSections[0].SelectedValue.Id;
+                        for (int i = 0; i < LegSections.Count - 1; i++)
+                            if (ids.Count >= i)
+                            {
+                                if (
+                                    LegSections[i + 1].SelectedValue != null && !LegSections[i + 1].SelectedValue.ToNextPart
+                                    &&
+                                    LegSections[i + 1].SelectedValue.Id != 0
+                                    )
+                                    ids[i] = LegSections[i + 1].SelectedValue.Id;
+                            }
+                            else ids.Add(null);
+                        Data.BPVCombos.Add(newCombo);
+                    }
 
                     MessageBus.Default.Call("LegDataSaved", this, this.GetType());
                     Controller.NavigateTo<ViewModelAddPhysical>();
+                    
                 }
             );
 

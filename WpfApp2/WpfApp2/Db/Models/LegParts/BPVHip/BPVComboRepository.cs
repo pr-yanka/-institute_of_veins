@@ -28,7 +28,7 @@ namespace WpfApp2.Db.Models.LegParts.BPVHip
                     x.IdStr4 == bpvhipstr4 &&
                     x.IdStr5 == bpvhipstr5)).First();
             }
-            catch (EntityCommandExecutionException ex)
+            catch (InvalidOperationException ex)
             {
                 return null;
             }
