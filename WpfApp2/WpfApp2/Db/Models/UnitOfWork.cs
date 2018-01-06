@@ -10,6 +10,9 @@ namespace WpfApp2.Db.Models
 {
     public class UnitOfWork : IUnitOfWork
     {
+        public CancelOperationRepository CancelOperation { get; }
+        public OperationResultRepository OperationResult { get; }
+
         public DiagnosisObsRepository DiagnosisObs { get; }
         private readonly MySqlContext _context;
         public ExaminationRepository Examination { get; }
@@ -36,7 +39,10 @@ namespace WpfApp2.Db.Models
         public UnitOfWork (MySqlContext context)
         {
             _context = context;
-
+           // _context.Configuration.AutoDetectChangesEnabled = false;
+          // _context.Set<Operation>().AsNoTracking();
+            OperationResult = new OperationResultRepository(_context);
+            CancelOperation = new CancelOperationRepository(_context);
             DiagnosisObs = new DiagnosisObsRepository(_context);
 
             Examination = new ExaminationRepository(_context);
