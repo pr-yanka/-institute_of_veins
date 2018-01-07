@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Microsoft.Practices.Prism.Commands;
 using WpfApp2.Db.Models;
 using WpfApp2.Messaging;
@@ -15,23 +16,27 @@ namespace WpfApp2.ViewModels
 {
     public class ViewModelOperationOverview : ViewModelBase, INotifyPropertyChanged
     {
-      
+        #region Inotify realisation
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             //если PropertyChanged не нулевое - оно будет разбужено
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-    
+        #endregion
+      
+        #region DelegateCommands
         public DelegateCommand ToPhysicalCommand { get; protected set; }
         public DelegateCommand ToCurrentPatientCommand { get; protected set; }
-        //
-       // public ObservableCollection<DiagnosisDataSource> LeftDiagnosisList { get; set; }
-       // public ObservableCollection<DiagnosisDataSource> RightDiagnosisList { get; set; }
-       //  public ObservableCollection<string> OprTypes { get; set; }
-       // public ObservableCollection<string> AnestethicTypes { get; set; }
-       //   public ObservableCollection<DoctorDataSource> Doctors { get; set; }
+        public DelegateCommand ToAddOperationResultCommand { get; protected set; }
+        public DelegateCommand ToCancleOperationCommand { get; protected set; }
+        public Patient CurrentPatient { get; protected set; }
+        public string initials { get; protected set; }
+        #endregion
 
+        #region Bindings
+        public string OperationResults { get; set; }
+        public Visibility VisiBIlityOfAddResult { get; set; }
         private List<DiagnosisDataSource> _leftDiagnosisList;
         private List<DiagnosisDataSource> _rightDiagnosisList;
         private List<DoctorDataSource> _doctorsSelected;
@@ -57,21 +62,62 @@ namespace WpfApp2.ViewModels
                 _rightDiagnosisList = value; OnPropertyChanged();
             }
         }
-        
+        public List<DoctorDataSource> DoctorsSelected
+        {
+            get
+            {
+                return _doctorsSelected;
+            }
+            set
+            {
+                _doctorsSelected = value; OnPropertyChanged();
+            }
+        }
+        public Operation Operation { get; set; }
+
+        public string AnesteticSelected { get; set; }
+        public string OprTypeSelected { get; set; }
+
+        #endregion
+
         private void GetOperation(object sender, object data)
         {
-            Operation = Data.Operation.Get((int)data);
+            using (var context = new MySqlContext())
+            {
+                OperationRepository OperationRp = new OperationRepository(context);
+                Operation = OperationRp.Get((int)data);
+            }
+            if (Operation.итоги_операции != null)
+            {
+                OperationResults = "Операция проведена";
+
+            }
+            else
+            { OperationResults = "Итоги ещё не добавлены!"; }
+            if (Operation.отмена_операции != null)
+            {
+                OperationResults = "Операция перенесена";
+
+            }
             LeftDiagnosisList = new List<DiagnosisDataSource>();
             RightDiagnosisList = new List<DiagnosisDataSource>();
             DoctorsSelected = new List<DoctorDataSource>();
             AnesteticSelected = Data.Anestethic.Get(Operation.AnestheticId).Str;
             OprTypeSelected = Data.OperationType.Get(Operation.OperationTypeId).LongName;
+            CurrentPatient = Data.Patients.Get(Operation.PatientId);
+            initials = " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
 
             DateTime bufTime = DateTime.Parse(Operation.Time);
 
-            Operation.Date =  new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
+            Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
 
-           
+
+            if (Operation.Date > DateTime.Now || Operation.итоги_операции != null || Operation.отмена_операции != null)
+            { VisiBIlityOfAddResult = Visibility.Hidden; }
+            else
+            {
+                VisiBIlityOfAddResult = Visibility.Visible;
+            }
             foreach (var Brigade in Data.Brigade.GetAll)
             {
                 if (Brigade.id_операции == Operation.Id)
@@ -100,46 +146,32 @@ namespace WpfApp2.ViewModels
                     }
                 }
             }
-            
+
 
         }
 
-        public List<DoctorDataSource> DoctorsSelected
-        {
-            get
-            {
-                return _doctorsSelected;
-            }
-            set
-            {
-                _doctorsSelected = value; OnPropertyChanged();
-            }
-        }
-        public Operation Operation { get; set; }
        
-        public string AnesteticSelected { get; set; }
-        public string OprTypeSelected { get; set; }
-        
- 
+
         public ViewModelOperationOverview(NavigationController controller) : base(controller)
         {
-
-            //Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, int.Parse(Hour), int.Parse(Minute), 0);
-            //Operation.Time = Hour + ":" + Minute + ":" + 0;
-
-            //Operation.PatientId = CurrentPatient.Id;
-            //Operation.AnestheticId = AnesteticSelected + 1;
-            //Operation.OperationTypeId = OprTypeSelected + 1;
-            //Data.Operation.Add(Operation);
-            //Data.Complete();
-
-            //Data.Complete();
-            //Operation = new Operation();
 
             MessageBus.Default.Subscribe("GetOperationForOverwiev", GetOperation);
 
 
             base.HasNavigation = false;
+            #region DelegateCommands
+            ToAddOperationResultCommand = new DelegateCommand(() =>
+            {
+                MessageBus.Default.Call("GetOperationIDForAddOperationResult", this, Operation.Id);
+                Controller.NavigateTo<ViewModelAddOperationResult>();
+            });
+            ToCancleOperationCommand = new DelegateCommand(
+                () =>
+                {
+                    MessageBus.Default.Call("GetOperationIDForAddCancel", this, Operation.Id);
+                    Controller.NavigateTo<ViewModelCancelOperations>();
+                }
+            );
             ToPhysicalCommand = new DelegateCommand(
                 () =>
                 {
@@ -154,6 +186,7 @@ namespace WpfApp2.ViewModels
                     Controller.NavigateTo<ViewModelCurrentPatient>();
                 }
             );
+            #endregion
         }
     }
 }

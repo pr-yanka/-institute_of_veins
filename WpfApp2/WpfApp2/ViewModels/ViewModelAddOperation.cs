@@ -51,40 +51,16 @@ namespace WpfApp2.ViewModels
     }
     public class ViewModelAddOperation : ViewModelBase, INotifyPropertyChanged
     {
+        #region Inotify Realisation
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             //если PropertyChanged не нулевое - оно будет разбужено
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        private void UpdateSelectedDoctors(object sender, object data)
-        {
 
-            DoctorsSelected = new ObservableCollection<DoctorDataSource>();
-            foreach (var doctor in Doctors)
-            {
-                if (doctor.IsChecked == true)
-                { DoctorsSelected.Add(doctor); }
-            }
-        }
-        public ObservableCollection<DiagnosisDataSource> LeftDiagnosisList { get; set; }
-        public ObservableCollection<DiagnosisDataSource> RightDiagnosisList { get; set; }
-        public ObservableCollection<string> OprTypes { get; set; }
-        public ObservableCollection<string> AnestethicTypes { get; set; }
-        public ObservableCollection<DoctorDataSource> Doctors { get; set; }
-
-        private Brush _textBox_Minute;
-        private Brush _textBox_Hour;
-
-
-        public Brush TextBoxMinute { get { return _textBox_Minute; } set { _textBox_Minute = value; OnPropertyChanged(); } }
-
-        public Brush TextBoxHour { get { return _textBox_Hour; } set { _textBox_Hour = value; OnPropertyChanged(); } }
-
-
-
-        private ObservableCollection<DoctorDataSource> _doctorsSelected;
-
+        #endregion
+      
         #region everyth connected with panel
 
         public DelegateCommand RevertCommand { set; get; }
@@ -110,8 +86,66 @@ namespace WpfApp2.ViewModels
 
         #endregion
 
+        #region Bindings
+        public ObservableCollection<DiagnosisDataSource> LeftDiagnosisList { get; set; }
+        public ObservableCollection<DiagnosisDataSource> RightDiagnosisList { get; set; }
+        public ObservableCollection<string> OprTypes { get; set; }
+        public ObservableCollection<string> AnestethicTypes { get; set; }
+        public ObservableCollection<DoctorDataSource> Doctors { get; set; }
+
+        private Brush _textBox_Minute;
+        private Brush _textBox_Hour;
 
 
+        public Brush TextBoxMinute { get { return _textBox_Minute; } set { _textBox_Minute = value; OnPropertyChanged(); } }
+
+        public Brush TextBoxHour { get { return _textBox_Hour; } set { _textBox_Hour = value; OnPropertyChanged(); } }
+
+        public string Minute
+        {
+            get { return _minute; }
+            set
+            {
+                _minute = value; int buf = 0;
+                if (int.TryParse(_minute, out buf))
+                {
+                    if (buf > 59 || buf < 0)
+                    {
+                        TextBoxMinute = Brushes.Red;
+                        TimeCheckMinute = false;
+                    }
+                    else
+                    { TimeCheckMinute = true; TextBoxMinute = Brushes.Gray; }
+                }
+                else { TextBoxMinute = Brushes.Red; TimeCheckMinute = false; }
+                OnPropertyChanged();
+            }
+        }
+
+        public string Hour
+        {
+            get { return _hour; }
+            set
+            {
+                _hour = value;
+                int buf = 0;
+                if (int.TryParse(_hour, out buf))
+                {
+                    if (buf > 23 || buf < 0)
+                    {
+                        TextBoxHour = Brushes.Red;
+
+                        TimeCheckHour = false;
+                    }
+                    else
+                    { TimeCheckHour = true; TextBoxHour = Brushes.Gray; }
+                }
+                else { TextBoxHour = Brushes.Red; TimeCheckHour = false; }
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<DoctorDataSource> _doctorsSelected;
         public ObservableCollection<DoctorDataSource> DoctorsSelected
         {
             get
@@ -123,6 +157,30 @@ namespace WpfApp2.ViewModels
                 _doctorsSelected = value; OnPropertyChanged();
             }
         }
+    
+        public Operation Operation { get; set; }
+        string _minute;
+        string _hour;
+        bool TimeCheckMinute;
+     
+        private OperationResult OperationResult { get; set; }
+
+        bool TimeCheckHour;
+        public int AnesteticSelected { get; set; }
+        public int OprTypeSelected { get; set; }
+
+        public string ButtonSaveText { get; set; }
+        public DelegateCommand ToLeftDiagCommand { get; protected set; }
+        public DelegateCommand ToRightDiagCommand { get; protected set; }
+        public DelegateCommand ToCurrentPatientCommand { get; protected set; }
+        public DelegateCommand ToOperationOverviewCommand { get; protected set; }
+
+        public Patient CurrentPatient { get; set; }
+        public string initials { get; set; }
+        #endregion
+
+        #region MessageBus
+        bool isSetOperResult = false;
         private void SetRightDiagnosisList(object sender, object data)
         {
             RightDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
@@ -136,66 +194,31 @@ namespace WpfApp2.ViewModels
             { LeftDiagnosisList.Add(diag); }
 
         }
-        public Operation Operation { get; set; }
-        string _minute;
-        string _hour;
-        bool TimeCheckMinute;
-        public string Minute
+        private void SetOperResult(object sender, object data)
         {
-            get { return _minute; }
-            set
+            isSetOperResult = true;
+            var buf = (OperationResult)data;
+            OperationResult = Data.OperationResult.Get(buf.Id);
+        }
+
+        private void UpdateSelectedDoctors(object sender, object data)
+        {
+            DoctorsSelected = new ObservableCollection<DoctorDataSource>();
+            foreach (var doctor in Doctors)
             {
-                _minute = value; int buf = 0;
-                if (int.TryParse(_minute, out buf))
-                {
-                    if (buf > 60 || buf < 0)
-                    {
-                        TextBoxMinute = Brushes.Red;
-                        TimeCheckMinute = false;
-                    }else
-                    { TimeCheckMinute = true; TextBoxMinute = Brushes.Gray; }
-                }
-                else { TextBoxMinute = Brushes.Red; TimeCheckMinute = false; }
-                OnPropertyChanged();
+                if (doctor.IsChecked == true)
+                { DoctorsSelected.Add(doctor); }
             }
         }
-        
-        public string Hour { get { return _hour; } set { _hour = value;
-                int buf = 0;
-                if (int.TryParse(_hour, out buf))
-                {
-                    if (buf > 24 || buf < 0)
-                    {
-                        TextBoxHour = Brushes.Red;
-                        
-                        TimeCheckHour = false;
-                    }
-                    else
-                    { TimeCheckHour = true; TextBoxHour = Brushes.Gray; }
-                }
-                else { TextBoxHour = Brushes.Red; TimeCheckHour = false; }
-                OnPropertyChanged(); 
-            } }
-
-
-        bool TimeCheckHour;
-        public int AnesteticSelected { get; set; }
-        public int OprTypeSelected { get; set; }
-
-        public string ButtonSaveText { get; set; }
-        public DelegateCommand ToLeftDiagCommand { get; protected set; }
-        public DelegateCommand ToRightDiagCommand { get; protected set; }
-        public DelegateCommand ToCurrentPatientCommand { get; protected set; }
-        public DelegateCommand ToOperationOverviewCommand { get; protected set; }
-        public Patient CurrentPatient { get; set; }
-        public string initials { get; set; }
         private void SetCurrentPatientID(object sender, object data)
         {
-
+            Operation = new Operation();
+            Operation.Date = DateTime.Now;
             CurrentPatient = Data.Patients.Get((int)data);
             initials = " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
 
         }
+        #endregion
 
         public ViewModelAddOperation(NavigationController controller) : base(controller)
         {
@@ -207,6 +230,9 @@ namespace WpfApp2.ViewModels
             TimeCheckHour = true;
             TimeCheckMinute = true;
             ButtonSaveText = "Назначить операцию";
+
+            
+            MessageBus.Default.Subscribe("SetOperationResult", SetOperResult);
             MessageBus.Default.Subscribe("SetCurrentPatientForOperation", SetCurrentPatientID);
             MessageBus.Default.Subscribe("SetRightDiagnosisListForOperation", SetRightDiagnosisList);
             MessageBus.Default.Subscribe("SetLeftDiagnosisListForOperation", SetLeftDiagnosisList);
@@ -250,6 +276,7 @@ namespace WpfApp2.ViewModels
                 }
                 else
                 {
+                      
                     Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, int.Parse(Hour), int.Parse(Minute), 0);
                     Operation.Time = Hour + ":" + Minute+":"+ 0;
 
@@ -293,10 +320,17 @@ namespace WpfApp2.ViewModels
                         }
 
                         Data.Complete();
-                        
+                        if (isSetOperResult == true)
+                        {
+                            OperationResult.IdNextOperation = Operation.Id;
+                            Data.Complete();
+                            isSetOperResult = false;
+                        }
                         MessageBus.Default.Call("GetOperationForOverwiev", this, Operation.Id);
                         Controller.NavigateTo<ViewModelOperationOverview>();
+                        Data.Complete();
                         Operation = new Operation();
+                        OperationResult = new OperationResult();
                     }
                 }
             );
@@ -332,7 +366,7 @@ namespace WpfApp2.ViewModels
                 Data.Complete();
 
             });
-
+          
             RevertCommand = new DelegateCommand(() => {
                 CurrentPanelViewModel.PanelOpened = false;
                 Handled = false;

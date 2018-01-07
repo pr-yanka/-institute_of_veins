@@ -46,8 +46,8 @@
                        VerticalAlignment="Top" Text="Диагноз слева" FontSize="16"/>
             <TextBlock x:Name="textBlock_Copy7" HorizontalAlignment="Left" Margin="695,130,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="Диагноз справа" RenderTransformOrigin="2.097,10.521" FontSize="16"/>
-            <Button x:Name="button_Copy3" Content="Отменить операцию" HorizontalAlignment="Left" Margin="180,558,0,0"              
-                    VerticalAlignment="Top" Width="215" Height="34" RenderTransformOrigin="0.502,0.471"/>
+            <Button x:Name="button_Copy3"  Visibility="{Binding Path=VisiBIlityOfAddResult}" Content="Отменить операцию" HorizontalAlignment="Left" Margin="180,558,0,0"              
+                    VerticalAlignment="Top" Width="215" Command="{Binding Path=ToCancleOperationCommand}" Height="34" RenderTransformOrigin="0.502,0.471"/>
 
             <DataGrid  AutoGenerateColumns="False" HeadersVisibility="None" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" HorizontalAlignment="Left" Height="375" Margin="408,161,0,0" VerticalAlignment="Top" Width="289"  
                           Foreground="Black" 
@@ -81,8 +81,8 @@
             </DataGrid>
 
             <TextBlock HorizontalAlignment="Left" FontSize="24" Height="38" VerticalAlignment="Top" Margin="45,38,0,0" Text="дата время" ><DatePickerTextBox Text="{Binding Path=Operation.Date}"></DatePickerTextBox></TextBlock>
-            <TextBlock HorizontalAlignment="Left" FontSize="24" Height="33" VerticalAlignment="Top" Margin="0,76,0,0" Text="итоги ещё не добавлены!" Foreground="#FF5D140D" Width="1024" Background="#FFB9E0E6" TextAlignment="Center" />
-            <Button x:Name="button_Copy" Content="Добавить итоги" HorizontalAlignment="Left" Margin="663,558,0,0"              
+            <TextBlock HorizontalAlignment="Left" FontSize="24" Height="33" VerticalAlignment="Top" Margin="0,76,0,0" Text="{Binding Path=OperationResults}" Foreground="#FF5D140D" Width="1024" Background="#FFB9E0E6" TextAlignment="Center" />
+            <Button Visibility="{Binding Path=VisiBIlityOfAddResult}" x:Name="button_Copy" Content="Добавить итоги" Command="{Binding Path=ToAddOperationResultCommand}" HorizontalAlignment="Left" Margin="663,558,0,0"              
             VerticalAlignment="Top" Width="215" Height="34" RenderTransformOrigin="0.502,0.471"/>
         </Grid>
     </DataTemplate>

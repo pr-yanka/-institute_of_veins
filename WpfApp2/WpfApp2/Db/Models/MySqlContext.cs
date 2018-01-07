@@ -9,6 +9,9 @@ namespace WpfApp2.Db.Models
 {
     public class MySqlContext : DbContext
     {
+        public DbSet<OperationResult> OperationResult { get; set; }
+        public DbSet<CancelOperation> CancelOperation { get; set; }
+
         public DbSet<Examination> Examination { get; set; }
 
         public DbSet<DiagnosisObs> DiagnosisObs { get; set; }

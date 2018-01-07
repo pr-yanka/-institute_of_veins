@@ -1,13 +1,15 @@
 ﻿using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using WpfApp2.Db.Models;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 
 namespace WpfApp2.ViewModels
 {
-    public class HistoryDataSource 
+    public class HistoryDataSource
     {
         private DateTime _date;
         public DateTime Date
@@ -32,12 +34,21 @@ namespace WpfApp2.ViewModels
         }
     }
 
-    public class ViewModelViewHistory : ViewModelBase
+    public class ViewModelViewHistory : ViewModelBase, INotifyPropertyChanged
     {
+        #region Inotify realisation
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            //если PropertyChanged не нулевое - оно будет разбужено
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
         public Patient CurrentPatient { get; set; }
         public string initials { get; set; }
+        public ObservableCollection<HistoryDataSource> _historyDataSource;
+        public ObservableCollection<HistoryDataSource> HistoryDataSource { get { return _historyDataSource; } set { _historyDataSource = value; OnPropertyChanged();  } }
 
-        public ObservableCollection<HistoryDataSource> HistoryDataSource { get; set; }
         public DelegateCommand ToCurrentPatientCommand { get; protected set; }
         public DelegateCommand ToAddPhysicalCommand { get; protected set; }
         public DelegateCommand ToDashboardCommand { get; protected set; }
@@ -49,6 +60,9 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToAddAnalizeCommand { get; protected set; }
 
         protected int CurrentPatientID;
+        private bool _isCanceledOprVisible;
+        public bool isCanceledOprVisible { get { return _isCanceledOprVisible; } set { _isCanceledOprVisible = value;  OnPropertyChanged(); MessageBus.Default.Call("OpenHistoryOfPatient", this, CurrentPatient.Id); } }
+
 
         private void SetCurrentPatientID(object sender, object data)
         {
@@ -69,10 +83,11 @@ namespace WpfApp2.ViewModels
                         Controller.NavigateTo<ViewModelOperationOverview>();
                     }
                 );
-                    
+
                     DateTime buf1 = DateTime.Parse(Operation.Time);
-                   
-                    HistoryDataSource.Add(new HistoryDataSource(bufer,new DateTime( Operation.Date.Year, Operation.Date.Month, Operation.Date.Day,buf1.Hour,buf1.Minute,buf1.Second), "Операция"));
+                    if (Operation.отмена_операции != null && isCanceledOprVisible == false) { }
+                    else
+                        HistoryDataSource.Add(new HistoryDataSource(bufer, new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, buf1.Hour, buf1.Minute, buf1.Second), "Операция"));
                 }
             }
 
@@ -104,24 +119,24 @@ namespace WpfApp2.ViewModels
                         Controller.NavigateTo<ViewModelAnalizeOverview>();
                     }
                 );
-                    HistoryDataSource.Add( new HistoryDataSource(bufer, Analize.data, "Анализ"));
+                    HistoryDataSource.Add(new HistoryDataSource(bufer, Analize.data, "Анализ"));
                 }
             }
-            
-                
-                for (int i = 0; i < HistoryDataSource.Count; i++)
+
+
+            for (int i = 0; i < HistoryDataSource.Count; i++)
+            {
+                for (int j = 0; j < HistoryDataSource.Count - i - 1; j++)
                 {
-                    for (int j = 0; j < HistoryDataSource.Count - i - 1; j++)
+                    if (HistoryDataSource[j].Date < HistoryDataSource[j + 1].Date)
                     {
-                        if (HistoryDataSource[j].Date < HistoryDataSource[j + 1].Date)
-                        {
                         var temp = HistoryDataSource[j];
                         HistoryDataSource[j] = HistoryDataSource[j + 1];
                         HistoryDataSource[j + 1] = temp;
-                        }
                     }
                 }
-            
+            }
+
         }
 
         public ViewModelViewHistory(NavigationController controller) : base(controller)
@@ -132,7 +147,7 @@ namespace WpfApp2.ViewModels
             base.HasNavigation = false;
             HasNavigation = false;
             MessageBus.Default.Subscribe("OpenHistoryOfPatient", SetCurrentPatientID);
-           
+
             ToAddPhysicalCommand = new DelegateCommand(
                 () =>
                 {
@@ -178,7 +193,7 @@ namespace WpfApp2.ViewModels
             ToAddOperationCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("SetCurrentPatientForOperation", this,CurrentPatient.Id);
+                    MessageBus.Default.Call("SetCurrentPatientForOperation", this, CurrentPatient.Id);
                     Controller.NavigateTo<ViewModelAddOperation>();
                 }
             );

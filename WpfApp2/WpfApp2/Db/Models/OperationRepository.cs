@@ -28,10 +28,12 @@ namespace WpfApp2.Db.Models
         public int AnestheticId { set; get; }
         [Column("NB!")]
         public string NB { set; get; }
-        [Column("отмена_операции")]
-        public int? CancleOperation { set; get; }
-        [Column("итоги_операции")]
-        public int? ResultOperation { set; get; }
+        [Column(Order = 0), ForeignKey("OpCancle")]
+        public int? отмена_операции { set; get; }
+        [Column(Order = 1), ForeignKey("OpResult")]
+        public int? итоги_операции { set; get; }
+        public virtual OperationResult OpResult { get; set; }
+        public virtual CancelOperation OpCancle { get; set; }
 
     }
     public class OperationRepository : Repository<Operation>

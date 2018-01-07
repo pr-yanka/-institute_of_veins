@@ -48,6 +48,8 @@ namespace WpfApp2.Navigation
             _viewModels = new List<ViewModelBase>
             {
                 new ViewModelLogin(this),
+            
+                new ViewModelOperationResultOverview(this),
                 new ViewModelPhysicalOverview(this),
                 new ViewModelOperationOverview(this),
                 new ViewModelRegistration(this),
@@ -75,6 +77,7 @@ namespace WpfApp2.Navigation
                 new ViewModelDiagnosisListForOperation(this),
                 new ViewModelComplainsList(this),
                 new ViewModelDiagnosisList(this),
+                new  ViewModelCancelOperations(this),
                 new ViewModelRecomendationsList(this),
                 new LegPartViewModel(this)
             };
