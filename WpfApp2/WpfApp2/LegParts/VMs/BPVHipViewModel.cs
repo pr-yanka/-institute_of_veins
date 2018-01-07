@@ -36,5 +36,7 @@ namespace WpfApp2.LegParts.VMs
         {
             Initialize();
         }
+
+        
     }
 }

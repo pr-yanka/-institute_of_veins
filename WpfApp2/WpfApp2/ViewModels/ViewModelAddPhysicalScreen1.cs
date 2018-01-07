@@ -194,12 +194,14 @@ namespace WpfApp2.ViewModels
             //БПВ
             LeftBPVHip = new BPVHipViewModel(Controller, LegSide.Left);
             RightBPVHip = new BPVHipViewModel(Controller, LegSide.Right);
+            Controller.AddLegPartVM(LeftBPVHip);
+            Controller.AddLegPartVM(RightBPVHip);
 
             ToLeftBPVHipCommand = new DelegateCommand(
                 () =>
                 {
                     Controller.LegViewModel = LeftBPVHip;
-                    Controller.NavigateTo<LegPartViewModel>();
+                    Controller.NavigateTo<BPVHipViewModel>(LegSide.Left);
                 }
             );
 
@@ -207,7 +209,7 @@ namespace WpfApp2.ViewModels
                 () =>
                 {
                     Controller.LegViewModel = RightBPVHip;
-                    Controller.NavigateTo<LegPartViewModel>();
+                    Controller.NavigateTo<BPVHipViewModel>(LegSide.Right);
                 }
             );
 

@@ -22,7 +22,7 @@ namespace WpfApp2.Navigation
             set { _currentViewModel = value; OnPropertyChanged(nameof(CurrentViewModel)); }
         }
 
-        private List<ViewModelBase> _legViewModels;
+        private List<LegPartViewModel> _legViewModels;
 
         private ViewModelBase _legViewModel;
 
@@ -30,6 +30,17 @@ namespace WpfApp2.Navigation
         {
             get { return _legViewModel; }
             set { _legViewModel = value; OnPropertyChanged(nameof(LegViewModel)); }
+        }
+
+        public void AddLegPartVM(LegPartViewModel vm)
+        {
+            if (_legViewModels == null)
+            {
+                _legViewModels = new List<LegPartViewModel>();
+                //_viewModels = new List<ViewModelBase>();
+            }
+            _legViewModels.Add(vm);
+            //_viewModels.Add(vm);
         }
 
         public NavigationController()
@@ -61,25 +72,30 @@ namespace WpfApp2.Navigation
                 new ViewModelAnalizeOverview(this),
                 new ViewModelAddOperation(this),
                 new LegPartViewModel(this),
-               new ViewModelDiagnosisListForOperation(this),
+                new ViewModelDiagnosisListForOperation(this),
                 new ViewModelComplainsList(this),
                 new ViewModelDiagnosisList(this),
-                new ViewModelRecomendationsList(this)
+                new ViewModelRecomendationsList(this),
+                new LegPartViewModel(this)
             };
 
             _currentViewModel = _viewModels.First();
 
-            _legViewModels = new List<ViewModelBase>
+            AddLegPartVM(new SFSViewModel(this, LegSide.Left));
+            /*
+            _legViewModels = new List<LegPartViewModel>
             {
-                new SFSViewModel(this),
-                new BPVHipViewModel(this),
-                new HipPerforateViewModel(this),
+                new SFSViewModel(this, LegSide.Left),
+                new SFSViewModel(this, LegSide.Right),
+                new BPVHipViewModel(this, LegSide.Left),
+                new BPVHipViewModel(this, LegSide.Right),
+                new HipPerforateViewModel(this, LegSide.Right),
                 new PDSVViewModel(this),
                 new ZDSVViewModel(this),
                 new TibiaPerforateViewModel(this),
                 new BPVTibiaViewModel(this),
                 new SPSViewModel(this)
-            };
+            };*/
 
             _legViewModel = _legViewModels.First();
         }
@@ -90,6 +106,24 @@ namespace WpfApp2.Navigation
 
             if (target != null)
                 CurrentViewModel = target;
+        }
+
+        public LegPartViewModel GetLegPart<T>(LegSide side)
+        {
+            var target1 = _legViewModels.Where(e => e.GetType() == typeof(T));
+            var target2 = target1.Where(e => (e).CurrentLegSide == side);
+            var target3 = target2.FirstOrDefault();
+            return target3;
+        }
+
+        public void NavigateTo<T>(LegSide side)
+        {
+            var target = GetLegPart<T>(side);
+            if (target != null)
+            {
+                LegViewModel = target;
+                NavigateTo<LegPartViewModel>();
+            }     
         }
 
         [NotifyPropertyChangedInvocator]

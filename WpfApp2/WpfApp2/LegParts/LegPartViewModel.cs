@@ -90,8 +90,8 @@ namespace WpfApp2.LegParts
 
         public DelegateCommand AnimationCompleted { get; set; }
 
-        protected LegSectionViewModel _lastSender;
-        protected Type _lastSenderType;
+        protected static LegSectionViewModel _lastSender;
+        protected static Type _lastSenderType;
 
         public static bool handled = false;
         public UIElement ui;
@@ -100,11 +100,12 @@ namespace WpfApp2.LegParts
         {
             if (!handled)
             {
+                var curPanel = ((LegPartViewModel)Controller.LegViewModel).CurrentPanelViewModel;
                 var currentPart = (LegSectionViewModel)sender;
                 _lastSender = (LegSectionViewModel)sender;
                 _lastSenderType = (Type)data;
                 handled = true;
-                CurrentPanelViewModel.PanelOpened = true;
+                ((LegPartViewModel)Controller.LegViewModel).CurrentPanelViewModel.PanelOpened = true;
             }
         }
 
@@ -138,6 +139,7 @@ namespace WpfApp2.LegParts
         {
             CurrentPanelViewModel = new SizePanelViewModel(this);
             OpenPanelCommand = new DelegateCommand(() => {
+                CurrentLegSide = CurrentLegSide;
                 CurrentPanelViewModel.PanelOpened = true;
             });
 
@@ -148,6 +150,7 @@ namespace WpfApp2.LegParts
             });
 
             SavePanelCommand = new DelegateCommand(() => {
+                CurrentLegSide = CurrentLegSide;
                 CurrentPanelViewModel.PanelOpened = false;
                 handled = false;
                 var newStruct = GetPanelStructure();
@@ -242,6 +245,41 @@ namespace WpfApp2.LegParts
         {
             var vm = new DialogConfirmStructureViewModel();
             var result = DialogService.DialogService.OpenDialog(vm, parameter as Window);
+        }
+
+        private string _summary;
+        public string Summary {
+            get
+            {
+                var str = "";
+                foreach (var section in LegSections)
+                {
+                    if (section.Text1 != "")
+                        str += section.Text1 + " ";
+                    if (section.HasSize)
+                    {
+                        str += section.Size + " ";
+                        str += section.SizeToText;
+                    }
+                    if (section.Text2 != "")
+                        str += section.Text2;
+
+                    if (section.Comment != "")
+                    {
+                        str += "\n";
+                        str += section.Comment;
+                    }
+
+                    str += "\n";
+                }
+                _summary = str;
+                return str;
+            }
+            set
+            {
+                _summary = value;
+                OnPropertyChanged();
+            }
         }
     }
 }
