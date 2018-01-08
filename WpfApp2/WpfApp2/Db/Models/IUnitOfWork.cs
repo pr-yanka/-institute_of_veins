@@ -10,6 +10,8 @@ namespace WpfApp2.Db.Models
 {
     public interface IUnitOfWork : IDisposable
     {
+        ReasonsOfCancleOperationRepository ReasonsOfCancleOperation { get; }
+
         CancelOperationRepository CancelOperation { get; }
         OperationResultRepository OperationResult { get; }
 

@@ -14,10 +14,11 @@ namespace WpfApp2.Db.Models
         public int Id { set; get; }
         [Column("дата_переноса")]
         public DateTime TransferDate { set; get; }
-        [Column("причина")]
+        [Column("причина"),ForeignKey("ReasonCancle")]
         public int Reason { set; get; }
         [Column("операция_отменена")]
         public bool isCancled { set; get; }
+        public virtual ReasonsOfCancleOperation ReasonCancle { get; set; }
     }
     public class CancelOperationRepository : Repository<CancelOperation>
     {

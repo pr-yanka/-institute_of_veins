@@ -46,7 +46,7 @@
                        VerticalAlignment="Top" Text="Диагноз слева" FontSize="16"/>
             <TextBlock x:Name="textBlock_Copy7" HorizontalAlignment="Left" Margin="695,130,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="Диагноз справа" RenderTransformOrigin="2.097,10.521" FontSize="16"/>
-            <Button x:Name="button_Copy3"  Visibility="{Binding Path=VisiBIlityOfAddResult}" Content="Отменить операцию" HorizontalAlignment="Left" Margin="180,558,0,0"              
+            <Button x:Name="button_Copy3"  Visibility="{Binding Path=VisiBIlityOfAddCancle}" Content="Отменить операцию" HorizontalAlignment="Left" Margin="180,558,0,0"              
                     VerticalAlignment="Top" Width="215" Command="{Binding Path=ToCancleOperationCommand}" Height="34" RenderTransformOrigin="0.502,0.471"/>
 
             <DataGrid  AutoGenerateColumns="False" HeadersVisibility="None" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" HorizontalAlignment="Left" Height="375" Margin="408,161,0,0" VerticalAlignment="Top" Width="289"  

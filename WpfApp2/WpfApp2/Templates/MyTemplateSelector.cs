@@ -37,6 +37,8 @@ namespace WpfApp2.Templates
         public DataTemplate LegPartMainTemplate { get; set; }
         public DataTemplate TemplateCheckboxes { get; set; }
 
+        public DataTemplate TemplateCancleOperations { get; set; }
+
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             if (item == null)
@@ -131,7 +133,7 @@ namespace WpfApp2.Templates
                 return TemplateCheckboxes;
 
             if (item.GetType() == typeof(ViewModelCancelOperations))
-                return TemplateAddOperationResult;
+                return TemplateCancleOperations;
             
             return null;
         }

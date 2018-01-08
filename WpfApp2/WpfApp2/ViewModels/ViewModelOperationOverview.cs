@@ -24,7 +24,7 @@ namespace WpfApp2.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
-      
+
         #region DelegateCommands
         public DelegateCommand ToPhysicalCommand { get; protected set; }
         public DelegateCommand ToCurrentPatientCommand { get; protected set; }
@@ -36,6 +36,9 @@ namespace WpfApp2.ViewModels
 
         #region Bindings
         public string OperationResults { get; set; }
+
+
+        public Visibility VisiBIlityOfAddCancle { get; set; }
         public Visibility VisiBIlityOfAddResult { get; set; }
         private List<DiagnosisDataSource> _leftDiagnosisList;
         private List<DiagnosisDataSource> _rightDiagnosisList;
@@ -87,17 +90,38 @@ namespace WpfApp2.ViewModels
                 OperationRepository OperationRp = new OperationRepository(context);
                 Operation = OperationRp.Get((int)data);
             }
-            if (Operation.итоги_операции != null)
+
+
+            DateTime bufTime = DateTime.Parse(Operation.Time);
+
+            Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
+
+
+            if (Operation.Date > DateTime.Now)
+            {
+                OperationResults = "Операция еще не проведена";
+                VisiBIlityOfAddResult = Visibility.Hidden;
+                VisiBIlityOfAddCancle = Visibility.Visible;
+            }else
             {
                 OperationResults = "Операция проведена";
-
+                VisiBIlityOfAddResult = Visibility.Visible;
+                VisiBIlityOfAddCancle = Visibility.Hidden;
             }
-            else
-            { OperationResults = "Итоги ещё не добавлены!"; }
+          
+            if (Operation.итоги_операции != null)
+            {
+                
+                OperationResults = "Итоги добавлены";
+                VisiBIlityOfAddResult = Visibility.Hidden;
+                VisiBIlityOfAddCancle = Visibility.Hidden;
+            }
+           
             if (Operation.отмена_операции != null)
             {
                 OperationResults = "Операция перенесена";
-
+                VisiBIlityOfAddResult = Visibility.Hidden;
+                VisiBIlityOfAddCancle = Visibility.Hidden;
             }
             LeftDiagnosisList = new List<DiagnosisDataSource>();
             RightDiagnosisList = new List<DiagnosisDataSource>();
@@ -107,17 +131,7 @@ namespace WpfApp2.ViewModels
             CurrentPatient = Data.Patients.Get(Operation.PatientId);
             initials = " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
 
-            DateTime bufTime = DateTime.Parse(Operation.Time);
-
-            Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
-
-
-            if (Operation.Date > DateTime.Now || Operation.итоги_операции != null || Operation.отмена_операции != null)
-            { VisiBIlityOfAddResult = Visibility.Hidden; }
-            else
-            {
-                VisiBIlityOfAddResult = Visibility.Visible;
-            }
+          
             foreach (var Brigade in Data.Brigade.GetAll)
             {
                 if (Brigade.id_операции == Operation.Id)
@@ -146,11 +160,9 @@ namespace WpfApp2.ViewModels
                     }
                 }
             }
-
-
         }
 
-       
+
 
         public ViewModelOperationOverview(NavigationController controller) : base(controller)
         {
