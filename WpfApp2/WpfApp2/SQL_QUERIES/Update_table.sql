@@ -67,6 +67,7 @@ INSERT INTO `med_db`.`медперсонал` (`id`, `имя`, `фамилия`,
 INSERT INTO `med_db`.`медперсонал` (`id`, `имя`, `фамилия`, `отчество`) VALUES ('2', 'Влад', 'Иванов', 'Петрович');
 INSERT INTO `med_db`.`медперсонал` (`id`, `имя`, `фамилия`, `отчество`) VALUES ('3', 'Алмаши', 'Янош', 'Петрович');
 
+UPDATE `med_db`.`аккаунты` SET `enabled/disabled`='1' WHERE `id`='1';
 
 
 SET  FOREIGN_KEY_CHECKS=1; 
