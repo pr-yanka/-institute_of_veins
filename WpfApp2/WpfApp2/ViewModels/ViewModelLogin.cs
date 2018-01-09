@@ -7,6 +7,7 @@ using System.Text;
 using System.Security;
 using System.Windows.Controls;
 using System.Windows;
+using WpfApp2.Messaging;
 
 namespace WpfApp2.ViewModels
 {
@@ -28,6 +29,7 @@ namespace WpfApp2.ViewModels
             ToRegistrationCommand = new DelegateCommand(
                 () =>
                 {
+
                     Controller.NavigateTo<ViewModelDashboard>();
                     //Controller.NavigateTo<ViewModelRegistration>();
                 }
@@ -49,6 +51,7 @@ namespace WpfApp2.ViewModels
                             isUeserNameCorrect = true;
                             if (CheckSum == acc.Password)
                             {
+                                MessageBus.Default.Call("GetAcaunt",this, acc.Id);
                                 Controller.NavigateTo<ViewModelDashboard>();
                                
                                
