@@ -18,7 +18,7 @@ using WpfApp2.ViewModels.Panels;
 
 namespace WpfApp2.ViewModels
 {
-    public class ViewModelAddPathology : ViewModelBase, INotifyPropertyChanged
+    public class ViewModelRedactPathology : ViewModelBase, INotifyPropertyChanged
     {
 
         #region Inotify realisation
@@ -54,24 +54,38 @@ namespace WpfApp2.ViewModels
 
         #endregion
         #region Bindings
-        public string TextAddOrSave { get; set; }
-        private ObservableCollection<string> _patologyTypes;
-        public ObservableCollection<string> PatologyTypes { get { return _patologyTypes; } set { _patologyTypes = value; OnPropertyChanged(); } }
-        private ObservableCollection<int> _patologyTypesId;
-        public ObservableCollection<int> PatologyTypesId { get { return _patologyTypesId; } set { _patologyTypesId = value; OnPropertyChanged(); } }
-        private Visibility _isNewTypeAvalible;
-        public Visibility isNewTypeAvalible { get { return _isNewTypeAvalible; } set { _isNewTypeAvalible = value; OnPropertyChanged(); } }
-
-        private int _index = 1;
-
         private bool _isReadOnly;
         public bool isReadOnly { get { return _isReadOnly; } set { _isReadOnly = value; OnPropertyChanged(); } }
 
+        private ObservableCollection<string> _patologyTypes;
+        public ObservableCollection<string> PatologyTypes { get { return _patologyTypes; } set { _patologyTypes = value; OnPropertyChanged(); } }
+
+        private ObservableCollection<int> _patologyTypesId;
+        public ObservableCollection<int> PatologyTypesId { get { return _patologyTypesId; } set { _patologyTypesId = value; OnPropertyChanged(); } }
+
+
+        private PatologyType _patologyType;
+
+
+        public PatologyType PatologyType
+        {
+            get { return _patologyType; }
+            set
+            {
+                _patologyType = value; OnPropertyChanged();
+            }
+        }
 
         public string _yearAppear;
         public string _monthAppear;
         public string _monthDisappear;
         public string _yearDisappear;
+
+        private Visibility _isNewTypeAvalible;
+        public Visibility isNewTypeAvalible { get { return _isNewTypeAvalible; } set { _isNewTypeAvalible = value; OnPropertyChanged(); } }
+
+
+
         private Brush _yearAppearB;
         private Brush _monthAppearB;
         private Brush _yearDisappearB;
@@ -81,6 +95,7 @@ namespace WpfApp2.ViewModels
         public Brush MonthAppearB { get { return _monthAppearB; } set { _monthAppearB = value; OnPropertyChanged(); } }
         public Brush YearDisappearB { get { return _yearDisappearB; } set { _yearDisappearB = value; OnPropertyChanged(); } }
         public Brush MonthDisappearB { get { return _monthDisappearB; } set { _monthDisappearB = value; OnPropertyChanged(); } }
+        private int _index = 1;
 
         public int Index { get { return _index; } set { _index = value; OnPropertyChanged(); } }
         public string YearAppear { get { return _yearAppear; } set { _yearAppear = value; } }
@@ -88,61 +103,68 @@ namespace WpfApp2.ViewModels
         public string MonthDisappear { get { return _monthDisappear; } set { _monthDisappear = value; } }
         public string YearDisappear { get { return _yearDisappear; } set { _yearDisappear = value; } }
 
+
+        public string TextAddOrSave { get; set; }
+
         public DateTime DateAppear { get; set; }
 
         public DateTime DateDisappear { get; set; }
 
         public Patient CurrentPatient { get; set; }
+
+        public Patology CurrentPatology { get; set; }
         #endregion
         #region MessageBus
 
-        private void SetCurrentPatientID(object sender, object data)
+        private void SetCurrentPatology(object sender, object data)
         {
-            isNewTypeAvalible = Visibility.Visible;
-            isReadOnly = true;
-            CurrentPatient = Data.Patients.Get((int)data);
+            isNewTypeAvalible = Visibility.Hidden;
+            isReadOnly = false;
             using (var context = new MySqlContext())
             {
-                PatologyTypesId = new ObservableCollection<int>();
+
                 PatologyTypes = new ObservableCollection<string>();
-                ObservableCollection<PatologyType> PatologyTypesbuf = new ObservableCollection<PatologyType>();
+
+                PatologyTypesId = new ObservableCollection<int>();
 
 
-                PatologyRepository ptRep = new PatologyRepository(context);
-                PatientsRepository ptentRep = new PatientsRepository(context);
                 PatologyTypeRepository PatType = new PatologyTypeRepository(context);
+                PatologyRepository PatRep = new PatologyRepository(context);
+                PatientsRepository PatsRep = new PatientsRepository(context);
 
-                foreach (var Patology in ptRep.GetAll)
+
+
+                foreach (var Patology in PatType.GetAll)
                 {
-                    //Patology sadasew
-                    if (Patology.id_пациента == CurrentPatient.Id)
-                    {
-                        foreach (var PatoType in PatType.GetAll)
-                        {
-                            if (PatoType.Id == Patology.id_патологии)
-                            {
-                                PatologyTypesbuf.Add(PatoType);
-                            }
-                        }
+                    PatologyTypes.Add(Patology.Str);
+                    PatologyTypesId.Add(Patology.Id);
+                }
 
+                CurrentPatology = (Patology)data;
+                foreach (var Patology in PatologyTypesId)
+                {
+                    if (CurrentPatology.id_патологии == Patology)
+                    {
+                        Index = PatologyTypesId.IndexOf(Patology);
+                        break;
                     }
                 }
-                bool result = true;
-                foreach (var PatoType in PatType.GetAll)
-                {
-                    result = true;
+                CurrentPatient = PatsRep.Get(CurrentPatology.id_пациента);
 
-                    foreach (var PatoTypeBuff in PatologyTypesbuf)
-                    {
-                        if (PatoType.Id == PatoTypeBuff.Id)
-                            result = false;
-                    }
-                    if (result == true)
-                    {
-                        PatologyTypes.Add(PatoType.Str);
-                        PatologyTypesId.Add(PatoType.Id);
-                    }
+
+                YearAppear = CurrentPatology.YearAppear.Value.Year.ToString();
+                MonthAppear = CurrentPatology.MonthAppear.Value.Month.ToString();
+                try
+                {
+                    YearDisappear = CurrentPatology.YearDisappear.Value.Year.ToString();
+                    MonthDisappear = CurrentPatology.MonthDisappear.Value.Month.ToString();
                 }
+                catch
+                {
+                    YearDisappear = "";
+                    MonthDisappear = "";
+                }
+
 
             }
 
@@ -152,6 +174,8 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToPathologyListCommand { get; protected set; }
         public DelegateCommand ToPathologyListNoSaveCommands { get; protected set; }
         #endregion
+
+
 
         private bool testTime()
         {
@@ -210,19 +234,21 @@ namespace WpfApp2.ViewModels
             return result;
         }
 
-        public ViewModelAddPathology(NavigationController controller) : base(controller)
+        public ViewModelRedactPathology(NavigationController controller) : base(controller)
         {
-
-            TextAddOrSave = "Добавить";
+            isReadOnly = true;
+            TextAddOrSave = "Сохранить";
             YearAppearB = Brushes.Gray;
             MonthAppearB = Brushes.Gray;
+            PatologyType = new PatologyType();
             DateAppear = DateTime.Now;
             DateDisappear = DateTime.Now;
-            MessageBus.Default.Subscribe("GetPatientForAddPatology", SetCurrentPatientID);
+            MessageBus.Default.Subscribe("GetPatologyForRedactPatology", SetCurrentPatology);
             HasNavigation = false;
             CurrentPanelViewModel = new PatologyTypePanelViewModel(this);
             OpenPanelCommand = new DelegateCommand(() =>
             {
+
                 CurrentPanelViewModel.ClearPanel();
                 CurrentPanelViewModel.PanelOpened = true;
             });
@@ -238,26 +264,31 @@ namespace WpfApp2.ViewModels
 
                     if (testTime())
                     {
-                        Patology buff = new Patology();
-                        DateAppear = new DateTime(int.Parse(YearAppear), int.Parse(MonthAppear), 1);
-                        buff.MonthAppear = DateAppear;
-                        buff.YearAppear = DateAppear;
-                        if (!String.IsNullOrEmpty(MonthDisappear) && !String.IsNullOrEmpty(YearDisappear))
-                        {
-                            DateDisappear = new DateTime(int.Parse(YearDisappear), int.Parse(MonthDisappear), 1);
-                            buff.MonthDisappear = DateDisappear;
-                            buff.YearDisappear = DateDisappear;
-                        }
-                        else
-                        {
-                            buff.MonthDisappear = null;
-                            buff.YearDisappear = null;
-                        }
-                        buff.id_пациента = CurrentPatient.Id;
 
-                        buff.id_патологии = PatologyTypesId[Index];
 
-                        Data.Patology.Add(buff);
+                        foreach (var Patology in Data.Patology.GetAll)
+                        {
+                            if (Patology.id_пациента == CurrentPatology.id_пациента && Patology.id_патологии == CurrentPatology.id_патологии)
+                            {
+                                DateAppear = new DateTime(int.Parse(YearAppear), int.Parse(MonthAppear), 1);
+                                Patology.MonthAppear = DateAppear;
+                                Patology.YearAppear = DateAppear;
+                                if (!String.IsNullOrEmpty(MonthDisappear) && !String.IsNullOrEmpty(YearDisappear))
+                                {
+                                    DateDisappear = new DateTime(int.Parse(YearDisappear), int.Parse(MonthDisappear), 1);
+                                    Patology.MonthDisappear = DateDisappear;
+                                    Patology.YearDisappear = DateDisappear;
+                                }
+                                else
+                                {
+                                    Patology.MonthDisappear = null;
+                                    Patology.YearDisappear = null;
+                                }
+                             
+                                break;
+                            }
+                        }
+
                         Data.Complete();
                         MessageBus.Default.Call("GetPatientForPatology", this, CurrentPatient.Id);
                         Controller.NavigateTo<ViewModelPathologyList>();
@@ -285,7 +316,7 @@ namespace WpfApp2.ViewModels
                 var newType = CurrentPanelViewModel.GetPanelType();
                 Data.PatologyType.Add((newType));
                 Data.Complete();
-                MessageBus.Default.Call("GetPatientForAddPatology", this, CurrentPatient.Id);
+                MessageBus.Default.Call("GetPatologyForRedactPatology", this, CurrentPatology);
             });
 
         }

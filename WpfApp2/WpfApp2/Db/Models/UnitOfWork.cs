@@ -10,6 +10,9 @@ namespace WpfApp2.Db.Models
 {
     public class UnitOfWork : IUnitOfWork
     {
+        public PatologyRepository Patology { get; }
+        public PatologyTypeRepository PatologyType { get; }
+
         public CancelOperationRepository CancelOperation { get; }
         public OperationResultRepository OperationResult { get; }
         public ReasonsOfCancleOperationRepository ReasonsOfCancleOperation { get; }
@@ -39,6 +42,8 @@ namespace WpfApp2.Db.Models
         public UnitOfWork (MySqlContext context)
         {
             _context = context;
+            PatologyType = new PatologyTypeRepository(_context);
+            Patology = new PatologyRepository(_context);
             // _context.Configuration.AutoDetectChangesEnabled = false;
             // _context.Set<Operation>().AsNoTracking();
             ReasonsOfCancleOperation = new ReasonsOfCancleOperationRepository(_context);

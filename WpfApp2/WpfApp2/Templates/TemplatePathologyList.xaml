@@ -3,25 +3,59 @@
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplatePathologyList">
         <Grid Margin="220,80,0,0">
-            <Grid.Background>
-                <RadialGradientBrush>
-                    <GradientStop Color="#FFC7D0EA" Offset="0"/>
-                    <GradientStop Color="#FFEBF0FD" Offset="1"/>
-                </RadialGradientBrush>
-            </Grid.Background>
-            <Label x:Name="label" Content="Патологии" HorizontalAlignment="Left" Margin="214,10,0,0" VerticalAlignment="Top"/>
-            <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" Margin="17,52,0,0" VerticalAlignment="Top" Height="200" Width="490">
+
+            <Label x:Name="label" Content="Патологии" HorizontalAlignment="Left" Margin="13,10,0,0" FontFamily="/fonts/#Pescadero" FontSize="16pt" VerticalAlignment="Top"/>
+            <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" AutoGenerateColumns="False" Margin="17,52,0,0" VerticalAlignment="Top" Height="500" Width="auto" ItemsSource="{Binding Path=PatologyList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
                 <DataGrid.Columns>
-                    <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Патология"/>
-                    <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Месяц появления"/>
-                    <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Год появления"/>
-                    <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Удаление"/>
-                    <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="комментарий"/>
+                 
+                        <DataGridTemplateColumn Header="Патология">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Background="Gray" TextAlignment="Center" Text="{Binding Name}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Дата появления">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Center" Text="{Binding DateAppear}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Месяц исчезнования">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock TextAlignment="Center" Text="{Binding DateDisapear}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Архивировать">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                    <Button x:Name="ToPatient" Command="{Binding Path=ArchiveCommand}" HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}">
+                                            <Image Source="pack://application:,,,/Images/forward.png"></Image>
+                                        </Button>
+                                    </Grid>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Редактировать">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Button x:Name="ToPatient" Command="{Binding Path=RedactCommand}" HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}">
+                                        <Image Source="pack://application:,,,/Images/forward.png"></Image>
+                                    </Button>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button x:Name="button_Copy1" Command="{Binding Path=ToAddPathologyCommand}" Content="Указать патологию" HorizontalAlignment="Left" Margin="186,270,0,0"  
+            <Button x:Name="button_Copy1" Command="{Binding Path=ToAddPathologyCommand}" Content="Указать патологию" HorizontalAlignment="Left" Margin="286,470,0,0"  
                     VerticalAlignment="Top" Width="158" Height="31"/>
-            <Button x:Name="button_Copy2" Command="{Binding Path=ToAddPathologyCommand}" Content="Возврат" HorizontalAlignment="Left" Margin="86,270,0,0"  
+            <Button x:Name="button_Copy2" Command="{Binding Path=ToCurrentPatientCommand}" Content="Возврат" HorizontalAlignment="Left" Margin="86,470,0,0"  
                     VerticalAlignment="Top" Width="158" Height="31"/>
         </Grid>
     </DataTemplate>

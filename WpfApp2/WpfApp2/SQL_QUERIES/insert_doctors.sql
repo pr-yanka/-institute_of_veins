@@ -66,3 +66,5 @@ INSERT into специализации (id_специализации, id_вра
 INSERT into специализации (id_специализации, id_врача) VALUES (3, 3);
 INSERT into научные_звания (id_звания, id_врача) VALUES (2, 3);
 INSERT into категории (id_категории, id_врача) VALUES (1, 3);
+
+
