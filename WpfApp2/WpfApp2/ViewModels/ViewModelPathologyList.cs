@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Microsoft.Practices.Prism.Commands;
 using WpfApp2.Db.Models;
 using WpfApp2.Messaging;
@@ -20,10 +21,15 @@ namespace WpfApp2.ViewModels
         public string DateDisapear { get; set; }
         public DelegateCommand ArchiveCommand { get; set; }
         public DelegateCommand RedactCommand { get; set; }
+
+        public Visibility ArchiveButtonVis { get; set; }
+
+        public float Opacity { get; set; }
         private Patology Patology;
 
 
-        public PatologyDataSource(string Name, string DateAppear, string DateDisapear, DelegateCommand ArchiveCommand, DelegateCommand RedactCommand, Patology Patology)
+
+        public PatologyDataSource(string Name, string DateAppear, string DateDisapear, DelegateCommand ArchiveCommand, DelegateCommand RedactCommand, Patology Patology, float Opacity)
         {
             this.Name = Name;
             this.DateAppear = DateAppear;
@@ -31,6 +37,14 @@ namespace WpfApp2.ViewModels
             this.ArchiveCommand = ArchiveCommand;
             this.RedactCommand = RedactCommand;
             this.Patology = Patology;
+            this.Opacity = Opacity;
+            if (Opacity == 0.38f)
+            { ArchiveButtonVis = Visibility.Hidden; }else
+            {
+                ArchiveButtonVis = Visibility.Visible;
+            }
+
+
         }
     }
     public class ViewModelPathologyList : ViewModelBase, INotifyPropertyChanged
@@ -74,6 +88,9 @@ namespace WpfApp2.ViewModels
                         {
                             if (PatoType.Id == Patology.id_патологии)
                             {
+                                float OpacityBuf = 0.0f;
+                                if (Patology.isArchivatied == true)
+                                 OpacityBuf = 0.38f; 
                                 string DateAppear = Patology.MonthAppear.Value.Month.ToString() + "/" + Patology.YearAppear.Value.Year.ToString();
                                 string DateDisappear = "";
                                 try
@@ -97,7 +114,7 @@ namespace WpfApp2.ViewModels
                                         Controller.NavigateTo<ViewModelArchivePathology>();
                                     }
                                     );
-                                PatologyList.Add(new PatologyDataSource(PatoType.Str, DateAppear, DateDisappear, ToArchiveP, ToRedactP, Patology));
+                                PatologyList.Add(new PatologyDataSource(PatoType.Str, DateAppear, DateDisappear, ToArchiveP, ToRedactP, Patology, OpacityBuf));
                             }
                         }
 
