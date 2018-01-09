@@ -25,7 +25,8 @@ namespace WpfApp2.Db.Models
 
         [Column("отчество")]
         public string Patronimic { set; get; }
-        [Column("дополнительно")]
+
+        [Column("дополнительная_информация")]
         public string Aditional { set; get; }
 
         //[Column("id_категории")]

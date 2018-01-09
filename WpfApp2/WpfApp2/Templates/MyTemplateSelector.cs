@@ -36,7 +36,8 @@ namespace WpfApp2.Templates
         public DataTemplate TemplateAnalize { get; set; }
         public DataTemplate LegPartMainTemplate { get; set; }
         public DataTemplate TemplateCheckboxes { get; set; }
-
+        public DataTemplate TemplateAdminPanel { get; set; }
+        public DataTemplate TemplateViewPersonal { get; set; }
         public DataTemplate TemplateCancleOperations { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
@@ -140,7 +141,22 @@ namespace WpfApp2.Templates
 
             if (item.GetType() == typeof(ViewModelArchivePathology))
                 return TemplateAddPathology;
+
+            if (item.GetType() == typeof(ViewModelAdminPanel))
+                return TemplateAdminPanel;
+
+
+            if (item.GetType() == typeof(ViewModelViewDoctors))
+                return TemplateViewPersonal;
+
+            if (item.GetType() == typeof(ViewModelViewUsers))
+                return TemplateViewPersonal;
+
+            if (item.GetType() == typeof(ViewModelViewMedPatient))
+                return TemplateViewPersonal;
             
+
+
 
 
             return null;

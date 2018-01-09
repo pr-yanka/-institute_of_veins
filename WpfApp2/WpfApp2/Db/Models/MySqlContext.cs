@@ -9,7 +9,11 @@ namespace WpfApp2.Db.Models
 {
     public class MySqlContext : DbContext
     {
-       
+        
+        public DbSet<MedPersonal> MedPersonal { get; set; }
+
+        public DbSet<Accaunt> Accaunt { get; set; }
+
         public DbSet<Patology> Patology { get; set; }
         public DbSet<PatologyType> PatologyType { get; set; }
 

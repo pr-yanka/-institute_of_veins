@@ -157,8 +157,10 @@
     <Compile Include="Controls\AddReport.xaml.cs">
       <DependentUpon>AddReport.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Db\Models\MedPersonalRepository.cs" />
     <Compile Include="Db\Models\AnalizeRepository.cs" />
     <Compile Include="Db\Models\AnalizeTypeRepository.cs" />
+    <Compile Include="Db\Models\AccauntRepository.cs" />
     <Compile Include="Db\Models\AnestethicRepository.cs" />
     <Compile Include="Db\Models\BrigadeRepository.cs" />
     <Compile Include="Db\Models\CancelOperationRepository.cs" />
@@ -265,6 +267,10 @@
     <Compile Include="ViewModels\ViewModelRecomendationsAdd.cs" />
     <Compile Include="ViewModels\ViewModelRecomendationsList.cs" />
     <Compile Include="ViewModels\ViewModelSymptomsAdd.cs" />
+    <Compile Include="ViewModels\ViewModelAdminPanel.cs" />
+    <Compile Include="ViewModels\ViewModelViewMedPatient.cs" />
+    <Compile Include="ViewModels\ViewModelViewUsers.cs" />
+    <Compile Include="ViewModels\ViewModelViewDoctors.cs" />
     <Compile Include="ViewModels\ViewModelViewHistory.cs" />
     <Compile Include="ViewModels\ViewModelAddPhysicalScreen1.cs" />
     <Compile Include="ViewModels\ViewModelCurrentPatient.cs" />
@@ -350,7 +356,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Templates\TemplateAdminPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Templates\TemplateLogin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Templates\TemplateViewPersonal.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

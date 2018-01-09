@@ -8,37 +8,32 @@
                 <LinearGradientBrush.GradientStops>
                     <GradientStop Color="White" Offset="0.3"/>
                     <GradientStop Color="Azure" Offset=".8"/>
-                    </LinearGradientBrush.GradientStops> 
+                </LinearGradientBrush.GradientStops> 
             </LinearGradientBrush>
         </Grid.Background>
             <TextBlock DockPanel.Dock="Top" FontFamily="/fonts/#Pescadero" FontSize="18pt" Margin="24,0,-24,586" Height="38" Text="{Binding Path=CurrentPatient.Name}"><TextBlock Text="{Binding Path=initials}"/></TextBlock>
             <CheckBox x:Name="button2" Content="Показывать отменённые операции" IsChecked="{Binding Path=isCanceledOprVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Right" Margin="380,17,0,0" VerticalAlignment="Top" Width="auto" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-
             <Button x:Name="button" Content="Добавить обследование" Command="{Binding Path=ToAddPhysicalCommand}" HorizontalAlignment="Left" Margin="24,391,0,0" VerticalAlignment="Top" Width="225" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
             <Button x:Name="button_Copy3" Content="К ПАЦИЕНТУ" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="24,448,0,0" VerticalAlignment="Top" Width="707" Height="43" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-        
-                <DataGrid HorizontalAlignment="Left" Height="295" VerticalAlignment="Top" Width="707" Margin="24,68,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Foreground="Black"  ItemsSource="{Binding Path=HistoryDataSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserResizeRows="False">
+            <DataGrid HorizontalAlignment="Left" Height="295" VerticalAlignment="Top" Width="707" Margin="24,68,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Foreground="Black"  ItemsSource="{Binding Path=HistoryDataSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserResizeRows="False">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn>
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
                                 <Button  Content="{Binding Type}" Command="{Binding Path=Command}" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                           
-                        </DataGridTemplateColumn>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <DatePickerTextBox IsReadOnly="True" Text="{Binding Date}"  />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
-
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
-                            </DataGrid>
-       
-        <Button x:Name="button_Copy4" Content="Добавить операцию" Command="{Binding Path=ToAddOperationCommand}" HorizontalAlignment="Left" Margin="506,391,0,0" VerticalAlignment="Top" Width="225" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+               </DataGrid>
+               <Button x:Name="button_Copy4" Content="Добавить операцию" Command="{Binding Path=ToAddOperationCommand}" HorizontalAlignment="Left" Margin="506,391,0,0" VerticalAlignment="Top" Width="225" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
             <Button x:Name="button_Copy6" Content="Добавить анализы" Command="{Binding Path=ToAddAnalizeCommand}" HorizontalAlignment="Left" Margin="265,391,0,0" VerticalAlignment="Top" Width="225" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
     </Grid></DataTemplate>
 

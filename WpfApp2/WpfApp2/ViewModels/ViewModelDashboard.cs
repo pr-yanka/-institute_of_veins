@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows.Input;
-using Microsoft.Practices.Prism.Commands;
+﻿using Microsoft.Practices.Prism.Commands;
 using WpfApp2.Navigation;
 
 namespace WpfApp2.ViewModels

@@ -27,14 +27,19 @@
         <ResourceDictionary Source="Operation/TemplateOperationResultOverview.xaml"/>
         <ResourceDictionary Source="Operation/TemplateAddOperationResult.xaml"/>
         <ResourceDictionary Source="TemplateAnalize.xaml"/>
+        <ResourceDictionary Source="TemplateAdminPanel.xaml"/>
         <ResourceDictionary Source="TemplateCheckboxes.xaml"/>
         <ResourceDictionary Source="Operation/TemplateCancleOperations.xaml"/>
         <ResourceDictionary Source="/LegParts/LegPartMainTemplate.xaml"/>
-   
+        <ResourceDictionary Source="TemplateViewPersonal.xaml"/>
         
+
+
     </ResourceDictionary.MergedDictionaries>
 
     <local:MyTemplateSelector x:Key="MyTemplateSelector" 
+                              TemplateViewPersonal ="{StaticResource TemplateViewPersonal}"
+                              TemplateAdminPanel ="{StaticResource TemplateAdminPanel}"
                               TemplateCancleOperations="{StaticResource TemplateCancleOperations}"
                               TemplateAddAnalize="{StaticResource TemplateAddAnalize}"
                               TemplateLogin="{StaticResource TemplateLogin}"

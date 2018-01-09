@@ -1,0 +1,20 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:WpfApp2.Templates">
+    <DataTemplate x:Key="TemplateAdminPanel">
+        <Grid Name="RootGrid">
+            <Button x:Name="buttonToPatients" Command="{Binding ToMedPersonalCommand}" HorizontalAlignment="Left" Margin="601,222,0,0" VerticalAlignment="Top" Width="227" Height="153" Background="#FFDDF2F3" FontFamily="Segoe UI Symbol" FontSize="16" BorderBrush="{x:Null}" Foreground="#FF686868" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" UseLayoutRounding="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" FontStretch="Condensed">
+                <Image Margin="0,22,0,61" Source="pack://application:,,,/Images/patient.png" Stretch="Fill" Width="60" Height="60"/>
+            </Button>
+            <TextBlock FontFamily="Source Sans Pro" HorizontalAlignment="Left" Margin="613,319,0,0" TextWrapping="Wrap" Text="Медперсонал" VerticalAlignment="Top" Width="202" Height="75" TextAlignment="Center" FontSize="14" Foreground="#FF404040"/>
+            <Button x:Name="buttonToPhysicalTable" Command="{Binding ToUsersCommand}" HorizontalAlignment="Left" Margin="342,431,0,0" VerticalAlignment="Top" Width="227" Height="153" Background="#FFDDF2F3" FontFamily="Segoe UI Symbol" FontSize="16" BorderBrush="{x:Null}" Foreground="#FF686868" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" UseLayoutRounding="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" FontStretch="Condensed">
+                <Image Margin="0,25,0,68" Source="pack://application:,,,/Images/patient.png" Stretch="Fill" Width="54" Height="54"/>
+            </Button>
+            <Button x:Name="buttonToNewPatient" Command="{Binding ToDoctorsCommand}" HorizontalAlignment="Left" Margin="342,222,0,0" VerticalAlignment="Top" Width="227" Height="153" Background="#FFDDF2F3" FontFamily="Segoe UI Symbol" FontSize="16" BorderBrush="{x:Null}" Foreground="#FF686868" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" UseLayoutRounding="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" FontStretch="Condensed">
+                <Image Source="pack://application:,,,/Images/patient.png" Width="50" Height="50" HorizontalAlignment="Left" Margin="0,24,0,69"/>
+            </Button>
+            <TextBlock FontFamily="Source Sans Pro" HorizontalAlignment="Left" Margin="359,521,0,0" TextWrapping="Wrap" Text="Пользователи" VerticalAlignment="Top" Width="188" Height="47" TextAlignment="Center" FontSize="14" Foreground="#FF404040"/>
+            <TextBlock FontFamily="Source Sans Pro" HorizontalAlignment="Left" Margin="359,319,0,0" TextWrapping="Wrap" Text="Врачи" VerticalAlignment="Top" Width="188" Height="47" TextAlignment="Center" FontSize="14" Foreground="#FF404040"/>
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>
