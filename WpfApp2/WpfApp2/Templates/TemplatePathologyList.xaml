@@ -2,16 +2,41 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplatePathologyList">
-        <Grid Margin="220,80,0,0">
+        <Grid Margin="220,80,0,0" >
 
             <Label x:Name="label" Content="Патологии" HorizontalAlignment="Left" Margin="13,10,0,0" FontFamily="/fonts/#Pescadero" FontSize="16pt" VerticalAlignment="Top"/>
-            <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" AutoGenerateColumns="False" Margin="17,52,0,0" VerticalAlignment="Top" Height="500" Width="auto" ItemsSource="{Binding Path=PatologyList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
+            <DataGrid CanUserAddRows="False" CanUserResizeRows="false" CanUserResizeColumns="False" x:Name="dataGrid" HorizontalAlignment="Left" AutoGenerateColumns="False" Margin="17,52,0,0" VerticalAlignment="Top" Height="500" Width="auto" ItemsSource="{Binding Path=PatologyList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
+                <DataGrid.RowStyle>
+
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="SkyBlue" ></Setter>
+                            </Trigger>
+
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="LightSkyBlue" ></Setter>
+                            </Trigger>
+                            <DataTrigger Binding="{Binding Opacity}" Value="0.38">
+                                <Setter Property="Background" Value="Gray" ></Setter>
+                                <Setter Property="Opacity" Value="1" ></Setter>
+                            </DataTrigger>
+
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+
                 <DataGrid.Columns>
-                 
-                        <DataGridTemplateColumn Header="Патология">
-                        <DataGridTemplateColumn.CellTemplate>
+
+                    <DataGridTemplateColumn Header="Патология" >
+                        
+                        <DataGridTemplateColumn.CellTemplate  >
+                           
                             <DataTemplate>
-                                <TextBlock Background="Gray" TextAlignment="Center" Text="{Binding Name}" />
+
+                             
+                                    <TextBlock  Text="{Binding Name}" />
+                               
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -33,7 +58,7 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Grid>
-                                    <Button x:Name="ToPatient" Command="{Binding Path=ArchiveCommand}" HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}">
+                                    <Button ToolTip="Можете заархивировать патологию в случае, если пациент от неё избавился" Visibility="{Binding ArchiveButtonVis}" x:Name="ToPatient" Command="{Binding Path=ArchiveCommand}" HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}">
                                             <Image Source="pack://application:,,,/Images/forward.png"></Image>
                                         </Button>
                                     </Grid>

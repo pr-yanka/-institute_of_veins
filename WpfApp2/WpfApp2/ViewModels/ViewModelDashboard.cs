@@ -1,12 +1,12 @@
-﻿using System;
-using System.Windows.Input;
-using Microsoft.Practices.Prism.Commands;
+﻿using Microsoft.Practices.Prism.Commands;
+using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 
 namespace WpfApp2.ViewModels
 {
     public class ViewModelDashboard : ViewModelBase
-    {
+    { 
+        public string AccauntName { get; set; }
         public DelegateCommand ToOperationOverviewCommand { get; protected set; }
         public DelegateCommand ToNewPatientCommand { get; protected set; }
         public DelegateCommand ToCurrentPatientCommand { get; protected set; }
@@ -15,9 +15,16 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToPhysicalTableCommand { get; protected set; }
         public DelegateCommand ToCalendarOperationsCommand { get; protected set; }
 
-        public ViewModelDashboard(NavigationController controller) : base(controller)
+
+        private void GetAcaunt(object sender, object data)
+        {
+            AccauntName = Data.Accaunt.Get((int)data).Name;
+        }
+            public ViewModelDashboard(NavigationController controller) : base(controller)
         {
             base.HasNavigation = true;
+
+            MessageBus.Default.Subscribe("GetAcaunt", GetAcaunt);
 
             ToOperationOverviewCommand = new DelegateCommand(
                 () =>

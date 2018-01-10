@@ -91,6 +91,8 @@ namespace WpfApp2.ViewModels
         public ObservableCollection<DiagnosisDataSource> RightDiagnosisList { get; set; }
         public ObservableCollection<string> OprTypes { get; set; }
         public ObservableCollection<string> AnestethicTypes { get; set; }
+        public ObservableCollection<int> OprTypesId { get; set; }
+        public ObservableCollection<int> AnestethicTypesID { get; set; }
         public ObservableCollection<DoctorDataSource> Doctors { get; set; }
 
         private Brush _textBox_Minute;
@@ -217,6 +219,25 @@ namespace WpfApp2.ViewModels
             CurrentPatient = Data.Patients.Get((int)data);
             initials = " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
 
+            OprTypes = new ObservableCollection<string>();
+            AnestethicTypes = new ObservableCollection<string>();
+            Doctors = new ObservableCollection<DoctorDataSource>();
+            OprTypesId = new ObservableCollection<int>();
+            AnestethicTypesID = new ObservableCollection<int>();
+            foreach (var Doctor in Data.Doctor.GetAll)
+            {
+                Doctors.Add(new DoctorDataSource(Doctor));
+            }
+            foreach (var OprType in Data.OperationType.GetAll)
+            {
+                OprTypes.Add(OprType.LongName);
+                OprTypesId.Add(OprType.Id);
+            }
+            foreach (var AnestethicType in Data.Anestethic.GetAll)
+            {
+                AnestethicTypes.Add(AnestethicType.Str);
+                AnestethicTypesID.Add(AnestethicType.Id);
+            }
         }
         #endregion
 
@@ -237,9 +258,7 @@ namespace WpfApp2.ViewModels
             MessageBus.Default.Subscribe("SetRightDiagnosisListForOperation", SetRightDiagnosisList);
             MessageBus.Default.Subscribe("SetLeftDiagnosisListForOperation", SetLeftDiagnosisList);
             MessageBus.Default.Subscribe("UpdateSelectedDoctors", UpdateSelectedDoctors);
-            OprTypes = new ObservableCollection<string>();
-            AnestethicTypes = new ObservableCollection<string>();
-            Doctors = new ObservableCollection<DoctorDataSource>();
+           
             Controller = controller;
             HasNavigation = false;
             Operation = new Operation();
@@ -248,18 +267,7 @@ namespace WpfApp2.ViewModels
             RightDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
 
 
-            foreach (var Doctor in Data.Doctor.GetAll)
-            {
-                Doctors.Add(new DoctorDataSource(Doctor));
-            }
-            foreach (var OprType in Data.OperationType.GetAll)
-            {
-                OprTypes.Add(OprType.LongName);
-            }
-            foreach (var AnestethicType in Data.Anestethic.GetAll)
-            {
-                AnestethicTypes.Add(AnestethicType.Str);
-            }
+           
             ToCurrentPatientCommand = new DelegateCommand(
                 () => { Controller.NavigateTo<ViewModelCurrentPatient>(); }
             );
@@ -281,8 +289,8 @@ namespace WpfApp2.ViewModels
                     Operation.Time = Hour + ":" + Minute+":"+ 0;
 
                         Operation.PatientId = CurrentPatient.Id;
-                        Operation.AnestheticId = AnesteticSelected + 1;
-                        Operation.OperationTypeId = OprTypeSelected + 1;
+                        Operation.AnestheticId = AnestethicTypesID[AnesteticSelected];
+                        Operation.OperationTypeId =  OprTypesId[OprTypeSelected];
                         Data.Operation.Add(Operation);
                         Data.Complete();
                         foreach (var Doctor in DoctorsSelected)

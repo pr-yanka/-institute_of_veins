@@ -4,7 +4,7 @@
     <DataTemplate x:Key="TemplateDashboard">
         <Grid Name="RootGrid">
             
-            <TextBlock  FontSize="24" Margin="273,93,-273,589" Height="38" Foreground="#FFA81E1E"><Run Text="Здравствуйте, Оксана!"/></TextBlock>
+            <TextBlock  FontSize="24" Margin="273,93,-273,589" Height="38" Foreground="#FFA81E1E"><Run Text="Здравствуйте, "/><TextBlock Text="{Binding AccauntName}"></TextBlock></TextBlock>
 
             <Label FontFamily="Source Sans Pro" x:Name="label" Content="        Ваша следущая операция назначена на 14:30" Margin="273,150,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.338,0.401" Height="31" Background="#FFFFF0F0" HorizontalAlignment="Left" Width="607" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" FontSize="14" />
             <Label Target="{Binding ElementName=TextArea}" Margin="592,150,231,353" FontFamily="Segoe UI Light" FontSize="14">

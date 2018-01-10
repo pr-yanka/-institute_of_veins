@@ -17,7 +17,8 @@ namespace WpfApp2.Navigation
 
         private ViewModelBase _currentViewModel;
 
-        public ViewModelBase CurrentViewModel {
+        public ViewModelBase CurrentViewModel
+        {
             get { return _currentViewModel; }
             set { _currentViewModel = value; OnPropertyChanged(nameof(CurrentViewModel)); }
         }
@@ -48,7 +49,7 @@ namespace WpfApp2.Navigation
             _viewModels = new List<ViewModelBase>
             {
                 new ViewModelLogin(this),
-            
+
                 new ViewModelOperationResultOverview(this),
                 new ViewModelPhysicalOverview(this),
                 new ViewModelOperationOverview(this),
@@ -78,9 +79,13 @@ namespace WpfApp2.Navigation
                 new ViewModelDiagnosisListForOperation(this),
                 new ViewModelComplainsList(this),
                 new ViewModelDiagnosisList(this),
-                new  ViewModelCancelOperations(this),
+                new ViewModelCancelOperations(this),
                 new ViewModelRecomendationsList(this),
                 new ViewModelArchivePathology(this),
+                new ViewModelAdminPanel(this),
+                new ViewModelViewDoctors(this),
+                new ViewModelViewUsers(this),
+                new   ViewModelViewMedPatient(this),
                 new LegPartViewModel(this)
             };
 
@@ -128,7 +133,7 @@ namespace WpfApp2.Navigation
             {
                 LegViewModel = target;
                 NavigateTo<LegPartViewModel>();
-            }     
+            }
         }
 
         [NotifyPropertyChangedInvocator]

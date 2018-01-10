@@ -21,6 +21,7 @@ namespace WpfApp2.ViewModels
         public Analize Analize { get; set; }
         public Patient CurrentPatient { get; set; }
         public List<AnalizeType> AnalizeTypes { get; set; }
+     
         public int SelectedIndexOfAnalizeType { get; set; }
         public string ButtonName { get; set; }
 
@@ -29,6 +30,13 @@ namespace WpfApp2.ViewModels
             CurrentPatient = Data.Patients.Get((int)data);
             Analize.patientId = CurrentPatient.Id;
             Analize.data = DateTime.Now;
+
+            AnalizeTypes = new List<AnalizeType>();
+            foreach (var AnalizeType in Data.AnalizeType.GetAll)
+            {
+                
+                AnalizeTypes.Add(AnalizeType);
+            }
         }
         public DelegateCommand ToCurrentPatient { get; protected set; }
         public DelegateCommand OpenAnalizePicture { get; protected set; }
@@ -50,9 +58,11 @@ namespace WpfApp2.ViewModels
             ToCurrentPatient = new DelegateCommand(
              () =>
              {
-                 Analize.analyzeType = SelectedIndexOfAnalizeType + 1;
+                 Analize.analyzeType = AnalizeTypes[SelectedIndexOfAnalizeType].Id;
                  if (Analize.ImageByte == null)
                  {
+
+
                      MessageBox.Show("Загрузите фото анализа");
                  }
                  else

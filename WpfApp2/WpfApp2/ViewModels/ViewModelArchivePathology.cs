@@ -230,6 +230,24 @@ namespace WpfApp2.ViewModels
                     YearDisappearB = Brushes.Red;
                     result = false;
                 }
+                try
+                {
+                    DateDisappear = new DateTime(int.Parse(YearDisappear), int.Parse(MonthDisappear), 1);
+                    YearDisappearB = Brushes.Gray;
+                    MonthDisappearB = Brushes.Gray;
+                }
+                catch
+                {
+                    YearDisappearB = Brushes.Red;
+                    MonthDisappearB = Brushes.Red;
+                    result = false;
+                }
+            }
+            else
+            {
+                YearDisappearB = Brushes.Red;
+                MonthDisappearB = Brushes.Red;
+                result = false;
             }
             return result;
         }

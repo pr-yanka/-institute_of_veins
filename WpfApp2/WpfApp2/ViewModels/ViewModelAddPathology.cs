@@ -98,6 +98,8 @@ namespace WpfApp2.ViewModels
 
         private void SetCurrentPatientID(object sender, object data)
         {
+            Index = 1;
+
             isNewTypeAvalible = Visibility.Visible;
             isReadOnly = true;
             CurrentPatient = Data.Patients.Get((int)data);
@@ -286,6 +288,7 @@ namespace WpfApp2.ViewModels
                 Data.PatologyType.Add((newType));
                 Data.Complete();
                 MessageBus.Default.Call("GetPatientForAddPatology", this, CurrentPatient.Id);
+                Index = PatologyTypes.Count-1;
             });
 
         }

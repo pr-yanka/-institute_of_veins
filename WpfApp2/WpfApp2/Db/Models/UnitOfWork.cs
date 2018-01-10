@@ -10,6 +10,9 @@ namespace WpfApp2.Db.Models
 {
     public class UnitOfWork : IUnitOfWork
     {
+        public MedPersonalRepository MedPersonal { get; }
+        public AccauntRepository Accaunt { get; }
+
         public PatologyRepository Patology { get; }
         public PatologyTypeRepository PatologyType { get; }
 
@@ -43,6 +46,9 @@ namespace WpfApp2.Db.Models
         public UnitOfWork (MySqlContext context)
         {
             _context = context;
+            MedPersonal = new MedPersonalRepository(_context);
+
+            Accaunt = new AccauntRepository(_context);
             PatologyType = new PatologyTypeRepository(_context);
             Patology = new PatologyRepository(_context);
             // _context.Configuration.AutoDetectChangesEnabled = false;
