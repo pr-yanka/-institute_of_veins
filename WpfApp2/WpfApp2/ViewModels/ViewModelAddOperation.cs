@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Drawing;
+using System.Windows.Media;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -349,8 +349,7 @@ namespace WpfApp2.ViewModels
                    Controller.NavigateTo<ViewModelDiagnosisListForOperation>();
                }
            );
-
-            //for right oanel
+            //for right panel
             CurrentPanelViewModel = new OperationTypePanelViewModel(this);
             OpenPanelCommand = new DelegateCommand(() =>
             {

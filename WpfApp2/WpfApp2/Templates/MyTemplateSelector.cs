@@ -134,7 +134,15 @@ namespace WpfApp2.Templates
 
             if (item.GetType() == typeof(ViewModelCancelOperations))
                 return TemplateCancleOperations;
+
+            if (item.GetType() == typeof(ViewModelRedactPathology))
+                return TemplateAddPathology;
+
+            if (item.GetType() == typeof(ViewModelArchivePathology))
+                return TemplateAddPathology;
             
+
+
             return null;
         }
     }

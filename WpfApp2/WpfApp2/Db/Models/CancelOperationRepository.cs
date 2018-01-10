@@ -18,7 +18,7 @@ namespace WpfApp2.Db.Models
         public int Reason { set; get; }
         [Column("операция_отменена")]
         public bool isCancled { set; get; }
-        public virtual ReasonsOfCancleOperation ReasonCancle { get; set; }
+        public virtual ReasonsOfCancelOperation ReasonCancle { get; set; }
     }
     public class CancelOperationRepository : Repository<CancelOperation>
     {

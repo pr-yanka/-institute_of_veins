@@ -25,6 +25,8 @@ namespace WpfApp2.Db.Models
         public virtual ICollection<BPVHipCombo> BPVs3 { get; set; } = new HashSet<BPVHipCombo>();
         public virtual ICollection<BPVHipCombo> BPVs4 { get; set; } = new HashSet<BPVHipCombo>();
         public virtual ICollection<BPVHipCombo> BPVs5 { get; set; } = new HashSet<BPVHipCombo>();
+
+        public virtual ICollection<BPVHipEntry> Entries { get; set; } = new HashSet<BPVHipEntry>();
     }
 
     [Table("БПВ_на_бедре_комбо")]
@@ -60,9 +62,7 @@ namespace WpfApp2.Db.Models
         public override string ToString()
         {
             return Str1.ToString();
-        }
-
-        
+        }   
     }
 
     /*
@@ -111,18 +111,20 @@ namespace WpfApp2.Db.Models
             return null;
         }
     }*/
-
-    public class BPVHipEntry : LegPartEntry
+    [Table("БПВ_на_бедре_подзапись")]
+    public class BPVHipEntry : LegPartEntry, ILegPart
     {
-        
+        public virtual BPVHipStructure Structure { get; set; }
     }
-        
+
+    [Table("вид_БПВ_хода")]
     public class BPVHipWay
     {
         public int Id { get; set; }
         public string Name { get; set; }
     }
 
+    [Table("большая_подкожная_вена")]
     public class BPVHipEntryFull : LegPartEntries
     {
         public int Id { get; set; }

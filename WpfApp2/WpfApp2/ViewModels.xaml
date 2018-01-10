@@ -3,4 +3,5 @@
                     xmlns:viewModels="clr-namespace:WpfApp2.ViewModels"
                     xmlns:local="clr-namespace:WpfApp2">
     <viewModels:MainWindowViewModel x:Key="MainWindowViewModel" />
+    <local:FloatToString x:Key="FloatConvert" />
 </ResourceDictionary>

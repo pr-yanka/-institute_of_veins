@@ -7,7 +7,7 @@ using System.Linq;
 namespace WpfApp2.Db.Models
 {
     [Table("причины_переноса")]
-    public class ReasonsOfCancleOperation
+    public class ReasonsOfCancelOperation
     {
         [Key]
         [Column("id")]
@@ -20,9 +20,9 @@ namespace WpfApp2.Db.Models
             return Str;
         }
     }
-    public class ReasonsOfCancleOperationRepository : Repository<ReasonsOfCancleOperation>
+    public class ReasonsOfCancelOperationRepository : Repository<ReasonsOfCancelOperation>
     {
-        public ReasonsOfCancleOperationRepository(DbContext context) : base(context)
+        public ReasonsOfCancelOperationRepository(DbContext context) : base(context)
         {
 
         }

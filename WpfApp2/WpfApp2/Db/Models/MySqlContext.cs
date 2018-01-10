@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,11 @@ namespace WpfApp2.Db.Models
 {
     public class MySqlContext : DbContext
     {
-        public DbSet<ReasonsOfCancleOperation> ReasonsOfCancleOperation { get; set; }
+       
+        public DbSet<Patology> Patology { get; set; }
+        public DbSet<PatologyType> PatologyType { get; set; }
+
+        public DbSet<ReasonsOfCancelOperation> ReasonsOfCancleOperation { get; set; }
 
         public DbSet<OperationResult> OperationResult { get; set; }
         public DbSet<CancelOperation> CancelOperation { get; set; }
@@ -30,6 +35,7 @@ namespace WpfApp2.Db.Models
         public DbSet<AnalizeType> AnalizeType { get; set; }
         public DbSet<BPVHipStructure> BPVHipStructures { get; set; }
         public DbSet<BPVHipCombo> BPVHipCombos { get; set; }
+        public DbSet<BPVHipEntry> BPVHipEntries { get; set; }
         public DbSet<Metrics> Metrics { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<DiagnosisType> DiagnosisTypes { get; set; }
@@ -57,6 +63,10 @@ namespace WpfApp2.Db.Models
 
             modelBuilder.Entity<BPVHipCombo>()
                 .HasOptional<BPVHipStructure>(s => s.Str5).WithMany(g => g.BPVs5).HasForeignKey<int?>(s => s.IdStr5);
+
+            modelBuilder.Entity<BPVHipEntry>()
+                .HasRequired<BPVHipStructure>(s => s.Structure).WithMany(g => g.Entries).HasForeignKey<int>(s => s.StructureID);
+
         }
     }
 }

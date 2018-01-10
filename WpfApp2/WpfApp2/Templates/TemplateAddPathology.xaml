@@ -1,42 +1,85 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:WpfApp2.Templates">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/LegParts/Templates/RightPanelAnimation.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
     <DataTemplate x:Key="TemplateAddPathology">
-        <Grid Margin="220,80,0,0">
-            <Grid.Background>
-                <RadialGradientBrush>
-                    <GradientStop Color="#FFC7D0EA" Offset="0"/>
-                    <GradientStop Color="#FFEBF0FD" Offset="1"/>
-                </RadialGradientBrush>
-            </Grid.Background>
+        <Grid Margin="0,62,0,0">
+
             <Label x:Name="label" Content="Патологии" HorizontalAlignment="Left" Margin="214,10,0,0" VerticalAlignment="Top"/>
-            <Button x:Name="button_Copy1" Content="Добавить" Command="{Binding Path=ToPathologyListCommand}" HorizontalAlignment="Left" Margin="268,264,0,0" VerticalAlignment="Top"  
+            <Button x:Name="button_Copy1" Content="{Binding TextAddOrSave}" Command="{Binding Path=ToPathologyListCommand}" HorizontalAlignment="Left" Margin="268,264,0,0" VerticalAlignment="Top"  
                     Width="158" Height="31" />
-            <Button x:Name="button_Copy" Content="Вернуться"  Command="{Binding Path=ToPathologyListCommand}" HorizontalAlignment="Left" Margin="89,264,0,0" VerticalAlignment="Top"  
+            <Button x:Name="button_Copy" Content="Вернуться"  Command="{Binding Path=ToPathologyListNoSaveCommands}" HorizontalAlignment="Left" Margin="89,264,0,0" VerticalAlignment="Top"  
                     Width="158" Height="31"/>
-            <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="89,48,0,0" VerticalAlignment="Top" Width="337">
-                <ComboBoxItem Content="Добавить свой вариант"/>
-                <ComboBoxItem Content="Лунатизм"/>
-                <ComboBoxItem Content="Перфекционизм"/>
+
+            <ComboBox IsEnabled="{Binding Path=isReadOnly}"  x:Name="comboBox" ItemsSource="{Binding Path=PatologyTypes}" 
+            SelectedIndex="{Binding Path=Index,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Margin="89,48,0,0" VerticalAlignment="Top" Width="337">
+
             </ComboBox>
-            <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="89,75,0,0" TextWrapping="Wrap" Text="описание  
-своей патологии" VerticalAlignment="Top" Width="337"/>
-            <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Height="23" Margin="89,228,0,0" TextWrapping="Wrap"  
-                     Text="комментарий" VerticalAlignment="Top" Width="337"/>
-            <ComboBox x:Name="comboBox_Copy" HorizontalAlignment="Left" Margin="89,127,0,0" VerticalAlignment="Top" Width="337">
-                <ComboBoxItem Content="Добавить свой вариант"/>
-                <ComboBoxItem Content="Лунатизм"/>
-                <ComboBoxItem Content="Перфекционизм"/>
-            </ComboBox>
-            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="206,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  
-                       RenderTransformOrigin="0.247,0.521"><Run Text="Месяц "/><Run Text="появления"/></TextBlock>
-            <ComboBox x:Name="comboBox_Copy1" HorizontalAlignment="Left" Margin="89,188,0,0" VerticalAlignment="Top" Width="337">
-                <ComboBoxItem Content="Добавить свой вариант"/>
-                <ComboBoxItem Content="Лунатизм"/>
-                <ComboBoxItem Content="Перфекционизм"/>
-            </ComboBox>
-            <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="214,164,0,0" TextWrapping="Wrap" Text="Год появления"  
+
+            <Button Visibility="{Binding Path=isNewTypeAvalible}" Content="Добавить новую патологию"  x:Name="comboBosdax" Command="{Binding Path=OpenPanelCommand}" HorizontalAlignment="Left" Margin="89,76,0,0" VerticalAlignment="Top" Width="337">
+
+            </Button>
+            <TextBox BorderBrush="{Binding Path=MonthAppearB}" Text="{Binding MonthAppear, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="comboBox_Copy" HorizontalAlignment="Left" Height="20" Margin="89,127,0,0" VerticalAlignment="Top" Width="100">
+
+            </TextBox>
+            <TextBox BorderBrush="{Binding Path=YearAppearB}" Text="{Binding YearAppear, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="comboBox_C3opy" HorizontalAlignment="Left" Height="20" Margin="209,127,0,0" VerticalAlignment="Top" Width="100">
+
+            </TextBox>
+            <TextBlock  x:Name="textBlock" HorizontalAlignment="Left" Margin="206,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top"  
+                       RenderTransformOrigin="0.247,0.521"><Run Text="Дата "/><Run Text="появления (Месяц/Год)"/></TextBlock>
+            <TextBox  BorderBrush="{Binding Path=MonthDisappearB}" Width="100" Height="20" Text="{Binding MonthDisappear}" x:Name="comboBox_Copy1" HorizontalAlignment="Left" Margin="89,188,0,0" VerticalAlignment="Top" >
+
+            </TextBox>
+            <TextBox BorderBrush="{Binding Path=YearDisappearB}"  Width="100" Height="20" Text="{Binding YearDisappear}" x:Name="comboBoddx_Copy1" HorizontalAlignment="Left" Margin="209,188,0,0" VerticalAlignment="Top" >
+
+            </TextBox>
+            <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="206,164,0,0" TextWrapping="Wrap" Text="Дата исчезнования"  
                        VerticalAlignment="Top" RenderTransformOrigin="0.247,0.521"/>
+            <Border Grid.RowSpan="4" Visibility="{Binding Path = CurrentPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOverlay" Width="auto" Height="auto">
+                <Border.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.78"/>
+                </Border.Background>
+            </Border>
+            <Border x:Name="panelControl" Grid.RowSpan="4" Margin="0,0,-450,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="450" Height="275" DataContext="{Binding Path=CurrentPanelViewModel}" >
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=PanelOpened}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <RemoveStoryboard BeginStoryboardName="AnimationCloseStoryboard"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Open}" x:Name="AnimationBeginStoryboard"/>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <RemoveStoryboard BeginStoryboardName="AnimationBeginStoryboard"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Close}" x:Name="AnimationCloseStoryboard"/>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Border.RenderTransform>
+
+                <Grid>
+                    <Canvas Background="#FFC6E8E6" Margin="0,0,0,29">
+                        <TextBlock x:Name="textBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="135" FontSize="18" Canvas.Top="10" Text="Новый тип патологии"/>
+                        <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=NewPtName}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="61" />
+                        <Button x:Name="buttonCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding ParentVM.RevertCommand}" Canvas.Left="60" Canvas.Top="200" Height="36"/>
+                        <Button x:Name="ButtonAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding ParentVM.SaveCommand}" Canvas.Left="256" Canvas.Top="200" Height="36"/>
+                        <TextBlock x:Name="textBlock_Copy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="42" Canvas.Left="173" Text="Название:"/>
+
+                    </Canvas>
+                </Grid>
+            </Border>
         </Grid>
     </DataTemplate>
 

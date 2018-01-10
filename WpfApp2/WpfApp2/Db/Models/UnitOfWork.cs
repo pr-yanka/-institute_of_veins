@@ -10,6 +10,9 @@ namespace WpfApp2.Db.Models
 {
     public class UnitOfWork : IUnitOfWork
     {
+        public PatologyRepository Patology { get; }
+        public PatologyTypeRepository PatologyType { get; }
+
         public CancelOperationRepository CancelOperation { get; }
         public OperationResultRepository OperationResult { get; }
         public ReasonsOfCancleOperationRepository ReasonsOfCancleOperation { get; }
@@ -28,6 +31,7 @@ namespace WpfApp2.Db.Models
 
         public BPVHipRepository BPVHips { get; private set; }
         public BPVComboRepository BPVCombos { get; private set; }
+        public BPVHipEntryRepository BPVHipEntries { get; private set; }
         public MetricsRepository Metrics { get; }
         public PatientsRepository Patients { get; }
         public AnalizeTypeRepository AnalizeType { get; }
@@ -39,6 +43,8 @@ namespace WpfApp2.Db.Models
         public UnitOfWork (MySqlContext context)
         {
             _context = context;
+            PatologyType = new PatologyTypeRepository(_context);
+            Patology = new PatologyRepository(_context);
             // _context.Configuration.AutoDetectChangesEnabled = false;
             // _context.Set<Operation>().AsNoTracking();
             ReasonsOfCancleOperation = new ReasonsOfCancleOperationRepository(_context);
@@ -62,6 +68,7 @@ namespace WpfApp2.Db.Models
             AnalizeType = new AnalizeTypeRepository(_context);
             BPVHips = new BPVHipRepository(_context);
             BPVCombos = new BPVComboRepository(_context);
+            BPVHipEntries = new BPVHipEntryRepository(_context);
             Metrics = new MetricsRepository(_context);
             Patients = new PatientsRepository(_context);
             ComplainsTypes = new ComplainsTypeRepository(_context);

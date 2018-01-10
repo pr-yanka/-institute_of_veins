@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using WpfApp2.Db.Models;
+using WpfApp2.Db.Models.LegParts;
 using WpfApp2.LegParts.DialogConfirmStructure;
 using WpfApp2.LegParts.VMs;
 using WpfApp2.Messaging;
@@ -37,6 +38,7 @@ namespace WpfApp2.LegParts
         }
 
         public LegSide CurrentLegSide { get; protected set; }
+        public LegPartEntry CurrentEntry { get; protected set; }
 
         public string ButtonText
         {
@@ -215,8 +217,6 @@ namespace WpfApp2.LegParts
                     
                 }
             );
-
-
         }
 
         public LegPartViewModel(NavigationController controller, LegSide side) : base(controller)

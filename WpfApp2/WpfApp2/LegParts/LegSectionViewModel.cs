@@ -10,6 +10,7 @@ using System.Windows;
 using WpfApp2.Db.Models;
 using WpfApp2.Navigation;
 using WpfApp2.Messaging;
+using WpfApp2.Db.Models.LegParts;
 
 namespace WpfApp2.LegParts
 {
@@ -17,6 +18,8 @@ namespace WpfApp2.LegParts
     {
         private int _listNumber;
         public int ListNumber { get; set; }
+
+        LegPartEntry CurrentEntry { get; set; }
 
         public ObservableCollection<LegPartDbStructure> StructureSource { get; protected set; }
         //all values

@@ -54,6 +54,7 @@ namespace WpfApp2.Navigation
                 new ViewModelOperationOverview(this),
                 new ViewModelRegistration(this),
                 new ViewModelDashboard(this),
+                new ViewModelRedactPathology(this),
                 new ViewModelCurrentPatient(this),
                 new ViewModelNewPatient(this),
                 new ViewModelTablePatients(this),
@@ -79,6 +80,7 @@ namespace WpfApp2.Navigation
                 new ViewModelDiagnosisList(this),
                 new  ViewModelCancelOperations(this),
                 new ViewModelRecomendationsList(this),
+                new ViewModelArchivePathology(this),
                 new LegPartViewModel(this)
             };
 

@@ -62,6 +62,8 @@ namespace WpfApp2.ViewModels
             ToPathologyListCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("GetPatientForPatology", this, currentPatient.Id);
+                    
                     Controller.NavigateTo<ViewModelPathologyList>();
                 }
             );

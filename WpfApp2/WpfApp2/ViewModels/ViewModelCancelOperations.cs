@@ -95,7 +95,7 @@ namespace WpfApp2.ViewModels
                         buf.Reason = ReasonSelected + 1;
                     }else
                     {
-                        ReasonsOfCancleOperation buf1 = new ReasonsOfCancleOperation();
+                        ReasonsOfCancelOperation buf1 = new ReasonsOfCancelOperation();
                         buf1.Str = OtherReasonText;
                         Data.ReasonsOfCancleOperation.Add(buf1);
                         Data.Complete();

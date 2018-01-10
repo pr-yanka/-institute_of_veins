@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WpfApp2.Db.Models;
 using WpfApp2.Navigation;
 
 namespace WpfApp2.LegParts.VMs
@@ -28,6 +29,7 @@ namespace WpfApp2.LegParts.VMs
                     LegSections.Add(new BPVHipSectionViewModel(Controller, null, i + 1));
             }
             _title = "Большая подкожная вена на бедре";
+            CurrentEntry = new BPVHipEntry();
         }
 
         public BPVHipViewModel(NavigationController controller) : base(controller) { }
