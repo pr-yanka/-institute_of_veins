@@ -85,7 +85,17 @@ namespace WpfApp2.Navigation
                 new ViewModelAdminPanel(this),
                 new ViewModelViewDoctors(this),
                 new ViewModelViewUsers(this),
-                new   ViewModelViewMedPatient(this),
+                new ViewModelViewMedPatient(this),
+
+                new ViewModelAddMedPersonal(this),
+                new ViewModelAddDoctor(this),
+                new ViewModelEditDoctor(this),
+                new ViewModelAddUser(this),
+               new ViewModelEditUser(this),
+
+                new ViewModelEditMedPersonal(this),
+
+
                 new LegPartViewModel(this)
             };
 

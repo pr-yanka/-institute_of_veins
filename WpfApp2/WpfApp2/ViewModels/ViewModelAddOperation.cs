@@ -38,14 +38,18 @@ namespace WpfApp2.ViewModels
             }
             set { _isChecked = value; MessageBus.Default.Call("UpdateSelectedDoctors", this, null); OnPropertyChanged(); }
         }
-        public Doctor Data { get; set; }
+        public bool isDoctor;
+        public int id;
+        public string Surname { get; set; }
 
         public string initials { get; set; }
 
-        public DoctorDataSource(Doctor Doctor)
+        public DoctorDataSource(string Name, string Surname, string Patronimic, bool isDoctor, int id)
         {
-            this.Data = Doctor;
-            initials = " " + Doctor.Name.ToCharArray()[0].ToString() + ". " + Doctor.Patronimic.ToCharArray()[0].ToString() + ".";
+            this.id = id;
+            this.isDoctor = isDoctor;
+            this.Surname = Surname;
+            initials = " " + Name.ToCharArray()[0].ToString() + ". " + Patronimic.ToCharArray()[0].ToString() + ".";
             IsChecked = false;
         }
     }
@@ -60,7 +64,7 @@ namespace WpfApp2.ViewModels
         }
 
         #endregion
-      
+
         #region everyth connected with panel
 
         public DelegateCommand RevertCommand { set; get; }
@@ -93,7 +97,7 @@ namespace WpfApp2.ViewModels
         public ObservableCollection<string> AnestethicTypes { get; set; }
         public ObservableCollection<int> OprTypesId { get; set; }
         public ObservableCollection<int> AnestethicTypesID { get; set; }
-        public ObservableCollection<DoctorDataSource> Doctors { get; set; }
+        public List<DoctorDataSource> Doctors { get; set; }
 
         private Brush _textBox_Minute;
         private Brush _textBox_Hour;
@@ -147,8 +151,8 @@ namespace WpfApp2.ViewModels
             }
         }
 
-        private ObservableCollection<DoctorDataSource> _doctorsSelected;
-        public ObservableCollection<DoctorDataSource> DoctorsSelected
+        private List<DoctorDataSource> _doctorsSelected;
+        public List<DoctorDataSource> DoctorsSelected
         {
             get
             {
@@ -159,12 +163,12 @@ namespace WpfApp2.ViewModels
                 _doctorsSelected = value; OnPropertyChanged();
             }
         }
-    
+
         public Operation Operation { get; set; }
         string _minute;
         string _hour;
         bool TimeCheckMinute;
-     
+
         private OperationResult OperationResult { get; set; }
 
         bool TimeCheckHour;
@@ -205,45 +209,63 @@ namespace WpfApp2.ViewModels
 
         private void UpdateSelectedDoctors(object sender, object data)
         {
-            DoctorsSelected = new ObservableCollection<DoctorDataSource>();
-            foreach (var doctor in Doctors)
+            DoctorsSelected = new List<DoctorDataSource>();
+            if (Doctors != null)
             {
-                if (doctor.IsChecked == true)
-                { DoctorsSelected.Add(doctor); }
+                foreach (var doctor in Doctors)
+                {
+                    if (doctor.IsChecked == true)
+                    { DoctorsSelected.Add(doctor); }
+                }
             }
         }
         private void SetCurrentPatientID(object sender, object data)
         {
-            Operation = new Operation();
-            Operation.Date = DateTime.Now;
-            CurrentPatient = Data.Patients.Get((int)data);
-            initials = " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
+            using (var context = new MySqlContext())
+            {
+                MedPersonalRepository MedPersonalRep = new MedPersonalRepository(context);
+                DoctorRepository DoctorRep = new DoctorRepository(context);
+                Operation = new Operation();
+                Operation.Date = DateTime.Now;
+                CurrentPatient = Data.Patients.Get((int)data);
+                initials = " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
 
-            OprTypes = new ObservableCollection<string>();
-            AnestethicTypes = new ObservableCollection<string>();
-            Doctors = new ObservableCollection<DoctorDataSource>();
-            OprTypesId = new ObservableCollection<int>();
-            AnestethicTypesID = new ObservableCollection<int>();
-            foreach (var Doctor in Data.Doctor.GetAll)
-            {
-                Doctors.Add(new DoctorDataSource(Doctor));
-            }
-            foreach (var OprType in Data.OperationType.GetAll)
-            {
-                OprTypes.Add(OprType.LongName);
-                OprTypesId.Add(OprType.Id);
-            }
-            foreach (var AnestethicType in Data.Anestethic.GetAll)
-            {
-                AnestethicTypes.Add(AnestethicType.Str);
-                AnestethicTypesID.Add(AnestethicType.Id);
+                OprTypes = new ObservableCollection<string>();
+                AnestethicTypes = new ObservableCollection<string>();
+                Doctors = new List<DoctorDataSource>();
+                OprTypesId = new ObservableCollection<int>();
+                AnestethicTypesID = new ObservableCollection<int>();
+                foreach (var Doctor in DoctorRep.GetAll)
+                {
+                    if (Doctor.isEnabled.Value)
+                    {
+                        Doctors.Add(new DoctorDataSource(Doctor.Name, Doctor.Sirname, Doctor.Patronimic, true, Doctor.Id));
+                    }
+                }
+                foreach (var Meds in MedPersonalRep.GetAll)
+                {
+                    if (Meds.isEnabled.Value)
+                    {
+                        Doctors.Add(new DoctorDataSource(Meds.Name, Meds.Surname, Meds.Patronimic, false, Meds.Id));
+                    }
+                }
+                foreach (var OprType in Data.OperationType.GetAll)
+                {
+                    OprTypes.Add(OprType.LongName);
+                    OprTypesId.Add(OprType.Id);
+                }
+                foreach (var AnestethicType in Data.Anestethic.GetAll)
+                {
+                    AnestethicTypes.Add(AnestethicType.Str);
+                    AnestethicTypesID.Add(AnestethicType.Id);
+                }
             }
         }
         #endregion
 
         public ViewModelAddOperation(NavigationController controller) : base(controller)
         {
-           
+
             TextBoxMinute = Brushes.Gray;
             TextBoxHour = Brushes.Gray;
             Minute = "0";
@@ -252,13 +274,13 @@ namespace WpfApp2.ViewModels
             TimeCheckMinute = true;
             ButtonSaveText = "Назначить операцию";
 
-            
+
             MessageBus.Default.Subscribe("SetOperationResult", SetOperResult);
             MessageBus.Default.Subscribe("SetCurrentPatientForOperation", SetCurrentPatientID);
             MessageBus.Default.Subscribe("SetRightDiagnosisListForOperation", SetRightDiagnosisList);
             MessageBus.Default.Subscribe("SetLeftDiagnosisListForOperation", SetLeftDiagnosisList);
             MessageBus.Default.Subscribe("UpdateSelectedDoctors", UpdateSelectedDoctors);
-           
+
             Controller = controller;
             HasNavigation = false;
             Operation = new Operation();
@@ -267,7 +289,7 @@ namespace WpfApp2.ViewModels
             RightDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
 
 
-           
+
             ToCurrentPatientCommand = new DelegateCommand(
                 () => { Controller.NavigateTo<ViewModelCurrentPatient>(); }
             );
@@ -275,37 +297,45 @@ namespace WpfApp2.ViewModels
             ToOperationOverviewCommand = new DelegateCommand(
                 () =>
                 {
-                // TextBoxMinute = Brushes.Red;
-                // TextBoxHour = Brushes.Red;
-                if (LeftDiagnosisList.Count == 0 || RightDiagnosisList.Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false)
-                {
+                    // TextBoxMinute = Brushes.Red;
+                    // TextBoxHour = Brushes.Red;
+                    if (LeftDiagnosisList.Count == 0 || RightDiagnosisList.Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false)
+                    {
 
-                    MessageBox.Show("Не всё заполнено!");
-                }
-                else
-                {
-                      
-                    Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, int.Parse(Hour), int.Parse(Minute), 0);
-                    Operation.Time = Hour + ":" + Minute+":"+ 0;
+                        MessageBox.Show("Не всё заполнено!");
+                    }
+                    else
+                    {
+
+                        Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, int.Parse(Hour), int.Parse(Minute), 0);
+                        Operation.Time = Hour + ":" + Minute + ":" + 0;
 
                         Operation.PatientId = CurrentPatient.Id;
                         Operation.AnestheticId = AnestethicTypesID[AnesteticSelected];
-                        Operation.OperationTypeId =  OprTypesId[OprTypeSelected];
+                        Operation.OperationTypeId = OprTypesId[OprTypeSelected];
                         Data.Operation.Add(Operation);
                         Data.Complete();
                         foreach (var Doctor in DoctorsSelected)
                         {
-                            Brigade buf = new Brigade();
-                            buf.id_врача = Doctor.Data.Id;
-                            buf.id_операции = Operation.Id;
-                            Data.Brigade.Add(buf);
-
+                            if (Doctor.isDoctor)
+                            {
+                                Brigade buf = new Brigade();
+                                buf.id_врача = Doctor.id;
+                                buf.id_операции = Operation.Id;
+                                Data.Brigade.Add(buf);
+                            }else
+                            {
+                                BrigadeMedPersonal buf = new BrigadeMedPersonal();
+                                buf.id_медперсонал = Doctor.id;
+                                buf.id_операции = Operation.Id;
+                                Data.BrigadeMedPersonal.Add(buf);
+                            }
 
                         }
                         Data.Complete();
                         foreach (var diagnozL in LeftDiagnosisList)
                         {
-                            
+
                             Diagnosis buf = new Diagnosis();
                             buf.id_диагноз = diagnozL.Data.Id;
                             buf.id_операции = Operation.Id;
@@ -342,7 +372,7 @@ namespace WpfApp2.ViewModels
                     }
                 }
             );
-           
+
             ToLeftDiagCommand = new DelegateCommand(
                 () =>
                 {
@@ -365,7 +395,8 @@ namespace WpfApp2.ViewModels
                 CurrentPanelViewModel.PanelOpened = true;
             });
 
-            SaveCommand = new DelegateCommand(() => {
+            SaveCommand = new DelegateCommand(() =>
+            {
                 CurrentPanelViewModel.PanelOpened = false;
                 Handled = false;
                 var newType = CurrentPanelViewModel.GetPanelType();
@@ -373,8 +404,9 @@ namespace WpfApp2.ViewModels
                 Data.Complete();
 
             });
-          
-            RevertCommand = new DelegateCommand(() => {
+
+            RevertCommand = new DelegateCommand(() =>
+            {
                 CurrentPanelViewModel.PanelOpened = false;
                 Handled = false;
             });

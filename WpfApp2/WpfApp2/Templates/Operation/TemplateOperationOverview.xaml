@@ -20,7 +20,7 @@
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock TextAlignment="Left" Width="Auto" Text="{Binding Path=Data.Sirname}" />
+                                <TextBlock TextAlignment="Left" Width="Auto" Text="{Binding Path=Surname}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

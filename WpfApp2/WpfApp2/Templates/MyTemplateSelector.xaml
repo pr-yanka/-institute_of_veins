@@ -32,12 +32,21 @@
         <ResourceDictionary Source="Operation/TemplateCancleOperations.xaml"/>
         <ResourceDictionary Source="/LegParts/LegPartMainTemplate.xaml"/>
         <ResourceDictionary Source="TemplateViewPersonal.xaml"/>
-        
+
+        <ResourceDictionary Source="TemplateAddMedPersonal.xaml"/>
+        <ResourceDictionary Source="TemplateAddDoctor.xaml"/>
+        <ResourceDictionary Source="TemplateAddUser.xaml"/>
+
+
 
 
     </ResourceDictionary.MergedDictionaries>
 
     <local:MyTemplateSelector x:Key="MyTemplateSelector" 
+                              
+                              TemplateAddMedPersonal="{StaticResource TemplateAddMedPersonal}"
+                              TemplateAddDoctor="{StaticResource TemplateAddDoctor}"
+                              TemplateAddUser="{StaticResource TemplateAddUser}"     
                               TemplateViewPersonal ="{StaticResource TemplateViewPersonal}"
                               TemplateAdminPanel ="{StaticResource TemplateAdminPanel}"
                               TemplateCancleOperations="{StaticResource TemplateCancleOperations}"

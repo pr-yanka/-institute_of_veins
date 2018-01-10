@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using WpfApp2.Db.Models;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 
@@ -21,11 +20,23 @@ namespace WpfApp2.ViewModels
             set { _name = value; }
         }
 
+        private string _btnName;
+        public string BtnName
+        {
+            get
+            {
+                return _btnName;
+
+            }
+            set { _btnName = value; }
+        }
+
         public DelegateCommand Archivate { get; protected set; }
         public DelegateCommand Redact { get; protected set; }
 
-        public UsersDataSource(DelegateCommand Redact, string Name, DelegateCommand Archivate)
+        public UsersDataSource(DelegateCommand Redact, string Name, DelegateCommand Archivate, string BtnName)
         {
+            this.BtnName = BtnName;
             this.Redact = Redact;
             this.Archivate = Archivate;
             this.Name = Name;
@@ -47,7 +58,7 @@ namespace WpfApp2.ViewModels
         public ObservableCollection<UsersDataSource> DataSource { get { return _historyDataSource; } set { _historyDataSource = value; OnPropertyChanged();  } }
 
         public DelegateCommand ToAddSomeoneCommand { get; protected set; }
-
+        public string TooltipText { get; set; }
         public string TextAddUserOrPersonalOrMed
         {
             get;
@@ -56,28 +67,45 @@ namespace WpfApp2.ViewModels
 
         private void SetCurrentPatientID(object sender, object data)
         {
-            TextAddUserOrPersonalOrMed = "Добавить Пользовать";
+            TextAddUserOrPersonalOrMed = "Добавить Пользователя";
+            TooltipText = "Архивация позволяет отключить пользователя от системы";
             DataSource = new ObservableCollection<UsersDataSource>();
 
-            DelegateCommand Redact = new DelegateCommand(
-            () =>
-            {
-                    //MessageBus.Default.Call("GetPatientForAnalize", this, CurrentPatient.Id);
-                    //Controller.NavigateTo<ViewModelAddAnalize>();
-            }
-            );
-
-            DelegateCommand Archivate = new DelegateCommand(
-            () =>
-            {
-                    //MessageBus.Default.Call("GetPatientForAnalize", this, CurrentPatient.Id);
-                    //Controller.NavigateTo<ViewModelAddAnalize>();
-            }
-            );
+           
 
             foreach (var User in Data.Accaunt.GetAll)
             {
-                   DataSource.Add(new UsersDataSource(Redact, User.Name, Archivate));
+                DelegateCommand Redact = new DelegateCommand(
+              () =>
+              {
+                  
+                  MessageBus.Default.Call("GetUserForEditUser", this, User.Id);
+                  Controller.NavigateTo<ViewModelEditUser>();
+              }
+              );
+
+                string BtnName = "Разархивировать";
+                DelegateCommand Archivate = new DelegateCommand(
+                    () =>
+                    {
+                        Data.Accaunt.Get(User.Id).isEnabled = true;
+                        Data.Complete();
+                        MessageBus.Default.Call("OpenUsers", this, "");
+                    }
+                    );
+                if (User.isEnabled == true)
+                {
+                    BtnName = "Архивировать";
+                    Archivate = new DelegateCommand(
+                   () =>
+                   {
+                       Data.Accaunt.Get(User.Id).isEnabled = false;
+                       Data.Complete();
+                       MessageBus.Default.Call("OpenUsers", this, "");
+                   }
+                   );
+                }
+                DataSource.Add(new UsersDataSource(Redact, User.Name, Archivate, BtnName));
             }
 
         }
@@ -92,8 +120,8 @@ namespace WpfApp2.ViewModels
             ToAddSomeoneCommand = new DelegateCommand(
                 () =>
                 {
-                    //MessageBus.Default.Call("GetPatientForAnalize", this, CurrentPatient.Id);
-                    //Controller.NavigateTo<ViewModelAddAnalize>();
+                    
+                   Controller.NavigateTo<ViewModelAddUser>();
                 }
             );
 

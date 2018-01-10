@@ -3,14 +3,7 @@
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplateEditPatient">
         <Grid Name="RootGrid"  Margin="227,0,0,0" >
-        <Grid.Background>
-            <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
-                <LinearGradientBrush.GradientStops>
-                    <GradientStop Color="White" Offset="0.3" />
-                    <GradientStop Color="Azure" Offset=".8" />
-                </LinearGradientBrush.GradientStops>
-            </LinearGradientBrush>
-        </Grid.Background>
+      
         <TextBlock DockPanel.Dock="Top" FontFamily="/fonts/#Pescadero" FontSize="18pt" Margin="24,30,-24,436" Height="38"><Run Text="Редактировать"/><Run Text=" пациента"/></TextBlock>
         <Button x:Name="button" Content="Сбросить изменения" HorizontalAlignment="Left" Margin="24,391,0,0" VerticalAlignment="Top" Width="707" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
             <Button x:Name="button_Copy3" Content="Вернуться в профиль" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="24,448,0,0" VerticalAlignment="Top" Width="342" Height="43" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>

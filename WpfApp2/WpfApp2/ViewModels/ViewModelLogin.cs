@@ -46,7 +46,7 @@ namespace WpfApp2.ViewModels
                    
                     foreach (var acc in Data.Accaunt.GetAll)
                     {
-                        if(Name == acc.Name)
+                    if (Name == acc.Name && acc.isEnabled == true)
                         {
                             isUeserNameCorrect = true;
                             if (CheckSum == acc.Password)

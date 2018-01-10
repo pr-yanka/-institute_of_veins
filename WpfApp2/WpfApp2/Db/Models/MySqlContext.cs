@@ -10,7 +10,19 @@ namespace WpfApp2.Db.Models
 {
     public class MySqlContext : DbContext
     {
-        
+        public DbSet<BrigadeMedPersonal> BrigadeMedPersonal { get; set; }
+
+
+
+        public DbSet<ScientificTitles> ScientificTitles { get; set; }
+
+        public DbSet<ScientificTitleType> ScientificTitleType { get; set; }
+
+        public DbSet<SpecializationType> SpecializationType { get; set; }
+
+        public DbSet<DoctorsSpecializations> DoctorsSpecializations { get; set; }
+
+
         public DbSet<MedPersonal> MedPersonal { get; set; }
 
         public DbSet<Accaunt> Accaunt { get; set; }

@@ -172,6 +172,11 @@
     <Compile Include="Controls\AddReport.xaml.cs">
       <DependentUpon>AddReport.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Db\Models\BrigadeMedPersonalRepository.cs" />
+    <Compile Include="Db\Models\ScientificTitlesRepository.cs" />
+    <Compile Include="Db\Models\ScientificTitleTypeRepository.cs" />
+    <Compile Include="Db\Models\SpecializationTypeRepository.cs" />
+    <Compile Include="Db\Models\DoctorsSpecializationsRepository.cs" />
     <Compile Include="Db\Models\MedPersonalRepository.cs" />
     <Compile Include="Db\Models\AnalizeRepository.cs" />
     <Compile Include="Db\Models\AnalizeTypeRepository.cs" />
@@ -261,9 +266,15 @@
     <Compile Include="ViewModels\ViewBaseModel.cs" />
     <Compile Include="Templates\MyTemplateSelector.cs" />
     <Compile Include="ViewModels\ViewModelAddAnalize.cs" />
+    <Compile Include="ViewModels\ViewModelEditUser.cs" />
+    <Compile Include="ViewModels\ViewModelEditMedPersonal.cs" />
+    <Compile Include="ViewModels\ViewModelEditDoctor.cs" />
     <Compile Include="ViewModels\ViewModelAddOperation.cs" />
     <Compile Include="ViewModels\ViewModelAddOperationResult.cs" />
     <Compile Include="ViewModels\ViewModelArchivePathology.cs" />
+    <Compile Include="ViewModels\ViewModelAddMedPersonal.cs" />
+    <Compile Include="ViewModels\ViewModelAddUser.cs" />
+    <Compile Include="ViewModels\ViewModelAddDoctor.cs" />
     <Compile Include="ViewModels\ViewModelRedactPathology.cs" />
     <Compile Include="ViewModels\ViewModelAddPathology.cs" />
     <Compile Include="ViewModels\ViewModelAnalizeOverview.cs" />
@@ -366,6 +377,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Templates\Operation\TemplateCancleOperations.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Templates\TemplateAddDoctor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Templates\TemplateAddMedPersonal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Templates\TemplateAddUser.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -581,6 +604,10 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Hide.PNG" />
+    <Resource Include="Images\Show.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

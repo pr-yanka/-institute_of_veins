@@ -9,7 +9,14 @@ using WpfApp2.Db.Models.LegParts.BPVHip;
 namespace WpfApp2.Db.Models
 {
     public interface IUnitOfWork : IDisposable
-    {   PatologyTypeRepository PatologyType { get; }
+    {
+        BrigadeMedPersonalRepository BrigadeMedPersonal { get; }
+        ScientificTitlesRepository ScientificTitles { get; }
+        ScientificTitleTypeRepository ScientificTitleType { get; }
+        SpecializationTypeRepository SpecializationType { get; }
+        DoctorsSpecializationsRepository DoctorsSpecializations { get; }
+
+        PatologyTypeRepository PatologyType { get; }
         MedPersonalRepository MedPersonal { get; }
         ReasonsOfCancelOperationRepository ReasonsOfCancleOperation { get; }
         PatologyRepository Patology { get; }

@@ -40,6 +40,10 @@ namespace WpfApp2.Templates
         public DataTemplate TemplateViewPersonal { get; set; }
         public DataTemplate TemplateCancleOperations { get; set; }
 
+        public DataTemplate TemplateAddDoctor { get; set; }
+        public DataTemplate TemplateAddMedPersonal { get; set; }
+        public DataTemplate TemplateAddUser { get; set; }
+
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             if (item == null)
@@ -154,8 +158,27 @@ namespace WpfApp2.Templates
 
             if (item.GetType() == typeof(ViewModelViewMedPatient))
                 return TemplateViewPersonal;
-            
 
+            if (item.GetType() == typeof(ViewModelAddDoctor))
+                return TemplateAddDoctor;
+
+            if (item.GetType() == typeof(ViewModelAddUser))
+                return TemplateAddUser;
+
+
+            if (item.GetType() == typeof(ViewModelAddMedPersonal))
+                return TemplateAddMedPersonal;
+
+            if (item.GetType() == typeof(ViewModelEditDoctor))
+                return TemplateAddDoctor;
+
+
+            if (item.GetType() == typeof(ViewModelEditMedPersonal))
+                return TemplateAddMedPersonal;
+
+            if (item.GetType() == typeof(ViewModelEditUser))
+                return TemplateAddUser;
+            
 
             return null;
         }

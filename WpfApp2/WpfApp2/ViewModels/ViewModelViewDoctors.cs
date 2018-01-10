@@ -21,11 +21,23 @@ namespace WpfApp2.ViewModels
             set { _name = value; }
         }
 
+        private string _btnName;
+        public string BtnName
+        {
+            get
+            {
+                return _btnName;
+
+            }
+            set { _btnName = value; }
+        }
+
         public DelegateCommand Archivate { get; protected set; }
         public DelegateCommand Redact { get; protected set; }
 
-        public DoctorsDataSource(DelegateCommand Redact, string Name, DelegateCommand Archivate)
+        public DoctorsDataSource(DelegateCommand Redact, string Name, DelegateCommand Archivate, string BtnName)
         {
+            this.BtnName = BtnName;
             this.Redact = Redact;
             this.Archivate = Archivate;
             this.Name = Name;
@@ -42,9 +54,12 @@ namespace WpfApp2.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
-    
+
+        public string TooltipText { get; set; }
+
         public ObservableCollection<DoctorsDataSource> _historyDataSource;
-        public ObservableCollection<DoctorsDataSource> DataSource { get { return _historyDataSource; } set { _historyDataSource = value; OnPropertyChanged();  } }
+
+        public ObservableCollection<DoctorsDataSource> DataSource { get { return _historyDataSource; } set { _historyDataSource = value; OnPropertyChanged(); } }
 
         public DelegateCommand ToAddSomeoneCommand { get; protected set; }
 
@@ -57,29 +72,47 @@ namespace WpfApp2.ViewModels
         private void SetCurrentPatientID(object sender, object data)
         {
             TextAddUserOrPersonalOrMed = "Добавить Врачи";
+            TooltipText = "Архивация позволяет отключить врача от системы";
             DataSource = new ObservableCollection<DoctorsDataSource>();
 
-            DelegateCommand Redact = new DelegateCommand(
-            () =>
+            using (var context = new MySqlContext())
             {
-                    //MessageBus.Default.Call("GetPatientForAnalize", this, CurrentPatient.Id);
-                    //Controller.NavigateTo<ViewModelAddAnalize>();
-            }
-            );
+                DoctorRepository dcRep = new DoctorRepository(context);
 
-            DelegateCommand Archivate = new DelegateCommand(
-            () =>
-            {
-                    //MessageBus.Default.Call("GetPatientForAnalize", this, CurrentPatient.Id);
-                    //Controller.NavigateTo<ViewModelAddAnalize>();
-            }
-            );
+                foreach (var Doctors in dcRep.GetAll)
+                {
+                    DelegateCommand Redact = new DelegateCommand(
+                    () =>
+                    {
 
-            foreach (var Doctors in Data.Doctor.GetAll)
-            {
-
-                string initials = " " + Doctors.Name.ToCharArray()[0].ToString() + ". " + Doctors.Patronimic.ToCharArray()[0].ToString() + ". ";
-                DataSource.Add(new DoctorsDataSource(Redact, Doctors.Sirname + initials, Archivate));
+                        MessageBus.Default.Call("GetDoctorForEditDoctor", this, Doctors.Id);
+                        Controller.NavigateTo<ViewModelEditDoctor>();
+                    }
+                    );
+                    string BtnName = "Разархивировать";
+                    DelegateCommand Archivate = new DelegateCommand(
+                        () =>
+                        {
+                            Data.Doctor.Get(Doctors.Id).isEnabled = true;
+                            Data.Complete();
+                            MessageBus.Default.Call("OpenDoctors", this, "");
+                        }
+                        );
+                    if (Doctors.isEnabled == true)
+                    {
+                        BtnName = "Архивировать";
+                        Archivate = new DelegateCommand(
+                       () =>
+                       {
+                           Data.Doctor.Get(Doctors.Id).isEnabled = false;
+                           Data.Complete();
+                           MessageBus.Default.Call("OpenDoctors", this, "");
+                       }
+                       );
+                    }
+                    string initials = " " + Doctors.Name.ToCharArray()[0].ToString() + ". " + Doctors.Patronimic.ToCharArray()[0].ToString() + ". ";
+                    DataSource.Add(new DoctorsDataSource(Redact, Doctors.Sirname + initials, Archivate, BtnName));
+                }
             }
 
         }
@@ -93,8 +126,9 @@ namespace WpfApp2.ViewModels
             ToAddSomeoneCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("RefreshDataForNewDoctors", this, "");
                     //MessageBus.Default.Call("GetPatientForAnalize", this, CurrentPatient.Id);
-                    //Controller.NavigateTo<ViewModelAddAnalize>();
+                    Controller.NavigateTo<ViewModelAddDoctor>();
                 }
             );
 

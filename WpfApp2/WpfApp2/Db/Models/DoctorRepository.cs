@@ -15,7 +15,7 @@ namespace WpfApp2.Db.Models
     {
         [Key]
         [Column("id")]
-        public int? Id { set; get; }
+        public int Id { set; get; }
                 
         [Column("имя")]
         public string Name { set; get; }
@@ -28,14 +28,15 @@ namespace WpfApp2.Db.Models
 
         [Column("дополнительная_информация")]
         public string Aditional { set; get; }
-
+        [Column("enabled/disabled")]
+        public bool? isEnabled { set; get; }
         //[Column("id_категории")]
         //public int CategoryId { set; get; }
 
         //[Column("id_звания")]
         //public int RankId  { set; get; }
 
-      
+
 
     }
     public class DoctorRepository : Repository<Doctor>

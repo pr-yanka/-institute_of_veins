@@ -3,7 +3,6 @@
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplateAddAnalize">
         <Grid >
-
             <Grid.RowDefinitions>
                 <RowDefinition Height="90"></RowDefinition>
                 <RowDefinition Height="35"></RowDefinition>

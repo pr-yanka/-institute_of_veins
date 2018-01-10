@@ -10,6 +10,14 @@ namespace WpfApp2.Db.Models
 {
     public class UnitOfWork : IUnitOfWork
     {
+
+        public BrigadeMedPersonalRepository BrigadeMedPersonal { get; }
+        public ScientificTitlesRepository ScientificTitles { get; }
+        public ScientificTitleTypeRepository ScientificTitleType { get; }
+        public SpecializationTypeRepository SpecializationType { get; }
+        public DoctorsSpecializationsRepository DoctorsSpecializations { get; }
+
+
         public MedPersonalRepository MedPersonal { get; }
         public AccauntRepository Accaunt { get; }
 
@@ -43,9 +51,15 @@ namespace WpfApp2.Db.Models
         public RecomendationsTypeRepository RecomendationsTypes { get; }
         public DiagnosisTypeRepository DiagnosisTypes { get; }
 
-        public UnitOfWork (MySqlContext context)
+        public UnitOfWork(MySqlContext context)
         {
             _context = context;
+            BrigadeMedPersonal = new BrigadeMedPersonalRepository(_context);
+            ScientificTitles = new ScientificTitlesRepository(_context);
+            ScientificTitleType = new ScientificTitleTypeRepository(_context);
+            SpecializationType = new SpecializationTypeRepository(_context);
+            DoctorsSpecializations = new DoctorsSpecializationsRepository(_context);
+
             MedPersonal = new MedPersonalRepository(_context);
 
             Accaunt = new AccauntRepository(_context);

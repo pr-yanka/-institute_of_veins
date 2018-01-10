@@ -22,10 +22,13 @@ namespace WpfApp2.Db.Models
         public string Surname { set; get; }
         [Column("отчество")]
         public string Patronimic { set; get; }
-      
+        [Column("enabled/disabled")]
+        public bool? isEnabled { set; get; }
 
 
-     
+
+
+
 
 
 

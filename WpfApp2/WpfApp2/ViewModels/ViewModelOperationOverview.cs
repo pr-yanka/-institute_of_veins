@@ -87,9 +87,21 @@ namespace WpfApp2.ViewModels
         {
             using (var context = new MySqlContext())
             {
+                DiagnosisRepository DiagnosisRep = new DiagnosisRepository(context);
+                DiagnosisTypeRepository DiagnosisTypeRep = new DiagnosisTypeRepository(context);
+                MedPersonalRepository MedPersonalRep = new MedPersonalRepository(context);
+                DoctorRepository DoctorRep = new DoctorRepository(context);
                 OperationRepository OperationRp = new OperationRepository(context);
+
+                AnestethicRepository AnestethicRep = new AnestethicRepository(context);
+                OperationTypeRepository OperationTypeRep = new OperationTypeRepository(context);
+                PatientsRepository PatientsRep = new PatientsRepository(context);
+
+                BrigadeRepository BrigadeRep = new BrigadeRepository(context);
+                BrigadeMedPersonalRepository BrigadeMedRep = new BrigadeMedPersonalRepository(context);
+
                 Operation = OperationRp.Get((int)data);
-            }
+           
 
 
             DateTime bufTime = DateTime.Parse(Operation.Time);
@@ -126,42 +138,53 @@ namespace WpfApp2.ViewModels
             LeftDiagnosisList = new List<DiagnosisDataSource>();
             RightDiagnosisList = new List<DiagnosisDataSource>();
             DoctorsSelected = new List<DoctorDataSource>();
-            AnesteticSelected = Data.Anestethic.Get(Operation.AnestheticId).Str;
-            OprTypeSelected = Data.OperationType.Get(Operation.OperationTypeId).LongName;
-            CurrentPatient = Data.Patients.Get(Operation.PatientId);
+            AnesteticSelected = AnestethicRep.Get(Operation.AnestheticId).Str;
+            OprTypeSelected = OperationTypeRep.Get(Operation.OperationTypeId).LongName;
+            CurrentPatient = PatientsRep.Get(Operation.PatientId);
             initials = " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
 
           
-            foreach (var Brigade in Data.Brigade.GetAll)
+            foreach (var Brigade in BrigadeRep.GetAll)
             {
                 if (Brigade.id_операции == Operation.Id)
                 {
-                    var buf = new DoctorDataSource(Data.Doctor.Get(Brigade.id_врача.Value));
+                    var buf = new DoctorDataSource(DoctorRep.Get(Brigade.id_врача.Value).Name, DoctorRep.Get(Brigade.id_врача.Value).Sirname, DoctorRep.Get(Brigade.id_врача.Value).Patronimic,true, DoctorRep.Get(Brigade.id_врача.Value).Id);
                     buf.IsChecked = true;
                     DoctorsSelected.Add(buf);
                 }
             }
-            //foreach (var diagnozL in LeftDiagnosisList)
-            foreach (var Diagnosis in Data.Diagnosis.GetAll)
+            foreach (var Brigade in BrigadeMedRep.GetAll)
+            {
+                if (Brigade.id_операции == Operation.Id)
+                {
+                    var buf = new DoctorDataSource(MedPersonalRep.Get(Brigade.id_медперсонал.Value).Name, MedPersonalRep.Get(Brigade.id_медперсонал.Value).Surname, MedPersonalRep.Get(Brigade.id_медперсонал.Value).Patronimic, false, MedPersonalRep.Get(Brigade.id_медперсонал.Value).Id);
+                    buf.IsChecked = true;
+                    DoctorsSelected.Add(buf);
+                }
+            }
+
+
+
+                foreach (var Diagnosis in DiagnosisRep.GetAll)
             {
                 if (Diagnosis.id_операции == Operation.Id)
                 {
                     if (Diagnosis.isLeft == true)
                     {
-                        var buf1 = new DiagnosisDataSource(Data.DiagnosisTypes.Get(Diagnosis.id_диагноз.Value));
+                        var buf1 = new DiagnosisDataSource(DiagnosisTypeRep.Get(Diagnosis.id_диагноз.Value));
                         buf1.IsChecked = true;
                         LeftDiagnosisList.Add(buf1);
                     }
                     else
                     {
-                        var buf2 = new DiagnosisDataSource(Data.DiagnosisTypes.Get(Diagnosis.id_диагноз.Value));
+                        var buf2 = new DiagnosisDataSource(DiagnosisTypeRep.Get(Diagnosis.id_диагноз.Value));
                         buf2.IsChecked = true;
                         RightDiagnosisList.Add(buf2);
                     }
                 }
             }
         }
-
+        }
 
 
         public ViewModelOperationOverview(NavigationController controller) : base(controller)
