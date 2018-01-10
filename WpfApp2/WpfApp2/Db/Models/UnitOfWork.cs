@@ -18,7 +18,7 @@ namespace WpfApp2.Db.Models
 
         public CancelOperationRepository CancelOperation { get; }
         public OperationResultRepository OperationResult { get; }
-        public ReasonsOfCancleOperationRepository ReasonsOfCancleOperation { get; }
+        public ReasonsOfCancelOperationRepository ReasonsOfCancleOperation { get; }
         public DiagnosisObsRepository DiagnosisObs { get; }
         private readonly MySqlContext _context;
         public ExaminationRepository Examination { get; }
@@ -53,7 +53,7 @@ namespace WpfApp2.Db.Models
             Patology = new PatologyRepository(_context);
             // _context.Configuration.AutoDetectChangesEnabled = false;
             // _context.Set<Operation>().AsNoTracking();
-            ReasonsOfCancleOperation = new ReasonsOfCancleOperationRepository(_context);
+            ReasonsOfCancleOperation = new ReasonsOfCancelOperationRepository(_context);
 
             OperationResult = new OperationResultRepository(_context);
             CancelOperation = new CancelOperationRepository(_context);

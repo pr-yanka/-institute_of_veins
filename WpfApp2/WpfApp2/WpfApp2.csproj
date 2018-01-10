@@ -182,7 +182,6 @@
     <Compile Include="Db\Models\LegParts\BPVHip\BPVHipEntryRepository.cs" />
     <Compile Include="Db\Models\PatologyTypeRepository.cs" />
     <Compile Include="Db\Models\PatologyRepository.cs" />
-
     <Compile Include="Db\Models\ComplainsTypeRepository.cs" />
     <Compile Include="Db\Models\DiagnosisObsRepository.cs" />
     <Compile Include="Db\Models\DiagnosisRepository.cs" />
@@ -201,7 +200,7 @@
     <Compile Include="Db\Models\OperationResultRepository.cs" />
     <Compile Include="Db\Models\OperationTypeRepository.cs" />
     <Compile Include="Db\Models\PatientsRepository.cs" />
-    <Compile Include="Db\Models\ReasonsOfCancleOperationRepository.cs" />
+    <Compile Include="Db\Models\ReasonsOfCancelOperationRepository.cs" />
     <Compile Include="Db\Models\RecomendationsTypeRepository.cs" />
     <Compile Include="Db\Models\Repository.cs" />
     <Compile Include="Db\Models\IRepository.cs" />

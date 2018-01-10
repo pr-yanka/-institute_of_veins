@@ -18,9 +18,7 @@ namespace WpfApp2.Db.Models
         public DbSet<Patology> Patology { get; set; }
         public DbSet<PatologyType> PatologyType { get; set; }
 
-        public DbSet<ReasonsOfCancleOperation> ReasonsOfCancleOperation { get; set; }
-
-        public DbSet<ReasonsOfCancelOperation> ReasonsOfCancleOperation { get; set; }
+        public DbSet<ReasonsOfCancelOperation> ReasonsOfCancelOperation { get; set; }
 
         public DbSet<OperationResult> OperationResult { get; set; }
         public DbSet<CancelOperation> CancelOperation { get; set; }

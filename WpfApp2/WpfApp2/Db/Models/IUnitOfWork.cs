@@ -11,7 +11,7 @@ namespace WpfApp2.Db.Models
     public interface IUnitOfWork : IDisposable
     {   PatologyTypeRepository PatologyType { get; }
         MedPersonalRepository MedPersonal { get; }
-        ReasonsOfCancleOperationRepository ReasonsOfCancleOperation { get; }
+        ReasonsOfCancelOperationRepository ReasonsOfCancleOperation { get; }
         PatologyRepository Patology { get; }
         CancelOperationRepository CancelOperation { get; }
         OperationResultRepository OperationResult { get; }
