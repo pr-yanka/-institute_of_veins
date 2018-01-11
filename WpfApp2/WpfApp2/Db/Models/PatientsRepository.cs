@@ -37,12 +37,25 @@ namespace WpfApp2.Db.Models
         public DateTime Birthday { set; get; }
 
         [Required]
+        [Column("область_проживания")]
+        public int Region { set; get; }
+
+
+  
+        [Column("место_работы")]
+        public string Work { set; get; }
+
+
+        [Column("район_проживания")]
+        public int? District { set; get; }
+
+        [Required]
         [Column("город_проживания")]
-        public string City { set; get; }
+        public int City { set; get; }
 
         [Required]
         [Column("улица_проживания")]
-        public string Street
+        public int Street
         {
             set;
             get;

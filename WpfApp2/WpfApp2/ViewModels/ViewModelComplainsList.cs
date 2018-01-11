@@ -77,6 +77,7 @@ namespace WpfApp2.ViewModels
             SaveChangesCommand = new DelegateCommand(
                 () =>
                 {
+
                     Controller.NavigateTo<ViewModelAddPhysical>();
                 }
             );

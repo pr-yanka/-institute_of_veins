@@ -152,6 +152,8 @@ namespace WpfApp2.ViewModels
             ToAddPhysicalCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("GetCurrentPatientIdForOperation", this, CurrentPatient.Id);
+
                     Controller.NavigateTo<ViewModelAddPhysical>();
                 }
             );

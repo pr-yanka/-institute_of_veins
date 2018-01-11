@@ -69,6 +69,7 @@ namespace WpfApp2.ViewModels
                  () =>
                  {
                      File.Delete("TempImage.Bmp");
+                     MessageBus.Default.Call("GetCurrentPatientId", this, CurrentPatient.Id);
                      Controller.NavigateTo<ViewModelCurrentPatient>();
                  }
              );

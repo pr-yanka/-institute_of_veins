@@ -11,6 +11,11 @@ namespace WpfApp2.Db.Models
     public class UnitOfWork : IUnitOfWork
     {
 
+        public CitiesRepository Cities { get; }
+        public DistrictsRepository Districts { get; }
+        public RegionsRepository Regions { get; }
+        public StreetsRepository Streets { get; }
+
         public BrigadeMedPersonalRepository BrigadeMedPersonal { get; }
         public ScientificTitlesRepository ScientificTitles { get; }
         public ScientificTitleTypeRepository ScientificTitleType { get; }
@@ -54,6 +59,12 @@ namespace WpfApp2.Db.Models
         public UnitOfWork(MySqlContext context)
         {
             _context = context;
+
+
+            Cities = new CitiesRepository(_context);
+            Districts = new DistrictsRepository(_context);
+            Regions = new RegionsRepository(_context);
+            Streets = new StreetsRepository(_context);
             BrigadeMedPersonal = new BrigadeMedPersonalRepository(_context);
             ScientificTitles = new ScientificTitlesRepository(_context);
             ScientificTitleType = new ScientificTitleTypeRepository(_context);

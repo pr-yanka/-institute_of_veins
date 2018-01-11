@@ -7,7 +7,7 @@
             <Button x:Name="button" Content="Редактировать профиль" Command="{Binding Path=ToEditPatientCommand}" HorizontalAlignment="Left" Margin="19,61,0,0" VerticalAlignment="Top" Width="300" Height="41" FontFamily="Franklin Gothic Medium" FontSize="16" Background="#FFB8E2EC"/>
             <Button x:Name="button_Copy4" Content="Посмотреть историю" Command="{Binding Path=ToViewHistoryCommand}" HorizontalAlignment="Left" Margin="420,61,0,0" VerticalAlignment="Top" Width="300" Height="41" FontFamily="Franklin Gothic Medium" FontSize="16" Background="#FFB8E2EC"/>
 
-            <StackPanel Orientation="Vertical" Margin="19,118,231,42">
+            <StackPanel Orientation="Vertical" Margin="19,118,0,42">
                 <StackPanel Orientation="Horizontal" Height="29">
                     <TextBlock x:Name="age" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto" ><TextBlock  Text="Возраст :" /></TextBlock>
                     <TextBlock x:Name="textBlock_ageAndBirthday" HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto" Text="{Binding Path=CurrentPatient.Age}"><TextBlock  Text=" лет ("/><TextBlock Text="{Binding Path=PatientBirthday}" /><TextBlock Text=")"/></TextBlock>
@@ -22,18 +22,32 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock x:Name="textBlock_phone" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto"><Run Text="Телефон"/><Run Text=": "/><TextBlock Text="{Binding Path=CurrentPatient.Phone}"/><LineBreak/><Run/></TextBlock>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock x:Name="textBlock_adres" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto"><Run Text="Город:"/>
-                <TextBlock Text="{Binding Path=CurrentPatient.City}"/>
-                <TextBlock Text="улица"/>
-                <TextBlock Text="{Binding Path=CurrentPatient.Street}"/>
-                <TextBlock Text="{Binding Path=CurrentPatient.House}"/><Run Text=" кв. "/>
-                <TextBlock Text="{Binding Path=CurrentPatient.Flat}"/>
+                <StackPanel Orientation="Horizontal" Width="auto">
+
+
+                <TextBlock x:Name="textBlock_adres" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="auto"> 
+                <Run Text="Область:"/>
+                <TextBlock Text="{Binding Path=Region}"/>
+                <Run Text="Город:"/>
+                <TextBlock Text="{Binding Path=Town}"/>
+                <TextBlock Visibility="{Binding IsDistrict}" Text="Регион"/>
+                <TextBlock Visibility="{Binding IsDistrict}" Text="{Binding Path=District}"/>
+         
+               
                 <LineBreak/><Run/></TextBlock>
+                  
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Height="61">
+                <TextBlock x:Name="textBslock_adres" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto"> 
+                
+                    <TextBlock Text="улица"/>
+                    <TextBlock Text="{Binding Path=Street}"/>
+                    <TextBlock Text="{Binding Path=CurrentPatient.House}"/>
+                    <TextBlock Text=" кв. "/>
+                    <TextBlock Text="{Binding Path=CurrentPatient.Flat}"/>
+                        </TextBlock>
+                <StackPanel Margin="0,20,0,0" Width="Auto" Orientation="Horizontal" Height="61">
                     <TextBlock x:Name="email" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto" ><TextBlock  Text="Почта :" /></TextBlock>
-                    <TextBlock x:Name="textBlock_email" HorizontalAlignment="Left" Margin="266,206,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="237" Text="{Binding Path=CurrentPatient.Email}"/>
+                    <TextBlock x:Name="textBlock_email" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto" Text="{Binding Path=CurrentPatient.Email}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                 </StackPanel>

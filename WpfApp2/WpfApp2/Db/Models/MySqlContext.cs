@@ -10,9 +10,13 @@ namespace WpfApp2.Db.Models
 {
     public class MySqlContext : DbContext
     {
+
+        public DbSet<Cities> Cities { get; set; }
+        public DbSet<Districts> Districts { get; set; }
+        public DbSet<Regions> Regions { get; set; }
+        public DbSet<Streets> Streets { get; set; }
+
         public DbSet<BrigadeMedPersonal> BrigadeMedPersonal { get; set; }
-
-
 
         public DbSet<ScientificTitles> ScientificTitles { get; set; }
 
@@ -22,17 +26,18 @@ namespace WpfApp2.Db.Models
 
         public DbSet<DoctorsSpecializations> DoctorsSpecializations { get; set; }
 
-
         public DbSet<MedPersonal> MedPersonal { get; set; }
 
         public DbSet<Accaunt> Accaunt { get; set; }
 
         public DbSet<Patology> Patology { get; set; }
+
         public DbSet<PatologyType> PatologyType { get; set; }
 
         public DbSet<ReasonsOfCancelOperation> ReasonsOfCancelOperation { get; set; }
 
         public DbSet<OperationResult> OperationResult { get; set; }
+
         public DbSet<CancelOperation> CancelOperation { get; set; }
        
         public DbSet<Examination> Examination { get; set; }
