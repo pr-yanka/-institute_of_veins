@@ -25,18 +25,44 @@ namespace WpfApp2.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private float _weight;
-        public float Weight { get { return _weight; } set { _weight = value; ITM = Weight / ((Growth / 100) * (Growth / 100)); OnPropertyChanged(); } }
-        private float _growth;
-        public float Growth { get { return _growth; } set { _growth = value; ITM = Weight / ((Growth / 100) * (Growth/100)); OnPropertyChanged(); } }
+        private string _weight;
+        public string Weight
+        {
+            get { return _weight; }
+            set
+            {
+                float buf = 0f;
+                if (value.Contains(",")) { _weight = value; }
+                else if (value == "")
+                { _weight = ""; }else if (float.TryParse(value, out buf)) { _weight = buf.ToString(); }
+
+                if (float.TryParse(Weight, out buf) && float.TryParse(Growth, out buf)) ITM = float.Parse(Weight) / ((float.Parse(Growth) / 100) * (float.Parse(Growth) / 100)); OnPropertyChanged();
+            }
+        }
+
+        private string _growth;
+        public string Growth
+        {
+            get {  return _growth; }
+            set
+            {
+                float buf = 0f;
+                if (value.Contains(",") ) {  _growth = value; } else if (value == "") { _growth = ""; } else if (float.TryParse(value, out buf)) { _growth = buf.ToString(); }
+                if (float.TryParse(Weight, out buf) && float.TryParse(Growth, out buf)) ITM = float.Parse(Weight) / ((float.Parse(Growth) / 100) * (float.Parse(Growth) / 100)); OnPropertyChanged();
+            }
+        }
 
         private double _itm;
-        public double ITM { get { return Math.Round(_itm,3) ; } set { if(Growth != 0 ) _itm = value; OnPropertyChanged(); } }
+        public double ITM { get { return Math.Round(_itm, 3); } set { if (float.Parse(Growth) != 0) _itm = value; OnPropertyChanged(); } }
 
         private string _textTip;
-        public string TextTip { get { return _textTip; } set { _textTip = value; OnPropertyChanged();} }
+        public string TextTip { get { return _textTip; } set { _textTip = value; OnPropertyChanged(); } }
         public DelegateCommand IMTCOUNT { get; protected set; }
         public DelegateCommand ClickOnTextTip { get; protected set; }
+
+        public DelegateCommand ClickOnWeight { get; protected set; }
+        public DelegateCommand ClickOnGrowth { get; protected set; }
+
         public DelegateCommand ToDashboardCommand { get; protected set; }
         public DelegateCommand ToCurrentPatientCommand { get; protected set; }
         public DelegateCommand ToTablePatientsCommand { get; protected set; }
@@ -95,9 +121,11 @@ namespace WpfApp2.ViewModels
 
         private void SetCurrentPatientID(object sender, object data)
         {
-
+            Weight = "0";
+            Growth = "0";
+            TextTip = "Текст пометки";
             CurrentPatient = Data.Patients.Get((int)data);
-            initials = " "+CurrentPatient.Sirname.ToCharArray()[0].ToString()+". "+ CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
+            initials = " " + CurrentPatient.Sirname.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
 
         }
 
@@ -128,7 +156,7 @@ namespace WpfApp2.ViewModels
 
         private void FinishAdding(object parameter)
         {
-           
+
             DialogViewModelBase vm =
                 new DialogYesNo.DialogYesNoViewModel("Назначить операцию?");
             DialogResult result =
@@ -140,7 +168,7 @@ namespace WpfApp2.ViewModels
                 result = DialogService.DialogService.OpenDialog(vm, parameter as Window);
             }
         }
- 
+
         private void SetRightDiagnosisList(object sender, object data)
         {
             RightDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
@@ -170,6 +198,22 @@ namespace WpfApp2.ViewModels
             base.HasNavigation = false;
 
             this.openDialogCommand = new RelayCommand(FinishAdding);
+
+            ClickOnWeight = new DelegateCommand(
+                () =>
+                {
+                    if (Weight == "0")
+                        Weight = "";
+                }
+            );
+            ClickOnGrowth = new DelegateCommand(
+                () =>
+                {
+                    if (Growth == "0")
+                        Growth = "";
+                }
+            );
+
 
             ToSymptomsAddCommand = new DelegateCommand(
                 () =>
@@ -305,7 +349,7 @@ namespace WpfApp2.ViewModels
             IMTCOUNT = new DelegateCommand(
             () =>
             {
-                ITM = Weight / ((Growth / 100) * (Growth / 100));
+                ITM = float.Parse(Weight) / ((float.Parse(Growth) / 100) * (float.Parse(Growth) / 100));
             }
           );
             ToLeftSPSCommand = new DelegateCommand(
@@ -405,8 +449,8 @@ namespace WpfApp2.ViewModels
             ClickOnTextTip = new DelegateCommand(
                 () =>
                 {
-                    if(TextTip == "Текст пометки")
-                    TextTip = "";
+                    if (TextTip == "Текст пометки")
+                        TextTip = "";
                     //Controller.NavigateTo<ViewModelCurrentPatient>();
                 }
             );
@@ -419,12 +463,12 @@ namespace WpfApp2.ViewModels
         }
 
 
-        
-            //кто присылает и что присылает
-            private void Handler(object sender, object data)
+
+        //кто присылает и что присылает
+        private void Handler(object sender, object data)
         {
             Type senderType = sender.GetType();
-            LegPartViewModel senderVM = (LegPartViewModel) sender;
+            LegPartViewModel senderVM = (LegPartViewModel)sender;
 
             //sender проверять какого типа
             if (senderType == typeof(SFSViewModel))

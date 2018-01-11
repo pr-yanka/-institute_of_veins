@@ -93,8 +93,13 @@ namespace WpfApp2.ViewModels
         #region Bindings
         public ObservableCollection<DiagnosisDataSource> LeftDiagnosisList { get; set; }
         public ObservableCollection<DiagnosisDataSource> RightDiagnosisList { get; set; }
-        public ObservableCollection<string> OprTypes { get; set; }
-        public ObservableCollection<string> AnestethicTypes { get; set; }
+
+        private ObservableCollection<string> _oprTypes;
+        private ObservableCollection<string> _anestethicTypes;
+
+        public ObservableCollection<string> OprTypes { get { return _oprTypes; } set { _oprTypes = value; OnPropertyChanged(); } }
+        public ObservableCollection<string> AnestethicTypes { get { return _anestethicTypes; } set { _anestethicTypes = value; OnPropertyChanged(); } }
+
         public ObservableCollection<int> OprTypesId { get; set; }
         public ObservableCollection<int> AnestethicTypesID { get; set; }
         public List<DoctorDataSource> Doctors { get; set; }
@@ -173,7 +178,8 @@ namespace WpfApp2.ViewModels
 
         bool TimeCheckHour;
         public int AnesteticSelected { get; set; }
-        public int OprTypeSelected { get; set; }
+        private int _oprTypeSelected;
+        public int OprTypeSelected { get { return _oprTypeSelected; } set { _oprTypeSelected = value; OnPropertyChanged(); } }
 
         public string ButtonSaveText { get; set; }
         public DelegateCommand ToLeftDiagCommand { get; protected set; }
@@ -397,12 +403,20 @@ namespace WpfApp2.ViewModels
 
             SaveCommand = new DelegateCommand(() =>
             {
-                CurrentPanelViewModel.PanelOpened = false;
-                Handled = false;
+             
+            
                 var newType = CurrentPanelViewModel.GetPanelType();
-                Data.OperationType.Add((newType));
-                Data.Complete();
-
+                if (!string.IsNullOrWhiteSpace(newType.LongName) && !string.IsNullOrWhiteSpace(newType.ShortName))
+                {
+                    CurrentPanelViewModel.PanelOpened = false;
+                    Handled = false;
+                    Data.OperationType.Add((newType));
+                    Data.Complete();
+                    MessageBus.Default.Call("SetCurrentPatientForOperation", this, CurrentPatient.Id);
+                    OprTypeSelected = OprTypes.Count - 1;
+                }
+                else
+                { MessageBox.Show("Не все поля заполнены"); }
             });
 
             RevertCommand = new DelegateCommand(() =>

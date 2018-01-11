@@ -282,13 +282,22 @@ namespace WpfApp2.ViewModels
 
             SaveCommand = new DelegateCommand(() =>
             {
-                CurrentPanelViewModel.PanelOpened = false;
-                Handled = false;
+                
+
                 var newType = CurrentPanelViewModel.GetPanelType();
-                Data.PatologyType.Add((newType));
-                Data.Complete();
-                MessageBus.Default.Call("GetPatientForAddPatology", this, CurrentPatient.Id);
-                Index = PatologyTypes.Count-1;
+                if (!string.IsNullOrWhiteSpace(newType.Str))
+                {
+                    CurrentPanelViewModel.PanelOpened = false;
+                    Handled = false;
+                    Data.PatologyType.Add((newType));
+                    Data.Complete();
+                    MessageBus.Default.Call("GetPatientForAddPatology", this, CurrentPatient.Id);
+                    Index = PatologyTypes.Count - 1;
+                }
+                else
+                {
+                    MessageBox.Show("Не все поля заполнены");
+                }
             });
 
         }
