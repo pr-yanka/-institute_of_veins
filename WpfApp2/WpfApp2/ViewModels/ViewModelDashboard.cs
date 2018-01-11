@@ -36,6 +36,9 @@ namespace WpfApp2.ViewModels
             ToNewPatientCommand = new DelegateCommand(
                 () =>
                 {
+
+                    MessageBus.Default.Call("UpdateDictionariesOfLocationForNewPatient", this,"");
+
                     Controller.NavigateTo<ViewModelNewPatient>();
                 }
             );
@@ -43,6 +46,7 @@ namespace WpfApp2.ViewModels
             ToCurrentPatientCommand = new DelegateCommand(
                 () =>
                 {
+                 //   MessageBus.Default.Call("GetCurrentPatientId", this, CurrentPatient.Id);
                     Controller.NavigateTo<ViewModelCurrentPatient>();
                 }
             );
@@ -50,6 +54,7 @@ namespace WpfApp2.ViewModels
             ToTablePatientsCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("UpdateTableOfPatients", this, controller);
                     Controller.NavigateTo<ViewModelTablePatients>();
                 }
             );

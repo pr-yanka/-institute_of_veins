@@ -34,7 +34,8 @@ namespace WpfApp2.ViewModels
                 float buf = 0f;
                 if (value.Contains(",")) { _weight = value; }
                 else if (value == "")
-                { _weight = ""; }else if (float.TryParse(value, out buf)) { _weight = buf.ToString(); }
+                { _weight = ""; }
+                else if (float.TryParse(value, out buf)) { _weight = buf.ToString(); }
 
                 if (float.TryParse(Weight, out buf) && float.TryParse(Growth, out buf)) ITM = float.Parse(Weight) / ((float.Parse(Growth) / 100) * (float.Parse(Growth) / 100)); OnPropertyChanged();
             }
@@ -43,11 +44,11 @@ namespace WpfApp2.ViewModels
         private string _growth;
         public string Growth
         {
-            get {  return _growth; }
+            get { return _growth; }
             set
             {
                 float buf = 0f;
-                if (value.Contains(",") ) {  _growth = value; } else if (value == "") { _growth = ""; } else if (float.TryParse(value, out buf)) { _growth = buf.ToString(); }
+                if (value.Contains(",")) { _growth = value; } else if (value == "") { _growth = ""; } else if (float.TryParse(value, out buf)) { _growth = buf.ToString(); }
                 if (float.TryParse(Weight, out buf) && float.TryParse(Growth, out buf)) ITM = float.Parse(Weight) / ((float.Parse(Growth) / 100) * (float.Parse(Growth) / 100)); OnPropertyChanged();
             }
         }
@@ -443,6 +444,7 @@ namespace WpfApp2.ViewModels
             ToTablePatientsCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("UpdateTableOfPatients", this, controller);
                     Controller.NavigateTo<ViewModelTablePatients>();
                 }
             );
@@ -457,6 +459,7 @@ namespace WpfApp2.ViewModels
             ToCurrentPatientCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("GetCurrentPatientId", this, CurrentPatient.Id);
                     Controller.NavigateTo<ViewModelCurrentPatient>();
                 }
             );

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Practices.Prism.Commands;
+using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 using WpfApp2.ViewModels;
 
@@ -46,6 +47,8 @@ namespace WpfApp2.ViewModels
             ToTablePatientsCommand = new DelegateCommand(
                 () =>
                 {
+                    
+                    MessageBus.Default.Call("UpdateTableOfPatients", this,controller);
                     Controller.NavigateTo<ViewModelTablePatients>();
                 });
             ToAdminPanelCommand = new DelegateCommand(

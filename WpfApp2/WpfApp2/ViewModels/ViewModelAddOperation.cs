@@ -20,13 +20,14 @@ namespace WpfApp2.ViewModels
 {
     public class DoctorDataSource : INotifyPropertyChanged
     {
-
+        #region Inotify realisation
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             //если PropertyChanged не нулевое - оно будет разбужено
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        #endregion
         private bool? _isChecked;
         public bool? IsChecked
         {
@@ -112,52 +113,12 @@ namespace WpfApp2.ViewModels
 
         public Brush TextBoxHour { get { return _textBox_Hour; } set { _textBox_Hour = value; OnPropertyChanged(); } }
 
-        public string Minute
-        {
-            get { return _minute; }
-            set
-            {
-                _minute = value; int buf = 0;
-                if (int.TryParse(_minute, out buf))
-                {
-                    if (buf > 59 || buf < 0)
-                    {
-                        TextBoxMinute = Brushes.Red;
-                        TimeCheckMinute = false;
-                    }
-                    else
-                    { TimeCheckMinute = true; TextBoxMinute = Brushes.Gray; }
-                }
-                else { TextBoxMinute = Brushes.Red; TimeCheckMinute = false; }
-                OnPropertyChanged();
-            }
-        }
+        private DateTime _minuteHour;
+        public DateTime MinuteHour { get { return _minuteHour; } set { _minuteHour = value; OnPropertyChanged(); } }
 
-        public string Hour
-        {
-            get { return _hour; }
-            set
-            {
-                _hour = value;
-                int buf = 0;
-                if (int.TryParse(_hour, out buf))
-                {
-                    if (buf > 23 || buf < 0)
-                    {
-                        TextBoxHour = Brushes.Red;
 
-                        TimeCheckHour = false;
-                    }
-                    else
-                    { TimeCheckHour = true; TextBoxHour = Brushes.Gray; }
-                }
-                else { TextBoxHour = Brushes.Red; TimeCheckHour = false; }
-                OnPropertyChanged();
-            }
-        }
-
-        private List<DoctorDataSource> _doctorsSelected;
-        public List<DoctorDataSource> DoctorsSelected
+        private ObservableCollection<DoctorDataSource> _doctorsSelected;
+        public ObservableCollection<DoctorDataSource> DoctorsSelected
         {
             get
             {
@@ -170,8 +131,7 @@ namespace WpfApp2.ViewModels
         }
 
         public Operation Operation { get; set; }
-        string _minute;
-        string _hour;
+    
         bool TimeCheckMinute;
 
         private OperationResult OperationResult { get; set; }
@@ -215,7 +175,7 @@ namespace WpfApp2.ViewModels
 
         private void UpdateSelectedDoctors(object sender, object data)
         {
-            DoctorsSelected = new List<DoctorDataSource>();
+            DoctorsSelected = new ObservableCollection<DoctorDataSource>();
             if (Doctors != null)
             {
                 foreach (var doctor in Doctors)
@@ -274,8 +234,7 @@ namespace WpfApp2.ViewModels
 
             TextBoxMinute = Brushes.Gray;
             TextBoxHour = Brushes.Gray;
-            Minute = "0";
-            Hour = "0";
+            MinuteHour = DateTime.Now;
             TimeCheckHour = true;
             TimeCheckMinute = true;
             ButtonSaveText = "Назначить операцию";
@@ -303,8 +262,7 @@ namespace WpfApp2.ViewModels
             ToOperationOverviewCommand = new DelegateCommand(
                 () =>
                 {
-                    // TextBoxMinute = Brushes.Red;
-                    // TextBoxHour = Brushes.Red;
+
                     if (LeftDiagnosisList.Count == 0 || RightDiagnosisList.Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false)
                     {
 
@@ -313,8 +271,8 @@ namespace WpfApp2.ViewModels
                     else
                     {
 
-                        Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, int.Parse(Hour), int.Parse(Minute), 0);
-                        Operation.Time = Hour + ":" + Minute + ":" + 0;
+                        Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, MinuteHour.Hour, MinuteHour.Minute, 0);
+                        Operation.Time = MinuteHour.Hour + ":" + MinuteHour.Minute + ":" + 0;
 
                         Operation.PatientId = CurrentPatient.Id;
                         Operation.AnestheticId = AnestethicTypesID[AnesteticSelected];
@@ -412,7 +370,12 @@ namespace WpfApp2.ViewModels
                     Handled = false;
                     Data.OperationType.Add((newType));
                     Data.Complete();
-                    MessageBus.Default.Call("SetCurrentPatientForOperation", this, CurrentPatient.Id);
+                    OprTypes = new ObservableCollection<string>();
+                    foreach (var OprType in Data.OperationType.GetAll)
+                    {
+                        OprTypes.Add(OprType.LongName);
+                        OprTypesId.Add(OprType.Id);
+                    }
                     OprTypeSelected = OprTypes.Count - 1;
                 }
                 else

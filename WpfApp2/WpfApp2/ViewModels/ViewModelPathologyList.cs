@@ -135,6 +135,7 @@ namespace WpfApp2.ViewModels
             ToCurrentPatientCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("GetCurrentPatientId", this, CurrentPatient.Id);
                     Controller.NavigateTo<ViewModelCurrentPatient>();
                 }
             );

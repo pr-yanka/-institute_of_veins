@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/LegParts/Templates/RightPanelAnimation.xaml"/>
@@ -24,15 +25,9 @@
 
             </DatePicker>
 
-            <TextBox Text="{Binding Path=Hour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" BorderBrush="{Binding Path=TextBoxMinute, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="comboBox_Copy"  HorizontalAlignment="Left" Margin="5,232,0,0" VerticalAlignment="Top" Width="47" Height="37">
+            <xctk:TimePicker Value="{Binding Path=MinuteHour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Format="ShortTime"  HorizontalAlignment="Left" Margin="5,232,0,0" VerticalAlignment="Top" Width="120" Height="20" />
 
-            </TextBox>
-            <TextBlock x:Name="textBlock_Copy33" HorizontalAlignment="Left" Margin="62,244,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top" Text=":"/>
-            <TextBox Text="{Binding Path=Minute, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  BorderBrush="{Binding Path=TextBoxHour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" x:Name="comboBox_Copy1" HorizontalAlignment="Left" Margin="77,232,0,0" VerticalAlignment="Top" Width="47"  
-                      RenderTransformOrigin="-0.091,2.227" Height="37">
 
-            </TextBox>
             <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="100,204,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text=":"/>
             <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Margin="138,182,0,0" TextWrapping="Wrap"  

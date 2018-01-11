@@ -26,12 +26,27 @@ namespace WpfApp2.ViewModels
             CurrentPatientID = (int)data;
             MessageBus.Default.Call("GetCurrentPatientId", this, CurrentPatientID);
         }
+        #region MessageBus
 
+        private void GetListOfPatients(object sender, object data)
+        {
+
+            using (var context = new MySqlContext())
+            {
+                PatientsRepository PatientsRep = new PatientsRepository(context);
+                Patients = new List<ViewModelPatient>();
+                foreach (var patient in PatientsRep.GetAll)
+                {
+                    Patients.Add(new ViewModelPatient((NavigationController)data, patient));
+                }
+            }
+        }
+        #endregion
         public List<ViewModelPatient> Patients { get; set; }
         public ViewModelTablePatients(NavigationController controller) : base(controller)
         {
             base.HasNavigation = true;
-
+            MessageBus.Default.Subscribe("UpdateTableOfPatients", GetListOfPatients);
             Patients = new List<ViewModelPatient>();
             foreach (var patient in Data.Patients.GetAll)
             {
@@ -50,6 +65,7 @@ namespace WpfApp2.ViewModels
             ToCurrentPatientCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("GetCurrentPatientId", this, CurrentPatientID);
                     Controller.NavigateTo<ViewModelCurrentPatient>();
                 }
             );

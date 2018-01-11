@@ -10,6 +10,11 @@ namespace WpfApp2.Db.Models
 {
     public interface IUnitOfWork : IDisposable
     {
+        CitiesRepository Cities { get; }
+        DistrictsRepository Districts { get; }
+        RegionsRepository Regions { get; }
+        StreetsRepository Streets { get; }
+
         BrigadeMedPersonalRepository BrigadeMedPersonal { get; }
         ScientificTitlesRepository ScientificTitles { get; }
         ScientificTitleTypeRepository ScientificTitleType { get; }
