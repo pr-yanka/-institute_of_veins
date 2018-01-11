@@ -156,8 +156,8 @@ namespace WpfApp2.ViewModels
             }
         }
 
-        private List<DoctorDataSource> _doctorsSelected;
-        public List<DoctorDataSource> DoctorsSelected
+        private ObservableCollection<DoctorDataSource> _doctorsSelected;
+        public ObservableCollection<DoctorDataSource> DoctorsSelected
         {
             get
             {
@@ -215,7 +215,7 @@ namespace WpfApp2.ViewModels
 
         private void UpdateSelectedDoctors(object sender, object data)
         {
-            DoctorsSelected = new List<DoctorDataSource>();
+            DoctorsSelected = new ObservableCollection<DoctorDataSource>();
             if (Doctors != null)
             {
                 foreach (var doctor in Doctors)
