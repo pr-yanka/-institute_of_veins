@@ -226,32 +226,32 @@ namespace WpfApp2.ViewModels
 
                 result = false;
             }
-            var CauntSpecializations = 0;
-            var CauntScintifics = 0;
-            foreach (var spec in Specializations)
-            {
-                if (spec.IsChecked == true)
-                {
-                    CauntSpecializations++;
+            //var CauntSpecializations = 0;
+            //var CauntScintifics = 0;
+            //foreach (var spec in Specializations)
+            //{
+            //    if (spec.IsChecked == true)
+            //    {
+            //        CauntSpecializations++;
 
-                }
+            //    }
 
-            }
+            //}
 
-            foreach (var Tytle in Scintifics)
-            {
-                if (Tytle.IsChecked == true)
-                {
-                    CauntScintifics++;
+            //foreach (var Tytle in Scintifics)
+            //{
+            //    if (Tytle.IsChecked == true)
+            //    {
+            //        CauntScintifics++;
 
-                }
+            //    }
 
-            }
-            if (CauntSpecializations == 0 || CauntScintifics == 0)
-            {
+            //}
+            //if (CauntSpecializations == 0 || CauntScintifics == 0)
+            //{
 
-                result = false;
-            }
+            //    result = false;
+            //}
             return result;
         }
 
