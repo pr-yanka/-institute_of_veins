@@ -370,7 +370,12 @@ namespace WpfApp2.ViewModels
                     Handled = false;
                     Data.OperationType.Add((newType));
                     Data.Complete();
-                    MessageBus.Default.Call("SetCurrentPatientForOperation", this, CurrentPatient.Id);
+                    OprTypes = new ObservableCollection<string>();
+                    foreach (var OprType in Data.OperationType.GetAll)
+                    {
+                        OprTypes.Add(OprType.LongName);
+                        OprTypesId.Add(OprType.Id);
+                    }
                     OprTypeSelected = OprTypes.Count - 1;
                 }
                 else
