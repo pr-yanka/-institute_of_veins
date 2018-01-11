@@ -46,5 +46,20 @@ namespace WpfApp2.Db.Models.LegParts.BPVHip
             //значит их 4. по-хорошему тут должна быть ещё одна проверка и эксепшн.
             return FindCombo(str1, ids[0], ids[1], ids[2], ids[3]);
         }
+
+        //cогласна, архитектура странновата, разрешаю переписать))
+        public void AddCombo(BPVHipCombo newCombo, List<int?> ids)
+        {
+            //это пример плохого кода
+            if (ids.Count >= 1)
+                newCombo.IdStr2 = ids[0];
+            if (ids.Count >= 2)
+                newCombo.IdStr3 = ids[1];
+            if (ids.Count >= 3)
+                newCombo.IdStr4 = ids[2];
+            if (ids.Count >= 4)
+                newCombo.IdStr5 = ids[3];
+            Add(newCombo);
+        }
     }
 }

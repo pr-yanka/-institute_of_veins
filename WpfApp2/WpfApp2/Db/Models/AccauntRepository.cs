@@ -32,10 +32,8 @@ namespace WpfApp2.Db.Models
         public string Name { set; get; }
         [Column("пароль")]
         public string Password { set; get; }
-
-
-
     }
+
     public class AccauntRepository : Repository<Accaunt>
     {
         public AccauntRepository(DbContext context) : base(context)
@@ -43,5 +41,4 @@ namespace WpfApp2.Db.Models
 
         }
     }
-
 }

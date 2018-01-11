@@ -18,8 +18,15 @@ namespace WpfApp2.LegParts
     {
         private int _listNumber;
         public int ListNumber { get; set; }
-
-        LegPartEntry CurrentEntry { get; set; }
+        private LegPartEntry _currentEntry;
+        public LegPartEntry CurrentEntry {
+            get { return _currentEntry; }
+            set
+            {
+                _currentEntry = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ObservableCollection<LegPartDbStructure> StructureSource { get; protected set; }
         //all values

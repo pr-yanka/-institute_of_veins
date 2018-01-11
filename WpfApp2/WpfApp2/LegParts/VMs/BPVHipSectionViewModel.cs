@@ -21,6 +21,7 @@ namespace WpfApp2.LegParts.VMs
             }
             AddCustomObject(typeof(BPVHipStructure));
             AddNextPartObject(typeof(BPVHipStructure));
+            CurrentEntry = new BPVHipEntry();
         }
 
     }

@@ -38,7 +38,6 @@ namespace WpfApp2.LegParts
         }
 
         public LegSide CurrentLegSide { get; protected set; }
-        public LegPartEntry CurrentEntry { get; protected set; }
 
         public string ButtonText
         {
@@ -197,19 +196,34 @@ namespace WpfApp2.LegParts
                     if (combo == null)
                     {
                         var newCombo = new BPVHipCombo();
-                        newCombo.IdStr1 = LegSections[0].SelectedValue.Id;
-                        for (int i = 0; i < LegSections.Count - 1; i++)
-                            if (ids.Count >= i)
+                        
+                        for (int i = 0; i < LegSections.Count; i++)
                             {
-                                if (
-                                    LegSections[i + 1].SelectedValue != null && !LegSections[i + 1].SelectedValue.ToNextPart
-                                    &&
-                                    LegSections[i + 1].SelectedValue.Id != 0
-                                    )
-                                    ids[i] = LegSections[i + 1].SelectedValue.Id;
+                            var currentStructure = LegSections[i].SelectedValue;
+                            //ничего не было выбрано
+                            if (currentStructure == null) continue;
+                            //добавляем структуры, которые встретились впервые, чтобы потом добавить комбо
+                            if (currentStructure.Id == 0
+                            //потому что переход к след.разделу в комбо добавлять не надо, это излишняя информация
+                            && !currentStructure.ToNextPart)
+                            {
+                                currentStructure.Level = i + 1;
+                                Data.BPVHips.Add((BPVHipStructure)currentStructure);
+                                Data.Complete();
+                                ((BPVHipEntry)LegSections[i].CurrentEntry).Structure = (BPVHipStructure)currentStructure;
+                                (LegSections[i].CurrentEntry).StructureID = currentStructure.Id;
+                                Data.BPVHipEntries.Add((BPVHipEntry)LegSections[i].CurrentEntry);
+                                Data.Complete();
+                                if (i == 0) newCombo.IdStr1 = currentStructure.Id;
+                                //там гда раньше был ноль теперь будет актуальный айдишник
+                                else ids[i - 2] = currentStructure.Id;
                             }
-                            else ids.Add(null);
-                        Data.BPVCombos.Add(newCombo);
+                        }
+
+                        newCombo.IdStr1 = LegSections[0].SelectedValue.Id;
+                        //заполняем комбо
+                        Data.BPVCombos.AddCombo(newCombo, ids);
+                        Data.Complete();
                     }
 
                     MessageBus.Default.Call("LegDataSaved", this, this.GetType());
@@ -258,16 +272,16 @@ namespace WpfApp2.LegParts
                         str += section.Text1 + " ";
                     if (section.HasSize)
                     {
-                        str += section.Size + " ";
+                        str += section.Size + " " + section.CurrentEntry.Size.ToString() + " ";
                         str += section.SizeToText;
                     }
                     if (section.Text2 != "")
                         str += section.Text2;
 
-                    if (section.Comment != "")
+                    if (section.CurrentEntry.Comment != "")
                     {
                         str += "\n";
-                        str += section.Comment;
+                        str += section.CurrentEntry.Comment;
                     }
 
                     str += "\n";
