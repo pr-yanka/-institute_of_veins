@@ -6,52 +6,19 @@
              xmlns:local="clr-namespace:WpfApp2"
              mc:Ignorable="d" 
              d:DesignHeight="705" d:DesignWidth="1024">
-    <Grid Margin="0,80,0,0">
-        <Border Grid.RowSpan="4" Visibility="{Binding Path = Controller.LegViewModel.CurrentPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOverlay">
-            <Border.Background>
-                <SolidColorBrush Color="Black" Opacity="0.78"/>
-            </Border.Background>
-        </Border>
-
-        <Border x:Name="panelControl" Grid.RowSpan="4" Margin="0,0,-450,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="450" Height="275" DataContext="{Binding Path=Controller.LegViewModel.CurrentOpTypePanelViewModel}" >
-            <Border.Style>
-                <Style TargetType="{x:Type Border}">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Path=PanelOpened}" Value="True">
-                            <DataTrigger.EnterActions>
-                                <RemoveStoryboard BeginStoryboardName="AnimationCloseStoryboard"/>
-                                <BeginStoryboard Storyboard="{StaticResource Open}" x:Name="AnimationBeginStoryboard"/>
-                            </DataTrigger.EnterActions>
-                            <DataTrigger.ExitActions>
-                                <RemoveStoryboard BeginStoryboardName="AnimationBeginStoryboard"/>
-                                <BeginStoryboard Storyboard="{StaticResource Close}" x:Name="AnimationCloseStoryboard"/>
-                            </DataTrigger.ExitActions>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Border.Style>
-
-            <Border.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Border.RenderTransform>
-
-            <Grid>
-                <Canvas Background="#FFC6E8E6" Margin="0,0,0,29">
-                    <TextBlock x:Name="textBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="135" FontSize="18" Canvas.Top="10" Text="Новый тип операции"/>
-                    <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=Text1}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="61" />
-                    <Button x:Name="buttonCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Canvas.Left="60" Canvas.Top="200" Height="36"/>
-                    <Button x:Name="ButtonAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding ClosePanelCommand}" Canvas.Left="256" Canvas.Top="200" Height="36"/>
-                    <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="42" Canvas.Left="173" Text="Короткое название:"/>
-                    <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="124" Canvas.Left="173" Text="Длинное название:"/>
-                    <TextBox x:Name="textBox1_Copy" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Text1}" VerticalAlignment="Top" Width="422" Canvas.Top="143" RenderTransformOrigin="0.502,0.488" Canvas.Left="10" />
-                </Canvas>
-            </Grid>
-        </Border>
-
+    <Grid Name="RootGrid">
+        <TextBlock FontSize="24" FontFamily="Source Sans Pro" HorizontalAlignment="Left" Margin="432,48,0,0" TextWrapping="Wrap" Text="ПАНЕЛЬ АДМИНИСТРАТОРА" VerticalAlignment="Top" Width="297" Height="75" TextAlignment="Center" Foreground="#FF404040" FontWeight="Bold"/>
+        <Button x:Name="buttonToPatients" Command="{Binding ToMedPersonalCommand}" HorizontalAlignment="Left" Margin="601,222,0,0" VerticalAlignment="Top" Width="227" Height="153" Background="#FFDDF2F3" FontFamily="Segoe UI Symbol" FontSize="16" BorderBrush="{x:Null}" Foreground="#FF686868" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" UseLayoutRounding="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" FontStretch="Condensed">
+            <Image Margin="0,22,0,61" Source="pack://application:,,,/Images/patient.png" Stretch="Fill" Width="60" Height="60"/>
+        </Button>
+        <TextBlock FontSize="14" FontFamily="Source Sans Pro" HorizontalAlignment="Left" Margin="613,319,0,0" TextWrapping="Wrap" Text="МЕДПЕРСОНАЛ" VerticalAlignment="Top" Width="202" Height="75" TextAlignment="Center" Foreground="#FF404040"/>
+        <Button x:Name="buttonToPhysicalTable" Command="{Binding ToUsersCommand}" HorizontalAlignment="Left" Margin="342,431,0,0" VerticalAlignment="Top" Width="227" Height="153" Background="#FFDDF2F3" FontFamily="Segoe UI Symbol" FontSize="16" BorderBrush="{x:Null}" Foreground="#FF686868" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" UseLayoutRounding="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" FontStretch="Condensed">
+            <Image Margin="0,25,0,68" Source="pack://application:,,,/Images/patient.png" Stretch="Fill" Width="54" Height="54"/>
+        </Button>
+        <Button x:Name="buttonToNewPatient" Command="{Binding ToDoctorsCommand}" HorizontalAlignment="Left" Margin="342,222,0,0" VerticalAlignment="Top" Width="227" Height="153" Background="#FFDDF2F3" FontFamily="Segoe UI Symbol" FontSize="16" BorderBrush="{x:Null}" Foreground="#FF686868" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" UseLayoutRounding="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" FontStretch="Condensed">
+            <Image Source="pack://application:,,,/Images/patient.png" Width="50" Height="50" HorizontalAlignment="Left" Margin="0,24,0,69"/>
+        </Button>
+        <TextBlock FontSize="14" FontFamily="Source Sans Pro" HorizontalAlignment="Left" Margin="359,521,0,0" TextWrapping="Wrap" Text="ПОЛЬЗОВАТЕЛИ" VerticalAlignment="Top" Width="188" Height="47" TextAlignment="Center" Foreground="#FF404040"/>
+        <TextBlock FontSize="14" FontFamily="Source Sans Pro" HorizontalAlignment="Left" Margin="359,319,0,0" TextWrapping="Wrap" Text="ВРАЧИ" VerticalAlignment="Top" Width="188" Height="47" TextAlignment="Center" Foreground="#FF404040"/>
     </Grid>
 </UserControl>
