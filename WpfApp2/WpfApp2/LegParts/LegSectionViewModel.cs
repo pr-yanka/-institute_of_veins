@@ -61,7 +61,10 @@ namespace WpfApp2.LegParts
                 if (_selectedValue.HasSize) HasSize = true;
                 if (_selectedValue.HasDoubleMetric) HasDoubleSize = true;
 
-                HasComment = true;
+                if (_selectedValue.ToNextPart)
+                    HasComment = false;
+                else
+                    HasComment = true;
                 OnPropertyChanged();
             }
         }
