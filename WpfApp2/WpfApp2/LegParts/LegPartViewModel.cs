@@ -218,55 +218,72 @@ namespace WpfApp2.LegParts
             SaveCommand = new DelegateCommand(
                 () =>
                 {
-                    IsEmpty = false;
-
-                    List<int?> ids = new List<int?>();
-
-                    foreach (var leg in LegSections)
+                    if (LegSections[0].SelectedValue != null)
                     {
-                        //никогда так не делайте
-                        if (leg.IsVisible == Visibility.Visible && leg.ListNumber != 1 && leg.SelectedValue != null && leg.SelectedValue.Id != 0)
-                            ids.Add(leg.SelectedValue.Id);
-                    }
-
-                    var combo = Data.BPVCombos.FindCombo(LegSections[0].SelectedValue.Id, ids);
-                    //если комбо не нашлось - значит оно кастомное, мы его запомним и отправим в базу на радость будущим пользователям
-                    if (combo == null)
-                    {
-                        var newCombo = new BPVHipCombo();
-
-                        for (int i = 0; i < LegSections.Count; i++)
+                        bool test = true;
+                        foreach (var leg in LegSections)
                         {
-                            var currentStructure = LegSections[i].SelectedValue;
-                            //ничего не было выбрано
-                            if (currentStructure == null) continue;
-                            //добавляем структуры, которые встретились впервые, чтобы потом добавить комбо
-                            if (currentStructure.Id == 0
-                            //потому что переход к след.разделу в комбо добавлять не надо, это излишняя информация
-                            && !currentStructure.ToNextPart)
-                            {
-                                currentStructure.Level = i + 1;
-                                Data.BPVHips.Add((BPVHipStructure)currentStructure);
-                                Data.Complete();
-                                ((BPVHipEntry)LegSections[i].CurrentEntry).Structure = (BPVHipStructure)currentStructure;
-                                (LegSections[i].CurrentEntry).StructureID = currentStructure.Id;
-                                Data.BPVHipEntries.Add((BPVHipEntry)LegSections[i].CurrentEntry);
-                                Data.Complete();
-                                if (i == 0) newCombo.IdStr1 = currentStructure.Id;
-                                //там гда раньше был ноль теперь будет актуальный айдишник
-                                else ids[i - 2] = currentStructure.Id;
-                            }
+                            if(leg.HasSize && leg.CurrentEntry.Size == 0)
+                            { test = false; }
+                            //if(leg.HasDoubleSize && leg.Size2 == 0)
+                            //{
+                            //    test = false;
+                            //}
                         }
+                        if (test)
+                        {
+                            IsEmpty = false;
 
-                        newCombo.IdStr1 = LegSections[0].SelectedValue.Id;
-                        //заполняем комбо
-                        Data.BPVCombos.AddCombo(newCombo, ids);
-                        Data.Complete();
+                            List<int?> ids = new List<int?>();
+
+                            foreach (var leg in LegSections)
+                            {
+                                //никогда так не делайте
+                                if (leg.IsVisible == Visibility.Visible && leg.ListNumber != 1 && leg.SelectedValue != null && leg.SelectedValue.Id != 0)
+                                    ids.Add(leg.SelectedValue.Id);
+                            }
+
+                            var combo = Data.BPVCombos.FindCombo(LegSections[0].SelectedValue.Id, ids);
+                            //если комбо не нашлось - значит оно кастомное, мы его запомним и отправим в базу на радость будущим пользователям
+                            if (combo == null)
+                            {
+                                var newCombo = new BPVHipCombo();
+
+                                for (int i = 0; i < LegSections.Count; i++)
+                                {
+                                    var currentStructure = LegSections[i].SelectedValue;
+                                    //ничего не было выбрано
+                                    if (currentStructure == null) continue;
+                                    //добавляем структуры, которые встретились впервые, чтобы потом добавить комбо
+                                    if (currentStructure.Id == 0
+                                    //потому что переход к след.разделу в комбо добавлять не надо, это излишняя информация
+                                    && !currentStructure.ToNextPart)
+                                    {
+                                        currentStructure.Level = i + 1;
+                                        Data.BPVHips.Add((BPVHipStructure)currentStructure);
+                                        Data.Complete();
+                                        ((BPVHipEntry)LegSections[i].CurrentEntry).Structure = (BPVHipStructure)currentStructure;
+                                        (LegSections[i].CurrentEntry).StructureID = currentStructure.Id;
+                                        Data.BPVHipEntries.Add((BPVHipEntry)LegSections[i].CurrentEntry);
+                                        Data.Complete();
+                                        if (i == 0) newCombo.IdStr1 = currentStructure.Id;
+                                        //там гда раньше был ноль теперь будет актуальный айдишник
+                                        else ids[i - 2] = currentStructure.Id;
+                                    }
+                                }
+
+                                newCombo.IdStr1 = LegSections[0].SelectedValue.Id;
+                                //заполняем комбо
+                                Data.BPVCombos.AddCombo(newCombo, ids);
+                                Data.Complete();
+                            }
+
+                            MessageBus.Default.Call("LegDataSaved", this, this.GetType());
+                            Controller.NavigateTo<ViewModelAddPhysical>();
+                        }
+                        else { MessageBox.Show("Не все поля заполнены"); }
                     }
-
-                    MessageBus.Default.Call("LegDataSaved", this, this.GetType());
-                    Controller.NavigateTo<ViewModelAddPhysical>();
-
+                    else { Controller.NavigateTo<ViewModelAddPhysical>(); }
                 }
             );
         }

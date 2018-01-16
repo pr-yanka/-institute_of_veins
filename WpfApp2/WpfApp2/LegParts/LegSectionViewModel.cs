@@ -49,38 +49,47 @@ namespace WpfApp2.LegParts
             get { return _selectedValue; }
             set
             {
-                if ((_selectedValue == null && value.Custom) || (_selectedValue != null && _selectedValue.Custom != value.Custom))
+                if (value != null && value.Text2 == "" && value.Text1 == "")
                 {
-                    if (value.Custom && value.Text1 == _startCustomText) MessageBus.Default.Call("OpenCustom", this, this.GetType());
-                    else MessageBus.Default.Call("CloseCustom", this, this.GetType());
+                   _selectedValue = value; OnPropertyChanged();
+                    MessageBus.Default.Call("RebuildLegSectionViewModel", "Empty",this);
                 }
-                _selectedValue = value;
-                if (_selectedValue == null)
+                else if(value != null)
                 {
-                    HasFirstPart = false;
-                    HasSecondPart = false;
-                    HasComment = false;
-                    HasSize = false;
-                    HasDoubleSize = false;
+
+                    if ((_selectedValue == null && value.Custom) || (_selectedValue != null && _selectedValue.Custom != value.Custom))
+                    {
+                        if (value.Custom && value.Text1 == _startCustomText) MessageBus.Default.Call("OpenCustom", this, this.GetType());
+                        else MessageBus.Default.Call("CloseCustom", this, this.GetType());
+                    }
+                    _selectedValue = value;
+                    if (_selectedValue == null)
+                    {
+                        HasFirstPart = false;
+                        HasSecondPart = false;
+                        HasComment = false;
+                        HasSize = false;
+                        HasDoubleSize = false;
+                        OnPropertyChanged();
+                        return;
+                    }
+
+                    if (_selectedValue.Text1 != "") HasFirstPart = true;
+                    if (_selectedValue.Text2 != "") HasSecondPart = true;
+                    if (_selectedValue.HasSize) HasSize = true;
+                    if (_selectedValue.HasDoubleMetric) HasDoubleSize = true;
+
+                    if (_selectedValue.ToNextPart)
+                        HasComment = false;
+                    else
+                        HasComment = true;
+                    MessageBus.Default.Call("RebuildLegSectionViewModel", this, this);
+
                     OnPropertyChanged();
-                    return;
+
+
                 }
-
-                if (_selectedValue.Text1 != "") HasFirstPart = true;
-                if (_selectedValue.Text2 != "") HasSecondPart = true;
-                if (_selectedValue.HasSize) HasSize = true;
-                if (_selectedValue.HasDoubleMetric) HasDoubleSize = true;
-
-                if (_selectedValue.ToNextPart)
-                    HasComment = false;
-                else
-                    HasComment = true;
-
-
-
-                MessageBus.Default.Call("RebuildLegSectionViewModel", this, this);
-
-
+                else { _selectedValue = null; OnPropertyChanged();  }
 
                 OnPropertyChanged();
             }
@@ -215,7 +224,7 @@ namespace WpfApp2.LegParts
             {
                 _isVisible = value;
                 // int indexOfSelectedValue = SelectedValue.Id;
-               
+
                 OnPropertyChanged();
             }
         }
@@ -249,6 +258,17 @@ namespace WpfApp2.LegParts
             _customChoice.Custom = true;
             _customChoice.ToNextPart = false;
             StructureSource.Add(_customChoice);
+        }
+
+        protected void AddEmpty(Type structureType)
+        {
+            var _Empty = (LegPartDbStructure)Activator.CreateInstance(structureType);
+            _Empty.Text1 = "";
+            _Empty.Text2 = "";
+            _Empty.HasSize = false;
+            _Empty.Custom = false;
+            _Empty.ToNextPart = false;
+            StructureSource.Add(_Empty);
         }
 
         protected void AddNextPartObject(Type structureType)

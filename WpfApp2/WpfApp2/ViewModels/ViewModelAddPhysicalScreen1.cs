@@ -252,11 +252,11 @@ namespace WpfApp2.ViewModels
 
             for (int i = 0; i < 6; ++i)
             {
-                IsVisibleBPVleftBuf.Add(Visibility.Hidden);
+                IsVisibleBPVleftBuf.Add(Visibility.Collapsed);
             }
             for (int i = 0; i < 6; ++i)
             {
-                IsVisibleBPVRight.Add(Visibility.Hidden);
+                IsVisibleBPVRight.Add(Visibility.Collapsed);
             }
 
             IsVisibleBPVleft = IsVisibleBPVleftBuf;
@@ -580,7 +580,7 @@ namespace WpfApp2.ViewModels
                         if (LeftBPVHip.LegSections[i].SelectedValue == null || LeftBPVHip.LegSections[i].SelectedValue.ToNextPart)
                         {
 
-                            IsVisibleBPVleftbuf.Add(Visibility.Hidden);
+                            IsVisibleBPVleftbuf.Add(Visibility.Collapsed);
                         }
                         else
                         {
@@ -614,7 +614,7 @@ namespace WpfApp2.ViewModels
                         if (RightBPVHip.LegSections[i].SelectedValue == null || RightBPVHip.LegSections[i].SelectedValue.ToNextPart)
                         {
 
-                            IsVisibleBPVRightbuf.Add(Visibility.Hidden);
+                            IsVisibleBPVRightbuf.Add(Visibility.Collapsed);
                         }
                         else
                         {

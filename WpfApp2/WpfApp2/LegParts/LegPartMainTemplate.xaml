@@ -16,14 +16,14 @@
     <DataTemplate x:Key="LegPartTemplate">
         <Grid Margin="0,80,0,0" ShowGridLines="True">
             <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
+                <RowDefinition Height="60"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="100"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" x:Name="textBlock" HorizontalAlignment="Center" VerticalAlignment="Center" Height="40" Margin="0,10,0,10" TextWrapping="Wrap" Text="{Binding Path=Controller.LegViewModel.Title}" FontSize="28"/>
+            <TextBlock Grid.Row="0" x:Name="textBlock" HorizontalAlignment="Center" VerticalAlignment="Center" Height="auto" Margin="0,10,0,10" TextWrapping="Wrap" Text="{Binding Path=Controller.LegViewModel.Title}" FontSize="28"/>
             <ContentControl Grid.Row="1" Content="{Binding Controller.LegViewModel}" VerticalAlignment="Center" Margin="0,10,0,10" ContentTemplateSelector="{StaticResource LegTemplateSelector}" Background="#FFF7F7F7"/>
             <ListView Grid.Row="2" ItemsSource="{Binding Path=Controller.LegViewModel.LegSections}" Margin="5,10,5,10" ScrollViewer.VerticalScrollBarVisibility="Visible">
                 <ListView.ItemContainerStyle>

@@ -5,7 +5,7 @@
         <ResourceDictionary Source="/LegParts/Templates/RightPanelAnimation.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     <DataTemplate x:Key="TemplateAddPathology">
-        <Grid Margin="0,62,0,0">
+        <Grid Margin="203,62,0,0">
 
             <Label x:Name="label" Content="Патологии" HorizontalAlignment="Left" Margin="214,10,0,0" VerticalAlignment="Top"/>
             <Button x:Name="button_Copy1" Content="{Binding TextAddOrSave}" Command="{Binding Path=ToPathologyListCommand}" HorizontalAlignment="Left" Margin="268,264,0,0" VerticalAlignment="Top"  
@@ -37,12 +37,12 @@
             </TextBox>
             <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="206,164,0,0" TextWrapping="Wrap" Text="Дата исчезнования"  
                        VerticalAlignment="Top" RenderTransformOrigin="0.247,0.521"/>
-            <Border Grid.RowSpan="4" Visibility="{Binding Path = CurrentPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOverlay" Width="auto" Height="auto">
+            <Border Visibility="{Binding Path = CurrentPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOverlay" Width="auto" Height="auto">
                 <Border.Background>
                     <SolidColorBrush Color="Black" Opacity="0.78"/>
                 </Border.Background>
             </Border>
-            <Border x:Name="panelControl" Grid.RowSpan="4" Margin="0,0,-450,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="450" Height="275" DataContext="{Binding Path=CurrentPanelViewModel}" >
+            <Border x:Name="panelControl" Grid.RowSpan="4" Margin="0,0,-450,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="450" Height="175" DataContext="{Binding Path=CurrentPanelViewModel}" >
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
                         <Style.Triggers>
@@ -73,8 +73,8 @@
                     <Canvas Background="#FFC6E8E6" Margin="0,0,0,29">
                         <TextBlock x:Name="textBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="135" FontSize="18" Canvas.Top="10" Text="Новый тип патологии"/>
                         <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=NewPtName}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="61" />
-                        <Button x:Name="buttonCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding ParentVM.RevertCommand}" Canvas.Left="60" Canvas.Top="200" Height="36"/>
-                        <Button x:Name="ButtonAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding ParentVM.SaveCommand}" Canvas.Left="256" Canvas.Top="200" Height="36"/>
+                        <Button x:Name="buttonCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding ParentVM.RevertCommand}" Canvas.Left="60" Canvas.Top="110" Height="36"/>
+                        <Button x:Name="ButtonAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding ParentVM.SaveCommand}" Canvas.Left="256" Canvas.Top="110" Height="36"/>
                         <TextBlock x:Name="textBlock_Copy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="42" Canvas.Left="173" Text="Название:"/>
 
                     </Canvas>

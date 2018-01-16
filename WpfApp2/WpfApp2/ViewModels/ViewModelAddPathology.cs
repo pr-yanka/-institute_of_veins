@@ -218,10 +218,12 @@ namespace WpfApp2.ViewModels
             TextAddOrSave = "Добавить";
             YearAppearB = Brushes.Gray;
             MonthAppearB = Brushes.Gray;
+            YearDisappearB = Brushes.Gray;
+            MonthDisappearB = Brushes.Gray;
             DateAppear = DateTime.Now;
             DateDisappear = DateTime.Now;
             MessageBus.Default.Subscribe("GetPatientForAddPatology", SetCurrentPatientID);
-            HasNavigation = false;
+            HasNavigation = true;
             CurrentPanelViewModel = new PatologyTypePanelViewModel(this);
             OpenPanelCommand = new DelegateCommand(() =>
             {
