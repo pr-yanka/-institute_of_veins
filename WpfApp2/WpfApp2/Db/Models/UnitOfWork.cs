@@ -10,6 +10,7 @@ namespace WpfApp2.Db.Models
 {
     public class UnitOfWork : IUnitOfWork
     {
+        public BPVHipWayRepository BPVHipWay { get; set; }
 
         public CitiesRepository Cities { get; }
         public DistrictsRepository Districts { get; }
@@ -60,7 +61,7 @@ namespace WpfApp2.Db.Models
         {
             _context = context;
 
-
+            BPVHipWay = new BPVHipWayRepository(_context);
             Cities = new CitiesRepository(_context);
             Districts = new DistrictsRepository(_context);
             Regions = new RegionsRepository(_context);

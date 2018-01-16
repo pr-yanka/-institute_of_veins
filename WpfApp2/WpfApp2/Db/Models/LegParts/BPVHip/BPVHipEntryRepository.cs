@@ -15,7 +15,16 @@ namespace WpfApp2.Db.Models.LegParts.BPVHip
         }
     }
 
-    public class BPVHipEntryFullRepository : Repository<BPVHipEntryFull>
+    public class BPVHipWayRepository : Repository<BPVHipWay>
+    {
+        public BPVHipWayRepository(DbContext context) : base(context)
+    {
+
+    }
+}
+
+
+public class BPVHipEntryFullRepository : Repository<BPVHipEntryFull>
     {
         public BPVHipEntryFullRepository(DbContext context) : base(context)
         {

@@ -19,7 +19,8 @@ namespace WpfApp2.LegParts
         private int _listNumber;
         public int ListNumber { get; set; }
         private LegPartEntry _currentEntry;
-        public LegPartEntry CurrentEntry {
+        public LegPartEntry CurrentEntry
+        {
             get { return _currentEntry; }
             set
             {
@@ -27,8 +28,17 @@ namespace WpfApp2.LegParts
                 OnPropertyChanged();
             }
         }
+        private ObservableCollection<LegPartDbStructure> _structureSource;
 
-        public ObservableCollection<LegPartDbStructure> StructureSource { get; protected set; }
+        public ObservableCollection<LegPartDbStructure> StructureSource
+        {
+            get { return _structureSource; }
+            set
+            {
+                _structureSource = value;
+                OnPropertyChanged();
+            }
+        }
         //all values
 
         //selected value
@@ -39,7 +49,7 @@ namespace WpfApp2.LegParts
             get { return _selectedValue; }
             set
             {
-                if ((_selectedValue == null && value.Custom) || (_selectedValue != null &&_selectedValue.Custom != value.Custom))
+                if ((_selectedValue == null && value.Custom) || (_selectedValue != null && _selectedValue.Custom != value.Custom))
                 {
                     if (value.Custom && value.Text1 == _startCustomText) MessageBus.Default.Call("OpenCustom", this, this.GetType());
                     else MessageBus.Default.Call("CloseCustom", this, this.GetType());
@@ -55,7 +65,7 @@ namespace WpfApp2.LegParts
                     OnPropertyChanged();
                     return;
                 }
-                    
+
                 if (_selectedValue.Text1 != "") HasFirstPart = true;
                 if (_selectedValue.Text2 != "") HasSecondPart = true;
                 if (_selectedValue.HasSize) HasSize = true;
@@ -65,6 +75,13 @@ namespace WpfApp2.LegParts
                     HasComment = false;
                 else
                     HasComment = true;
+
+
+
+                MessageBus.Default.Call("RebuildLegSectionViewModel", this, this);
+
+
+
                 OnPropertyChanged();
             }
         }
@@ -87,7 +104,8 @@ namespace WpfApp2.LegParts
 
         //has double size
         private bool _hasDoubleSize;
-        public bool HasDoubleSize {
+        public bool HasDoubleSize
+        {
             get
             {
                 return _hasDoubleSize;
@@ -116,7 +134,8 @@ namespace WpfApp2.LegParts
 
         //has second part
         private bool _hasSecondPart;
-        public bool HasSecondPart {
+        public bool HasSecondPart
+        {
             get
             {
                 return _hasSecondPart;
@@ -150,13 +169,37 @@ namespace WpfApp2.LegParts
         public string Text2 { get; set; }
 
         private float _size;
-        public float Size { get; set; }
+        public float Size
+        {
+            get
+            {
+                return _size;
+            }
+            set
+            {
+                _size = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string Comment { get; set; }
 
         private float _size2;
 
         private LegSectionViewModel _previousSection;
+
+        public LegSectionViewModel PreviousSection
+        {
+            get
+            {
+                return _previousSection;
+            }
+            set
+            {
+                _previousSection = value;
+                OnPropertyChanged();
+            }
+        }
 
         private Visibility _isVisible;
         public Visibility IsVisible
@@ -168,8 +211,11 @@ namespace WpfApp2.LegParts
                 //SelectedValue = null;
                 return Visibility.Hidden;
             }
-            set {
+            set
+            {
                 _isVisible = value;
+                // int indexOfSelectedValue = SelectedValue.Id;
+               
                 OnPropertyChanged();
             }
         }
@@ -181,7 +227,7 @@ namespace WpfApp2.LegParts
                 prevSection.PropertyChanged += (e, args) =>
                 {
                     if (prevSection.SelectedValue != null) IsVisible = Visibility.Visible;
-                    else IsVisible = Visibility.Hidden;;
+                    else IsVisible = Visibility.Hidden; ;
                 };
             StructureSource = new ObservableCollection<LegPartDbStructure>();
             var t = StructureSource.GetEnumerator().GetType().GetGenericTypeDefinition();
@@ -224,7 +270,8 @@ namespace WpfApp2.LegParts
 
         public float Size2 { get; set; }
 
-        public string SizeToText {
+        public string SizeToText
+        {
             get
             {
                 if (!HasSize && !HasDoubleSize)
@@ -236,6 +283,6 @@ namespace WpfApp2.LegParts
             }
         }
 
-        
+
     }
 }

@@ -25,6 +25,61 @@ namespace WpfApp2.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public List<string> BpvLeftstr
+        {
+            get
+            {
+                return _bpvLeftstr;
+            }
+            set
+            {
+                _bpvLeftstr = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private List<string> _bpvLeftstr;
+        private ObservableCollection<Visibility> _isVisibleBPVleft;
+        public ObservableCollection<Visibility> IsVisibleBPVleft
+        {
+            get
+            {
+                return _isVisibleBPVleft;
+            }
+            set
+            {
+                _isVisibleBPVleft = value;
+                OnPropertyChanged();
+            }
+        }
+        public List<string> BpvRightstr
+        {
+            get
+            {
+                return _bpvRightstr;
+            }
+            set
+            {
+                _bpvRightstr = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private List<string> _bpvRightstr;
+        private ObservableCollection<Visibility> _isVisibleBPVRight;
+        public ObservableCollection<Visibility> IsVisibleBPVRight
+        {
+            get
+            {
+                return _isVisibleBPVRight;
+            }
+            set
+            {
+                _isVisibleBPVRight = value;
+                OnPropertyChanged();
+            }
+        }
+
         private string _weight;
         public string Weight
         {
@@ -137,6 +192,10 @@ namespace WpfApp2.ViewModels
             set { this.openDialogCommand = value; }
         }
 
+
+        public BPVHipEntryFull LeftBPVEntryFull { get; protected set; }
+        public BPVHipEntryFull RightBPVEntryFull { get; protected set; }
+
         public BPVHipViewModel LeftBPVHip { get; protected set; }
         public SFSViewModel LeftSFS { get; protected set; }
         public PDSVViewModel LeftPDSV { get; protected set; }
@@ -185,6 +244,23 @@ namespace WpfApp2.ViewModels
         }
         public ViewModelAddPhysical(NavigationController controller) : base(controller)
         {
+            BpvLeftstr = new List<string>();
+            BpvRightstr = new List<string>();
+            var IsVisibleBPVleftBuf = new ObservableCollection<Visibility>();
+            IsVisibleBPVRight = new ObservableCollection<Visibility>();
+            IsVisibleBPVleft = new ObservableCollection<Visibility>();
+
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleBPVleftBuf.Add(Visibility.Hidden);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleBPVRight.Add(Visibility.Hidden);
+            }
+
+            IsVisibleBPVleft = IsVisibleBPVleftBuf;
+
             MessageBus.Default.Subscribe("LegDataSaved", Handler);
             MessageBus.Default.Subscribe("GetCurrentPatientIdForOperation", SetCurrentPatientID);
 
@@ -466,12 +542,13 @@ namespace WpfApp2.ViewModels
         }
 
 
-
+        //  public ObservableCollection<>
         //кто присылает и что присылает
         private void Handler(object sender, object data)
         {
             Type senderType = sender.GetType();
             LegPartViewModel senderVM = (LegPartViewModel)sender;
+            BPVHipEntryFull bpv = new BPVHipEntryFull();
 
             //sender проверять какого типа
             if (senderType == typeof(SFSViewModel))
@@ -482,9 +559,70 @@ namespace WpfApp2.ViewModels
 
             if (senderType == typeof(BPVHipViewModel))
                 if (senderVM.CurrentLegSide == LegSide.Left)
+                {
+                    
+
+
+                    List<string> bufBpvLeftStr = new List<string>();
+                    BpvLeftstr = new List<string>();
+
+                    LeftBPVEntryFull = new BPVHipEntryFull();
+                    //to do тут должно быть сохранение
+
+
+                    var IsVisibleBPVleftbuf = new ObservableCollection<Visibility>();
                     LeftBPVHip = (BPVHipViewModel)sender;
+
+                    IsVisibleBPVleftbuf.Add(Visibility.Visible);
+
+                    for (int i = 0; i < LeftBPVHip.LegSections.Count; ++i)
+                    {
+                        if (LeftBPVHip.LegSections[i].SelectedValue == null || LeftBPVHip.LegSections[i].SelectedValue.ToNextPart)
+                        {
+
+                            IsVisibleBPVleftbuf.Add(Visibility.Hidden);
+                        }
+                        else
+                        {
+                            bufBpvLeftStr.Add(LeftBPVHip.LegSections[i].SelectedValue.Text1 + " " + LeftBPVHip.LegSections[i].CurrentEntry.Size + LeftBPVHip.LegSections[i].SelectedValue.Metrics);
+                            IsVisibleBPVleftbuf.Add(Visibility.Visible);
+                        }
+                    }
+                    BpvLeftstr = bufBpvLeftStr;
+                    IsVisibleBPVleft = IsVisibleBPVleftbuf;
+
+                }
                 else
+                {
+                  
+
+
+                    List<string> bufBpvRightStr = new List<string>();
+                    BpvRightstr = new List<string>();
+
+                    var IsVisibleBPVRightbuf = new ObservableCollection<Visibility>();
                     RightBPVHip = (BPVHipViewModel)sender;
+
+                    IsVisibleBPVRightbuf.Add(Visibility.Visible);
+
+                    for (int i = 0; i < RightBPVHip.LegSections.Count; ++i)
+                    {
+                        if (RightBPVHip.LegSections[i].SelectedValue == null || RightBPVHip.LegSections[i].SelectedValue.ToNextPart)
+                        {
+
+                            IsVisibleBPVRightbuf.Add(Visibility.Hidden);
+                        }
+                        else
+                        {
+                            bufBpvRightStr.Add(RightBPVHip.LegSections[i].SelectedValue.Text1 + " " + RightBPVHip.LegSections[i].CurrentEntry.Size + RightBPVHip.LegSections[i].SelectedValue.Metrics);
+                            IsVisibleBPVRightbuf.Add(Visibility.Visible);
+                        }
+                    }
+                    BpvRightstr = bufBpvRightStr;
+                    IsVisibleBPVRight = IsVisibleBPVRightbuf;
+
+
+                }
 
         }
     }

@@ -115,20 +115,40 @@ namespace WpfApp2.Db.Models
     public class BPVHipEntry : LegPartEntry, ILegPart
     {
         public virtual BPVHipStructure Structure { get; set; }
+
+        public virtual ICollection<BPVHipEntryFull> EntriesFull1 { get; set; } = new HashSet<BPVHipEntryFull>();
+        public virtual ICollection<BPVHipEntryFull> EntriesFull2 { get; set; } = new HashSet<BPVHipEntryFull>();
+        public virtual ICollection<BPVHipEntryFull> EntriesFull3 { get; set; } = new HashSet<BPVHipEntryFull>();
+        public virtual ICollection<BPVHipEntryFull> EntriesFull4 { get; set; } = new HashSet<BPVHipEntryFull>();
+        public virtual ICollection<BPVHipEntryFull> EntriesFull5 { get; set; } = new HashSet<BPVHipEntryFull>();
+
     }
 
     [Table("вид_БПВ_хода")]
     public class BPVHipWay
     {
+        [Column("id_вида"),Key]
         public int Id { get; set; }
+        [Column("описание")]
         public string Name { get; set; }
+        public virtual ICollection<BPVHipEntryFull> EntriesFull { get; set; } = new HashSet<BPVHipEntryFull>();
+
     }
 
-    [Table("большая_подкожная_вена")]
+    [Table("большая_подкожная_вена_на_бедре")]
     public class BPVHipEntryFull : LegPartEntries
     {
+        public virtual BPVHipWay BPVHipWay { get; set; }
+        public virtual BPVHipEntry BPVHipEntry1 { get; set; }
+        public virtual BPVHipEntry BPVHipEntry2 { get; set; }
+        public virtual BPVHipEntry BPVHipEntry3 { get; set; }
+        public virtual BPVHipEntry BPVHipEntry4 { get; set; }
+        public virtual BPVHipEntry BPVHipEntry5 { get; set; }
         public int Id { get; set; }
         public int BPVHipWayID { get; set; }
+
+        public int BPVHipEntryId1 { get; set; }
+        public int BPVHipEntryId2 { get; set; }
         public int BPVHipEntryId3 { get; set; }
         public int BPVHipEntryId4 { get; set; }
         public int BPVHipEntryId5 { get; set; }

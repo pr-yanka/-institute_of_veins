@@ -37,6 +37,7 @@ namespace WpfApp2.LegParts
             }
         }
 
+
         public LegSide CurrentLegSide { get; protected set; }
 
         public string ButtonText

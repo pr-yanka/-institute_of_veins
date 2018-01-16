@@ -11,6 +11,9 @@ namespace WpfApp2.Db.Models
     public class MySqlContext : DbContext
     {
 
+
+        public DbSet<BPVHipWay> BPVHipWay { get; set; }
+
         public DbSet<Cities> Cities { get; set; }
         public DbSet<Districts> Districts { get; set; }
         public DbSet<Regions> Regions { get; set; }
@@ -39,7 +42,7 @@ namespace WpfApp2.Db.Models
         public DbSet<OperationResult> OperationResult { get; set; }
 
         public DbSet<CancelOperation> CancelOperation { get; set; }
-       
+
         public DbSet<Examination> Examination { get; set; }
 
         public DbSet<DiagnosisObs> DiagnosisObs { get; set; }
@@ -62,13 +65,16 @@ namespace WpfApp2.Db.Models
         public DbSet<DiagnosisType> DiagnosisTypes { get; set; }
         public DbSet<RecomendationsType> RecomendationsTypes { get; set; }
         public DbSet<ComplainsType> ComplainsTypes { get; set; }
-        public MySqlContext() : base("server=localhost;user=root;database=med_db;password=22222;") {
-            
+        public MySqlContext() : base("server=localhost;user=root;database=med_db;password=22222;")
+        {
+
         }
 
-        
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+
+
             // configures one-to-many relationship
             modelBuilder.Entity<BPVHipCombo>()
                 .HasRequired<BPVHipStructure>(s => s.Str1).WithMany(g => g.BPVs1).HasForeignKey<int>(s => s.IdStr1);
@@ -87,6 +93,23 @@ namespace WpfApp2.Db.Models
 
             modelBuilder.Entity<BPVHipEntry>()
                 .HasRequired<BPVHipStructure>(s => s.Structure).WithMany(g => g.Entries).HasForeignKey<int>(s => s.StructureID);
+
+            modelBuilder.Entity<BPVHipEntryFull>()
+              .HasRequired<BPVHipWay>(s => s.BPVHipWay).WithMany(g => g.EntriesFull).HasForeignKey<int>(s => s.BPVHipWayID);
+
+            modelBuilder.Entity<BPVHipEntryFull>()
+            .HasRequired<BPVHipEntry>(s => s.BPVHipEntry1).WithMany(g => g.EntriesFull1).HasForeignKey<int>(s => s.BPVHipEntryId1);
+            modelBuilder.Entity<BPVHipEntryFull>()
+            .HasRequired<BPVHipEntry>(s => s.BPVHipEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int>(s => s.BPVHipEntryId2);
+
+            modelBuilder.Entity<BPVHipEntryFull>()
+            .HasRequired<BPVHipEntry>(s => s.BPVHipEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int>(s => s.BPVHipEntryId3);
+
+            modelBuilder.Entity<BPVHipEntryFull>()
+            .HasRequired<BPVHipEntry>(s => s.BPVHipEntry4).WithMany(g => g.EntriesFull4).HasForeignKey<int>(s => s.BPVHipEntryId4);
+
+            modelBuilder.Entity<BPVHipEntryFull>()
+            .HasRequired<BPVHipEntry>(s => s.BPVHipEntry5).WithMany(g => g.EntriesFull5).HasForeignKey<int>(s => s.BPVHipEntryId5);
 
         }
     }
