@@ -37,7 +37,7 @@ namespace WpfApp2.ViewModels
         #region Bindings
         public string OperationResults { get; set; }
 
-
+        public string ResultButtonName { get; set; }
         public Visibility VisiBIlityOfAddCancle { get; set; }
         public Visibility VisiBIlityOfAddResult { get; set; }
         private List<DiagnosisDataSource> _leftDiagnosisList;

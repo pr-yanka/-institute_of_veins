@@ -573,7 +573,7 @@ namespace WpfApp2.ViewModels
                     var IsVisibleBPVleftbuf = new ObservableCollection<Visibility>();
                     LeftBPVHip = (BPVHipViewModel)sender;
 
-                    IsVisibleBPVleftbuf.Add(Visibility.Visible);
+                   // IsVisibleBPVleftbuf.Add(Visibility.Visible);
 
                     for (int i = 0; i < LeftBPVHip.LegSections.Count; ++i)
                     {
@@ -584,7 +584,11 @@ namespace WpfApp2.ViewModels
                         }
                         else
                         {
-                            bufBpvLeftStr.Add(LeftBPVHip.LegSections[i].SelectedValue.Text1 + " " + LeftBPVHip.LegSections[i].CurrentEntry.Size + LeftBPVHip.LegSections[i].SelectedValue.Metrics);
+                            if (LeftBPVHip.LegSections[i].SelectedValue.HasSize)
+                                bufBpvLeftStr.Add(LeftBPVHip.LegSections[i].SelectedValue.Text1 + " " + LeftBPVHip.LegSections[i].CurrentEntry.Size + LeftBPVHip.LegSections[i].SelectedValue.Metrics);
+                            else
+                                bufBpvLeftStr.Add(LeftBPVHip.LegSections[i].SelectedValue.Text1 );
+
                             IsVisibleBPVleftbuf.Add(Visibility.Visible);
                         }
                     }
@@ -603,7 +607,7 @@ namespace WpfApp2.ViewModels
                     var IsVisibleBPVRightbuf = new ObservableCollection<Visibility>();
                     RightBPVHip = (BPVHipViewModel)sender;
 
-                    IsVisibleBPVRightbuf.Add(Visibility.Visible);
+                   // IsVisibleBPVRightbuf.Add(Visibility.Visible);
 
                     for (int i = 0; i < RightBPVHip.LegSections.Count; ++i)
                     {
@@ -614,7 +618,13 @@ namespace WpfApp2.ViewModels
                         }
                         else
                         {
+                            if(RightBPVHip.LegSections[i].SelectedValue.HasSize)
                             bufBpvRightStr.Add(RightBPVHip.LegSections[i].SelectedValue.Text1 + " " + RightBPVHip.LegSections[i].CurrentEntry.Size + RightBPVHip.LegSections[i].SelectedValue.Metrics);
+                            else
+                            {
+                                bufBpvRightStr.Add(RightBPVHip.LegSections[i].SelectedValue.Text1);
+
+                            }
                             IsVisibleBPVRightbuf.Add(Visibility.Visible);
                         }
                     }

@@ -114,53 +114,90 @@ namespace WpfApp2.LegParts
         private LegPartDbStructure GetPanelStructure()
         {
 
+
             var newStr = (LegPartDbStructure)Activator.CreateInstance(_lastSender.SelectedValue.GetType());
             var panel = CurrentPanelViewModel;
+
             newStr.Text1 = panel.Text1;
             newStr.Text2 = panel.Text2;
             newStr.HasSize = panel.HasSize;
             if (panel.HasSize)
             {
-                newStr.Size = panel.SelectedMetric.Id;
-                newStr.Metrics = panel.SelectedMetric.Str;
+                bool test = true;
+                foreach(var metric in Data.Metrics.GetAll)
+                {
+                    if(metric.Str == panel.SelectedMetricText)
+                    {
+                        test = false;
+                        newStr.Size = metric.Id;
+                        newStr.Metrics = metric.Str;
+                        break;
+                    }
+                }
+                if (test)
+                {
+                    Metrics newMetric = new Metrics();
+                    newMetric.Str = panel.SelectedMetricText;
+                    Data.Metrics.Add(newMetric);
+                    Data.Complete();
+                    newStr.Size = newMetric.Id;
+                    newStr.Metrics = newMetric.Str;
+                }
+                
             }
             else newStr.Size = null;
             newStr.Level = _lastSender.ListNumber;
             newStr.Custom = true;
 
             return newStr;
+
+
         }
 
 
         private void CloseHandler(object sender, object data)
         {
+
             CurrentPanelViewModel.PanelOpened = false;
+
         }
 
         public void Initialization()
         {
             CurrentPanelViewModel = new SizePanelViewModel(this);
-            OpenPanelCommand = new DelegateCommand(() => {
+            OpenPanelCommand = new DelegateCommand(() =>
+            {
                 CurrentLegSide = CurrentLegSide;
                 CurrentPanelViewModel.PanelOpened = true;
             });
 
-            ClosePanelCommand = new DelegateCommand(() => {
+            ClosePanelCommand = new DelegateCommand(() =>
+            {
                 CurrentPanelViewModel.PanelOpened = false;
                 handled = false;
 
             });
 
-            SavePanelCommand = new DelegateCommand(() => {
-                CurrentLegSide = CurrentLegSide;
-                CurrentPanelViewModel.PanelOpened = false;
-                handled = false;
-                var newStruct = GetPanelStructure();
-                newStruct.Custom = false;
-                Data.BPVHips.Add((BPVHipStructure)newStruct);
+            SavePanelCommand = new DelegateCommand(() =>
+            {
+                var panel = CurrentPanelViewModel;
+                if (!string.IsNullOrWhiteSpace(panel.Text1) || !string.IsNullOrWhiteSpace(panel.Text2))
+                {
+                    CurrentLegSide = CurrentLegSide;
+                    CurrentPanelViewModel.PanelOpened = false;
+                    handled = false;
+                    var newStruct = GetPanelStructure();
+                    newStruct.Custom = false;
+                    Data.BPVHips.Add((BPVHipStructure)newStruct);
 
-                _lastSender.StructureSource.Add(newStruct);
-                _lastSender.SelectedValue = newStruct;
+                    _lastSender.StructureSource.Add(newStruct);
+                    _lastSender.SelectedValue = newStruct;
+                }
+                else
+                {
+                    MessageBox.Show("Не все поля заполнены");
+                }
+
                 //_lastSender.DeleteCustom();
             });
 
@@ -197,9 +234,9 @@ namespace WpfApp2.LegParts
                     if (combo == null)
                     {
                         var newCombo = new BPVHipCombo();
-                        
+
                         for (int i = 0; i < LegSections.Count; i++)
-                            {
+                        {
                             var currentStructure = LegSections[i].SelectedValue;
                             //ничего не было выбрано
                             if (currentStructure == null) continue;
@@ -229,7 +266,7 @@ namespace WpfApp2.LegParts
 
                     MessageBus.Default.Call("LegDataSaved", this, this.GetType());
                     Controller.NavigateTo<ViewModelAddPhysical>();
-                    
+
                 }
             );
         }
@@ -263,7 +300,8 @@ namespace WpfApp2.LegParts
         }
 
         private string _summary;
-        public string Summary {
+        public string Summary
+        {
             get
             {
                 var str = "";

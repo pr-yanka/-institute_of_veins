@@ -61,7 +61,10 @@
                                 </StackPanel>
                             </Expander.Header>
                         <StackPanel Orientation="Vertical">
-                            <TextBlock Visibility="{Binding IsVisibleBPVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding LeftBPVHip.SelectedBpvWayType.Name}" FontSize="12"/></TextBlock>
+                            <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding LeftBPVHip.SelectedBpvWayType.Name}" FontSize="12"/></TextBlock>
+
+                            <TextBlock Visibility="{Binding IsVisibleBPVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvLeftstr[0]}"></TextBlock>
+                            
                             <TextBlock Visibility="{Binding IsVisibleBPVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvLeftstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleBPVleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvLeftstr[2]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleBPVleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvLeftstr[3]}"></TextBlock>
@@ -199,7 +202,9 @@
                             </StackPanel>
                             </Expander.Header>
                             <StackPanel Orientation="Vertical">
-                            <TextBlock Visibility="{Binding IsVisibleBPVRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding RightBPVHip.SelectedBpvWayType.Name}" FontSize="12"/></TextBlock>
+                            <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding RightBPVHip.SelectedBpvWayType.Name}" FontSize="12"/></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvRightstr[0]}"></TextBlock>
+
                             <TextBlock Visibility="{Binding IsVisibleBPVRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvRightstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleBPVRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvRightstr[2]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleBPVRight[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvRightstr[3]}"></TextBlock>

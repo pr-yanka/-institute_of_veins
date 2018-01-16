@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Practices.Prism.Commands;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using WpfApp2.Db.Models;
 using WpfApp2.LegParts.VMs;
 using WpfApp2.Navigation;
@@ -14,6 +16,7 @@ namespace WpfApp2.LegParts
 {
     public class SizePanelViewModel : ViewModelBase, INotifyPropertyChanged
     {
+        public DelegateCommand<object> ClickOnAutoComplete { get; set; }
         public bool DoubleSizeAvailable;
 
         private ViewModelBase _parentVM;
@@ -47,6 +50,16 @@ namespace WpfApp2.LegParts
 
         public SizePanelViewModel(ViewModelBase parentVM) : base(parentVM.Controller)
         {
+           
+
+            ClickOnAutoComplete = new DelegateCommand<object>(
+             (sender) =>
+             {
+                 var buf = (AutoCompleteBox)sender;
+                 buf.IsDropDownOpen = true;
+
+             }
+         );
             _parentVM = parentVM;
             Dimentions = new ObservableCollection<Metrics>(Data.Metrics.GetAll);
             //потому что я программист от бога
@@ -122,6 +135,21 @@ namespace WpfApp2.LegParts
             set
             {
                 _selectedMetric = value;
+                OnPropertyChanged();
+            }
+        }
+     
+
+        private string _selectedMetricText;
+        public string SelectedMetricText
+        {
+            get
+            {
+                return _selectedMetricText;
+            }
+            set
+            {
+                _selectedMetricText = value;
                 OnPropertyChanged();
             }
         }

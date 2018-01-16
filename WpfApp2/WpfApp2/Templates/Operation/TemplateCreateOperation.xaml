@@ -32,14 +32,64 @@
                        VerticalAlignment="Top" Text=":"/>
             <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Margin="138,182,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="Список всех врачей" FontSize="16" Width="155" TextAlignment="Center"/>
+
+            <CheckBox Content="Врачи" HorizontalAlignment="Left" Margin="140,0,0,250" IsChecked="{Binding ShowDoctors}" >
+             
+            
+            </CheckBox>
+            <CheckBox Content="Медперсонал" HorizontalAlignment="Left" Margin="210,0,0,250" IsChecked="{Binding ShowMeds}" >
+
+
+            </CheckBox>
+            <CheckBox Content="Врачи" HorizontalAlignment="Left" Margin="320,0,0,250" IsChecked="{Binding ShowDoctorsSelected}" >
+
+
+            </CheckBox>
+            <CheckBox Content="Медперсонал" HorizontalAlignment="Left" Margin="385,0,0,250" IsChecked="{Binding ShowMedsSelected}" >
+
+
+            </CheckBox>
+
             <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="546,68,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" FontSize="18"><Run Text="А"/><Run Text="нестетик"/></TextBlock>
             <ComboBox x:Name="comboBox_Copy2"   HorizontalAlignment="Left" ItemsSource="{Binding Path=AnestethicTypes}" SelectedIndex="{Binding Path=AnesteticSelected}" Margin="546,109,0,0" VerticalAlignment="Top" Width="468" Height="40"/>
             <Button x:Name="button_Copy2" Content="Добавить новый вид" HorizontalAlignment="Left" Margin="688,62,0,0"              
                     VerticalAlignment="Top" Width="326" Height="36" />
-            <DataGrid HorizontalAlignment="Left" Height="220" Margin="141,211,0,0" VerticalAlignment="Top" Width="152"  
+            <DataGrid HorizontalAlignment="Left" Height="220" Margin="141,231,0,0" VerticalAlignment="Top" Width="152"  
                           Foreground="Black" Background="White" AutoGenerateColumns="False" HeadersVisibility="None"
                      ItemsSource="{Binding Path=Controller.CurrentViewModel.Doctors}" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" >
+                <DataGrid.RowStyle>
+
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="SkyBlue" ></Setter>
+                            </Trigger>
+
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="LightSkyBlue" ></Setter>
+                            </Trigger>
+                            <DataTrigger Binding="{Binding isDoctor}" Value="true">
+                                <Setter Property="BorderBrush" Value="DarkGreen" ></Setter>
+                                <Setter Property="BorderThickness" Value="1" ></Setter>
+                                <Setter Property="Opacity" Value="1" ></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding isDoctor}" Value="false">
+                                <Setter Property="BorderBrush" Value="DarkBlue" ></Setter>
+                                <Setter Property="BorderThickness" Value="1" ></Setter>
+                                <Setter Property="Opacity" Value="1" ></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsVisible}" Value="false">
+                                <Setter Property="Visibility" Value="Collapsed" ></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsVisible}" Value="true">
+                                <Setter Property="Visibility" Value="Visible" ></Setter>
+                            </DataTrigger>
+
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+
                 <DataGrid.Columns>
                     <DataGridTemplateColumn >
                         <DataGridTemplateColumn.CellTemplate>
@@ -66,9 +116,35 @@
             </DataGrid>
             <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="343,182,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="Ваша бригада" FontSize="16"/>
-            <DataGrid HorizontalAlignment="Left" Height="220" Margin="316,211,0,0" VerticalAlignment="Top" Width="152"  
+           
+            <DataGrid HorizontalAlignment="Left" Height="220" Margin="316,231,0,0" VerticalAlignment="Top" Width="152"  
                           Foreground="Black" Background="White"  AutoGenerateColumns="False" HeadersVisibility="None"
                      ItemsSource="{Binding Path=Controller.CurrentViewModel.DoctorsSelected}" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" >
+                <DataGrid.RowStyle>
+
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="SkyBlue" ></Setter>
+                            </Trigger>
+
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="LightSkyBlue" ></Setter>
+                            </Trigger>
+                           
+                            <DataTrigger Binding="{Binding isDoctor}" Value="true">
+                                <Setter Property="BorderBrush" Value="DarkGreen" ></Setter>
+                                <Setter Property="BorderThickness" Value="1" ></Setter>
+                                <Setter Property="Opacity" Value="1" ></Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding isDoctor}" Value="false">
+                                <Setter Property="BorderBrush" Value="DarkBlue" ></Setter>
+                                <Setter Property="BorderThickness" Value="1" ></Setter>
+                                <Setter Property="Opacity" Value="1" ></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
                 <DataGrid.Columns>
                     <DataGridTemplateColumn >
                         <DataGridTemplateColumn.CellTemplate>

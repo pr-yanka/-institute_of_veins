@@ -15,6 +15,7 @@ using WpfApp2.LegParts;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 using WpfApp2.ViewModels.Panels;
+using System.Windows.Data;
 
 namespace WpfApp2.ViewModels
 {
@@ -39,7 +40,29 @@ namespace WpfApp2.ViewModels
             }
             set { _isChecked = value; MessageBus.Default.Call("UpdateSelectedDoctors", this, null); OnPropertyChanged(); }
         }
-        public bool isDoctor;
+        private bool _isVisible;
+        private bool _isDoctor;
+
+        public bool IsVisible
+        {
+            get
+            {
+
+                return _isVisible;
+
+            }
+            set { _isVisible = value; OnPropertyChanged(); }
+        }
+        public bool isDoctor
+        {
+            get
+            {
+
+                return _isDoctor;
+
+            }
+            set { _isDoctor = value; OnPropertyChanged(); }
+        }
         public int id;
         public string Surname { get; set; }
 
@@ -47,6 +70,7 @@ namespace WpfApp2.ViewModels
 
         public DoctorDataSource(string Name, string Surname, string Patronimic, bool isDoctor, int id)
         {
+            IsVisible = true;
             this.id = id;
             this.isDoctor = isDoctor;
             this.Surname = Surname;
@@ -103,10 +127,124 @@ namespace WpfApp2.ViewModels
 
         public ObservableCollection<int> OprTypesId { get; set; }
         public ObservableCollection<int> AnestethicTypesID { get; set; }
-        public List<DoctorDataSource> Doctors { get; set; }
+        public ObservableCollection<DoctorDataSource> Doctors { get { return _doctors; } set { _doctors = value; OnPropertyChanged(); } }
+
+        private ObservableCollection<DoctorDataSource> _doctors;
 
         private Brush _textBox_Minute;
         private Brush _textBox_Hour;
+
+        private bool _showDoctors;
+
+        private bool _showMeds;
+
+        private bool _showDoctorsSelected;
+
+        private bool _showMedsSelected;
+
+        public bool ShowDoctorsSelected
+        {
+            get { return _showDoctorsSelected; }
+            set
+            {
+
+                _showDoctorsSelected = value; 
+                OnPropertyChanged();
+                DoctorsSelected = new ObservableCollection<DoctorDataSource>();
+                if (Doctors != null)
+                {
+                    foreach (var doctor in Doctors)
+                    {
+                        if (doctor.IsChecked == true)
+                        {
+
+                            if (doctor.isDoctor == true && ShowDoctorsSelected == true)
+                                DoctorsSelected.Add(doctor);
+                            if (doctor.isDoctor == false && ShowMedsSelected == true)
+                                DoctorsSelected.Add(doctor);
+                        }
+                    }
+                }
+            }
+        }
+        public bool ShowMedsSelected
+        {
+            get { return _showMedsSelected; }
+            set
+            {
+
+                _showMedsSelected = value;
+                OnPropertyChanged();
+                DoctorsSelected = new ObservableCollection<DoctorDataSource>();
+                if (Doctors != null)
+                {
+                    foreach (var doctor in Doctors)
+                    {
+                        if (doctor.IsChecked == true)
+                        {
+
+                            if (doctor.isDoctor == true && ShowDoctorsSelected == true)
+                                DoctorsSelected.Add(doctor);
+                            if (doctor.isDoctor == false && ShowMedsSelected == true)
+                                DoctorsSelected.Add(doctor);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        public bool ShowDoctors
+        {
+            get { return _showDoctors; }
+            set
+            {
+
+                _showDoctors = value; OnPropertyChanged();
+                if (ShowDoctors == false)
+                {
+                    foreach (var doc in Doctors)
+                    {
+                        if(doc.isDoctor == true)
+                        doc.IsVisible = false;
+                    }
+                }else
+                {
+                    foreach (var doc in Doctors)
+                    {
+                        if (doc.isDoctor == true)
+                            doc.IsVisible = true;
+                    }
+                }
+                
+            }
+        }
+
+        public bool ShowMeds
+        {
+            get { return _showMeds; }
+            set
+            {
+                _showMeds = value; OnPropertyChanged();
+                if (ShowMeds == false)
+                {
+                    foreach (var doc in Doctors)
+                    {
+                        if (doc.isDoctor == false)
+                            doc.IsVisible = false;
+                    }
+                }
+                else
+                {
+                    foreach (var doc in Doctors)
+                    {
+                        if (doc.isDoctor == false)
+                            doc.IsVisible = true;
+                    }
+                }
+            }
+        }
+
 
 
         public Brush TextBoxMinute { get { return _textBox_Minute; } set { _textBox_Minute = value; OnPropertyChanged(); } }
@@ -131,7 +269,7 @@ namespace WpfApp2.ViewModels
         }
 
         public Operation Operation { get; set; }
-    
+
         bool TimeCheckMinute;
 
         private OperationResult OperationResult { get; set; }
@@ -198,7 +336,7 @@ namespace WpfApp2.ViewModels
 
                 OprTypes = new ObservableCollection<string>();
                 AnestethicTypes = new ObservableCollection<string>();
-                Doctors = new List<DoctorDataSource>();
+                Doctors = new ObservableCollection<DoctorDataSource>();
                 OprTypesId = new ObservableCollection<int>();
                 AnestethicTypesID = new ObservableCollection<int>();
                 foreach (var Doctor in DoctorRep.GetAll)
@@ -231,7 +369,14 @@ namespace WpfApp2.ViewModels
 
         public ViewModelAddOperation(NavigationController controller) : base(controller)
         {
+            Doctors = new ObservableCollection<DoctorDataSource>();
+            DoctorsSelected = new ObservableCollection<DoctorDataSource>();
 
+            ShowDoctors = true;
+
+            ShowMeds = true;
+            ShowMedsSelected = true;
+            ShowDoctorsSelected = true;
             TextBoxMinute = Brushes.Gray;
             TextBoxHour = Brushes.Gray;
             MinuteHour = DateTime.Now;
@@ -287,7 +432,8 @@ namespace WpfApp2.ViewModels
                                 buf.id_врача = Doctor.id;
                                 buf.id_операции = Operation.Id;
                                 Data.Brigade.Add(buf);
-                            }else
+                            }
+                            else
                             {
                                 BrigadeMedPersonal buf = new BrigadeMedPersonal();
                                 buf.id_медперсонал = Doctor.id;
@@ -361,8 +507,8 @@ namespace WpfApp2.ViewModels
 
             SaveCommand = new DelegateCommand(() =>
             {
-             
-            
+
+
                 var newType = CurrentPanelViewModel.GetPanelType();
                 if (!string.IsNullOrWhiteSpace(newType.LongName) && !string.IsNullOrWhiteSpace(newType.ShortName))
                 {
