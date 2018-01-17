@@ -61,6 +61,13 @@ namespace WpfApp2.ViewModels
         private ObservableCollection<SpecDataSoursForEdit> _scintificsOld;
         private ObservableCollection<SpecDataSoursForEdit> _specializations;
         private ObservableCollection<SpecDataSoursForEdit> _scintifics;
+        private ObservableCollection<СategoryType> _category;
+        private int _categorySelectedId;
+        
+        public int CategorySelectedId { get { return _categorySelectedId; } set { _categorySelectedId = value; nameOfButton = "Сохранить"; OnPropertyChanged(); } }
+
+        public ObservableCollection<СategoryType> Category { get { return _category; } set { _category = value; OnPropertyChanged(); } }
+
 
         public ObservableCollection<SpecDataSoursForEdit> SpecializationsOld { get { return _specializationsOld; } set { _specializationsOld = value; OnPropertyChanged(); } }                
         public ObservableCollection<SpecDataSoursForEdit> ScintificsOld { get { return _scintificsOld; } set { _scintificsOld = value; OnPropertyChanged(); } }                   
@@ -112,23 +119,31 @@ namespace WpfApp2.ViewModels
 
             using (var context = new MySqlContext())
             {
-
+                Category = new ObservableCollection<СategoryType>();
                 Specializations = new ObservableCollection<SpecDataSoursForEdit>();
                 Scintifics = new ObservableCollection<SpecDataSoursForEdit>();
                 SpecializationsOld = new ObservableCollection<SpecDataSoursForEdit>();
                 ScintificsOld = new ObservableCollection<SpecDataSoursForEdit>();
+                СategoryTypeRepository ctRep = new СategoryTypeRepository(context);
                 DoctorRepository dcRep = new DoctorRepository(context);
                 SpecializationTypeRepository spRep = new SpecializationTypeRepository(context);
                 ScientificTitleTypeRepository scRep = new ScientificTitleTypeRepository(context);
 
                 DoctorsSpecializationsRepository dcspRep = new DoctorsSpecializationsRepository(context);
                 ScientificTitlesRepository dcscRep = new ScientificTitlesRepository(context);
+              
 
                 currentDoctor = dcRep.Get((int)data);
                 Name = currentDoctor.Name;
                 Surname = currentDoctor.Sirname;
                 Patronimic = currentDoctor.Patronimic;
                 Aditional = currentDoctor.Aditional;
+                foreach (var category in ctRep.GetAll)
+                {
+                    Category.Add(category);
+                    if (category.Id == currentDoctor.категория)
+                    { CategorySelectedId = Category.IndexOf(category); }
+                }
 
                 foreach (var spec in spRep.GetAll)
                 {
@@ -303,7 +318,7 @@ namespace WpfApp2.ViewModels
                         bufDoc.Sirname = Surname;
                         bufDoc.Patronimic = Patronimic;
                         bufDoc.Aditional = Aditional;
-                   
+                        bufDoc.категория = CategorySelectedId;
                         Data.Complete();
 
                         bool specTestbuf = false;

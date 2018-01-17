@@ -62,6 +62,11 @@ namespace WpfApp2.ViewModels
         #region Bindings
         private ObservableCollection<SpecDataSours> _specializations;
         private ObservableCollection<SpecDataSours> _scintifics;
+        private ObservableCollection<СategoryType> _category;
+        private int _categorySelectedId;
+        public int CategorySelectedId { get { return _categorySelectedId; } set { _categorySelectedId = value; OnPropertyChanged(); } }
+
+        public ObservableCollection<СategoryType> Category { get { return _category; } set { _category = value; OnPropertyChanged(); } }
 
         public ObservableCollection<SpecDataSours> Specializations { get { return _specializations; } set { _specializations = value; OnPropertyChanged(); } }
         public ObservableCollection<SpecDataSours> Scintifics { get { return _scintifics; } set { _scintifics = value; OnPropertyChanged(); } }
@@ -106,13 +111,19 @@ namespace WpfApp2.ViewModels
 
             using (var context = new MySqlContext())
             {
-
+                Category = new ObservableCollection<СategoryType>();
                 Specializations = new ObservableCollection<SpecDataSours>();
                 Scintifics = new ObservableCollection<SpecDataSours>();
+                СategoryTypeRepository ctRep = new СategoryTypeRepository(context);
                 SpecializationTypeRepository spRep = new SpecializationTypeRepository(context);
                 ScientificTitleTypeRepository scRep = new ScientificTitleTypeRepository(context);
 
-                foreach(var spec in spRep.GetAll)
+                foreach (var category in ctRep.GetAll)
+                {
+                    Category.Add(category);
+                }
+
+                foreach (var spec in spRep.GetAll)
                 {
                     Specializations.Add(new SpecDataSours(spec.Str,spec.id_специлизации));
                 }
@@ -121,7 +132,7 @@ namespace WpfApp2.ViewModels
                 {
                     Scintifics.Add(new SpecDataSours(title.Str, title.Id));
                 }
-
+                CategorySelectedId = 0;
             }
         }
         #endregion
@@ -207,6 +218,10 @@ namespace WpfApp2.ViewModels
             ToDashboardCommand = new DelegateCommand(
               () =>
               {
+                  Name = "";
+                  Surname = "";
+                  Patronimic = "";
+                  Aditional = "";
                   MessageBus.Default.Call("RefreshDataForNewDoctors", this,"");
               }
           );
@@ -222,6 +237,7 @@ namespace WpfApp2.ViewModels
                         currentDoctor.Patronimic = Patronimic;
                         currentDoctor.Aditional = Aditional;
                         currentDoctor.isEnabled = true;
+                        currentDoctor.категория = Category[CategorySelectedId].Id;
                         Data.Doctor.Add(currentDoctor);
                         Data.Complete();
                         foreach(var spec in Specializations)

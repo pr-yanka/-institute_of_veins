@@ -10,6 +10,7 @@ namespace WpfApp2.Db.Models
 {
     public interface IUnitOfWork : IDisposable
     {
+        СategoryTypeRepository СategoryType { get; }
         BPVHipWayRepository BPVHipWay { get; }
 
         CitiesRepository Cities { get; }

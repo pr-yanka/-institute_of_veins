@@ -69,6 +69,36 @@
                 <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Path=accType}" SelectedIndex="{Binding Path=SelectedIndexOfAccauntType}"  FontFamily="/fonts/#Pescadero" FontSize="14pt" Height="18" Width="155" HorizontalAlignment="Left">
 
                 </ComboBox>
+
+                <DataGrid Visibility="{Binding MedVis}"  Grid.Column="0" Grid.Row="4" Grid.RowSpan="8" Grid.ColumnSpan="2" Width="622" HorizontalAlignment="Left"
+                          Foreground="Black"  AutoGenerateColumns="False" HeadersVisibility="None" 
+                     ItemsSource="{Binding Path=Controller.CurrentViewModel.MedsDataSource}" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" >
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Спека">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <RadioButton GroupName="Meds" IsChecked="{Binding Path=IsChecked,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Content="{Binding Name}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <DataGrid Visibility="{Binding DocVis}"  Grid.Column="0" Grid.Row="4" Grid.RowSpan="8" Grid.ColumnSpan="2" Width="622" HorizontalAlignment="Left"
+                          Foreground="Black"  AutoGenerateColumns="False" HeadersVisibility="None" 
+                     ItemsSource="{Binding Path=Controller.CurrentViewModel.DocsDataSource}" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" >
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Спека">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <RadioButton GroupName="Doc" IsChecked="{Binding Path=IsChecked,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Content="{Binding Name}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        
+                    </DataGrid.Columns>
+                </DataGrid>
             </Grid>
         </Grid>
     </DataTemplate>

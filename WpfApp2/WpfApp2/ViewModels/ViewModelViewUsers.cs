@@ -120,8 +120,9 @@ namespace WpfApp2.ViewModels
             ToAddSomeoneCommand = new DelegateCommand(
                 () =>
                 {
-                    
-                   Controller.NavigateTo<ViewModelAddUser>();
+                    MessageBus.Default.Call("UpdateAccsEmptyForNewUser", this,this);
+
+                    Controller.NavigateTo<ViewModelAddUser>();
                 }
             );
 

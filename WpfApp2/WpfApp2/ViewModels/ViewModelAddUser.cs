@@ -15,10 +15,42 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Security.Cryptography;
 using System.Windows.Controls;
+using System.Collections.ObjectModel;
 
 namespace WpfApp2.ViewModels
 {
+    public class DocDataSoursForNewUser : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            //если PropertyChanged не нулевое - оно будет разбужено
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        private bool? _isChecked;
+        public bool? IsChecked
+        {
+            get
+            {
+                if (_isChecked == null)
+                    return false;
+                else return _isChecked;
+            }
+            set { _isChecked = value; MessageBus.Default.Call("SomethingChangedUserForEditUser", this,this); OnPropertyChanged(); }
+        }
+        public string Name { get; set; }
+        public int id { get; set; }
 
+
+        public DocDataSoursForNewUser(string Name, int id)
+        {
+            this.Name = Name;
+            this.id = id;
+            IsChecked = false;
+
+        }
+
+    }
     public class ViewModelAddUser : ViewModelBase, INotifyPropertyChanged
     {
         #region DelegateCommands
@@ -30,7 +62,8 @@ namespace WpfApp2.ViewModels
         #region Bindings
 
         public List<string> accType { get; set; }
-        
+        public ObservableCollection<DocDataSoursForNewUser> DocsDataSource { get; set; }
+        public ObservableCollection<DocDataSoursForNewUser> MedsDataSource { get; set; }
         private string _password;
         private BitmapImage _imageSource;
         public BitmapImage ImageSource { get { return _imageSource; } set { _imageSource = value; OnPropertyChanged(); } }
@@ -41,6 +74,10 @@ namespace WpfApp2.ViewModels
         public Visibility PasswordBoxVisiblity { get { return _passwordBoxVisiblity; } set { _passwordBoxVisiblity = value; OnPropertyChanged(); } }
 
         public Visibility PasswordTextBoxVisiblity { get { return _passwordTextBoxVisiblity; } set { _passwordTextBoxVisiblity = value; OnPropertyChanged(); } }
+        private Visibility _docVis;
+        public Visibility DocVis { get { return _docVis; } set { _docVis = value; OnPropertyChanged(); } }
+        private Visibility _medVis;
+        public Visibility MedVis { get { return _medVis; } set { _medVis = value; OnPropertyChanged(); } }
 
 
         public string _nameOfButton;
@@ -52,8 +89,8 @@ namespace WpfApp2.ViewModels
         public string TextHeader { get { return _textHeader; } set { _textHeader = value; OnPropertyChanged(); } }
 
         private string _name;
-      
-        public int SelectedIndexOfAccauntType { get; set; }
+        public int _selectedIndexOfAccauntType;
+        public int SelectedIndexOfAccauntType { get { return _selectedIndexOfAccauntType; } set { _selectedIndexOfAccauntType = value; if (accType[_selectedIndexOfAccauntType] == "Врач") { DocVis = Visibility.Visible; MedVis = Visibility.Collapsed; } else if (accType[_selectedIndexOfAccauntType] == "Медперсонал") { DocVis = Visibility.Collapsed; MedVis = Visibility.Visible; } else { DocVis = Visibility.Collapsed; MedVis = Visibility.Collapsed; } OnPropertyChanged(); } }
 
         public string Name { get { return _name; } set { _name = value; OnPropertyChanged(); } }
 
@@ -70,7 +107,7 @@ namespace WpfApp2.ViewModels
 
         #endregion
 
-      
+
         private bool TestRequiredFields()
         {
             bool result = true;
@@ -109,10 +146,69 @@ namespace WpfApp2.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+        #region MessageBus
+        private void UpdateAccsEmpty(object sender, object data)
+        {
+            using (var context = new MySqlContext())
+            {
+                MedsDataSource = new ObservableCollection<DocDataSoursForNewUser>();
+                DocsDataSource = new ObservableCollection<DocDataSoursForNewUser>();
+                MedPersonalRepository medRip = new MedPersonalRepository(context);
+                AccauntRepository acRep = new AccauntRepository(context);
+                DoctorRepository dcRep = new DoctorRepository(context);
+                bool test = true;
+                foreach (var doc in dcRep.GetAll)
+                {
+                    test = true;
 
+                    foreach (var acc in acRep.GetAll)
+                    {
+                        if (acc.isDoctor != null && acc.isDoctor.Value && doc.isEnabled != null && doc.isEnabled.Value == true)
+                        {
+                            if (doc.Id == acc.idврач)
+                            {
+                                test = false;
+                            }
+                        }
+                    }
+                    if (test)
+                    {
+                        string initials = " " + doc.Name.ToCharArray()[0].ToString() + ". " + doc.Patronimic.ToCharArray()[0].ToString() + ". ";
 
+                        DocsDataSource.Add(new DocDataSoursForNewUser(doc.Sirname + initials, doc.Id));
+                    }
+                }
+                foreach (var doc in medRip.GetAll)
+                {
+                    test = true;
+
+                    foreach (var acc in acRep.GetAll)
+                    {
+                        if (acc.isMedPersonal != null && acc.isMedPersonal.Value && doc.isEnabled != null && doc.isEnabled.Value == true)
+                        {
+                            if (doc.Id == acc.idмедперсонал)
+                            {
+                                test = false;
+                            }
+                        }
+                    }
+                    if (test)
+                    {
+                        string initials = " " + doc.Name.ToCharArray()[0].ToString() + ". " + doc.Patronimic.ToCharArray()[0].ToString() + ". ";
+
+                        MedsDataSource.Add(new DocDataSoursForNewUser(doc.Surname + initials, doc.Id));
+                    }
+                }
+
+            }
+
+        }
+        #endregion
         public ViewModelAddUser(NavigationController controller) : base(controller)
         {
+            DocVis = Visibility.Visible;
+            MedVis = Visibility.Collapsed;
+            MessageBus.Default.Subscribe("UpdateAccsEmptyForNewUser", UpdateAccsEmpty);
             ImageSource = new BitmapImage(new Uri("pack://application:,,,/Images/Hide.PNG"));
             base.HasNavigation = true;
             PasswordBoxVisiblity = Visibility.Visible;
@@ -131,7 +227,7 @@ namespace WpfApp2.ViewModels
               () =>
               {
                   ImageSource = new BitmapImage(new Uri("pack://application:,,,/Images/Hide.PNG"));
-                 
+
                   Password = "";
                   PasswordBoxVisiblity = Visibility.Visible;
                   PasswordTextBoxVisiblity = Visibility.Hidden;
@@ -167,28 +263,51 @@ namespace WpfApp2.ViewModels
                   Password = ((PasswordBox)sender).Password;
                   sender = null;
                   if (TestRequiredFields())
-                    {
+                  {
 
-                        currentUser = new Accaunt();
-                        currentUser.Name = Name;
-                        currentUser.Password = CalculateMD5Hash(Password);
+                      currentUser = new Accaunt();
+                      currentUser.Name = Name;
+                      currentUser.Password = CalculateMD5Hash(Password);
 
-                        currentUser.isEnabled = true;
-                     
+                      currentUser.isEnabled = true;
+
                       if (accType[SelectedIndexOfAccauntType] == "Врач")
                       {
                           currentUser.isDoctor = true;
+                          currentUser.idмедперсонал = null;
+
+
+                          foreach (var doc in DocsDataSource)
+                          {
+                              if(doc.IsChecked == true)
+                              {
+                                  currentUser.idврач = doc.id;
+                              }
+                          }
+
                       }
                       else if (accType[SelectedIndexOfAccauntType] == "Админ")
                       {
+                          currentUser.idмедперсонал = null;
+                          currentUser.idврач = null;
                           currentUser.isAdmin = true;
                       }
                       else if (accType[SelectedIndexOfAccauntType] == "Медперсонал")
                       {
                           currentUser.isMedPersonal = true;
+                          currentUser.idврач = null;
+                          foreach (var doc in MedsDataSource)
+                          {
+                              if (doc.IsChecked == true)
+                              {
+                                  currentUser.idмедперсонал = doc.id;
+                              }
+                          }
                       }
                       else if (accType[SelectedIndexOfAccauntType] == "Секретарь")
                       {
+                          currentUser.idмедперсонал = null;
+                          currentUser.idврач = null;
                           currentUser.isSecretar = true;
                       }
                       Data.Accaunt.Add(currentUser);
@@ -198,13 +317,13 @@ namespace WpfApp2.ViewModels
                       MessageBus.Default.Call("OpenUsers", this, "");
                       Controller.NavigateTo<ViewModelViewUsers>();
                   }
-                    else
-                    {
+                  else
+                  {
 
-                        MessageBox.Show("Не все поля заполнены");
-                    }
+                      MessageBox.Show("Не все поля заполнены");
+                  }
 
-                }
+              }
             );
 
         }

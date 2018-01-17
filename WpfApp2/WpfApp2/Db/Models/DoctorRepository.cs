@@ -30,6 +30,12 @@ namespace WpfApp2.Db.Models
         public string Aditional { set; get; }
         [Column("enabled/disabled")]
         public bool? isEnabled { set; get; }
+
+        [Column("категория")]
+        public int? категория { set; get; }
+
+
+    
         //[Column("id_категории")]
         //public int CategoryId { set; get; }
 

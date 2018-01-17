@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Security.Cryptography;
 using System.Windows.Controls;
+using System.Collections.ObjectModel;
 
 namespace WpfApp2.ViewModels
 {
@@ -31,7 +32,17 @@ namespace WpfApp2.ViewModels
         #region Bindings
 
         public List<string> accType { get; set; }
-        
+                                                                           
+       private ObservableCollection<DocDataSoursForNewUser> _docsDataSource;
+        private ObservableCollection<DocDataSoursForNewUser> _medsDataSource;
+
+        public ObservableCollection<DocDataSoursForNewUser> DocsDataSource { get { return _docsDataSource; } set { _docsDataSource = value; OnPropertyChanged(); } }
+        public ObservableCollection<DocDataSoursForNewUser> MedsDataSource { get { return _medsDataSource; } set { _medsDataSource = value; OnPropertyChanged(); } }
+        private Visibility _docVis;
+        public Visibility DocVis { get { return _docVis; } set { _docVis = value; OnPropertyChanged(); } }
+        private Visibility _medVis;
+        public Visibility MedVis { get { return _medVis; } set { _medVis = value; OnPropertyChanged(); } }
+
         private string _password;
         private BitmapImage _imageSource;
         public BitmapImage ImageSource { get { return _imageSource; } set { _imageSource = value; OnPropertyChanged(); } }
@@ -54,7 +65,7 @@ namespace WpfApp2.ViewModels
 
         private string _name;
         private int _selectedIndexOfAccauntType;
-        public int SelectedIndexOfAccauntType { get { return _selectedIndexOfAccauntType; } set { _selectedIndexOfAccauntType = value; nameOfButton = "Сохранить"; OnPropertyChanged(); } }
+        public int SelectedIndexOfAccauntType { get { return _selectedIndexOfAccauntType; } set { _selectedIndexOfAccauntType = value; if (accType[_selectedIndexOfAccauntType] == "Врач") { DocVis = Visibility.Visible; MedVis = Visibility.Collapsed; } else if (accType[_selectedIndexOfAccauntType] == "Медперсонал") { DocVis = Visibility.Collapsed; MedVis = Visibility.Visible; } else { DocVis = Visibility.Collapsed; MedVis = Visibility.Collapsed; } OnPropertyChanged(); } }
 
         public string Name { get { return _name; } set { _name = value; nameOfButton = "Сохранить"; OnPropertyChanged(); } }
 
@@ -71,7 +82,7 @@ namespace WpfApp2.ViewModels
 
         #endregion
 
-      
+
         private bool TestRequiredFields()
         {
             bool result = true;
@@ -113,32 +124,106 @@ namespace WpfApp2.ViewModels
 
 
         #region MessageBus
+        private void Changed(object sender, object data)
+        {
+            nameOfButton = "Сохранить";
+        }
+
         private void GetUserForEditUser(object sender, object data)
         {
-            currentUser = Data.Accaunt.Get((int)data);
-            Name = currentUser.Name;
-            if (currentUser.isAdmin == true)
+            using (var context = new MySqlContext())
             {
-                SelectedIndexOfAccauntType = accType.IndexOf("Админ");
-            }
-            else if (currentUser.isDoctor == true)
-            {
-                SelectedIndexOfAccauntType = accType.IndexOf("Врач");
-            }
-            else if (currentUser.isSecretar == true)
-            {
-                SelectedIndexOfAccauntType = accType.IndexOf("Секретарь");
-            }
-            else if (currentUser.isMedPersonal == true)
-            {
-                SelectedIndexOfAccauntType = accType.IndexOf("Медперсонал");
-            }
+                MedsDataSource = new ObservableCollection<DocDataSoursForNewUser>();
+                DocsDataSource = new ObservableCollection<DocDataSoursForNewUser>();
+                MedPersonalRepository medRip = new MedPersonalRepository(context);
+                AccauntRepository acRep = new AccauntRepository(context);
+                DoctorRepository dcRep = new DoctorRepository(context);
 
+
+
+                currentUser = Data.Accaunt.Get((int)data);
+                Name = currentUser.Name;
+                if (currentUser.isAdmin == true)
+                {
+                    SelectedIndexOfAccauntType = accType.IndexOf("Админ");
+                }
+                else if (currentUser.isDoctor == true)
+                {
+                    SelectedIndexOfAccauntType = accType.IndexOf("Врач");
+                    var doc = dcRep.Get(currentUser.idврач.Value);
+                    string initials = " " + doc.Name.ToCharArray()[0].ToString() + ". " + doc.Patronimic.ToCharArray()[0].ToString() + ". ";
+                    MedVis = Visibility.Collapsed;
+                    DocVis = Visibility.Visible;
+                    DocsDataSource.Add(new DocDataSoursForNewUser(doc.Sirname + initials, doc.Id));
+                    DocsDataSource[0].IsChecked = true;
+
+
+                }
+                else if (currentUser.isSecretar == true)
+                {
+                    SelectedIndexOfAccauntType = accType.IndexOf("Секретарь");
+                }
+                else if (currentUser.isMedPersonal == true)
+                {
+                    SelectedIndexOfAccauntType = accType.IndexOf("Медперсонал");
+                    var doc = medRip.Get(currentUser.idмедперсонал.Value);
+                    string initials = " " + doc.Name.ToCharArray()[0].ToString() + ". " + doc.Patronimic.ToCharArray()[0].ToString() + ". ";
+                    MedVis = Visibility.Visible;
+                    DocVis = Visibility.Collapsed;
+                    MedsDataSource.Add(new DocDataSoursForNewUser(doc.Surname + initials, doc.Id));
+                    MedsDataSource[0].IsChecked = true;
+                }
+                bool test = true;
+                foreach (var doc in dcRep.GetAll)
+                {
+                    test = true;
+
+                    foreach (var acc in acRep.GetAll)
+                    {
+                        if (acc.isDoctor != null && acc.isDoctor.Value && doc.isEnabled != null && doc.isEnabled.Value == true)
+                        {
+                            if (doc.Id == acc.idврач)
+                            {
+                                test = false;
+                            }
+                        }
+                    }
+                    if (test)
+                    {
+                        string initials = " " + doc.Name.ToCharArray()[0].ToString() + ". " + doc.Patronimic.ToCharArray()[0].ToString() + ". ";
+
+                        DocsDataSource.Add(new DocDataSoursForNewUser(doc.Sirname + initials, doc.Id));
+                    }
+                }
+                foreach (var doc in medRip.GetAll)
+                {
+                    test = true;
+
+                    foreach (var acc in acRep.GetAll)
+                    {
+                        if (acc.isMedPersonal != null && acc.isMedPersonal.Value && doc.isEnabled != null && doc.isEnabled.Value == true)
+                        {
+                            if (doc.Id == acc.idмедперсонал)
+                            {
+                                test = false;
+                            }
+                        }
+                    }
+                    if (test)
+                    {
+                        string initials = " " + doc.Name.ToCharArray()[0].ToString() + ". " + doc.Patronimic.ToCharArray()[0].ToString() + ". ";
+
+                        MedsDataSource.Add(new DocDataSoursForNewUser(doc.Surname + initials, doc.Id));
+                    }
+                }
+            }
             nameOfButton = "К списку пользователей";
         }
         #endregion
         public ViewModelEditUser(NavigationController controller) : base(controller)
         {
+            MessageBus.Default.Subscribe("SomethingChangedUserForEditUser", Changed);
+
             MessageBus.Default.Subscribe("GetUserForEditUser", GetUserForEditUser);
             ImageSource = new BitmapImage(new Uri("pack://application:,,,/Images/Hide.PNG"));
             base.HasNavigation = true;
@@ -165,7 +250,7 @@ namespace WpfApp2.ViewModels
               () =>
               {
                   ImageSource = new BitmapImage(new Uri("pack://application:,,,/Images/Hide.PNG"));
-                 
+
                   Password = "";
                   PasswordBoxVisiblity = Visibility.Visible;
                   PasswordTextBoxVisiblity = Visibility.Hidden;
@@ -192,22 +277,9 @@ namespace WpfApp2.ViewModels
                   Name = currentUser.Name;
 
                   ((PasswordBox)sender).Password = "";
-                  if (currentUser.isAdmin == true)
-                  {
-                      SelectedIndexOfAccauntType = accType.IndexOf("Админ");
-                  }
-                  else if (currentUser.isDoctor == true)
-                  {
-                      SelectedIndexOfAccauntType = accType.IndexOf("Врач");
-                  }
-                  else if (currentUser.isSecretar == true)
-                  {
-                      SelectedIndexOfAccauntType = accType.IndexOf("Секретарь");
-                  }
-                  else if (currentUser.isMedPersonal == true)
-                  {
-                      SelectedIndexOfAccauntType = accType.IndexOf("Медперсонал");
-                  }
+
+                  MessageBus.Default.Call("GetUserForEditUser", this,currentUser.Id);
+
                   nameOfButton = "К списку пользователей";
               }
           );
@@ -218,13 +290,13 @@ namespace WpfApp2.ViewModels
                   Password = ((PasswordBox)sender).Password;
                   sender = null;
                   if (TestRequiredFields())
-                    {
+                  {
 
                       currentUser = Data.Accaunt.Get(currentUser.Id);
                       currentUser.Name = Name;
 
                       if (!String.IsNullOrEmpty(Password))
-                      currentUser.Password = CalculateMD5Hash(Password);
+                          currentUser.Password = CalculateMD5Hash(Password);
 
                       currentUser.isDoctor = false;
                       currentUser.isAdmin = false;
@@ -235,33 +307,53 @@ namespace WpfApp2.ViewModels
                       if (accType[SelectedIndexOfAccauntType] == "Врач")
                       {
                           currentUser.isDoctor = true;
+                          currentUser.idмедперсонал = null;
+                          foreach (var doc in DocsDataSource)
+                          {
+                              if (doc.IsChecked == true)
+                              {
+                                  currentUser.idврач = doc.id;
+                              }
+                          }
                       }
                       else if (accType[SelectedIndexOfAccauntType] == "Админ")
                       {
+                          currentUser.idмедперсонал = null;
+                          currentUser.idврач = null;
                           currentUser.isAdmin = true;
                       }
                       else if (accType[SelectedIndexOfAccauntType] == "Медперсонал")
                       {
                           currentUser.isMedPersonal = true;
+                          currentUser.idврач = null;
+                          foreach (var doc in MedsDataSource)
+                          {
+                              if (doc.IsChecked == true)
+                              {
+                                  currentUser.idмедперсонал = doc.id;
+                              }
+                          }
                       }
                       else if (accType[SelectedIndexOfAccauntType] == "Секретарь")
                       {
+                          currentUser.idмедперсонал = null;
+                          currentUser.idврач = null;
                           currentUser.isSecretar = true;
                       }
-                     
+
                       Data.Complete();
 
 
                       MessageBus.Default.Call("OpenUsers", this, "");
                       Controller.NavigateTo<ViewModelViewUsers>();
                   }
-                    else
-                    {
+                  else
+                  {
 
-                        MessageBox.Show("Не все поля заполнены");
-                    }
+                      MessageBox.Show("Не все поля заполнены");
+                  }
 
-                }
+              }
             );
 
         }

@@ -27,6 +27,10 @@ namespace WpfApp2.Db.Models
         [Column("enabled/disabled")]
         public bool? isEnabled { set; get; }
 
+        [Column("idврач")]
+        public int? idврач { set; get; }
+        [Column("idмедперсонал")]
+        public int? idмедперсонал { set; get; }
 
         [Column("имя")]
         public string Name { set; get; }

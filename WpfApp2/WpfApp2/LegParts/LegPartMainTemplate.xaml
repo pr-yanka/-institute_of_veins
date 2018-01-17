@@ -45,8 +45,8 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="4"  VerticalAlignment="Center">
-                <Button x:Name="AddButton" Command="{Binding Controller.LegViewModel.RevertCommand}" Content="Вернуться к ноге" HorizontalAlignment="Left" VerticalAlignment="Top" Width="408" Background="#FFDBEDF7" FontSize="16" Grid.ColumnSpan="2"/>
-                <Button x:Name="AddButton_Copy" Command="{Binding Controller.LegViewModel.SaveCommand}" Content="Сохранить" HorizontalAlignment="Right"  VerticalAlignment="Top" Width="408" Background="#FFDBEDF7" FontSize="16" Grid.ColumnSpan="2"/>
+                <Button x:Name="AddButton" Command="{Binding Controller.LegViewModel.RevertCommand}" Content="Вернуться к ноге" HorizontalAlignment="Left" VerticalAlignment="Top" Width="512" Background="#FFDBEDF7" FontSize="16"  Grid.ColumnSpan="2"/>
+                <Button x:Name="AddButton_Copy" Command="{Binding Controller.LegViewModel.SaveCommand}" Content="Сохранить" HorizontalAlignment="Right"  VerticalAlignment="Top" Width="512" Background="#FFDBEDF7"  FontSize="16"   Grid.ColumnSpan="2"/>
             </StackPanel>
 
             <Border Grid.RowSpan="4" Visibility="{Binding Path = Controller.LegViewModel.CurrentPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOverlay">

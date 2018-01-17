@@ -10,8 +10,8 @@ namespace WpfApp2.Db.Models
 {
     public class MySqlContext : DbContext
     {
-
-
+     
+        public DbSet<СategoryType> СategoryType { get; set; }
         public DbSet<BPVHipWay> BPVHipWay { get; set; }
 
         public DbSet<Cities> Cities { get; set; }

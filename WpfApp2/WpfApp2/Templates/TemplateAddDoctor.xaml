@@ -34,9 +34,10 @@
                 <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="49,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Grid.Row="1" Text="Фамилия" Grid.RowSpan="2"/>
                 <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="49,7,0,0" TextWrapping="Wrap" Text="Отчество" VerticalAlignment="Top" FontSize="16" Grid.Row="2"/>
                 <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Margin="19,6,0,0" TextWrapping="Wrap" Text="Дополнительно" VerticalAlignment="Top" FontSize="16" Grid.Row="3" Width="144"/>
-
-                <TextBlock x:Name="textуBlock_Copy2" HorizontalAlignment="Left" Margin="19,6,0,0" TextWrapping="Wrap" Text="Специальность" VerticalAlignment="Top" FontSize="16" Grid.Row="4" Width="144"/>
-                <TextBlock x:Name="textуBlock_Copyd2" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="120,6,0,0" Text="Звание" VerticalAlignment="Top" FontSize="16" Grid.Row="4" Grid.Column="2" Width="144"/>
+                <TextBlock x:Name="textуBlock_аCopy2" HorizontalAlignment="Left" Margin="19,6,0,0" TextWrapping="Wrap" Text="Категория" VerticalAlignment="Top" FontSize="16" Grid.Row="4" Width="144"/>
+                <ComboBox ItemsSource="{Binding Category}" SelectedIndex="{Binding CategorySelectedId}" Grid.Row="4" Grid.Column="1"  HorizontalAlignment="Left" Width="511" ></ComboBox>
+                <TextBlock x:Name="textуBlock_Copy2" HorizontalAlignment="Left" Margin="19,6,0,0" TextWrapping="Wrap" Text="Специальность" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Width="144"/>
+                <TextBlock x:Name="textуBlock_Copyd2" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="120,6,0,0" Text="Звание" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Grid.Column="2" Width="144"/>
 
                 <TextBox  BorderBrush="{Binding Path=TextBoxNameB}"  x:Name="textBox" Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Width="511">
                    
@@ -48,7 +49,7 @@
                    
                 </TextBox>
                 <TextBox x:Name="comboBox" Text="{Binding Path=Aditional, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" Width="511" Height="33" Margin="0,0,0,0"/>
-                <Grid Grid.Row="2" Margin="0,30,0,0" Grid.RowSpan="10" Height="100" Width="auto" >
+                <Grid Grid.Row="3" Margin="0,30,0,0" Grid.RowSpan="10" Height="100" Width="auto" >
                 <DataGrid   
                           Foreground="Black"  AutoGenerateColumns="False" HeadersVisibility="None" 
                      ItemsSource="{Binding Path=Controller.CurrentViewModel.Specializations}" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" >
@@ -70,7 +71,7 @@
                     </DataGrid.Columns>
                 </DataGrid>
                     </Grid>
-                <Grid Grid.Row="2" Grid.Column="2" Margin="120,30,0,0" Grid.RowSpan="10" Height="100" Width="auto" >
+                <Grid Grid.Row="3" Grid.Column="2" Margin="120,30,0,0" Grid.RowSpan="10" Height="100" Width="auto" >
                 <DataGrid HorizontalAlignment="Left" Height="220"  VerticalAlignment="Top" Width="152" Grid.Column="2" 
                           Foreground="Black"  AutoGenerateColumns="False" HeadersVisibility="None" Grid.Row="5" Grid.RowSpan="10"
                      ItemsSource="{Binding Path=Controller.CurrentViewModel.Scintifics}" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" >
