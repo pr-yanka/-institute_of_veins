@@ -5,12 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 using WpfApp2.Db.Models.LegParts;
 using WpfApp2.Db.Models.LegParts.BPVHip;
+using WpfApp2.Db.Models.LegParts.PDSVHip;
 using WpfApp2.Db.Models.LegParts.SFSHip;
 
 namespace WpfApp2.Db.Models
 {
     public interface IUnitOfWork : IDisposable
     {
+        PDSVHipRepository PDSVHips { get; }
+        PDSVComboRepository PDSVCombos { get; }
+        PDSVHipEntryRepository PDSVHipEntries { get; }
+        PDSVHipWayRepository PDSVHipWay { get; }
+
+
         СategoryTypeRepository СategoryType { get; }
         BPVHipWayRepository BPVHipWay { get; }
 

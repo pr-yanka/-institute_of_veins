@@ -63,11 +63,70 @@ namespace WpfApp2.ViewModels
             }
         }
 
+
+
+        public List<string> PDSVLeftstr
+        {
+            get
+            {
+                return _pdsvLeftstr;
+            }
+            set
+            {
+                _pdsvLeftstr = value;
+                OnPropertyChanged();
+            }
+        }
+        public List<string> PDSVRightstr
+        {
+            get
+            {
+                return _pdsvRightstr;
+            }
+            set
+            {
+                _pdsvRightstr = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
         public SFSHipEntryFull RightSFSEntryFull { get; private set; }
         public SFSHipEntryFull LeftSFSEntryFull { get; private set; }
+        private List<string> _pdsvRightstr;
+        private List<string> _pdsvLeftstr;
         private List<string> _sfsRightstr;
         private List<string> _sfsLeftstr;
         private List<string> _bpvLeftstr;
+
+        private ObservableCollection<Visibility> _isVisiblePDSVleft;
+        private ObservableCollection<Visibility> _isVisiblePDSVright;
+        public ObservableCollection<Visibility> IsVisiblePDSVleft
+        {
+            get
+            {
+                return _isVisiblePDSVleft;
+            }
+            set
+            {
+                _isVisiblePDSVleft = value;
+                OnPropertyChanged();
+            }
+        }
+        public ObservableCollection<Visibility> IsVisiblePDSVright
+        {
+            get
+            {
+                return _isVisiblePDSVright;
+            }
+            set
+            {
+                _isVisiblePDSVright = value;
+                OnPropertyChanged();
+            }
+        }
+
         private ObservableCollection<Visibility> _isVisibleBPVleft;
         public ObservableCollection<Visibility> IsVisibleBPVleft
         {
@@ -257,7 +316,7 @@ namespace WpfApp2.ViewModels
 
         public BPVHipEntryFull LeftBPVEntryFull { get; protected set; }
         public BPVHipEntryFull RightBPVEntryFull { get; protected set; }
-
+        public PDSVHipEntryFull LeftPDSVEntryFull { get; private set; }
         public BPVHipViewModel LeftBPVHip { get; protected set; }
         public SFSViewModel LeftSFS { get; protected set; }
         public PDSVViewModel LeftPDSV { get; protected set; }
@@ -269,6 +328,7 @@ namespace WpfApp2.ViewModels
 
         public BPVHipViewModel RightBPVHip { get; protected set; }
         public SFSViewModel RightSFS { get; protected set; }
+        public PDSVHipEntryFull RightPDSVEntryFull { get; private set; }
         public PDSVViewModel RightPDSV { get; protected set; }
         public ZDSVViewModel RightZDSV { get; protected set; }
         public HipPerforateViewModel RightPerforate { get; protected set; }
@@ -306,15 +366,31 @@ namespace WpfApp2.ViewModels
         }
         public ViewModelAddPhysical(NavigationController controller) : base(controller)
         {
+
+            PDSVLeftstr = new List<string>();
+            PDSVRightstr = new List<string>();
             BpvLeftstr = new List<string>();
             BpvRightstr = new List<string>();
             SFSLeftstr = new List<string>();
             SFSRightstr = new List<string>();
             var IsVisibleBPVleftBuf = new ObservableCollection<Visibility>();
+
+            IsVisiblePDSVleft = new ObservableCollection<Visibility>();
+            IsVisiblePDSVright = new ObservableCollection<Visibility>();
             IsVisibleBPVRight = new ObservableCollection<Visibility>();
             IsVisibleBPVleft = new ObservableCollection<Visibility>();
             IsVisibleSFSRight = new ObservableCollection<Visibility>();
             IsVisibleSFSleft = new ObservableCollection<Visibility>();
+
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisiblePDSVleft.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisiblePDSVright.Add(Visibility.Collapsed);
+            }
+
 
             for (int i = 0; i < 6; ++i)
             {
@@ -453,15 +529,16 @@ namespace WpfApp2.ViewModels
             );
 
             //ПДСВ
-
             LeftPDSV = new PDSVViewModel(Controller, LegSide.Left);
             RightPDSV = new PDSVViewModel(Controller, LegSide.Right);
+            Controller.AddLegPartVM(LeftPDSV);
+            Controller.AddLegPartVM(RightPDSV);
 
             ToLeftPDSVCommand = new DelegateCommand(
                 () =>
                 {
                     Controller.LegViewModel = LeftPDSV;
-                    Controller.NavigateTo<LegPartViewModel>();
+                    Controller.NavigateTo<PDSVViewModel>(LegSide.Left);
                 }
             );
 
@@ -469,7 +546,7 @@ namespace WpfApp2.ViewModels
                 () =>
                 {
                     Controller.LegViewModel = RightPDSV;
-                    Controller.NavigateTo<LegPartViewModel>();
+                    Controller.NavigateTo<PDSVViewModel>(LegSide.Right);
                 }
             );
 
@@ -701,48 +778,51 @@ namespace WpfApp2.ViewModels
 
                 else
                 {
-                     SFSRightstr = new List<string>();
-                     RightSFSEntryFull = new SFSHipEntryFull();
-                     //to do тут должно быть сохранение
-                     RightSFS = (SFSViewModel)sender;
-                     SaveSet result = SaveViewModel(RightSFS);
-                     SFSRightstr = result.stringList;
-                     IsVisibleSFSRight = result.listVisibility;
+                    SFSRightstr = new List<string>();
+                    RightSFSEntryFull = new SFSHipEntryFull();
+                    //to do тут должно быть сохранение
+                    RightSFS = (SFSViewModel)sender;
+                    SaveSet result = SaveViewModel(RightSFS);
+                    SFSRightstr = result.stringList;
+                    IsVisibleSFSRight = result.listVisibility;
                 }
             if (senderType == typeof(BPVHipViewModel))
                 if (senderVM.CurrentLegSide == LegSide.Left)
                 {
-
-
-
-                    //List<string> bufBpvLeftStr = new List<string>();
-                    //BpvLeftstr = new List<string>();
-
                     LeftBPVEntryFull = new BPVHipEntryFull();
                     //to do тут должно быть сохранение
                     LeftBPVHip = (BPVHipViewModel)sender;
                     SaveSet result = SaveViewModel(LeftBPVHip);
                     BpvLeftstr = result.stringList;
                     IsVisibleBPVleft = result.listVisibility;
-
-
                 }
                 else
                 {
-
-
-
-
                     BpvRightstr = new List<string>();
-
-
                     RightBPVHip = (BPVHipViewModel)sender;
-
                     SaveSet result = SaveViewModel(RightBPVHip);
                     BpvRightstr = result.stringList;
                     IsVisibleBPVRight = result.listVisibility;
+                }
 
-
+            if (senderType == typeof(PDSVViewModel))
+                if (senderVM.CurrentLegSide == LegSide.Left)
+                {
+                    LeftPDSVEntryFull = new PDSVHipEntryFull();
+                    //to do тут должно быть сохранение
+                    LeftPDSV = (PDSVViewModel)sender;
+                    SaveSet result = SaveViewModel(LeftPDSV);
+                    PDSVLeftstr = result.stringList;
+                    IsVisiblePDSVleft = result.listVisibility;
+                }
+                else
+                {
+                    RightPDSVEntryFull = new PDSVHipEntryFull();
+                    //to do тут должно быть сохранение
+                    RightPDSV = (PDSVViewModel)sender;
+                    SaveSet result = SaveViewModel(RightPDSV);
+                    PDSVRightstr = result.stringList;
+                    IsVisiblePDSVright = result.listVisibility;
                 }
 
         }

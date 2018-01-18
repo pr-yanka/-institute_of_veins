@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WpfApp2.Db.Models.LegParts;
 using WpfApp2.Db.Models.LegParts.BPVHip;
+using WpfApp2.Db.Models.LegParts.PDSVHip;
 using WpfApp2.Db.Models.LegParts.SFSHip;
 
 namespace WpfApp2.Db.Models
@@ -17,7 +18,17 @@ namespace WpfApp2.Db.Models
 
         public СategoryTypeRepository СategoryType { get; }
 
-        public BPVHipWayRepository BPVHipWay { get; set; }
+
+        public PDSVHipRepository PDSVHips { get;  }
+        public PDSVComboRepository PDSVCombos { get; }
+        public PDSVHipEntryRepository PDSVHipEntries { get;  }
+        public PDSVHipWayRepository PDSVHipWay { get; }
+
+        public BPVHipRepository BPVHips { get; }
+        public BPVComboRepository BPVCombos { get;  }
+        public BPVHipEntryRepository BPVHipEntries { get;  }
+        public BPVHipWayRepository BPVHipWay { get; }
+
 
         public CitiesRepository Cities { get; }
         public DistrictsRepository Districts { get; }
@@ -53,9 +64,7 @@ namespace WpfApp2.Db.Models
         public DoctorRepository Doctor { get; }
 
 
-        public BPVHipRepository BPVHips { get; private set; }
-        public BPVComboRepository BPVCombos { get; private set; }
-        public BPVHipEntryRepository BPVHipEntries { get; private set; }
+
         public MetricsRepository Metrics { get; }
         public PatientsRepository Patients { get; }
         public AnalizeTypeRepository AnalizeType { get; }
@@ -67,6 +76,11 @@ namespace WpfApp2.Db.Models
         public UnitOfWork(MySqlContext context)
         {
             _context = context;
+
+            PDSVHips = new PDSVHipRepository(_context);
+            PDSVCombos = new PDSVComboRepository(_context);
+            PDSVHipEntries = new PDSVHipEntryRepository(_context);
+            PDSVHipWay = new PDSVHipWayRepository(_context);
 
             SFSHips = new SFSHipRepository(_context);
             SFSCombos = new SFSComboRepository(_context);

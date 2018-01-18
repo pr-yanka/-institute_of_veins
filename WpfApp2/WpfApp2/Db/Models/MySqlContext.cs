@@ -10,6 +10,14 @@ namespace WpfApp2.Db.Models
 {
     public class MySqlContext : DbContext
     {
+     
+
+        public DbSet<PDSVHipStructure> PDSVHips { get; set; }
+        public DbSet<PDSVHipCombo> PDSVCombos { get; set; }
+        public DbSet<PDSVHipEntry> PDSVHipEntries { get; set; }
+        public DbSet<PDSVHipWay> PDSVHipWay { get; set; }
+
+
 
         public DbSet<СategoryType> СategoryType { get; set; }
         public DbSet<BPVHipWay> BPVHipWay { get; set; }
@@ -78,6 +86,42 @@ namespace WpfApp2.Db.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+
+
+
+            modelBuilder.Entity<PDSVHipCombo>()
+                .HasRequired<PDSVHipStructure>(s => s.Str1).WithMany(g => g.PDSVs1).HasForeignKey<int>(s => s.IdStr1);
+
+            modelBuilder.Entity<PDSVHipCombo>()
+                .HasOptional<PDSVHipStructure>(s => s.Str2).WithMany(g => g.PDSVs2).HasForeignKey<int?>(s => s.IdStr2);
+
+            modelBuilder.Entity<PDSVHipCombo>()
+                .HasOptional<PDSVHipStructure>(s => s.Str3).WithMany(g => g.PDSVs3).HasForeignKey<int?>(s => s.IdStr3);
+
+          
+            modelBuilder.Entity<PDSVHipEntry>()
+                .HasRequired<PDSVHipStructure>(s => s.Structure).WithMany(g => g.Entries).HasForeignKey<int>(s => s.StructureID);
+
+            modelBuilder.Entity<PDSVHipEntryFull>()
+              .HasRequired<PDSVHipWay>(s => s.PDSVHipWay).WithMany(g => g.EntriesFull).HasForeignKey<int>(s => s.PDSVHipWayID);
+
+            modelBuilder.Entity<PDSVHipEntryFull>()
+            .HasRequired<PDSVHipEntry>(s => s.PDSVHipEntry1).WithMany(g => g.EntriesFull1).HasForeignKey<int>(s => s.PDSVHipEntryId1);
+            modelBuilder.Entity<PDSVHipEntryFull>()
+            .HasRequired<PDSVHipEntry>(s => s.PDSVHipEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int>(s => s.PDSVHipEntryId2);
+
+            modelBuilder.Entity<PDSVHipEntryFull>()
+            .HasRequired<PDSVHipEntry>(s => s.PDSVHipEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int>(s => s.PDSVHipEntryId3);
+
+
+
+
+
+
+
+
+
+
 
 
             // configures one-to-many relationship

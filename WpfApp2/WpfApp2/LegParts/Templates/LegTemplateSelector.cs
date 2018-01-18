@@ -12,6 +12,7 @@ namespace WpfApp2.LegParts.Templates
         public DataTemplate BPVHipTemplate { get; set; }
         public DataTemplate SFSTemplate { get; set; }
         public DataTemplate EmptyTemplate { get; set; }
+        public DataTemplate PDSVHipTemplate { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -29,7 +30,7 @@ namespace WpfApp2.LegParts.Templates
                 return EmptyTemplate;
 
             if (item.GetType() == typeof(PDSVViewModel))
-                return EmptyTemplate;
+                return PDSVHipTemplate;
 
             if (item.GetType() == typeof(ZDSVViewModel))
                 return EmptyTemplate;

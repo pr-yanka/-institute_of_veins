@@ -149,6 +149,7 @@ namespace WpfApp2.Db.Models
         public virtual BPVHipEntry BPVHipEntry4 { get; set; }
         public virtual BPVHipEntry BPVHipEntry5 { get; set; }
         public int Id { get; set; }
+
         public int BPVHipWayID { get; set; }
 
         public int BPVHipEntryId1 { get; set; }

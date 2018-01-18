@@ -6,7 +6,8 @@
         <ResourceDictionary Source="StandartPartTemplate.xaml"/>
         <ResourceDictionary Source="EmptyTemplate.xaml"/>
         <ResourceDictionary Source="BPVHipTemplate.xaml"/>
-        <ResourceDictionary Source="SFSTemplate.xaml"/>
+        <ResourceDictionary Source="PDSVHipTemplate.xaml"/>
+        <ResourceDictionary Source="SFSTemplate.xaml"/> 
     </ResourceDictionary.MergedDictionaries>
 
     <local:LegTemplateSelector x:Key="LegTemplateSelector" 
@@ -14,6 +15,7 @@
                               EmptyTemplate="{StaticResource EmptyTemplate}"
                               BPVHipTemplate="{StaticResource BPVHipTemplate}"
                               SFSTemplate="{StaticResource SFSTemplate}"
+                               PDSVHipTemplate="{StaticResource PDSVHipTemplate}"
                                />
     
 </ResourceDictionary>

@@ -88,8 +88,13 @@
                                 </StackPanel>
                             </Expander.Header>
                             <StackPanel Orientation="Vertical">
+                            <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding LeftPDSV.SelectedPDSVWayType.Name}" FontSize="12"/></TextBlock>
 
-                            </StackPanel>
+                            <TextBlock Visibility="{Binding IsVisiblePDSVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PDSVLeftstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePDSVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PDSVLeftstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePDSVleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PDSVLeftstr[2]}"></TextBlock>
+                           
+                        </StackPanel>
                         </Expander>
                         <Separator/>
 
@@ -235,8 +240,13 @@
                                 </StackPanel>
                             </Expander.Header>
                             <StackPanel Orientation="Vertical">
+                            <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding RightPDSV.SelectedPDSVWayType.Name}" FontSize="12"/></TextBlock>
 
-                            </StackPanel>
+                            <TextBlock Visibility="{Binding IsVisiblePDSVright[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PDSVRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePDSVright[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PDSVRightstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePDSVright[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PDSVRightstr[2]}"></TextBlock>
+
+                        </StackPanel>
                         </Expander>
                         <Separator/>
 

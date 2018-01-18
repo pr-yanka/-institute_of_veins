@@ -1,0 +1,18 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:WpfApp2.LegParts.Templates">
+    <DataTemplate x:Key="PDSVHipTemplate">
+        <StackPanel Orientation="Vertical">
+            <TextBlock x:Name="textBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Вид хода:" VerticalAlignment="Top" FontSize="16"/>
+            <ComboBox x:Name="comboBox" SelectedItem="{Binding SelectedPDSVWayType}" SelectedIndex="{Binding SelectedPDSVWayTypeId}" ItemsSource="{Binding PDSVWayType}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="180">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Name}"></TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
+    </DataTemplate>
+</ResourceDictionary>
