@@ -38,6 +38,35 @@ namespace WpfApp2.ViewModels
             }
         }
 
+        public List<string> SFSLeftstr
+        {
+            get
+            {
+                return _sfsLeftstr;
+            }
+            set
+            {
+                _sfsLeftstr = value;
+                OnPropertyChanged();
+            }
+        }
+        public List<string> SFSRightstr
+        {
+            get
+            {
+                return _sfsRightstr;
+            }
+            set
+            {
+                _sfsRightstr = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public SFSHipEntryFull RightSFSEntryFull { get; private set; }
+        public SFSHipEntryFull LeftSFSEntryFull { get; private set; }
+        private List<string> _sfsRightstr;
+        private List<string> _sfsLeftstr;
         private List<string> _bpvLeftstr;
         private ObservableCollection<Visibility> _isVisibleBPVleft;
         public ObservableCollection<Visibility> IsVisibleBPVleft
@@ -66,6 +95,39 @@ namespace WpfApp2.ViewModels
         }
 
         private List<string> _bpvRightstr;
+
+
+        private ObservableCollection<Visibility> _isVisibleSFSleft;
+        public ObservableCollection<Visibility> IsVisibleSFSleft
+        {
+            get
+            {
+                return _isVisibleSFSleft;
+            }
+            set
+            {
+                _isVisibleSFSleft = value;
+                OnPropertyChanged();
+            }
+        }
+        private ObservableCollection<Visibility> _isVisibleSFSRight;
+        public ObservableCollection<Visibility> IsVisibleSFSRight
+        {
+            get
+            {
+                return _isVisibleSFSRight;
+            }
+            set
+            {
+                _isVisibleSFSRight = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
+
+
         private ObservableCollection<Visibility> _isVisibleBPVRight;
         public ObservableCollection<Visibility> IsVisibleBPVRight
         {
@@ -246,9 +308,13 @@ namespace WpfApp2.ViewModels
         {
             BpvLeftstr = new List<string>();
             BpvRightstr = new List<string>();
+            SFSLeftstr = new List<string>();
+            SFSRightstr = new List<string>();
             var IsVisibleBPVleftBuf = new ObservableCollection<Visibility>();
             IsVisibleBPVRight = new ObservableCollection<Visibility>();
             IsVisibleBPVleft = new ObservableCollection<Visibility>();
+            IsVisibleSFSRight = new ObservableCollection<Visibility>();
+            IsVisibleSFSleft = new ObservableCollection<Visibility>();
 
             for (int i = 0; i < 6; ++i)
             {
@@ -257,6 +323,15 @@ namespace WpfApp2.ViewModels
             for (int i = 0; i < 6; ++i)
             {
                 IsVisibleBPVRight.Add(Visibility.Collapsed);
+            }
+
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleSFSleft.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleSFSRight.Add(Visibility.Collapsed);
             }
 
             IsVisibleBPVleft = IsVisibleBPVleftBuf;
@@ -403,11 +478,14 @@ namespace WpfApp2.ViewModels
             LeftSFS = new SFSViewModel(Controller, LegSide.Left);
             RightSFS = new SFSViewModel(Controller, LegSide.Right);
 
+            Controller.AddLegPartVM(LeftSFS);
+            Controller.AddLegPartVM(RightSFS);
+
             ToLeftSFSCommand = new DelegateCommand(
                 () =>
                 {
                     Controller.LegViewModel = LeftSFS;
-                    Controller.NavigateTo<LegPartViewModel>();
+                    Controller.NavigateTo<SFSViewModel>(LegSide.Left);
                 }
             );
 
@@ -415,7 +493,7 @@ namespace WpfApp2.ViewModels
                 () =>
                 {
                     Controller.LegViewModel = RightSFS;
-                    Controller.NavigateTo<LegPartViewModel>();
+                    Controller.NavigateTo<SFSViewModel>(LegSide.Right);
                 }
             );
 
@@ -541,6 +619,64 @@ namespace WpfApp2.ViewModels
             );
         }
 
+        struct SaveSet
+        {
+            public List<string> stringList;
+            public ObservableCollection<Visibility> listVisibility;
+            public SaveSet(List<string> stringList, ObservableCollection<Visibility> listVisibility)
+            {
+                this.listVisibility = listVisibility;
+                this.stringList = stringList;
+            }
+        }
+
+        private SaveSet SaveViewModel(LegPartViewModel sender)
+        {
+            List<string> bufBpvLeftStr = new List<string>();
+
+
+
+            //to do тут должно быть сохранение
+
+
+            var IsVisibleBPVleftbuf = new ObservableCollection<Visibility>();
+
+
+            // IsVisibleBPVleftbuf.Add(Visibility.Visible);
+
+            for (int i = 0; i < sender.LegSections.Count; ++i)
+            {
+                if (sender.LegSections[i].SelectedValue == null || sender.LegSections[i].SelectedValue.ToNextPart)
+                {
+
+                    IsVisibleBPVleftbuf.Add(Visibility.Collapsed);
+                }
+                else
+                {
+                    if (sender.LegSections[i].SelectedValue.HasSize || sender.LegSections[i].HasDoubleSize)
+                    {
+                        if (sender.LegSections[i].HasDoubleSize)
+                        {
+                            bufBpvLeftStr.Add(sender.LegSections[i].SelectedValue.Text1 + " " + sender.LegSections[i].CurrentEntry.Size + "*" + sender.LegSections[i].CurrentEntry.Size2 + sender.LegSections[i].SelectedValue.Metrics + " " + sender.LegSections[i].SelectedValue.Text2 + " " + sender.LegSections[i].CurrentEntry.Comment);
+
+                        }
+                        else
+                        {
+                            bufBpvLeftStr.Add(sender.LegSections[i].SelectedValue.Text1 + " " + sender.LegSections[i].CurrentEntry.Size + sender.LegSections[i].SelectedValue.Metrics + " " + sender.LegSections[i].SelectedValue.Text2 + " " + sender.LegSections[i].CurrentEntry.Comment);
+                        }
+                    }
+                    else
+                    {
+                        bufBpvLeftStr.Add(sender.LegSections[i].SelectedValue.Text1 + " " + sender.LegSections[i].SelectedValue.Text2 + " " + sender.LegSections[i].CurrentEntry.Comment);
+                    }
+                    IsVisibleBPVleftbuf.Add(Visibility.Visible);
+                }
+            }
+            SaveSet result = new SaveSet(bufBpvLeftStr, IsVisibleBPVleftbuf);
+            return result;
+
+        }
+
 
         //  public ObservableCollection<>
         //кто присылает и что присылает
@@ -553,83 +689,58 @@ namespace WpfApp2.ViewModels
             //sender проверять какого типа
             if (senderType == typeof(SFSViewModel))
                 if (senderVM.CurrentLegSide == LegSide.Left)
+                {
+                    SFSLeftstr = new List<string>();
+                    LeftSFSEntryFull = new SFSHipEntryFull();
+                    //to do тут должно быть сохранение
                     LeftSFS = (SFSViewModel)sender;
-                else
-                    RightSFS = (SFSViewModel)sender;
+                    SaveSet result = SaveViewModel(LeftSFS);
+                    SFSLeftstr = result.stringList;
+                    IsVisibleSFSleft = result.listVisibility;
+                }
 
+                else
+                {
+                     SFSRightstr = new List<string>();
+                     RightSFSEntryFull = new SFSHipEntryFull();
+                     //to do тут должно быть сохранение
+                     RightSFS = (SFSViewModel)sender;
+                     SaveSet result = SaveViewModel(RightSFS);
+                     SFSRightstr = result.stringList;
+                     IsVisibleSFSRight = result.listVisibility;
+                }
             if (senderType == typeof(BPVHipViewModel))
                 if (senderVM.CurrentLegSide == LegSide.Left)
                 {
-                    
 
 
-                    List<string> bufBpvLeftStr = new List<string>();
-                    BpvLeftstr = new List<string>();
+
+                    //List<string> bufBpvLeftStr = new List<string>();
+                    //BpvLeftstr = new List<string>();
 
                     LeftBPVEntryFull = new BPVHipEntryFull();
                     //to do тут должно быть сохранение
-
-
-                    var IsVisibleBPVleftbuf = new ObservableCollection<Visibility>();
                     LeftBPVHip = (BPVHipViewModel)sender;
+                    SaveSet result = SaveViewModel(LeftBPVHip);
+                    BpvLeftstr = result.stringList;
+                    IsVisibleBPVleft = result.listVisibility;
 
-                   // IsVisibleBPVleftbuf.Add(Visibility.Visible);
-
-                    for (int i = 0; i < LeftBPVHip.LegSections.Count; ++i)
-                    {
-                        if (LeftBPVHip.LegSections[i].SelectedValue == null || LeftBPVHip.LegSections[i].SelectedValue.ToNextPart)
-                        {
-
-                            IsVisibleBPVleftbuf.Add(Visibility.Collapsed);
-                        }
-                        else
-                        {
-                            if (LeftBPVHip.LegSections[i].SelectedValue.HasSize)
-                                bufBpvLeftStr.Add(LeftBPVHip.LegSections[i].SelectedValue.Text1 + " " + LeftBPVHip.LegSections[i].CurrentEntry.Size + LeftBPVHip.LegSections[i].SelectedValue.Metrics);
-                            else
-                                bufBpvLeftStr.Add(LeftBPVHip.LegSections[i].SelectedValue.Text1 );
-
-                            IsVisibleBPVleftbuf.Add(Visibility.Visible);
-                        }
-                    }
-                    BpvLeftstr = bufBpvLeftStr;
-                    IsVisibleBPVleft = IsVisibleBPVleftbuf;
 
                 }
                 else
                 {
-                  
 
 
-                    List<string> bufBpvRightStr = new List<string>();
+
+
                     BpvRightstr = new List<string>();
 
-                    var IsVisibleBPVRightbuf = new ObservableCollection<Visibility>();
+
                     RightBPVHip = (BPVHipViewModel)sender;
 
-                   // IsVisibleBPVRightbuf.Add(Visibility.Visible);
-
-                    for (int i = 0; i < RightBPVHip.LegSections.Count; ++i)
-                    {
-                        if (RightBPVHip.LegSections[i].SelectedValue == null || RightBPVHip.LegSections[i].SelectedValue.ToNextPart)
-                        {
-
-                            IsVisibleBPVRightbuf.Add(Visibility.Collapsed);
-                        }
-                        else
-                        {
-                            if(RightBPVHip.LegSections[i].SelectedValue.HasSize)
-                            bufBpvRightStr.Add(RightBPVHip.LegSections[i].SelectedValue.Text1 + " " + RightBPVHip.LegSections[i].CurrentEntry.Size + RightBPVHip.LegSections[i].SelectedValue.Metrics);
-                            else
-                            {
-                                bufBpvRightStr.Add(RightBPVHip.LegSections[i].SelectedValue.Text1);
-
-                            }
-                            IsVisibleBPVRightbuf.Add(Visibility.Visible);
-                        }
-                    }
-                    BpvRightstr = bufBpvRightStr;
-                    IsVisibleBPVRight = IsVisibleBPVRightbuf;
+                    SaveSet result = SaveViewModel(RightBPVHip);
+                    BpvRightstr = result.stringList;
+                    IsVisibleBPVRight = result.listVisibility;
 
 
                 }

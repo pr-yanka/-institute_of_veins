@@ -49,8 +49,14 @@
                                 </StackPanel>
                             </Expander.Header>
                             <StackPanel Orientation="Vertical">
-
-                            </StackPanel>
+                            <TextBlock Visibility="{Binding IsVisibleSFSleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSLeftstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSFSleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSLeftstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSFSleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSLeftstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSFSleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSLeftstr[3]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSFSleft[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSLeftstr[4]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSFSleft[5],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSLeftstr[5]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSFSleft[6],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSLeftstr[6]}"></TextBlock>
+                        </StackPanel>
                         </Expander>
                         <Separator/>
                         <Expander FontSize="14">
@@ -64,7 +70,6 @@
                             <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding LeftBPVHip.SelectedBpvWayType.Name}" FontSize="12"/></TextBlock>
 
                             <TextBlock Visibility="{Binding IsVisibleBPVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvLeftstr[0]}"></TextBlock>
-                            
                             <TextBlock Visibility="{Binding IsVisibleBPVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvLeftstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleBPVleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvLeftstr[2]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleBPVleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvLeftstr[3]}"></TextBlock>
@@ -188,8 +193,15 @@
                                 </StackPanel>
                             </Expander.Header>
                             <StackPanel Orientation="Vertical">
+                            <TextBlock Visibility="{Binding IsVisibleSFSRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSFSRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSRightstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSFSRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSRightstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSFSRight[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSRightstr[3]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSFSRight[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSRightstr[4]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSFSRight[5],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSRightstr[5]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSFSRight[6],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSRightstr[6]}"></TextBlock>
 
-                            </StackPanel>
+                        </StackPanel>
                         </Expander>
                         <Separator/>
                         <Expander>

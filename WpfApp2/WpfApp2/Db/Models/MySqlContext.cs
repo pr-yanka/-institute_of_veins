@@ -10,7 +10,7 @@ namespace WpfApp2.Db.Models
 {
     public class MySqlContext : DbContext
     {
-     
+
         public DbSet<СategoryType> СategoryType { get; set; }
         public DbSet<BPVHipWay> BPVHipWay { get; set; }
 
@@ -54,6 +54,11 @@ namespace WpfApp2.Db.Models
         public DbSet<OperationType> OperationType { get; set; }
         public DbSet<Anestethic> Anestethic { get; set; }
         public DbSet<Doctor> Doctor { get; set; }
+
+
+        public DbSet<SFSHipStructure> SFSHips { get; }
+        public DbSet<SFSHipCombo> SFSCombos { get; }
+        public DbSet<SFSHipEntry> SFSHipEntries { get; }
 
         public DbSet<Analize> Analize { get; set; }
         public DbSet<AnalizeType> AnalizeType { get; set; }
@@ -110,6 +115,51 @@ namespace WpfApp2.Db.Models
 
             modelBuilder.Entity<BPVHipEntryFull>()
             .HasRequired<BPVHipEntry>(s => s.BPVHipEntry5).WithMany(g => g.EntriesFull5).HasForeignKey<int>(s => s.BPVHipEntryId5);
+
+
+
+
+
+
+
+            modelBuilder.Entity<SFSHipCombo>()
+              .HasRequired<SFSHipStructure>(s => s.Str1).WithMany(g => g.SFSs1).HasForeignKey<int>(s => s.IdStr1);
+
+            modelBuilder.Entity<SFSHipCombo>()
+                .HasOptional<SFSHipStructure>(s => s.Str2).WithMany(g => g.SFSs2).HasForeignKey<int?>(s => s.IdStr2);
+
+            modelBuilder.Entity<SFSHipCombo>()
+                .HasOptional<SFSHipStructure>(s => s.Str3).WithMany(g => g.SFSs3).HasForeignKey<int?>(s => s.IdStr3);
+
+            modelBuilder.Entity<SFSHipCombo>()
+                .HasOptional<SFSHipStructure>(s => s.Str4).WithMany(g => g.SFSs4).HasForeignKey<int?>(s => s.IdStr4);
+
+            modelBuilder.Entity<SFSHipCombo>()
+                .HasOptional<SFSHipStructure>(s => s.Str5).WithMany(g => g.SFSs5).HasForeignKey<int?>(s => s.IdStr5);
+            modelBuilder.Entity<SFSHipCombo>()
+               .HasOptional<SFSHipStructure>(s => s.Str6).WithMany(g => g.SFSs6).HasForeignKey<int?>(s => s.IdStr6);
+
+            modelBuilder.Entity<SFSHipEntry>()
+                .HasRequired<SFSHipStructure>(s => s.Structure).WithMany(g => g.Entries).HasForeignKey<int>(s => s.StructureID);
+
+            modelBuilder.Entity<SFSHipEntryFull>()
+            .HasRequired<SFSHipEntry>(s => s.SFSHipEntry1).WithMany(g => g.EntriesFull1).HasForeignKey<int>(s => s.SFSHipEntryId1);
+            modelBuilder.Entity<SFSHipEntryFull>()
+            .HasRequired<SFSHipEntry>(s => s.SFSHipEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int>(s => s.SFSHipEntryId2);
+
+            modelBuilder.Entity<SFSHipEntryFull>()
+            .HasRequired<SFSHipEntry>(s => s.SFSHipEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int>(s => s.SFSHipEntryId3);
+
+            modelBuilder.Entity<SFSHipEntryFull>()
+            .HasRequired<SFSHipEntry>(s => s.SFSHipEntry4).WithMany(g => g.EntriesFull4).HasForeignKey<int>(s => s.SFSHipEntryId4);
+
+            modelBuilder.Entity<SFSHipEntryFull>()
+            .HasRequired<SFSHipEntry>(s => s.SFSHipEntry5).WithMany(g => g.EntriesFull5).HasForeignKey<int>(s => s.SFSHipEntryId5);
+
+            modelBuilder.Entity<SFSHipEntryFull>()
+            .HasRequired<SFSHipEntry>(s => s.SFSHipEntry6).WithMany(g => g.EntriesFull6).HasForeignKey<int>(s => s.SFSHipEntryId6);
+
+
 
         }
     }

@@ -114,6 +114,10 @@ namespace WpfApp2.Db.Models
     [Table("БПВ_на_бедре_подзапись")]
     public class BPVHipEntry : LegPartEntry, ILegPart
     {
+
+        [Column("метрика")]
+        public override float Size { get; set; }
+
         public virtual BPVHipStructure Structure { get; set; }
 
         public virtual ICollection<BPVHipEntryFull> EntriesFull1 { get; set; } = new HashSet<BPVHipEntryFull>();

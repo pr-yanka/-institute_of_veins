@@ -44,6 +44,8 @@ namespace WpfApp2.LegParts
         //selected value
         private LegPartDbStructure _selectedValue;
 
+      
+
         public LegPartDbStructure SelectedValue
         {
             get { return _selectedValue; }
@@ -51,45 +53,60 @@ namespace WpfApp2.LegParts
             {
                 if (value != null && value.Text2 == "" && value.Text1 == "")
                 {
-                   _selectedValue = value; OnPropertyChanged();
-                    MessageBus.Default.Call("RebuildLegSectionViewModel", "Empty",this);
+                    _selectedValue = value; OnPropertyChanged();
+
+
+
+                    MessageBus.Default.Call("RebuildLegSectionViewModel", "Empty", this);
                 }
-                else if(value != null)
+                else if (value != null)
                 {
 
                     if ((_selectedValue == null && value.Custom) || (_selectedValue != null && _selectedValue.Custom != value.Custom))
                     {
-                        if (value.Custom && value.Text1 == _startCustomText) MessageBus.Default.Call("OpenCustom", this, this.GetType());
+                        if (value.Custom && value.Text1 == _startCustomText)
+                        {
+                           
+                            MessageBus.Default.Call("OpenCustom", this, this.GetType()); }
                         else MessageBus.Default.Call("CloseCustom", this, this.GetType());
                     }
-                    _selectedValue = value;
-                    if (_selectedValue == null)
-                    {
-                        HasFirstPart = false;
-                        HasSecondPart = false;
-                        HasComment = false;
-                        HasSize = false;
-                        HasDoubleSize = false;
-                        OnPropertyChanged();
-                        return;
-                    }
-
-                    if (_selectedValue.Text1 != "") HasFirstPart = true;
-                    if (_selectedValue.Text2 != "") HasSecondPart = true;
-                    if (_selectedValue.HasSize) HasSize = true;
-                    if (_selectedValue.HasDoubleMetric) HasDoubleSize = true;
-
-                    if (_selectedValue.ToNextPart)
-                        HasComment = false;
                     else
-                        HasComment = true;
-                    MessageBus.Default.Call("RebuildLegSectionViewModel", this, this);
+                    {
 
-                    OnPropertyChanged();
+                        _selectedValue = value;
+                        if (_selectedValue == null)
+                        {
+                            HasFirstPart = false;
+                            HasSecondPart = false;
+                            HasComment = false;
+                            HasSize = false;
+                            HasDoubleSize = false;
+
+                            OnPropertyChanged();
+                            return;
+                        }
+
+                        if (_selectedValue.Text1 != "") HasFirstPart = true;
+                        else { HasFirstPart = false; }
+                        if (_selectedValue.Text2 != "") HasSecondPart = true;
+                        else { HasSecondPart = false; }
+                        if (_selectedValue.HasSize) HasSize = true;
+                        else { HasSize = false; }
+                        if (_selectedValue.HasDoubleMetric) HasDoubleSize = true;
+                        else { HasDoubleSize = false; }
+                        if (_selectedValue.ToNextPart)
+                            HasComment = false;
+                        else
+                            HasComment = true;
+                        MessageBus.Default.Call("RebuildLegSectionViewModel", this, this);
+
+                        OnPropertyChanged();
 
 
+
+                    }
                 }
-                else { _selectedValue = null; OnPropertyChanged();  }
+                else { _selectedValue = null; OnPropertyChanged(); }
 
                 OnPropertyChanged();
             }
@@ -231,6 +248,7 @@ namespace WpfApp2.LegParts
 
         public LegSectionViewModel(NavigationController controller, LegSectionViewModel prevSection) : base(controller)
         {
+
             _previousSection = prevSection;
             if (prevSection != null)
                 prevSection.PropertyChanged += (e, args) =>

@@ -64,8 +64,8 @@ namespace WpfApp2.LegParts
             Dimentions = new ObservableCollection<Metrics>(Data.Metrics.GetAll);
             //потому что я программист от бога
             if (parentVM.GetType() == typeof(SFSViewModel) || parentVM.GetType() == typeof(SPSViewModel))
-                DoubleSizeAvailable = true;
-            else DoubleSizeAvailable = false;
+                DoubleSizeIsAvailable = true;
+            else DoubleSizeIsAvailable = false;
         }
 
         private string _text1;

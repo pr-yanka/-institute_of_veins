@@ -200,6 +200,10 @@
       <DependentUpon>AddReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="Db\Models\CitiesRepository.cs" />
+    <Compile Include="Db\Models\LegParts\SFSHip\SFSComboRepository.cs" />
+    <Compile Include="Db\Models\LegParts\SFSHip\SFSHip.cs" />
+    <Compile Include="Db\Models\LegParts\SFSHip\SFSHipEntryRepository.cs" />
+    <Compile Include="Db\Models\LegParts\SFSHip\SFSHipRepository.cs" />
     <Compile Include="Db\Models\RegionsRepository.cs" />
     <Compile Include="Db\Models\DistrictsRepository.cs" />
     <Compile Include="Db\Models\СategoryTypeRepository.cs" />
@@ -379,6 +383,10 @@
     <Page Include="LegParts\LegPartMainTemplate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LegParts\Templates\SFSTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="LegParts\Templates\BPVHipTemplate.xaml">
       <SubType>Designer</SubType>

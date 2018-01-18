@@ -14,7 +14,7 @@
                     <TextBox x:Name="size1Box" Text="{Binding Path = CurrentEntry.Size, Converter={StaticResource FloatConvert}}" Visibility="{Binding Path = SelectedValue.HasSize, FallbackValue=Hidden, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="30"/>
                     <!--for 1*1 size-->
                     <Label x:Name="inches2Text_Copy" Content="*" Visibility="{Binding Path = HasDoubleSize, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
-                    <TextBox x:Name="size2Box" Text="" Visibility="{Binding Path = HasDoubleSize, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="30"/>
+                    <TextBox x:Name="size2Box" Text="{Binding Path = CurrentEntry.Size2, Converter={StaticResource FloatConvert}}" Visibility="{Binding Path = HasDoubleSize, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="30"/>
 
                     <Label x:Name="inches1Text_Copy" Content="{Binding Path=SelectedValue.Metrics}" Visibility="{Binding Path = HasSize, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Margin="5,0,5,0" VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
                     <Label x:Name="inches1Text_Copy2" Content="{Binding Path=SelectedValue.Text2}" Visibility="{Binding Path = HasSecondPart, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Margin="5,0,5,0" VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>

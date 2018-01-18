@@ -5,12 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using WpfApp2.Db.Models.LegParts;
 using WpfApp2.Db.Models.LegParts.BPVHip;
+using WpfApp2.Db.Models.LegParts.SFSHip;
 
 namespace WpfApp2.Db.Models
 {
     public class UnitOfWork : IUnitOfWork
     {
-        public СategoryTypeRepository СategoryType { get; set; }
+        public SFSHipRepository SFSHips { get; }
+        public SFSComboRepository SFSCombos { get; }
+        public SFSHipEntryRepository SFSHipEntries { get; }
+
+        public СategoryTypeRepository СategoryType { get; }
 
         public BPVHipWayRepository BPVHipWay { get; set; }
 
@@ -62,6 +67,10 @@ namespace WpfApp2.Db.Models
         public UnitOfWork(MySqlContext context)
         {
             _context = context;
+
+            SFSHips = new SFSHipRepository(_context);
+            SFSCombos = new SFSComboRepository(_context);
+            SFSHipEntries = new SFSHipEntryRepository(_context);
 
             СategoryType = new СategoryTypeRepository(_context);
             BPVHipWay = new BPVHipWayRepository(_context);

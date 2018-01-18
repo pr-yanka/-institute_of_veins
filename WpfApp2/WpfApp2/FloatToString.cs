@@ -17,7 +17,15 @@ namespace WpfApp2
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return float.Parse(value as string);
+            float buf = 0.0f;
+            if(float.TryParse(value as string, out buf))
+            {
+                return buf;
+            }else
+            {
+                return 0.0f;
+            }
+           
         }
     }
 }

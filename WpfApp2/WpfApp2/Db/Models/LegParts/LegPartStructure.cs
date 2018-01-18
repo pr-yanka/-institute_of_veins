@@ -44,8 +44,8 @@ namespace WpfApp2.Db.Models
         [NotMapped]
         public bool ToNextPart { get; internal set; }
 
-        [NotMapped]
-        public virtual bool HasDoubleMetric { get; }
+        [Column("двойная_метрика")] 
+        public virtual bool HasDoubleMetric { get; set; }
 
         public override string ToString()
         {

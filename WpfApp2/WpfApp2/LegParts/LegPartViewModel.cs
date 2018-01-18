@@ -23,6 +23,7 @@ namespace WpfApp2.LegParts
 {
     public class LegPartViewModel : ViewModelBase, INotifyPropertyChanged
     {
+
         private bool _isEmpty = true;
         public bool IsEmpty
         {
@@ -93,6 +94,7 @@ namespace WpfApp2.LegParts
         public DelegateCommand AnimationCompleted { get; set; }
 
         protected static LegSectionViewModel _lastSender;
+        
         protected static Type _lastSenderType;
 
         public static bool handled = false;
@@ -104,29 +106,35 @@ namespace WpfApp2.LegParts
             {
                 var curPanel = ((LegPartViewModel)Controller.LegViewModel).CurrentPanelViewModel;
                 var currentPart = (LegSectionViewModel)sender;
-                _lastSender = (LegSectionViewModel)sender;
+                
+              
+                    _lastSender = currentPart;
+              
+                  //  _lastSenderNewAnswer
+                    
+                
                 _lastSenderType = (Type)data;
                 handled = true;
-                ((LegPartViewModel)Controller.LegViewModel).CurrentPanelViewModel.PanelOpened = true;
+                curPanel.PanelOpened = true;
             }
         }
 
-        private LegPartDbStructure GetPanelStructure()
+        public LegPartDbStructure GetPanelStructure()
         {
-
-
-            var newStr = (LegPartDbStructure)Activator.CreateInstance(_lastSender.SelectedValue.GetType());
+            var newStr = (LegPartDbStructure)Activator.CreateInstance(LegSections[0].StructureSource[0].GetType());
             var panel = CurrentPanelViewModel;
 
             newStr.Text1 = panel.Text1;
             newStr.Text2 = panel.Text2;
             newStr.HasSize = panel.HasSize;
+            newStr.HasDoubleMetric = panel.HasDoubleSize;
+
             if (panel.HasSize)
             {
                 bool test = true;
-                foreach(var metric in Data.Metrics.GetAll)
+                foreach (var metric in Data.Metrics.GetAll)
                 {
-                    if(metric.Str == panel.SelectedMetricText)
+                    if (metric.Str == panel.SelectedMetricText)
                     {
                         test = false;
                         newStr.Size = metric.Id;
@@ -143,7 +151,7 @@ namespace WpfApp2.LegParts
                     newStr.Size = newMetric.Id;
                     newStr.Metrics = newMetric.Str;
                 }
-                
+
             }
             else newStr.Size = null;
             newStr.Level = _lastSender.ListNumber;
@@ -165,127 +173,50 @@ namespace WpfApp2.LegParts
         public void Initialization()
         {
             CurrentPanelViewModel = new SizePanelViewModel(this);
-            OpenPanelCommand = new DelegateCommand(() =>
-            {
-                CurrentLegSide = CurrentLegSide;
-                CurrentPanelViewModel.PanelOpened = true;
-            });
+
 
             ClosePanelCommand = new DelegateCommand(() =>
             {
+                if (_lastSender.SelectedValue == null)
+                {
+                    foreach (var structr in _lastSender.StructureSource)
+                    {
+                        if (structr.Text1 == "" && structr.Text2 == "")
+                        {
+                            _lastSender.SelectedValue = structr;
+                        }
+                    }
+                }
+                else
+                {
+                    LegSections[_lastSender.ListNumber - 1].SelectedValue = _lastSender.SelectedValue;
+                }
                 CurrentPanelViewModel.PanelOpened = false;
                 handled = false;
 
             });
 
-            SavePanelCommand = new DelegateCommand(() =>
-            {
-                var panel = CurrentPanelViewModel;
-                if (!string.IsNullOrWhiteSpace(panel.Text1) || !string.IsNullOrWhiteSpace(panel.Text2))
-                {
-                    CurrentLegSide = CurrentLegSide;
-                    CurrentPanelViewModel.PanelOpened = false;
-                    handled = false;
-                    var newStruct = GetPanelStructure();
-                    newStruct.Custom = false;
-                    Data.BPVHips.Add((BPVHipStructure)newStruct);
 
-                    _lastSender.StructureSource.Add(newStruct);
-                    _lastSender.SelectedValue = newStruct;
-                }
-                else
-                {
-                    MessageBox.Show("Не все поля заполнены");
-                }
-
-                //_lastSender.DeleteCustom();
-            });
 
             CurrentPanelViewModel.PanelOpened = false;
             //when user picks custom structure
             MessageBus.Default.Subscribe("OpenCustom", OpenHandler);
 
             _hasNavigation = false;
-
+            OpenPanelCommand = new DelegateCommand(() =>
+            {
+                CurrentLegSide = CurrentLegSide;
+                CurrentPanelViewModel.PanelOpened = true;
+            });
             RevertCommand = new DelegateCommand(
                 () =>
                 {
-                    IsEmpty = false;
+                   // IsEmpty = false;
                     Controller.NavigateTo<ViewModelAddPhysical>();
                 }
             );
 
-            SaveCommand = new DelegateCommand(
-                () =>
-                {
-                    if (LegSections[0].SelectedValue != null)
-                    {
-                        bool test = true;
-                        foreach (var leg in LegSections)
-                        {
-                            if(leg.HasSize && leg.CurrentEntry.Size == 0)
-                            { test = false; }
-                            //if(leg.HasDoubleSize && leg.Size2 == 0)
-                            //{
-                            //    test = false;
-                            //}
-                        }
-                        if (test)
-                        {
-                            IsEmpty = false;
 
-                            List<int?> ids = new List<int?>();
-
-                            foreach (var leg in LegSections)
-                            {
-                                //никогда так не делайте
-                                if (leg.IsVisible == Visibility.Visible && leg.ListNumber != 1 && leg.SelectedValue != null && leg.SelectedValue.Id != 0)
-                                    ids.Add(leg.SelectedValue.Id);
-                            }
-
-                            var combo = Data.BPVCombos.FindCombo(LegSections[0].SelectedValue.Id, ids);
-                            //если комбо не нашлось - значит оно кастомное, мы его запомним и отправим в базу на радость будущим пользователям
-                            if (combo == null)
-                            {
-                                var newCombo = new BPVHipCombo();
-
-                                for (int i = 0; i < LegSections.Count; i++)
-                                {
-                                    var currentStructure = LegSections[i].SelectedValue;
-                                    //ничего не было выбрано
-                                    if (currentStructure == null) continue;
-                                    //добавляем структуры, которые встретились впервые, чтобы потом добавить комбо
-                                    if (currentStructure.Id == 0
-                                    //потому что переход к след.разделу в комбо добавлять не надо, это излишняя информация
-                                    && !currentStructure.ToNextPart)
-                                    {
-                                        currentStructure.Level = i + 1;
-                                        Data.BPVHips.Add((BPVHipStructure)currentStructure);
-                                        Data.Complete();
-                                        ((BPVHipEntry)LegSections[i].CurrentEntry).Structure = (BPVHipStructure)currentStructure;
-                                        (LegSections[i].CurrentEntry).StructureID = currentStructure.Id;
-                                        Data.BPVHipEntries.Add((BPVHipEntry)LegSections[i].CurrentEntry);
-                                        Data.Complete();
-                                        if (i == 0) newCombo.IdStr1 = currentStructure.Id;
-                                        //там гда раньше был ноль теперь будет актуальный айдишник
-                                        else ids[i - 2] = currentStructure.Id;
-                                    }
-                                }
-
-                                newCombo.IdStr1 = LegSections[0].SelectedValue.Id;
-                                //заполняем комбо
-                                Data.BPVCombos.AddCombo(newCombo, ids);
-                                Data.Complete();
-                            }
-
-                            MessageBus.Default.Call("LegDataSaved", this, this.GetType());
-                            Controller.NavigateTo<ViewModelAddPhysical>();
-                        }
-                        else { MessageBox.Show("Не все поля заполнены"); }
-                    }
-                    else { Controller.NavigateTo<ViewModelAddPhysical>(); }
-                }
-            );
         }
 
         public LegPartViewModel(NavigationController controller, LegSide side) : base(controller)

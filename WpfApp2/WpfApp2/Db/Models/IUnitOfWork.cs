@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WpfApp2.Db.Models.LegParts;
 using WpfApp2.Db.Models.LegParts.BPVHip;
+using WpfApp2.Db.Models.LegParts.SFSHip;
 
 namespace WpfApp2.Db.Models
 {
@@ -53,6 +54,11 @@ namespace WpfApp2.Db.Models
         ComplainsTypeRepository ComplainsTypes { get; }
         RecomendationsTypeRepository RecomendationsTypes { get; }
         DiagnosisTypeRepository DiagnosisTypes { get; }
+
+
+       SFSHipRepository SFSHips { get; }
+       SFSComboRepository SFSCombos { get; }
+       SFSHipEntryRepository SFSHipEntries { get; }
 
         int Complete();
     }

@@ -21,7 +21,7 @@ namespace WpfApp2.Db.Models.SPS
     }
 
     [Table("спс_комбо")]
-    public partial class BPVHipCombo : ILegPart
+    public partial class SPSHipCombo : ILegPart
     {
         [Key]
         [Column("id")]
