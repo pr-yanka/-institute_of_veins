@@ -19,161 +19,163 @@ namespace WpfApp2.LegParts.VMs
 
         private void Rebuild(object sender, object data)
         {
-            var section = (LegSectionViewModel)data;
-            if (section.SelectedValue != null && section.SelectedValue.Text1 == "" && section.SelectedValue.Text2 == "")
+            if (Controller.CurrentViewModel.Controller.LegViewModel == this)
             {
-
-
-
-                for (int i = section.ListNumber - 1; i < LegSections.Count; i++)
+                var section = (LegSectionViewModel)data;
+                if (section.SelectedValue != null && section.SelectedValue.Text1 == "" && section.SelectedValue.Text2 == "")
                 {
 
-                    LegSections[i].SelectedValue = null;
+
+
+                    for (int i = section.ListNumber - 1; i < LegSections.Count; i++)
+                    {
+
+                        LegSections[i].SelectedValue = null;
+                    }
+
+                    if (section.ListNumber - 1 == 0)
+                    { IsEmpty = true; }
+
+
                 }
-
-                if (section.ListNumber - 1 == 0)
-                { IsEmpty = true; }
-
-
-            }
-            else if (section.SelectedValue != null)
-            {
-
-
-                if (section.ListNumber != 6 && LegSections[section.ListNumber].SelectedValue == null)
+                else if (section.SelectedValue != null)
                 {
 
 
-                    var StructureSourceBuf = new List<int>();
-                    bool test = true;
-                    int selectCombo = 0;
-                    int selectComboNext = 0;
-
-                    var bufSave = new ObservableCollection<LegPartDbStructure>();
-                    bufSave = LegSections[section.ListNumber].StructureSource;
-
-                    LegSections[section.ListNumber].StructureSource = new ObservableCollection<LegPartDbStructure>(base.Data.SFSHips.LevelStructures(LegSections[section.ListNumber].ListNumber).ToList());
-
-                    foreach (var variant in bufSave)
+                    if (section.ListNumber != 6 && LegSections[section.ListNumber].SelectedValue == null)
                     {
 
-                        if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
+
+                        var StructureSourceBuf = new List<int>();
+                        bool test = true;
+                        int selectCombo = 0;
+                        int selectComboNext = 0;
+
+                        var bufSave = new ObservableCollection<LegPartDbStructure>();
+                        bufSave = LegSections[section.ListNumber].StructureSource;
+
+                        LegSections[section.ListNumber].StructureSource = new ObservableCollection<LegPartDbStructure>(base.Data.SFSHips.LevelStructures(LegSections[section.ListNumber].ListNumber).ToList());
+
+                        foreach (var variant in bufSave)
                         {
-                            LegSections[section.ListNumber].StructureSource.Add(variant);
-                        }
-                        else if (variant.Text1 == "" && variant.Text2 == "")
-                        { LegSections[section.ListNumber].StructureSource.Add(variant); }
+
+                            if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
+                            {
+                                LegSections[section.ListNumber].StructureSource.Add(variant);
+                            }
+                            else if (variant.Text1 == "" && variant.Text2 == "")
+                            { LegSections[section.ListNumber].StructureSource.Add(variant); }
 
 
-                    }
-                    foreach (var structure in LegSections[section.ListNumber].StructureSource)
-                    {
-                        structure.Metrics = Data.Metrics.GetStr(structure.Size);
-                    }
-                    // StructureSource = new ObservableCollection<LegPartDbStructure>();
-                    foreach (var Combo in Data.SFSCombos.GetAll)
-                    {
-                        if (section.ListNumber == 1)
-                        {
-                            try
-                            {
-                                selectCombo = Combo.IdStr1;
-                                selectComboNext = Combo.IdStr2.Value;
-                            }
-                            catch { continue; }
                         }
-                        if (section.ListNumber == 2)
+                        foreach (var structure in LegSections[section.ListNumber].StructureSource)
                         {
-                            try
-                            {
-                                selectCombo = Combo.IdStr2.Value;
-                                selectComboNext = Combo.IdStr3.Value;
-                            }
-                            catch { continue; }
+                            structure.Metrics = Data.Metrics.GetStr(structure.Size);
                         }
-                        else if (section.ListNumber == 3)
+                        // StructureSource = new ObservableCollection<LegPartDbStructure>();
+                        foreach (var Combo in Data.SFSCombos.GetAll)
                         {
-                            try
+                            if (section.ListNumber == 1)
                             {
-                                selectCombo = Combo.IdStr3.Value;
-                                selectComboNext = Combo.IdStr4.Value;
+                                try
+                                {
+                                    selectCombo = Combo.IdStr1;
+                                    selectComboNext = Combo.IdStr2.Value;
+                                }
+                                catch { continue; }
                             }
-                            catch { continue; }
-                        }
-                        else if (section.ListNumber == 4)
-                        {
-                            try
+                            if (section.ListNumber == 2)
                             {
-                                selectCombo = Combo.IdStr4.Value;
-                                selectComboNext = Combo.IdStr5.Value;
+                                try
+                                {
+                                    selectCombo = Combo.IdStr2.Value;
+                                    selectComboNext = Combo.IdStr3.Value;
+                                }
+                                catch { continue; }
                             }
-                            catch { continue; }
-                        }
-                        else if (section.ListNumber == 5)
-                        {
-                            try
+                            else if (section.ListNumber == 3)
                             {
-                                selectCombo = Combo.IdStr5.Value;
-                                selectComboNext = Combo.IdStr6.Value;
+                                try
+                                {
+                                    selectCombo = Combo.IdStr3.Value;
+                                    selectComboNext = Combo.IdStr4.Value;
+                                }
+                                catch { continue; }
                             }
-                            catch { continue; }
-                        }
+                            else if (section.ListNumber == 4)
+                            {
+                                try
+                                {
+                                    selectCombo = Combo.IdStr4.Value;
+                                    selectComboNext = Combo.IdStr5.Value;
+                                }
+                                catch { continue; }
+                            }
+                            else if (section.ListNumber == 5)
+                            {
+                                try
+                                {
+                                    selectCombo = Combo.IdStr5.Value;
+                                    selectComboNext = Combo.IdStr6.Value;
+                                }
+                                catch { continue; }
+                            }
 
 
 
-                        if (section.SelectedValue.Id == selectCombo)
+                            if (section.SelectedValue.Id == selectCombo)
+                            {
+                                test = true;
+
+                                foreach (var bufId in StructureSourceBuf)
+                                {
+
+                                    if (bufId == selectComboNext)
+                                    {
+                                        test = false;
+                                        break;
+                                    }
+
+                                }
+                                if (test)
+                                {
+                                    StructureSourceBuf.Add(selectComboNext);
+                                }
+
+
+                            }
+
+
+                        }
+
+                        List<LegPartDbStructure> buf = LegSections[section.ListNumber].StructureSource.ToList();
+                        foreach (var variant in buf)
                         {
                             test = true;
-
                             foreach (var bufId in StructureSourceBuf)
                             {
 
-                                if (bufId == selectComboNext)
+                                if (bufId == variant.Id)
                                 {
                                     test = false;
                                     break;
                                 }
 
                             }
-                            if (test)
+                            if (variant.Text1 != "" && variant.Text2 != "")
                             {
-                                StructureSourceBuf.Add(selectComboNext);
+                                if (test && variant.Text1 != "Свой вариант ответа" && variant.Text1 != "Переход к следующему разделу")
+                                {
+                                    LegSections[section.ListNumber].StructureSource.Remove(variant);
+                                }
                             }
 
 
                         }
-
 
                     }
-
-                    List<LegPartDbStructure> buf = LegSections[section.ListNumber].StructureSource.ToList();
-                    foreach (var variant in buf)
-                    {
-                        test = true;
-                        foreach (var bufId in StructureSourceBuf)
-                        {
-
-                            if (bufId == variant.Id)
-                            {
-                                test = false;
-                                break;
-                            }
-
-                        }
-                        if (variant.Text1 != "" && variant.Text2 != "")
-                        {
-                            if (test && variant.Text1 != "Свой вариант ответа" && variant.Text1 != "Переход к следующему разделу")
-                            {
-                                LegSections[section.ListNumber].StructureSource.Remove(variant);
-                            }
-                        }
-
-
-                    }
-
                 }
             }
-
         }
 
 
@@ -212,7 +214,7 @@ namespace WpfApp2.LegParts.VMs
                     var newStruct = GetPanelStructure();
                     newStruct.Custom = false;
                     Data.SFSHips.Add((SFSHipStructure)newStruct);
-
+                    Data.Complete();
                     _lastSender.StructureSource.Add(newStruct);
                     _lastSender.SelectedValue = newStruct;
                     CurrentPanelViewModel.PanelOpened = false;
@@ -238,7 +240,7 @@ namespace WpfApp2.LegParts.VMs
                          { test = false; }
                          if (leg.HasDoubleSize && leg.CurrentEntry.Size2 == 0)
                          { test = false; }
-                       
+
                      }
                      if (test)
                      {
@@ -283,6 +285,7 @@ namespace WpfApp2.LegParts.VMs
                              }
 
                              newCombo.IdStr1 = LegSections[0].SelectedValue.Id;
+                             //if()
                              //заполняем комбо
                              Data.SFSCombos.AddCombo(newCombo, ids);
                              Data.Complete();

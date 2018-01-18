@@ -202,8 +202,8 @@ namespace WpfApp2.LegParts.VMs
                     var newStruct = GetPanelStructure();
                     newStruct.Custom = false;
                     Data.BPVHips.Add((BPVHipStructure)newStruct);
-
-                    _lastSender.StructureSource.Add(newStruct);
+                    Data.Complete();
+                   _lastSender.StructureSource.Add(newStruct);
                     _lastSender.SelectedValue = newStruct;
                     CurrentPanelViewModel.PanelOpened = false;
                     handled = false;
