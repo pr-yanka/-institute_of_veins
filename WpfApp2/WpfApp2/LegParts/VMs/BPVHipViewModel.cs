@@ -43,6 +43,17 @@ namespace WpfApp2.LegParts.VMs
 
 
                 }
+                else if (section.SelectedValue != null && section.SelectedValue.Text1 == "Переход к следующему разделу")
+                {
+                    for (int i = section.ListNumber; i < LegSections.Count; i++)
+                    {
+
+                        LegSections[i].SelectedValue = null;
+                    }
+
+                    if (section.ListNumber - 1 == 0)
+                    { IsEmpty = true; }
+                }
                 else if (section.SelectedValue != null)
                 {
 
@@ -158,9 +169,12 @@ namespace WpfApp2.LegParts.VMs
                                 }
 
                             }
-                            if (variant.Text1 != "" && variant.Text2 != "")
+                            if (test && variant.Text1 != "Свой вариант ответа" && variant.Text1 != "Переход к следующему разделу")
                             {
-                                if (test && variant.Text1 != "Свой вариант ответа" && variant.Text1 != "Переход к следующему разделу")
+                                if (variant.Text1 == "" && variant.Text2 == "")
+                                {
+                                }
+                                else
                                 {
                                     LegSections[section.ListNumber].StructureSource.Remove(variant);
                                 }
@@ -175,7 +189,34 @@ namespace WpfApp2.LegParts.VMs
             }
         }
 
-        
+        private void RebuildFirst(object sender, object data)
+        {
+
+
+            var bufSave = new ObservableCollection<LegPartDbStructure>();
+            bufSave = LegSections[0].StructureSource;
+
+            LegSections[0].StructureSource = new ObservableCollection<LegPartDbStructure>(base.Data.BPVHips.LevelStructures(1).ToList());
+
+            foreach (var variant in bufSave)
+            {
+
+                if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
+                {
+                    LegSections[0].StructureSource.Add(variant);
+                }
+                else if (variant.Text1 == "" && variant.Text2 == "")
+                { LegSections[0].StructureSource.Add(variant); }
+
+
+            }
+            foreach (var structure in LegSections[0].StructureSource)
+            {
+                structure.Metrics = Data.Metrics.GetStr(structure.Size);
+            }
+
+
+        }
 
         private List<LegSectionViewModel> _sections;
         public override List<LegSectionViewModel> LegSections
@@ -188,6 +229,7 @@ namespace WpfApp2.LegParts.VMs
 
         public void Initialize()
         {
+            MessageBus.Default.Subscribe("RebuildFirstBPV", RebuildFirst);
             MessageBus.Default.Subscribe("RebuildLegSectionViewModel", Rebuild);
             BpvWayType = new List<BPVHipWay>();
            
@@ -259,16 +301,16 @@ namespace WpfApp2.LegParts.VMs
                                   //потому что переход к след.разделу в комбо добавлять не надо, это излишняя информация
                                   && !currentStructure.ToNextPart)
                                    {
-                                       currentStructure.Level = i + 1;
-                                       Data.BPVHips.Add((BPVHipStructure)currentStructure);
-                                       Data.Complete();
-                                       ((BPVHipEntry)LegSections[i].CurrentEntry).Structure = (BPVHipStructure)currentStructure;
-                                       (LegSections[i].CurrentEntry).StructureID = currentStructure.Id;
-                                       Data.BPVHipEntries.Add((BPVHipEntry)LegSections[i].CurrentEntry);
-                                       Data.Complete();
-                                       if (i == 0) newCombo.IdStr1 = currentStructure.Id;
-                                       //там гда раньше был ноль теперь будет актуальный айдишник
-                                       else ids[i - 2] = currentStructure.Id;
+                                       //currentStructure.Level = i + 1;
+                                       //Data.BPVHips.Add((BPVHipStructure)currentStructure);
+                                       //Data.Complete();
+                                       //((BPVHipEntry)LegSections[i].CurrentEntry).Structure = (BPVHipStructure)currentStructure;
+                                       //(LegSections[i].CurrentEntry).StructureID = currentStructure.Id;
+                                       //Data.BPVHipEntries.Add((BPVHipEntry)LegSections[i].CurrentEntry);
+                                       //Data.Complete();
+                                       //if (i == 0) newCombo.IdStr1 = currentStructure.Id;
+                                       ////там гда раньше был ноль теперь будет актуальный айдишник
+                                       //else ids[i - 2] = currentStructure.Id;
                                    }
                                }
 
@@ -276,6 +318,12 @@ namespace WpfApp2.LegParts.VMs
                                //заполняем комбо
                                Data.BPVCombos.AddCombo(newCombo, ids);
                                Data.Complete();
+                               MessageBus.Default.Call("RebuildFirstBPV", this, LegSections[0]);
+                               MessageBus.Default.Call("RebuildLegSectionViewModel", this, LegSections[0]);
+                               MessageBus.Default.Call("RebuildLegSectionViewModel", this, LegSections[1]);
+                               MessageBus.Default.Call("RebuildLegSectionViewModel", this, LegSections[2]);
+                               MessageBus.Default.Call("RebuildLegSectionViewModel", this, LegSections[3]);
+                               MessageBus.Default.Call("RebuildLegSectionViewModel", this, LegSections[4]);
                            }
 
                            MessageBus.Default.Call("LegDataSaved", this, this.GetType());

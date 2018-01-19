@@ -472,6 +472,7 @@ namespace WpfApp2.ViewModels
             ToLeftBPVHipCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("RebuildFirstBPV", this, this);
                     Controller.LegViewModel = LeftBPVHip;
                     Controller.NavigateTo<BPVHipViewModel>(LegSide.Left);
                 }
@@ -480,6 +481,7 @@ namespace WpfApp2.ViewModels
             ToRightBPVHipCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("RebuildFirstBPV", this, this);
                     Controller.LegViewModel = RightBPVHip;
                     Controller.NavigateTo<BPVHipViewModel>(LegSide.Right);
                 }
@@ -537,6 +539,7 @@ namespace WpfApp2.ViewModels
             ToLeftPDSVCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("RebuildFirstPDSV", this, this);
                     Controller.LegViewModel = LeftPDSV;
                     Controller.NavigateTo<PDSVViewModel>(LegSide.Left);
                 }
@@ -545,6 +548,7 @@ namespace WpfApp2.ViewModels
             ToRightPDSVCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("RebuildFirstPDSV", this, this);
                     Controller.LegViewModel = RightPDSV;
                     Controller.NavigateTo<PDSVViewModel>(LegSide.Right);
                 }
@@ -561,6 +565,7 @@ namespace WpfApp2.ViewModels
             ToLeftSFSCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("RebuildFirstSFS", this, this);
                     Controller.LegViewModel = LeftSFS;
                     Controller.NavigateTo<SFSViewModel>(LegSide.Left);
                 }
@@ -569,6 +574,7 @@ namespace WpfApp2.ViewModels
             ToRightSFSCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("RebuildFirstSFS", this, this);
                     Controller.LegViewModel = RightSFS;
                     Controller.NavigateTo<SFSViewModel>(LegSide.Right);
                 }
