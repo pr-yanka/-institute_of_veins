@@ -5,17 +5,21 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WpfApp2.Db.Models.SPS;
 
 namespace WpfApp2.Db.Models
 {
     public class MySqlContext : DbContext
     {
 
+        public DbSet<Perforate_shinStructure> Perforate_shin { get; set; }
+        public DbSet<Perforate_shinCombo> Perforate_shinCombos { get; set; }
+        public DbSet<Perforate_shinEntry> Perforate_shinEntries { get; set; }
 
 
-
-
-
+        public DbSet<SPSHipStructure> SPS { get; set; }
+        public DbSet<SPSHipCombo> SPSHipCombo { get; set; }
+        public DbSet<SPSHipEntry> SPSHipEntry { get; set; }
 
 
 
@@ -113,6 +117,77 @@ namespace WpfApp2.Db.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+
+
+
+            modelBuilder.Entity<SPSHipCombo>()
+              .HasRequired<SPSHipStructure>(s => s.Str1).WithMany(g => g.SPSs1).HasForeignKey<int>(s => s.IdStr1);
+
+            modelBuilder.Entity<SPSHipCombo>()
+                .HasOptional<SPSHipStructure>(s => s.Str2).WithMany(g => g.SPSs2).HasForeignKey<int?>(s => s.IdStr2);
+
+            modelBuilder.Entity<SPSHipCombo>()
+                .HasOptional<SPSHipStructure>(s => s.Str3).WithMany(g => g.SPSs3).HasForeignKey<int?>(s => s.IdStr3);
+
+
+            modelBuilder.Entity<SPSHipEntry>()
+                .HasRequired<SPSHipStructure>(s => s.Structure).WithMany(g => g.Entries).HasForeignKey<int>(s => s.StructureID);
+
+
+            modelBuilder.Entity<SPSHipEntryFull>()
+            .HasRequired<SPSHipEntry>(s => s.SPSHipEntry1).WithMany(g => g.EntriesFull1).HasForeignKey<int>(s => s.EntryId1);
+
+            modelBuilder.Entity<SPSHipEntryFull>()
+            .HasRequired<SPSHipEntry>(s => s.SPSHipEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int>(s => s.EntryId2);
+
+            modelBuilder.Entity<SPSHipEntryFull>()
+            .HasRequired<SPSHipEntry>(s => s.SPSHipEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int>(s => s.EntryId3);
+
+
+
+
+
+            modelBuilder.Entity<Perforate_shinCombo>()
+            .HasRequired<Perforate_shinStructure>(s => s.Str1).WithMany(g => g.BPVs1).HasForeignKey<int>(s => s.IdStr1);
+
+            modelBuilder.Entity<Perforate_shinCombo>()
+                .HasOptional<Perforate_shinStructure>(s => s.Str2).WithMany(g => g.BPVs2).HasForeignKey<int?>(s => s.IdStr2);
+
+            modelBuilder.Entity<Perforate_shinCombo>()
+                .HasOptional<Perforate_shinStructure>(s => s.Str3).WithMany(g => g.BPVs3).HasForeignKey<int?>(s => s.IdStr3);
+
+            modelBuilder.Entity<Perforate_shinCombo>()
+                .HasOptional<Perforate_shinStructure>(s => s.Str4).WithMany(g => g.BPVs4).HasForeignKey<int?>(s => s.IdStr4);
+
+            modelBuilder.Entity<Perforate_shinCombo>()
+                .HasOptional<Perforate_shinStructure>(s => s.Str5).WithMany(g => g.BPVs5).HasForeignKey<int?>(s => s.IdStr5);
+
+            modelBuilder.Entity<Perforate_shinEntry>()
+                .HasRequired<Perforate_shinStructure>(s => s.Structure).WithMany(g => g.Entries).HasForeignKey<int>(s => s.StructureID);
+
+
+            modelBuilder.Entity<Perforate_shinEntryFull>()
+            .HasRequired<Perforate_shinEntry>(s => s.Perforate_shinEntry1).WithMany(g => g.EntriesFull1).HasForeignKey<int>(s => s.EntryId1);
+            modelBuilder.Entity<Perforate_shinEntryFull>()
+            .HasRequired<Perforate_shinEntry>(s => s.Perforate_shinEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int>(s => s.EntryId2);
+
+            modelBuilder.Entity<Perforate_shinEntryFull>()
+            .HasRequired<Perforate_shinEntry>(s => s.Perforate_shinEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int>(s => s.EntryId3);
+
+            modelBuilder.Entity<Perforate_shinEntryFull>()
+            .HasRequired<Perforate_shinEntry>(s => s.Perforate_shinEntry4).WithMany(g => g.EntriesFull4).HasForeignKey<int>(s => s.EntryId4);
+
+            modelBuilder.Entity<Perforate_shinEntryFull>()
+            .HasRequired<Perforate_shinEntry>(s => s.Perforate_shinEntry5).WithMany(g => g.EntriesFull5).HasForeignKey<int>(s => s.EntryId5);
+
+
+
+
+
+
+
+
+
             modelBuilder.Entity<Perforate_hipCombo>()
               .HasRequired<Perforate_hipStructure>(s => s.Str1).WithMany(g => g.BPVs1).HasForeignKey<int>(s => s.IdStr1);
 

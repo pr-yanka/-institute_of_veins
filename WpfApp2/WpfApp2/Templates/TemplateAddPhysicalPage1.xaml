@@ -156,9 +156,15 @@
                                     <Button x:Name="buttonPerforateTibia1" Command="{Binding ToLeftTibiaPerforateCommand}" Content="{Binding Path=LeftTibiaPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
                                 </StackPanel>
                             </Expander.Header>
+                            
                             <StackPanel Orientation="Vertical">
+                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_shinLeftstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_shinLeftstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_shinLeftstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_shinLeftstr[3]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinleft[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_shinLeftstr[4]}"></TextBlock>
 
-                            </StackPanel>
+                        </StackPanel>
                         </Expander>
                         <Separator/>
 
@@ -170,8 +176,11 @@
                                 </StackPanel>
                             </Expander.Header>
                             <StackPanel Orientation="Vertical">
+                            <TextBlock Visibility="{Binding IsVisibleSPSleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SPSLeftstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSPSleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SPSLeftstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSPSleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SPSLeftstr[2]}"></TextBlock>
 
-                            </StackPanel>
+                        </StackPanel>
                         </Expander>
                         <Separator/>
 
@@ -296,8 +305,6 @@
                         </StackPanel>
                         </Expander>
                         <Separator/>
-                    <Separator/>
-
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
@@ -313,16 +320,51 @@
                             <TextBlock Visibility="{Binding IsVisibleBPV_Tibiaright[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BPV_TibiaRightstr[3]}"></TextBlock>
 
                         </StackPanel>
+                    
+                    </Expander>
+                    
+                    <Separator/>
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="VII. Перфоранты голени*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttondPeвrforate2" Command="{Binding ToRightTibiaPerforateCommand}" Content="{Binding Path=RightTibiaPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+
+                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_shinRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_shinRightstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_shinRightstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinRight[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_shinRightstr[3]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinRight[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_shinRightstr[3]}"></TextBlock>
+
+                        </StackPanel>
+
+                    </Expander>
+                    <Separator/>
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="VIII. СПС (Сафено-поплитеальное соустье)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttdondPeвrforate2" Command="{Binding ToRightSPSCommand}" Content="{Binding Path=RightSPS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+
+                            <TextBlock Visibility="{Binding IsVisibleSPSRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SPSRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSPSRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SPSRightstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSPSRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SPSRightstr[2]}"></TextBlock>
+                           
+                        </StackPanel>
+
                     </Expander>
                     <Separator/>
                     <Separator Margin="10,0,10,0"/>
                    
+                        
                         <Separator Margin="10,0,10,0"/>
-                        <Expander Header="VII. Перфоранты голени*" FontSize="12">
-                            <Grid Background="#FFE5E5E5"/>
-                        </Expander>
-                        <Separator Margin="10,0,10,0"/>
-                        <Expander Header="VIII. СПС (Сафено-поплитеальное соустье)" FontSize="12">
+                        <Expander Header="" FontSize="12">
                             <Grid Background="#FFE5E5E5"/>
                         </Expander>
                         <Separator Margin="10,0,10,0"/>

@@ -50,7 +50,7 @@ namespace WpfApp2.LegParts
 
         public SizePanelViewModel(ViewModelBase parentVM) : base(parentVM.Controller)
         {
-           
+
 
             ClickOnAutoComplete = new DelegateCommand<object>(
              (sender) =>
@@ -93,7 +93,8 @@ namespace WpfApp2.LegParts
         private bool _hasSize;
         public bool HasSize
         {
-            get {
+            get
+            {
                 return _hasSize;
             }
             set
@@ -138,7 +139,7 @@ namespace WpfApp2.LegParts
                 OnPropertyChanged();
             }
         }
-     
+
 
         private string _selectedMetricText;
         public string SelectedMetricText

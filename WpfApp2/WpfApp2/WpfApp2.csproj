@@ -209,6 +209,10 @@
     <Compile Include="Db\Models\LegParts\PDSV\PDSVHip.cs" />
     <Compile Include="Db\Models\LegParts\PDSV\PDSVHipEntryRepository.cs" />
     <Compile Include="Db\Models\LegParts\PDSV\PDSVHipRepository.cs" />
+    <Compile Include="Db\Models\LegParts\Perforate_shin\Perforate_shin.cs" />
+    <Compile Include="Db\Models\LegParts\Perforate_shin\Perforate_shinComboRepository.cs" />
+    <Compile Include="Db\Models\LegParts\Perforate_shin\Perforate_shinEntryRepository.cs" />
+    <Compile Include="Db\Models\LegParts\Perforate_shin\Perforate_shinRepository.cs" />
     <Compile Include="Db\Models\LegParts\Perforate_hip\Perforate_hip.cs" />
     <Compile Include="Db\Models\LegParts\Perforate_hip\Perforate_hipComboRepository.cs" />
     <Compile Include="Db\Models\LegParts\Perforate_hip\Perforate_hipEntryRepository.cs" />
@@ -217,6 +221,9 @@
     <Compile Include="Db\Models\LegParts\SFSHip\SFSHip.cs" />
     <Compile Include="Db\Models\LegParts\SFSHip\SFSHipEntryRepository.cs" />
     <Compile Include="Db\Models\LegParts\SFSHip\SFSHipRepository.cs" />
+    <Compile Include="Db\Models\LegParts\SPS\SPSComboRepository.cs" />
+    <Compile Include="Db\Models\LegParts\SPS\SPSHipEntryRepository.cs" />
+    <Compile Include="Db\Models\LegParts\SPS\SPSHipRepository.cs" />
     <Compile Include="Db\Models\LegParts\ZDSV\ZDSVComboRepository.cs" />
     <Compile Include="Db\Models\LegParts\ZDSV\ZDSV.cs" />
     <Compile Include="Db\Models\LegParts\ZDSV\ZDSVEntryRepository.cs" />

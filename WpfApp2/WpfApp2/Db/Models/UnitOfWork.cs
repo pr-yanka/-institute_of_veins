@@ -10,7 +10,10 @@ using WpfApp2.Db.Models.LegParts.BPVHip;
 using WpfApp2.Db.Models.LegParts.PDSVHip;
 using WpfApp2.Db.Models.LegParts.Perforate_hip;
 using WpfApp2.Db.Models.LegParts.Perforate_hip_Tibia;
+using WpfApp2.Db.Models.LegParts.Perforate_shin;
+using WpfApp2.Db.Models.LegParts.Perforate_shin_Tibia;
 using WpfApp2.Db.Models.LegParts.SFSHip;
+using WpfApp2.Db.Models.LegParts.SPSHip;
 using WpfApp2.Db.Models.LegParts.ZDSV;
 
 namespace WpfApp2.Db.Models
@@ -18,7 +21,14 @@ namespace WpfApp2.Db.Models
     public class UnitOfWork : IUnitOfWork
     {
 
+        public Perforate_shinRepository Perforate_shin { get; }
+        public Perforate_shinComboRepository Perforate_shinCombos { get; }
+        public Perforate_shinEntryRepository Perforate_shinEntries { get; }
 
+
+        public SPSHipRepository SPS { get; }
+        public SPSComboRepository SPSCombos { get; }
+        public SPSHipEntryRepository SPSEntries { get; }
 
 
 
@@ -108,7 +118,12 @@ namespace WpfApp2.Db.Models
         {
             _context = context;
 
-
+            Perforate_shin = new Perforate_shinRepository(_context);
+            Perforate_shinCombos = new Perforate_shinComboRepository(_context);
+            Perforate_shinEntries = new Perforate_shinEntryRepository(_context);
+            SPS = new SPSHipRepository(_context);
+            SPSCombos = new SPSComboRepository(_context);
+            SPSEntries = new SPSHipEntryRepository(_context);
 
 
 
@@ -121,7 +136,7 @@ namespace WpfApp2.Db.Models
             BPV_TibiaCombos = new BPV_TibiaComboRepository(_context);
             BPV_TibiaEntries = new BPV_TibiaEntryRepository(_context);
             Perforate_hip = new Perforate_hipRepository(_context);
-            Perforate_hipCombos = new    Perforate_hipComboRepository(_context);
+            Perforate_hipCombos = new Perforate_hipComboRepository(_context);
             Perforate_hipEntries = new Perforate_hipEntryRepository(_context);
             ZDSV = new ZDSVRepository(_context);
             ZDSVCombos = new ZDSVComboRepository(_context);

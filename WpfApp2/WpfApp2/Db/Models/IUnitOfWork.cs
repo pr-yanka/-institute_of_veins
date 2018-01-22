@@ -10,13 +10,25 @@ using WpfApp2.Db.Models.LegParts.BPVHip;
 using WpfApp2.Db.Models.LegParts.PDSVHip;
 using WpfApp2.Db.Models.LegParts.Perforate_hip;
 using WpfApp2.Db.Models.LegParts.Perforate_hip_Tibia;
+using WpfApp2.Db.Models.LegParts.Perforate_shin;
+using WpfApp2.Db.Models.LegParts.Perforate_shin_Tibia;
 using WpfApp2.Db.Models.LegParts.SFSHip;
+using WpfApp2.Db.Models.LegParts.SPSHip;
 using WpfApp2.Db.Models.LegParts.ZDSV;
 
 namespace WpfApp2.Db.Models
 {
     public interface IUnitOfWork : IDisposable
     {
+
+        Perforate_shinRepository Perforate_shin { get; }
+        Perforate_shinComboRepository Perforate_shinCombos { get; }
+        Perforate_shinEntryRepository Perforate_shinEntries { get; }
+
+
+        SPSHipRepository SPS { get; }
+        SPSComboRepository SPSCombos { get; }
+        SPSHipEntryRepository SPSEntries { get; }
 
         BPV_TibiaRepository BPV_Tibia { get; }
         BPV_TibiaComboRepository BPV_TibiaCombos { get; }

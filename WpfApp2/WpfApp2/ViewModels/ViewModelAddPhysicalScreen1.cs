@@ -14,6 +14,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using WpfApp2.Db.Models.LegParts;
+using WpfApp2.Db.Models.SPS;
 
 namespace WpfApp2.ViewModels
 {
@@ -29,7 +30,66 @@ namespace WpfApp2.ViewModels
 
 
 
+        #region Perforate_shin binds
 
+        private ObservableCollection<Visibility> _isVisiblePerforate_shinleft;
+        public ObservableCollection<Visibility> IsVisiblePerforate_shinleft
+        {
+            get
+            {
+                return _isVisiblePerforate_shinleft;
+            }
+            set
+            {
+                _isVisiblePerforate_shinleft = value;
+                OnPropertyChanged();
+            }
+        }
+        private ObservableCollection<Visibility> _isVisiblePerforate_shinRight;
+        public ObservableCollection<Visibility> IsVisiblePerforate_shinRight
+        {
+            get
+            {
+                return _isVisiblePerforate_shinRight;
+            }
+            set
+            {
+                _isVisiblePerforate_shinRight = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<string> Perforate_shinLeftstr
+        {
+            get
+            {
+                return _Perforate_shinLeftstr;
+            }
+            set
+            {
+                _Perforate_shinLeftstr = value;
+                OnPropertyChanged();
+            }
+        }
+        public List<string> Perforate_shinRightstr
+        {
+            get
+            {
+                return _Perforate_shinRightstr;
+            }
+            set
+            {
+                _Perforate_shinRightstr = value;
+                OnPropertyChanged();
+            }
+        }
+        public Perforate_shinEntryFull RightPerforate_shinEntryFull { get; private set; }
+        public Perforate_shinEntryFull LeftPerforate_shinEntryFull { get; private set; }
+
+        private List<string> _Perforate_shinRightstr;
+        private List<string> _Perforate_shinLeftstr;
+
+        #endregion
 
         #region BPV_Tibia binds
         public BPV_TibiaEntryFull RightBPV_TibiaEntryFull { get; private set; }
@@ -89,6 +149,68 @@ namespace WpfApp2.ViewModels
         }
 
         #endregion
+
+        #region SPS binds
+
+        private ObservableCollection<Visibility> _isVisibleSPSleft;
+        public ObservableCollection<Visibility> IsVisibleSPSleft
+        {
+            get
+            {
+                return _isVisibleSPSleft;
+            }
+            set
+            {
+                _isVisibleSPSleft = value;
+                OnPropertyChanged();
+            }
+        }
+        private ObservableCollection<Visibility> _isVisibleSPSRight;
+        public ObservableCollection<Visibility> IsVisibleSPSRight
+        {
+            get
+            {
+                return _isVisibleSPSRight;
+            }
+            set
+            {
+                _isVisibleSPSRight = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<string> SPSLeftstr
+        {
+            get
+            {
+                return _SPSLeftstr;
+            }
+            set
+            {
+                _SPSLeftstr = value;
+                OnPropertyChanged();
+            }
+        }
+        public List<string> SPSRightstr
+        {
+            get
+            {
+                return _SPSRightstr;
+            }
+            set
+            {
+                _SPSRightstr = value;
+                OnPropertyChanged();
+            }
+        }
+        public SPSHipEntryFull RightSPSEntryFull { get; private set; }
+        public SPSHipEntryFull LeftSPSEntryFull { get; private set; }
+
+        private List<string> _SPSRightstr;
+        private List<string> _SPSLeftstr;
+
+        #endregion
+
         #region SFS binds
 
         private ObservableCollection<Visibility> _isVisibleSFSleft;
@@ -149,6 +271,7 @@ namespace WpfApp2.ViewModels
         private List<string> _sfsLeftstr;
 
         #endregion
+
         #region PDsV binds
         public PDSVHipEntryFull RightPDSVEntryFull { get; private set; }
         public PDSVHipEntryFull LeftPDSVEntryFull { get; private set; }
@@ -555,6 +678,10 @@ namespace WpfApp2.ViewModels
         }
         public ViewModelAddPhysical(NavigationController controller) : base(controller)
         {
+            Perforate_shinLeftstr = new List<string>();
+            Perforate_shinRightstr = new List<string>();
+            SPSLeftstr = new List<string>();
+            SPSRightstr = new List<string>();
 
             PDSVLeftstr = new List<string>();
             PDSVRightstr = new List<string>();
@@ -571,6 +698,29 @@ namespace WpfApp2.ViewModels
             BPV_TibiaRightstr = new List<string>();
 
             var IsVisibleBPVleftBuf = new ObservableCollection<Visibility>();
+
+            //
+            IsVisiblePerforate_shinleft = new ObservableCollection<Visibility>();
+            IsVisiblePerforate_shinRight = new ObservableCollection<Visibility>();
+            IsVisibleSPSleft = new ObservableCollection<Visibility>();
+            IsVisibleSPSRight = new ObservableCollection<Visibility>();
+            //
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisiblePerforate_shinleft.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisiblePerforate_shinRight.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleSPSleft.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleSPSRight.Add(Visibility.Collapsed);
+            }
             //
             IsVisibleBPV_Tibialeft = new ObservableCollection<Visibility>();
             IsVisibleBPV_Tibiaright = new ObservableCollection<Visibility>();
@@ -820,6 +970,9 @@ namespace WpfApp2.ViewModels
 
             LeftSPS = new SPSViewModel(Controller, LegSide.Left);
             RightSPS = new SPSViewModel(Controller, LegSide.Right);
+
+            Controller.AddLegPartVM(LeftSPS);
+            Controller.AddLegPartVM(RightSPS);
             IMTCOUNT = new DelegateCommand(
             () =>
             {
@@ -829,16 +982,18 @@ namespace WpfApp2.ViewModels
             ToLeftSPSCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("RebuildFirstSPS", this, this);
                     Controller.LegViewModel = LeftSPS;
-                    Controller.NavigateTo<LegPartViewModel>();
+                    Controller.NavigateTo<SPSViewModel>(LegSide.Left);
                 }
             );
 
             ToRightSPSCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("RebuildFirstSPS", this, this);
                     Controller.LegViewModel = RightSPS;
-                    Controller.NavigateTo<LegPartViewModel>();
+                    Controller.NavigateTo<SPSViewModel>(LegSide.Right);
                 }
             );
 
@@ -846,20 +1001,23 @@ namespace WpfApp2.ViewModels
 
             LeftTibiaPerforate = new TibiaPerforateViewModel(Controller, LegSide.Left);
             RightTibiaPerforate = new TibiaPerforateViewModel(Controller, LegSide.Right);
-
+            Controller.AddLegPartVM(LeftTibiaPerforate);
+            Controller.AddLegPartVM(RightTibiaPerforate);
             ToLeftTibiaPerforateCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("RebuildFirstPerforateTibia", this, this);
                     Controller.LegViewModel = LeftTibiaPerforate;
-                    Controller.NavigateTo<LegPartViewModel>();
+                    Controller.NavigateTo<TibiaPerforateViewModel>(LegSide.Left);
                 }
             );
 
             ToRightTibiaPerforateCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("RebuildFirstPerforateTibia", this, this);
                     Controller.LegViewModel = RightTibiaPerforate;
-                    Controller.NavigateTo<LegPartViewModel>();
+                    Controller.NavigateTo<TibiaPerforateViewModel>(LegSide.Right);
                 }
             );
 
@@ -955,7 +1113,7 @@ namespace WpfApp2.ViewModels
         }
 
         private void SaveAll()
-        { 
+        {
             RightBPV_TibiaEntryFull = (BPV_TibiaEntryFull)SaveFullEntry(RightBPVTibia, RightBPV_TibiaEntryFull);
             LeftBPV_TibiaEntryFull = (BPV_TibiaEntryFull)SaveFullEntry(LeftBPVTibia, LeftBPV_TibiaEntryFull);
             RightPerforate_hipEntryFull = (Perforate_hipEntryFull)SaveFullEntry(RightPerforate, RightPerforate_hipEntryFull);
@@ -968,15 +1126,23 @@ namespace WpfApp2.ViewModels
             LeftBPVEntryFull = (BPVHipEntryFull)SaveFullEntry(LeftBPVHip, LeftBPVEntryFull);
             RightSFSEntryFull = (SFSHipEntryFull)SaveFullEntry(RightSFS, RightSFSEntryFull);
             LeftSFSEntryFull = (SFSHipEntryFull)SaveFullEntry(LeftSFS, LeftSFSEntryFull);
+
+            RightSPSEntryFull = (SPSHipEntryFull)SaveFullEntry(RightSPS, RightSPSEntryFull);
+            LeftSPSEntryFull = (SPSHipEntryFull)SaveFullEntry(LeftSPS, LeftSPSEntryFull);
+
+            RightPerforate_shinEntryFull = (Perforate_shinEntryFull)SaveFullEntry(RightTibiaPerforate, RightPerforate_shinEntryFull);
+            LeftPerforate_shinEntryFull = (Perforate_shinEntryFull)SaveFullEntry(LeftTibiaPerforate, LeftPerforate_shinEntryFull);
+
+
         }
 
         private LegPartEntries SaveFullEntry(LegPartViewModel Part, LegPartEntries FullEntry)
         {
-            
+
             LegPartEntries LeftSFSEntryFullbuf = FullEntry;
             foreach (var section in Part.LegSections)
             {
-                if(section.SelectedValue == null)
+                if (section.SelectedValue == null)
                 { continue; }
                 LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
                 newSFSentry.StructureID = section.SelectedValue.Id;
@@ -986,7 +1152,7 @@ namespace WpfApp2.ViewModels
                     Data.PDSVHipEntries.Add((PDSVHipEntry)newSFSentry);
                 }
                 else if (Part is SFSViewModel)
-                { 
+                {
                     Data.SFSHipEntries.Add((SFSHipEntry)newSFSentry);
                 }
                 else if (Part is BPVHipViewModel)
@@ -1005,7 +1171,16 @@ namespace WpfApp2.ViewModels
                 {
                     Data.ZDSVEntries.Add((ZDSVEntry)newSFSentry);
                 }
-              
+
+                else if (Part is SPSViewModel)
+                {
+                    Data.SPSEntries.Add((SPSHipEntry)newSFSentry);
+                }
+                else if (Part is TibiaPerforateViewModel)
+                {
+                    Data.Perforate_shinEntries.Add((Perforate_shinEntry)newSFSentry);
+                }
+
                 Data.Complete();
                 if (section.ListNumber == 1)
                 {
@@ -1038,7 +1213,7 @@ namespace WpfApp2.ViewModels
             }
             return LeftSFSEntryFullbuf;
         }
-        
+
 
         private SaveSet SaveViewModel(LegPartViewModel sender)
         {
@@ -1107,7 +1282,7 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(LeftSFS);
                     SFSLeftstr = result.stringList;
                     IsVisibleSFSleft = result.listVisibility;
-                    
+
                 }
 
                 else
@@ -1119,8 +1294,70 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(RightSFS);
                     SFSRightstr = result.stringList;
                     IsVisibleSFSRight = result.listVisibility;
-                  
+
                 }
+
+//
+
+
+            if (senderType == typeof(SPSViewModel))
+                if (senderVM.CurrentLegSide == LegSide.Left)
+                {
+                    SPSLeftstr = new List<string>();
+                    LeftSPSEntryFull = new SPSHipEntryFull();
+                    //to do тут должно быть сохранение
+                    LeftSPS = (SPSViewModel)sender;
+                    SaveSet result = SaveViewModel(LeftSPS);
+                    SPSLeftstr = result.stringList;
+                    IsVisibleSPSleft = result.listVisibility;
+
+                }
+
+                else
+                {
+                    SPSRightstr = new List<string>();
+                    RightSPSEntryFull = new SPSHipEntryFull();
+                    //to do тут должно быть сохранение
+                    RightSPS = (SPSViewModel)sender;
+                    SaveSet result = SaveViewModel(RightSPS);
+                    SPSRightstr = result.stringList;
+                    IsVisibleSPSRight = result.listVisibility;
+
+                }
+
+
+            if (senderType == typeof(TibiaPerforateViewModel))
+                if (senderVM.CurrentLegSide == LegSide.Left)
+                {
+                    Perforate_shinLeftstr = new List<string>();
+                    LeftPerforate_shinEntryFull = new Perforate_shinEntryFull();
+                    //to do тут должно быть сохранение
+                    LeftTibiaPerforate = (TibiaPerforateViewModel)sender;
+                    SaveSet result = SaveViewModel(LeftTibiaPerforate);
+                    Perforate_shinLeftstr = result.stringList;
+                    IsVisiblePerforate_shinleft = result.listVisibility;
+
+                }
+
+                else
+                {
+                    Perforate_shinRightstr = new List<string>();
+                    RightPerforate_shinEntryFull = new Perforate_shinEntryFull();
+                    //to do тут должно быть сохранение
+                    RightTibiaPerforate = (TibiaPerforateViewModel)sender;
+                    SaveSet result = SaveViewModel(RightTibiaPerforate);
+                    Perforate_shinRightstr = result.stringList;
+                    IsVisiblePerforate_shinRight = result.listVisibility;
+
+                }
+
+
+
+            //
+
+
+
+
             if (senderType == typeof(BPVHipViewModel))
                 if (senderVM.CurrentLegSide == LegSide.Left)
                 {
@@ -1130,7 +1367,7 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(LeftBPVHip);
                     BpvLeftstr = result.stringList;
                     IsVisibleBPVleft = result.listVisibility;
-                    
+
                 }
                 else
                 {
@@ -1140,7 +1377,7 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(RightBPVHip);
                     BpvRightstr = result.stringList;
                     IsVisibleBPVRight = result.listVisibility;
-                   
+
                 }
 
             if (senderType == typeof(PDSVViewModel))
@@ -1164,7 +1401,7 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(RightPDSV);
                     PDSVRightstr = result.stringList;
                     IsVisiblePDSVright = result.listVisibility;
-                  
+
                 }
 
             //
@@ -1177,7 +1414,7 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(LeftZDSV);
                     ZDSVLeftstr = result.stringList;
                     IsVisibleZDSVleft = result.listVisibility;
-                 
+
                 }
                 else
                 {
@@ -1187,7 +1424,7 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(RightZDSV);
                     ZDSVRightstr = result.stringList;
                     IsVisibleZDSVright = result.listVisibility;
-                  
+
                 }
             if (senderType == typeof(HipPerforateViewModel))
                 if (senderVM.CurrentLegSide == LegSide.Left)
@@ -1198,7 +1435,7 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(LeftPerforate);
                     Perforate_hipLeftstr = result.stringList;
                     IsVisiblePerforateHIPleft = result.listVisibility;
-                 
+
                 }
                 else
                 {
@@ -1208,7 +1445,7 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(RightPerforate);
                     Perforate_hipRightstr = result.stringList;
                     IsVisiblePerforateHIPright = result.listVisibility;
-                   
+
                 }
             if (senderType == typeof(BPVTibiaViewModel))
                 if (senderVM.CurrentLegSide == LegSide.Left)
@@ -1219,7 +1456,7 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(LeftBPVTibia);
                     BPV_TibiaLeftstr = result.stringList;
                     IsVisibleBPV_Tibialeft = result.listVisibility;
-                 
+
                 }
                 else
                 {
@@ -1229,7 +1466,7 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(RightBPVTibia);
                     BPV_TibiaRightstr = result.stringList;
                     IsVisibleBPV_Tibiaright = result.listVisibility;
-                    
+
                 }
             //
 
