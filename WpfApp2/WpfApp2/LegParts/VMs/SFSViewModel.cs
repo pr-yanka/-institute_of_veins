@@ -263,6 +263,7 @@ namespace WpfApp2.LegParts.VMs
                     newStruct.Custom = false;
                     Data.SFSHips.Add((SFSHipStructure)newStruct);
                     Data.Complete();
+                 
                     _lastSender.StructureSource.Add(newStruct);
                     _lastSender.SelectedValue = newStruct;
                     CurrentPanelViewModel.PanelOpened = false;

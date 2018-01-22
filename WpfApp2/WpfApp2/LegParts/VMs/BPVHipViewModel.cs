@@ -18,7 +18,7 @@ namespace WpfApp2.LegParts.VMs
 
         public List<BPVHipWay> BpvWayType { get; set; }
         public int SelectedBpvWayTypeId { get; set; }
-        public BPVHipWay SelectedBpvWayType { get; set; }
+    
 
 
         private void Rebuild(object sender, object data)

@@ -19,7 +19,7 @@ namespace WpfApp2.LegParts.VMs
 
         public List<PDSVHipWay> PDSVWayType { get; set; }
         public int? SelectedPDSVWayTypeId { get; set; }
-        public PDSVHipWay SelectedPDSVWayType { get; set; }
+      
 
         private void Rebuild(object sender, object data)
         {

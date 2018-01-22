@@ -108,6 +108,8 @@ namespace WpfApp2.Db.Models
 
         [Column("метрика")]
         public override float Size { get; set; }
+        [NotMapped]
+        public override float Size2 { get; set; }
 
         public virtual ZDSVStructure Structure { get; set; }
 
@@ -126,12 +128,12 @@ namespace WpfApp2.Db.Models
         public virtual ZDSVEntry ZDSVEntry2 { get; set; }
         public virtual ZDSVEntry ZDSVEntry3 { get; set; }
       
-        public int Id { get; set; }
+       
 
 
-        public int ZDSVEntryId1 { get; set; }
-        public int ZDSVEntryId2 { get; set; }
-        public int ZDSVEntryId3 { get; set; }
+        public override int EntryId1 { get; set; }
+        public override int EntryId2 { get; set; }
+        public override int EntryId3 { get; set; }
     
     }
 }

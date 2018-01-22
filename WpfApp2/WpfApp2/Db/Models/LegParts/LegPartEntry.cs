@@ -17,9 +17,11 @@ namespace WpfApp2.Db.Models.LegParts
         public int StructureID { get; set; }
         [Column("комментарий")]
         public string Comment { get; set; }
-        [NotMapped]
+
+
+        [Column("метрика1")]
         public virtual float Size { get; set; }
-        [NotMapped]
+        [Column("метрика2")]
         public virtual float Size2 { get; set; }
 
     }

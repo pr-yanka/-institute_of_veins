@@ -4,7 +4,7 @@
     <DataTemplate x:Key="BPVHipTemplate">
         <StackPanel Orientation="Vertical">
             <TextBlock x:Name="textBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Вид хода:" VerticalAlignment="Top" FontSize="16"/>
-            <ComboBox x:Name="comboBox" SelectedItem="{Binding SelectedBpvWayType}" SelectedIndex="{Binding SelectedBpvWayTypeId}" ItemsSource="{Binding BpvWayType}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="180">
+            <ComboBox x:Name="comboBox" SelectedItem="{Binding SelectedWayType}" SelectedIndex="{Binding SelectedBpvWayTypeId}" ItemsSource="{Binding BpvWayType}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="180">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">

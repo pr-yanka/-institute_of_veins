@@ -204,6 +204,7 @@
     <Compile Include="Db\Models\LegParts\BPV_Tibia\BPV_Tibia.cs" />
     <Compile Include="Db\Models\LegParts\BPV_Tibia\BPV_TibiaEntryRepository.cs" />
     <Compile Include="Db\Models\LegParts\BPV_Tibia\BPV_TibiaRepository.cs" />
+    <Compile Include="Db\Models\LegParts\da_Way.cs" />
     <Compile Include="Db\Models\LegParts\PDSV\PDSVComboRepository.cs" />
     <Compile Include="Db\Models\LegParts\PDSV\PDSVHip.cs" />
     <Compile Include="Db\Models\LegParts\PDSV\PDSVHipEntryRepository.cs" />

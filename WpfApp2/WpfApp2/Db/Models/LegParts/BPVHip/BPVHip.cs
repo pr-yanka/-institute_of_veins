@@ -117,6 +117,10 @@ namespace WpfApp2.Db.Models
 
         [Column("метрика")]
         public override float Size { get; set; }
+      
+        [NotMapped]
+        public override float Size2 { get; set; }
+       
 
         public virtual BPVHipStructure Structure { get; set; }
 
@@ -129,12 +133,9 @@ namespace WpfApp2.Db.Models
     }
 
     [Table("вид_БПВ_хода")]
-    public class BPVHipWay
+    public class BPVHipWay : da_Way
     {
-        [Column("id_вида"),Key]
-        public int Id { get; set; }
-        [Column("описание")]
-        public string Name { get; set; }
+      
         public virtual ICollection<BPVHipEntryFull> EntriesFull { get; set; } = new HashSet<BPVHipEntryFull>();
 
     }
@@ -148,14 +149,15 @@ namespace WpfApp2.Db.Models
         public virtual BPVHipEntry BPVHipEntry3 { get; set; }
         public virtual BPVHipEntry BPVHipEntry4 { get; set; }
         public virtual BPVHipEntry BPVHipEntry5 { get; set; }
-        public int Id { get; set; }
 
-        public int BPVHipWayID { get; set; }
+      
 
-        public int BPVHipEntryId1 { get; set; }
-        public int BPVHipEntryId2 { get; set; }
-        public int BPVHipEntryId3 { get; set; }
-        public int BPVHipEntryId4 { get; set; }
-        public int BPVHipEntryId5 { get; set; }
+        public override int WayID { get; set; }
+             
+        public override int EntryId1 { get; set; }
+        public override int EntryId2 { get; set; }
+        public override int EntryId3 { get; set; }
+        public override int EntryId4 { get; set; }
+        public override int EntryId5 { get; set; }
     }
 }

@@ -75,9 +75,9 @@ namespace WpfApp2.Db.Models
     {
         public virtual SFSHipStructure Structure { get; set; }
 
-        [Column("метрика1")]
+      
         public override float Size { get; set; }
-        [Column("метрика2")]
+     
         public override float Size2 { get; set; }
 
         public virtual ICollection<SFSHipEntryFull> EntriesFull1 { get; set; } = new HashSet<SFSHipEntryFull>();
@@ -101,14 +101,14 @@ namespace WpfApp2.Db.Models
         public virtual SFSHipEntry SFSHipEntry4 { get; set; }
         public virtual SFSHipEntry SFSHipEntry5 { get; set; }
         public virtual SFSHipEntry SFSHipEntry6 { get; set; }
-        public int Id { get; set; }
+   
       
 
-        public int SFSHipEntryId1 { get; set; }
-        public int SFSHipEntryId2 { get; set; }
-        public int SFSHipEntryId3 { get; set; }
-        public int SFSHipEntryId4 { get; set; }
-        public int SFSHipEntryId5 { get; set; }
-        public int SFSHipEntryId6 { get; set; }
+        public override int EntryId1 { get; set; }
+        public override int EntryId2 { get; set; }
+        public override int EntryId3 { get; set; }
+        public override int EntryId4 { get; set; }
+        public override int EntryId5 { get; set; }
+        public override int EntryId6 { get; set; }
     }
 }

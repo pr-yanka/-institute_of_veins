@@ -13,6 +13,7 @@ using WpfApp2.Db.Models;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
+using WpfApp2.Db.Models.LegParts;
 
 namespace WpfApp2.ViewModels
 {
@@ -742,7 +743,7 @@ namespace WpfApp2.ViewModels
             );
 
             //Бедро перфорант
-          
+
             LeftPerforate = new HipPerforateViewModel(Controller, LegSide.Left);
             RightPerforate = new HipPerforateViewModel(Controller, LegSide.Right);
             Controller.AddLegPartVM(LeftPerforate);
@@ -866,7 +867,7 @@ namespace WpfApp2.ViewModels
 
             LeftZDSV = new ZDSVViewModel(Controller, LegSide.Left);
             RightZDSV = new ZDSVViewModel(Controller, LegSide.Right);
-        
+
             Controller.AddLegPartVM(LeftZDSV);
             Controller.AddLegPartVM(RightZDSV);
 
@@ -953,6 +954,92 @@ namespace WpfApp2.ViewModels
             }
         }
 
+        private void SaveAll()
+        { 
+            RightBPV_TibiaEntryFull = (BPV_TibiaEntryFull)SaveFullEntry(RightBPVTibia, RightBPV_TibiaEntryFull);
+            LeftBPV_TibiaEntryFull = (BPV_TibiaEntryFull)SaveFullEntry(LeftBPVTibia, LeftBPV_TibiaEntryFull);
+            RightPerforate_hipEntryFull = (Perforate_hipEntryFull)SaveFullEntry(RightPerforate, RightPerforate_hipEntryFull);
+            LeftPerforate_hipEntryFull = (Perforate_hipEntryFull)SaveFullEntry(LeftPerforate, LeftPerforate_hipEntryFull);
+            RightZDSVEntryFull = (ZDSVEntryFull)SaveFullEntry(RightZDSV, RightZDSVEntryFull);
+            LeftZDSVEntryFull = (ZDSVEntryFull)SaveFullEntry(LeftZDSV, LeftZDSVEntryFull);
+            RightPDSVEntryFull = (PDSVHipEntryFull)SaveFullEntry(RightPDSV, RightPDSVEntryFull);
+            LeftPDSVEntryFull = (PDSVHipEntryFull)SaveFullEntry(LeftPDSV, LeftPDSVEntryFull);
+            RightBPVEntryFull = (BPVHipEntryFull)SaveFullEntry(RightBPVHip, RightBPVEntryFull);
+            LeftBPVEntryFull = (BPVHipEntryFull)SaveFullEntry(LeftBPVHip, LeftBPVEntryFull);
+            RightSFSEntryFull = (SFSHipEntryFull)SaveFullEntry(RightSFS, RightSFSEntryFull);
+            LeftSFSEntryFull = (SFSHipEntryFull)SaveFullEntry(LeftSFS, LeftSFSEntryFull);
+        }
+
+        private LegPartEntries SaveFullEntry(LegPartViewModel Part, LegPartEntries FullEntry)
+        {
+            
+            LegPartEntries LeftSFSEntryFullbuf = FullEntry;
+            foreach (var section in Part.LegSections)
+            {
+                if(section.SelectedValue == null)
+                { continue; }
+                LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                newSFSentry.StructureID = section.SelectedValue.Id;
+                if (Part is PDSVViewModel)
+                {
+
+                    Data.PDSVHipEntries.Add((PDSVHipEntry)newSFSentry);
+                }
+                else if (Part is SFSViewModel)
+                { 
+                    Data.SFSHipEntries.Add((SFSHipEntry)newSFSentry);
+                }
+                else if (Part is BPVHipViewModel)
+                {
+                    Data.BPVHipEntries.Add((BPVHipEntry)newSFSentry);
+                }
+                else if (Part is BPVTibiaViewModel)
+                {
+                    Data.BPV_TibiaEntries.Add((BPV_TibiaEntry)newSFSentry);
+                }
+                else if (Part is HipPerforateViewModel)
+                {
+                    Data.Perforate_hipEntries.Add((Perforate_hipEntry)newSFSentry);
+                }
+                else if (Part is ZDSVViewModel)
+                {
+                    Data.ZDSVEntries.Add((ZDSVEntry)newSFSentry);
+                }
+              
+                Data.Complete();
+                if (section.ListNumber == 1)
+                {
+                    LeftSFSEntryFullbuf.EntryId1 = newSFSentry.Id;
+                }
+                if (section.ListNumber == 2)
+                {
+                    LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
+                }
+                if (section.ListNumber == 3)
+                {
+                    LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
+                }
+                if (section.ListNumber == 4)
+                {
+                    LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
+                }
+                if (section.ListNumber == 5)
+                {
+                    LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
+                }
+                if (section.ListNumber == 6)
+                {
+                    LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
+                }
+            }
+            if (Part.SelectedWayType != null)
+            {
+                LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
+            }
+            return LeftSFSEntryFullbuf;
+        }
+        
+
         private SaveSet SaveViewModel(LegPartViewModel sender)
         {
             List<string> bufBpvLeftStr = new List<string>();
@@ -1020,6 +1107,7 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(LeftSFS);
                     SFSLeftstr = result.stringList;
                     IsVisibleSFSleft = result.listVisibility;
+                    
                 }
 
                 else
@@ -1031,6 +1119,7 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(RightSFS);
                     SFSRightstr = result.stringList;
                     IsVisibleSFSRight = result.listVisibility;
+                  
                 }
             if (senderType == typeof(BPVHipViewModel))
                 if (senderVM.CurrentLegSide == LegSide.Left)
@@ -1041,14 +1130,17 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(LeftBPVHip);
                     BpvLeftstr = result.stringList;
                     IsVisibleBPVleft = result.listVisibility;
+                    
                 }
                 else
                 {
+                    RightBPVEntryFull = new BPVHipEntryFull();
                     BpvRightstr = new List<string>();
                     RightBPVHip = (BPVHipViewModel)sender;
                     SaveSet result = SaveViewModel(RightBPVHip);
                     BpvRightstr = result.stringList;
                     IsVisibleBPVRight = result.listVisibility;
+                   
                 }
 
             if (senderType == typeof(PDSVViewModel))
@@ -1060,6 +1152,9 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(LeftPDSV);
                     PDSVLeftstr = result.stringList;
                     IsVisiblePDSVleft = result.listVisibility;
+                    //SaveAll();
+
+
                 }
                 else
                 {
@@ -1069,6 +1164,7 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(RightPDSV);
                     PDSVRightstr = result.stringList;
                     IsVisiblePDSVright = result.listVisibility;
+                  
                 }
 
             //
@@ -1081,6 +1177,7 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(LeftZDSV);
                     ZDSVLeftstr = result.stringList;
                     IsVisibleZDSVleft = result.listVisibility;
+                 
                 }
                 else
                 {
@@ -1090,6 +1187,7 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(RightZDSV);
                     ZDSVRightstr = result.stringList;
                     IsVisibleZDSVright = result.listVisibility;
+                  
                 }
             if (senderType == typeof(HipPerforateViewModel))
                 if (senderVM.CurrentLegSide == LegSide.Left)
@@ -1100,6 +1198,7 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(LeftPerforate);
                     Perforate_hipLeftstr = result.stringList;
                     IsVisiblePerforateHIPleft = result.listVisibility;
+                 
                 }
                 else
                 {
@@ -1109,6 +1208,7 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(RightPerforate);
                     Perforate_hipRightstr = result.stringList;
                     IsVisiblePerforateHIPright = result.listVisibility;
+                   
                 }
             if (senderType == typeof(BPVTibiaViewModel))
                 if (senderVM.CurrentLegSide == LegSide.Left)
@@ -1119,6 +1219,7 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(LeftBPVTibia);
                     BPV_TibiaLeftstr = result.stringList;
                     IsVisibleBPV_Tibialeft = result.listVisibility;
+                 
                 }
                 else
                 {
@@ -1128,6 +1229,7 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(RightBPVTibia);
                     BPV_TibiaRightstr = result.stringList;
                     IsVisibleBPV_Tibiaright = result.listVisibility;
+                    
                 }
             //
 

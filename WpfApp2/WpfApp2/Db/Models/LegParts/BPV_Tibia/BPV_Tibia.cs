@@ -115,6 +115,9 @@ namespace WpfApp2.Db.Models
 
         [Column("метрика")]
         public override float Size { get; set; }
+        [NotMapped]
+        public override float Size2 { get; set; }
+       
 
         public virtual BPV_TibiaStructure Structure { get; set; }
 
@@ -135,13 +138,11 @@ namespace WpfApp2.Db.Models
         public virtual BPV_TibiaEntry BPV_TibiaEntry2 { get; set; }
         public virtual BPV_TibiaEntry BPV_TibiaEntry3 { get; set; }
         public virtual BPV_TibiaEntry BPV_TibiaEntry4 { get; set; }
-         public int Id { get; set; }
+     
 
-
-
-        public int BPV_TibiaEntryId1 { get; set; }
-        public int BPV_TibiaEntryId2 { get; set; }
-        public int BPV_TibiaEntryId3 { get; set; }
-        public int BPV_TibiaEntryId4 { get; set; }
+        public override int EntryId1 { get; set; }
+        public override int EntryId2 { get; set; }
+        public override int EntryId3 { get; set; }
+        public override int EntryId4 { get; set; }
          }
 }

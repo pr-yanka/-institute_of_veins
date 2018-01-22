@@ -117,6 +117,8 @@ namespace WpfApp2.Db.Models
 
         [Column("метрика")]
         public override float Size { get; set; }
+        [NotMapped]
+        public override float Size2 { get; set; }
 
         public virtual Perforate_hipStructure Structure { get; set; }
 
@@ -139,14 +141,14 @@ namespace WpfApp2.Db.Models
         public virtual Perforate_hipEntry Perforate_hipEntry3 { get; set; }
         public virtual Perforate_hipEntry Perforate_hipEntry4 { get; set; }
         public virtual Perforate_hipEntry Perforate_hipEntry5 { get; set; }
-        public int Id { get; set; }
+     
 
 
 
-        public int Perforate_hipEntryId1 { get; set; }
-        public int Perforate_hipEntryId2 { get; set; }
-        public int Perforate_hipEntryId3 { get; set; }
-        public int Perforate_hipEntryId4 { get; set; }
-        public int Perforate_hipEntryId5 { get; set; }
+        public override int EntryId1 { get; set; }
+        public override int EntryId2 { get; set; }
+        public override int EntryId3 { get; set; }
+        public override int EntryId4 { get; set; }
+        public override int EntryId5 { get; set; }
     }
 }

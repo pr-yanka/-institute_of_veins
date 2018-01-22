@@ -11,11 +11,11 @@ namespace WpfApp2.Db.Models
 {
     public class PDSVHip
     {
-        
+
     }
 
     [Table("пдсв_структура")]
-    public partial class PDSVHipStructure :LegPartDbStructure, ILegPart
+    public partial class PDSVHipStructure : LegPartDbStructure, ILegPart
     {
         [NotMapped]
         public override bool HasDoubleMetric { get { return false; } }
@@ -23,7 +23,7 @@ namespace WpfApp2.Db.Models
         public virtual ICollection<PDSVHipCombo> PDSVs1 { get; set; } = new HashSet<PDSVHipCombo>();
         public virtual ICollection<PDSVHipCombo> PDSVs2 { get; set; } = new HashSet<PDSVHipCombo>();
         public virtual ICollection<PDSVHipCombo> PDSVs3 { get; set; } = new HashSet<PDSVHipCombo>();
-      
+
         public virtual ICollection<PDSVHipEntry> Entries { get; set; } = new HashSet<PDSVHipEntry>();
     }
 
@@ -49,11 +49,11 @@ namespace WpfApp2.Db.Models
         public int? IdStr3 { get; set; }
         public virtual PDSVHipStructure Str3 { get; set; }
 
-      
+
         public override string ToString()
         {
             return Str1.ToString();
-        }   
+        }
     }
 
     /*
@@ -108,22 +108,21 @@ namespace WpfApp2.Db.Models
 
         [Column("метрика")]
         public override float Size { get; set; }
+        [NotMapped]
+        public override float Size2 { get; set; }
 
         public virtual PDSVHipStructure Structure { get; set; }
 
         public virtual ICollection<PDSVHipEntryFull> EntriesFull1 { get; set; } = new HashSet<PDSVHipEntryFull>();
         public virtual ICollection<PDSVHipEntryFull> EntriesFull2 { get; set; } = new HashSet<PDSVHipEntryFull>();
         public virtual ICollection<PDSVHipEntryFull> EntriesFull3 { get; set; } = new HashSet<PDSVHipEntryFull>();
-       
+
     }
 
     [Table("вид_пдсв_хода")]
-    public class PDSVHipWay
+    public class PDSVHipWay : da_Way
     {
-        [Column("id_вида"),Key]
-        public int Id { get; set; }
-        [Column("описание")]
-        public string Name { get; set; }
+
         public virtual ICollection<PDSVHipEntryFull> EntriesFull { get; set; } = new HashSet<PDSVHipEntryFull>();
 
     }
@@ -135,13 +134,13 @@ namespace WpfApp2.Db.Models
         public virtual PDSVHipEntry PDSVHipEntry1 { get; set; }
         public virtual PDSVHipEntry PDSVHipEntry2 { get; set; }
         public virtual PDSVHipEntry PDSVHipEntry3 { get; set; }
-      
-        public int Id { get; set; }
-        public int PDSVHipWayID { get; set; }
 
-        public int PDSVHipEntryId1 { get; set; }
-        public int PDSVHipEntryId2 { get; set; }
-        public int PDSVHipEntryId3 { get; set; }
-    
+
+        public override int WayID { get; set; }
+
+        public override int EntryId1 { get; set; }
+        public override int EntryId2 { get; set; }
+        public override int EntryId3 { get; set; }
+
     }
 }

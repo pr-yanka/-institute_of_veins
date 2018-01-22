@@ -26,12 +26,12 @@ namespace WpfApp2.LegParts
     {
 
 
+        public da_Way SelectedWayType { get; set; }
 
 
 
 
 
-       
 
 
 
