@@ -106,8 +106,11 @@
                                 </StackPanel>
                             </Expander.Header>
                             <StackPanel Orientation="Vertical">
-
-                            </StackPanel>
+                            <TextBlock Visibility="{Binding IsVisibleZDSVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding ZDSVLeftstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleZDSVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding ZDSVLeftstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleZDSVleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding ZDSVLeftstr[2]}"></TextBlock>
+                           
+                        </StackPanel>
                         </Expander>
                         <Separator/>
 
@@ -119,8 +122,13 @@
                                 </StackPanel>
                             </Expander.Header>
                             <StackPanel Orientation="Vertical">
-
-                            </StackPanel>
+                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipLeftstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipLeftstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipLeftstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipLeftstr[3]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPleft[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipLeftstr[4]}"></TextBlock>
+                           
+                        </StackPanel>
                         </Expander>
                         <Separator/>
 
@@ -132,8 +140,13 @@
                                 </StackPanel>
                             </Expander.Header>
                             <StackPanel Orientation="Vertical">
-
-                            </StackPanel>
+                            
+                            <TextBlock Visibility="{Binding IsVisibleBPV_Tibialeft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BPV_TibiaLeftstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPV_Tibialeft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BPV_TibiaLeftstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPV_Tibialeft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BPV_TibiaLeftstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPV_Tibialeft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BPV_TibiaLeftstr[3]}"></TextBlock>
+                           
+                        </StackPanel>
                         </Expander>
                         <Separator/>
 
@@ -258,8 +271,11 @@
                                 </StackPanel>
                             </Expander.Header>
                             <StackPanel Orientation="Vertical">
+                            <TextBlock Visibility="{Binding IsVisibleZDSVright[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding ZDSVRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleZDSVright[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding ZDSVRightstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleZDSVright[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding ZDSVRightstr[2]}"></TextBlock>
 
-                            </StackPanel>
+                        </StackPanel>
                         </Expander>
                         <Separator/>
 
@@ -271,14 +287,37 @@
                                 </StackPanel>
                             </Expander.Header>
                             <StackPanel Orientation="Vertical">
+                           
+                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPright[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPright[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipRightstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPright[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipRightstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPright[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipRightstr[3]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPright[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipRightstr[4]}"></TextBlock>
 
-                            </StackPanel>
+                        </StackPanel>
                         </Expander>
                         <Separator/>
-                        <Separator Margin="10,0,10,0"/>
-                        <Expander Header="VI. БПВ на голени" FontSize="12">
-                            <Grid Background="#FFE5E5E5"/>
-                        </Expander>
+                    <Separator/>
+
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="VI. БПВ на голени" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttonPeвrforate2" Command="{Binding ToRightBPVTibiaCommand}" Content="{Binding Path=RightBPVTibia.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+
+                            <TextBlock Visibility="{Binding IsVisibleBPV_Tibiaright[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BPV_TibiaRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPV_Tibiaright[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BPV_TibiaRightstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPV_Tibiaright[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BPV_TibiaRightstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPV_Tibiaright[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BPV_TibiaRightstr[3]}"></TextBlock>
+
+                        </StackPanel>
+                    </Expander>
+                    <Separator/>
+                    <Separator Margin="10,0,10,0"/>
+                   
                         <Separator Margin="10,0,10,0"/>
                         <Expander Header="VII. Перфоранты голени*" FontSize="12">
                             <Grid Background="#FFE5E5E5"/>

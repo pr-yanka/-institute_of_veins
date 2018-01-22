@@ -1,10 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Practices.Prism.Commands;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
+using WpfApp2.Db.Models;
+using WpfApp2.Messaging;
 using WpfApp2.Navigation;
+using WpfApp2.ViewModels;
 
 namespace WpfApp2.LegParts.VMs
 {
     public class TibiaPerforateViewModel : LegPartViewModel
     {
+
+
+
+
+
+
+
+
+
+
+
+
         private List<LegSectionViewModel> _sections;
         public override List<LegSectionViewModel> LegSections
         {
@@ -14,6 +33,9 @@ namespace WpfApp2.LegParts.VMs
 
         public void Initialize()
         {
+
+
+         
             LevelCount = 5;
             _sections = new List<LegSectionViewModel>();
             for (int i = 0; i < LevelCount; i++)

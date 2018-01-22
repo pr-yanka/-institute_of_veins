@@ -14,6 +14,11 @@ namespace WpfApp2.LegParts.Templates
         public DataTemplate EmptyTemplate { get; set; }
         public DataTemplate PDSVHipTemplate { get; set; }
 
+        //public DataTemplate PerfarateHipTemplate { get; set; }
+
+        //public DataTemplate ZDSVTemplate { get; set; }
+        //public DataTemplate BPVTibiaTemplate { get; set; }
+
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             if (item == null)

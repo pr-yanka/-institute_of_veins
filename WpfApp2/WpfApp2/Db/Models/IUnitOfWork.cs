@@ -4,14 +4,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WpfApp2.Db.Models.LegParts;
+using WpfApp2.Db.Models.LegParts.BPV_Tibia;
+using WpfApp2.Db.Models.LegParts.BPV_Tibia_Tibia;
 using WpfApp2.Db.Models.LegParts.BPVHip;
 using WpfApp2.Db.Models.LegParts.PDSVHip;
+using WpfApp2.Db.Models.LegParts.Perforate_hip;
+using WpfApp2.Db.Models.LegParts.Perforate_hip_Tibia;
 using WpfApp2.Db.Models.LegParts.SFSHip;
+using WpfApp2.Db.Models.LegParts.ZDSV;
 
 namespace WpfApp2.Db.Models
 {
     public interface IUnitOfWork : IDisposable
     {
+
+        BPV_TibiaRepository BPV_Tibia { get; }
+        BPV_TibiaComboRepository BPV_TibiaCombos { get; }
+        BPV_TibiaEntryRepository BPV_TibiaEntries { get; }
+
+        Perforate_hipRepository Perforate_hip { get; }
+        Perforate_hipComboRepository Perforate_hipCombos { get; }
+        Perforate_hipEntryRepository Perforate_hipEntries { get; }
+
+
+        ZDSVRepository ZDSV { get; }
+        ZDSVComboRepository ZDSVCombos { get; }
+        ZDSVEntryRepository ZDSVEntries { get; }
+
+
+
+
         PDSVHipRepository PDSVHips { get; }
         PDSVComboRepository PDSVCombos { get; }
         PDSVHipEntryRepository PDSVHipEntries { get; }
@@ -63,9 +85,9 @@ namespace WpfApp2.Db.Models
         DiagnosisTypeRepository DiagnosisTypes { get; }
 
 
-       SFSHipRepository SFSHips { get; }
-       SFSComboRepository SFSCombos { get; }
-       SFSHipEntryRepository SFSHipEntries { get; }
+        SFSHipRepository SFSHips { get; }
+        SFSComboRepository SFSCombos { get; }
+        SFSHipEntryRepository SFSHipEntries { get; }
 
         int Complete();
     }

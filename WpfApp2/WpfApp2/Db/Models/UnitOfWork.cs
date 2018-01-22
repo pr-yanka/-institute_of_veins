@@ -4,14 +4,45 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WpfApp2.Db.Models.LegParts;
+using WpfApp2.Db.Models.LegParts.BPV_Tibia;
+using WpfApp2.Db.Models.LegParts.BPV_Tibia_Tibia;
 using WpfApp2.Db.Models.LegParts.BPVHip;
 using WpfApp2.Db.Models.LegParts.PDSVHip;
+using WpfApp2.Db.Models.LegParts.Perforate_hip;
+using WpfApp2.Db.Models.LegParts.Perforate_hip_Tibia;
 using WpfApp2.Db.Models.LegParts.SFSHip;
+using WpfApp2.Db.Models.LegParts.ZDSV;
 
 namespace WpfApp2.Db.Models
 {
     public class UnitOfWork : IUnitOfWork
     {
+
+
+
+
+
+        public BPV_TibiaRepository BPV_Tibia { get; }
+        public BPV_TibiaComboRepository BPV_TibiaCombos { get; }
+        public BPV_TibiaEntryRepository BPV_TibiaEntries { get; }
+
+        public Perforate_hipRepository Perforate_hip { get; }
+        public Perforate_hipComboRepository Perforate_hipCombos { get; }
+        public Perforate_hipEntryRepository Perforate_hipEntries { get; }
+
+        public ZDSVRepository ZDSV { get; }
+        public ZDSVComboRepository ZDSVCombos { get; }
+        public ZDSVEntryRepository ZDSVEntries { get; }
+
+
+
+
+
+
+
+
+
+
         public SFSHipRepository SFSHips { get; }
         public SFSComboRepository SFSCombos { get; }
         public SFSHipEntryRepository SFSHipEntries { get; }
@@ -19,14 +50,14 @@ namespace WpfApp2.Db.Models
         public СategoryTypeRepository СategoryType { get; }
 
 
-        public PDSVHipRepository PDSVHips { get;  }
+        public PDSVHipRepository PDSVHips { get; }
         public PDSVComboRepository PDSVCombos { get; }
-        public PDSVHipEntryRepository PDSVHipEntries { get;  }
+        public PDSVHipEntryRepository PDSVHipEntries { get; }
         public PDSVHipWayRepository PDSVHipWay { get; }
 
         public BPVHipRepository BPVHips { get; }
-        public BPVComboRepository BPVCombos { get;  }
-        public BPVHipEntryRepository BPVHipEntries { get;  }
+        public BPVComboRepository BPVCombos { get; }
+        public BPVHipEntryRepository BPVHipEntries { get; }
         public BPVHipWayRepository BPVHipWay { get; }
 
 
@@ -76,6 +107,37 @@ namespace WpfApp2.Db.Models
         public UnitOfWork(MySqlContext context)
         {
             _context = context;
+
+
+
+
+
+
+
+
+
+
+            BPV_Tibia = new BPV_TibiaRepository(_context);
+            BPV_TibiaCombos = new BPV_TibiaComboRepository(_context);
+            BPV_TibiaEntries = new BPV_TibiaEntryRepository(_context);
+            Perforate_hip = new Perforate_hipRepository(_context);
+            Perforate_hipCombos = new    Perforate_hipComboRepository(_context);
+            Perforate_hipEntries = new Perforate_hipEntryRepository(_context);
+            ZDSV = new ZDSVRepository(_context);
+            ZDSVCombos = new ZDSVComboRepository(_context);
+            ZDSVEntries = new ZDSVEntryRepository(_context);
+
+
+
+
+
+
+
+
+
+
+
+
 
             PDSVHips = new PDSVHipRepository(_context);
             PDSVCombos = new PDSVComboRepository(_context);

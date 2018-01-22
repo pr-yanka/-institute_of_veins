@@ -25,15 +25,94 @@ namespace WpfApp2.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public List<string> BpvLeftstr
+
+
+
+
+
+        #region BPV_Tibia binds
+        public BPV_TibiaEntryFull RightBPV_TibiaEntryFull { get; private set; }
+        public BPV_TibiaEntryFull LeftBPV_TibiaEntryFull { get; private set; }
+        private List<string> _BPV_TibiaRightstr;
+        private List<string> _BPV_TibiaLeftstr;
+        public List<string> BPV_TibiaLeftstr
         {
             get
             {
-                return _bpvLeftstr;
+                return _BPV_TibiaLeftstr;
             }
             set
             {
-                _bpvLeftstr = value;
+                _BPV_TibiaLeftstr = value;
+                OnPropertyChanged();
+            }
+        }
+        public List<string> BPV_TibiaRightstr
+        {
+            get
+            {
+                return _BPV_TibiaRightstr;
+            }
+            set
+            {
+                _BPV_TibiaRightstr = value;
+                OnPropertyChanged();
+            }
+        }
+        private ObservableCollection<Visibility> _isVisibleBPV_Tibialeft;
+        private ObservableCollection<Visibility> _isVisibleBPV_Tibiaright;
+
+        public ObservableCollection<Visibility> IsVisibleBPV_Tibiaright
+        {
+            get
+            {
+                return _isVisibleBPV_Tibiaright;
+            }
+            set
+            {
+                _isVisibleBPV_Tibiaright = value;
+                OnPropertyChanged();
+            }
+        }
+        public ObservableCollection<Visibility> IsVisibleBPV_Tibialeft
+        {
+            get
+            {
+                return _isVisibleBPV_Tibialeft;
+            }
+            set
+            {
+                _isVisibleBPV_Tibialeft = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion
+        #region SFS binds
+
+        private ObservableCollection<Visibility> _isVisibleSFSleft;
+        public ObservableCollection<Visibility> IsVisibleSFSleft
+        {
+            get
+            {
+                return _isVisibleSFSleft;
+            }
+            set
+            {
+                _isVisibleSFSleft = value;
+                OnPropertyChanged();
+            }
+        }
+        private ObservableCollection<Visibility> _isVisibleSFSRight;
+        public ObservableCollection<Visibility> IsVisibleSFSRight
+        {
+            get
+            {
+                return _isVisibleSFSRight;
+            }
+            set
+            {
+                _isVisibleSFSRight = value;
                 OnPropertyChanged();
             }
         }
@@ -62,9 +141,18 @@ namespace WpfApp2.ViewModels
                 OnPropertyChanged();
             }
         }
+        public SFSHipEntryFull RightSFSEntryFull { get; private set; }
+        public SFSHipEntryFull LeftSFSEntryFull { get; private set; }
 
+        private List<string> _sfsRightstr;
+        private List<string> _sfsLeftstr;
 
-
+        #endregion
+        #region PDsV binds
+        public PDSVHipEntryFull RightPDSVEntryFull { get; private set; }
+        public PDSVHipEntryFull LeftPDSVEntryFull { get; private set; }
+        private List<string> _pdsvRightstr;
+        private List<string> _pdsvLeftstr;
         public List<string> PDSVLeftstr
         {
             get
@@ -89,31 +177,9 @@ namespace WpfApp2.ViewModels
                 OnPropertyChanged();
             }
         }
-
-
-
-        public SFSHipEntryFull RightSFSEntryFull { get; private set; }
-        public SFSHipEntryFull LeftSFSEntryFull { get; private set; }
-        private List<string> _pdsvRightstr;
-        private List<string> _pdsvLeftstr;
-        private List<string> _sfsRightstr;
-        private List<string> _sfsLeftstr;
-        private List<string> _bpvLeftstr;
-
         private ObservableCollection<Visibility> _isVisiblePDSVleft;
         private ObservableCollection<Visibility> _isVisiblePDSVright;
-        public ObservableCollection<Visibility> IsVisiblePDSVleft
-        {
-            get
-            {
-                return _isVisiblePDSVleft;
-            }
-            set
-            {
-                _isVisiblePDSVleft = value;
-                OnPropertyChanged();
-            }
-        }
+
         public ObservableCollection<Visibility> IsVisiblePDSVright
         {
             get
@@ -126,7 +192,154 @@ namespace WpfApp2.ViewModels
                 OnPropertyChanged();
             }
         }
+        public ObservableCollection<Visibility> IsVisiblePDSVleft
+        {
+            get
+            {
+                return _isVisiblePDSVleft;
+            }
+            set
+            {
+                _isVisiblePDSVleft = value;
+                OnPropertyChanged();
+            }
+        }
 
+        #endregion
+        #region ZDSV binds
+
+        private ObservableCollection<Visibility> _isVisibleZDSVright;
+        public ObservableCollection<Visibility> IsVisibleZDSVright
+        {
+            get
+            {
+                return _isVisibleZDSVright;
+            }
+            set
+            {
+                _isVisibleZDSVright = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ZDSVEntryFull RightZDSVEntryFull { get; private set; }
+        public ZDSVEntryFull LeftZDSVEntryFull { get; private set; }
+        private List<string> _ZDSVRightstr;
+        private List<string> _ZDSVLeftstr;
+        public List<string> ZDSVLeftstr
+        {
+            get
+            {
+                return _ZDSVLeftstr;
+            }
+            set
+            {
+                _ZDSVLeftstr = value;
+                OnPropertyChanged();
+            }
+        }
+        public List<string> ZDSVRightstr
+        {
+            get
+            {
+                return _ZDSVRightstr;
+            }
+            set
+            {
+                _ZDSVRightstr = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<Visibility> _isVisibleZDSVleft;
+        public ObservableCollection<Visibility> IsVisibleZDSVleft
+        {
+            get
+            {
+                return _isVisibleZDSVleft;
+            }
+            set
+            {
+                _isVisibleZDSVleft = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+        #region PerforateHIp binds
+
+        private ObservableCollection<Visibility> _isVisiblePerforateHIPright;
+        public ObservableCollection<Visibility> IsVisiblePerforateHIPright
+        {
+            get
+            {
+                return _isVisiblePerforateHIPright;
+            }
+            set
+            {
+                _isVisiblePerforateHIPright = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Perforate_hipEntryFull RightPerforate_hipEntryFull { get; private set; }
+        public Perforate_hipEntryFull LeftPerforate_hipEntryFull { get; private set; }
+        private List<string> _Perforate_hipRightstr;
+        private List<string> _Perforate_hipLeftstr;
+        public List<string> Perforate_hipLeftstr
+        {
+            get
+            {
+                return _Perforate_hipLeftstr;
+            }
+            set
+            {
+                _Perforate_hipLeftstr = value;
+                OnPropertyChanged();
+            }
+        }
+        public List<string> Perforate_hipRightstr
+        {
+            get
+            {
+                return _Perforate_hipRightstr;
+            }
+            set
+            {
+                _Perforate_hipRightstr = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<Visibility> _isVisiblePerforateHIPleft;
+        public ObservableCollection<Visibility> IsVisiblePerforateHIPleft
+        {
+            get
+            {
+                return _isVisiblePerforateHIPleft;
+            }
+            set
+            {
+                _isVisiblePerforateHIPleft = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+        #region Bpv binds
+        public BPVHipEntryFull LeftBPVEntryFull { get; protected set; }
+        public BPVHipEntryFull RightBPVEntryFull { get; protected set; }
+        public List<string> BpvLeftstr
+        {
+            get
+            {
+                return _bpvLeftstr;
+            }
+            set
+            {
+                _bpvLeftstr = value;
+                OnPropertyChanged();
+            }
+        }
+        private List<string> _bpvLeftstr;
         private ObservableCollection<Visibility> _isVisibleBPVleft;
         public ObservableCollection<Visibility> IsVisibleBPVleft
         {
@@ -156,32 +369,6 @@ namespace WpfApp2.ViewModels
         private List<string> _bpvRightstr;
 
 
-        private ObservableCollection<Visibility> _isVisibleSFSleft;
-        public ObservableCollection<Visibility> IsVisibleSFSleft
-        {
-            get
-            {
-                return _isVisibleSFSleft;
-            }
-            set
-            {
-                _isVisibleSFSleft = value;
-                OnPropertyChanged();
-            }
-        }
-        private ObservableCollection<Visibility> _isVisibleSFSRight;
-        public ObservableCollection<Visibility> IsVisibleSFSRight
-        {
-            get
-            {
-                return _isVisibleSFSRight;
-            }
-            set
-            {
-                _isVisibleSFSRight = value;
-                OnPropertyChanged();
-            }
-        }
 
 
 
@@ -200,6 +387,8 @@ namespace WpfApp2.ViewModels
                 OnPropertyChanged();
             }
         }
+        #endregion
+
 
         private string _weight;
         public string Weight
@@ -314,9 +503,8 @@ namespace WpfApp2.ViewModels
         }
 
 
-        public BPVHipEntryFull LeftBPVEntryFull { get; protected set; }
-        public BPVHipEntryFull RightBPVEntryFull { get; protected set; }
-        public PDSVHipEntryFull LeftPDSVEntryFull { get; private set; }
+
+
         public BPVHipViewModel LeftBPVHip { get; protected set; }
         public SFSViewModel LeftSFS { get; protected set; }
         public PDSVViewModel LeftPDSV { get; protected set; }
@@ -328,7 +516,7 @@ namespace WpfApp2.ViewModels
 
         public BPVHipViewModel RightBPVHip { get; protected set; }
         public SFSViewModel RightSFS { get; protected set; }
-        public PDSVHipEntryFull RightPDSVEntryFull { get; private set; }
+
         public PDSVViewModel RightPDSV { get; protected set; }
         public ZDSVViewModel RightZDSV { get; protected set; }
         public HipPerforateViewModel RightPerforate { get; protected set; }
@@ -373,15 +561,55 @@ namespace WpfApp2.ViewModels
             BpvRightstr = new List<string>();
             SFSLeftstr = new List<string>();
             SFSRightstr = new List<string>();
-            var IsVisibleBPVleftBuf = new ObservableCollection<Visibility>();
 
+            ZDSVLeftstr = new List<string>();
+            ZDSVRightstr = new List<string>();
+            Perforate_hipLeftstr = new List<string>();
+            Perforate_hipRightstr = new List<string>();
+            BPV_TibiaLeftstr = new List<string>();
+            BPV_TibiaRightstr = new List<string>();
+
+            var IsVisibleBPVleftBuf = new ObservableCollection<Visibility>();
+            //
+            IsVisibleBPV_Tibialeft = new ObservableCollection<Visibility>();
+            IsVisibleBPV_Tibiaright = new ObservableCollection<Visibility>();
+            IsVisiblePerforateHIPleft = new ObservableCollection<Visibility>();
+            IsVisiblePerforateHIPright = new ObservableCollection<Visibility>();
+            IsVisibleZDSVleft = new ObservableCollection<Visibility>();
+            IsVisibleZDSVright = new ObservableCollection<Visibility>();
+            //
             IsVisiblePDSVleft = new ObservableCollection<Visibility>();
             IsVisiblePDSVright = new ObservableCollection<Visibility>();
             IsVisibleBPVRight = new ObservableCollection<Visibility>();
             IsVisibleBPVleft = new ObservableCollection<Visibility>();
             IsVisibleSFSRight = new ObservableCollection<Visibility>();
             IsVisibleSFSleft = new ObservableCollection<Visibility>();
-
+            //
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleBPV_Tibialeft.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleBPV_Tibiaright.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisiblePerforateHIPleft.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisiblePerforateHIPright.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleZDSVleft.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleZDSVright.Add(Visibility.Collapsed);
+            }
+            //
             for (int i = 0; i < 6; ++i)
             {
                 IsVisiblePDSVleft.Add(Visibility.Collapsed);
@@ -492,41 +720,48 @@ namespace WpfApp2.ViewModels
 
             LeftBPVTibia = new BPVTibiaViewModel(Controller, LegSide.Left);
             RightBPVTibia = new BPVTibiaViewModel(Controller, LegSide.Right);
+            Controller.AddLegPartVM(LeftBPVTibia);
+            Controller.AddLegPartVM(RightBPVTibia);
 
             ToLeftBPVTibiaCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("RebuildFirstBPV_Tibia", this, this);
                     Controller.LegViewModel = LeftBPVTibia;
-                    Controller.NavigateTo<LegPartViewModel>();
+                    Controller.NavigateTo<BPVTibiaViewModel>(LegSide.Left);
                 }
             );
 
             ToRightBPVTibiaCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("RebuildFirstBPV_Tibia", this, this);
                     Controller.LegViewModel = RightBPVTibia;
-                    Controller.NavigateTo<LegPartViewModel>();
+                    Controller.NavigateTo<BPVTibiaViewModel>(LegSide.Right);
                 }
             );
 
             //Бедро перфорант
-
+          
             LeftPerforate = new HipPerforateViewModel(Controller, LegSide.Left);
             RightPerforate = new HipPerforateViewModel(Controller, LegSide.Right);
-
+            Controller.AddLegPartVM(LeftPerforate);
+            Controller.AddLegPartVM(RightPerforate);
             ToLeftPerforateCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("RebuildFirstPerforateHip", this, this);
                     Controller.LegViewModel = LeftPerforate;
-                    Controller.NavigateTo<LegPartViewModel>();
+                    Controller.NavigateTo<HipPerforateViewModel>(LegSide.Left);
                 }
             );
 
             ToRightPerforateCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("RebuildFirstPerforateHip", this, this);
                     Controller.LegViewModel = RightPerforate;
-                    Controller.NavigateTo<LegPartViewModel>();
+                    Controller.NavigateTo<HipPerforateViewModel>(LegSide.Right);
                 }
             );
 
@@ -631,20 +866,25 @@ namespace WpfApp2.ViewModels
 
             LeftZDSV = new ZDSVViewModel(Controller, LegSide.Left);
             RightZDSV = new ZDSVViewModel(Controller, LegSide.Right);
+        
+            Controller.AddLegPartVM(LeftZDSV);
+            Controller.AddLegPartVM(RightZDSV);
 
             ToLeftZDSVCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("RebuildFirstZDSV", this, this);
                     Controller.LegViewModel = LeftZDSV;
-                    Controller.NavigateTo<LegPartViewModel>();
+                    Controller.NavigateTo<ZDSVViewModel>(LegSide.Left);
                 }
             );
 
             ToRightZDSVCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("RebuildFirstZDSV", this, this);
                     Controller.LegViewModel = RightZDSV;
-                    Controller.NavigateTo<LegPartViewModel>();
+                    Controller.NavigateTo<ZDSVViewModel>(LegSide.Right);
                 }
             );
 
@@ -830,6 +1070,66 @@ namespace WpfApp2.ViewModels
                     PDSVRightstr = result.stringList;
                     IsVisiblePDSVright = result.listVisibility;
                 }
+
+            //
+            if (senderType == typeof(ZDSVViewModel))
+                if (senderVM.CurrentLegSide == LegSide.Left)
+                {
+                    LeftZDSVEntryFull = new ZDSVEntryFull();
+                    //to do тут должно быть сохранение
+                    LeftZDSV = (ZDSVViewModel)sender;
+                    SaveSet result = SaveViewModel(LeftZDSV);
+                    ZDSVLeftstr = result.stringList;
+                    IsVisibleZDSVleft = result.listVisibility;
+                }
+                else
+                {
+                    RightZDSVEntryFull = new ZDSVEntryFull();
+                    //to do тут должно быть сохранение
+                    RightZDSV = (ZDSVViewModel)sender;
+                    SaveSet result = SaveViewModel(RightZDSV);
+                    ZDSVRightstr = result.stringList;
+                    IsVisibleZDSVright = result.listVisibility;
+                }
+            if (senderType == typeof(HipPerforateViewModel))
+                if (senderVM.CurrentLegSide == LegSide.Left)
+                {
+                    LeftPerforate_hipEntryFull = new Perforate_hipEntryFull();
+                    //to do тут должно быть сохранение
+                    LeftPerforate = (HipPerforateViewModel)sender;
+                    SaveSet result = SaveViewModel(LeftPerforate);
+                    Perforate_hipLeftstr = result.stringList;
+                    IsVisiblePerforateHIPleft = result.listVisibility;
+                }
+                else
+                {
+                    RightPerforate_hipEntryFull = new Perforate_hipEntryFull();
+                    //to do тут должно быть сохранение
+                    RightPerforate = (HipPerforateViewModel)sender;
+                    SaveSet result = SaveViewModel(RightPerforate);
+                    Perforate_hipRightstr = result.stringList;
+                    IsVisiblePerforateHIPright = result.listVisibility;
+                }
+            if (senderType == typeof(BPVTibiaViewModel))
+                if (senderVM.CurrentLegSide == LegSide.Left)
+                {
+                    LeftBPV_TibiaEntryFull = new BPV_TibiaEntryFull();
+                    //to do тут должно быть сохранение
+                    LeftBPVTibia = (BPVTibiaViewModel)sender;
+                    SaveSet result = SaveViewModel(LeftBPVTibia);
+                    BPV_TibiaLeftstr = result.stringList;
+                    IsVisibleBPV_Tibialeft = result.listVisibility;
+                }
+                else
+                {
+                    RightBPV_TibiaEntryFull = new BPV_TibiaEntryFull();
+                    //to do тут должно быть сохранение
+                    RightBPVTibia = (BPVTibiaViewModel)sender;
+                    SaveSet result = SaveViewModel(RightBPVTibia);
+                    BPV_TibiaRightstr = result.stringList;
+                    IsVisibleBPV_Tibiaright = result.listVisibility;
+                }
+            //
 
         }
     }

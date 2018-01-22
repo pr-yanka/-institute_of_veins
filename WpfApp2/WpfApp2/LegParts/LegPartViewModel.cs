@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -23,6 +24,19 @@ namespace WpfApp2.LegParts
 {
     public class LegPartViewModel : ViewModelBase, INotifyPropertyChanged
     {
+
+
+
+
+
+
+
+       
+
+
+
+
+
 
         private bool _isEmpty = true;
         public bool IsEmpty

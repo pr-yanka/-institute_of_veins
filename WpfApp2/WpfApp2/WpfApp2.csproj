@@ -200,14 +200,26 @@
       <DependentUpon>AddReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="Db\Models\CitiesRepository.cs" />
+    <Compile Include="Db\Models\LegParts\BPV_Tibia\BPV_TibiaComboRepository.cs" />
+    <Compile Include="Db\Models\LegParts\BPV_Tibia\BPV_Tibia.cs" />
+    <Compile Include="Db\Models\LegParts\BPV_Tibia\BPV_TibiaEntryRepository.cs" />
+    <Compile Include="Db\Models\LegParts\BPV_Tibia\BPV_TibiaRepository.cs" />
     <Compile Include="Db\Models\LegParts\PDSV\PDSVComboRepository.cs" />
     <Compile Include="Db\Models\LegParts\PDSV\PDSVHip.cs" />
     <Compile Include="Db\Models\LegParts\PDSV\PDSVHipEntryRepository.cs" />
     <Compile Include="Db\Models\LegParts\PDSV\PDSVHipRepository.cs" />
+    <Compile Include="Db\Models\LegParts\Perforate_hip\Perforate_hip.cs" />
+    <Compile Include="Db\Models\LegParts\Perforate_hip\Perforate_hipComboRepository.cs" />
+    <Compile Include="Db\Models\LegParts\Perforate_hip\Perforate_hipEntryRepository.cs" />
+    <Compile Include="Db\Models\LegParts\Perforate_hip\Perforate_hipRepository.cs" />
     <Compile Include="Db\Models\LegParts\SFSHip\SFSComboRepository.cs" />
     <Compile Include="Db\Models\LegParts\SFSHip\SFSHip.cs" />
     <Compile Include="Db\Models\LegParts\SFSHip\SFSHipEntryRepository.cs" />
     <Compile Include="Db\Models\LegParts\SFSHip\SFSHipRepository.cs" />
+    <Compile Include="Db\Models\LegParts\ZDSV\ZDSVComboRepository.cs" />
+    <Compile Include="Db\Models\LegParts\ZDSV\ZDSV.cs" />
+    <Compile Include="Db\Models\LegParts\ZDSV\ZDSVEntryRepository.cs" />
+    <Compile Include="Db\Models\LegParts\ZDSV\ZDSVRepository.cs" />
     <Compile Include="Db\Models\RegionsRepository.cs" />
     <Compile Include="Db\Models\DistrictsRepository.cs" />
     <Compile Include="Db\Models\СategoryTypeRepository.cs" />
@@ -389,6 +401,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="LegParts\Templates\PDSVHipTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LegParts\Templates\ZDSVTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LegParts\Templates\PerfarateHipTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LegParts\Templates\BPVTibiaTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -657,5 +681,6 @@
     <Resource Include="Images\Hide.PNG" />
     <Resource Include="Images\Show.PNG" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

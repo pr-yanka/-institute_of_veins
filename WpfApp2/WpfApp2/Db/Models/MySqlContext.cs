@@ -10,7 +10,14 @@ namespace WpfApp2.Db.Models
 {
     public class MySqlContext : DbContext
     {
-     
+
+
+       
+
+       
+
+
+
 
         public DbSet<PDSVHipStructure> PDSVHips { get; set; }
         public DbSet<PDSVHipCombo> PDSVCombos { get; set; }
@@ -78,6 +85,26 @@ namespace WpfApp2.Db.Models
         public DbSet<DiagnosisType> DiagnosisTypes { get; set; }
         public DbSet<RecomendationsType> RecomendationsTypes { get; set; }
         public DbSet<ComplainsType> ComplainsTypes { get; set; }
+
+
+
+
+        public DbSet<BPV_TibiaStructure> BPV_Tibia { get; set; }
+        public DbSet<BPV_TibiaCombo> BPV_TibiaCombos { get; set; }
+        public DbSet<BPV_TibiaEntry> BPV_TibiaEntries { get; set; }
+
+        public DbSet<Perforate_hipStructure> Perforate_hip { get; set; }
+        public DbSet<Perforate_hipCombo> Perforate_hipCombos { get; set; }
+        public DbSet<Perforate_hipEntry> Perforate_hipEntries { get; set; }
+
+
+
+        public DbSet<ZDSVStructure> ZDSV { get; set; }
+        public DbSet<ZDSVCombo> ZDSVCombos { get; set; }
+        public DbSet<ZDSVEntry> ZDSVEntries { get; set; }
+
+
+
         public MySqlContext() : base("server=localhost;user=root;database=med_db;password=22222;")
         {
 
@@ -86,6 +113,108 @@ namespace WpfApp2.Db.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Perforate_hipCombo>()
+              .HasRequired<Perforate_hipStructure>(s => s.Str1).WithMany(g => g.BPVs1).HasForeignKey<int>(s => s.IdStr1);
+
+            modelBuilder.Entity<Perforate_hipCombo>()
+                .HasOptional<Perforate_hipStructure>(s => s.Str2).WithMany(g => g.BPVs2).HasForeignKey<int?>(s => s.IdStr2);
+
+            modelBuilder.Entity<Perforate_hipCombo>()
+                .HasOptional<Perforate_hipStructure>(s => s.Str3).WithMany(g => g.BPVs3).HasForeignKey<int?>(s => s.IdStr3);
+
+            modelBuilder.Entity<Perforate_hipCombo>()
+                .HasOptional<Perforate_hipStructure>(s => s.Str4).WithMany(g => g.BPVs4).HasForeignKey<int?>(s => s.IdStr4);
+
+            modelBuilder.Entity<Perforate_hipCombo>()
+                .HasOptional<Perforate_hipStructure>(s => s.Str5).WithMany(g => g.BPVs5).HasForeignKey<int?>(s => s.IdStr5);
+
+            modelBuilder.Entity<Perforate_hipEntry>()
+                .HasRequired<Perforate_hipStructure>(s => s.Structure).WithMany(g => g.Entries).HasForeignKey<int>(s => s.StructureID);
+
+           
+            modelBuilder.Entity<Perforate_hipEntryFull>()
+            .HasRequired<Perforate_hipEntry>(s => s.Perforate_hipEntry1).WithMany(g => g.EntriesFull1).HasForeignKey<int>(s => s.Perforate_hipEntryId1);
+            modelBuilder.Entity<Perforate_hipEntryFull>()
+            .HasRequired<Perforate_hipEntry>(s => s.Perforate_hipEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int>(s => s.Perforate_hipEntryId2);
+
+            modelBuilder.Entity<Perforate_hipEntryFull>()
+            .HasRequired<Perforate_hipEntry>(s => s.Perforate_hipEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int>(s => s.Perforate_hipEntryId3);
+
+            modelBuilder.Entity<Perforate_hipEntryFull>()
+            .HasRequired<Perforate_hipEntry>(s => s.Perforate_hipEntry4).WithMany(g => g.EntriesFull4).HasForeignKey<int>(s => s.Perforate_hipEntryId4);
+
+            modelBuilder.Entity<Perforate_hipEntryFull>()
+            .HasRequired<Perforate_hipEntry>(s => s.Perforate_hipEntry5).WithMany(g => g.EntriesFull5).HasForeignKey<int>(s => s.Perforate_hipEntryId5);
+
+
+
+
+
+
+
+
+
+
+            modelBuilder.Entity<BPV_TibiaCombo>()
+              .HasRequired<BPV_TibiaStructure>(s => s.Str1).WithMany(g => g.BPVs1).HasForeignKey<int>(s => s.IdStr1);
+
+            modelBuilder.Entity<BPV_TibiaCombo>()
+                .HasOptional<BPV_TibiaStructure>(s => s.Str2).WithMany(g => g.BPVs2).HasForeignKey<int?>(s => s.IdStr2);
+
+            modelBuilder.Entity<BPV_TibiaCombo>()
+                .HasOptional<BPV_TibiaStructure>(s => s.Str3).WithMany(g => g.BPVs3).HasForeignKey<int?>(s => s.IdStr3);
+
+            modelBuilder.Entity<BPV_TibiaCombo>()
+              .HasOptional<BPV_TibiaStructure>(s => s.Str4).WithMany(g => g.BPVs4).HasForeignKey<int?>(s => s.IdStr4);
+
+            modelBuilder.Entity<BPV_TibiaEntry>()
+                .HasRequired<BPV_TibiaStructure>(s => s.Structure).WithMany(g => g.Entries).HasForeignKey<int>(s => s.StructureID);
+
+
+            modelBuilder.Entity<BPV_TibiaEntryFull>()
+            .HasRequired<BPV_TibiaEntry>(s => s.BPV_TibiaEntry1).WithMany(g => g.EntriesFull1).HasForeignKey<int>(s => s.BPV_TibiaEntryId1);
+            
+            modelBuilder.Entity<BPV_TibiaEntryFull>()
+            .HasRequired<BPV_TibiaEntry>(s => s.BPV_TibiaEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int>(s => s.BPV_TibiaEntryId2);
+
+            modelBuilder.Entity<BPV_TibiaEntryFull>()
+            .HasRequired<BPV_TibiaEntry>(s => s.BPV_TibiaEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int>(s => s.BPV_TibiaEntryId3);
+
+            modelBuilder.Entity<BPV_TibiaEntryFull>()
+            .HasRequired<BPV_TibiaEntry>(s => s.BPV_TibiaEntry4).WithMany(g => g.EntriesFull4).HasForeignKey<int>(s => s.BPV_TibiaEntryId4);
+
+
+
+
+
+            modelBuilder.Entity<ZDSVCombo>()
+              .HasRequired<ZDSVStructure>(s => s.Str1).WithMany(g => g.ZDSVs1).HasForeignKey<int>(s => s.IdStr1);
+
+            modelBuilder.Entity<ZDSVCombo>()
+                .HasOptional<ZDSVStructure>(s => s.Str2).WithMany(g => g.ZDSVs2).HasForeignKey<int?>(s => s.IdStr2);
+
+            modelBuilder.Entity<ZDSVCombo>()
+                .HasOptional<ZDSVStructure>(s => s.Str3).WithMany(g => g.ZDSVs3).HasForeignKey<int?>(s => s.IdStr3);
+
+
+            modelBuilder.Entity<ZDSVEntry>()
+                .HasRequired<ZDSVStructure>(s => s.Structure).WithMany(g => g.Entries).HasForeignKey<int>(s => s.StructureID);
+
+         
+            modelBuilder.Entity<ZDSVEntryFull>()
+            .HasRequired<ZDSVEntry>(s => s.ZDSVEntry1).WithMany(g => g.EntriesFull1).HasForeignKey<int>(s => s.ZDSVEntryId1);
+            modelBuilder.Entity<ZDSVEntryFull>()
+            .HasRequired<ZDSVEntry>(s => s.ZDSVEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int>(s => s.ZDSVEntryId2);
+
+            modelBuilder.Entity<ZDSVEntryFull>()
+            .HasRequired<ZDSVEntry>(s => s.ZDSVEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int>(s => s.ZDSVEntryId3);
+
+
+
+
+
+
+
 
 
 
