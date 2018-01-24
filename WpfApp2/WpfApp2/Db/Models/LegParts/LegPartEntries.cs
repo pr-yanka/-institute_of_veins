@@ -26,6 +26,12 @@ namespace WpfApp2.Db.Models.LegParts
         public virtual int EntryId5 { get; set; }
         [Column("подзапись6")]
         public virtual int EntryId6 { get; set; }
-        
+
+
+
+      
+
+
+
     }
 }

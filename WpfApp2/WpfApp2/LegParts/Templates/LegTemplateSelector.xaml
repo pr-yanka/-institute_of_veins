@@ -8,9 +8,11 @@
         <ResourceDictionary Source="BPVHipTemplate.xaml"/>
         <ResourceDictionary Source="PDSVHipTemplate.xaml"/>
         <ResourceDictionary Source="SFSTemplate.xaml"/>
+        <ResourceDictionary Source="TEMPVTemplate.xaml"/>
+        <ResourceDictionary Source="MPVTemplate.xaml"/>
 
 
-       
+
     </ResourceDictionary.MergedDictionaries>
 
     <local:LegTemplateSelector x:Key="LegTemplateSelector" 
@@ -21,6 +23,8 @@
                               BPVHipTemplate="{StaticResource BPVHipTemplate}"
                               SFSTemplate="{StaticResource SFSTemplate}"
                               PDSVHipTemplate="{StaticResource PDSVHipTemplate}"
+                              TEMPVTemplate="{StaticResource TEMPVTemplate}"
+                              MPVTemplate="{StaticResource MPVTemplate}"
                                />
 
 </ResourceDictionary>

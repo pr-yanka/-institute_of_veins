@@ -13,7 +13,8 @@ namespace WpfApp2.LegParts.Templates
         public DataTemplate SFSTemplate { get; set; }
         public DataTemplate EmptyTemplate { get; set; }
         public DataTemplate PDSVHipTemplate { get; set; }
-
+        public DataTemplate TEMPVTemplate { get; set; }
+        public DataTemplate MPVTemplate { get; set; }
         //public DataTemplate PerfarateHipTemplate { get; set; }
 
         //public DataTemplate ZDSVTemplate { get; set; }
@@ -48,6 +49,12 @@ namespace WpfApp2.LegParts.Templates
 
             if (item.GetType() == typeof(SPSViewModel))
                 return EmptyTemplate;
+            if (item.GetType() == typeof(MPVViewModel))
+                return MPVTemplate;
+
+            if (item.GetType() == typeof(TEMPVViewModel))
+                return TEMPVTemplate;
+
 
             return null;
         }

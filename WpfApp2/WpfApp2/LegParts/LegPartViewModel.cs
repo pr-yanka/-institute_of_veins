@@ -30,7 +30,7 @@ namespace WpfApp2.LegParts
 
 
 
-
+        public float FF_length { get; set; }
 
 
 

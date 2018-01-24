@@ -5,12 +5,25 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WpfApp2.Db.Models;
 using WpfApp2.Db.Models.SPS;
 
 namespace WpfApp2.Db.Models
 {
     public class MySqlContext : DbContext
     {
+
+        public DbSet<TEMPVWay> TEMPVWay { get; set; }
+        public DbSet<MPVWay> MPVWay { get; set; }
+
+        public DbSet<MPVStructure> MPV { get; set; }
+        public DbSet<MPVCombo> MPVCombos { get; set; }
+        public DbSet<MPVEntry> MPVEntries { get; set; }
+
+        
+        public DbSet<TEMPVStructure> TEMPV { get; set; }
+        public DbSet<TEMPVCombo> TEMPVCombos { get; set; }
+        public DbSet<TEMPVEntry> TEMPVEntries { get; set; }
 
         public DbSet<Perforate_shinStructure> Perforate_shin { get; set; }
         public DbSet<Perforate_shinCombo> Perforate_shinCombos { get; set; }
@@ -117,6 +130,71 @@ namespace WpfApp2.Db.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+
+
+
+
+            modelBuilder.Entity<TEMPVCombo>()
+                .HasRequired<TEMPVStructure>(s => s.Str1).WithMany(g => g.TEMPVs1).HasForeignKey<int>(s => s.IdStr1);
+
+            modelBuilder.Entity<TEMPVCombo>()
+                .HasOptional<TEMPVStructure>(s => s.Str2).WithMany(g => g.TEMPVs2).HasForeignKey<int?>(s => s.IdStr2);
+
+            modelBuilder.Entity<TEMPVCombo>()
+                .HasOptional<TEMPVStructure>(s => s.Str3).WithMany(g => g.TEMPVs3).HasForeignKey<int?>(s => s.IdStr3);
+
+
+            modelBuilder.Entity<TEMPVEntry>()
+                .HasRequired<TEMPVStructure>(s => s.Structure).WithMany(g => g.Entries).HasForeignKey<int>(s => s.StructureID);
+
+            modelBuilder.Entity<TEMPVEntryFull>()
+              .HasRequired<TEMPVWay>(s => s.TEMPVWay).WithMany(g => g.EntriesFull).HasForeignKey<int>(s => s.WayID);
+
+            modelBuilder.Entity<TEMPVEntryFull>()
+            .HasRequired<TEMPVEntry>(s => s.TEMPVEntry1).WithMany(g => g.EntriesFull1).HasForeignKey<int>(s => s.EntryId1);
+            modelBuilder.Entity<TEMPVEntryFull>()
+            .HasRequired<TEMPVEntry>(s => s.TEMPVEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int>(s => s.EntryId2);
+
+            modelBuilder.Entity<TEMPVEntryFull>()
+            .HasRequired<TEMPVEntry>(s => s.TEMPVEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int>(s => s.EntryId3);
+
+
+
+
+
+
+
+
+
+
+            modelBuilder.Entity<MPVCombo>()
+                  .HasRequired<MPVStructure>(s => s.Str1).WithMany(g => g.MPVs1).HasForeignKey<int>(s => s.IdStr1);
+
+            modelBuilder.Entity<MPVCombo>()
+                .HasOptional<MPVStructure>(s => s.Str2).WithMany(g => g.MPVs2).HasForeignKey<int?>(s => s.IdStr2);
+
+            modelBuilder.Entity<MPVCombo>()
+                .HasOptional<MPVStructure>(s => s.Str3).WithMany(g => g.MPVs3).HasForeignKey<int?>(s => s.IdStr3);
+            modelBuilder.Entity<MPVCombo>()
+             .HasOptional<MPVStructure>(s => s.Str4).WithMany(g => g.MPVs4).HasForeignKey<int?>(s => s.IdStr4);
+
+
+            modelBuilder.Entity<MPVEntry>()
+                .HasRequired<MPVStructure>(s => s.Structure).WithMany(g => g.Entries).HasForeignKey<int>(s => s.StructureID);
+
+            modelBuilder.Entity<MPVEntryFull>()
+              .HasRequired<MPVWay>(s => s.MPVWay).WithMany(g => g.EntriesFull).HasForeignKey<int>(s => s.WayID);
+
+            modelBuilder.Entity<MPVEntryFull>()
+            .HasRequired<MPVEntry>(s => s.MPVEntry1).WithMany(g => g.EntriesFull1).HasForeignKey<int>(s => s.EntryId1);
+            modelBuilder.Entity<MPVEntryFull>()
+            .HasRequired<MPVEntry>(s => s.MPVEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int>(s => s.EntryId2);
+
+            modelBuilder.Entity<MPVEntryFull>()
+            .HasRequired<MPVEntry>(s => s.MPVEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int>(s => s.EntryId3);
+            modelBuilder.Entity<MPVEntryFull>()
+          .HasRequired<MPVEntry>(s => s.MPVEntry4).WithMany(g => g.EntriesFull4).HasForeignKey<int>(s => s.EntryId4);
+
 
 
 

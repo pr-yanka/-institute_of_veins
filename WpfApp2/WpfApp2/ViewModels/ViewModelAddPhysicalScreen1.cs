@@ -29,6 +29,127 @@ namespace WpfApp2.ViewModels
 
 
 
+        #region TEMPV binds
+
+        private ObservableCollection<Visibility> _isVisibleTEMPVleft;
+        public ObservableCollection<Visibility> IsVisibleTEMPVleft
+        {
+            get
+            {
+                return _isVisibleTEMPVleft;
+            }
+            set
+            {
+                _isVisibleTEMPVleft = value;
+                OnPropertyChanged();
+            }
+        }
+        private ObservableCollection<Visibility> _isVisibleTEMPVRight;
+        public ObservableCollection<Visibility> IsVisibleTEMPVRight
+        {
+            get
+            {
+                return _isVisibleTEMPVRight;
+            }
+            set
+            {
+                _isVisibleTEMPVRight = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<string> TEMPVLeftstr
+        {
+            get
+            {
+                return _TEMPVLeftstr;
+            }
+            set
+            {
+                _TEMPVLeftstr = value;
+                OnPropertyChanged();
+            }
+        }
+        public List<string> TEMPVRightstr
+        {
+            get
+            {
+                return _TEMPVRightstr;
+            }
+            set
+            {
+                _TEMPVRightstr = value;
+                OnPropertyChanged();
+            }
+        }
+        public TEMPVEntryFull RightTEMPVEntryFull { get; private set; }
+        public TEMPVEntryFull LeftTEMPVEntryFull { get; private set; }
+
+        private List<string> _TEMPVRightstr;
+        private List<string> _TEMPVLeftstr;
+
+        #endregion
+
+        #region MPV binds
+
+        private ObservableCollection<Visibility> _isVisibleMPVleft;
+        public ObservableCollection<Visibility> IsVisibleMPVleft
+        {
+            get
+            {
+                return _isVisibleMPVleft;
+            }
+            set
+            {
+                _isVisibleMPVleft = value;
+                OnPropertyChanged();
+            }
+        }
+        private ObservableCollection<Visibility> _isVisibleMPVRight;
+        public ObservableCollection<Visibility> IsVisibleMPVRight
+        {
+            get
+            {
+                return _isVisibleMPVRight;
+            }
+            set
+            {
+                _isVisibleMPVRight = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<string> MPVLeftstr
+        {
+            get
+            {
+                return _MPVLeftstr;
+            }
+            set
+            {
+                _MPVLeftstr = value;
+                OnPropertyChanged();
+            }
+        }
+        public List<string> MPVRightstr
+        {
+            get
+            {
+                return _MPVRightstr;
+            }
+            set
+            {
+                _MPVRightstr = value;
+                OnPropertyChanged();
+            }
+        }
+        public MPVEntryFull RightMPVEntryFull { get; private set; }
+        public MPVEntryFull LeftMPVEntryFull { get; private set; }
+
+        private List<string> _MPVRightstr;
+        private List<string> _MPVLeftstr;
+
+        #endregion
 
         #region Perforate_shin binds
 
@@ -563,6 +684,13 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToRightBPVHipCommand { get; protected set; }
         public DelegateCommand ToLeftBPVHipCommand { get; protected set; }
 
+
+        public DelegateCommand ToLeftMPVCommand { get; protected set; }
+        public DelegateCommand ToRightMPVCommand { get; protected set; }
+
+        public DelegateCommand ToLeftTEMPVCommand { get; protected set; }
+        public DelegateCommand ToRightTEMPVCommand { get; protected set; }
+
         public DelegateCommand ToLeftPDSVCommand { get; protected set; }
         public DelegateCommand ToLeftZDSVCommand { get; protected set; }
         public DelegateCommand ToLeftPerforateCommand { get; protected set; }
@@ -576,6 +704,7 @@ namespace WpfApp2.ViewModels
 
         public DelegateCommand ToRightPDSVCommand { get; protected set; }
         public DelegateCommand ToRightZDSVCommand { get; protected set; }
+      
         public DelegateCommand ToRightPerforateCommand { get; protected set; }
         public DelegateCommand ToLeftDiagCommand { get; protected set; }
         public DelegateCommand ToRightDiagCommand { get; protected set; }
@@ -637,6 +766,11 @@ namespace WpfApp2.ViewModels
         public TibiaPerforateViewModel LeftTibiaPerforate { get; protected set; }
         public BPVTibiaViewModel LeftBPVTibia { get; protected set; }
         public SPSViewModel LeftSPS { get; protected set; }
+        public MPVViewModel LeftMPV { get; protected set; }
+        public MPVViewModel RightMPV { get; protected set; }
+
+        public TEMPVViewModel LeftTEMPV { get; protected set; }
+        public TEMPVViewModel RightTEMPV { get; protected set; }
 
         public BPVHipViewModel RightBPVHip { get; protected set; }
         public SFSViewModel RightSFS { get; protected set; }
@@ -678,6 +812,11 @@ namespace WpfApp2.ViewModels
         }
         public ViewModelAddPhysical(NavigationController controller) : base(controller)
         {
+            MPVLeftstr = new List<string>();
+            MPVRightstr = new List<string>();
+            TEMPVLeftstr = new List<string>();
+            TEMPVRightstr = new List<string>();
+
             Perforate_shinLeftstr = new List<string>();
             Perforate_shinRightstr = new List<string>();
             SPSLeftstr = new List<string>();
@@ -698,13 +837,36 @@ namespace WpfApp2.ViewModels
             BPV_TibiaRightstr = new List<string>();
 
             var IsVisibleBPVleftBuf = new ObservableCollection<Visibility>();
-
+            //
+            IsVisibleTEMPVleft = new ObservableCollection<Visibility>();
+            IsVisibleTEMPVRight = new ObservableCollection<Visibility>();
+            IsVisibleMPVleft = new ObservableCollection<Visibility>();
+            IsVisibleMPVRight = new ObservableCollection<Visibility>();
             //
             IsVisiblePerforate_shinleft = new ObservableCollection<Visibility>();
             IsVisiblePerforate_shinRight = new ObservableCollection<Visibility>();
             IsVisibleSPSleft = new ObservableCollection<Visibility>();
             IsVisibleSPSRight = new ObservableCollection<Visibility>();
             //
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleMPVleft.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleMPVRight.Add(Visibility.Collapsed);
+            }
+
+
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleTEMPVleft.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleTEMPVRight.Add(Visibility.Collapsed);
+            }
+
             for (int i = 0; i < 6; ++i)
             {
                 IsVisiblePerforate_shinleft.Add(Visibility.Collapsed);
@@ -1048,7 +1210,59 @@ namespace WpfApp2.ViewModels
             );
 
             //
+            //МПВ
 
+            LeftMPV = new MPVViewModel(Controller, LegSide.Left);
+            RightMPV = new MPVViewModel(Controller, LegSide.Right);
+
+            Controller.AddLegPartVM(LeftMPV);
+            Controller.AddLegPartVM(RightMPV);
+
+            ToLeftMPVCommand = new DelegateCommand(
+                () =>
+                {
+                    MessageBus.Default.Call("RebuildFirstMPV", this, this);
+                    Controller.LegViewModel = LeftMPV;
+                    Controller.NavigateTo<MPVViewModel>(LegSide.Left);
+                }
+            );
+
+            ToRightMPVCommand = new DelegateCommand(
+                () =>
+                {
+                    MessageBus.Default.Call("RebuildFirstMPV", this, this);
+                    Controller.LegViewModel = RightMPV;
+                    Controller.NavigateTo<MPVViewModel>(LegSide.Right);
+                }
+            );
+
+            //ТЕМПВ
+
+            LeftTEMPV = new TEMPVViewModel(Controller, LegSide.Left);
+            RightTEMPV = new TEMPVViewModel(Controller, LegSide.Right);
+
+            Controller.AddLegPartVM(LeftTEMPV);
+            Controller.AddLegPartVM(RightTEMPV);
+
+            ToLeftTEMPVCommand = new DelegateCommand(
+                () =>
+                {
+                    MessageBus.Default.Call("RebuildFirstTEMPV", this, this);
+                    Controller.LegViewModel = LeftTEMPV;
+                    Controller.NavigateTo<TEMPVViewModel>(LegSide.Left);
+                }
+            );
+
+            ToRightTEMPVCommand = new DelegateCommand(
+                () =>
+                {
+                    MessageBus.Default.Call("RebuildFirstTEMPV", this, this);
+                    Controller.LegViewModel = RightTEMPV;
+                    Controller.NavigateTo<TEMPVViewModel>(LegSide.Right);
+                }
+            );
+
+            //
             ToSymptomsAddCommand = new DelegateCommand(
                 () =>
                 {
@@ -1133,6 +1347,11 @@ namespace WpfApp2.ViewModels
             RightPerforate_shinEntryFull = (Perforate_shinEntryFull)SaveFullEntry(RightTibiaPerforate, RightPerforate_shinEntryFull);
             LeftPerforate_shinEntryFull = (Perforate_shinEntryFull)SaveFullEntry(LeftTibiaPerforate, LeftPerforate_shinEntryFull);
 
+            RightTEMPVEntryFull = (TEMPVEntryFull)SaveFullEntry(RightTEMPV, RightTEMPVEntryFull);
+            LeftTEMPVEntryFull = (TEMPVEntryFull)SaveFullEntry(LeftTEMPV, LeftTEMPVEntryFull);
+
+            RightMPVEntryFull = (MPVEntryFull)SaveFullEntry(RightMPV, RightMPVEntryFull);
+            LeftMPVEntryFull = (MPVEntryFull)SaveFullEntry(LeftMPV, LeftMPVEntryFull);
 
         }
 
@@ -1180,6 +1399,15 @@ namespace WpfApp2.ViewModels
                 {
                     Data.Perforate_shinEntries.Add((Perforate_shinEntry)newSFSentry);
                 }
+                else if (Part is MPVViewModel)
+                {
+                    Data.MPVEntries.Add((MPVEntry)newSFSentry);
+                }
+                else if (Part is TEMPVViewModel)
+                {
+                    ((TEMPVEntryFull)LeftSFSEntryFullbuf).FF_Length = Part.FF_length;
+                    Data.TEMPVEntries.Add((TEMPVEntry)newSFSentry);
+                }
 
                 Data.Complete();
                 if (section.ListNumber == 1)
@@ -1211,6 +1439,9 @@ namespace WpfApp2.ViewModels
             {
                 LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
             }
+          
+             
+          
             return LeftSFSEntryFullbuf;
         }
 
@@ -1269,8 +1500,55 @@ namespace WpfApp2.ViewModels
         {
             Type senderType = sender.GetType();
             LegPartViewModel senderVM = (LegPartViewModel)sender;
-            BPVHipEntryFull bpv = new BPVHipEntryFull();
+            //  BPVHipEntryFull bpv = new BPVHipEntryFull();
+            if (senderType == typeof(MPVViewModel))
+                if (senderVM.CurrentLegSide == LegSide.Left)
+                {
+                    MPVLeftstr = new List<string>();
+                    LeftMPVEntryFull = new MPVEntryFull();
+                    //to do тут должно быть сохранение
+                    LeftMPV = (MPVViewModel)sender;
+                    SaveSet result = SaveViewModel(LeftMPV);
+                    MPVLeftstr = result.stringList;
+                    IsVisibleMPVleft = result.listVisibility;
 
+                }
+
+                else
+                {
+                    MPVRightstr = new List<string>();
+                    RightMPVEntryFull = new MPVEntryFull();
+                    //to do тут должно быть сохранение
+                    RightMPV = (MPVViewModel)sender;
+                    SaveSet result = SaveViewModel(RightMPV);
+                    MPVRightstr = result.stringList;
+                    IsVisibleMPVRight = result.listVisibility;
+
+                }
+            if (senderType == typeof(TEMPVViewModel))
+                if (senderVM.CurrentLegSide == LegSide.Left)
+                {
+                    TEMPVLeftstr = new List<string>();
+                    LeftTEMPVEntryFull = new TEMPVEntryFull();
+                    //to do тут должно быть сохранение
+                    LeftTEMPV = (TEMPVViewModel)sender;
+                    SaveSet result = SaveViewModel(LeftTEMPV);
+                    TEMPVLeftstr = result.stringList;
+                    IsVisibleTEMPVleft = result.listVisibility;
+
+                }
+
+                else
+                {
+                    TEMPVRightstr = new List<string>();
+                    RightTEMPVEntryFull = new TEMPVEntryFull();
+                    //to do тут должно быть сохранение
+                    RightTEMPV = (TEMPVViewModel)sender;
+                    SaveSet result = SaveViewModel(RightTEMPV);
+                    TEMPVRightstr = result.stringList;
+                    IsVisibleTEMPVRight = result.listVisibility;
+
+                }
             //sender проверять какого типа
             if (senderType == typeof(SFSViewModel))
                 if (senderVM.CurrentLegSide == LegSide.Left)
@@ -1297,7 +1575,7 @@ namespace WpfApp2.ViewModels
 
                 }
 
-//
+            //
 
 
             if (senderType == typeof(SPSViewModel))

@@ -7,6 +7,7 @@ using WpfApp2.Db.Models.LegParts;
 using WpfApp2.Db.Models.LegParts.BPV_Tibia;
 using WpfApp2.Db.Models.LegParts.BPV_Tibia_Tibia;
 using WpfApp2.Db.Models.LegParts.BPVHip;
+using WpfApp2.Db.Models.LegParts.MPV;
 using WpfApp2.Db.Models.LegParts.PDSVHip;
 using WpfApp2.Db.Models.LegParts.Perforate_hip;
 using WpfApp2.Db.Models.LegParts.Perforate_hip_Tibia;
@@ -14,12 +15,21 @@ using WpfApp2.Db.Models.LegParts.Perforate_shin;
 using WpfApp2.Db.Models.LegParts.Perforate_shin_Tibia;
 using WpfApp2.Db.Models.LegParts.SFSHip;
 using WpfApp2.Db.Models.LegParts.SPSHip;
+using WpfApp2.Db.Models.LegParts.TEMPV;
 using WpfApp2.Db.Models.LegParts.ZDSV;
 
 namespace WpfApp2.Db.Models
 {
     public class UnitOfWork : IUnitOfWork
     {
+        public TEMPVRepository TEMPV { get; }
+        public TEMPVComboRepository TEMPVCombos { get; }
+        public TEMPVEntryRepository TEMPVEntries { get; }
+
+        public MPVRepository MPV { get; }
+        public MPVComboRepository MPVCombos { get; }
+        public MPVEntryRepository MPVEntries { get; }
+
 
         public Perforate_shinRepository Perforate_shin { get; }
         public Perforate_shinComboRepository Perforate_shinCombos { get; }
@@ -104,7 +114,8 @@ namespace WpfApp2.Db.Models
         public AnestethicRepository Anestethic { get; }
         public DoctorRepository Doctor { get; }
 
-
+        public TEMPVWayRepository TEMPVWay { get; }
+        public MPVWayRepository MPVWay { get; }
 
         public MetricsRepository Metrics { get; }
         public PatientsRepository Patients { get; }
@@ -117,6 +128,20 @@ namespace WpfApp2.Db.Models
         public UnitOfWork(MySqlContext context)
         {
             _context = context;
+
+
+            TEMPVWay = new TEMPVWayRepository(_context);
+            MPVWay = new MPVWayRepository(_context);
+            TEMPV = new TEMPVRepository(_context);
+            TEMPVCombos = new TEMPVComboRepository(_context);
+            TEMPVEntries = new TEMPVEntryRepository(_context);
+            MPV = new MPVRepository(_context);
+            MPVCombos = new MPVComboRepository(_context);
+            MPVEntries = new MPVEntryRepository(_context);
+
+
+
+
 
             Perforate_shin = new Perforate_shinRepository(_context);
             Perforate_shinCombos = new Perforate_shinComboRepository(_context);

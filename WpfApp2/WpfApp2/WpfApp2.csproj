@@ -205,6 +205,14 @@
     <Compile Include="Db\Models\LegParts\BPV_Tibia\BPV_TibiaEntryRepository.cs" />
     <Compile Include="Db\Models\LegParts\BPV_Tibia\BPV_TibiaRepository.cs" />
     <Compile Include="Db\Models\LegParts\da_Way.cs" />
+    <Compile Include="Db\Models\LegParts\TEMPV\TEMPV.cs" />
+    <Compile Include="Db\Models\LegParts\TEMPV\TEMPVComboRepository.cs" />
+    <Compile Include="Db\Models\LegParts\TEMPV\TEMPVEntryRepository.cs" />
+    <Compile Include="Db\Models\LegParts\TEMPV\TEMPVRepository.cs" />
+    <Compile Include="Db\Models\LegParts\MPV\MPVComboRepository.cs" />
+    <Compile Include="Db\Models\LegParts\MPV\MPV.cs" />
+    <Compile Include="Db\Models\LegParts\MPV\MPVEntryRepository.cs" />
+    <Compile Include="Db\Models\LegParts\MPV\MPVRepository.cs" />
     <Compile Include="Db\Models\LegParts\PDSV\PDSVComboRepository.cs" />
     <Compile Include="Db\Models\LegParts\PDSV\PDSVHip.cs" />
     <Compile Include="Db\Models\LegParts\PDSV\PDSVHipEntryRepository.cs" />
@@ -304,6 +312,8 @@
     <Compile Include="LegParts\VMs\BPVTibiaViewModel.cs" />
     <Compile Include="LegParts\VMs\HipPerforateViewModel.cs" />
     <Compile Include="LegParts\VMs\HipPerforateSectionViewModel.cs" />
+    <Compile Include="LegParts\VMs\TEMPVViewModel.cs" />
+    <Compile Include="LegParts\VMs\TEMPVSectionViewModel.cs" />
     <Compile Include="LegParts\VMs\PDSVSectionViewModel.cs" />
     <Compile Include="LegParts\VMs\PDSVViewModel.cs" />
     <Compile Include="LegParts\VMs\SFSSectionViewModel.cs" />
@@ -321,6 +331,8 @@
       <DependentUpon>TestUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="LegParts\VMs\MPVSectionViewModel.cs" />
+    <Compile Include="LegParts\VMs\MPVViewModel.cs" />
     <Compile Include="ViewModels\Panels\PatologyTypePanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\OperationTypePanelViewModel.cs" />
     <Compile Include="ViewModels\ViewBaseModel.cs" />
@@ -408,7 +420,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="LegParts\Templates\TEMPVTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="LegParts\Templates\PDSVHipTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="LegParts\Templates\MPVTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

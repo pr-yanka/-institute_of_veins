@@ -66,7 +66,7 @@
                                 </StackPanel>
                             </Expander.Header>
                         <StackPanel Orientation="Vertical">
-                            <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding LeftBPVHip.SelectedBpvWayType.Name}" FontSize="12"/></TextBlock>
+                            <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding LeftBPVHip.SelectedWayType.Name}" FontSize="12"/></TextBlock>
 
                             <TextBlock Visibility="{Binding IsVisibleBPVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvLeftstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleBPVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvLeftstr[1]}"></TextBlock>
@@ -87,7 +87,7 @@
                                 </StackPanel>
                             </Expander.Header>
                             <StackPanel Orientation="Vertical">
-                            <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding LeftPDSV.SelectedPDSVWayType.Name}" FontSize="12"/></TextBlock>
+                            <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding LeftPDSV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
 
                             <TextBlock Visibility="{Binding IsVisiblePDSVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PDSVLeftstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisiblePDSVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PDSVLeftstr[1]}"></TextBlock>
@@ -183,14 +183,44 @@
                         </StackPanel>
                         </Expander>
                         <Separator/>
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="IX. МПВ (Малая подкожная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttfonPDSV1" Command="{Binding ToLeftMPVCommand}" Content="{Binding Path=LeftMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding LeftMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
 
-                        <Expander Header="IX. МПВ (Малая подкожная вена)" FontSize="12">
-                            <Grid Background="#FFE5E5E5"/>
-                        </Expander>
-                        <Separator Margin="10,0,10,0"/>
-                        <Expander Header="X. ТЕ МПВ (Бедренное продолжение малой подкожной вены)*" FontSize="12">
-                            <Grid Background="#FFE5E5E5"/>
-                        </Expander>
+                            <TextBlock Visibility="{Binding IsVisibleMPVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding MPVLeftstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleMPVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding MPVLeftstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleMPVleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding MPVLeftstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleMPVleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding MPVLeftstr[3]}"></TextBlock>
+                           
+                        </StackPanel>
+                    </Expander>
+                    <Separator/>
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="X. ТЕ МПВ (Бедренное продолжение малой подкожной вены)*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttfonвPDSV1" Command="{Binding ToLeftTEMPVCommand}" Content="{Binding Path=LeftTEMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding LeftTEMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
+                            <TextBlock  HorizontalAlignment="Center" Text="Протяжность: "> <TextBlock  Text="{Binding LeftTEMPV.FF_length}" FontSize="12"/></TextBlock>
+
+                            <TextBlock Visibility="{Binding IsVisibleTEMPVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding TEMPVLeftstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleTEMPVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding TEMPVLeftstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleTEMPVleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding TEMPVLeftstr[2]}"></TextBlock>
+
+
+                        </StackPanel>
+                    </Expander>
+                    <Separator/>
+                   
                         <Separator Margin="0,0,0,0"/>
                         <Expander Header="XI. ППВ (Подколенная перфорантная вена)*" FontSize="12">
                             <Grid Background="#FFE5E5E5"/>
@@ -240,7 +270,7 @@
                             </StackPanel>
                             </Expander.Header>
                             <StackPanel Orientation="Vertical">
-                            <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding RightBPVHip.SelectedBpvWayType.Name}" FontSize="12"/></TextBlock>
+                            <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding RightBPVHip.SelectedWayType.Name}" FontSize="12"/></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleBPVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvRightstr[0]}"></TextBlock>
 
                             <TextBlock Visibility="{Binding IsVisibleBPVRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvRightstr[1]}"></TextBlock>
@@ -261,7 +291,7 @@
                                 </StackPanel>
                             </Expander.Header>
                             <StackPanel Orientation="Vertical">
-                            <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding RightPDSV.SelectedPDSVWayType.Name}" FontSize="12"/></TextBlock>
+                            <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding RightPDSV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
 
                             <TextBlock Visibility="{Binding IsVisiblePDSVright[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PDSVRightstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisiblePDSVright[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PDSVRightstr[1]}"></TextBlock>
@@ -358,6 +388,43 @@
                            
                         </StackPanel>
 
+                    </Expander>
+                    <Separator/>
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="IX. МПВ (Малая подкожная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="butаtfonPDSV1" Command="{Binding ToRightMPVCommand}" Content="{Binding Path=RightMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding RightMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
+
+                            <TextBlock Visibility="{Binding IsVisibleMPVRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding MPVRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleMPVRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding MPVRightstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleMPVRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding MPVRightstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleMPVRight[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding MPVRightstr[3]}"></TextBlock>
+
+                        </StackPanel>
+                    </Expander>
+                    <Separator/>
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="X. ТЕ МПВ (Бедренное продолжение малой подкожной вены)*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="butаtfonвPDSV1" Command="{Binding ToRightTEMPVCommand}" Content="{Binding Path=RightTEMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding RightTEMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
+                            <TextBlock  HorizontalAlignment="Center" Text="Протяжность: "> <TextBlock  Text="{Binding RightTEMPV.FF_length}" FontSize="12"/></TextBlock>
+
+                            <TextBlock Visibility="{Binding IsVisibleTEMPVRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding TEMPVRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleTEMPVRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding TEMPVRightstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleTEMPVRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding TEMPVRightstr[2]}"></TextBlock>
+
+
+                        </StackPanel>
                     </Expander>
                     <Separator/>
                     <Separator Margin="10,0,10,0"/>

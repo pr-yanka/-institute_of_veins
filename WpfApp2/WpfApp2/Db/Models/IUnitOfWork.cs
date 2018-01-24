@@ -7,6 +7,7 @@ using WpfApp2.Db.Models.LegParts;
 using WpfApp2.Db.Models.LegParts.BPV_Tibia;
 using WpfApp2.Db.Models.LegParts.BPV_Tibia_Tibia;
 using WpfApp2.Db.Models.LegParts.BPVHip;
+using WpfApp2.Db.Models.LegParts.MPV;
 using WpfApp2.Db.Models.LegParts.PDSVHip;
 using WpfApp2.Db.Models.LegParts.Perforate_hip;
 using WpfApp2.Db.Models.LegParts.Perforate_hip_Tibia;
@@ -14,12 +15,23 @@ using WpfApp2.Db.Models.LegParts.Perforate_shin;
 using WpfApp2.Db.Models.LegParts.Perforate_shin_Tibia;
 using WpfApp2.Db.Models.LegParts.SFSHip;
 using WpfApp2.Db.Models.LegParts.SPSHip;
+using WpfApp2.Db.Models.LegParts.TEMPV;
 using WpfApp2.Db.Models.LegParts.ZDSV;
 
 namespace WpfApp2.Db.Models
 {
     public interface IUnitOfWork : IDisposable
     {
+        TEMPVRepository TEMPV { get; }
+        TEMPVComboRepository TEMPVCombos { get; }
+        TEMPVEntryRepository TEMPVEntries { get; }
+
+        TEMPVWayRepository TEMPVWay { get; }
+        MPVWayRepository MPVWay { get; }
+
+        MPVRepository MPV { get; }
+        MPVComboRepository MPVCombos { get; }
+        MPVEntryRepository MPVEntries { get; }
 
         Perforate_shinRepository Perforate_shin { get; }
         Perforate_shinComboRepository Perforate_shinCombos { get; }
