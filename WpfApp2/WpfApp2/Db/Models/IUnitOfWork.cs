@@ -26,6 +26,8 @@ namespace WpfApp2.Db.Models
         TEMPVComboRepository TEMPVCombos { get; }
         TEMPVEntryRepository TEMPVEntries { get; }
 
+        LettersRepository Letters { get; }
+
         TEMPVWayRepository TEMPVWay { get; }
         MPVWayRepository MPVWay { get; }
 

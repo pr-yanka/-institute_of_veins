@@ -22,6 +22,7 @@ namespace WpfApp2.Db.Models
 {
     public class UnitOfWork : IUnitOfWork
     {
+        public LettersRepository Letters { get; }
         public TEMPVRepository TEMPV { get; }
         public TEMPVComboRepository TEMPVCombos { get; }
         public TEMPVEntryRepository TEMPVEntries { get; }
@@ -129,7 +130,7 @@ namespace WpfApp2.Db.Models
         {
             _context = context;
 
-
+            Letters = new LettersRepository(_context);
             TEMPVWay = new TEMPVWayRepository(_context);
             MPVWay = new MPVWayRepository(_context);
             TEMPV = new TEMPVRepository(_context);

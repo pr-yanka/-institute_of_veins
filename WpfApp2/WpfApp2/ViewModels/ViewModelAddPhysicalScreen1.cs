@@ -26,8 +26,66 @@ namespace WpfApp2.ViewModels
             //если PropertyChanged не нулевое - оно будет разбужено
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        public string LeftAdditionalText { get; set; }
+        public string RightAdditionalText { get; set; }
+        #region CEAP binds
 
+        private ObservableCollection<Visibility> _isVisibleCEAPleft;
+        public ObservableCollection<Visibility> IsVisibleCEAPleft
+        {
+            get
+            {
+                return _isVisibleCEAPleft;
+            }
+            set
+            {
+                _isVisibleCEAPleft = value;
+                OnPropertyChanged();
+            }
+        }
+        private ObservableCollection<Visibility> _isVisibleCEAPRight;
+        public ObservableCollection<Visibility> IsVisibleCEAPRight
+        {
+            get
+            {
+                return _isVisibleCEAPRight;
+            }
+            set
+            {
+                _isVisibleCEAPRight = value;
+                OnPropertyChanged();
+            }
+        }
 
+        public List<string> CEAPLeftstr
+        {
+            get
+            {
+                return _CEAPLeftstr;
+            }
+            set
+            {
+                _CEAPLeftstr = value;
+                OnPropertyChanged();
+            }
+        }
+        public List<string> CEAPRightstr
+        {
+            get
+            {
+                return _CEAPRightstr;
+            }
+            set
+            {
+                _CEAPRightstr = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private List<string> _CEAPRightstr;
+        private List<string> _CEAPLeftstr;
+
+        #endregion
 
         #region TEMPV binds
 
@@ -451,6 +509,7 @@ namespace WpfApp2.ViewModels
         }
 
         #endregion
+
         #region ZDSV binds
 
         private ObservableCollection<Visibility> _isVisibleZDSVright;
@@ -510,6 +569,7 @@ namespace WpfApp2.ViewModels
             }
         }
         #endregion
+
         #region PerforateHIp binds
 
         private ObservableCollection<Visibility> _isVisiblePerforateHIPright;
@@ -569,6 +629,7 @@ namespace WpfApp2.ViewModels
             }
         }
         #endregion
+
         #region Bpv binds
         public BPVHipEntryFull LeftBPVEntryFull { get; protected set; }
         public BPVHipEntryFull RightBPVEntryFull { get; protected set; }
@@ -704,7 +765,7 @@ namespace WpfApp2.ViewModels
 
         public DelegateCommand ToRightPDSVCommand { get; protected set; }
         public DelegateCommand ToRightZDSVCommand { get; protected set; }
-      
+
         public DelegateCommand ToRightPerforateCommand { get; protected set; }
         public DelegateCommand ToLeftDiagCommand { get; protected set; }
         public DelegateCommand ToRightDiagCommand { get; protected set; }
@@ -774,13 +835,16 @@ namespace WpfApp2.ViewModels
 
         public BPVHipViewModel RightBPVHip { get; protected set; }
         public SFSViewModel RightSFS { get; protected set; }
-
+        public LettersViewModel LeftCEAR { get; protected set; }
+        public LettersViewModel RightCEAR { get; protected set; }
         public PDSVViewModel RightPDSV { get; protected set; }
         public ZDSVViewModel RightZDSV { get; protected set; }
         public HipPerforateViewModel RightPerforate { get; protected set; }
         public TibiaPerforateViewModel RightTibiaPerforate { get; protected set; }
         public BPVTibiaViewModel RightBPVTibia { get; protected set; }
         public SPSViewModel RightSPS { get; protected set; }
+        public DelegateCommand ToLeftCEARCommand { get; private set; }
+        public DelegateCommand ToRightCEARCommand { get; private set; }
 
         private void FinishAdding(object parameter)
         {
@@ -812,6 +876,8 @@ namespace WpfApp2.ViewModels
         }
         public ViewModelAddPhysical(NavigationController controller) : base(controller)
         {
+            CEAPLeftstr = new List<string>();
+            CEAPRightstr = new List<string>();
             MPVLeftstr = new List<string>();
             MPVRightstr = new List<string>();
             TEMPVLeftstr = new List<string>();
@@ -836,6 +902,9 @@ namespace WpfApp2.ViewModels
             BPV_TibiaLeftstr = new List<string>();
             BPV_TibiaRightstr = new List<string>();
 
+            IsVisibleCEAPleft = new ObservableCollection<Visibility>();
+            IsVisibleCEAPRight = new ObservableCollection<Visibility>();
+
             var IsVisibleBPVleftBuf = new ObservableCollection<Visibility>();
             //
             IsVisibleTEMPVleft = new ObservableCollection<Visibility>();
@@ -848,6 +917,14 @@ namespace WpfApp2.ViewModels
             IsVisibleSPSleft = new ObservableCollection<Visibility>();
             IsVisibleSPSRight = new ObservableCollection<Visibility>();
             //
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleCEAPleft.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleCEAPRight.Add(Visibility.Collapsed);
+            }
             for (int i = 0; i < 6; ++i)
             {
                 IsVisibleMPVleft.Add(Visibility.Collapsed);
@@ -1262,6 +1339,32 @@ namespace WpfApp2.ViewModels
                 }
             );
 
+            // //CEAP
+
+            LeftCEAR = new LettersViewModel(Controller, LegSide.Left);
+            RightCEAR = new LettersViewModel(Controller, LegSide.Right);
+
+            Controller.AddLegPartVM(LeftCEAR);
+            Controller.AddLegPartVM(RightCEAR);
+
+            ToLeftCEARCommand = new DelegateCommand(
+                () =>
+                {
+                    //MessageBus.Default.Call("RebuildFirstTEMPV", this, this);
+                    Controller.LegViewModel = LeftCEAR;
+                    Controller.NavigateTo<LettersViewModel>(LegSide.Left);
+                }
+            );
+
+            ToRightCEARCommand = new DelegateCommand(
+                () =>
+                {
+                    //MessageBus.Default.Call("RebuildFirstTEMPV", this, this);
+                    Controller.LegViewModel = RightCEAR;
+                    Controller.NavigateTo<LettersViewModel>(LegSide.Right);
+                }
+            );
+
             //
             ToSymptomsAddCommand = new DelegateCommand(
                 () =>
@@ -1439,9 +1542,9 @@ namespace WpfApp2.ViewModels
             {
                 LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
             }
-          
-             
-          
+
+
+
             return LeftSFSEntryFullbuf;
         }
 
@@ -1744,6 +1847,47 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(RightBPVTibia);
                     BPV_TibiaRightstr = result.stringList;
                     IsVisibleBPV_Tibiaright = result.listVisibility;
+
+                }
+
+            if (senderType == typeof(LettersViewModel))
+                if (senderVM.CurrentLegSide == LegSide.Left)
+                {
+
+                    IsVisibleCEAPleft = new ObservableCollection<Visibility>();
+                    LeftCEAR = (LettersViewModel)sender;
+                    CEAPLeftstr = new List<string>();
+                    foreach (var leter in LeftCEAR.LegSections)
+                    {
+                        if (leter.SelectedValue != null)
+                        {
+                            IsVisibleCEAPleft.Add(Visibility.Visible);
+                            CEAPLeftstr.Add(leter.SelectedValue.Leter + leter.SelectedValue.Text1);
+                        }else
+                        {
+                            CEAPLeftstr.Add("");
+                                IsVisibleCEAPleft.Add(Visibility.Collapsed); }
+                    }
+
+
+
+                }
+                else
+                {
+                    IsVisibleCEAPRight = new ObservableCollection<Visibility>();
+                    RightCEAR = (LettersViewModel)sender;
+                    CEAPRightstr = new List<string>();
+                    foreach (var leter in RightCEAR.LegSections)
+                    {
+                        if (leter.SelectedValue != null)
+                        {
+                            IsVisibleCEAPRight.Add(Visibility.Visible);
+                            CEAPRightstr.Add(leter.SelectedValue.Leter + leter.SelectedValue.Text1);
+                        }
+                        else
+                        { IsVisibleCEAPRight.Add(Visibility.Collapsed); }
+                    }
+
 
                 }
             //

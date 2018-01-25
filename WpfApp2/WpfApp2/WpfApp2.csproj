@@ -232,6 +232,7 @@
     <Compile Include="Db\Models\LegParts\SPS\SPSComboRepository.cs" />
     <Compile Include="Db\Models\LegParts\SPS\SPSHipEntryRepository.cs" />
     <Compile Include="Db\Models\LegParts\SPS\SPSHipRepository.cs" />
+    <Compile Include="Db\Models\LegParts\Letters.cs" />
     <Compile Include="Db\Models\LegParts\ZDSV\ZDSVComboRepository.cs" />
     <Compile Include="Db\Models\LegParts\ZDSV\ZDSV.cs" />
     <Compile Include="Db\Models\LegParts\ZDSV\ZDSVEntryRepository.cs" />
@@ -301,12 +302,14 @@
     <Compile Include="Dialogs\DialogConfirmStructure\DialogConfirmStructureViewModel.cs" />
     <Compile Include="FloatToString.cs" />
     <Compile Include="LegParts\LegPartViewModel.cs" />
+    <Compile Include="LegParts\LettersSectionViewModel.cs" />
     <Compile Include="LegParts\LegSectionViewModel.cs" />
     <Compile Include="LegParts\LegSide.cs" />
     <Compile Include="LegParts\SizePanelViewModel.cs" />
     <Compile Include="LegParts\StoryboardHelper.cs" />
     <Compile Include="LegParts\Templates\LegTemplateSelector.cs" />
     <Compile Include="LegParts\VMs\BPVHipSectionViewModel.cs" />
+    <Compile Include="LegParts\VMs\LettersViewModel.cs" />
     <Compile Include="LegParts\VMs\BPVHipViewModel.cs" />
     <Compile Include="LegParts\VMs\BPVTibiaSectionViewModel.cs" />
     <Compile Include="LegParts\VMs\BPVTibiaViewModel.cs" />

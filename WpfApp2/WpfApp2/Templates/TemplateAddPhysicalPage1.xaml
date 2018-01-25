@@ -220,8 +220,35 @@
                         </StackPanel>
                     </Expander>
                     <Separator/>
-                   
-                        <Separator Margin="0,0,0,0"/>
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="CEAP" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="butаtfohnвPDSV1" Command="{Binding ToLeftCEARCommand}" Content="{Binding Path=LeftCEAR.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+
+                            <TextBlock Visibility="{Binding IsVisibleCEAPleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding CEAPLeftstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleCEAPleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding CEAPLeftstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleCEAPleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding CEAPLeftstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleCEAPleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding CEAPLeftstr[3]}"></TextBlock>
+
+                        </StackPanel>
+                    </Expander>
+                    <Separator/>
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="XII. Примечание *" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                          </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+                            <TextBox Width="470"  Height="50"  HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding LeftAdditionalText}"></TextBox>
+                        </StackPanel>
+                    </Expander>
+                    <Separator/>
+                    <Separator Margin="0,0,0,0"/>
                         <Expander Header="XI. ППВ (Подколенная перфорантная вена)*" FontSize="12">
                             <Grid Background="#FFE5E5E5"/>
                         </Expander>
@@ -424,6 +451,34 @@
                             <TextBlock Visibility="{Binding IsVisibleTEMPVRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding TEMPVRightstr[2]}"></TextBlock>
 
 
+                        </StackPanel>
+                    </Expander>
+                    <Separator/>
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="CEAP" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="butаtfohnвPfDSV1" Command="{Binding ToRightCEARCommand}" Content="{Binding Path=RightCEAR.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+                     
+                            <TextBlock Visibility="{Binding IsVisibleCEAPRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding CEAPRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleCEAPRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding CEAPRightstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleCEAPRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding CEAPRightstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleCEAPRight[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding CEAPRightstr[3]}"></TextBlock>
+
+                        </StackPanel>
+                    </Expander>
+                    <Separator/>
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="XII. Примечание *" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+                            <TextBox  Height="50" Width="470"  HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding RightAdditionalText}"></TextBox>
                         </StackPanel>
                     </Expander>
                     <Separator/>

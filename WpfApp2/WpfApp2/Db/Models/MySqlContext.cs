@@ -12,6 +12,7 @@ namespace WpfApp2.Db.Models
 {
     public class MySqlContext : DbContext
     {
+        public DbSet<Letters> Letters { get; set; }
 
         public DbSet<TEMPVWay> TEMPVWay { get; set; }
         public DbSet<MPVWay> MPVWay { get; set; }
