@@ -13,6 +13,7 @@ using WpfApp2.Db.Models.LegParts.Perforate_hip;
 using WpfApp2.Db.Models.LegParts.Perforate_hip_Tibia;
 using WpfApp2.Db.Models.LegParts.Perforate_shin;
 using WpfApp2.Db.Models.LegParts.Perforate_shin_Tibia;
+using WpfApp2.Db.Models.LegParts.PPV;
 using WpfApp2.Db.Models.LegParts.SFSHip;
 using WpfApp2.Db.Models.LegParts.SPSHip;
 using WpfApp2.Db.Models.LegParts.TEMPV;
@@ -22,6 +23,9 @@ namespace WpfApp2.Db.Models
 {
     public class UnitOfWork : IUnitOfWork
     {
+        public PPVRepository PPV { get; }
+        public PPVComboRepository PPVCombos { get; }
+        public PPVEntryRepository PPVEntries { get; }
         public LettersRepository Letters { get; }
         public TEMPVRepository TEMPV { get; }
         public TEMPVComboRepository TEMPVCombos { get; }
@@ -129,6 +133,10 @@ namespace WpfApp2.Db.Models
         public UnitOfWork(MySqlContext context)
         {
             _context = context;
+
+            PPV = new PPVRepository(_context);
+            PPVCombos = new PPVComboRepository(_context);
+            PPVEntries = new PPVEntryRepository(_context);
 
             Letters = new LettersRepository(_context);
             TEMPVWay = new TEMPVWayRepository(_context);

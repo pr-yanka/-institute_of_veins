@@ -59,6 +59,9 @@ namespace WpfApp2.LegParts.Templates
             if (item.GetType() == typeof(TEMPVViewModel))
                 return TEMPVTemplate;
 
+            if (item.GetType() == typeof(PPVViewModel))
+                return EmptyTemplate;
+            
 
             return null;
         }

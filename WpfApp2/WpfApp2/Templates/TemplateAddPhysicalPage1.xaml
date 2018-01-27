@@ -82,7 +82,7 @@
                         <Expander FontSize="14">
                             <Expander.Header>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="III. ПДСВ (Передняя добавочная сафенная вена)*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <TextBlock  TextDecorations="Underline" Text="III. ПДСВ (Передняя добавочная сафенная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
                                     <Button x:Name="buttonPDSV1" Command="{Binding ToLeftPDSVCommand}" Content="{Binding Path=LeftPDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
                                 </StackPanel>
                             </Expander.Header>
@@ -100,7 +100,7 @@
                         <Expander FontSize="14">
                             <Expander.Header>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="IV. ЗДСВ (Задняя добавочная сафенная вена)*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <TextBlock TextDecorations="Underline" Text="IV. ЗДСВ (Задняя добавочная сафенная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
                                     <Button x:Name="buttonZDSV1" Command="{Binding ToLeftZDSVCommand}" Content="{Binding Path=LeftZDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
                                 </StackPanel>
                             </Expander.Header>
@@ -116,7 +116,7 @@
                         <Expander FontSize="14">
                             <Expander.Header>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="V. Перфоранты бедра и несафенные вены*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <TextBlock TextDecorations="Underline" Text="V. Перфоранты бедра и несафенные вены" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
                                     <Button x:Name="buttonPerforate1" Command="{Binding ToLeftPerforateCommand}" Content="{Binding Path=LeftPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
                                 </StackPanel>
                             </Expander.Header>
@@ -152,7 +152,7 @@
                         <Expander FontSize="14">
                             <Expander.Header>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="VII. Перфоранты голени*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <TextBlock TextDecorations="Underline" Text="VII. Перфоранты голени" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
                                     <Button x:Name="buttonPerforateTibia1" Command="{Binding ToLeftTibiaPerforateCommand}" Content="{Binding Path=LeftTibiaPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
                                 </StackPanel>
                             </Expander.Header>
@@ -204,7 +204,7 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="X. ТЕ МПВ (Бедренное продолжение малой подкожной вены)*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <TextBlock TextWrapping="Wrap" TextDecorations="Underline" Text="X. ТЕ МПВ (Бедренное продолжение малой подкожной вены)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
                                 <Button x:Name="buttfonвPDSV1" Command="{Binding ToLeftTEMPVCommand}" Content="{Binding Path=LeftTEMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
@@ -216,6 +216,21 @@
                             <TextBlock Visibility="{Binding IsVisibleTEMPVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding TEMPVLeftstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleTEMPVleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding TEMPVLeftstr[2]}"></TextBlock>
 
+
+                        </StackPanel>
+                    </Expander>
+                    <Separator/>
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock TextDecorations="Underline" Text="XI. ППВ (Подколенная перфорантная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="butаtffohnвPDSV1" Command="{Binding ToLeftPPVCommand}" Content="{Binding Path=LeftPPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+
+                            <TextBlock Visibility="{Binding IsVisiblePPVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PPVLeftstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePPVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PPVLeftstr[1]}"></TextBlock>
 
                         </StackPanel>
                     </Expander>
@@ -240,7 +255,7 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="XII. Примечание *" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <TextBlock TextDecorations="Underline" Text="XII. Примечание" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
                           </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
@@ -248,22 +263,13 @@
                         </StackPanel>
                     </Expander>
                     <Separator/>
-                    <Separator Margin="0,0,0,0"/>
-                        <Expander Header="XI. ППВ (Подколенная перфорантная вена)*" FontSize="12">
-                            <Grid Background="#FFE5E5E5"/>
-                        </Expander>
-                        <Separator Margin="10,0,10,0"/>
-                        <Expander Header="XII. Примечание *" FontSize="12" Height="101">
-                            <Grid Background="#FFE5E5E5"/>
-                        </Expander>
-                        <Separator Margin="10,0,10,0"/>
+                  
+                    <Separator Margin="10,0,10,0"/>
                         <Expander Header="XIII. Глубокие вены" FontSize="12">
                             <Grid Background="#FFE5E5E5"/>
                         </Expander>
-                        <Separator Margin="10,0,10,0"/>
-                        <Expander Header="XIV. Диагноз" FontSize="12">
-                            <Grid Background="#FFE5E5E5"/>
-                        </Expander>
+
+
                     </StackPanel>
                 </ScrollViewer>
                 <ScrollViewer Margin="518,190,10,320" RenderTransformOrigin="0.5,0.5" FontSize="16">
@@ -298,7 +304,7 @@
                             </Expander.Header>
                             <StackPanel Orientation="Vertical">
                             <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding RightBPVHip.SelectedWayType.Name}" FontSize="12"/></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleBPVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPVRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvRightstr[0]}"></TextBlock>
 
                             <TextBlock Visibility="{Binding IsVisibleBPVRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvRightstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleBPVRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvRightstr[2]}"></TextBlock>
@@ -313,7 +319,7 @@
                         <Expander FontSize="14">
                             <Expander.Header>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="III. ПДСВ (Передняя добавочная сафенная вена)*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <TextBlock TextDecorations="Underline" Text="III. ПДСВ (Передняя добавочная сафенная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
                                     <Button x:Name="buttonPDSV2" Command="{Binding ToRightPDSVCommand}" Content="{Binding Path=RightPDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
                                 </StackPanel>
                             </Expander.Header>
@@ -331,7 +337,7 @@
                         <Expander FontSize="14">
                             <Expander.Header>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="IV. ЗДСВ (Задняя добавочная сафенная вена)*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <TextBlock TextDecorations="Underline" Text="IV. ЗДСВ (Задняя добавочная сафенная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
                                     <Button x:Name="buttonZDSV2" Command="{Binding ToRightZDSVCommand}" Content="{Binding Path=RightZDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
                                 </StackPanel>
                             </Expander.Header>
@@ -347,7 +353,7 @@
                         <Expander FontSize="14">
                             <Expander.Header>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="V. Перфоранты бедра и несафенные вены*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <TextBlock TextDecorations="Underline" Text="V. Перфоранты бедра и несафенные вены" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
                                     <Button x:Name="buttonPerforate2" Command="{Binding ToRightPerforateCommand}" Content="{Binding Path=RightPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
                                 </StackPanel>
                             </Expander.Header>
@@ -384,7 +390,7 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="VII. Перфоранты голени*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <TextBlock TextDecorations="Underline" Text="VII. Перфоранты голени" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
                                 <Button x:Name="buttondPeвrforate2" Command="{Binding ToRightTibiaPerforateCommand}" Content="{Binding Path=RightTibiaPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
@@ -438,7 +444,7 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="X. ТЕ МПВ (Бедренное продолжение малой подкожной вены)*" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <TextBlock TextDecorations="Underline" Text="X. ТЕ МПВ (Бедренное продолжение малой подкожной вены)" TextWrapping="Wrap" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
                                 <Button x:Name="butаtfonвPDSV1" Command="{Binding ToRightTEMPVCommand}" Content="{Binding Path=RightTEMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
@@ -457,6 +463,23 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
+                                <TextBlock TextDecorations="Underline" Text="XI. ППВ (Подколенная перфорантная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0">
+                                </TextBlock>
+                                <Button x:Name="butdsаtfohnвPfDSV1" Command="{Binding ToRightPPVCommand}" Content="{Binding Path=RightPPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+
+                            <TextBlock Visibility="{Binding IsVisiblePPVRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PPVRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePPVRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PPVRightstr[1]}"></TextBlock>
+
+                        </StackPanel>
+                    </Expander>
+
+                    <Separator/>
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="CEAP" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
                                 <Button x:Name="butаtfohnвPfDSV1" Command="{Binding ToRightCEARCommand}" Content="{Binding Path=RightCEAR.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
                             </StackPanel>
@@ -471,10 +494,12 @@
                         </StackPanel>
                     </Expander>
                     <Separator/>
+                   
+                   
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="XII. Примечание *" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <TextBlock TextDecorations="Underline" Text="XII. Примечание" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
@@ -482,49 +507,12 @@
                         </StackPanel>
                     </Expander>
                     <Separator/>
-                    <Separator Margin="10,0,10,0"/>
-                   
-                        
-                        <Separator Margin="10,0,10,0"/>
-                        <Expander Header="" FontSize="12">
-                            <Grid Background="#FFE5E5E5"/>
-                        </Expander>
-                        <Separator Margin="10,0,10,0"/>
-                        <Expander Header="IX. МПВ (Малая подкожная вена)" FontSize="12">
-                            <Grid Background="#FFE5E5E5"/>
-                        </Expander>
-                        <Separator Margin="0,0,0,0"/>
-                        <Expander Header="X. ТЕ МПВ (Бедренное продолжение малой подкожной вены)*" FontSize="12">
-                            <Grid Background="#FFE5E5E5"/>
-                        </Expander>
-                        <Separator Margin="0,0,0,0"/>
-                        <Expander Header="XI. ППВ (Подколенная перфорантная вена)*" FontSize="12">
-                            <Grid Background="#FFE5E5E5"/>
-                        </Expander>
-                        <Separator Margin="10,0,10,0"/>
-                        <Expander Header="XII. Примечание *" FontSize="12">
-                            <Grid Background="#FFE5E5E5"/>
-                        </Expander>
+                
                         <Separator Margin="10,0,10,0"/>
                         <Expander Header="XIII. Глубокие вены" FontSize="12">
                             <Grid Background="#FFE5E5E5"/>
                         </Expander>
-                        <Separator Margin="10,0,10,0"/>
-                        <Expander Header="XIV. Диагноз" FontSize="12">
-                            <Grid Background="#FFE5E5E5"/>
-                        </Expander>
-                        <Expander Header="С" FontSize="12">
-                            <Grid Background="#FFE5E5E5"/>
-                        </Expander>
-                        <Expander Header="E" FontSize="12">
-                            <Grid Background="#FFE5E5E5"/>
-                        </Expander>
-                        <Expander Header="A" FontSize="12">
-                            <Grid Background="#FFE5E5E5"/>
-                        </Expander>
-                        <Expander Header="P" FontSize="12">
-                            <Grid Background="#FFE5E5E5"/>
-                        </Expander>
+                     
                     </StackPanel>
                 </ScrollViewer>
 

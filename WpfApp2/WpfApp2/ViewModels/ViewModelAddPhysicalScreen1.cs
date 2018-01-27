@@ -15,6 +15,7 @@ using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using WpfApp2.Db.Models.LegParts;
 using WpfApp2.Db.Models.SPS;
+using WpfApp2.Db.Models.PPV;
 
 namespace WpfApp2.ViewModels
 {
@@ -28,6 +29,68 @@ namespace WpfApp2.ViewModels
         }
         public string LeftAdditionalText { get; set; }
         public string RightAdditionalText { get; set; }
+
+        #region PPV binds
+
+        private ObservableCollection<Visibility> _isVisiblePPVleft;
+        public ObservableCollection<Visibility> IsVisiblePPVleft
+        {
+            get
+            {
+                return _isVisiblePPVleft;
+            }
+            set
+            {
+                _isVisiblePPVleft = value;
+                OnPropertyChanged();
+            }
+        }
+        private ObservableCollection<Visibility> _isVisiblePPVRight;
+        public ObservableCollection<Visibility> IsVisiblePPVRight
+        {
+            get
+            {
+                return _isVisiblePPVRight;
+            }
+            set
+            {
+                _isVisiblePPVRight = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<string> PPVLeftstr
+        {
+            get
+            {
+                return _PPVLeftstr;
+            }
+            set
+            {
+                _PPVLeftstr = value;
+                OnPropertyChanged();
+            }
+        }
+        public List<string> PPVRightstr
+        {
+            get
+            {
+                return _PPVRightstr;
+            }
+            set
+            {
+                _PPVRightstr = value;
+                OnPropertyChanged();
+            }
+        }
+        public PPVEntryFull RightPPVEntryFull { get; private set; }
+        public PPVEntryFull LeftPPVEntryFull { get; private set; }
+
+        private List<string> _PPVRightstr;
+        private List<string> _PPVLeftstr;
+
+        #endregion
+
         #region CEAP binds
 
         private ObservableCollection<Visibility> _isVisibleCEAPleft;
@@ -830,6 +893,10 @@ namespace WpfApp2.ViewModels
         public MPVViewModel LeftMPV { get; protected set; }
         public MPVViewModel RightMPV { get; protected set; }
 
+
+        public PPVViewModel LeftPPV { get; protected set; }
+        public PPVViewModel RightPPV { get; protected set; }
+
         public TEMPVViewModel LeftTEMPV { get; protected set; }
         public TEMPVViewModel RightTEMPV { get; protected set; }
 
@@ -845,19 +912,80 @@ namespace WpfApp2.ViewModels
         public SPSViewModel RightSPS { get; protected set; }
         public DelegateCommand ToLeftCEARCommand { get; private set; }
         public DelegateCommand ToRightCEARCommand { get; private set; }
+        public DelegateCommand ToLeftPPVCommand { get; private set; }
+        public DelegateCommand ToRightPPVCommand { get; private set; }
 
         private void FinishAdding(object parameter)
         {
 
-            DialogViewModelBase vm =
-                new DialogYesNo.DialogYesNoViewModel("Назначить операцию?");
-            DialogResult result =
-                DialogService.DialogService.OpenDialog(vm, parameter as Window);
-
-            if (result == DialogResult.Yes)
+            if (LeftPDSV.IsEmpty == true)
             {
-                vm = new DialogPreOperationViewModel();
-                result = DialogService.DialogService.OpenDialog(vm, parameter as Window);
+                MessageBox.Show("ПДСВ слева не заполнено");
+            }
+            else if (RightPDSV.IsEmpty == true)
+            {
+                MessageBox.Show("ПДСВ справа не заполнено");
+            }
+            else if (RightZDSV.IsEmpty == true)
+            {
+                MessageBox.Show("ЗДСВ справа не заполнено");
+            }
+            else if (LeftZDSV.IsEmpty == true)
+            {
+                MessageBox.Show("ЗДСВ слева не заполнено");
+            }
+            else if (RightPerforate.IsEmpty == true)
+            {
+                MessageBox.Show("Перфоранты бедра и несафенные вены справа не заполнено");
+            }
+            else if (LeftPerforate.IsEmpty == true)
+            {
+                MessageBox.Show("Перфоранты бедра и несафенные вены слева не заполнено");
+            }
+            else if (RightTibiaPerforate.IsEmpty == true)
+            {
+                MessageBox.Show("Перфоранты голени справа не заполнено");
+            }
+            else if (LeftTibiaPerforate.IsEmpty == true)
+            {
+                MessageBox.Show("Перфоранты голени слева не заполнено");
+            }
+            else if (RightTEMPV.IsEmpty == true)
+            {
+                MessageBox.Show("ТЕ МПВ справа не заполнено");
+            }
+            else if (LeftTEMPV.IsEmpty == true)
+            {
+                MessageBox.Show("ТЕ МПВ слева не заполнено");
+            }
+            else if (RightPPV.IsEmpty == true)
+            {
+                MessageBox.Show("ППВ справа не заполнено");
+            }
+            else if (LeftPPV.IsEmpty == true)
+            {
+                MessageBox.Show("ППВ слева не заполнено");
+            }
+            else if (string.IsNullOrWhiteSpace(RightAdditionalText))
+            {
+                MessageBox.Show("Примечание справа не заполнено");
+            }
+            else if (string.IsNullOrWhiteSpace(LeftAdditionalText))
+            {
+                MessageBox.Show("Примечание слева не заполнено");
+            }
+            else
+            {
+                DialogViewModelBase vm =
+                    new DialogYesNo.DialogYesNoViewModel("Назначить операцию?");
+                DialogResult result =
+                    DialogService.DialogService.OpenDialog(vm, parameter as Window);
+
+                if (result == DialogResult.Yes)
+                {
+                    vm = new DialogPreOperationViewModel();
+                    result = DialogService.DialogService.OpenDialog(vm, parameter as Window);
+                }
             }
         }
 
@@ -876,6 +1004,9 @@ namespace WpfApp2.ViewModels
         }
         public ViewModelAddPhysical(NavigationController controller) : base(controller)
         {
+            PPVLeftstr = new List<string>();
+            PPVRightstr = new List<string>();
+
             CEAPLeftstr = new List<string>();
             CEAPRightstr = new List<string>();
             MPVLeftstr = new List<string>();
@@ -902,6 +1033,9 @@ namespace WpfApp2.ViewModels
             BPV_TibiaLeftstr = new List<string>();
             BPV_TibiaRightstr = new List<string>();
 
+            IsVisiblePPVleft = new ObservableCollection<Visibility>();
+            IsVisiblePPVRight = new ObservableCollection<Visibility>();
+
             IsVisibleCEAPleft = new ObservableCollection<Visibility>();
             IsVisibleCEAPRight = new ObservableCollection<Visibility>();
 
@@ -916,7 +1050,15 @@ namespace WpfApp2.ViewModels
             IsVisiblePerforate_shinRight = new ObservableCollection<Visibility>();
             IsVisibleSPSleft = new ObservableCollection<Visibility>();
             IsVisibleSPSRight = new ObservableCollection<Visibility>();
-            //
+            //  
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisiblePPVleft.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisiblePPVRight.Add(Visibility.Collapsed);
+            }
             for (int i = 0; i < 6; ++i)
             {
                 IsVisibleCEAPleft.Add(Visibility.Collapsed);
@@ -1152,6 +1294,31 @@ namespace WpfApp2.ViewModels
                     MessageBus.Default.Call("RebuildFirstPerforateHip", this, this);
                     Controller.LegViewModel = RightPerforate;
                     Controller.NavigateTo<HipPerforateViewModel>(LegSide.Right);
+                }
+            );
+
+
+            //PPV
+
+            LeftPPV = new PPVViewModel(Controller, LegSide.Left);
+            RightPPV = new PPVViewModel(Controller, LegSide.Right);
+            Controller.AddLegPartVM(LeftPPV);
+            Controller.AddLegPartVM(RightPPV);
+            ToLeftPPVCommand = new DelegateCommand(
+                () =>
+                {
+                    MessageBus.Default.Call("RebuildFirstPPV", this, this);
+                    Controller.LegViewModel = LeftPPV;
+                    Controller.NavigateTo<PPVViewModel>(LegSide.Left);
+                }
+            );
+
+            ToRightPPVCommand = new DelegateCommand(
+                () =>
+                {
+                    MessageBus.Default.Call("RebuildFirstPPV", this, this);
+                    Controller.LegViewModel = RightPPV;
+                    Controller.NavigateTo<PPVViewModel>(LegSide.Right);
                 }
             );
 
@@ -1456,6 +1623,10 @@ namespace WpfApp2.ViewModels
             RightMPVEntryFull = (MPVEntryFull)SaveFullEntry(RightMPV, RightMPVEntryFull);
             LeftMPVEntryFull = (MPVEntryFull)SaveFullEntry(LeftMPV, LeftMPVEntryFull);
 
+
+            RightPPVEntryFull = (PPVEntryFull)SaveFullEntry(RightPPV, RightPPVEntryFull);
+            LeftPPVEntryFull = (PPVEntryFull)SaveFullEntry(LeftPPV, LeftPPVEntryFull);
+
         }
 
         private LegPartEntries SaveFullEntry(LegPartViewModel Part, LegPartEntries FullEntry)
@@ -1510,6 +1681,10 @@ namespace WpfApp2.ViewModels
                 {
                     ((TEMPVEntryFull)LeftSFSEntryFullbuf).FF_Length = Part.FF_length;
                     Data.TEMPVEntries.Add((TEMPVEntry)newSFSentry);
+                }
+                else if (Part is PPVViewModel)
+                {
+                    Data.PPVEntries.Add((PPVEntry)newSFSentry);
                 }
 
                 Data.Complete();
@@ -1628,6 +1803,38 @@ namespace WpfApp2.ViewModels
                     IsVisibleMPVRight = result.listVisibility;
 
                 }
+
+
+
+            if (senderType == typeof(PPVViewModel))
+                if (senderVM.CurrentLegSide == LegSide.Left)
+                {
+                    PPVLeftstr = new List<string>();
+                    LeftPPVEntryFull = new PPVEntryFull();
+                    //to do тут должно быть сохранение
+                    LeftPPV = (PPVViewModel)sender;
+                    SaveSet result = SaveViewModel(LeftPPV);
+                    PPVLeftstr = result.stringList;
+                    IsVisiblePPVleft = result.listVisibility;
+
+                }
+
+                else
+                {
+                    PPVRightstr = new List<string>();
+                    RightPPVEntryFull = new PPVEntryFull();
+                    //to do тут должно быть сохранение
+                    RightPPV = (PPVViewModel)sender;
+                    SaveSet result = SaveViewModel(RightPPV);
+                    PPVRightstr = result.stringList;
+                    IsVisiblePPVRight = result.listVisibility;
+
+                }
+
+
+
+
+
             if (senderType == typeof(TEMPVViewModel))
                 if (senderVM.CurrentLegSide == LegSide.Left)
                 {
@@ -1863,10 +2070,12 @@ namespace WpfApp2.ViewModels
                         {
                             IsVisibleCEAPleft.Add(Visibility.Visible);
                             CEAPLeftstr.Add(leter.SelectedValue.Leter + leter.SelectedValue.Text1);
-                        }else
+                        }
+                        else
                         {
                             CEAPLeftstr.Add("");
-                                IsVisibleCEAPleft.Add(Visibility.Collapsed); }
+                            IsVisibleCEAPleft.Add(Visibility.Collapsed);
+                        }
                     }
 
 

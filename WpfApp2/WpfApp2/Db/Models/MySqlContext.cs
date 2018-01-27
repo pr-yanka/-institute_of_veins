@@ -6,12 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WpfApp2.Db.Models;
+using WpfApp2.Db.Models.PPV;
 using WpfApp2.Db.Models.SPS;
 
 namespace WpfApp2.Db.Models
 {
     public class MySqlContext : DbContext
     {
+        public DbSet<PPVStructure> PPV { get; set; }
+        public DbSet<PPVCombo> PPVCombos { get; set; }
+        public DbSet<PPVEntry> PPVEntries { get; set; }
+
         public DbSet<Letters> Letters { get; set; }
 
         public DbSet<TEMPVWay> TEMPVWay { get; set; }
@@ -131,6 +136,33 @@ namespace WpfApp2.Db.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+
+
+            modelBuilder.Entity<PPVCombo>()
+               .HasRequired<PPVStructure>(s => s.Str1).WithMany(g => g.PPVs1).HasForeignKey<int>(s => s.IdStr1);
+
+            modelBuilder.Entity<PPVCombo>()
+                .HasOptional<PPVStructure>(s => s.Str2).WithMany(g => g.PPVs2).HasForeignKey<int?>(s => s.IdStr2);
+
+        
+
+            modelBuilder.Entity<PPVEntry>()
+                .HasRequired<PPVStructure>(s => s.Structure).WithMany(g => g.Entries).HasForeignKey<int>(s => s.StructureID);
+
+          
+            modelBuilder.Entity<PPVEntryFull>()
+            .HasRequired<PPVEntry>(s => s.PPVEntry1).WithMany(g => g.EntriesFull1).HasForeignKey<int>(s => s.EntryId1);
+            modelBuilder.Entity<PPVEntryFull>()
+            .HasRequired<PPVEntry>(s => s.PPVEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int>(s => s.EntryId2);
+
+           
+
+
+
+
+
+
+
 
 
 
