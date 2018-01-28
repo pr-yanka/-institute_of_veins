@@ -205,6 +205,10 @@
     <Compile Include="Db\Models\LegParts\BPV_Tibia\BPV_TibiaEntryRepository.cs" />
     <Compile Include="Db\Models\LegParts\BPV_Tibia\BPV_TibiaRepository.cs" />
     <Compile Include="Db\Models\LegParts\da_Way.cs" />
+    <Compile Include="Db\Models\LegParts\GV\GV.cs" />
+    <Compile Include="Db\Models\LegParts\GV\GVComboRepository.cs" />
+    <Compile Include="Db\Models\LegParts\GV\GVHipEntryRepository.cs" />
+    <Compile Include="Db\Models\LegParts\GV\GVRepository.cs" />
     <Compile Include="Db\Models\LegParts\PPV\PPV.cs" />
     <Compile Include="Db\Models\LegParts\PPV\PPVComboRepository.cs" />
     <Compile Include="Db\Models\LegParts\PPV\PPVHipEntryRepository.cs" />
@@ -319,6 +323,8 @@
     <Compile Include="LegParts\VMs\BPVTibiaViewModel.cs" />
     <Compile Include="LegParts\VMs\HipPerforateViewModel.cs" />
     <Compile Include="LegParts\VMs\HipPerforateSectionViewModel.cs" />
+    <Compile Include="LegParts\VMs\GVViewModel.cs" />
+    <Compile Include="LegParts\VMs\GVSectionViewModel.cs" />
     <Compile Include="LegParts\VMs\PPVViewModel.cs" />
     <Compile Include="LegParts\VMs\TEMPVViewModel.cs" />
     <Compile Include="LegParts\VMs\TEMPVSectionViewModel.cs" />

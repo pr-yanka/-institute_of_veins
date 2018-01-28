@@ -7,6 +7,7 @@ using WpfApp2.Db.Models.LegParts;
 using WpfApp2.Db.Models.LegParts.BPV_Tibia;
 using WpfApp2.Db.Models.LegParts.BPV_Tibia_Tibia;
 using WpfApp2.Db.Models.LegParts.BPVHip;
+using WpfApp2.Db.Models.LegParts.GV;
 using WpfApp2.Db.Models.LegParts.MPV;
 using WpfApp2.Db.Models.LegParts.PDSVHip;
 using WpfApp2.Db.Models.LegParts.Perforate_hip;
@@ -23,6 +24,10 @@ namespace WpfApp2.Db.Models
 {
     public interface IUnitOfWork : IDisposable
     {
+        GVRepository GV { get; }
+        GVComboRepository GVCombos { get; }
+        GVEntryRepository GVEntries { get; }
+
         PPVRepository PPV { get; }
         PPVComboRepository PPVCombos { get; }
         PPVEntryRepository PPVEntries { get; }

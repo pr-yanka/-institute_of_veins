@@ -7,6 +7,7 @@ using WpfApp2.Db.Models.LegParts;
 using WpfApp2.Db.Models.LegParts.BPV_Tibia;
 using WpfApp2.Db.Models.LegParts.BPV_Tibia_Tibia;
 using WpfApp2.Db.Models.LegParts.BPVHip;
+using WpfApp2.Db.Models.LegParts.GV;
 using WpfApp2.Db.Models.LegParts.MPV;
 using WpfApp2.Db.Models.LegParts.PDSVHip;
 using WpfApp2.Db.Models.LegParts.Perforate_hip;
@@ -23,6 +24,9 @@ namespace WpfApp2.Db.Models
 {
     public class UnitOfWork : IUnitOfWork
     {
+        public GVRepository GV { get; }
+        public GVComboRepository GVCombos { get; }
+        public GVEntryRepository GVEntries { get; }
         public PPVRepository PPV { get; }
         public PPVComboRepository PPVCombos { get; }
         public PPVEntryRepository PPVEntries { get; }
@@ -133,6 +137,10 @@ namespace WpfApp2.Db.Models
         public UnitOfWork(MySqlContext context)
         {
             _context = context;
+
+            GV = new GVRepository(_context);
+            GVCombos = new GVComboRepository(_context);
+            GVEntries = new GVEntryRepository(_context);
 
             PPV = new PPVRepository(_context);
             PPVCombos = new PPVComboRepository(_context);

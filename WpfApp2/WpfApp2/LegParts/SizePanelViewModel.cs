@@ -154,8 +154,20 @@ namespace WpfApp2.LegParts
                 OnPropertyChanged();
             }
         }
+        public ObservableCollection<Metrics> _dimentions;
 
-        public ObservableCollection<Metrics> Dimentions { get; set; }
+        public ObservableCollection<Metrics> Dimentions
+        {
+            get
+            {
+                return _dimentions;
+            }
+            set
+            {
+                _dimentions = value;
+                OnPropertyChanged();
+            }
+        }
 
 
     }

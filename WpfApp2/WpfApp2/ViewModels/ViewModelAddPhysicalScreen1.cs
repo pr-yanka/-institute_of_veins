@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 using WpfApp2.Db.Models.LegParts;
 using WpfApp2.Db.Models.SPS;
 using WpfApp2.Db.Models.PPV;
+using WpfApp2.Db.Models.GV;
 
 namespace WpfApp2.ViewModels
 {
@@ -29,6 +30,67 @@ namespace WpfApp2.ViewModels
         }
         public string LeftAdditionalText { get; set; }
         public string RightAdditionalText { get; set; }
+
+        #region GV binds
+
+        private ObservableCollection<Visibility> _isVisibleGVleft;
+        public ObservableCollection<Visibility> IsVisibleGVleft
+        {
+            get
+            {
+                return _isVisibleGVleft;
+            }
+            set
+            {
+                _isVisibleGVleft = value;
+                OnPropertyChanged();
+            }
+        }
+        private ObservableCollection<Visibility> _isVisibleGVRight;
+        public ObservableCollection<Visibility> IsVisibleGVRight
+        {
+            get
+            {
+                return _isVisibleGVRight;
+            }
+            set
+            {
+                _isVisibleGVRight = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public List<string> GVLeftstr
+        {
+            get
+            {
+                return _GVLeftstr;
+            }
+            set
+            {
+                _GVLeftstr = value;
+                OnPropertyChanged();
+            }
+        }
+        public List<string> GVRightstr
+        {
+            get
+            {
+                return _GVRightstr;
+            }
+            set
+            {
+                _GVRightstr = value;
+                OnPropertyChanged();
+            }
+        }
+        public GVEntryFull RightGVEntryFull { get; private set; }
+        public GVEntryFull LeftGVEntryFull { get; private set; }
+
+        private List<string> _GVRightstr;
+        private List<string> _GVLeftstr;
+
+        #endregion
 
         #region PPV binds
 
@@ -914,66 +976,78 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToRightCEARCommand { get; private set; }
         public DelegateCommand ToLeftPPVCommand { get; private set; }
         public DelegateCommand ToRightPPVCommand { get; private set; }
+        public GVViewModel LeftGV { get; private set; }
+        public GVViewModel RightGV { get; private set; }
+        public DelegateCommand ToLeftGVCommand { get; private set; }
+        public DelegateCommand ToRightGVCommand { get; private set; }
 
         private void FinishAdding(object parameter)
         {
+            if (LeftGV.IsEmpty == true)
+            {
+                MessageBox.Show("ГВ слева не заполнено");
+            }
+            else if (RightGV.IsEmpty == true)
+            {
+                MessageBox.Show("ГВ справа не заполнено");
+            }
 
-            if (LeftPDSV.IsEmpty == true)
-            {
-                MessageBox.Show("ПДСВ слева не заполнено");
-            }
-            else if (RightPDSV.IsEmpty == true)
-            {
-                MessageBox.Show("ПДСВ справа не заполнено");
-            }
-            else if (RightZDSV.IsEmpty == true)
-            {
-                MessageBox.Show("ЗДСВ справа не заполнено");
-            }
-            else if (LeftZDSV.IsEmpty == true)
-            {
-                MessageBox.Show("ЗДСВ слева не заполнено");
-            }
-            else if (RightPerforate.IsEmpty == true)
-            {
-                MessageBox.Show("Перфоранты бедра и несафенные вены справа не заполнено");
-            }
-            else if (LeftPerforate.IsEmpty == true)
-            {
-                MessageBox.Show("Перфоранты бедра и несафенные вены слева не заполнено");
-            }
-            else if (RightTibiaPerforate.IsEmpty == true)
-            {
-                MessageBox.Show("Перфоранты голени справа не заполнено");
-            }
-            else if (LeftTibiaPerforate.IsEmpty == true)
-            {
-                MessageBox.Show("Перфоранты голени слева не заполнено");
-            }
-            else if (RightTEMPV.IsEmpty == true)
-            {
-                MessageBox.Show("ТЕ МПВ справа не заполнено");
-            }
-            else if (LeftTEMPV.IsEmpty == true)
-            {
-                MessageBox.Show("ТЕ МПВ слева не заполнено");
-            }
-            else if (RightPPV.IsEmpty == true)
-            {
-                MessageBox.Show("ППВ справа не заполнено");
-            }
-            else if (LeftPPV.IsEmpty == true)
-            {
-                MessageBox.Show("ППВ слева не заполнено");
-            }
-            else if (string.IsNullOrWhiteSpace(RightAdditionalText))
-            {
-                MessageBox.Show("Примечание справа не заполнено");
-            }
-            else if (string.IsNullOrWhiteSpace(LeftAdditionalText))
-            {
-                MessageBox.Show("Примечание слева не заполнено");
-            }
+            //if (LeftPDSV.IsEmpty == true)
+            //{
+            //    MessageBox.Show("ПДСВ слева не заполнено");
+            //}
+            //else if (RightPDSV.IsEmpty == true)
+            //{
+            //    MessageBox.Show("ПДСВ справа не заполнено");
+            //}
+            //else if (RightZDSV.IsEmpty == true)
+            //{
+            //    MessageBox.Show("ЗДСВ справа не заполнено");
+            //}
+            //else if (LeftZDSV.IsEmpty == true)
+            //{
+            //    MessageBox.Show("ЗДСВ слева не заполнено");
+            //}
+            //else if (RightPerforate.IsEmpty == true)
+            //{
+            //    MessageBox.Show("Перфоранты бедра и несафенные вены справа не заполнено");
+            //}
+            //else if (LeftPerforate.IsEmpty == true)
+            //{
+            //    MessageBox.Show("Перфоранты бедра и несафенные вены слева не заполнено");
+            //}
+            //else if (RightTibiaPerforate.IsEmpty == true)
+            //{
+            //    MessageBox.Show("Перфоранты голени справа не заполнено");
+            //}
+            //else if (LeftTibiaPerforate.IsEmpty == true)
+            //{
+            //    MessageBox.Show("Перфоранты голени слева не заполнено");
+            //}
+            //else if (RightTEMPV.IsEmpty == true)
+            //{
+            //    MessageBox.Show("ТЕ МПВ справа не заполнено");
+            //}
+            //else if (LeftTEMPV.IsEmpty == true)
+            //{
+            //    MessageBox.Show("ТЕ МПВ слева не заполнено");
+            //}
+            //else if (RightPPV.IsEmpty == true)
+            //{
+            //    MessageBox.Show("ППВ справа не заполнено");
+            //}
+            //else if (LeftPPV.IsEmpty == true)
+            //{
+            //    MessageBox.Show("ППВ слева не заполнено");
+            //}
+            //else if (string.IsNullOrWhiteSpace(RightAdditionalText))
+            //{
+            //    MessageBox.Show("Примечание справа не заполнено");
+            //}
+            //else if (string.IsNullOrWhiteSpace(LeftAdditionalText))
+            //{
+            //    MessageBox.Show("Примечание слева не заполнено");
+            //}
             else
             {
                 DialogViewModelBase vm =
@@ -1004,6 +1078,10 @@ namespace WpfApp2.ViewModels
         }
         public ViewModelAddPhysical(NavigationController controller) : base(controller)
         {
+            GVLeftstr = new List<string>();
+            GVRightstr = new List<string>();
+
+
             PPVLeftstr = new List<string>();
             PPVRightstr = new List<string>();
 
@@ -1033,6 +1111,10 @@ namespace WpfApp2.ViewModels
             BPV_TibiaLeftstr = new List<string>();
             BPV_TibiaRightstr = new List<string>();
 
+            IsVisibleGVleft = new ObservableCollection<Visibility>();
+            IsVisibleGVRight = new ObservableCollection<Visibility>();
+
+
             IsVisiblePPVleft = new ObservableCollection<Visibility>();
             IsVisiblePPVRight = new ObservableCollection<Visibility>();
 
@@ -1051,6 +1133,17 @@ namespace WpfApp2.ViewModels
             IsVisibleSPSleft = new ObservableCollection<Visibility>();
             IsVisibleSPSRight = new ObservableCollection<Visibility>();
             //  
+
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleGVleft.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleGVRight.Add(Visibility.Collapsed);
+            }
+
+
             for (int i = 0; i < 6; ++i)
             {
                 IsVisiblePPVleft.Add(Visibility.Collapsed);
@@ -1321,7 +1414,29 @@ namespace WpfApp2.ViewModels
                     Controller.NavigateTo<PPVViewModel>(LegSide.Right);
                 }
             );
+            //GV
 
+            LeftGV = new GVViewModel(Controller, LegSide.Left);
+            RightGV = new GVViewModel(Controller, LegSide.Right);
+            Controller.AddLegPartVM(LeftGV);
+            Controller.AddLegPartVM(RightGV);
+            ToLeftGVCommand = new DelegateCommand(
+                () =>
+                {
+                    MessageBus.Default.Call("RebuildFirstGV", this, this);
+                    Controller.LegViewModel = LeftGV;
+                    Controller.NavigateTo<GVViewModel>(LegSide.Left);
+                }
+            );
+
+            ToRightGVCommand = new DelegateCommand(
+                () =>
+                {
+                    MessageBus.Default.Call("RebuildFirstGV", this, this);
+                    Controller.LegViewModel = RightGV;
+                    Controller.NavigateTo<GVViewModel>(LegSide.Right);
+                }
+            );
             //ПДСВ
             LeftPDSV = new PDSVViewModel(Controller, LegSide.Left);
             RightPDSV = new PDSVViewModel(Controller, LegSide.Right);
@@ -1627,6 +1742,9 @@ namespace WpfApp2.ViewModels
             RightPPVEntryFull = (PPVEntryFull)SaveFullEntry(RightPPV, RightPPVEntryFull);
             LeftPPVEntryFull = (PPVEntryFull)SaveFullEntry(LeftPPV, LeftPPVEntryFull);
 
+            RightGVEntryFull = (GVEntryFull)SaveFullEntry(RightGV, RightGVEntryFull);
+            LeftGVEntryFull = (GVEntryFull)SaveFullEntry(LeftGV, LeftGVEntryFull);
+
         }
 
         private LegPartEntries SaveFullEntry(LegPartViewModel Part, LegPartEntries FullEntry)
@@ -1685,6 +1803,10 @@ namespace WpfApp2.ViewModels
                 else if (Part is PPVViewModel)
                 {
                     Data.PPVEntries.Add((PPVEntry)newSFSentry);
+                }
+                else if (Part is GVViewModel)
+                {
+                    Data.GVEntries.Add((GVEntry)newSFSentry);
                 }
 
                 Data.Complete();
@@ -1779,6 +1901,34 @@ namespace WpfApp2.ViewModels
             Type senderType = sender.GetType();
             LegPartViewModel senderVM = (LegPartViewModel)sender;
             //  BPVHipEntryFull bpv = new BPVHipEntryFull();
+            if (senderType == typeof(GVViewModel))
+                if (senderVM.CurrentLegSide == LegSide.Left)
+                {
+                    GVLeftstr = new List<string>();
+                    LeftGVEntryFull = new GVEntryFull();
+                    //to do тут должно быть сохранение
+                    LeftGV = (GVViewModel)sender;
+                    SaveSet result = SaveViewModel(LeftGV);
+                    GVLeftstr = result.stringList;
+                    IsVisibleGVleft = result.listVisibility;
+
+                }
+
+                else
+                {
+                    GVRightstr = new List<string>();
+                    RightGVEntryFull = new GVEntryFull();
+                    //to do тут должно быть сохранение
+                    RightGV = (GVViewModel)sender;
+                    SaveSet result = SaveViewModel(RightGV);
+                    GVRightstr = result.stringList;
+                    IsVisibleGVRight = result.listVisibility;
+
+                }
+
+
+
+
             if (senderType == typeof(MPVViewModel))
                 if (senderVM.CurrentLegSide == LegSide.Left)
                 {

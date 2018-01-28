@@ -234,6 +234,7 @@
 
                         </StackPanel>
                     </Expander>
+                   
                     <Separator/>
                     <Expander FontSize="14">
                         <Expander.Header>
@@ -263,12 +264,24 @@
                         </StackPanel>
                     </Expander>
                     <Separator/>
-                  
-                    <Separator Margin="10,0,10,0"/>
-                        <Expander Header="XIII. Глубокие вены" FontSize="12">
-                            <Grid Background="#FFE5E5E5"/>
-                        </Expander>
+                   
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock TextDecorations="Underline" Text="XIII. Глубокие вены" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="butаtffohnfвPDSV1" Command="{Binding ToLeftGVCommand}" Content="{Binding Path=LeftGV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
 
+                            <TextBlock Visibility="{Binding IsVisibleGVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding GVLeftstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleGVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding GVLeftstr[1]}"></TextBlock>
+
+                        </StackPanel>
+                    </Expander>
+                    <Separator/>
+                    <Separator Margin="10,0,10,0"/>
+                   
 
                     </StackPanel>
                 </ScrollViewer>
@@ -477,6 +490,7 @@
                     </Expander>
 
                     <Separator/>
+                    
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
@@ -507,11 +521,25 @@
                         </StackPanel>
                     </Expander>
                     <Separator/>
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock TextDecorations="Underline" Text="XIII. Глубокие вены" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="butаtffohnffвPDSV1" Command="{Binding ToRightGVCommand}" Content="{Binding Path=RightGV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+
+                            <TextBlock Visibility="{Binding IsVisibleGVRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding GVRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleGVRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding GVRightstr[1]}"></TextBlock>
+
+                        </StackPanel>
+                    </Expander>
+                    
+                    <Separator/>
                 
                         <Separator Margin="10,0,10,0"/>
-                        <Expander Header="XIII. Глубокие вены" FontSize="12">
-                            <Grid Background="#FFE5E5E5"/>
-                        </Expander>
+                     
                      
                     </StackPanel>
                 </ScrollViewer>

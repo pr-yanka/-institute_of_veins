@@ -1,30 +1,31 @@
 ﻿using Microsoft.Practices.Prism.Commands;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using WpfApp2.Db.Models;
+using WpfApp2.Db.Models.GV;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 using WpfApp2.ViewModels;
 
 namespace WpfApp2.LegParts.VMs
 {
-    public class TibiaPerforateViewModel : LegPartViewModel
+    public class GVViewModel : LegPartViewModel
     {
-
-
 
         private void RebuildFirst(object sender, object data)
         {
-
 
             for (int i = 0; i < LegSections.Count; ++i)
             {
                 var bufSave = new ObservableCollection<LegPartDbStructure>();
                 bufSave = LegSections[i].StructureSource;
 
-                LegSections[i].StructureSource = new ObservableCollection<LegPartDbStructure>(base.Data.Perforate_shin.LevelStructures(i + 1).ToList());
+                LegSections[i].StructureSource = new ObservableCollection<LegPartDbStructure>(base.Data.GV.LevelStructures(i + 1).ToList());
 
                 foreach (var variant in bufSave)
                 {
@@ -50,7 +51,7 @@ namespace WpfApp2.LegParts.VMs
         {
             if (Controller.CurrentViewModel.Controller.LegViewModel == this)
             {
-
+                
                 var section = (LegSectionViewModel)data;
                 if (section.SelectedValue != null && section.SelectedValue.Text1 == "" && section.SelectedValue.Text2 == "")
                 {
@@ -83,11 +84,11 @@ namespace WpfApp2.LegParts.VMs
                 {
 
 
-                    if (section.ListNumber != 5 && LegSections[section.ListNumber].SelectedValue == null)
+                    if (section.ListNumber != 2 && LegSections[section.ListNumber].SelectedValue == null)
                     {
 
 
-
+                        
 
                         var StructureSourceBuf = new List<int>();
                         bool test = true;
@@ -97,7 +98,7 @@ namespace WpfApp2.LegParts.VMs
                         var bufSave = new ObservableCollection<LegPartDbStructure>();
                         bufSave = LegSections[section.ListNumber].StructureSource;
 
-                        LegSections[section.ListNumber].StructureSource = new ObservableCollection<LegPartDbStructure>(base.Data.Perforate_shin.LevelStructures(LegSections[section.ListNumber].ListNumber).ToList());
+                        LegSections[section.ListNumber].StructureSource = new ObservableCollection<LegPartDbStructure>(base.Data.GV.LevelStructures(LegSections[section.ListNumber].ListNumber).ToList());
 
                         foreach (var variant in bufSave)
                         {
@@ -116,7 +117,7 @@ namespace WpfApp2.LegParts.VMs
                             structure.Metrics = Data.Metrics.GetStr(structure.Size);
                         }
                         // StructureSource = new ObservableCollection<LegPartDbStructure>();
-                        foreach (var Combo in Data.Perforate_shinCombos.GetAll)
+                        foreach (var Combo in Data.GVCombos.GetAll)
                         {
                             if (section.ListNumber == 1)
                             {
@@ -127,34 +128,7 @@ namespace WpfApp2.LegParts.VMs
                                 }
                                 catch { continue; }
                             }
-                            if (section.ListNumber == 2)
-                            {
-                                try
-                                {
-                                    selectCombo = Combo.IdStr2.Value;
-                                    selectComboNext = Combo.IdStr3.Value;
-                                }
-                                catch { continue; }
-                            }
-                            else if (section.ListNumber == 3)
-                            {
-                                try
-                                {
-                                    selectCombo = Combo.IdStr3.Value;
-                                    selectComboNext = Combo.IdStr4.Value;
-                                }
-                                catch { continue; }
-                            }
-                            else if (section.ListNumber == 4)
-                            {
-                                try
-                                {
-                                    selectCombo = Combo.IdStr4.Value;
-                                    selectComboNext = Combo.IdStr5.Value;
-                                }
-                                catch { continue; }
-                            }
-
+                           
 
 
 
@@ -220,12 +194,6 @@ namespace WpfApp2.LegParts.VMs
 
 
 
-
-
-
-
-
-
         private List<LegSectionViewModel> _sections;
         public override List<LegSectionViewModel> LegSections
         {
@@ -233,11 +201,23 @@ namespace WpfApp2.LegParts.VMs
             set { _sections = value; }
         }
 
+
         public void Initialize()
         {
-
-            MessageBus.Default.Subscribe("RebuildFirstPerforateTibia", RebuildFirst);
+            
+            MessageBus.Default.Subscribe("RebuildFirstGV", RebuildFirst);
             MessageBus.Default.Subscribe("RebuildLegSectionViewModel", Rebuild);
+            LevelCount = 2;
+            _sections = new List<LegSectionViewModel>();
+            for (int i = 0; i < LevelCount; i++)
+            {
+                if (i != 0)
+                    LegSections.Add(new GVSectionViewModel(Controller, _sections[i - 1], i + 1));
+                else
+                    LegSections.Add(new GVSectionViewModel(Controller, null, i + 1));
+            }
+            _title = "Глубокие вены";
+
             SavePanelCommand = new DelegateCommand(() =>
             {
                 var panel = CurrentPanelViewModel;
@@ -249,8 +229,9 @@ namespace WpfApp2.LegParts.VMs
                     handled = false;
                     var newStruct = GetPanelStructure();
                     newStruct.Custom = false;
-                    Data.Perforate_shin.Add((Perforate_shinStructure)newStruct);
+                    Data.GV.Add((GVStructure)newStruct);
                     Data.Complete();
+                 
                     _lastSender.StructureSource.Add(newStruct);
                     _lastSender.SelectedValue = newStruct;
                     CurrentPanelViewModel.PanelOpened = false;
@@ -263,7 +244,6 @@ namespace WpfApp2.LegParts.VMs
 
                 //_lastSender.DeleteCustom();
             });
-
 
             SaveCommand = new DelegateCommand(
              () =>
@@ -292,11 +272,11 @@ namespace WpfApp2.LegParts.VMs
                                  ids.Add(leg.SelectedValue.Id);
                          }
 
-                         var combo = Data.Perforate_shinCombos.FindCombo(LegSections[0].SelectedValue.Id, ids);
+                         var combo = Data.GVCombos.FindCombo(LegSections[0].SelectedValue.Id, ids);
                          //если комбо не нашлось - значит оно кастомное, мы его запомним и отправим в базу на радость будущим пользователям
                          if (combo == null)
                          {
-                             var newCombo = new Perforate_shinCombo();
+                             var newCombo = new GVCombo();
 
                              for (int i = 0; i < LegSections.Count; i++)
                              {
@@ -309,11 +289,11 @@ namespace WpfApp2.LegParts.VMs
                                 && !currentStructure.ToNextPart)
                                  {
                                      //currentStructure.Level = i + 1;
-                                     //Data.Perforate_shinHips.Add((Perforate_shinHipStructure)currentStructure);
+                                     //Data.GVs.Add((GVStructure)currentStructure);
                                      //Data.Complete();
-                                     //((Perforate_shinHipEntry)LegSections[i].CurrentEntry).Structure = (Perforate_shinHipStructure)currentStructure;
+                                     //((GVEntry)LegSections[i].CurrentEntry).Structure = (GVStructure)currentStructure;
                                      //(LegSections[i].CurrentEntry).StructureID = currentStructure.Id;
-                                     // Data.Perforate_shinHipEntries.Add((Perforate_shinHipEntry)LegSections[i].CurrentEntry);
+                                     // Data.GVEntries.Add((GVEntry)LegSections[i].CurrentEntry);
                                      //Data.Complete();
                                      //if (i == 0) newCombo.IdStr1 = currentStructure.Id;
                                      ////там гда раньше был ноль теперь будет актуальный айдишник
@@ -324,15 +304,12 @@ namespace WpfApp2.LegParts.VMs
                              newCombo.IdStr1 = LegSections[0].SelectedValue.Id;
                              //if()
                              //заполняем комбо
-                             Data.Perforate_shinCombos.AddCombo(newCombo, ids);
+                             Data.GVCombos.AddCombo(newCombo, ids);
                              Data.Complete();
-                             MessageBus.Default.Call("RebuildFirstTibia", this, LegSections[0]);
+                             MessageBus.Default.Call("RebuildFirstGV", this, LegSections[0]);
                              MessageBus.Default.Call("RebuildLegSectionViewModel", this, LegSections[0]);
                              MessageBus.Default.Call("RebuildLegSectionViewModel", this, LegSections[1]);
-                             MessageBus.Default.Call("RebuildLegSectionViewModel", this, LegSections[2]);
-                             MessageBus.Default.Call("RebuildLegSectionViewModel", this, LegSections[3]);
-                             MessageBus.Default.Call("RebuildLegSectionViewModel", this, LegSections[4]);
-
+                           
                          }
 
                          MessageBus.Default.Call("LegDataSaved", this, this.GetType());
@@ -347,24 +324,16 @@ namespace WpfApp2.LegParts.VMs
                  }
              }
          );
-         
-            LevelCount = 5;
-            _sections = new List<LegSectionViewModel>();
-            for (int i = 0; i < LevelCount; i++)
-            {
-                if (i != 0)
-                    LegSections.Add(new TibiaPerforateSectionViewModel(Controller, _sections[i - 1], i + 1));
-                else
-                    LegSections.Add(new TibiaPerforateSectionViewModel(Controller, null, i + 1));
-            }
-            _title = "Перфорант голени";
+
+
         }
 
-        public TibiaPerforateViewModel(NavigationController controller) : base(controller) { }
+        public GVViewModel(NavigationController controller) : base(controller) { }
 
-        public TibiaPerforateViewModel(NavigationController controller, LegSide side) : base(controller, side)
+        public GVViewModel(NavigationController controller, LegSide side) : base(controller, side)
         {
             Initialize();
+
         }
     }
 }

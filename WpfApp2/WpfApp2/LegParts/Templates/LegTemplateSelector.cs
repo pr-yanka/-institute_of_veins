@@ -47,6 +47,8 @@ namespace WpfApp2.LegParts.Templates
             if (item.GetType() == typeof(LettersViewModel))
                 return EmptyTemplate;
 
+            if (item.GetType() == typeof(GVViewModel))
+                return EmptyTemplate;
 
             if (item.GetType() == typeof(TibiaPerforateViewModel))
                 return EmptyTemplate;
@@ -61,7 +63,9 @@ namespace WpfApp2.LegParts.Templates
 
             if (item.GetType() == typeof(PPVViewModel))
                 return EmptyTemplate;
-            
+
+           
+
 
             return null;
         }

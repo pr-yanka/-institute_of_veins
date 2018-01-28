@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WpfApp2.Db.Models;
+using WpfApp2.Db.Models.GV;
 using WpfApp2.Db.Models.PPV;
 using WpfApp2.Db.Models.SPS;
 
@@ -13,6 +14,12 @@ namespace WpfApp2.Db.Models
 {
     public class MySqlContext : DbContext
     {
+
+        public DbSet<GVStructure> GV { get; set; }
+        public DbSet<GVCombo> GVCombos { get; set; }
+        public DbSet<GVEntry> GVEntries { get; set; }
+
+
         public DbSet<PPVStructure> PPV { get; set; }
         public DbSet<PPVCombo> PPVCombos { get; set; }
         public DbSet<PPVEntry> PPVEntries { get; set; }
@@ -136,6 +143,25 @@ namespace WpfApp2.Db.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<GVCombo>()
+               .HasRequired<GVStructure>(s => s.Str1).WithMany(g => g.GVs1).HasForeignKey<int>(s => s.IdStr1);
+
+            modelBuilder.Entity<GVCombo>()
+                .HasOptional<GVStructure>(s => s.Str2).WithMany(g => g.GVs2).HasForeignKey<int?>(s => s.IdStr2);
+
+
+
+            modelBuilder.Entity<GVEntry>()
+                .HasRequired<GVStructure>(s => s.Structure).WithMany(g => g.Entries).HasForeignKey<int>(s => s.StructureID);
+
+
+            modelBuilder.Entity<GVEntryFull>()
+            .HasRequired<GVEntry>(s => s.GVEntry1).WithMany(g => g.EntriesFull1).HasForeignKey<int>(s => s.EntryId1);
+            modelBuilder.Entity<GVEntryFull>()
+            .HasRequired<GVEntry>(s => s.GVEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int>(s => s.EntryId2);
+
+
+
 
 
             modelBuilder.Entity<PPVCombo>()

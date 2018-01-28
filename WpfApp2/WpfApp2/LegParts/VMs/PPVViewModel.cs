@@ -19,31 +19,34 @@ namespace WpfApp2.LegParts.VMs
 
         private void RebuildFirst(object sender, object data)
         {
-            
-               
-                var bufSave = new ObservableCollection<LegPartDbStructure>();
-                bufSave = LegSections[0].StructureSource;
 
-                LegSections[0].StructureSource = new ObservableCollection<LegPartDbStructure>(base.Data.PPV.LevelStructures(1).ToList());
+            for (int i = 0; i < LegSections.Count; ++i)
+            {
+                var bufSave = new ObservableCollection<LegPartDbStructure>();
+                bufSave = LegSections[i].StructureSource;
+
+                LegSections[i].StructureSource = new ObservableCollection<LegPartDbStructure>(base.Data.PPV.LevelStructures(i + 1).ToList());
 
                 foreach (var variant in bufSave)
                 {
 
                     if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
                     {
-                        LegSections[0].StructureSource.Add(variant);
+                        LegSections[i].StructureSource.Add(variant);
                     }
                     else if (variant.Text1 == "" && variant.Text2 == "")
-                    { LegSections[0].StructureSource.Add(variant); }
+                    { LegSections[i].StructureSource.Add(variant); }
 
 
                 }
-                foreach (var structure in LegSections[0].StructureSource)
+                foreach (var structure in LegSections[i].StructureSource)
                 {
                     structure.Metrics = Data.Metrics.GetStr(structure.Size);
                 }
 
-            
+            }
+
+
         }
         private void Rebuild(object sender, object data)
         {
