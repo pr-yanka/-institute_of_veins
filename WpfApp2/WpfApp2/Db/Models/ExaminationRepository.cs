@@ -21,9 +21,9 @@ namespace WpfApp2.Db.Models
         [Column("дата_обследования")]
         public DateTime Date { set; get; }
         [Column("вес")]
-        public float OperationTypeId { set; get; }
+        public float weight { set; get; }
         [Column("рост")]
-        public float AnestheticId { set; get; }
+        public float height { set; get; }
         [Column("id_обследования_правой_ноги")]
         public int? idRightLegExamination { set; get; }
         [Column("id_обследования_левой_ноги")]

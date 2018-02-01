@@ -17,7 +17,7 @@ namespace WpfApp2.Db.Models
         public int? id_обследование_ноги { set; get; }
         [Column(Order = 1), Key, ForeignKey("DiagnosisType")]
         public int? id_диагноз { set; get; }
-        [Column("isLeft")]
+        [Column(Order = 2), Key]
         public bool isLeft { set; get; }
 
         public virtual Examination Examination { get; set; }

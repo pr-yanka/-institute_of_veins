@@ -101,14 +101,15 @@ namespace WpfApp2.Db.Models
         public virtual SFSHipEntry SFSHipEntry4 { get; set; }
         public virtual SFSHipEntry SFSHipEntry5 { get; set; }
         public virtual SFSHipEntry SFSHipEntry6 { get; set; }
-   
-      
+
+        [NotMapped]
+        public override int? WayID { get; set; }
 
         public override int EntryId1 { get; set; }
-        public override int EntryId2 { get; set; }
-        public override int EntryId3 { get; set; }
-        public override int EntryId4 { get; set; }
-        public override int EntryId5 { get; set; }
-        public override int EntryId6 { get; set; }
+        public override int? EntryId2 { get; set; }
+        public override int? EntryId3 { get; set; }
+        public override int? EntryId4 { get; set; }
+        public override int? EntryId5 { get; set; }
+        public override int? EntryId6 { get; set; }
     }
 }

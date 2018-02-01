@@ -141,14 +141,20 @@ namespace WpfApp2.Db.Models
         public virtual Perforate_hipEntry Perforate_hipEntry3 { get; set; }
         public virtual Perforate_hipEntry Perforate_hipEntry4 { get; set; }
         public virtual Perforate_hipEntry Perforate_hipEntry5 { get; set; }
-     
 
+        [NotMapped]
+        public override int? WayID { get; set; }
 
 
         public override int EntryId1 { get; set; }
-        public override int EntryId2 { get; set; }
-        public override int EntryId3 { get; set; }
-        public override int EntryId4 { get; set; }
-        public override int EntryId5 { get; set; }
+        public override int? EntryId2 { get; set; }
+        public override int? EntryId3 { get; set; }
+        public override int? EntryId4 { get; set; }
+        public override int? EntryId5 { get; set; }
+
+       
+
+        [NotMapped]
+        public override int? EntryId6 { get; set; }
     }
 }

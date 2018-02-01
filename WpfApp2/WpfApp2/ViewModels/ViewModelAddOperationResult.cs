@@ -76,6 +76,13 @@ namespace WpfApp2.ViewModels
 
                 }
             );
+            ToCreateStatementCommand = new DelegateCommand(
+                () =>
+                {
+                    MessageBus.Default.Call("GetOperationResultForCreateStatement", this, operationId);
+                    Controller.NavigateTo<ViewModelCreateStatement>();
+                }
+            );
             ToOperationOverviewCommand = new DelegateCommand(
                 () =>
                 {
@@ -84,8 +91,8 @@ namespace WpfApp2.ViewModels
                 }
             );
         }
-
         public DelegateCommand ToOperationCommand { get; protected set; }
+        public DelegateCommand ToCreateStatementCommand { get; protected set; }
         public DelegateCommand ToOperationOverviewCommand { get; protected set; }
     }
 }

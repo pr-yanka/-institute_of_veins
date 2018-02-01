@@ -91,8 +91,8 @@ namespace WpfApp2.Navigation
                 new ViewModelAddDoctor(this),
                 new ViewModelEditDoctor(this),
                 new ViewModelAddUser(this),
-               new ViewModelEditUser(this),
-
+                new ViewModelEditUser(this),
+                new ViewModelCreateStatement(this),
                 new ViewModelEditMedPersonal(this),
 
 

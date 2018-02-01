@@ -136,11 +136,22 @@ namespace WpfApp2.Db.Models
         public virtual PDSVHipEntry PDSVHipEntry3 { get; set; }
 
 
-        public override int WayID { get; set; }
+      
 
         public override int EntryId1 { get; set; }
-        public override int EntryId2 { get; set; }
-        public override int EntryId3 { get; set; }
+        public override int? EntryId2 { get; set; }
+        public override int? EntryId3 { get; set; }
+
+        
+
+        [NotMapped]
+        public override int? EntryId4 { get; set; }
+
+        [NotMapped]
+        public override int? EntryId5 { get; set; }
+
+        [NotMapped]
+        public override int? EntryId6 { get; set; }
 
     }
 }

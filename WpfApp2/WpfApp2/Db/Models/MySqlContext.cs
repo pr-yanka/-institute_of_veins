@@ -15,6 +15,28 @@ namespace WpfApp2.Db.Models
     public class MySqlContext : DbContext
     {
 
+
+      
+        public DbSet<ComplanesObs> ComplanesObs { get; set; }
+        public DbSet<RecomendationObs> RecomendationObs { get; set; }
+
+        public DbSet<BPVHipEntryFull> BPVHipsFull { get; set; }
+        public DbSet<PDSVHipEntryFull> PDSVFull { get; set; }
+        public DbSet<SFSHipEntryFull> SFSFull { get; set; }
+        public DbSet<Perforate_hipEntryFull> Perforate_hipFull { get; set; }
+        public DbSet<BPV_TibiaEntryFull> BPV_TibiaFull { get; set; }
+        public DbSet<SPSHipEntryFull> SPSHipFull { get; set; }
+        public DbSet<Perforate_shinEntryFull> Perforate_shinFull { get; set; }
+        public DbSet<MPVEntryFull> MPVFull { get; set; }
+        public DbSet<TEMPVEntryFull> TEMPVFull { get; set; }
+        public DbSet<PPVEntryFull> PPVFull { get; set; }
+        public DbSet<GVEntryFull> GVFull { get; set; }
+        public DbSet<ZDSVEntryFull> ZDSVFull { get; set; }
+        
+
+        public DbSet<ExaminationLeg> ExaminationLeg { get; set; }
+        public DbSet<doc_templates> doc_template { get; set; }
+
         public DbSet<GVStructure> GV { get; set; }
         public DbSet<GVCombo> GVCombos { get; set; }
         public DbSet<GVEntry> GVEntries { get; set; }
@@ -158,7 +180,7 @@ namespace WpfApp2.Db.Models
             modelBuilder.Entity<GVEntryFull>()
             .HasRequired<GVEntry>(s => s.GVEntry1).WithMany(g => g.EntriesFull1).HasForeignKey<int>(s => s.EntryId1);
             modelBuilder.Entity<GVEntryFull>()
-            .HasRequired<GVEntry>(s => s.GVEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int>(s => s.EntryId2);
+            .HasRequired<GVEntry>(s => s.GVEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int?>(s => s.EntryId2);
 
 
 
@@ -179,7 +201,7 @@ namespace WpfApp2.Db.Models
             modelBuilder.Entity<PPVEntryFull>()
             .HasRequired<PPVEntry>(s => s.PPVEntry1).WithMany(g => g.EntriesFull1).HasForeignKey<int>(s => s.EntryId1);
             modelBuilder.Entity<PPVEntryFull>()
-            .HasRequired<PPVEntry>(s => s.PPVEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int>(s => s.EntryId2);
+            .HasRequired<PPVEntry>(s => s.PPVEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int?>(s => s.EntryId2);
 
            
 
@@ -207,15 +229,15 @@ namespace WpfApp2.Db.Models
                 .HasRequired<TEMPVStructure>(s => s.Structure).WithMany(g => g.Entries).HasForeignKey<int>(s => s.StructureID);
 
             modelBuilder.Entity<TEMPVEntryFull>()
-              .HasRequired<TEMPVWay>(s => s.TEMPVWay).WithMany(g => g.EntriesFull).HasForeignKey<int>(s => s.WayID);
+              .HasRequired<TEMPVWay>(s => s.TEMPVWay).WithMany(g => g.EntriesFull).HasForeignKey<int?>(s => s.WayID);
 
             modelBuilder.Entity<TEMPVEntryFull>()
             .HasRequired<TEMPVEntry>(s => s.TEMPVEntry1).WithMany(g => g.EntriesFull1).HasForeignKey<int>(s => s.EntryId1);
             modelBuilder.Entity<TEMPVEntryFull>()
-            .HasRequired<TEMPVEntry>(s => s.TEMPVEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int>(s => s.EntryId2);
+            .HasRequired<TEMPVEntry>(s => s.TEMPVEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int?>(s => s.EntryId2);
 
             modelBuilder.Entity<TEMPVEntryFull>()
-            .HasRequired<TEMPVEntry>(s => s.TEMPVEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int>(s => s.EntryId3);
+            .HasRequired<TEMPVEntry>(s => s.TEMPVEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int?>(s => s.EntryId3);
 
 
 
@@ -242,17 +264,17 @@ namespace WpfApp2.Db.Models
                 .HasRequired<MPVStructure>(s => s.Structure).WithMany(g => g.Entries).HasForeignKey<int>(s => s.StructureID);
 
             modelBuilder.Entity<MPVEntryFull>()
-              .HasRequired<MPVWay>(s => s.MPVWay).WithMany(g => g.EntriesFull).HasForeignKey<int>(s => s.WayID);
+              .HasRequired<MPVWay>(s => s.MPVWay).WithMany(g => g.EntriesFull).HasForeignKey<int?>(s => s.WayID);
 
             modelBuilder.Entity<MPVEntryFull>()
             .HasRequired<MPVEntry>(s => s.MPVEntry1).WithMany(g => g.EntriesFull1).HasForeignKey<int>(s => s.EntryId1);
             modelBuilder.Entity<MPVEntryFull>()
-            .HasRequired<MPVEntry>(s => s.MPVEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int>(s => s.EntryId2);
+            .HasRequired<MPVEntry>(s => s.MPVEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int?>(s => s.EntryId2);
 
             modelBuilder.Entity<MPVEntryFull>()
-            .HasRequired<MPVEntry>(s => s.MPVEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int>(s => s.EntryId3);
+            .HasRequired<MPVEntry>(s => s.MPVEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int?>(s => s.EntryId3);
             modelBuilder.Entity<MPVEntryFull>()
-          .HasRequired<MPVEntry>(s => s.MPVEntry4).WithMany(g => g.EntriesFull4).HasForeignKey<int>(s => s.EntryId4);
+          .HasRequired<MPVEntry>(s => s.MPVEntry4).WithMany(g => g.EntriesFull4).HasForeignKey<int?>(s => s.EntryId4);
 
 
 
@@ -275,10 +297,10 @@ namespace WpfApp2.Db.Models
             .HasRequired<SPSHipEntry>(s => s.SPSHipEntry1).WithMany(g => g.EntriesFull1).HasForeignKey<int>(s => s.EntryId1);
 
             modelBuilder.Entity<SPSHipEntryFull>()
-            .HasRequired<SPSHipEntry>(s => s.SPSHipEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int>(s => s.EntryId2);
+            .HasRequired<SPSHipEntry>(s => s.SPSHipEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int?>(s => s.EntryId2);
 
             modelBuilder.Entity<SPSHipEntryFull>()
-            .HasRequired<SPSHipEntry>(s => s.SPSHipEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int>(s => s.EntryId3);
+            .HasRequired<SPSHipEntry>(s => s.SPSHipEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int?>(s => s.EntryId3);
 
 
 
@@ -306,16 +328,16 @@ namespace WpfApp2.Db.Models
             modelBuilder.Entity<Perforate_shinEntryFull>()
             .HasRequired<Perforate_shinEntry>(s => s.Perforate_shinEntry1).WithMany(g => g.EntriesFull1).HasForeignKey<int>(s => s.EntryId1);
             modelBuilder.Entity<Perforate_shinEntryFull>()
-            .HasRequired<Perforate_shinEntry>(s => s.Perforate_shinEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int>(s => s.EntryId2);
+            .HasRequired<Perforate_shinEntry>(s => s.Perforate_shinEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int?>(s => s.EntryId2);
 
             modelBuilder.Entity<Perforate_shinEntryFull>()
-            .HasRequired<Perforate_shinEntry>(s => s.Perforate_shinEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int>(s => s.EntryId3);
+            .HasRequired<Perforate_shinEntry>(s => s.Perforate_shinEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int?>(s => s.EntryId3);
 
             modelBuilder.Entity<Perforate_shinEntryFull>()
-            .HasRequired<Perforate_shinEntry>(s => s.Perforate_shinEntry4).WithMany(g => g.EntriesFull4).HasForeignKey<int>(s => s.EntryId4);
+            .HasRequired<Perforate_shinEntry>(s => s.Perforate_shinEntry4).WithMany(g => g.EntriesFull4).HasForeignKey<int?>(s => s.EntryId4);
 
             modelBuilder.Entity<Perforate_shinEntryFull>()
-            .HasRequired<Perforate_shinEntry>(s => s.Perforate_shinEntry5).WithMany(g => g.EntriesFull5).HasForeignKey<int>(s => s.EntryId5);
+            .HasRequired<Perforate_shinEntry>(s => s.Perforate_shinEntry5).WithMany(g => g.EntriesFull5).HasForeignKey<int?>(s => s.EntryId5);
 
 
 
@@ -347,16 +369,16 @@ namespace WpfApp2.Db.Models
             modelBuilder.Entity<Perforate_hipEntryFull>()
             .HasRequired<Perforate_hipEntry>(s => s.Perforate_hipEntry1).WithMany(g => g.EntriesFull1).HasForeignKey<int>(s => s.EntryId1);
             modelBuilder.Entity<Perforate_hipEntryFull>()
-            .HasRequired<Perforate_hipEntry>(s => s.Perforate_hipEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int>(s => s.EntryId2);
+            .HasRequired<Perforate_hipEntry>(s => s.Perforate_hipEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int?>(s => s.EntryId2);
 
             modelBuilder.Entity<Perforate_hipEntryFull>()
-            .HasRequired<Perforate_hipEntry>(s => s.Perforate_hipEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int>(s => s.EntryId3);
+            .HasRequired<Perforate_hipEntry>(s => s.Perforate_hipEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int?>(s => s.EntryId3);
 
             modelBuilder.Entity<Perforate_hipEntryFull>()
-            .HasRequired<Perforate_hipEntry>(s => s.Perforate_hipEntry4).WithMany(g => g.EntriesFull4).HasForeignKey<int>(s => s.EntryId4);
+            .HasRequired<Perforate_hipEntry>(s => s.Perforate_hipEntry4).WithMany(g => g.EntriesFull4).HasForeignKey<int?>(s => s.EntryId4);
 
             modelBuilder.Entity<Perforate_hipEntryFull>()
-            .HasRequired<Perforate_hipEntry>(s => s.Perforate_hipEntry5).WithMany(g => g.EntriesFull5).HasForeignKey<int>(s => s.EntryId5);
+            .HasRequired<Perforate_hipEntry>(s => s.Perforate_hipEntry5).WithMany(g => g.EntriesFull5).HasForeignKey<int?>(s => s.EntryId5);
 
 
 
@@ -387,13 +409,13 @@ namespace WpfApp2.Db.Models
             .HasRequired<BPV_TibiaEntry>(s => s.BPV_TibiaEntry1).WithMany(g => g.EntriesFull1).HasForeignKey<int>(s => s.EntryId1);
 
             modelBuilder.Entity<BPV_TibiaEntryFull>()
-            .HasRequired<BPV_TibiaEntry>(s => s.BPV_TibiaEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int>(s => s.EntryId2);
+            .HasRequired<BPV_TibiaEntry>(s => s.BPV_TibiaEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int?>(s => s.EntryId2);
 
             modelBuilder.Entity<BPV_TibiaEntryFull>()
-            .HasRequired<BPV_TibiaEntry>(s => s.BPV_TibiaEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int>(s => s.EntryId3);
+            .HasRequired<BPV_TibiaEntry>(s => s.BPV_TibiaEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int?>(s => s.EntryId3);
 
             modelBuilder.Entity<BPV_TibiaEntryFull>()
-            .HasRequired<BPV_TibiaEntry>(s => s.BPV_TibiaEntry4).WithMany(g => g.EntriesFull4).HasForeignKey<int>(s => s.EntryId4);
+            .HasRequired<BPV_TibiaEntry>(s => s.BPV_TibiaEntry4).WithMany(g => g.EntriesFull4).HasForeignKey<int?>(s => s.EntryId4);
 
 
 
@@ -416,10 +438,10 @@ namespace WpfApp2.Db.Models
             modelBuilder.Entity<ZDSVEntryFull>()
             .HasRequired<ZDSVEntry>(s => s.ZDSVEntry1).WithMany(g => g.EntriesFull1).HasForeignKey<int>(s => s.EntryId1);
             modelBuilder.Entity<ZDSVEntryFull>()
-            .HasRequired<ZDSVEntry>(s => s.ZDSVEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int>(s => s.EntryId2);
+            .HasRequired<ZDSVEntry>(s => s.ZDSVEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int?>(s => s.EntryId2);
 
             modelBuilder.Entity<ZDSVEntryFull>()
-            .HasRequired<ZDSVEntry>(s => s.ZDSVEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int>(s => s.EntryId3);
+            .HasRequired<ZDSVEntry>(s => s.ZDSVEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int?>(s => s.EntryId3);
 
 
 
@@ -444,15 +466,15 @@ namespace WpfApp2.Db.Models
                 .HasRequired<PDSVHipStructure>(s => s.Structure).WithMany(g => g.Entries).HasForeignKey<int>(s => s.StructureID);
 
             modelBuilder.Entity<PDSVHipEntryFull>()
-              .HasRequired<PDSVHipWay>(s => s.PDSVHipWay).WithMany(g => g.EntriesFull).HasForeignKey<int>(s => s.WayID);
+              .HasRequired<PDSVHipWay>(s => s.PDSVHipWay).WithMany(g => g.EntriesFull).HasForeignKey<int?>(s => s.WayID);
 
             modelBuilder.Entity<PDSVHipEntryFull>()
             .HasRequired<PDSVHipEntry>(s => s.PDSVHipEntry1).WithMany(g => g.EntriesFull1).HasForeignKey<int>(s => s.EntryId1);
             modelBuilder.Entity<PDSVHipEntryFull>()
-            .HasRequired<PDSVHipEntry>(s => s.PDSVHipEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int>(s => s.EntryId2);
+            .HasRequired<PDSVHipEntry>(s => s.PDSVHipEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int?>(s => s.EntryId2);
 
             modelBuilder.Entity<PDSVHipEntryFull>()
-            .HasRequired<PDSVHipEntry>(s => s.PDSVHipEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int>(s => s.EntryId3);
+            .HasRequired<PDSVHipEntry>(s => s.PDSVHipEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int?>(s => s.EntryId3);
 
 
 
@@ -485,21 +507,21 @@ namespace WpfApp2.Db.Models
                 .HasRequired<BPVHipStructure>(s => s.Structure).WithMany(g => g.Entries).HasForeignKey<int>(s => s.StructureID);
 
             modelBuilder.Entity<BPVHipEntryFull>()
-              .HasRequired<BPVHipWay>(s => s.BPVHipWay).WithMany(g => g.EntriesFull).HasForeignKey<int>(s => s.WayID);
+              .HasRequired<BPVHipWay>(s => s.BPVHipWay).WithMany(g => g.EntriesFull).HasForeignKey<int?>(s => s.WayID);
 
             modelBuilder.Entity<BPVHipEntryFull>()
             .HasRequired<BPVHipEntry>(s => s.BPVHipEntry1).WithMany(g => g.EntriesFull1).HasForeignKey<int>(s => s.EntryId1);
             modelBuilder.Entity<BPVHipEntryFull>()
-            .HasRequired<BPVHipEntry>(s => s.BPVHipEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int>(s => s.EntryId2);
+            .HasRequired<BPVHipEntry>(s => s.BPVHipEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int?>(s => s.EntryId2);
 
             modelBuilder.Entity<BPVHipEntryFull>()
-            .HasRequired<BPVHipEntry>(s => s.BPVHipEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int>(s => s.EntryId3);
+            .HasRequired<BPVHipEntry>(s => s.BPVHipEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int?>(s => s.EntryId3);
 
             modelBuilder.Entity<BPVHipEntryFull>()
-            .HasRequired<BPVHipEntry>(s => s.BPVHipEntry4).WithMany(g => g.EntriesFull4).HasForeignKey<int>(s => s.EntryId4);
+            .HasRequired<BPVHipEntry>(s => s.BPVHipEntry4).WithMany(g => g.EntriesFull4).HasForeignKey<int?>(s => s.EntryId4);
 
             modelBuilder.Entity<BPVHipEntryFull>()
-            .HasRequired<BPVHipEntry>(s => s.BPVHipEntry5).WithMany(g => g.EntriesFull5).HasForeignKey<int>(s => s.EntryId5);
+            .HasRequired<BPVHipEntry>(s => s.BPVHipEntry5).WithMany(g => g.EntriesFull5).HasForeignKey<int?>(s => s.EntryId5);
 
 
 
@@ -530,19 +552,19 @@ namespace WpfApp2.Db.Models
             modelBuilder.Entity<SFSHipEntryFull>()
             .HasRequired<SFSHipEntry>(s => s.SFSHipEntry1).WithMany(g => g.EntriesFull1).HasForeignKey<int>(s => s.EntryId1);
             modelBuilder.Entity<SFSHipEntryFull>()
-            .HasRequired<SFSHipEntry>(s => s.SFSHipEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int>(s => s.EntryId2);
+            .HasRequired<SFSHipEntry>(s => s.SFSHipEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int?>(s => s.EntryId2);
 
             modelBuilder.Entity<SFSHipEntryFull>()
-            .HasRequired<SFSHipEntry>(s => s.SFSHipEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int>(s => s.EntryId3);
+            .HasRequired<SFSHipEntry>(s => s.SFSHipEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int?>(s => s.EntryId3);
 
             modelBuilder.Entity<SFSHipEntryFull>()
-            .HasRequired<SFSHipEntry>(s => s.SFSHipEntry4).WithMany(g => g.EntriesFull4).HasForeignKey<int>(s => s.EntryId4);
+            .HasRequired<SFSHipEntry>(s => s.SFSHipEntry4).WithMany(g => g.EntriesFull4).HasForeignKey<int?>(s => s.EntryId4);
 
             modelBuilder.Entity<SFSHipEntryFull>()
-            .HasRequired<SFSHipEntry>(s => s.SFSHipEntry5).WithMany(g => g.EntriesFull5).HasForeignKey<int>(s => s.EntryId5);
+            .HasRequired<SFSHipEntry>(s => s.SFSHipEntry5).WithMany(g => g.EntriesFull5).HasForeignKey<int?>(s => s.EntryId5);
 
             modelBuilder.Entity<SFSHipEntryFull>()
-            .HasRequired<SFSHipEntry>(s => s.SFSHipEntry6).WithMany(g => g.EntriesFull6).HasForeignKey<int>(s => s.EntryId6);
+            .HasRequired<SFSHipEntry>(s => s.SFSHipEntry6).WithMany(g => g.EntriesFull6).HasForeignKey<int?>(s => s.EntryId6);
 
 
 

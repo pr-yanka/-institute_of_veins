@@ -39,7 +39,7 @@ namespace WpfApp2.Templates
         public DataTemplate TemplateAdminPanel { get; set; }
         public DataTemplate TemplateViewPersonal { get; set; }
         public DataTemplate TemplateCancleOperations { get; set; }
-
+        public DataTemplate TemplateAddStatement { get; set; }
         public DataTemplate TemplateAddDoctor { get; set; }
         public DataTemplate TemplateAddMedPersonal { get; set; }
         public DataTemplate TemplateAddUser { get; set; }
@@ -178,7 +178,10 @@ namespace WpfApp2.Templates
 
             if (item.GetType() == typeof(ViewModelEditUser))
                 return TemplateAddUser;
-            
+
+
+            if (item.GetType() == typeof(ViewModelCreateStatement))
+                return TemplateAddStatement;
 
             return null;
         }

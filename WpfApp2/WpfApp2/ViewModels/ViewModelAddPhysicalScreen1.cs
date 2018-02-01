@@ -17,6 +17,9 @@ using WpfApp2.Db.Models.LegParts;
 using WpfApp2.Db.Models.SPS;
 using WpfApp2.Db.Models.PPV;
 using WpfApp2.Db.Models.GV;
+using Xceed.Words.NET;
+using System.Diagnostics;
+using System.Drawing;
 
 namespace WpfApp2.ViewModels
 {
@@ -992,62 +995,62 @@ namespace WpfApp2.ViewModels
                 MessageBox.Show("ГВ справа не заполнено");
             }
 
-            //if (LeftPDSV.IsEmpty == true)
-            //{
-            //    MessageBox.Show("ПДСВ слева не заполнено");
-            //}
-            //else if (RightPDSV.IsEmpty == true)
-            //{
-            //    MessageBox.Show("ПДСВ справа не заполнено");
-            //}
-            //else if (RightZDSV.IsEmpty == true)
-            //{
-            //    MessageBox.Show("ЗДСВ справа не заполнено");
-            //}
-            //else if (LeftZDSV.IsEmpty == true)
-            //{
-            //    MessageBox.Show("ЗДСВ слева не заполнено");
-            //}
-            //else if (RightPerforate.IsEmpty == true)
-            //{
-            //    MessageBox.Show("Перфоранты бедра и несафенные вены справа не заполнено");
-            //}
-            //else if (LeftPerforate.IsEmpty == true)
-            //{
-            //    MessageBox.Show("Перфоранты бедра и несафенные вены слева не заполнено");
-            //}
-            //else if (RightTibiaPerforate.IsEmpty == true)
-            //{
-            //    MessageBox.Show("Перфоранты голени справа не заполнено");
-            //}
-            //else if (LeftTibiaPerforate.IsEmpty == true)
-            //{
-            //    MessageBox.Show("Перфоранты голени слева не заполнено");
-            //}
-            //else if (RightTEMPV.IsEmpty == true)
-            //{
-            //    MessageBox.Show("ТЕ МПВ справа не заполнено");
-            //}
-            //else if (LeftTEMPV.IsEmpty == true)
-            //{
-            //    MessageBox.Show("ТЕ МПВ слева не заполнено");
-            //}
-            //else if (RightPPV.IsEmpty == true)
-            //{
-            //    MessageBox.Show("ППВ справа не заполнено");
-            //}
-            //else if (LeftPPV.IsEmpty == true)
-            //{
-            //    MessageBox.Show("ППВ слева не заполнено");
-            //}
-            //else if (string.IsNullOrWhiteSpace(RightAdditionalText))
-            //{
-            //    MessageBox.Show("Примечание справа не заполнено");
-            //}
-            //else if (string.IsNullOrWhiteSpace(LeftAdditionalText))
-            //{
-            //    MessageBox.Show("Примечание слева не заполнено");
-            //}
+            else if (LeftPDSV.IsEmpty == true)
+            {
+                MessageBox.Show("ПДСВ слева не заполнено");
+            }
+            else if (RightPDSV.IsEmpty == true)
+            {
+                MessageBox.Show("ПДСВ справа не заполнено");
+            }
+            else if (RightZDSV.IsEmpty == true)
+            {
+                MessageBox.Show("ЗДСВ справа не заполнено");
+            }
+            else if (LeftZDSV.IsEmpty == true)
+            {
+                MessageBox.Show("ЗДСВ слева не заполнено");
+            }
+            else if (RightPerforate.IsEmpty == true)
+            {
+                MessageBox.Show("Перфоранты бедра и несафенные вены справа не заполнено");
+            }
+            else if (LeftPerforate.IsEmpty == true)
+            {
+                MessageBox.Show("Перфоранты бедра и несафенные вены слева не заполнено");
+            }
+            else if (RightTibiaPerforate.IsEmpty == true)
+            {
+                MessageBox.Show("Перфоранты голени справа не заполнено");
+            }
+            else if (LeftTibiaPerforate.IsEmpty == true)
+            {
+                MessageBox.Show("Перфоранты голени слева не заполнено");
+            }
+            else if (RightTEMPV.IsEmpty == true)
+            {
+                MessageBox.Show("ТЕ МПВ справа не заполнено");
+            }
+            else if (LeftTEMPV.IsEmpty == true)
+            {
+                MessageBox.Show("ТЕ МПВ слева не заполнено");
+            }
+            else if (RightPPV.IsEmpty == true)
+            {
+                MessageBox.Show("ППВ справа не заполнено");
+            }
+            else if (LeftPPV.IsEmpty == true)
+            {
+                MessageBox.Show("ППВ слева не заполнено");
+            }
+            else if (string.IsNullOrWhiteSpace(RightAdditionalText))
+            {
+                MessageBox.Show("Примечание справа не заполнено");
+            }
+            else if (string.IsNullOrWhiteSpace(LeftAdditionalText))
+            {
+                MessageBox.Show("Примечание слева не заполнено");
+            }
             else
             {
                 DialogViewModelBase vm =
@@ -1060,6 +1063,171 @@ namespace WpfApp2.ViewModels
                     vm = new DialogPreOperationViewModel();
                     result = DialogService.DialogService.OpenDialog(vm, parameter as Window);
                 }
+
+              
+                    SaveAll();
+                Examination examnTotal = new Examination();
+                ExaminationLeg leftLegExams = new ExaminationLeg();
+                ExaminationLeg rightLegExams = new ExaminationLeg();
+                if (!LeftBPVHip.IsEmpty)
+                    leftLegExams.BPVHip = LeftBPVEntryFull.Id;
+
+                if (!LeftBPVTibia.IsEmpty)
+                    leftLegExams.BPVTibiaid = LeftBPV_TibiaEntryFull.Id;
+
+
+                if (!LeftGV.IsEmpty)
+                    leftLegExams.GVid = LeftGVEntryFull.Id;
+
+                if (!LeftMPV.IsEmpty)
+                    leftLegExams.MPVid = LeftMPVEntryFull.Id;
+
+                if (!LeftPDSV.IsEmpty)
+                    leftLegExams.PDSVid = LeftPDSVEntryFull.Id;
+
+                if (!LeftPerforate.IsEmpty)
+                    leftLegExams.PerforateHipid = LeftPerforate_hipEntryFull.Id;
+
+                if (!LeftPPV.IsEmpty)
+                    leftLegExams.PPVid = LeftPPVEntryFull.Id;
+
+                if (!LeftSFS.IsEmpty)
+                    leftLegExams.SFSid = LeftSFSEntryFull.Id;
+
+                if (!LeftSPS.IsEmpty)
+                    leftLegExams.SPSid = LeftSPSEntryFull.Id;
+
+                if (!LeftTEMPV.IsEmpty)
+                    leftLegExams.TEMPVid = LeftTEMPVEntryFull.Id;
+
+                if (!LeftTibiaPerforate.IsEmpty)
+                    leftLegExams.TibiaPerforateid = LeftPerforate_shinEntryFull.Id;
+
+                if (!LeftZDSV.IsEmpty)
+                    leftLegExams.ZDSVid = LeftZDSVEntryFull.Id;
+
+                leftLegExams.additionalText = LeftAdditionalText;
+                if (LeftCEAR.LegSections[0].SelectedValue != null)
+                    leftLegExams.C = LeftCEAR.LegSections[0].SelectedValue.Id;
+                if (LeftCEAR.LegSections[1].SelectedValue != null)
+                    leftLegExams.E = LeftCEAR.LegSections[1].SelectedValue.Id;
+                if (LeftCEAR.LegSections[2].SelectedValue != null)
+                    leftLegExams.A = LeftCEAR.LegSections[2].SelectedValue.Id;
+                if (LeftCEAR.LegSections[3].SelectedValue != null)
+                    leftLegExams.P = LeftCEAR.LegSections[3].SelectedValue.Id;
+
+
+                if (!RightBPVHip.IsEmpty)
+                    rightLegExams.BPVHip = RightBPVEntryFull.Id;
+
+                if (!RightBPVTibia.IsEmpty)
+                    rightLegExams.BPVTibiaid = RightBPV_TibiaEntryFull.Id;
+
+
+                if (!RightGV.IsEmpty)
+                    rightLegExams.GVid = RightGVEntryFull.Id;
+
+                if (!RightMPV.IsEmpty)
+                    rightLegExams.MPVid = RightMPVEntryFull.Id;
+
+                if (!RightPDSV.IsEmpty)
+                    rightLegExams.PDSVid = RightPDSVEntryFull.Id;
+
+                if (!RightPerforate.IsEmpty)
+                    rightLegExams.PerforateHipid = RightPerforate_hipEntryFull.Id;
+
+                if (!RightPPV.IsEmpty)
+                    rightLegExams.PPVid = RightPPVEntryFull.Id;
+
+                if (!RightSFS.IsEmpty)
+                    rightLegExams.SFSid = RightSFSEntryFull.Id;
+
+                if (!RightSPS.IsEmpty)
+                    rightLegExams.SPSid = RightSPSEntryFull.Id;
+
+                if (!RightTEMPV.IsEmpty)
+                    rightLegExams.TEMPVid = RightTEMPVEntryFull.Id;
+
+                if (!RightTibiaPerforate.IsEmpty)
+                    rightLegExams.TibiaPerforateid = RightPerforate_shinEntryFull.Id;
+
+                if (!RightZDSV.IsEmpty)
+                    rightLegExams.ZDSVid = RightZDSVEntryFull.Id;
+
+                rightLegExams.additionalText = RightAdditionalText;
+                if (RightCEAR.LegSections[0].SelectedValue != null)
+                    rightLegExams.C = RightCEAR.LegSections[0].SelectedValue.Id;
+                if (RightCEAR.LegSections[1].SelectedValue != null)
+                    rightLegExams.E = RightCEAR.LegSections[1].SelectedValue.Id;
+                if (RightCEAR.LegSections[2].SelectedValue != null)
+                    rightLegExams.A = RightCEAR.LegSections[2].SelectedValue.Id;
+                if (RightCEAR.LegSections[3].SelectedValue != null)
+                    rightLegExams.P = RightCEAR.LegSections[3].SelectedValue.Id;
+
+                Data.ExaminationLeg.Add(leftLegExams);
+                Data.ExaminationLeg.Add(rightLegExams);
+                Data.Complete();
+               
+                examnTotal.PatientId = CurrentPatient.Id;
+                examnTotal.Date = DateTime.Now;
+                if (result == DialogResult.Yes)
+                examnTotal.isNeedOperation = true;
+                else
+                examnTotal.isNeedOperation = false;
+                examnTotal.weight = float.Parse(Weight);
+                examnTotal.height = float.Parse(Growth);
+                examnTotal.idLeftLegExamination = leftLegExams.Id;
+                examnTotal.idRightLegExamination = rightLegExams.Id;
+                Data.Examination.Add(examnTotal);
+                Data.Complete();
+                foreach (var diag in LeftDiagnosisList)
+                {
+                    if (diag.IsChecked.Value)
+                    {
+                        var newDiag = new DiagnosisObs();
+                        newDiag.id_диагноз = diag.Data.Id;
+                        newDiag.id_обследование_ноги = examnTotal.Id;
+                        newDiag.isLeft = true;
+                        Data.DiagnosisObs.Add(newDiag);
+                    }
+                }
+                Data.Complete();
+                foreach (var diag in RightDiagnosisList)
+                {
+                    if (diag.IsChecked.Value)
+                    {
+                        var newDiag = new DiagnosisObs();
+                        newDiag.id_диагноз = diag.Data.Id;
+                        newDiag.id_обследование_ноги = examnTotal.Id;
+                        newDiag.isLeft = false;
+                        Data.DiagnosisObs.Add(newDiag);
+                    }
+                }
+                Data.Complete();
+
+                foreach (var rec in RecomendationsList)
+                {
+                    if (rec.IsChecked.Value)
+                    {
+                        var newRec = new RecomendationObs();
+                        newRec.id_рекомендации = rec.Data.Id;
+                        newRec.id_обследования = examnTotal.Id.Value;
+                        Data.RecomendationObs.Add(newRec);
+                    }
+                }
+                Data.Complete();
+
+                foreach (var cmp in ComplainsList)
+                {
+                    if (cmp.IsChecked.Value)
+                    {
+                        var newcmp = new ComplanesObs();
+                        newcmp.id_жалобы = cmp.Data.Id;
+                        newcmp.id_обследования = examnTotal.Id.Value;
+                        Data.ComplanesObs.Add(newcmp);
+                    }
+                }
+                Data.Complete();
             }
         }
 
@@ -1295,10 +1463,247 @@ namespace WpfApp2.ViewModels
                 }
             );
 
+            ToPhysicalOverviewCommand = new DelegateCommand(
+                () =>
+                {
+                    //if (LeftGV.IsEmpty == true)
+                    //{
+                    //    MessageBox.Show("ГВ слева не заполнено");
+                    //}
+                    //else if (RightGV.IsEmpty == true)
+                    //{
+                    //    MessageBox.Show("ГВ справа не заполнено");
+                    //}
+
+                    //   else if (LeftPDSV.IsEmpty == true)
+                    //    {
+                    //        MessageBox.Show("ПДСВ слева не заполнено");
+                    //    }
+                    //    else if (RightPDSV.IsEmpty == true)
+                    //    {
+                    //        MessageBox.Show("ПДСВ справа не заполнено");
+                    //    }
+                    //    else if (RightZDSV.IsEmpty == true)
+                    //    {
+                    //        MessageBox.Show("ЗДСВ справа не заполнено");
+                    //    }
+                    //    else if (LeftZDSV.IsEmpty == true)
+                    //    {
+                    //        MessageBox.Show("ЗДСВ слева не заполнено");
+                    //    }
+                    //    else if (RightPerforate.IsEmpty == true)
+                    //    {
+                    //        MessageBox.Show("Перфоранты бедра и несафенные вены справа не заполнено");
+                    //    }
+                    //    else if (LeftPerforate.IsEmpty == true)
+                    //    {
+                    //        MessageBox.Show("Перфоранты бедра и несафенные вены слева не заполнено");
+                    //    }
+                    //    else if (RightTibiaPerforate.IsEmpty == true)
+                    //    {
+                    //        MessageBox.Show("Перфоранты голени справа не заполнено");
+                    //    }
+                    //    else if (LeftTibiaPerforate.IsEmpty == true)
+                    //    {
+                    //        MessageBox.Show("Перфоранты голени слева не заполнено");
+                    //    }
+                    //    else if (RightTEMPV.IsEmpty == true)
+                    //    {
+                    //        MessageBox.Show("ТЕ МПВ справа не заполнено");
+                    //    }
+                    //    else if (LeftTEMPV.IsEmpty == true)
+                    //    {
+                    //        MessageBox.Show("ТЕ МПВ слева не заполнено");
+                    //    }
+                    //    else if (RightPPV.IsEmpty == true)
+                    //    {
+                    //        MessageBox.Show("ППВ справа не заполнено");
+                    //    }
+                    //    else if (LeftPPV.IsEmpty == true)
+                    //    {
+                    //        MessageBox.Show("ППВ слева не заполнено");
+                    //    }
+                    //    else if (string.IsNullOrWhiteSpace(RightAdditionalText))
+                    //    {
+                    //        MessageBox.Show("Примечание справа не заполнено");
+                    //    }
+                    //    else if (string.IsNullOrWhiteSpace(LeftAdditionalText))
+                    //    {
+                    //        MessageBox.Show("Примечание слева не заполнено");
+                    //    }
+                    //    else
+                    //    {
+                    string docName = "Консультативное_заключение_" + DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year;
+                    using (DocX document = DocX.Create(@"" + docName))
+                    {
+
+
+
+                        // Insert a new Paragraph.
+                        Paragraph p = document.InsertParagraph();
+                        Paragraph p1 = document.InsertParagraph();
+                        Paragraph p2 = document.InsertParagraph();
+                        Paragraph p3 = document.InsertParagraph();
+                        Paragraph p4 = document.InsertParagraph();
+                        Paragraph p5 = document.InsertParagraph();
+                        Paragraph p6 = document.InsertParagraph();
+                        Paragraph p7 = document.InsertParagraph();
+                        Paragraph p8 = document.InsertParagraph();
+
+                        p.Append("Консультативное заключение\n").Font("Times new roman").Bold().FontSize(14.0).Alignment = Alignment.center;
+                        p1.Append("«" + CurrentPatient.Sirname + " " + CurrentPatient.Name + " " + CurrentPatient.Patronimic + "»,«" + CurrentPatient.Birthday.Day + "." + CurrentPatient.Birthday.Month + "." + CurrentPatient.Birthday.Year + "»                            Дата: «" + DateTime.Now + "»\n").Font("Times new roman").FontSize(12.0);
+                        p2.Append("Допплерография вен нижних конечностей:\n").Font("Times new roman").Bold().FontSize(14.0);
+                        p3.Append("Правая нижняя конечность:\n").Font("Times new roman").Bold().FontSize(11.0);
+                        BuildStr(ref p4, RightSFS, false);
+                        BuildStr(ref p4, RightBPVHip, true);
+                        BuildStr(ref p4, RightPDSV, true);
+                        BuildStr(ref p4, RightZDSV, false);
+                        BuildStr(ref p4, RightPerforate, false);
+                        BuildStr(ref p4, RightBPVTibia, true);
+                        BuildStr(ref p4, RightTibiaPerforate, false);
+                        BuildStr(ref p4, RightSPS, false);
+                        BuildStr(ref p4, RightMPV, true);
+                        BuildStr(ref p4, RightTEMPV, true);
+                        BuildStr(ref p4, RightPPV, true);
+                        BuildStr(ref p4, RightGV, false);
+
+                        if (!string.IsNullOrWhiteSpace(RightAdditionalText))
+                            p4.Append("«" + RightAdditionalText + "»\n").Font("Times new roman").FontSize(11.0);
+
+                        p4.Append("Левая нижняя конечность:\n").Font("Times new roman").Bold().FontSize(11.0);
+                        BuildStr(ref p4, LeftSFS, false);
+                        BuildStr(ref p4, LeftBPVHip, true);
+                        BuildStr(ref p4, LeftPDSV, true);
+                        BuildStr(ref p4, LeftZDSV, false);
+                        BuildStr(ref p4, LeftPerforate, false);
+                        BuildStr(ref p4, LeftBPVTibia, true);
+                        BuildStr(ref p4, LeftTibiaPerforate, false);
+                        BuildStr(ref p4, LeftSPS, false);
+                        BuildStr(ref p4, LeftMPV, true);
+                        BuildStr(ref p4, LeftTEMPV, true);
+                        BuildStr(ref p4, LeftPPV, true);
+                        BuildStr(ref p4, LeftGV, false);
+
+                        if (!string.IsNullOrWhiteSpace(LeftAdditionalText))
+                            p4.Append("«" + LeftAdditionalText + "»\n").Font("Times new roman").FontSize(11.0);
+
+                        p4.Append("Заключение:\n").Font("Times new roman").Bold().FontSize(11.0);
+
+                        p4.Append("Заключение справа: ").Font("Times new roman").FontSize(11.0);
+                        foreach (var letter in RightCEAR.LegSections)
+                        {
+                            if (letter.SelectedValue != null)
+                            {
+                                p4.Append("«" + letter.SelectedValue.Leter + letter.SelectedValue.Text1 + "»").Font("Times new roman").FontSize(11.0);
+
+                            }
+                        }
+
+
+
+                        p4.Append("\nЗаключение слева: ").Font("Times new roman").FontSize(11.0);
+                        foreach (var letter in LeftCEAR.LegSections)
+                        {
+                            if (letter.SelectedValue != null)
+                            {
+                                p4.Append("«" + letter.SelectedValue.Leter + letter.SelectedValue.Text1 + "»").Font("Times new roman").FontSize(11.0);
+
+                            }
+                        }
+
+                        p4.Append("\nРекомендовано : ").Font("Times new roman").FontSize(11.0).UnderlineStyle(UnderlineStyle.singleLine);
+                        if (RecomendationsList != null)
+                            foreach (var rec in RecomendationsList)
+                            {
+                                if (rec.IsChecked == true)
+                                {
+                                    p4.Append("«" + rec.Data.Str + "»").Font("Times new roman").FontSize(11.0);
+
+                                }
+                            }
+                        //   p4.Append("Сафено-феморальное соустье").Font("Times new roman").FontSize(11.0).UnderlineStyle(UnderlineStyle.singleLine);
+                        //foreach (var section in RightSFS.LegSections)
+                        //{
+                        //    if (section.SelectedValue != null)
+                        //        p4.Append(" «" + section.SelectedValue.Text1 + "»").Font("Times new roman").FontSize(11.0);
+                        //}
+
+                        // Save this document.
+                        document.Save();
+                        // Release this document from memory.
+                        Process.Start("WINWORD.EXE", @"" + docName);
+                        //}
+
+
+                    }
+                }
+            );
+
+            void BuildStr(ref Paragraph p4, LegPartViewModel LegPart, bool isNormal)
+            {
+
+                if (!isNormal)
+                    p4.Append(LegPart.Title + ": ").Font("Times new roman").FontSize(11.0).UnderlineStyle(UnderlineStyle.singleLine);
+                else
+                {
+                    p4.Append(LegPart.Title + ": ").Font("Times new roman").FontSize(11.0);
+
+                }
+                if (!LegPart.IsEmpty)
+                {
+
+                    if (LegPart.SelectedWayType != null && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name))
+                        p4.Append("Вид хода :" + LegPart.SelectedWayType.Name + " ").Font("Times new roman").FontSize(11.0);
+                    if (LegPart is TEMPVViewModel)
+                        p4.Append("Протяжность :" + ((TEMPVViewModel)LegPart).FF_length + " ").Font("Times new roman").FontSize(11.0);
+
+
+                    foreach (var section in LegPart.LegSections)
+                    {
+                        if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
+                        {
+                            if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
+                                p4.Append(" «" + section.SelectedValue.Text1).Font("Times new roman").FontSize(11.0);
+
+
+                            if (section.SelectedValue.HasSize || section.HasDoubleSize)
+                            {
+                                if (section.HasDoubleSize)
+                                {
+                                    p4.Append(section.CurrentEntry.Size + "*" + section.CurrentEntry.Size2 + " " + section.SelectedValue.Metrics + "»").Font("Times new roman").FontSize(11.0);
+
+                                }
+                                else
+                                {
+                                    p4.Append(section.CurrentEntry.Size + " " + section.SelectedValue.Metrics + "»").Font("Times new roman").FontSize(11.0);
+                                }
+                            }
+                            else
+                            {
+                                p4.Append("»").Font("Times new roman").FontSize(11.0);
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
+                                p4.Append(" «" + section.SelectedValue.Text2 + "»").Font("Times new roman").FontSize(11.0);
+                            if (!string.IsNullOrWhiteSpace(section.CurrentEntry.Comment))
+                            {
+                                p4.Append(" «" + section.CurrentEntry.Comment + "»").Font("Times new roman").FontSize(11.0);
+
+                            }
+
+                        }
+                    }
+                }
+                p4.Append("\n");
+            }
+
 
             ToSymptomsAddCommand = new DelegateCommand(
                 () =>
                 {
+
+
+
                     Controller.NavigateTo<ViewModelSymptomsAdd>();
                 }
             );
@@ -1745,104 +2150,188 @@ namespace WpfApp2.ViewModels
             RightGVEntryFull = (GVEntryFull)SaveFullEntry(RightGV, RightGVEntryFull);
             LeftGVEntryFull = (GVEntryFull)SaveFullEntry(LeftGV, LeftGVEntryFull);
 
+
+
+            if (!RightBPVHip.IsEmpty)
+                Data.BPVHipsFull.Add(RightBPVEntryFull);
+          
+            if (!RightBPVTibia.IsEmpty)
+                Data.BPV_TibiaFull.Add(RightBPV_TibiaEntryFull);
+
+           
+            if (!RightGV.IsEmpty)
+                Data.GVFull.Add(RightGVEntryFull);
+           
+            if (!RightMPV.IsEmpty)
+                Data.MPVFull.Add(RightMPVEntryFull);
+          
+            if (!RightPDSV.IsEmpty)
+                Data.PDSVFull.Add(RightPDSVEntryFull);
+         
+            if (!RightPerforate.IsEmpty)
+                Data.Perforate_hipFull.Add(RightPerforate_hipEntryFull);
+       
+            if (!RightPPV.IsEmpty)
+                Data.PPVFull.Add(RightPPVEntryFull);
+          
+            if (!RightSFS.IsEmpty)
+                Data.SFSFull.Add(RightSFSEntryFull);
+          
+            if (!RightSPS.IsEmpty)
+                Data.SPSHipFull.Add(RightSPSEntryFull);
+          
+            if (!RightTEMPV.IsEmpty)
+                Data.TEMPVFull.Add(RightTEMPVEntryFull);
+         
+            if (!RightTibiaPerforate.IsEmpty)
+                Data.Perforate_shinFull.Add(RightPerforate_shinEntryFull);
+          
+            if (!RightZDSV.IsEmpty)
+                Data.ZDSVFull.Add(RightZDSVEntryFull);
+
+           
+            if (!LeftBPVHip.IsEmpty)
+                Data.BPVHipsFull.Add(LeftBPVEntryFull);
+          
+            if (!LeftBPVTibia.IsEmpty)
+                Data.BPV_TibiaFull.Add(LeftBPV_TibiaEntryFull);
+         
+
+            if (!LeftGV.IsEmpty)
+                Data.GVFull.Add(LeftGVEntryFull);
+          
+            if (!LeftMPV.IsEmpty)
+                Data.MPVFull.Add(LeftMPVEntryFull);
+            
+            if (!LeftPDSV.IsEmpty)
+                Data.PDSVFull.Add(LeftPDSVEntryFull);
+           
+            if (!LeftPerforate.IsEmpty)
+                Data.Perforate_hipFull.Add(LeftPerforate_hipEntryFull);
+           
+            if (!LeftPPV.IsEmpty)
+                Data.PPVFull.Add(LeftPPVEntryFull);
+            
+            if (!LeftSFS.IsEmpty)
+                Data.SFSFull.Add(LeftSFSEntryFull);
+          
+            if (!LeftSPS.IsEmpty)
+                Data.SPSHipFull.Add(LeftSPSEntryFull);
+          
+            if (!LeftTEMPV.IsEmpty)
+                Data.TEMPVFull.Add(LeftTEMPVEntryFull);
+          
+            if (!LeftTibiaPerforate.IsEmpty)
+                Data.Perforate_shinFull.Add(LeftPerforate_shinEntryFull);
+         
+            if (!LeftZDSV.IsEmpty)
+                Data.ZDSVFull.Add(LeftZDSVEntryFull);
+
+
+
+            Data.Complete();
+
         }
 
         private LegPartEntries SaveFullEntry(LegPartViewModel Part, LegPartEntries FullEntry)
         {
-
-            LegPartEntries LeftSFSEntryFullbuf = FullEntry;
-            foreach (var section in Part.LegSections)
+            if (!Part.IsEmpty)
             {
-                if (section.SelectedValue == null)
-                { continue; }
-                LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
-                newSFSentry.StructureID = section.SelectedValue.Id;
-                if (Part is PDSVViewModel)
+                LegPartEntries LeftSFSEntryFullbuf = FullEntry;
+                foreach (var section in Part.LegSections)
                 {
+                    if (section.SelectedValue == null)
+                    { continue; }
+                    LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                    newSFSentry.StructureID = section.SelectedValue.Id;
+                    if (Part is PDSVViewModel)
+                    {
 
-                    Data.PDSVHipEntries.Add((PDSVHipEntry)newSFSentry);
+                        Data.PDSVHipEntries.Add((PDSVHipEntry)newSFSentry);
+                    }
+                    else if (Part is SFSViewModel)
+                    {
+                        Data.SFSHipEntries.Add((SFSHipEntry)newSFSentry);
+                    }
+                    else if (Part is BPVHipViewModel)
+                    {
+                        Data.BPVHipEntries.Add((BPVHipEntry)newSFSentry);
+                    }
+                    else if (Part is BPVTibiaViewModel)
+                    {
+                        Data.BPV_TibiaEntries.Add((BPV_TibiaEntry)newSFSentry);
+                    }
+                    else if (Part is HipPerforateViewModel)
+                    {
+                        Data.Perforate_hipEntries.Add((Perforate_hipEntry)newSFSentry);
+                    }
+                    else if (Part is ZDSVViewModel)
+                    {
+                        Data.ZDSVEntries.Add((ZDSVEntry)newSFSentry);
+                    }
+
+                    else if (Part is SPSViewModel)
+                    {
+                        Data.SPSEntries.Add((SPSHipEntry)newSFSentry);
+                    }
+                    else if (Part is TibiaPerforateViewModel)
+                    {
+                        Data.Perforate_shinEntries.Add((Perforate_shinEntry)newSFSentry);
+                    }
+                    else if (Part is MPVViewModel)
+                    {
+                        Data.MPVEntries.Add((MPVEntry)newSFSentry);
+                    }
+                    else if (Part is TEMPVViewModel)
+                    {
+                        ((TEMPVEntryFull)LeftSFSEntryFullbuf).FF_Length = Part.FF_length;
+                        Data.TEMPVEntries.Add((TEMPVEntry)newSFSentry);
+                    }
+                    else if (Part is PPVViewModel)
+                    {
+                        Data.PPVEntries.Add((PPVEntry)newSFSentry);
+                    }
+                    else if (Part is GVViewModel)
+                    {
+                        Data.GVEntries.Add((GVEntry)newSFSentry);
+                    }
+
+                    Data.Complete();
+                    if (section.ListNumber == 1)
+                    {
+                        LeftSFSEntryFullbuf.EntryId1 = newSFSentry.Id;
+                    }
+                    if (section.ListNumber == 2)
+                    {
+                        LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
+                    }
+                    if (section.ListNumber == 3)
+                    {
+                        LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
+                    }
+                    if (section.ListNumber == 4)
+                    {
+                        LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
+                    }
+                    if (section.ListNumber == 5)
+                    {
+                        LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
+                    }
+                    if (section.ListNumber == 6)
+                    {
+                        LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
+                    }
                 }
-                else if (Part is SFSViewModel)
+                if (Part.SelectedWayType != null)
                 {
-                    Data.SFSHipEntries.Add((SFSHipEntry)newSFSentry);
-                }
-                else if (Part is BPVHipViewModel)
-                {
-                    Data.BPVHipEntries.Add((BPVHipEntry)newSFSentry);
-                }
-                else if (Part is BPVTibiaViewModel)
-                {
-                    Data.BPV_TibiaEntries.Add((BPV_TibiaEntry)newSFSentry);
-                }
-                else if (Part is HipPerforateViewModel)
-                {
-                    Data.Perforate_hipEntries.Add((Perforate_hipEntry)newSFSentry);
-                }
-                else if (Part is ZDSVViewModel)
-                {
-                    Data.ZDSVEntries.Add((ZDSVEntry)newSFSentry);
+                    LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                 }
 
-                else if (Part is SPSViewModel)
-                {
-                    Data.SPSEntries.Add((SPSHipEntry)newSFSentry);
-                }
-                else if (Part is TibiaPerforateViewModel)
-                {
-                    Data.Perforate_shinEntries.Add((Perforate_shinEntry)newSFSentry);
-                }
-                else if (Part is MPVViewModel)
-                {
-                    Data.MPVEntries.Add((MPVEntry)newSFSentry);
-                }
-                else if (Part is TEMPVViewModel)
-                {
-                    ((TEMPVEntryFull)LeftSFSEntryFullbuf).FF_Length = Part.FF_length;
-                    Data.TEMPVEntries.Add((TEMPVEntry)newSFSentry);
-                }
-                else if (Part is PPVViewModel)
-                {
-                    Data.PPVEntries.Add((PPVEntry)newSFSentry);
-                }
-                else if (Part is GVViewModel)
-                {
-                    Data.GVEntries.Add((GVEntry)newSFSentry);
-                }
 
-                Data.Complete();
-                if (section.ListNumber == 1)
-                {
-                    LeftSFSEntryFullbuf.EntryId1 = newSFSentry.Id;
-                }
-                if (section.ListNumber == 2)
-                {
-                    LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
-                }
-                if (section.ListNumber == 3)
-                {
-                    LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
-                }
-                if (section.ListNumber == 4)
-                {
-                    LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
-                }
-                if (section.ListNumber == 5)
-                {
-                    LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
-                }
-                if (section.ListNumber == 6)
-                {
-                    LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
-                }
+
+                return LeftSFSEntryFullbuf;
             }
-            if (Part.SelectedWayType != null)
-            {
-                LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
-            }
-
-
-
-            return LeftSFSEntryFullbuf;
+            return FullEntry;
         }
 
 

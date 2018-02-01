@@ -24,20 +24,53 @@ namespace WpfApp2.Db.Models
 {
     public class UnitOfWork : IUnitOfWork
     {
+        public ComplanesObsRepository ComplanesObs { get; }
+        public RecomendationObsRepository RecomendationObs { get; }
+
+        public ExaminationLegRepository ExaminationLeg { get; }
+        public doc_templatesRepository doc_template { get; }
+
+        public BPVHipEntryFullRepository BPVHipsFull { get; }
+        public PDSVHipEntryFullRepository PDSVFull { get; }
+        public SFSHipEntryFullRepository SFSFull { get; }
+        public Perforate_hipEntryFullRepository Perforate_hipFull { get; }
+        public BPV_TibiaEntryFullRepository BPV_TibiaFull { get; }
+        public SPSHipEntryFullRepository SPSHipFull { get; }
+        public Perforate_shinEntryFullRepository Perforate_shinFull { get; }
+        public MPVEntryFullRepository MPVFull { get; }
+        public TEMPVEntryFullRepository TEMPVFull { get; }
+        public PPVEntryFullRepository PPVFull { get; }
+        public GVEntryFullRepository GVFull { get; }
+
         public GVRepository GV { get; }
         public GVComboRepository GVCombos { get; }
         public GVEntryRepository GVEntries { get; }
+
+
+       
+
         public PPVRepository PPV { get; }
         public PPVComboRepository PPVCombos { get; }
         public PPVEntryRepository PPVEntries { get; }
         public LettersRepository Letters { get; }
+
+
+        
+
         public TEMPVRepository TEMPV { get; }
         public TEMPVComboRepository TEMPVCombos { get; }
         public TEMPVEntryRepository TEMPVEntries { get; }
 
+
+   
+
+
         public MPVRepository MPV { get; }
         public MPVComboRepository MPVCombos { get; }
         public MPVEntryRepository MPVEntries { get; }
+
+
+       
 
 
         public Perforate_shinRepository Perforate_shin { get; }
@@ -45,20 +78,26 @@ namespace WpfApp2.Db.Models
         public Perforate_shinEntryRepository Perforate_shinEntries { get; }
 
 
+
+       
+
+
         public SPSHipRepository SPS { get; }
         public SPSComboRepository SPSCombos { get; }
         public SPSHipEntryRepository SPSEntries { get; }
 
 
+       
 
         public BPV_TibiaRepository BPV_Tibia { get; }
         public BPV_TibiaComboRepository BPV_TibiaCombos { get; }
         public BPV_TibiaEntryRepository BPV_TibiaEntries { get; }
-
+      
         public Perforate_hipRepository Perforate_hip { get; }
         public Perforate_hipComboRepository Perforate_hipCombos { get; }
         public Perforate_hipEntryRepository Perforate_hipEntries { get; }
 
+        public ZDSVEntryFullRepository ZDSVFull { get; }
         public ZDSVRepository ZDSV { get; }
         public ZDSVComboRepository ZDSVCombos { get; }
         public ZDSVEntryRepository ZDSVEntries { get; }
@@ -70,20 +109,20 @@ namespace WpfApp2.Db.Models
 
 
 
-
-
+       
         public SFSHipRepository SFSHips { get; }
         public SFSComboRepository SFSCombos { get; }
         public SFSHipEntryRepository SFSHipEntries { get; }
 
         public СategoryTypeRepository СategoryType { get; }
-
-
+     
         public PDSVHipRepository PDSVHips { get; }
         public PDSVComboRepository PDSVCombos { get; }
         public PDSVHipEntryRepository PDSVHipEntries { get; }
         public PDSVHipWayRepository PDSVHipWay { get; }
 
+
+     
         public BPVHipRepository BPVHips { get; }
         public BPVComboRepository BPVCombos { get; }
         public BPVHipEntryRepository BPVHipEntries { get; }
@@ -138,6 +177,23 @@ namespace WpfApp2.Db.Models
         {
             _context = context;
 
+            ComplanesObs = new ComplanesObsRepository(_context);
+            RecomendationObs = new RecomendationObsRepository(_context);
+
+            GVFull = new GVEntryFullRepository(_context);
+            PPVFull = new PPVEntryFullRepository(_context);
+            TEMPVFull = new TEMPVEntryFullRepository(_context);
+            MPVFull = new MPVEntryFullRepository(_context);
+            Perforate_shinFull = new Perforate_shinEntryFullRepository(_context);
+            SPSHipFull = new SPSHipEntryFullRepository(_context);
+            BPV_TibiaFull = new BPV_TibiaEntryFullRepository(_context);
+            Perforate_hipFull = new Perforate_hipEntryFullRepository(_context);
+            ZDSVFull = new ZDSVEntryFullRepository(_context);
+            SFSFull = new SFSHipEntryFullRepository(_context);
+            PDSVFull = new PDSVHipEntryFullRepository(_context);
+            BPVHipsFull = new BPVHipEntryFullRepository(_context);
+            ExaminationLeg = new ExaminationLegRepository(_context);
+            doc_template = new doc_templatesRepository(_context);
             GV = new GVRepository(_context);
             GVCombos = new GVComboRepository(_context);
             GVEntries = new GVEntryRepository(_context);

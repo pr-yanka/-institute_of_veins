@@ -37,25 +37,25 @@ namespace WpfApp2.Db.Models
         public int Id { get; set; }
 
         [Required]
-        [Column("структура1")]
+        [Column("структура_1")]
         public int IdStr1 { get; set; }
 
         public virtual Perforate_shinStructure Str1 { get; set; }
 
-        [Column("структура2")]
+        [Column("структура_2")]
         public int? IdStr2 { get; set; }
 
         public virtual Perforate_shinStructure Str2 { get; set; }
 
-        [Column("структура3")]
+        [Column("структура_3")]
         public int? IdStr3 { get; set; }
         public virtual Perforate_shinStructure Str3 { get; set; }
 
-        [Column("структура4")]
+        [Column("структура_4")]
         public int? IdStr4 { get; set; }
         public virtual Perforate_shinStructure Str4 { get; set; }
 
-        [Column("структура5")]
+        [Column("структура_5")]
         public int? IdStr5 { get; set; }
         public virtual Perforate_shinStructure Str5 { get; set; }
 
@@ -135,20 +135,31 @@ namespace WpfApp2.Db.Models
     [Table("перфорант_голень")]
     public class Perforate_shinEntryFull : LegPartEntries
     {
+        [NotMapped]
+        public override int? WayID { get; set; }
 
         public virtual Perforate_shinEntry Perforate_shinEntry1 { get; set; }
         public virtual Perforate_shinEntry Perforate_shinEntry2 { get; set; }
         public virtual Perforate_shinEntry Perforate_shinEntry3 { get; set; }
         public virtual Perforate_shinEntry Perforate_shinEntry4 { get; set; }
         public virtual Perforate_shinEntry Perforate_shinEntry5 { get; set; }
-     
 
-
-
+        [Column("подзапись_1")]
         public override int EntryId1 { get; set; }
-        public override int EntryId2 { get; set; }
-        public override int EntryId3 { get; set; }
-        public override int EntryId4 { get; set; }
-        public override int EntryId5 { get; set; }
+        [Column("подзапись_2")]
+        public override int? EntryId2 { get; set; }
+        [Column("подзапись_3")]
+        public override int? EntryId3 { get; set; }
+        [Column("подзапись_4")]
+        public override int? EntryId4 { get; set; }
+        [Column("подзапись_5")]
+        public override int? EntryId5 { get; set; }
+      
+
+        [NotMapped]
+        public override int? EntryId6 { get; set; }
+
+
+
     }
 }

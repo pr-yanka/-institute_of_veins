@@ -24,6 +24,30 @@ namespace WpfApp2.Db.Models
 {
     public interface IUnitOfWork : IDisposable
     {
+
+        ComplanesObsRepository ComplanesObs { get; }
+        RecomendationObsRepository RecomendationObs { get; }
+
+
+
+        BPVHipEntryFullRepository BPVHipsFull { get; }
+        PDSVHipEntryFullRepository PDSVFull { get; }
+        SFSHipEntryFullRepository SFSFull { get; }
+        Perforate_hipEntryFullRepository Perforate_hipFull { get; }
+        BPV_TibiaEntryFullRepository BPV_TibiaFull { get; }
+        SPSHipEntryFullRepository SPSHipFull { get; }
+        Perforate_shinEntryFullRepository Perforate_shinFull { get; }
+        MPVEntryFullRepository MPVFull { get; }
+        TEMPVEntryFullRepository TEMPVFull { get; }
+        PPVEntryFullRepository PPVFull { get; }
+        GVEntryFullRepository GVFull { get; }
+        ZDSVEntryFullRepository ZDSVFull { get; }
+
+
+
+        ExaminationLegRepository ExaminationLeg { get; }
+        doc_templatesRepository doc_template { get; }
+
         GVRepository GV { get; }
         GVComboRepository GVCombos { get; }
         GVEntryRepository GVEntries { get; }

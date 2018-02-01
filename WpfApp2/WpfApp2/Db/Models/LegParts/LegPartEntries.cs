@@ -13,19 +13,19 @@ namespace WpfApp2.Db.Models.LegParts
         public int Id { get; set; }
 
         [Column("id_хода")]
-        public virtual int WayID { get; set; }
+        public virtual int? WayID { get; set; }
         [Column("подзапись1")] 
         public virtual int EntryId1 { get; set; }
         [Column("подзапись2")]
-        public virtual int EntryId2 { get; set; }
+        public virtual int? EntryId2 { get; set; }
         [Column("подзапись3")]
-        public virtual int EntryId3 { get; set; }
+        public virtual int? EntryId3 { get; set; }
         [Column("подзапись4")]
-        public virtual int EntryId4 { get; set; }
+        public virtual int? EntryId4 { get; set; }
         [Column("подзапись5")]
-        public virtual int EntryId5 { get; set; }
+        public virtual int? EntryId5 { get; set; }
         [Column("подзапись6")]
-        public virtual int EntryId6 { get; set; }
+        public virtual int? EntryId6 { get; set; }
 
 
 
