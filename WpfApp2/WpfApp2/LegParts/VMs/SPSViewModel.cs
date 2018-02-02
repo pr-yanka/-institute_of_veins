@@ -45,11 +45,11 @@ namespace WpfApp2.LegParts.VMs
                 }
 
             }
-
+           
         }
         private void Rebuild(object sender, object data)
         {
-            if (Controller.CurrentViewModel.Controller.LegViewModel == this)
+            if (Controller.CurrentViewModel.Controller.LegViewModel == this && mode == "Normal")
             {
 
                 var section = (LegSectionViewModel)data;

@@ -42,9 +42,12 @@ namespace WpfApp2.LegParts
         //all values
 
         //selected value
+
         private LegPartDbStructure _selectedValue;
 
-      
+        private int? _selectedIndex;
+
+        public int? SelectedIndex { get { return _selectedIndex; } set { _selectedIndex = value;OnPropertyChanged(); } }
 
         public LegPartDbStructure SelectedValue
         {
@@ -74,6 +77,9 @@ namespace WpfApp2.LegParts
                     {
 
                         _selectedValue = value;
+
+                        SelectedIndex = StructureSource.IndexOf(StructureSource.Where(s => s.Id == _selectedValue.Id).ToList()[0]);
+
                         if (_selectedValue == null)
                         {
                             HasFirstPart = false;

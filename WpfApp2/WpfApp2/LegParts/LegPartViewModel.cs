@@ -25,6 +25,8 @@ namespace WpfApp2.LegParts
     public class LegPartViewModel : ViewModelBase, INotifyPropertyChanged
     {
 
+        public string mode = "Normal";
+        public string Comment { get; set; }
 
         public da_Way SelectedWayType { get; set; }
 
@@ -45,7 +47,7 @@ namespace WpfApp2.LegParts
             {
                 return _isEmpty;
             }
-            protected set
+             set
             {
                 _isEmpty = value;
                 OnPropertyChanged();
@@ -176,7 +178,12 @@ namespace WpfApp2.LegParts
 
         }
 
+        private void SetModeHandler(object sender, object data)
+        {
 
+            mode = (string)data;
+
+        }
         private void CloseHandler(object sender, object data)
         {
 
@@ -186,6 +193,7 @@ namespace WpfApp2.LegParts
 
         public void Initialization()
         {
+            MessageBus.Default.Subscribe("SetMode", SetModeHandler);
             CurrentPanelViewModel = new SizePanelViewModel(this);
 
 

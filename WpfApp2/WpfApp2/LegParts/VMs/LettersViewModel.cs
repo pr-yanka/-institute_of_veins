@@ -24,14 +24,39 @@ namespace WpfApp2.LegParts.VMs
             get { return _sections; }
             set { _sections = value; }
         }
+        private void RebuildFirst(object sender, object data)
+        {
 
+
+            var sendModel = ((ViewModelAddPhysical)sender);
+            if (CurrentLegSide == LegSide.Left)
+            {
+
+                LegSections = sendModel.LeftCEAR.LegSections;
+
+
+             
+                IsEmpty = sendModel.LeftCEAR.IsEmpty;
+            }
+            else
+            {
+                LegSections = sendModel.RightCEAR.LegSections;
+
+
+             
+                IsEmpty = sendModel.RightCEAR.IsEmpty;
+
+            }
+
+
+        }
 
 
         public void Initialize()
         {
 
 
-
+            MessageBus.Default.Subscribe("RebuildFirstCEAP", RebuildFirst);
 
             SaveCommand = new DelegateCommand(
   () =>

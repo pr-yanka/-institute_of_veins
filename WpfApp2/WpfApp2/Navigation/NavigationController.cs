@@ -59,7 +59,7 @@ namespace WpfApp2.Navigation
                 new ViewModelCurrentPatient(this),
                 new ViewModelNewPatient(this),
                 new ViewModelTablePatients(this),
-                new ViewModelAddPhysical(this),
+               
                 new ViewModelEditPatient(this),
                 new ViewModelViewHistory(this),
                 new ViewModelLegDescribe(this),

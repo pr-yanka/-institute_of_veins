@@ -16,14 +16,14 @@ namespace WpfApp2.LegParts.VMs
     public class PDSVViewModel : LegPartViewModel
     {
 
-
+     
         public List<PDSVHipWay> PDSVWayType { get; set; }
         public int? SelectedPDSVWayTypeId { get; set; }
-      
+
 
         private void Rebuild(object sender, object data)
         {
-            if (Controller.CurrentViewModel.Controller.LegViewModel == this)
+            if (Controller.CurrentViewModel.Controller.LegViewModel == this && mode == "Normal")
             {
                 var section = (LegSectionViewModel)data;
                 if (section.SelectedValue != null && section.SelectedValue.Text1 == "" && section.SelectedValue.Text2 == "")
@@ -169,6 +169,7 @@ namespace WpfApp2.LegParts.VMs
                     }
                 }
             }
+           
         }
 
         private void RebuildFirst(object sender, object data)

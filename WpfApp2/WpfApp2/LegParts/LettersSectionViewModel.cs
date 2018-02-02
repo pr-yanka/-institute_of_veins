@@ -15,11 +15,14 @@ using WpfApp2.LegParts.VMs;
 
 namespace WpfApp2.LegParts
 {
-    public  class LettersSectionViewModel : ViewModelBase, INotifyPropertyChanged
+    public class LettersSectionViewModel : ViewModelBase, INotifyPropertyChanged
     {
         public bool HasDoubleSize { get; set; }
         public bool HasComment { get; set; }
         public string ListNumber { get; set; }
+        private int? _selectedIndex;
+
+        public int? SelectedIndex { get { return _selectedIndex; } set { _selectedIndex = value; OnPropertyChanged(); } }
         private LegPartEntry _currentEntry;
         public LegPartEntry CurrentEntry
         {
@@ -53,12 +56,14 @@ namespace WpfApp2.LegParts
             get { return _selectedValue; }
             set
             {
-               
+
                 if (value.Id == 0 && value.Leter == "" && value.Text1 == "")
                     _selectedValue = null;
                 else
                 {
                     _selectedValue = value;
+                    SelectedIndex = StructureSource.IndexOf(StructureSource.Where(s => s.Id == _selectedValue.Id).ToList()[0]);
+
                 }
                 OnPropertyChanged();
             }

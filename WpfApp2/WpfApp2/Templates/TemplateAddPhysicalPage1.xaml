@@ -239,7 +239,7 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="CEAP" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <TextBlock TextDecorations="Underline" Text="CEAP" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
                                 <Button x:Name="butаtfohnвPDSV1" Command="{Binding ToLeftCEARCommand}" Content="{Binding Path=LeftCEAR.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
@@ -494,7 +494,7 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="CEAP" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <TextBlock TextDecorations="Underline" Text="CEAP" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
                                 <Button x:Name="butаtfohnвPfDSV1" Command="{Binding ToRightCEARCommand}" Content="{Binding Path=RightCEAR.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>

@@ -18,12 +18,12 @@ namespace WpfApp2.LegParts.VMs
 
         public List<BPVHipWay> BpvWayType { get; set; }
         public int SelectedBpvWayTypeId { get; set; }
-    
+
 
 
         private void Rebuild(object sender, object data)
         {
-            if (Controller.CurrentViewModel.Controller.LegViewModel == this)
+            if (Controller.CurrentViewModel.Controller.LegViewModel == this && mode == "Normal")
             {
 
                 var section = (LegSectionViewModel)data;
@@ -216,8 +216,10 @@ namespace WpfApp2.LegParts.VMs
                     structure.Metrics = Data.Metrics.GetStr(structure.Size);
                 }
 
-            }
+              
 
+            }
+           
 
         }
 
@@ -235,7 +237,7 @@ namespace WpfApp2.LegParts.VMs
             MessageBus.Default.Subscribe("RebuildFirstBPV", RebuildFirst);
             MessageBus.Default.Subscribe("RebuildLegSectionViewModel", Rebuild);
             BpvWayType = new List<BPVHipWay>();
-           
+
             SavePanelCommand = new DelegateCommand(() =>
             {
                 var panel = CurrentPanelViewModel;
@@ -248,7 +250,7 @@ namespace WpfApp2.LegParts.VMs
                     newStruct.Custom = false;
                     Data.BPVHips.Add((BPVHipStructure)newStruct);
                     Data.Complete();
-                   _lastSender.StructureSource.Add(newStruct);
+                    _lastSender.StructureSource.Add(newStruct);
                     _lastSender.SelectedValue = newStruct;
                     CurrentPanelViewModel.PanelOpened = false;
                     handled = false;
@@ -337,7 +339,8 @@ namespace WpfApp2.LegParts.VMs
                    else
                    {
                        MessageBus.Default.Call("LegDataSaved", this, this.GetType());
-                       Controller.NavigateTo<ViewModelAddPhysical>(); }
+                       Controller.NavigateTo<ViewModelAddPhysical>();
+                   }
                }
            );
 

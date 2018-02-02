@@ -1,5 +1,4 @@
 ﻿using Microsoft.Practices.Prism.Commands;
-
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -99,6 +98,9 @@ namespace WpfApp2.ViewModels
                     DelegateCommand bufer = new DelegateCommand(
                     () =>
                     {
+                        MessageBus.Default.Call("GetCurrentPatientIdForOperation", this, CurrentPatient.Id);
+                        MessageBus.Default.Call("GetObsForOverview", this, Obsled.Id.Value);
+                        Controller.NavigateTo<ViewModelAddPhysical>();
                         // MessageBus.Default.Call("GetPatientForAnalizeOverview", this, CurrentPatient.Id);
                         //MessageBus.Default.Call("GetAnalizeForAnalizeOverview", this, Analize.Id);
                         //Controller.NavigateTo<ViewModelAnalizeOverview>();
