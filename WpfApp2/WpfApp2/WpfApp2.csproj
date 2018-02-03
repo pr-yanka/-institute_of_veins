@@ -355,6 +355,12 @@
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="LegParts\VMs\MPVSectionViewModel.cs" />
     <Compile Include="LegParts\VMs\MPVViewModel.cs" />
+    <Compile Include="ViewModels\Panels\ScintificsPanelViewModel.cs" />
+    <Compile Include="ViewModels\Panels\SpecPanelViewModel.cs" />
+    <Compile Include="ViewModels\Panels\DiagTypePanelViewModel.cs" />
+    <Compile Include="ViewModels\Panels\ComplaneTypePanelViewModel.cs" />
+    <Compile Include="ViewModels\Panels\RecomendationPanelViewModel.cs" />
+    <Compile Include="ViewModels\Panels\AnetheticTypePanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\PatologyTypePanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\OperationTypePanelViewModel.cs" />
     <Compile Include="ViewModels\ViewBaseModel.cs" />

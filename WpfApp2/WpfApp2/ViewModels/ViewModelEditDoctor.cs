@@ -12,6 +12,9 @@ using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 using System.Windows.Media;
 using System.Collections.ObjectModel;
+using System.Windows.Controls;
+using System.Windows.Input;
+using WpfApp2.ViewModels.Panels;
 
 namespace WpfApp2.ViewModels
 {
@@ -37,14 +40,14 @@ namespace WpfApp2.ViewModels
         }
         public string Name { get; set; }
         public int id { get; set; }
-        
+
 
         public SpecDataSoursForEdit(string Name, int id)
         {
             this.Name = Name;
             this.id = id;
             IsChecked = false;
-           
+
         }
 
     }
@@ -55,7 +58,27 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToDashboardCommand { get; protected set; }
         public DelegateCommand SaveAndGoDoctorListCommand { get; protected set; }
         #endregion
+        #region everyth connected with panel
+        public DelegateCommand RevertSpecCommand { set; get; }
+        public DelegateCommand RevertScintificsCommand { set; get; }
+        public DelegateCommand SaveSpecCommand { set; get; }
+        public DelegateCommand SaveScintificsCommand { set; get; }
+        public ICommand OpenAddSpecCommand { protected set; get; }
+        public ICommand OpenAddScintificsCommand { protected set; get; }
+        public SpecPanelViewModel CurrentSpecPanelViewModel { get; protected set; }
+        public ScintificsPanelViewModel CurrentScintificsPanelViewModel { get; protected set; }
+        public static bool Handled = false;
+        public UIElement UI;
+        //private void OpenHandler(object sender, object data)
+        //{
+        //    if (!Handled)
+        //    {
+        //        Handled = true;
+        //        CurrentSpecPanelViewModel.PanelOpened = true;
+        //    }
+        //}
 
+        #endregion
         #region Bindings
         private ObservableCollection<SpecDataSoursForEdit> _specializationsOld;
         private ObservableCollection<SpecDataSoursForEdit> _scintificsOld;
@@ -63,15 +86,20 @@ namespace WpfApp2.ViewModels
         private ObservableCollection<SpecDataSoursForEdit> _scintifics;
         private ObservableCollection<СategoryType> _category;
         private int _categorySelectedId;
-        
+
         public int CategorySelectedId { get { return _categorySelectedId; } set { _categorySelectedId = value; nameOfButton = "Сохранить"; OnPropertyChanged(); } }
 
         public ObservableCollection<СategoryType> Category { get { return _category; } set { _category = value; OnPropertyChanged(); } }
 
+        private СategoryType _categoryTypeSelected;
+        public СategoryType СategoryTypeSelected { get { return _categoryTypeSelected; } set { _categoryTypeSelected = value; OnPropertyChanged(); } }
+        public DelegateCommand<object> ClickOnAutoComplete { get; set; }
+        private string _categoryTypeSelectedText;
+        public string СategoryTypeSelectedText { get { return _categoryTypeSelectedText; } set { _categoryTypeSelectedText = value; nameOfButton = "Сохранить"; OnPropertyChanged(); } }
 
-        public ObservableCollection<SpecDataSoursForEdit> SpecializationsOld { get { return _specializationsOld; } set { _specializationsOld = value; OnPropertyChanged(); } }                
-        public ObservableCollection<SpecDataSoursForEdit> ScintificsOld { get { return _scintificsOld; } set { _scintificsOld = value; OnPropertyChanged(); } }                   
-        public ObservableCollection<SpecDataSoursForEdit> Specializations { get { return _specializations; } set { _specializations = value; OnPropertyChanged(); } }            
+        public ObservableCollection<SpecDataSoursForEdit> SpecializationsOld { get { return _specializationsOld; } set { _specializationsOld = value; OnPropertyChanged(); } }
+        public ObservableCollection<SpecDataSoursForEdit> ScintificsOld { get { return _scintificsOld; } set { _scintificsOld = value; OnPropertyChanged(); } }
+        public ObservableCollection<SpecDataSoursForEdit> Specializations { get { return _specializations; } set { _specializations = value; OnPropertyChanged(); } }
         public ObservableCollection<SpecDataSoursForEdit> Scintifics { get { return _scintifics; } set { _scintifics = value; OnPropertyChanged(); } }
 
         public string _nameOfButton;
@@ -86,10 +114,10 @@ namespace WpfApp2.ViewModels
         private string _name;
         private string _surname;
         private string _patronimic;
-        public string Aditional { get { return _aditional; } set { _aditional = value; nameOfButton = "Сохранить"; OnPropertyChanged();  } }
+        public string Aditional { get { return _aditional; } set { _aditional = value; nameOfButton = "Сохранить"; OnPropertyChanged(); } }
 
 
-        public string Name { get { return _name; } set { _name = value; nameOfButton = "Сохранить"; OnPropertyChanged();  } }
+        public string Name { get { return _name; } set { _name = value; nameOfButton = "Сохранить"; OnPropertyChanged(); } }
 
         public string Surname { get { return _surname; } set { _surname = value; nameOfButton = "Сохранить"; OnPropertyChanged(); } }
 
@@ -100,6 +128,9 @@ namespace WpfApp2.ViewModels
         private Brush _textBox_Name_B;
         private Brush _textBox_Surname_B;
         private Brush _textBox_Patronimic_B;
+        private Brush _textBox_Category_B;
+
+        public Brush TextBoxCategoryB { get { return _textBox_Category_B; } set { _textBox_Category_B = value; OnPropertyChanged(); } }
 
         public Brush TextBoxNameB { get { return _textBox_Name_B; } set { _textBox_Name_B = value; OnPropertyChanged(); } }
 
@@ -114,7 +145,7 @@ namespace WpfApp2.ViewModels
             nameOfButton = "Сохранить";
         }
 
-            private void GetCurrentDoctor(object sender, object data)
+        private void GetCurrentDoctor(object sender, object data)
         {
 
             using (var context = new MySqlContext())
@@ -131,7 +162,7 @@ namespace WpfApp2.ViewModels
 
                 DoctorsSpecializationsRepository dcspRep = new DoctorsSpecializationsRepository(context);
                 ScientificTitlesRepository dcscRep = new ScientificTitlesRepository(context);
-              
+
 
                 currentDoctor = dcRep.Get((int)data);
                 Name = currentDoctor.Name;
@@ -142,8 +173,14 @@ namespace WpfApp2.ViewModels
                 {
                     Category.Add(category);
                     if (category.Id == currentDoctor.категория)
-                    { CategorySelectedId = Category.IndexOf(category); }
+                    {
+                        CategorySelectedId = Category.IndexOf(category);
+                        СategoryTypeSelectedText = Category[Category.IndexOf(category)].Str;
+                        СategoryTypeSelected = Category[Category.IndexOf(category)];
+                    }
                 }
+
+
 
                 foreach (var spec in spRep.GetAll)
                 {
@@ -223,6 +260,15 @@ namespace WpfApp2.ViewModels
         {
             bool result = true;
 
+
+
+            if (string.IsNullOrWhiteSpace(СategoryTypeSelectedText))
+            {
+                MessageBox.Show("Категория не выбрана");
+                TextBoxCategoryB = Brushes.Red;
+                result = false;
+            }
+
             if (String.IsNullOrWhiteSpace(Name))
             {
                 TextBoxNameB = Brushes.Red;
@@ -241,37 +287,14 @@ namespace WpfApp2.ViewModels
 
                 result = false;
             }
-            //var CauntSpecializations = 0;
-            //var CauntScintifics = 0;
-            //foreach (var spec in Specializations)
-            //{
-            //    if (spec.IsChecked == true)
-            //    {
-            //        CauntSpecializations++;
-
-            //    }
-
-            //}
-
-            //foreach (var Tytle in Scintifics)
-            //{
-            //    if (Tytle.IsChecked == true)
-            //    {
-            //        CauntScintifics++;
-
-            //    }
-
-            //}
-            //if (CauntSpecializations == 0 || CauntScintifics == 0)
-            //{
-
-            //    result = false;
-            //}
+       
             return result;
         }
 
         public void SetAllFieldsDefault()
         {
+            TextBoxCategoryB = Brushes.Gray;
+
             TextBoxNameB = Brushes.Gray;
 
             TextBoxSurnameB = Brushes.Gray;
@@ -289,7 +312,115 @@ namespace WpfApp2.ViewModels
         #endregion
         public ViewModelEditDoctor(NavigationController controller) : base(controller)
         {
-            
+
+            CurrentSpecPanelViewModel = new SpecPanelViewModel(this);
+            OpenAddSpecCommand = new DelegateCommand(() =>
+            {
+                CurrentSpecPanelViewModel.ClearPanel();
+                CurrentSpecPanelViewModel.PanelOpened = true;
+            });
+
+            SaveSpecCommand = new DelegateCommand(() =>
+            {
+                var newType = CurrentSpecPanelViewModel.GetPanelType();
+                if (!string.IsNullOrWhiteSpace(newType.Str))
+                {
+                    CurrentSpecPanelViewModel.PanelOpened = false;
+
+                    Handled = false;
+
+                    Data.SpecializationType.Add((newType));
+
+                    Data.Complete();
+
+                    var DataSourceListbuf = Specializations;
+                    Specializations = new ObservableCollection<SpecDataSoursForEdit>();
+
+                    foreach (var spec in Data.SpecializationType.GetAll)
+                    {
+                        Specializations.Add(new SpecDataSoursForEdit(spec.Str, spec.id_специлизации));
+                    }
+
+                    foreach (var spec in DataSourceListbuf)
+                    {
+                        if (spec.IsChecked.Value)
+                        {
+                            Specializations.Where(s => s.id == spec.id).ToList()[0].IsChecked = true;
+                        }
+                    }
+
+                    Controller.NavigateTo<ViewModelEditDoctor>();
+                }
+                else
+                { MessageBox.Show("Не все поля заполнены"); }
+            });
+            RevertSpecCommand = new DelegateCommand(() =>
+            {
+                CurrentSpecPanelViewModel.PanelOpened = false;
+                Handled = false;
+            });
+
+
+            CurrentScintificsPanelViewModel = new ScintificsPanelViewModel(this);
+            OpenAddScintificsCommand = new DelegateCommand(() =>
+            {
+                CurrentScintificsPanelViewModel.ClearPanel();
+                CurrentScintificsPanelViewModel.PanelOpened = true;
+            });
+
+            SaveScintificsCommand = new DelegateCommand(() =>
+            {
+                var newType = CurrentScintificsPanelViewModel.GetPanelType();
+                if (!string.IsNullOrWhiteSpace(newType.Str))
+                {
+                    CurrentScintificsPanelViewModel.PanelOpened = false;
+
+                    Handled = false;
+
+                    Data.ScientificTitleType.Add((newType));
+
+                    Data.Complete();
+
+                    var DataSourceListbuf = Scintifics;
+                    Scintifics = new ObservableCollection<SpecDataSoursForEdit>();
+
+                    foreach (var Scintific in Data.ScientificTitleType.GetAll)
+                    {
+                        Scintifics.Add(new SpecDataSoursForEdit(Scintific.Str, Scintific.Id));
+                    }
+
+                    foreach (var Scintific in DataSourceListbuf)
+                    {
+                        if (Scintific.IsChecked.Value)
+                        {
+                            Scintifics.Where(s => s.id == Scintific.id).ToList()[0].IsChecked = true;
+                        }
+                    }
+
+                    Controller.NavigateTo<ViewModelEditDoctor>();
+                }
+                else
+                { MessageBox.Show("Не все поля заполнены"); }
+            });
+            RevertScintificsCommand = new DelegateCommand(() =>
+            {
+                CurrentScintificsPanelViewModel.PanelOpened = false;
+                Handled = false;
+            });
+
+
+
+            ClickOnAutoComplete = new DelegateCommand<object>(
+          (sender) =>
+          {
+              var buf = (AutoCompleteBox)sender;
+
+              buf.IsDropDownOpen = true;
+
+              buf.FilterMode = AutoCompleteFilterMode.None;
+
+          }
+          );
             MessageBus.Default.Subscribe("UpdateNameOfButtonForEditDoctor", UpdateNameOfButton);
             MessageBus.Default.Subscribe("GetDoctorForEditDoctor", GetCurrentDoctor);
             //Date = DateTime.Now;
@@ -312,13 +443,32 @@ namespace WpfApp2.ViewModels
                 {
                     if (TestRequiredFields())
                     {
-                        
+
                         Doctor bufDoc = Data.Doctor.Get(currentDoctor.Id);
                         bufDoc.Name = Name;
                         bufDoc.Sirname = Surname;
                         bufDoc.Patronimic = Patronimic;
                         bufDoc.Aditional = Aditional;
-                        bufDoc.категория = CategorySelectedId;
+
+                        bool test = true;
+                        foreach (var Category in Data.СategoryType.GetAll)
+                        {
+                            if (Category.Str == СategoryTypeSelectedText)
+                            {
+                                test = false;
+                                bufDoc.категория = Category.Id;
+                                break;
+                            }
+                        }
+                        if (test)
+                        {
+                            СategoryType newСategory = new СategoryType();
+                            newСategory.Str = СategoryTypeSelectedText;
+                            Data.СategoryType.Add(newСategory);
+                            Data.Complete();
+                            bufDoc.категория = newСategory.Id;
+                        }
+                      // bufDoc.категория = CategorySelectedId;
                         Data.Complete();
 
                         bool specTestbuf = false;
@@ -337,17 +487,17 @@ namespace WpfApp2.ViewModels
                                 }
                                 if (specTestbuf == false)
                                 {
-                                    
+
                                     foreach (var doctorSpec in Data.DoctorsSpecializations.GetAll)
                                     {
-                                        if(doctorSpec.id_врача == currentDoctor.Id && doctorSpec.id_специлизации == specOld.id)
+                                        if (doctorSpec.id_врача == currentDoctor.Id && doctorSpec.id_специлизации == specOld.id)
                                         {
                                             Data.DoctorsSpecializations.Remove(doctorSpec);
                                             specOld.IsChecked = false;
                                             break;
                                         }
                                     }
-                                
+
                                 }
                             }
                         }

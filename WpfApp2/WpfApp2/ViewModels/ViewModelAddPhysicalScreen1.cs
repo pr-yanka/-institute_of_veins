@@ -34,6 +34,7 @@ using WpfApp2.Db.Models.LegParts.MPV;
 using WpfApp2.Db.Models.LegParts.TEMPV;
 using WpfApp2.Db.Models.LegParts.GV;
 using WpfApp2.Db.Models.LegParts.PPV;
+using WpfApp2.ViewModels.Panels;
 
 namespace WpfApp2.ViewModels
 {
@@ -45,6 +46,13 @@ namespace WpfApp2.ViewModels
             //если PropertyChanged не нулевое - оно будет разбужено
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+
+     
+
+
+
+
         public string LeftAdditionalText { get; set; }
         public string RightAdditionalText { get; set; }
 
@@ -2391,6 +2399,16 @@ namespace WpfApp2.ViewModels
                     Controller.NavigateTo<ViewModelCurrentPatient>();
                 }
             );
+
+
+
+
+
+
+
+
+
+
         }
 
         struct SaveSet

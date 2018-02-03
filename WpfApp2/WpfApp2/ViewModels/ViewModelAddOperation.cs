@@ -94,15 +94,17 @@ namespace WpfApp2.ViewModels
 
         public DelegateCommand RevertCommand { set; get; }
         public DelegateCommand SaveCommand { set; get; }
-
+        public DelegateCommand SaveAnesteticCommand { set; get; }
+        public DelegateCommand RevertAnesteticCommand { get; private set; }
         public ICommand OpenPanelCommand { protected set; get; }
-
+        public ICommand OpenPanelAnesteticCommand { protected set; get; }
         public OperationTypePanelViewModel CurrentPanelViewModel { get; protected set; }
-
+        public AnetheticTypePanelViewModel CurrentPanelAnestViewModel { get; protected set; }
         public static bool Handled = false;
         public UIElement UI;
 
         public DelegateCommand NewOpTypeCommand { get; set; }
+        public DelegateCommand NewAnetheticTypeCommand { get; set; }
 
         private void OpenHandler(object sender, object data)
         {
@@ -148,7 +150,7 @@ namespace WpfApp2.ViewModels
             set
             {
 
-                _showDoctorsSelected = value; 
+                _showDoctorsSelected = value;
                 OnPropertyChanged();
                 DoctorsSelected = new ObservableCollection<DoctorDataSource>();
                 if (Doctors != null)
@@ -205,10 +207,11 @@ namespace WpfApp2.ViewModels
                 {
                     foreach (var doc in Doctors)
                     {
-                        if(doc.isDoctor == true)
-                        doc.IsVisible = false;
+                        if (doc.isDoctor == true)
+                            doc.IsVisible = false;
                     }
-                }else
+                }
+                else
                 {
                     foreach (var doc in Doctors)
                     {
@@ -216,7 +219,7 @@ namespace WpfApp2.ViewModels
                             doc.IsVisible = true;
                     }
                 }
-                
+
             }
         }
 
@@ -275,7 +278,8 @@ namespace WpfApp2.ViewModels
         private OperationResult OperationResult { get; set; }
 
         bool TimeCheckHour;
-        public int AnesteticSelected { get; set; }
+        private int _anesteticSelected;
+        public int AnesteticSelected { get { return _anesteticSelected; } set { _anesteticSelected = value; OnPropertyChanged(); } }
         private int _oprTypeSelected;
         public int OprTypeSelected { get { return _oprTypeSelected; } set { _oprTypeSelected = value; OnPropertyChanged(); } }
 
@@ -499,18 +503,52 @@ namespace WpfApp2.ViewModels
            );
             //for right panel
             CurrentPanelViewModel = new OperationTypePanelViewModel(this);
+           
             OpenPanelCommand = new DelegateCommand(() =>
             {
                 CurrentPanelViewModel.ClearPanel();
                 CurrentPanelViewModel.PanelOpened = true;
             });
 
+            #region Anestetic New type comands
+            CurrentPanelAnestViewModel = new AnetheticTypePanelViewModel(this);
+            OpenPanelAnesteticCommand = new DelegateCommand(() =>
+            {
+                CurrentPanelAnestViewModel.ClearPanel();
+                CurrentPanelAnestViewModel.PanelOpened = true;
+            });
+            SaveAnesteticCommand = new DelegateCommand(() =>
+            {
+                var newType = CurrentPanelAnestViewModel.GetPanelType();
+                if (!string.IsNullOrWhiteSpace(newType.Str))
+                {
+                    CurrentPanelAnestViewModel.PanelOpened = false;
+                    Handled = false;
+                    Data.Anestethic.Add((newType));
+                    Data.Complete();
+                    AnestethicTypes = new ObservableCollection<string>();
+                    foreach (var OprType in Data.Anestethic.GetAll)
+                    {
+                        AnestethicTypes.Add(OprType.Str);
+                        AnestethicTypesID.Add(OprType.Id);
+                    }
+                    AnesteticSelected = AnestethicTypes.Count - 1;
+                }
+                else
+                { MessageBox.Show("Не все поля заполнены"); }
+            });
+            RevertAnesteticCommand = new DelegateCommand(() =>
+            {
+                CurrentPanelAnestViewModel.PanelOpened = false;
+                Handled = false;
+            });
+            #endregion
             SaveCommand = new DelegateCommand(() =>
             {
 
 
                 var newType = CurrentPanelViewModel.GetPanelType();
-                if (!string.IsNullOrWhiteSpace(newType.LongName) && !string.IsNullOrWhiteSpace(newType.ShortName))
+                if (!string.IsNullOrWhiteSpace(newType.ShortName) || !string.IsNullOrWhiteSpace(newType.LongName))
                 {
                     CurrentPanelViewModel.PanelOpened = false;
                     Handled = false;
@@ -519,7 +557,10 @@ namespace WpfApp2.ViewModels
                     OprTypes = new ObservableCollection<string>();
                     foreach (var OprType in Data.OperationType.GetAll)
                     {
-                        OprTypes.Add(OprType.LongName);
+                        if (!string.IsNullOrWhiteSpace(newType.ShortName))
+                            OprTypes.Add(OprType.ShortName);
+                        if (!string.IsNullOrWhiteSpace(newType.LongName))
+                            OprTypes.Add(OprType.LongName);
                         OprTypesId.Add(OprType.Id);
                     }
                     OprTypeSelected = OprTypes.Count - 1;
