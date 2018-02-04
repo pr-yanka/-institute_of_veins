@@ -95,7 +95,7 @@ namespace WpfApp2.Navigation
                 new ViewModelCreateStatement(this),
                 new ViewModelEditMedPersonal(this),
 
-
+                new ViewModelAddEpicriz(this),
                 new LegPartViewModel(this)
             };
 

@@ -355,6 +355,7 @@
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="LegParts\VMs\MPVSectionViewModel.cs" />
     <Compile Include="LegParts\VMs\MPVViewModel.cs" />
+    <Compile Include="ViewModels\Panels\DoctorSelectPanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\ScintificsPanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\SpecPanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\DiagTypePanelViewModel.cs" />
@@ -366,6 +367,7 @@
     <Compile Include="ViewModels\ViewBaseModel.cs" />
     <Compile Include="Templates\MyTemplateSelector.cs" />
     <Compile Include="ViewModels\ViewModelAddAnalize.cs" />
+    <Compile Include="ViewModels\ViewModelAddEpicriz.cs" />
     <Compile Include="ViewModels\ViewModelCreateStatement.cs" />
     <Compile Include="ViewModels\ViewModelEditUser.cs" />
     <Compile Include="ViewModels\ViewModelEditMedPersonal.cs" />
@@ -500,6 +502,10 @@
     <Page Include="LegParts\Templates\RightPanelAnimation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Templates\Operation\TemplateAddEpicrizen.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Templates\Operation\TemplateAddStatement.xaml">
       <Generator>MSBuild:Compile</Generator>

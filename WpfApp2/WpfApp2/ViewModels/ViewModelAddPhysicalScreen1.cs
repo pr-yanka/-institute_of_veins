@@ -48,9 +48,33 @@ namespace WpfApp2.ViewModels
         }
 
 
-     
+        public DelegateCommand RevertCommand { set; get; }
 
 
+
+        public DelegateCommand SaveCommand { set; get; }
+
+
+        public DelegateCommand OpenCommand { protected set; get; }
+
+        public DoctorSelectPanelViewModel CurrentPanelViewModel { get; protected set; }
+
+
+        public static bool Handled = false;
+        public UIElement UI;
+
+
+
+        private void OpenHandler(object sender, object data)
+        {
+            if (!Handled)
+            {
+                Handled = true;
+                CurrentPanelViewModel.PanelOpened = true;
+            }
+        }
+
+        //
 
 
         public string LeftAdditionalText { get; set; }
@@ -890,6 +914,7 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToTablePatientsCommand { get; protected set; }
 
         public DelegateCommand ToPhysicalOverviewCommand { get; protected set; }
+        public DelegateCommand ToPhysicalChirurgOverviewCommand { get; private set; }
         public DelegateCommand ToSymptomsAddCommand { get; protected set; }
 
         public DelegateCommand ToRightBPVHipCommand { get; protected set; }
@@ -1006,6 +1031,7 @@ namespace WpfApp2.ViewModels
         public GVViewModel RightGV { get; private set; }
         public DelegateCommand ToLeftGVCommand { get; private set; }
         public DelegateCommand ToRightGVCommand { get; private set; }
+        public string Doctor { get; private set; }
 
         private void FinishAdding(object parameter)
         {
@@ -1124,20 +1150,24 @@ namespace WpfApp2.ViewModels
                     vm = new DialogPreOperationViewModel();
                     result = DialogService.DialogService.OpenDialog(vm, parameter as Window);
                 }
-             
+
                 if (mode == "EDIT")
                 {
                     using (var context = new MySqlContext())
                     {
+
+                        SaveAll();
+
+
                         ExaminationRepository ExamRep = new ExaminationRepository(context);
                         ExaminationLegRepository LegExamRep = new ExaminationLegRepository(context);
 
 
 
 
-                        Examination examnTotal = ExamRep.Get(obsid);
-                        ExaminationLeg leftLegExams = LegExamRep.Get(examnTotal.idLeftLegExamination.Value);
-                        ExaminationLeg rightLegExams = LegExamRep.Get(examnTotal.idRightLegExamination.Value);
+                        Examination examnTotal = Data.Examination.Get(obsid);
+                        ExaminationLeg leftLegExams = Data.ExaminationLeg.Get(examnTotal.idLeftLegExamination.Value);
+                        ExaminationLeg rightLegExams = Data.ExaminationLeg.Get(examnTotal.idRightLegExamination.Value);
 
 
                         if (!LeftBPVHip.IsEmpty)
@@ -1235,7 +1265,7 @@ namespace WpfApp2.ViewModels
                         if (RightCEAR.LegSections[3].SelectedValue != null)
                             rightLegExams.P = RightCEAR.LegSections[3].SelectedValue.Id;
 
-                      
+
 
                         examnTotal.PatientId = CurrentPatient.Id;
                         examnTotal.Date = DateTime.Now;
@@ -1249,64 +1279,208 @@ namespace WpfApp2.ViewModels
 
                         //examnTotal.idLeftLegExamination = leftLegExams.Id;
                         //examnTotal.idRightLegExamination = rightLegExams.Id;
-                        
+
                         Data.Complete();
+                        bool test = true;
                         if (LeftDiagnosisList != null)
+                        {
+
+                            foreach (var dgOp in Data.DiagnosisObs.GetAll)
+                            {
+                                test = true;
+                                if (dgOp.id_обследование_ноги == examnTotal.Id && dgOp.isLeft == true)
+                                    foreach (var diag in LeftDiagnosisList)
+                                    {
+                                        if (diag.IsChecked.Value && dgOp.id_диагноз == diag.Data.Id)
+                                        {
+                                            test = false;
+                                            break;
+                                        }
+                                    }
+                                if (test)
+                                {
+                                    Data.DiagnosisObs.Remove(dgOp);
+                                }
+                            }
+
+                            Data.Complete();
+
                             foreach (var diag in LeftDiagnosisList)
                             {
                                 if (diag.IsChecked.Value)
                                 {
-                                    var newDiag = new DiagnosisObs();
-                                    newDiag.id_диагноз = diag.Data.Id;
-                                    newDiag.id_обследование_ноги = examnTotal.Id;
-                                    newDiag.isLeft = true;
-                                    Data.DiagnosisObs.Add(newDiag);
+
+                                    test = true;
+                                    foreach (var dgOp in Data.DiagnosisObs.GetAll)
+                                    {
+                                        if (dgOp.id_диагноз == diag.Data.Id && dgOp.id_обследование_ноги == examnTotal.Id && dgOp.isLeft == true)
+                                        {
+                                            test = false;
+                                            break;
+                                        }
+                                    }
+                                    if (test)
+                                    {
+                                        var newDiag = new DiagnosisObs();
+                                        newDiag.id_диагноз = diag.Data.Id;
+                                        newDiag.id_обследование_ноги = examnTotal.Id;
+                                        newDiag.isLeft = true;
+                                        Data.DiagnosisObs.Add(newDiag);
+                                    }
                                 }
                             }
+
+                        }
                         if (RightDiagnosisList != null)
+                        {
+                            foreach (var dgOp in Data.DiagnosisObs.GetAll)
+                            {
+                                test = true;
+                                if (dgOp.id_обследование_ноги == examnTotal.Id && dgOp.isLeft == false)
+                                    foreach (var diag in RightDiagnosisList)
+                                    {
+                                        if (diag.IsChecked.Value && dgOp.id_диагноз == diag.Data.Id)
+                                        {
+                                            test = false;
+                                            break;
+                                        }
+                                    }
+                                if (test)
+                                {
+                                    Data.DiagnosisObs.Remove(dgOp);
+                                }
+                            }
+
+                            Data.Complete();
                             foreach (var diag in RightDiagnosisList)
                             {
                                 if (diag.IsChecked.Value)
                                 {
-                                    var newDiag = new DiagnosisObs();
-                                    newDiag.id_диагноз = diag.Data.Id;
-                                    newDiag.id_обследование_ноги = examnTotal.Id;
-                                    newDiag.isLeft = false;
-                                    Data.DiagnosisObs.Add(newDiag);
+                                    test = true;
+                                    foreach (var dgOp in Data.DiagnosisObs.GetAll)
+                                    {
+                                        if (dgOp.id_диагноз == diag.Data.Id && dgOp.id_обследование_ноги == examnTotal.Id && dgOp.isLeft == false)
+                                        {
+                                            test = false;
+                                            break;
+                                        }
+                                    }
+                                    if (test)
+                                    {
+                                        var newDiag = new DiagnosisObs();
+                                        newDiag.id_диагноз = diag.Data.Id;
+                                        newDiag.id_обследование_ноги = examnTotal.Id;
+                                        newDiag.isLeft = false;
+                                        Data.DiagnosisObs.Add(newDiag);
+                                    }
+                                }
+                            }
+                        }
+                        if (RecomendationsList != null)
+                        {
+
+                            foreach (var dgOp in Data.RecomendationObs.GetAll)
+                            {
+                                test = true;
+                                if (dgOp.id_обследования == examnTotal.Id)
+                                    foreach (var diag in RecomendationsList)
+                                    {
+                                        if (diag.IsChecked.Value && dgOp.id_рекомендации == diag.Data.Id)
+                                        {
+                                            test = false;
+                                            break;
+                                        }
+                                    }
+                                if (test)
+                                {
+                                    Data.RecomendationObs.Remove(dgOp);
                                 }
                             }
 
-                        if (RecomendationsList != null)
+                            Data.Complete();
+
+
                             foreach (var rec in RecomendationsList)
                             {
                                 if (rec.IsChecked.Value)
                                 {
-                                    var newRec = new RecomendationObs();
-                                    newRec.id_рекомендации = rec.Data.Id;
-                                    newRec.id_обследования = examnTotal.Id.Value;
-                                    Data.RecomendationObs.Add(newRec);
+                                    test = true;
+                                    foreach (var rcOp in Data.RecomendationObs.GetAll)
+                                    {
+                                        if (rcOp.id_рекомендации == rec.Data.Id && rcOp.id_обследования == examnTotal.Id.Value)
+                                        {
+                                            test = false;
+                                            break;
+                                        }
+                                    }
+                                    if (test)
+                                    {
+                                        var newRec = new RecomendationObs();
+                                        newRec.id_рекомендации = rec.Data.Id;
+                                        newRec.id_обследования = examnTotal.Id.Value;
+                                        Data.RecomendationObs.Add(newRec);
+                                    }
                                 }
                             }
+                        }
                         if (ComplainsList != null)
+                        {
+                            foreach (var dgOp in Data.ComplanesObs.GetAll)
+                            {
+                                test = true;
+                                if (dgOp.id_обследования == examnTotal.Id)
+                                    foreach (var diag in ComplainsList)
+                                    {
+                                        if (diag.IsChecked.Value && dgOp.id_жалобы == diag.Data.Id)
+                                        {
+                                            test = false;
+                                            break;
+                                        }
+                                    }
+                                if (test)
+                                {
+                                    Data.ComplanesObs.Remove(dgOp);
+                                }
+                            }
+
+                            Data.Complete();
+
+
+
 
                             foreach (var cmp in ComplainsList)
                             {
                                 if (cmp.IsChecked.Value)
                                 {
-                                    var newcmp = new ComplanesObs();
-                                    newcmp.id_жалобы = cmp.Data.Id;
-                                    newcmp.id_обследования = examnTotal.Id.Value;
-                                    Data.ComplanesObs.Add(newcmp);
+                                    test = true;
+                                    foreach (var cmOp in Data.ComplanesObs.GetAll)
+                                    {
+                                        if (cmOp.id_жалобы == cmp.Data.Id && cmOp.id_обследования == examnTotal.Id.Value)
+                                        {
+                                            test = false;
+                                            break;
+                                        }
+                                    }
+                                    if (test)
+                                    {
+                                        var newcmp = new ComplanesObs();
+                                        newcmp.id_жалобы = cmp.Data.Id;
+                                        newcmp.id_обследования = examnTotal.Id.Value;
+                                        Data.ComplanesObs.Add(newcmp);
+                                    }
                                 }
                             }
+                        }
                         Data.Complete();
 
 
                     }
-
+                    MessageBus.Default.Call("GetCurrentPatientId", this, CurrentPatient.Id);
+                    Controller.NavigateTo<ViewModelCurrentPatient>();
                     mode = "Normal";
 
-                }else
+                }
+                else
                 {
                     Examination examnTotal = new Examination();
                     ExaminationLeg leftLegExams = new ExaminationLeg();
@@ -1430,10 +1604,12 @@ namespace WpfApp2.ViewModels
                         {
                             if (diag.IsChecked.Value)
                             {
-                                var newDiag = new DiagnosisObs();
-                                newDiag.id_диагноз = diag.Data.Id;
-                                newDiag.id_обследование_ноги = examnTotal.Id;
-                                newDiag.isLeft = true;
+                                var newDiag = new DiagnosisObs
+                                {
+                                    id_диагноз = diag.Data.Id,
+                                    id_обследование_ноги = examnTotal.Id,
+                                    isLeft = true
+                                };
                                 Data.DiagnosisObs.Add(newDiag);
                             }
                         }
@@ -1442,10 +1618,12 @@ namespace WpfApp2.ViewModels
                         {
                             if (diag.IsChecked.Value)
                             {
-                                var newDiag = new DiagnosisObs();
-                                newDiag.id_диагноз = diag.Data.Id;
-                                newDiag.id_обследование_ноги = examnTotal.Id;
-                                newDiag.isLeft = false;
+                                var newDiag = new DiagnosisObs
+                                {
+                                    id_диагноз = diag.Data.Id,
+                                    id_обследование_ноги = examnTotal.Id,
+                                    isLeft = false
+                                };
                                 Data.DiagnosisObs.Add(newDiag);
                             }
                         }
@@ -1455,9 +1633,11 @@ namespace WpfApp2.ViewModels
                         {
                             if (rec.IsChecked.Value)
                             {
-                                var newRec = new RecomendationObs();
-                                newRec.id_рекомендации = rec.Data.Id;
-                                newRec.id_обследования = examnTotal.Id.Value;
+                                var newRec = new RecomendationObs
+                                {
+                                    id_рекомендации = rec.Data.Id,
+                                    id_обследования = examnTotal.Id.Value
+                                };
                                 Data.RecomendationObs.Add(newRec);
                             }
                         }
@@ -1479,7 +1659,7 @@ namespace WpfApp2.ViewModels
 
 
 
-             
+
 
             }
         }
@@ -1555,8 +1735,501 @@ namespace WpfApp2.ViewModels
             { LeftDiagnosisList.Add(diag); }
 
         }
+        private void CreateStatement(string docName)
+        {
+            using (DocX document = DocX.Create(docName))
+            {
+                // Insert a new Paragraph.
+                Paragraph p = document.InsertParagraph();
+                Paragraph p1 = document.InsertParagraph();
+                Paragraph p2 = document.InsertParagraph();
+                Paragraph p3 = document.InsertParagraph();
+                Paragraph p4 = document.InsertParagraph();
+                Paragraph p5 = document.InsertParagraph();
+                Paragraph p6 = document.InsertParagraph();
+                Paragraph p7 = document.InsertParagraph();
+                Paragraph p8 = document.InsertParagraph();
+
+                p.Append("Консультативное заключение\n").Font("Times new roman").Bold().FontSize(14.0).Alignment = Alignment.center;
+                p1.Append("«" + CurrentPatient.Sirname + " " + CurrentPatient.Name + " " + CurrentPatient.Patronimic + "»,«" + CurrentPatient.Birthday.Day + "." + CurrentPatient.Birthday.Month + "." + CurrentPatient.Birthday.Year + "»                            Дата: «" + DateTime.Now + "»\n").Font("Times new roman").FontSize(12.0);
+                p2.Append("Допплерография вен нижних конечностей:\n").Font("Times new roman").Bold().FontSize(14.0);
+                p3.Append("Правая нижняя конечность:\n").Font("Times new roman").Bold().FontSize(11.0);
+                BuildStr(ref p4, RightSFS, false);
+                BuildStr(ref p4, RightBPVHip, true);
+                BuildStr(ref p4, RightPDSV, true);
+                BuildStr(ref p4, RightZDSV, false);
+                BuildStr(ref p4, RightPerforate, false);
+                BuildStr(ref p4, RightBPVTibia, true);
+                BuildStr(ref p4, RightTibiaPerforate, false);
+                BuildStr(ref p4, RightSPS, false);
+                BuildStr(ref p4, RightMPV, true);
+                BuildStr(ref p4, RightTEMPV, true);
+                BuildStr(ref p4, RightPPV, true);
+                BuildStr(ref p4, RightGV, false);
+
+                if (!string.IsNullOrWhiteSpace(RightAdditionalText))
+                    p4.Append("«" + RightAdditionalText + "»\n").Font("Times new roman").FontSize(11.0);
+
+                p4.Append("Левая нижняя конечность:\n").Font("Times new roman").Bold().FontSize(11.0);
+                BuildStr(ref p4, LeftSFS, false);
+                BuildStr(ref p4, LeftBPVHip, true);
+                BuildStr(ref p4, LeftPDSV, true);
+                BuildStr(ref p4, LeftZDSV, false);
+                BuildStr(ref p4, LeftPerforate, false);
+                BuildStr(ref p4, LeftBPVTibia, true);
+                BuildStr(ref p4, LeftTibiaPerforate, false);
+                BuildStr(ref p4, LeftSPS, false);
+                BuildStr(ref p4, LeftMPV, true);
+                BuildStr(ref p4, LeftTEMPV, true);
+                BuildStr(ref p4, LeftPPV, true);
+                BuildStr(ref p4, LeftGV, false);
+
+                if (!string.IsNullOrWhiteSpace(LeftAdditionalText))
+                    p4.Append("«" + LeftAdditionalText + "»\n").Font("Times new roman").FontSize(11.0);
+
+                p4.Append("Заключение:\n").Font("Times new roman").Bold().FontSize(11.0);
+
+                p4.Append("Заключение справа: ").Font("Times new roman").FontSize(11.0);
+                foreach (var letter in RightCEAR.LegSections)
+                {
+                    if (letter.SelectedValue != null)
+                    {
+                        p4.Append("«" + letter.SelectedValue.Leter + letter.SelectedValue.Text1 + "»").Font("Times new roman").FontSize(11.0);
+
+                    }
+                }
+
+
+
+                p4.Append("\nЗаключение слева: ").Font("Times new roman").FontSize(11.0);
+                foreach (var letter in LeftCEAR.LegSections)
+                {
+                    if (letter.SelectedValue != null)
+                    {
+                        p4.Append("«" + letter.SelectedValue.Leter + letter.SelectedValue.Text1 + "»").Font("Times new roman").FontSize(11.0);
+
+                    }
+                }
+
+                p4.Append("\nРекомендовано : ").Font("Times new roman").FontSize(11.0).UnderlineStyle(UnderlineStyle.singleLine);
+                if (RecomendationsList != null)
+                    foreach (var rec in RecomendationsList)
+                    {
+                        if (rec.IsChecked == true)
+                        {
+                            p4.Append("«" + rec.Data.Str + "»").Font("Times new roman").FontSize(11.0);
+
+                        }
+                    }
+                //   p4.Append("Сафено-феморальное соустье").Font("Times new roman").FontSize(11.0).UnderlineStyle(UnderlineStyle.singleLine);
+                //foreach (var section in RightSFS.LegSections)
+                //{
+                //    if (section.SelectedValue != null)
+                //        p4.Append(" «" + section.SelectedValue.Text1 + "»").Font("Times new roman").FontSize(11.0);
+                //}
+
+                // Save this document.
+                document.Save();
+                // Release this document from memory.
+
+            }
+            Process.Start("WINWORD.EXE", docName);
+        }
+        private bool TestAllFIelds()
+        {
+            bool test = true;
+            if (LeftGV.IsEmpty == true)
+            {
+                MessageBox.Show("ГВ слева не заполнено");
+                test = false;
+            }
+            else if (RightGV.IsEmpty == true)
+            {
+                MessageBox.Show("ГВ справа не заполнено");
+                test = false;
+            }
+
+            else if (LeftPDSV.IsEmpty == true)
+            {
+                MessageBox.Show("ПДСВ слева не заполнено"); test = false;
+            }
+            else if (RightPDSV.IsEmpty == true)
+            {
+                MessageBox.Show("ПДСВ справа не заполнено"); test = false;
+            }
+            else if (RightZDSV.IsEmpty == true)
+            {
+                MessageBox.Show("ЗДСВ справа не заполнено"); test = false;
+            }
+            else if (LeftZDSV.IsEmpty == true)
+            {
+                MessageBox.Show("ЗДСВ слева не заполнено"); test = false;
+            }
+            else if (RightPerforate.IsEmpty == true)
+            {
+                MessageBox.Show("Перфоранты бедра и несафенные вены справа не заполнено"); test = false;
+            }
+            else if (LeftPerforate.IsEmpty == true)
+            {
+                MessageBox.Show("Перфоранты бедра и несафенные вены слева не заполнено"); test = false;
+            }
+            else if (RightTibiaPerforate.IsEmpty == true)
+            {
+                test = false;
+                MessageBox.Show("Перфоранты голени справа не заполнено");
+            }
+            else if (LeftTibiaPerforate.IsEmpty == true)
+            {
+                MessageBox.Show("Перфоранты голени слева не заполнено"); test = false;
+            }
+            else if (RightTEMPV.IsEmpty == true)
+            {
+                MessageBox.Show("ТЕ МПВ справа не заполнено"); test = false;
+            }
+            else if (LeftTEMPV.IsEmpty == true)
+            {
+                MessageBox.Show("ТЕ МПВ слева не заполнено"); test = false;
+            }
+            else if (RightPPV.IsEmpty == true)
+            {
+                MessageBox.Show("ППВ справа не заполнено"); test = false;
+            }
+            else if (LeftPPV.IsEmpty == true)
+            {
+                MessageBox.Show("ППВ слева не заполнено"); test = false;
+            }
+            else if (string.IsNullOrWhiteSpace(RightAdditionalText))
+            {
+                MessageBox.Show("Примечание справа не заполнено"); test = false;
+            }
+            else if (string.IsNullOrWhiteSpace(LeftAdditionalText))
+            {
+                MessageBox.Show("Примечание слева не заполнено"); test = false;
+            }
+            else if (LeftCEAR.LegSections[0].SelectedValue == null)
+            {
+                MessageBox.Show("C слева не заполнено"); test = false;
+            }
+            else if (LeftCEAR.LegSections[1].SelectedValue == null)
+            {
+                MessageBox.Show("E слева не заполнено"); test = false;
+            }
+            else if (LeftCEAR.LegSections[2].SelectedValue == null)
+            {
+                MessageBox.Show("A слева не заполнено"); test = false;
+            }
+            else if (LeftCEAR.LegSections[3].SelectedValue == null)
+            {
+                MessageBox.Show("P слева не заполнено"); test = false;
+            }
+
+            else if (RightCEAR.LegSections[0].SelectedValue == null)
+            {
+                MessageBox.Show("C справа не заполнено"); test = false;
+            }
+            else if (RightCEAR.LegSections[1].SelectedValue == null)
+            {
+                MessageBox.Show("E справа не заполнено"); test = false;
+            }
+            else if (RightCEAR.LegSections[2].SelectedValue == null)
+            {
+                MessageBox.Show("A справа не заполнено"); test = false;
+            }
+            else if (RightCEAR.LegSections[3].SelectedValue == null)
+            {
+                MessageBox.Show("P справа не заполнено"); test = false;
+            }
+            return test;
+        }
+        public string CreateStrForOverview(LegPartViewModel LegPart)
+        {
+            string p4 = "";
+            if (LegPart.SelectedWayType != null && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name))
+                p4 += "Вид хода :" + LegPart.SelectedWayType.Name + " ";
+            if (LegPart is TEMPVViewModel)
+                p4 += "Протяжность :" + ((TEMPVViewModel)LegPart).FF_length + " ";
+
+
+            foreach (var section in LegPart.LegSections)
+            {
+                if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
+                {
+                    if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
+                        p4 += " «" + section.SelectedValue.Text1;
+
+
+                    if (section.SelectedValue.HasSize || section.HasDoubleSize)
+                    {
+                        if (section.HasDoubleSize)
+                        {
+                            p4 += section.CurrentEntry.Size + "*" + section.CurrentEntry.Size2 + " " + section.SelectedValue.Metrics + "»";
+
+                        }
+                        else
+                        {
+                            p4 += section.CurrentEntry.Size + " " + section.SelectedValue.Metrics + "»";
+                        }
+                    }
+                    else
+                    {
+                        p4 += "»";
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
+                        p4 += " «" + section.SelectedValue.Text2 + "»";
+                    if (!string.IsNullOrWhiteSpace(section.CurrentEntry.Comment))
+                    {
+                        p4 += " «" + section.CurrentEntry.Comment + "»";
+
+                    }
+
+                }
+            }
+            return p4;
+
+        }
+
         public ViewModelAddPhysical(NavigationController controller) : base(controller)
         {
+            CurrentPanelViewModel = new DoctorSelectPanelViewModel(this);
+            using (var context = new MySqlContext())
+            {
+                DoctorRepository DoctorRep = new DoctorRepository(context);
+                CurrentPanelViewModel.Doctors = new ObservableCollection<Docs>();
+
+                foreach (var doc in DoctorRep.GetAll)
+                {
+                    CurrentPanelViewModel.Doctors.Add(new Docs(doc));
+                }
+            }
+            OpenCommand = new DelegateCommand(() =>
+            {
+                CurrentPanelViewModel.ClearPanel();
+                CurrentPanelViewModel.PanelOpened = true;
+            });
+
+            SaveCommand = new DelegateCommand(() =>
+            {
+                Doctor = CurrentPanelViewModel.GetPanelValue();
+
+                CurrentPanelViewModel.PanelOpened = false;
+
+                Handled = false;
+
+                int togle = 0;
+                // string fileName = System.IO.Path.GetTeWmpPath() + Guid.NewGuid().ToString() + ".docx";
+                string fileName = System.IO.Path.GetTempPath() + "Осмотр_хирурга.docx";
+                byte[] bte = Data.doc_template.Get(3).DocTemplate;
+                //File.WriteAllBytes(fileName, bte);
+                for (; ; )
+                {
+                    try
+                    {
+
+                        File.WriteAllBytes(fileName, bte);
+
+                        break;
+                    }
+                    catch
+                    {
+                        togle += 1;
+                        fileName = System.IO.Path.GetTempPath() + "Осмотр_хирурга" + togle + ".docx";
+                    }
+                }
+
+
+                using (DocX document = DocX.Load(fileName))
+                {
+
+
+                    document.ReplaceText("ФИО", CurrentPatient.Sirname + " " + CurrentPatient.Name + " " + CurrentPatient.Patronimic);
+                    document.ReplaceText("Возраст", CurrentPatient.Age.ToString());
+                    document.ReplaceText("«ИМТ»", ITM.ToString());
+                    if (!string.IsNullOrWhiteSpace(TextTip))
+                        document.ReplaceText("«NB_»", TextTip);
+                    else
+                        document.ReplaceText("«NB_»", "");
+
+
+                    document.ReplaceText("«Дата»", DateTime.Now.Day.ToString() + "." + DateTime.Now.Month.ToString() + "." + DateTime.Now.Year.ToString());
+
+
+
+
+
+
+                    string complanes = "";
+                    if (ComplainsList != null)
+                        foreach (var rec in ComplainsList)
+                        {
+                            if (rec.IsChecked == true)
+                            {
+                                complanes += " «" + rec.Data.Str + "»";
+
+                            }
+                        }
+                    document.ReplaceText("«Жалобы»", complanes);
+
+                    string lettersLeft = "";
+                    string lettersRight = "";
+
+                    using (var context = new MySqlContext())
+                    {
+                        ExaminationRepository ExamRep = new ExaminationRepository(context);
+                        ExaminationLegRepository LegExamRep = new ExaminationLegRepository(context);
+                        LettersRepository LettersRep = new LettersRepository(context);
+                        var ExamsOfCurrPatient = ExamRep.GetAll.ToList().Where(s => s.PatientId == CurrentPatient.Id).ToList();
+
+                        if (ExamsOfCurrPatient.Count > 0)
+                        {
+                            DateTime MaxExam = ExamsOfCurrPatient.Max(s => s.Date);
+                            var ExamsOfCurrPatientLatest = ExamsOfCurrPatient.Where(s => s.Date == MaxExam).ToList();
+                            ExaminationLeg leftLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idLeftLegExamination.Value);
+                            ExaminationLeg rightLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idRightLegExamination.Value);
+                            Letters bufLetter = new Letters();
+                            if (LeftCEAR.LegSections[0].SelectedValue != null)
+                            {
+                                bufLetter = LeftCEAR.LegSections[0].SelectedValue;
+                                lettersLeft += bufLetter.Leter + bufLetter.Text1 + " ";
+                            }
+                            if (LeftCEAR.LegSections[1].SelectedValue != null)
+                            {
+                                bufLetter = LeftCEAR.LegSections[1].SelectedValue;
+                                lettersLeft += bufLetter.Leter + bufLetter.Text1 + " ";
+                            }
+                            if (LeftCEAR.LegSections[2].SelectedValue != null)
+                            {
+                                bufLetter = LeftCEAR.LegSections[2].SelectedValue;
+                                lettersLeft += bufLetter.Leter + bufLetter.Text1 + " ";
+                            }
+                            if (LeftCEAR.LegSections[3].SelectedValue != null)
+                            {
+                                bufLetter = LeftCEAR.LegSections[3].SelectedValue;
+                                lettersLeft += bufLetter.Leter + bufLetter.Text1 + " ";
+                            }
+
+                            if (RightCEAR.LegSections[0].SelectedValue != null)
+                            {
+                                bufLetter = RightCEAR.LegSections[0].SelectedValue;
+                                lettersRight += bufLetter.Leter + bufLetter.Text1 + " ";
+                            }
+                            if (RightCEAR.LegSections[1].SelectedValue != null)
+                            {
+                                bufLetter = RightCEAR.LegSections[1].SelectedValue;
+                                lettersRight += bufLetter.Leter + bufLetter.Text1 + " ";
+                            }
+                            if (RightCEAR.LegSections[2].SelectedValue != null)
+                            {
+                                bufLetter = RightCEAR.LegSections[2].SelectedValue;
+                                lettersRight += bufLetter.Leter + bufLetter.Text1 + " ";
+                            }
+                            if (RightCEAR.LegSections[3].SelectedValue != null)
+                            {
+                                bufLetter = RightCEAR.LegSections[3].SelectedValue;
+                                lettersRight += bufLetter.Leter + bufLetter.Text1 + " ";
+                            }
+
+                        }
+
+                    }
+
+
+
+                    document.ReplaceText("«Заключение_справа»", lettersRight);
+                    document.ReplaceText("«Заключение_cлева»", lettersLeft);
+                    //буквы_1
+                    //буквы_2
+
+                    document.ReplaceText("«Врач»", Doctor);
+
+                    //область
+
+                    document.ReplaceText("«CFCRight»", CreateStrForOverview(RightSFS));
+
+                    document.ReplaceText("«BPVRight»", CreateStrForOverview(RightBPVHip));
+
+                    document.ReplaceText("«ПДСВRight»", CreateStrForOverview(RightPDSV));
+
+                    document.ReplaceText("«ЗДСВRight»", CreateStrForOverview(RightZDSV));
+
+                    document.ReplaceText("«ПБНВRight»", CreateStrForOverview(RightPerforate));
+
+                    document.ReplaceText("«БПВ_на_голениRight»", CreateStrForOverview(RightBPVTibia));
+
+                    document.ReplaceText("«Перфоранты_голениRight»", CreateStrForOverview(RightTibiaPerforate));
+
+                    document.ReplaceText("«СПСRight»", CreateStrForOverview(RightSPS));
+                    document.ReplaceText("«МПВRight»", CreateStrForOverview(RightMPV));
+
+                    document.ReplaceText("«ТЕ_МПВRight»", CreateStrForOverview(RightTEMPV));
+
+                    document.ReplaceText("«ППВRight»", CreateStrForOverview(RightPPV));
+
+                    document.ReplaceText("«Глубокие_веныRight»", CreateStrForOverview(RightGV));
+
+                    document.ReplaceText("«Примечание_справа»", RightAdditionalText);
+
+
+
+
+
+
+                    document.ReplaceText("«CFCLeft»", CreateStrForOverview(LeftSFS));
+
+                    document.ReplaceText("«BPVLeft»", CreateStrForOverview(LeftBPVHip));
+
+                    document.ReplaceText("«ПДСВLeft»", CreateStrForOverview(LeftPDSV));
+
+                    document.ReplaceText("«ЗДСВLeft»", CreateStrForOverview(LeftZDSV));
+
+                    document.ReplaceText("«ПБНВLeft»", CreateStrForOverview(LeftPerforate));
+
+                    document.ReplaceText("«БПВ_на_голениLeft»", CreateStrForOverview(LeftBPVTibia));
+
+                    document.ReplaceText("«Перфоранты_голениLeft»", CreateStrForOverview(LeftTibiaPerforate));
+
+                    document.ReplaceText("«СПСLeft»", CreateStrForOverview(LeftSPS));
+
+                    document.ReplaceText("«МПВLeft»", CreateStrForOverview(LeftMPV));
+
+                    document.ReplaceText("«ТЕ_МПВLeft»", CreateStrForOverview(LeftTEMPV));
+
+                    document.ReplaceText("«ППВLeft»", CreateStrForOverview(LeftPPV));
+
+                    document.ReplaceText("«Глубокие_веныLeft»", CreateStrForOverview(LeftGV));
+
+                    document.ReplaceText("«Примечание_слева»", LeftAdditionalText);
+
+                    //
+                    string recomendations = "";
+                    if (RecomendationsList != null)
+                        foreach (var rec in RecomendationsList)
+                        {
+                            if (rec.IsChecked == true)
+                            {
+                                recomendations += "«" + rec.Data.Str + "»";
+
+                            }
+                        }
+
+
+                    document.ReplaceText("«Рекомендации»", recomendations);
+
+                    document.Save();
+                    //Release this document from memory.
+                    Process.Start("WINWORD.EXE", fileName);
+                }
+
+
+
+
+            });
+            RevertCommand = new DelegateCommand(() =>
+            {
+                CurrentPanelViewModel.PanelOpened = false;
+                Handled = false;
+            });
+            TextTip = "";
             GVLeftstr = new List<string>();
             GVRightstr = new List<string>();
 
@@ -1779,217 +2452,77 @@ namespace WpfApp2.ViewModels
             ToPhysicalOverviewCommand = new DelegateCommand(
                 () =>
                 {
-                    if (LeftGV.IsEmpty == true)
-                    {
-                        MessageBox.Show("ГВ слева не заполнено");
-                    }
-                    else if (RightGV.IsEmpty == true)
-                    {
-                        MessageBox.Show("ГВ справа не заполнено");
-                    }
-
-                    else if (LeftPDSV.IsEmpty == true)
-                    {
-                        MessageBox.Show("ПДСВ слева не заполнено");
-                    }
-                    else if (RightPDSV.IsEmpty == true)
-                    {
-                        MessageBox.Show("ПДСВ справа не заполнено");
-                    }
-                    else if (RightZDSV.IsEmpty == true)
-                    {
-                        MessageBox.Show("ЗДСВ справа не заполнено");
-                    }
-                    else if (LeftZDSV.IsEmpty == true)
-                    {
-                        MessageBox.Show("ЗДСВ слева не заполнено");
-                    }
-                    else if (RightPerforate.IsEmpty == true)
-                    {
-                        MessageBox.Show("Перфоранты бедра и несафенные вены справа не заполнено");
-                    }
-                    else if (LeftPerforate.IsEmpty == true)
-                    {
-                        MessageBox.Show("Перфоранты бедра и несафенные вены слева не заполнено");
-                    }
-                    else if (RightTibiaPerforate.IsEmpty == true)
-                    {
-                        MessageBox.Show("Перфоранты голени справа не заполнено");
-                    }
-                    else if (LeftTibiaPerforate.IsEmpty == true)
-                    {
-                        MessageBox.Show("Перфоранты голени слева не заполнено");
-                    }
-                    else if (RightTEMPV.IsEmpty == true)
-                    {
-                        MessageBox.Show("ТЕ МПВ справа не заполнено");
-                    }
-                    else if (LeftTEMPV.IsEmpty == true)
-                    {
-                        MessageBox.Show("ТЕ МПВ слева не заполнено");
-                    }
-                    else if (RightPPV.IsEmpty == true)
-                    {
-                        MessageBox.Show("ППВ справа не заполнено");
-                    }
-                    else if (LeftPPV.IsEmpty == true)
-                    {
-                        MessageBox.Show("ППВ слева не заполнено");
-                    }
-                    else if (string.IsNullOrWhiteSpace(RightAdditionalText))
-                    {
-                        MessageBox.Show("Примечание справа не заполнено");
-                    }
-                    else if (string.IsNullOrWhiteSpace(LeftAdditionalText))
-                    {
-                        MessageBox.Show("Примечание слева не заполнено");
-                    }
-                    else if (LeftCEAR.LegSections[0].SelectedValue == null)
-                    {
-                        MessageBox.Show("C слева не заполнено");
-                    }
-                    else if (LeftCEAR.LegSections[1].SelectedValue == null)
-                    {
-                        MessageBox.Show("E слева не заполнено");
-                    }
-                    else if (LeftCEAR.LegSections[2].SelectedValue == null)
-                    {
-                        MessageBox.Show("A слева не заполнено");
-                    }
-                    else if (LeftCEAR.LegSections[3].SelectedValue == null)
-                    {
-                        MessageBox.Show("P слева не заполнено");
-                    }
-
-                    else if (RightCEAR.LegSections[0].SelectedValue == null)
-                    {
-                        MessageBox.Show("C справа не заполнено");
-                    }
-                    else if (RightCEAR.LegSections[1].SelectedValue == null)
-                    {
-                        MessageBox.Show("E справа не заполнено");
-                    }
-                    else if (RightCEAR.LegSections[2].SelectedValue == null)
-                    {
-                        MessageBox.Show("A справа не заполнено");
-                    }
-                    else if (RightCEAR.LegSections[3].SelectedValue == null)
-                    {
-                        MessageBox.Show("P справа не заполнено");
-                    }
-                    else
+                    if (TestAllFIelds())
                     {
                         int togle = 0;
                         //string docName = "Консультативное_заключение";
-                        string docName = System.IO.Path.GetTempPath() + Guid.NewGuid().ToString() + ".docx";
-
-
-                        using (DocX document = DocX.Create(docName))
+                        string docName = System.IO.Path.GetTempPath() + "Консультативное_заключение" + ".docx";
+                        for (; ; )
                         {
-
-
-
-                            // Insert a new Paragraph.
-                            Paragraph p = document.InsertParagraph();
-                            Paragraph p1 = document.InsertParagraph();
-                            Paragraph p2 = document.InsertParagraph();
-                            Paragraph p3 = document.InsertParagraph();
-                            Paragraph p4 = document.InsertParagraph();
-                            Paragraph p5 = document.InsertParagraph();
-                            Paragraph p6 = document.InsertParagraph();
-                            Paragraph p7 = document.InsertParagraph();
-                            Paragraph p8 = document.InsertParagraph();
-
-                            p.Append("Консультативное заключение\n").Font("Times new roman").Bold().FontSize(14.0).Alignment = Alignment.center;
-                            p1.Append("«" + CurrentPatient.Sirname + " " + CurrentPatient.Name + " " + CurrentPatient.Patronimic + "»,«" + CurrentPatient.Birthday.Day + "." + CurrentPatient.Birthday.Month + "." + CurrentPatient.Birthday.Year + "»                            Дата: «" + DateTime.Now + "»\n").Font("Times new roman").FontSize(12.0);
-                            p2.Append("Допплерография вен нижних конечностей:\n").Font("Times new roman").Bold().FontSize(14.0);
-                            p3.Append("Правая нижняя конечность:\n").Font("Times new roman").Bold().FontSize(11.0);
-                            BuildStr(ref p4, RightSFS, false);
-                            BuildStr(ref p4, RightBPVHip, true);
-                            BuildStr(ref p4, RightPDSV, true);
-                            BuildStr(ref p4, RightZDSV, false);
-                            BuildStr(ref p4, RightPerforate, false);
-                            BuildStr(ref p4, RightBPVTibia, true);
-                            BuildStr(ref p4, RightTibiaPerforate, false);
-                            BuildStr(ref p4, RightSPS, false);
-                            BuildStr(ref p4, RightMPV, true);
-                            BuildStr(ref p4, RightTEMPV, true);
-                            BuildStr(ref p4, RightPPV, true);
-                            BuildStr(ref p4, RightGV, false);
-
-                            if (!string.IsNullOrWhiteSpace(RightAdditionalText))
-                                p4.Append("«" + RightAdditionalText + "»\n").Font("Times new roman").FontSize(11.0);
-
-                            p4.Append("Левая нижняя конечность:\n").Font("Times new roman").Bold().FontSize(11.0);
-                            BuildStr(ref p4, LeftSFS, false);
-                            BuildStr(ref p4, LeftBPVHip, true);
-                            BuildStr(ref p4, LeftPDSV, true);
-                            BuildStr(ref p4, LeftZDSV, false);
-                            BuildStr(ref p4, LeftPerforate, false);
-                            BuildStr(ref p4, LeftBPVTibia, true);
-                            BuildStr(ref p4, LeftTibiaPerforate, false);
-                            BuildStr(ref p4, LeftSPS, false);
-                            BuildStr(ref p4, LeftMPV, true);
-                            BuildStr(ref p4, LeftTEMPV, true);
-                            BuildStr(ref p4, LeftPPV, true);
-                            BuildStr(ref p4, LeftGV, false);
-
-                            if (!string.IsNullOrWhiteSpace(LeftAdditionalText))
-                                p4.Append("«" + LeftAdditionalText + "»\n").Font("Times new roman").FontSize(11.0);
-
-                            p4.Append("Заключение:\n").Font("Times new roman").Bold().FontSize(11.0);
-
-                            p4.Append("Заключение справа: ").Font("Times new roman").FontSize(11.0);
-                            foreach (var letter in RightCEAR.LegSections)
+                            try
                             {
-                                if (letter.SelectedValue != null)
-                                {
-                                    p4.Append("«" + letter.SelectedValue.Leter + letter.SelectedValue.Text1 + "»").Font("Times new roman").FontSize(11.0);
 
-                                }
+                                CreateStatement(docName);
+
+                                break;
                             }
-
-
-
-                            p4.Append("\nЗаключение слева: ").Font("Times new roman").FontSize(11.0);
-                            foreach (var letter in LeftCEAR.LegSections)
+                            catch
                             {
-                                if (letter.SelectedValue != null)
-                                {
-                                    p4.Append("«" + letter.SelectedValue.Leter + letter.SelectedValue.Text1 + "»").Font("Times new roman").FontSize(11.0);
-
-                                }
+                                togle += 1;
+                                docName = System.IO.Path.GetTempPath() + "Консультативное_заключение" + togle + ".docx";
                             }
-
-                            p4.Append("\nРекомендовано : ").Font("Times new roman").FontSize(11.0).UnderlineStyle(UnderlineStyle.singleLine);
-                            if (RecomendationsList != null)
-                                foreach (var rec in RecomendationsList)
-                                {
-                                    if (rec.IsChecked == true)
-                                    {
-                                        p4.Append("«" + rec.Data.Str + "»").Font("Times new roman").FontSize(11.0);
-
-                                    }
-                                }
-                            //   p4.Append("Сафено-феморальное соустье").Font("Times new roman").FontSize(11.0).UnderlineStyle(UnderlineStyle.singleLine);
-                            //foreach (var section in RightSFS.LegSections)
-                            //{
-                            //    if (section.SelectedValue != null)
-                            //        p4.Append(" «" + section.SelectedValue.Text1 + "»").Font("Times new roman").FontSize(11.0);
-                            //}
-
-                            // Save this document.
-                            document.Save();
-                            // Release this document from memory.
-                            Process.Start("WINWORD.EXE", docName);
                         }
+
+
 
 
                     }
                 }
             );
 
-          
+            ToPhysicalChirurgOverviewCommand = new DelegateCommand(
+              () =>
+              {
+                  if (TestAllFIelds())
+                  {
+                      //int togle = 0;
+                      //////string docName = "Консультативное_заключение";
+                      //string docName = System.IO.Path.GetTempPath() + "Осмотр_хирурга" + ".docx";
+                      //for (; ; )
+                      //{
+                      //    try
+                      //    {
+
+                      //        CreateChirurgOverview(docName);
+
+                      //        break;
+                      //    }
+                      //    catch
+                      //    {
+                      //        togle += 1;
+                      //        docName = System.IO.Path.GetTempPath() + "Осмотр_хирурга" + togle + ".docx";
+                      //    }
+                      //}
+                      //doc_templates docTemp = new doc_templates();
+                      //byte[] bte = File.ReadAllBytes(@"Осмотр_хирурга.docx");
+                      //docTemp.DocTemplate = bte;
+                      //Data.doc_template.Add(docTemp);
+                      //Data.Complete();
+
+                      OpenCommand.Execute();
+
+
+
+                      //MessageBus.Default.Call("GetOperationResultForCreateStatement", this, operationId);
+                      // Controller.NavigateTo<ViewModelCreateStatement>();
+                  }
+
+
+
+
+              }
+          );
+
 
             ToSymptomsAddCommand = new DelegateCommand(
                 () =>
@@ -2411,6 +2944,8 @@ namespace WpfApp2.ViewModels
 
         }
 
+
+
         struct SaveSet
         {
             public List<string> stringList;
@@ -2424,6 +2959,32 @@ namespace WpfApp2.ViewModels
 
         private void SaveAll()
         {
+
+            RightBPV_TibiaEntryFull = new BPV_TibiaEntryFull();
+            LeftBPV_TibiaEntryFull = new BPV_TibiaEntryFull();
+            RightPerforate_hipEntryFull = new Perforate_hipEntryFull();
+            LeftPerforate_hipEntryFull = new Perforate_hipEntryFull();
+            RightZDSVEntryFull = new ZDSVEntryFull();
+            LeftZDSVEntryFull = new ZDSVEntryFull();
+            RightPDSVEntryFull = new PDSVHipEntryFull();
+            LeftPDSVEntryFull = new PDSVHipEntryFull();
+            RightBPVEntryFull = new BPVHipEntryFull();
+            LeftBPVEntryFull = new BPVHipEntryFull();
+            RightSFSEntryFull = new SFSHipEntryFull();
+            LeftSFSEntryFull = new SFSHipEntryFull();
+            RightSPSEntryFull = new SPSHipEntryFull();
+            LeftSPSEntryFull = new SPSHipEntryFull();
+            RightPerforate_shinEntryFull = new Perforate_shinEntryFull();
+            LeftPerforate_shinEntryFull = new Perforate_shinEntryFull();
+            RightTEMPVEntryFull = new TEMPVEntryFull();
+            LeftTEMPVEntryFull = new TEMPVEntryFull();
+            RightMPVEntryFull = new MPVEntryFull();
+            LeftMPVEntryFull = new MPVEntryFull();
+            RightPPVEntryFull = new PPVEntryFull();
+            LeftPPVEntryFull = new PPVEntryFull();
+            RightGVEntryFull = new GVEntryFull();
+            LeftGVEntryFull = new GVEntryFull();
+
             RightBPV_TibiaEntryFull = (BPV_TibiaEntryFull)SaveFullEntry(RightBPVTibia, RightBPV_TibiaEntryFull);
             LeftBPV_TibiaEntryFull = (BPV_TibiaEntryFull)SaveFullEntry(LeftBPVTibia, LeftBPV_TibiaEntryFull);
             RightPerforate_hipEntryFull = (Perforate_hipEntryFull)SaveFullEntry(RightPerforate, RightPerforate_hipEntryFull);
@@ -2457,83 +3018,498 @@ namespace WpfApp2.ViewModels
             LeftGVEntryFull = (GVEntryFull)SaveFullEntry(LeftGV, LeftGVEntryFull);
 
 
-
+            bool test = true;
             if (!RightBPVHip.IsEmpty)
-                Data.BPVHipsFull.Add(RightBPVEntryFull);
+            {
+                test = true;
+                foreach (var hfull in Data.BPVHipsFull.GetAll)
+                {
+                    if (hfull.EntryId1 == RightBPVEntryFull.EntryId1
+                    && hfull.EntryId2 == RightBPVEntryFull.EntryId2
+                    && hfull.EntryId3 == RightBPVEntryFull.EntryId3
+                    && hfull.EntryId4 == RightBPVEntryFull.EntryId4
+                    && hfull.EntryId5 == RightBPVEntryFull.EntryId5
+                    && hfull.WayID == RightBPVEntryFull.WayID)
+                    {
+                        test = false;
+                        RightBPVEntryFull = hfull;
+                        break;
+                    }
+                }
+                if (test)
+                    Data.BPVHipsFull.Add(RightBPVEntryFull);
+            }
+
 
             if (!RightBPVTibia.IsEmpty)
-                Data.BPV_TibiaFull.Add(RightBPV_TibiaEntryFull);
+            {
+                test = true;
+                foreach (var hfull in Data.BPV_TibiaFull.GetAll)
+                {
+                    if (hfull.EntryId1 == RightBPV_TibiaEntryFull.EntryId1
+                    && hfull.EntryId2 == RightBPV_TibiaEntryFull.EntryId2
+                    && hfull.EntryId3 == RightBPV_TibiaEntryFull.EntryId3
+                    && hfull.EntryId4 == RightBPV_TibiaEntryFull.EntryId4)
+                    {
+                        test = false;
+                        RightBPV_TibiaEntryFull = hfull;
+                        break;
+                    }
+                }
+                if (test)
+                    Data.BPV_TibiaFull.Add(RightBPV_TibiaEntryFull);
 
+            }
 
             if (!RightGV.IsEmpty)
-                Data.GVFull.Add(RightGVEntryFull);
+            {
+                test = true;
+                foreach (var hfull in Data.GVFull.GetAll)
+                {
+                    if (hfull.EntryId1 == RightGVEntryFull.EntryId1
+                    && hfull.EntryId2 == RightGVEntryFull.EntryId2)
+                    {
+                        test = false;
+                        RightGVEntryFull = hfull;
+                        break;
+                    }
+                }
+                if (test)
+                    Data.GVFull.Add(RightGVEntryFull);
+            }
 
             if (!RightMPV.IsEmpty)
-                Data.MPVFull.Add(RightMPVEntryFull);
+            {
+                test = true;
+                foreach (var hfull in Data.MPVFull.GetAll)
+                {
+                    if (hfull.EntryId1 == RightMPVEntryFull.EntryId1
+                    && hfull.EntryId2 == RightMPVEntryFull.EntryId2
+                    && hfull.EntryId3 == RightMPVEntryFull.EntryId3
+                    && hfull.EntryId4 == RightMPVEntryFull.EntryId4
+                    && hfull.WayID == RightMPVEntryFull.WayID)
+                    {
+                        test = false;
+                        RightMPVEntryFull = hfull;
+                        break;
+                    }
+                }
+                if (test)
+                    Data.MPVFull.Add(RightMPVEntryFull);
+            }
 
             if (!RightPDSV.IsEmpty)
-                Data.PDSVFull.Add(RightPDSVEntryFull);
-
+            {
+                test = true;
+                foreach (var hfull in Data.PDSVFull.GetAll)
+                {
+                    if (hfull.EntryId1 == RightPDSVEntryFull.EntryId1
+                    && hfull.EntryId2 == RightPDSVEntryFull.EntryId2
+                    && hfull.EntryId3 == RightPDSVEntryFull.EntryId3
+                    && hfull.WayID == RightPDSVEntryFull.WayID)
+                    {
+                        test = false;
+                        RightPDSVEntryFull = hfull;
+                        break;
+                    }
+                }
+                if (test)
+                    Data.PDSVFull.Add(RightPDSVEntryFull);
+            }
             if (!RightPerforate.IsEmpty)
-                Data.Perforate_hipFull.Add(RightPerforate_hipEntryFull);
-
+            {
+                test = true;
+                foreach (var hfull in Data.Perforate_hipFull.GetAll)
+                {
+                    if (hfull.EntryId1 == RightPerforate_hipEntryFull.EntryId1
+                    && hfull.EntryId2 == RightPerforate_hipEntryFull.EntryId2
+                    && hfull.EntryId3 == RightPerforate_hipEntryFull.EntryId3
+                    && hfull.EntryId4 == RightPerforate_hipEntryFull.EntryId4
+                    && hfull.EntryId5 == RightPerforate_hipEntryFull.EntryId5)
+                    {
+                        test = false;
+                        RightPerforate_hipEntryFull = hfull;
+                        break;
+                    }
+                }
+                if (test)
+                    Data.Perforate_hipFull.Add(RightPerforate_hipEntryFull);
+            }
             if (!RightPPV.IsEmpty)
-                Data.PPVFull.Add(RightPPVEntryFull);
+            {
+                test = true;
+                foreach (var hfull in Data.PPVFull.GetAll)
+                {
+                    if (hfull.EntryId1 == RightPPVEntryFull.EntryId1
+                    && hfull.EntryId2 == RightPPVEntryFull.EntryId2)
+                    {
+                        test = false;
+                        RightPPVEntryFull = hfull;
+                        break;
+                    }
+                }
+                if (test)
+                    Data.PPVFull.Add(RightPPVEntryFull);
+            }
 
             if (!RightSFS.IsEmpty)
-                Data.SFSFull.Add(RightSFSEntryFull);
+            {
+                test = true;
+                foreach (var hfull in Data.SFSFull.GetAll)
+                {
+                    if (hfull.EntryId1 == RightSFSEntryFull.EntryId1
+                    && hfull.EntryId2 == RightSFSEntryFull.EntryId2
+                    && hfull.EntryId3 == RightSFSEntryFull.EntryId3
+                    && hfull.EntryId4 == RightSFSEntryFull.EntryId4
+                    && hfull.EntryId5 == RightSFSEntryFull.EntryId5
+                    && hfull.EntryId6 == RightSFSEntryFull.EntryId6)
+                    {
+                        test = false;
+                        RightSFSEntryFull = hfull;
+                        break;
+                    }
+                }
+                if (test)
+                    Data.SFSFull.Add(RightSFSEntryFull);
+            }
 
             if (!RightSPS.IsEmpty)
-                Data.SPSHipFull.Add(RightSPSEntryFull);
-
+            {
+                test = true;
+                foreach (var hfull in Data.SPSHipFull.GetAll)
+                {
+                    if (hfull.EntryId1 == RightSPSEntryFull.EntryId1
+                    && hfull.EntryId2 == RightSPSEntryFull.EntryId2
+                    && hfull.EntryId3 == RightSPSEntryFull.EntryId3)
+                    {
+                        test = false;
+                        RightSPSEntryFull = hfull;
+                        break;
+                    }
+                }
+                if (test)
+                    Data.SPSHipFull.Add(RightSPSEntryFull);
+            }
             if (!RightTEMPV.IsEmpty)
-                Data.TEMPVFull.Add(RightTEMPVEntryFull);
+            {
+                test = true;
+                foreach (var hfull in Data.TEMPVFull.GetAll)
+                {
+                    if (hfull.EntryId1 == RightTEMPVEntryFull.EntryId1
+                    && hfull.EntryId2 == RightTEMPVEntryFull.EntryId2
+                    && hfull.EntryId3 == RightTEMPVEntryFull.EntryId3
+                    && hfull.WayID == RightTEMPVEntryFull.WayID
+                    && hfull.FF_Length == RightTEMPVEntryFull.FF_Length)
+                    {
+                        test = false;
+                        RightTEMPVEntryFull = hfull;
+                        break;
+                    }
+                }
+                if (test)
+                    Data.TEMPVFull.Add(RightTEMPVEntryFull);
+            }
 
             if (!RightTibiaPerforate.IsEmpty)
-                Data.Perforate_shinFull.Add(RightPerforate_shinEntryFull);
+            {
+                test = true;
+                foreach (var hfull in Data.Perforate_shinFull.GetAll)
+                {
+                    if (hfull.EntryId1 == RightPerforate_shinEntryFull.EntryId1
+                    && hfull.EntryId2 == RightPerforate_shinEntryFull.EntryId2
+                    && hfull.EntryId3 == RightPerforate_shinEntryFull.EntryId3
+                    && hfull.EntryId4 == RightPerforate_shinEntryFull.EntryId4
+                    && hfull.EntryId5 == RightPerforate_shinEntryFull.EntryId5)
+                    {
+                        test = false;
+                        RightPerforate_shinEntryFull = hfull;
+                        break;
+                    }
+                }
+                if (test)
+                    Data.Perforate_shinFull.Add(RightPerforate_shinEntryFull);
+            }
 
             if (!RightZDSV.IsEmpty)
-                Data.ZDSVFull.Add(RightZDSVEntryFull);
+            {
+                test = true;
+                foreach (var hfull in Data.ZDSVFull.GetAll)
+                {
+                    if (hfull.EntryId1 == RightZDSVEntryFull.EntryId1
+                    && hfull.EntryId2 == RightZDSVEntryFull.EntryId2
+                    && hfull.EntryId3 == RightZDSVEntryFull.EntryId3)
+                    {
+                        test = false;
+                        RightZDSVEntryFull = hfull;
+                        break;
+                    }
+                }
+                if (test)
+                    Data.ZDSVFull.Add(RightZDSVEntryFull);
+            }
+            //if (!LeftBPVHip.IsEmpty)
+            //    Data.BPVHipsFull.Add(LeftBPVEntryFull);
 
+            //if (!LeftBPVTibia.IsEmpty)
+            //    Data.BPV_TibiaFull.Add(LeftBPV_TibiaEntryFull);
+
+
+            //if (!LeftGV.IsEmpty)
+            //    Data.GVFull.Add(LeftGVEntryFull);
+
+            //if (!LeftMPV.IsEmpty)
+            //    Data.MPVFull.Add(LeftMPVEntryFull);
+
+            //if (!LeftPDSV.IsEmpty)
+            //    Data.PDSVFull.Add(LeftPDSVEntryFull);
+
+            //if (!LeftPerforate.IsEmpty)
+            //    Data.Perforate_hipFull.Add(LeftPerforate_hipEntryFull);
+
+            //if (!LeftPPV.IsEmpty)
+            //    Data.PPVFull.Add(LeftPPVEntryFull);
+
+            //if (!LeftSFS.IsEmpty)
+            //    Data.SFSFull.Add(LeftSFSEntryFull);
+
+            //if (!LeftSPS.IsEmpty)
+            //    Data.SPSHipFull.Add(LeftSPSEntryFull);
+
+            //if (!LeftTEMPV.IsEmpty)
+            //    Data.TEMPVFull.Add(LeftTEMPVEntryFull);
+
+            //if (!LeftTibiaPerforate.IsEmpty)
+            //    Data.Perforate_shinFull.Add(LeftPerforate_shinEntryFull);
+
+            //if (!LeftZDSV.IsEmpty)
+            //    Data.ZDSVFull.Add(LeftZDSVEntryFull);
 
             if (!LeftBPVHip.IsEmpty)
-                Data.BPVHipsFull.Add(LeftBPVEntryFull);
-
+            {
+                test = true;
+                foreach (var hfull in Data.BPVHipsFull.GetAll)
+                {
+                    if (hfull.EntryId1 == LeftBPVEntryFull.EntryId1
+                    && hfull.EntryId2 == LeftBPVEntryFull.EntryId2
+                    && hfull.EntryId3 == LeftBPVEntryFull.EntryId3
+                    && hfull.EntryId4 == LeftBPVEntryFull.EntryId4
+                    && hfull.EntryId5 == LeftBPVEntryFull.EntryId5
+                    && hfull.WayID == LeftBPVEntryFull.WayID)
+                    {
+                        test = false;
+                        LeftBPVEntryFull = hfull;
+                        break;
+                    }
+                }
+                if (test)
+                    Data.BPVHipsFull.Add(LeftBPVEntryFull);
+            }
             if (!LeftBPVTibia.IsEmpty)
-                Data.BPV_TibiaFull.Add(LeftBPV_TibiaEntryFull);
+            {
+                test = true;
+                foreach (var hfull in Data.BPV_TibiaFull.GetAll)
+                {
+                    if (hfull.EntryId1 == LeftBPV_TibiaEntryFull.EntryId1
+                    && hfull.EntryId2 == LeftBPV_TibiaEntryFull.EntryId2
+                    && hfull.EntryId3 == LeftBPV_TibiaEntryFull.EntryId3
+                    && hfull.EntryId4 == LeftBPV_TibiaEntryFull.EntryId4)
+                    {
+                        test = false;
+                        LeftBPV_TibiaEntryFull = hfull;
+                        break;
+                    }
+                }
+                if (test)
+                    Data.BPV_TibiaFull.Add(LeftBPV_TibiaEntryFull);
 
+            }
 
             if (!LeftGV.IsEmpty)
-                Data.GVFull.Add(LeftGVEntryFull);
+            {
+                test = true;
+                foreach (var hfull in Data.GVFull.GetAll)
+                {
+                    if (hfull.EntryId1 == LeftGVEntryFull.EntryId1
+                    && hfull.EntryId2 == LeftGVEntryFull.EntryId2)
+                    {
+                        test = false;
+                        LeftGVEntryFull = hfull;
+                        break;
+                    }
+                }
+                if (test)
+                    Data.GVFull.Add(LeftGVEntryFull);
+            }
 
             if (!LeftMPV.IsEmpty)
-                Data.MPVFull.Add(LeftMPVEntryFull);
+            {
+                test = true;
+                foreach (var hfull in Data.MPVFull.GetAll)
+                {
+                    if (hfull.EntryId1 == LeftMPVEntryFull.EntryId1
+                    && hfull.EntryId2 == LeftMPVEntryFull.EntryId2
+                    && hfull.EntryId3 == LeftMPVEntryFull.EntryId3
+                    && hfull.EntryId4 == LeftMPVEntryFull.EntryId4
+                    && hfull.WayID == LeftMPVEntryFull.WayID)
+                    {
+                        test = false;
+                        LeftMPVEntryFull = hfull;
+                        break;
+                    }
+                }
+                if (test)
+                    Data.MPVFull.Add(LeftMPVEntryFull);
+            }
 
             if (!LeftPDSV.IsEmpty)
-                Data.PDSVFull.Add(LeftPDSVEntryFull);
-
+            {
+                test = true;
+                foreach (var hfull in Data.PDSVFull.GetAll)
+                {
+                    if (hfull.EntryId1 == LeftPDSVEntryFull.EntryId1
+                    && hfull.EntryId2 == LeftPDSVEntryFull.EntryId2
+                    && hfull.EntryId3 == LeftPDSVEntryFull.EntryId3
+                    && hfull.WayID == LeftPDSVEntryFull.WayID)
+                    {
+                        test = false;
+                        LeftPDSVEntryFull = hfull;
+                        break;
+                    }
+                }
+                if (test)
+                    Data.PDSVFull.Add(LeftPDSVEntryFull);
+            }
             if (!LeftPerforate.IsEmpty)
-                Data.Perforate_hipFull.Add(LeftPerforate_hipEntryFull);
-
+            {
+                test = true;
+                foreach (var hfull in Data.Perforate_hipFull.GetAll)
+                {
+                    if (hfull.EntryId1 == LeftPerforate_hipEntryFull.EntryId1
+                    && hfull.EntryId2 == LeftPerforate_hipEntryFull.EntryId2
+                    && hfull.EntryId3 == LeftPerforate_hipEntryFull.EntryId3
+                    && hfull.EntryId4 == LeftPerforate_hipEntryFull.EntryId4
+                    && hfull.EntryId5 == LeftPerforate_hipEntryFull.EntryId5)
+                    {
+                        test = false;
+                        LeftPerforate_hipEntryFull = hfull;
+                        break;
+                    }
+                }
+                if (test)
+                    Data.Perforate_hipFull.Add(LeftPerforate_hipEntryFull);
+            }
             if (!LeftPPV.IsEmpty)
-                Data.PPVFull.Add(LeftPPVEntryFull);
+            {
+                test = true;
+                foreach (var hfull in Data.PPVFull.GetAll)
+                {
+                    if (hfull.EntryId1 == LeftPPVEntryFull.EntryId1
+                    && hfull.EntryId2 == LeftPPVEntryFull.EntryId2)
+                    {
+                        test = false;
+                        LeftPPVEntryFull = hfull;
+                        break;
+                    }
+                }
+                if (test)
+                    Data.PPVFull.Add(LeftPPVEntryFull);
+            }
 
             if (!LeftSFS.IsEmpty)
-                Data.SFSFull.Add(LeftSFSEntryFull);
+            {
+                test = true;
+                foreach (var hfull in Data.SFSFull.GetAll)
+                {
+                    if (hfull.EntryId1 == LeftSFSEntryFull.EntryId1
+                    && hfull.EntryId2 == LeftSFSEntryFull.EntryId2
+                    && hfull.EntryId3 == LeftSFSEntryFull.EntryId3
+                    && hfull.EntryId4 == LeftSFSEntryFull.EntryId4
+                    && hfull.EntryId5 == LeftSFSEntryFull.EntryId5
+                    && hfull.EntryId6 == LeftSFSEntryFull.EntryId6)
+                    {
+                        test = false;
+                        LeftSFSEntryFull = hfull;
+                        break;
+                    }
+                }
+                if (test)
+                    Data.SFSFull.Add(LeftSFSEntryFull);
+            }
 
             if (!LeftSPS.IsEmpty)
-                Data.SPSHipFull.Add(LeftSPSEntryFull);
-
+            {
+                test = true;
+                foreach (var hfull in Data.SPSHipFull.GetAll)
+                {
+                    if (hfull.EntryId1 == LeftSPSEntryFull.EntryId1
+                    && hfull.EntryId2 == LeftSPSEntryFull.EntryId2
+                    && hfull.EntryId3 == LeftSPSEntryFull.EntryId3)
+                    {
+                        test = false;
+                        LeftSPSEntryFull = hfull;
+                        break;
+                    }
+                }
+                if (test)
+                    Data.SPSHipFull.Add(LeftSPSEntryFull);
+            }
             if (!LeftTEMPV.IsEmpty)
-                Data.TEMPVFull.Add(LeftTEMPVEntryFull);
+            {
+                test = true;
+                foreach (var hfull in Data.TEMPVFull.GetAll)
+                {
+                    if (hfull.EntryId1 == LeftTEMPVEntryFull.EntryId1
+                    && hfull.EntryId2 == LeftTEMPVEntryFull.EntryId2
+                    && hfull.EntryId3 == LeftTEMPVEntryFull.EntryId3
+                    && hfull.WayID == LeftTEMPVEntryFull.WayID
+                    && hfull.FF_Length == LeftTEMPVEntryFull.FF_Length)
+                    {
+                        test = false;
+                        LeftTEMPVEntryFull = hfull;
+                        break;
+                    }
+                }
+                if (test)
+                    Data.TEMPVFull.Add(LeftTEMPVEntryFull);
+            }
 
             if (!LeftTibiaPerforate.IsEmpty)
-                Data.Perforate_shinFull.Add(LeftPerforate_shinEntryFull);
+            {
+                test = true;
+                foreach (var hfull in Data.Perforate_shinFull.GetAll)
+                {
+                    if (hfull.EntryId1 == LeftPerforate_shinEntryFull.EntryId1
+                    && hfull.EntryId2 == LeftPerforate_shinEntryFull.EntryId2
+                    && hfull.EntryId3 == LeftPerforate_shinEntryFull.EntryId3
+                    && hfull.EntryId4 == LeftPerforate_shinEntryFull.EntryId4
+                    && hfull.EntryId5 == LeftPerforate_shinEntryFull.EntryId5)
+                    {
+                        test = false;
+                        LeftPerforate_shinEntryFull = hfull;
+                        break;
+                    }
+                }
+                if (test)
+                    Data.Perforate_shinFull.Add(LeftPerforate_shinEntryFull);
+            }
 
             if (!LeftZDSV.IsEmpty)
-                Data.ZDSVFull.Add(LeftZDSVEntryFull);
-
-
+            {
+                test = true;
+                foreach (var hfull in Data.ZDSVFull.GetAll)
+                {
+                    if (hfull.EntryId1 == LeftZDSVEntryFull.EntryId1
+                    && hfull.EntryId2 == LeftZDSVEntryFull.EntryId2
+                    && hfull.EntryId3 == LeftZDSVEntryFull.EntryId3)
+                    {
+                        test = false;
+                        LeftZDSVEntryFull = hfull;
+                        break;
+                    }
+                }
+                if (test)
+                    Data.ZDSVFull.Add(LeftZDSVEntryFull);
+            }
 
             Data.Complete();
 
@@ -3412,6 +4388,12 @@ namespace WpfApp2.ViewModels
 
         }
 
+
+
+
+
+
+
         private LegPartEntries SaveFullEntry(LegPartViewModel Part, LegPartEntries FullEntry)
         {
             if (!Part.IsEmpty)
@@ -3423,56 +4405,155 @@ namespace WpfApp2.ViewModels
                     { continue; }
                     LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
                     newSFSentry.StructureID = section.SelectedValue.Id;
+
                     if (Part is PDSVViewModel)
                     {
+                        var testList = Data.PDSVHipEntries.GetAll.Where(s => s.Comment == ((PDSVHipEntry)newSFSentry).Comment && s.StructureID == ((PDSVHipEntry)newSFSentry).StructureID && s.Size == ((PDSVHipEntry)newSFSentry).Size && s.Size2 == ((PDSVHipEntry)newSFSentry).Size2).ToList();
+                        if (testList.Count > 0)
+                        {
+                            newSFSentry = testList[0];
+                        }
+                        else
+                        {
 
-                        Data.PDSVHipEntries.Add((PDSVHipEntry)newSFSentry);
+                            Data.PDSVHipEntries.Add((PDSVHipEntry)newSFSentry);
+                        }
                     }
                     else if (Part is SFSViewModel)
                     {
-                        Data.SFSHipEntries.Add((SFSHipEntry)newSFSentry);
+
+                        var testList = Data.SFSHipEntries.GetAll.Where(s => s.Comment == ((SFSHipEntry)newSFSentry).Comment && s.StructureID == ((SFSHipEntry)newSFSentry).StructureID && s.Size == ((SFSHipEntry)newSFSentry).Size && s.Size2 == ((SFSHipEntry)newSFSentry).Size2).ToList();
+                        if (testList.Count > 0)
+                        {
+                            newSFSentry = testList[0];
+                        }
+                        else
+                        {
+                            Data.SFSHipEntries.Add((SFSHipEntry)newSFSentry);
+                        }
                     }
                     else if (Part is BPVHipViewModel)
                     {
-                        Data.BPVHipEntries.Add((BPVHipEntry)newSFSentry);
+                        var testList = Data.BPVHipEntries.GetAll.Where(s => s.Comment == ((BPVHipEntry)newSFSentry).Comment && s.StructureID == ((BPVHipEntry)newSFSentry).StructureID && s.Size == ((BPVHipEntry)newSFSentry).Size && s.Size2 == ((BPVHipEntry)newSFSentry).Size2).ToList();
+                        if (testList.Count > 0)
+                        {
+                            newSFSentry = testList[0];
+                        }
+                        else
+                        {
+                            Data.BPVHipEntries.Add((BPVHipEntry)newSFSentry);
+                        }
                     }
                     else if (Part is BPVTibiaViewModel)
                     {
-                        Data.BPV_TibiaEntries.Add((BPV_TibiaEntry)newSFSentry);
+                        var testList = Data.BPV_TibiaEntries.GetAll.Where(s => s.Comment == ((BPV_TibiaEntry)newSFSentry).Comment && s.StructureID == ((BPV_TibiaEntry)newSFSentry).StructureID && s.Size == ((BPV_TibiaEntry)newSFSentry).Size && s.Size2 == ((BPV_TibiaEntry)newSFSentry).Size2).ToList();
+                        if (testList.Count > 0)
+                        {
+                            newSFSentry = testList[0];
+                        }
+                        else
+                        {
+                            Data.BPV_TibiaEntries.Add((BPV_TibiaEntry)newSFSentry);
+                        }
                     }
                     else if (Part is HipPerforateViewModel)
                     {
-                        Data.Perforate_hipEntries.Add((Perforate_hipEntry)newSFSentry);
+
+                        var testList = Data.Perforate_hipEntries.GetAll.Where(s => s.Comment == ((Perforate_hipEntry)newSFSentry).Comment && s.StructureID == ((Perforate_hipEntry)newSFSentry).StructureID && s.Size == ((Perforate_hipEntry)newSFSentry).Size && s.Size2 == ((Perforate_hipEntry)newSFSentry).Size2).ToList();
+                        if (testList.Count > 0)
+                        {
+                            newSFSentry = testList[0];
+                        }
+                        else
+                        {
+                            Data.Perforate_hipEntries.Add((Perforate_hipEntry)newSFSentry);
+                        }
                     }
                     else if (Part is ZDSVViewModel)
                     {
-                        Data.ZDSVEntries.Add((ZDSVEntry)newSFSentry);
+                        var testList = Data.ZDSVEntries.GetAll.Where(s => s.Comment == ((ZDSVEntry)newSFSentry).Comment && s.StructureID == ((ZDSVEntry)newSFSentry).StructureID && s.Size == ((ZDSVEntry)newSFSentry).Size && s.Size2 == ((ZDSVEntry)newSFSentry).Size2).ToList();
+                        if (testList.Count > 0)
+                        {
+                            newSFSentry = testList[0];
+                        }
+                        else
+                        {
+                            Data.ZDSVEntries.Add((ZDSVEntry)newSFSentry);
+                        }
                     }
 
                     else if (Part is SPSViewModel)
                     {
-                        Data.SPSEntries.Add((SPSHipEntry)newSFSentry);
+                        var testList = Data.SPSEntries.GetAll.Where(s => s.Comment == ((SPSHipEntry)newSFSentry).Comment && s.StructureID == ((SPSHipEntry)newSFSentry).StructureID && s.Size == ((SPSHipEntry)newSFSentry).Size && s.Size2 == ((SPSHipEntry)newSFSentry).Size2).ToList();
+                        if (testList.Count > 0)
+                        {
+                            newSFSentry = testList[0];
+                        }
+                        else
+                        {
+                            Data.SPSEntries.Add((SPSHipEntry)newSFSentry);
+                        }
                     }
                     else if (Part is TibiaPerforateViewModel)
                     {
-                        Data.Perforate_shinEntries.Add((Perforate_shinEntry)newSFSentry);
+                        var testList = Data.Perforate_shinEntries.GetAll.Where(s => s.Comment == ((Perforate_shinEntry)newSFSentry).Comment && s.StructureID == ((Perforate_shinEntry)newSFSentry).StructureID && s.Size == ((Perforate_shinEntry)newSFSentry).Size && s.Size2 == ((Perforate_shinEntry)newSFSentry).Size2).ToList();
+                        if (testList.Count > 0)
+                        {
+                            newSFSentry = testList[0];
+                        }
+                        else
+                        {
+                            Data.Perforate_shinEntries.Add((Perforate_shinEntry)newSFSentry);
+                        }
                     }
                     else if (Part is MPVViewModel)
                     {
-                        Data.MPVEntries.Add((MPVEntry)newSFSentry);
+                        var testList = Data.MPVEntries.GetAll.Where(s => s.Comment == ((MPVEntry)newSFSentry).Comment && s.StructureID == ((MPVEntry)newSFSentry).StructureID && s.Size == ((MPVEntry)newSFSentry).Size && s.Size2 == ((MPVEntry)newSFSentry).Size2).ToList();
+                        if (testList.Count > 0)
+                        {
+                            newSFSentry = testList[0];
+                        }
+                        else
+                        {
+                            Data.MPVEntries.Add((MPVEntry)newSFSentry);
+                        }
                     }
                     else if (Part is TEMPVViewModel)
                     {
                         ((TEMPVEntryFull)LeftSFSEntryFullbuf).FF_Length = Part.FF_length;
-                        Data.TEMPVEntries.Add((TEMPVEntry)newSFSentry);
+                        var testList = Data.TEMPVEntries.GetAll.Where(s => s.Comment == ((TEMPVEntry)newSFSentry).Comment && s.StructureID == ((TEMPVEntry)newSFSentry).StructureID && s.Size == ((TEMPVEntry)newSFSentry).Size && s.Size2 == ((TEMPVEntry)newSFSentry).Size2).ToList();
+                        if (testList.Count > 0)
+                        {
+                            newSFSentry = testList[0];
+                        }
+                        else
+                        {
+                            Data.TEMPVEntries.Add((TEMPVEntry)newSFSentry);
+                        }
                     }
                     else if (Part is PPVViewModel)
                     {
-                        Data.PPVEntries.Add((PPVEntry)newSFSentry);
+                        var testList = Data.PPVEntries.GetAll.Where(s => s.Comment == ((PPVEntry)newSFSentry).Comment && s.StructureID == ((PPVEntry)newSFSentry).StructureID && s.Size == ((PPVEntry)newSFSentry).Size && s.Size2 == ((PPVEntry)newSFSentry).Size2).ToList();
+                        if (testList.Count > 0)
+                        {
+                            newSFSentry = testList[0];
+                        }
+                        else
+                        {
+                            Data.PPVEntries.Add((PPVEntry)newSFSentry);
+                        }
                     }
                     else if (Part is GVViewModel)
                     {
-                        Data.GVEntries.Add((GVEntry)newSFSentry);
+                        var testList = Data.GVEntries.GetAll.Where(s => s.Comment == ((GVEntry)newSFSentry).Comment && s.StructureID == ((GVEntry)newSFSentry).StructureID && s.Size == ((GVEntry)newSFSentry).Size && s.Size2 == ((GVEntry)newSFSentry).Size2).ToList();
+                        if (testList.Count > 0)
+                        {
+                            newSFSentry = testList[0];
+                        }
+                        else
+                        {
+                            Data.GVEntries.Add((GVEntry)newSFSentry);
+                        }
                     }
 
                     Data.Complete();
@@ -3566,6 +4647,11 @@ namespace WpfApp2.ViewModels
         private void Clear(object sender, object data)
         {
             mode = "Normal";
+
+            LeftDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
+            RightDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
+            RecomendationsList = new List<RecomendationsDataSource>();
+            ComplainsList = new List<ComplainsDataSource>();
             // if (!LeftCEAR.IsEmpty)
             LeftCEAR = new LettersViewModel(Controller, LegSide.Left);
             //  if (!RightCEAR.IsEmpty)
@@ -3827,7 +4913,7 @@ namespace WpfApp2.ViewModels
 
 
                 DiagnosisDataSource diagDSourceBuf;
-                foreach (var diag in diagRep.GetAll.Where(s => s.isLeft == true && s.id_обследование_ноги == Exam.Id).ToList())
+                foreach (var diag in Data.DiagnosisObs.GetAll.Where(s => s.isLeft == true && s.id_обследование_ноги == Exam.Id).ToList())
                 {
                     diagDSourceBuf = new DiagnosisDataSource(diag.DiagnosisType);
                     diagDSourceBuf.IsChecked = true;
@@ -3838,16 +4924,18 @@ namespace WpfApp2.ViewModels
 
 
 
-                foreach (var diag in diagRep.GetAll.Where(s => s.isLeft == false && s.id_обследование_ноги == Exam.Id).ToList())
+                foreach (var diag in Data.DiagnosisObs.GetAll.Where(s => s.isLeft == false && s.id_обследование_ноги == Exam.Id).ToList())
                 {
                     diagDSourceBuf = new DiagnosisDataSource(diag.DiagnosisType);
                     diagDSourceBuf.IsChecked = true;
                     RightDiagnosisList.Add(diagDSourceBuf);
                 }
 
+                MessageBus.Default.Call("SetDiagnosisListBecauseOFEdit", LeftDiagnosisList, RightDiagnosisList);
+
                 ComplainsList = new List<ComplainsDataSource>();
                 ComplainsDataSource compDSourceBuf;
-                foreach (var diag in compRep.GetAll.Where(s => s.id_обследования == Exam.Id).ToList())
+                foreach (var diag in Data.ComplanesObs.GetAll.Where(s => s.id_обследования == Exam.Id).ToList())
                 {
                     compDSourceBuf = new ComplainsDataSource(diag.CompType);
                     compDSourceBuf.IsChecked = true;
@@ -3856,13 +4944,17 @@ namespace WpfApp2.ViewModels
                 RecomendationsList = new List<RecomendationsDataSource>();
                 RecomendationsDataSource recDSourceBuf;
 
-                foreach (var diag in recRep.GetAll.Where(s => s.id_обследования == Exam.Id).ToList())
+                foreach (var diag in Data.RecomendationObs.GetAll.Where(s => s.id_обследования == Exam.Id).ToList())
                 {
                     recDSourceBuf = new RecomendationsDataSource(diag.RecType);
                     recDSourceBuf.IsChecked = true;
                     RecomendationsList.Add(recDSourceBuf);
                 }
+                MessageBus.Default.Call("SetDRecomendationListBecauseOFEdit", this, RecomendationsList);
 
+                MessageBus.Default.Call("SetDComplanesListBecauseOFEdit", this, ComplainsList);
+
+                
                 //leftLegExams.additionalText = LeftAdditionalText;
                 //if (LeftCEAR.LegSections[0].SelectedValue != null)
                 //    leftLegExams.C = LeftCEAR.LegSections[0].SelectedValue.Id;

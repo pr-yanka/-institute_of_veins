@@ -79,7 +79,23 @@ namespace WpfApp2.ViewModels
         }
 
         #endregion
+        private void SetDRecomendationListBecauseOFEdit(object sender, object data)
+        {
 
+            foreach(var dat in (List<RecomendationsDataSource>)data)
+            {
+                foreach (var datC in DataSourceList)
+                {
+                    if(dat.Data.Id == datC.Data.Id)
+                    {
+                        datC.IsChecked = true;
+                    }
+                }
+            }
+           
+          
+
+        }
         public DelegateCommand ToPhysicalCommand { get; protected set; }
         public DelegateCommand SaveChangesCommand { get; protected set; }
         public string TextOFNewType { get; private set; }
@@ -91,6 +107,7 @@ namespace WpfApp2.ViewModels
 
         public ViewModelRecomendationsList(NavigationController controller) : base(controller)
         {
+            MessageBus.Default.Subscribe("SetDRecomendationListBecauseOFEdit", SetDRecomendationListBecauseOFEdit);
             TextOFNewType = "Новый тип рекомендации";
             HeaderText = "Рекомендации";
             AddButtonText = "Добавить рекомендацию";

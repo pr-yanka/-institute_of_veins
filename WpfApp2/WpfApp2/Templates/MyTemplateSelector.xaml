@@ -32,17 +32,18 @@
         <ResourceDictionary Source="Operation/TemplateCancleOperations.xaml"/>
         <ResourceDictionary Source="/LegParts/LegPartMainTemplate.xaml"/>
         <ResourceDictionary Source="TemplateViewPersonal.xaml"/>
-
         <ResourceDictionary Source="TemplateAddMedPersonal.xaml"/>
         <ResourceDictionary Source="TemplateAddDoctor.xaml"/>
         <ResourceDictionary Source="TemplateAddUser.xaml"/>
         <ResourceDictionary Source="Operation/TemplateAddStatement.xaml"/>
-
+        <ResourceDictionary Source="Operation/TemplateAddEpicrizen.xaml"/>
+        
 
 
     </ResourceDictionary.MergedDictionaries>
 
     <local:MyTemplateSelector x:Key="MyTemplateSelector" 
+                              TemplateAddEpicrizen ="{StaticResource TemplateAddEpicrizen}"
                               TemplateAddStatement="{StaticResource TemplateAddStatement}"
                               TemplateAddMedPersonal="{StaticResource TemplateAddMedPersonal}"
                               TemplateAddDoctor="{StaticResource TemplateAddDoctor}"

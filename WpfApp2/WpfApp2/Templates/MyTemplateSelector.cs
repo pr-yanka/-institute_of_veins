@@ -43,6 +43,7 @@ namespace WpfApp2.Templates
         public DataTemplate TemplateAddDoctor { get; set; }
         public DataTemplate TemplateAddMedPersonal { get; set; }
         public DataTemplate TemplateAddUser { get; set; }
+        public DataTemplate TemplateAddEpicrizen { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -182,6 +183,10 @@ namespace WpfApp2.Templates
 
             if (item.GetType() == typeof(ViewModelCreateStatement))
                 return TemplateAddStatement;
+
+
+            if (item.GetType() == typeof(ViewModelAddEpicriz))
+                return TemplateAddEpicrizen;
 
             return null;
         }

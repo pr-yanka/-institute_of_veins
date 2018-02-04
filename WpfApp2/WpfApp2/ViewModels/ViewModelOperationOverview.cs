@@ -26,6 +26,7 @@ namespace WpfApp2.ViewModels
         #endregion
 
         #region DelegateCommands
+        public DelegateCommand ToCreateEpicrizCommand { get; protected set; }
         public DelegateCommand ToPhysicalCommand { get; protected set; }
         public DelegateCommand ToCurrentPatientCommand { get; protected set; }
         public DelegateCommand ToAddOperationResultCommand { get; protected set; }
@@ -210,6 +211,14 @@ namespace WpfApp2.ViewModels
 
             base.HasNavigation = false;
             #region DelegateCommands
+
+            ToCreateEpicrizCommand = new DelegateCommand(() =>
+            {
+                MessageBus.Default.Call("GetOperationIDForAddEpicriz", DoctorsSelected, Operation.Id);
+                Controller.NavigateTo<ViewModelAddEpicriz>();
+            });
+
+
             ToAddOperationResultCommand = new DelegateCommand(() =>
             {
                 MessageBus.Default.Call("GetOperationIDForAddOperationResult", this, Operation.Id);

@@ -2,6 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                     xmlns:local="clr-namespace:WpfApp2.Templates">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/LegParts/Templates/RightPanelAnimation.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
     <DataTemplate x:Key="TemplateAddPhysicalPage1">
         <Grid Name="RootGrid">
                 <Grid.Resources>
@@ -17,6 +20,40 @@
                         </LinearGradientBrush.GradientStops>
                     </LinearGradientBrush>
                 </Grid.Background>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             <TextBlock x:Name="textBlock2" TextAlignment="Center" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap" Text="Добавление обследования" VerticalAlignment="Top" Width="318" FontSize="18" Height="28" FontFamily="Segoe UI Semibold" FontWeight="Bold"/>
             <TextBlock x:Name="textBlock1" TextAlignment="Center" HorizontalAlignment="Left" Margin="228,3,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="543" FontSize="18" Height="28" FontFamily="Segoe UI Semibold" FontWeight="Bold"><TextBlock Text="{Binding Path=CurrentPatient.Name}" /><TextBlock Text="{Binding Path=initials}" /><TextBlock Text=" (" /><TextBlock Text="{Binding Path=CurrentPatient.Age}" /><TextBlock Text=")" /></TextBlock>
@@ -615,13 +652,66 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
                 <Button x:Name="button_Copy4" Content="Добавить рекомендации" Command="{Binding ToAddRecomendationsCommand}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="688" Height="32" Background="AliceBlue" FontSize="14" Margin="13,576,0,0"/>
-                <StackPanel Orientation="Vertical" Margin="717,576,0,0">
+                <StackPanel Orientation="Vertical" Margin="710,573,0,0">
                     <Button x:Name="button_Copy3" Margin="0,5,0,5" Content="Вернуться к пациенту" Command="{Binding ToCurrentPatientCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="297" Height="31" Background="MintCream" FontSize="14"/>
                     <Button x:Name="button_Copy10" Margin="0,5,0,5" Content="Заключение" Command="{Binding ToPhysicalOverviewCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="297" Height="33" Background="Azure" FontSize="14"/>
-                    <Button x:Name="button_Copy9" Margin="0,5,0,5" Content="Завершить обследование" Command="{Binding OpenDialogCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="297" Height="31" Background="Honeydew" FontSize="14"/>
+                <Button x:Name="butаton_Copy10" Margin="0,5,0,5" Content="Осмотр хирурга" Command="{Binding ToPhysicalChirurgOverviewCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="297" Height="33" Background="Azure" FontSize="14"/>
+
+                <Button x:Name="button_Copy9" Margin="0,5,0,5" Content="Завершить обследование" Command="{Binding OpenDialogCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="297" Height="31" Background="Honeydew" FontSize="14"/>
                 </StackPanel>
             <Button x:Name="button_Copy" Command="{Binding Path=ToLeftDiagCommand}" Content="Поставить диагноз" HorizontalAlignment="Left" Margin="3,417,0,0" VerticalAlignment="Top" Width="487" Height="32" Background="Lavender" FontSize="14"/>
-            </Grid>
+
+
+
+            <Border  Visibility="{Binding Path = CurrentPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOv5erlay">
+                <Border.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.78"/>
+                </Border.Background>
+            </Border>
+
+            <Border x:Name="panel34Corntrol"  Margin="0,0,-450,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="450" Height="225" DataContext="{Binding Path=CurrentPanelViewModel}" >
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=PanelOpened}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <RemoveStoryboard BeginStoryboardName="AnimationCloseStoryboard"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Open}" x:Name="AnimationBeginStoryboard"/>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <RemoveStoryboard BeginStoryboardName="AnimationBeginStoryboard"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Close}" x:Name="AnimationCloseStoryboard"/>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Border.RenderTransform>
+
+                <Grid>
+                    <Canvas Background="#FFC6E8E6" Margin="0,0,0,29">
+
+                        <TextBlock x:Name="textfBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="135" FontSize="18" Canvas.Top="10" Text="Врач"/>
+                        <ComboBox ItemsSource="{Binding Doctors}" SelectedIndex="{Binding Path=DoctorSelectedId}" x:Name="textBfox1" HorizontalAlignment="Left" Width="280" Height="13"  Text="{Binding Path=ShortText}" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="61" />
+                        <Button x:Name="buttonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding ParentVM.RevertCommand}" Canvas.Left="60" Canvas.Top="120" Height="36"/>
+                        <Button x:Name="ButtonfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding ParentVM.SaveCommand}" Canvas.Left="256" Canvas.Top="120" Height="36"/>
+                       
+                    </Canvas>
+                </Grid>
+            </Border>
+
+
+
+
+        </Grid>
 
     </DataTemplate>
 </ResourceDictionary>

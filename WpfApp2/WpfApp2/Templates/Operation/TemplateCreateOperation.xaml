@@ -33,19 +33,19 @@
             <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Margin="138,182,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="Список всех врачей" FontSize="16" Width="155" TextAlignment="Center"/>
 
-            <CheckBox Content="Врачи" HorizontalAlignment="Left" Margin="140,0,0,250" IsChecked="{Binding ShowDoctors}" >
+            <CheckBox Content="Врачи" HorizontalAlignment="Left" Margin="140,0,0,250"  Width="100" Height="30" IsChecked="{Binding ShowDoctors}" >
              
             
             </CheckBox>
-            <CheckBox Content="Медперсонал" HorizontalAlignment="Left" Margin="210,0,0,250" IsChecked="{Binding ShowMeds}" >
+            <CheckBox Content="Медперсонал" HorizontalAlignment="Left" Margin="210,0,0,250" Width="100" Height="30" IsChecked="{Binding ShowMeds}" >
 
 
             </CheckBox>
-            <CheckBox Content="Врачи" HorizontalAlignment="Left" Margin="320,0,0,250" IsChecked="{Binding ShowDoctorsSelected}" >
+            <CheckBox Content="Врачи" HorizontalAlignment="Left" Margin="320,0,0,250"  Width="100" Height="30" IsChecked="{Binding ShowDoctorsSelected}" >
 
 
             </CheckBox>
-            <CheckBox Content="Медперсонал" HorizontalAlignment="Left" Margin="385,0,0,250" IsChecked="{Binding ShowMedsSelected}" >
+            <CheckBox Content="Медперсонал" HorizontalAlignment="Left" Margin="385,0,0,250"  Width="100" Height="30" IsChecked="{Binding ShowMedsSelected}" >
 
 
             </CheckBox>

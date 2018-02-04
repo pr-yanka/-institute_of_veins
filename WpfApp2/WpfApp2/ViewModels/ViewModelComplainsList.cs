@@ -81,7 +81,23 @@ namespace WpfApp2.ViewModels
 
         #endregion
 
+        private void SetDComplanesListBecauseOFEdit(object sender, object data)
+        {
 
+          
+            foreach (var dat in (List<ComplainsDataSource>)data)
+            {
+                foreach (var datC in DataSourceList)
+                {
+                    if (dat.Data.Id == datC.Data.Id)
+                    {
+                        datC.IsChecked = true;
+                    }
+                }
+            }
+
+
+        }
 
 
         public DelegateCommand ToPhysicalCommand { get; protected set; }
@@ -90,15 +106,17 @@ namespace WpfApp2.ViewModels
         public string HeaderText { get; set; }
         public string AddButtonText { get; set; }
         //Жалобы/диагноз/заключение
-        public ObservableCollection<ComplainsDataSource> _dataSourceList;
-        public ObservableCollection<ComplainsDataSource> DataSourceList { get { return _dataSourceList; } set { _dataSourceList = value; OnPropertyChanged(); } }
+        public List<ComplainsDataSource> _dataSourceList;
+        public List<ComplainsDataSource> DataSourceList { get { return _dataSourceList; } set { _dataSourceList = value; OnPropertyChanged(); } }
 
         public ViewModelComplainsList(NavigationController controller) : base(controller)
         {
+            MessageBus.Default.Subscribe("SetDComplanesListBecauseOFEdit", SetDComplanesListBecauseOFEdit);
+
             TextOFNewType = "Новый тип жалобы";
             HeaderText = "Жалобы";
             AddButtonText = "Добавить жалобу";
-            DataSourceList = new ObservableCollection<ComplainsDataSource>();
+            DataSourceList = new List<ComplainsDataSource>();
             foreach (var ComplainsType in Data.ComplainsTypes.GetAll)
             {
                 DataSourceList.Add(new ComplainsDataSource(ComplainsType));
@@ -146,7 +164,7 @@ namespace WpfApp2.ViewModels
 
                     Data.Complete();
                     var DataSourceListbuf = DataSourceList;
-                    DataSourceList = new ObservableCollection<ComplainsDataSource>();
+                    DataSourceList = new List<ComplainsDataSource>();
                  
                     foreach (var ComplainsType in Data.ComplainsTypes.GetAll)
                     {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Practices.Prism.Commands;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -90,6 +91,34 @@ namespace WpfApp2.ViewModels
         public List<DiagnosisDataSource> DataSourceList { get { return _dataSourceList; } set { _dataSourceList = value; OnPropertyChanged(); } }
 
         private string ld;
+        private void SetDiagnosisListBecauseOFEdit(object sender, object data)
+        {
+
+           
+            foreach (var dg in (ObservableCollection<DiagnosisDataSource>)sender)
+            {
+                foreach (var datC in LeftDiag)
+                {
+                    if (dg.Data.Id == datC.Data.Id)
+                    {
+                        datC.IsChecked = true;
+                    }
+                }
+               
+            }
+            foreach (var dg in (ObservableCollection<DiagnosisDataSource>)data)
+            {
+                foreach (var datC in RightDiag)
+                {
+                    if (dg.Data.Id == datC.Data.Id)
+                    {
+                        datC.IsChecked = true;
+                    }
+                }
+               
+            }
+            
+        }
         private void SetDiagnosisList(object sender, object data)
         {
             ld = (string)data;
@@ -115,6 +144,8 @@ namespace WpfApp2.ViewModels
             DataSourceList = new List<DiagnosisDataSource>();
             LeftDiag = new List<DiagnosisDataSource>();
             RightDiag = new List<DiagnosisDataSource>();
+
+            MessageBus.Default.Subscribe("SetDiagnosisListBecauseOFEdit", SetDiagnosisListBecauseOFEdit);
             MessageBus.Default.Subscribe("SetleftOrRightForObsled", SetDiagnosisList);
             foreach (var DiagnosisType in Data.DiagnosisTypes.GetAll)
             {
@@ -127,7 +158,7 @@ namespace WpfApp2.ViewModels
                 () =>
                 {
                     List<DiagnosisDataSource> DataSourceListBuffer = new List<DiagnosisDataSource>();
-                    
+
                     foreach (var Data in DataSourceList)
                     {
                         if (Data.IsChecked == true)
@@ -145,7 +176,7 @@ namespace WpfApp2.ViewModels
                         MessageBus.Default.Call("SetRightDiagnosisListForObsled", this, DataSourceListBuffer);
                         RightDiag = DataSourceList;
                     }
-                   // MessageBus.Default.Call("SetDiagnosisList", this, DataSourceListBuffer);
+                    // MessageBus.Default.Call("SetDiagnosisList", this, DataSourceListBuffer);
                     Controller.NavigateTo<ViewModelAddPhysical>();
                 }
             );
@@ -188,9 +219,9 @@ namespace WpfApp2.ViewModels
                         LeftDiag.Add(new DiagnosisDataSource(DiagnosisType));
                         RightDiag.Add(new DiagnosisDataSource(DiagnosisType));
                     }
-                    foreach(var DiagnosisType in DataSourceListbuf)
+                    foreach (var DiagnosisType in DataSourceListbuf)
                     {
-                        if(DiagnosisType.IsChecked.Value)
+                        if (DiagnosisType.IsChecked.Value)
                         {
                             DataSourceList.Where(s => s.Data.Id == DiagnosisType.Data.Id).ToList()[0].IsChecked = true;
                         }

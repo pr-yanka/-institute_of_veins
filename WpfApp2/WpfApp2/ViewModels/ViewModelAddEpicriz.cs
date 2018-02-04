@@ -12,40 +12,52 @@ using Xceed.Words.NET;
 
 namespace WpfApp2.ViewModels
 {
-    public struct Docs
-    {
-        public Doctor doc;
-        public Docs(Doctor doc)
-        {
-            this.doc = doc;
-        }
-        public override string ToString()
-        {
-            string initials = " " + doc.Name.ToCharArray()[0].ToString() + ". " + doc.Patronimic.ToCharArray()[0].ToString() + ".";
-            return doc.Sirname + initials;
-        }
-    }
-    public class ViewModelCreateStatement : ViewModelBase
+    //public struct docs
+    //{
+    //    public Doctor doc;
+    //    public docs(Doctor doc)
+    //    {
+    //        this.doc = doc;
+    //    }
+    //    public override string ToString()
+    //    {
+    //        string initials = " " + doc.Name.ToCharArray()[0].ToString() + ". " + doc.Patronimic.ToCharArray()[0].ToString() + ".";
+    //        return doc.Sirname + initials;
+    //    }
+    //}
+    public class ViewModelAddEpicriz : ViewModelBase
     {
 
-        public List<string> LeftOrRight { get; set; }
+        public float E1 { get; set; }
+        public float E2 { get; set; }
+        public string Антикоагулянты { get; set; }
+
+        public string FullScrelizovanie { get; set; }
+        public string Svetoootvod { get; set; }
         public float days { get; set; }
 
         public List<Docs> Doctors { get; set; }
 
         public int SelectedDoctor { get; set; }
 
-        public int SelectedLeg { get; set; }
+
 
         public Operation Operation { get; set; }
         public DateTime Date { get; set; }
-        public string OperationType { get; set; }
+        public string operationType { get; set; }
         public Patient CurrentPatient;
         private int operationId;
+        public List<DoctorDataSource> DoctorsSelected;
 
         private void GetOperationid(object sender, object data)
         {
-            SelectedLeg = 0;
+            days = 0.0f;
+            Svetoootvod = "";
+            Антикоагулянты = "";
+            FullScrelizovanie = "";
+            E1 = 0.0f;
+            E2 = 0.0f;
+            DoctorsSelected = (List<DoctorDataSource>)sender;
             Doctors = new List<Docs>();
             Operation = Data.Operation.Get((int)data);
             operationId = (int)data;
@@ -53,7 +65,7 @@ namespace WpfApp2.ViewModels
 
             Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
             Date = Operation.Date;
-            OperationType = Data.OperationType.Get(Operation.OperationTypeId).LongName;
+            operationType = Data.OperationType.Get(Operation.OperationTypeId).LongName;
             //TextResultCancle = "Итоги операции"; 
             using (var context = new MySqlContext())
             {
@@ -72,43 +84,49 @@ namespace WpfApp2.ViewModels
             }
         }
 
-        public ViewModelCreateStatement(NavigationController controller) : base(controller)
+        public ViewModelAddEpicriz(NavigationController controller) : base(controller)
         {
-            LeftOrRight = new List<string>();
-            LeftOrRight.Add("Правая нога");
-            LeftOrRight.Add("Левая нога");
 
-            MessageBus.Default.Subscribe("GetOperationResultForCreateStatement", GetOperationid);
+
+            MessageBus.Default.Subscribe("GetOperationIDForAddEpicriz", GetOperationid);
             HasNavigation = false;
-            
+
             ToCreateStatementCommand = new DelegateCommand(
                 () =>
                 {
                     //doc_templates docTemp = new doc_templates();
-                    //byte[] bte = File.ReadAllBytes(@"Выписка_заготовка.docx");
+                    //byte[] bte = File.ReadAllBytes(@"Предоперационный_эпикриз_ЛЕВАЯ.docx");
                     //docTemp.DocTemplate = bte;
                     //Data.doc_template.Add(docTemp);
                     //Data.Complete();
+
+
+
+
+
+
+                    
+
                     int togle = 0;
-                    // string fileName = System.IO.Path.GetTeWmpPath() + Guid.NewGuid().ToString() + ".docx";
-                    string fileName = System.IO.Path.GetTempPath() + "Выписка_заготовка.docx";
-                    byte[] bte = Data.doc_template.Get(1).DocTemplate;
-                    //File.WriteAllBytes(fileName, bte);
+
+                    string fileName = System.IO.Path.GetTempPath() + "Предоперационный_эпикриз_ЛЕВАЯ.docx";
+                    byte[] bte = Data.doc_template.Get(2).DocTemplate;
+
                     for (; ; )
                     {
                         try
                         {
                             if (togle == 0)
-                                File.WriteAllBytes(System.IO.Path.GetTempPath() + "Выписка_заготовка.docx", bte);
+                                File.WriteAllBytes(System.IO.Path.GetTempPath() + "Предоперационный_эпикриз_ЛЕВАЯ.docx", bte);
                             else
-                                File.WriteAllBytes(System.IO.Path.GetTempPath() + "Выписка_заготовка" + togle + ".docx", bte);
+                                File.WriteAllBytes(System.IO.Path.GetTempPath() + "Предоперационный_эпикриз_ЛЕВАЯ" + togle + ".docx", bte);
 
                             break;
                         }
                         catch
                         {
                             togle += 1;
-                            fileName = System.IO.Path.GetTempPath() + "Выписка_заготовка" + togle + ".docx";
+                            fileName = System.IO.Path.GetTempPath() + "Предоперационный_эпикриз_ЛЕВАЯ" + togle + ".docx";
                         }
                     }
 
@@ -118,49 +136,8 @@ namespace WpfApp2.ViewModels
 
 
                         document.ReplaceText("ФИО", CurrentPatient.Sirname + " " + CurrentPatient.Name + " " + CurrentPatient.Patronimic);
-                        string day1 = "0";
-                        string day2 = "0";
-                        string mnth1 = "0";
-                        string mnth2 = "0";
-                        string year1 = CurrentPatient.Birthday.Year.ToString();
-                        string year2 = CurrentPatient.Birthday.Year.ToString();
-                        if (CurrentPatient.Birthday.Day.ToString().ToCharArray().Length == 1)
-                        {
-                            day1 = "0";
-                            day2 = CurrentPatient.Birthday.Day.ToString().ToCharArray()[0].ToString();
-                        }
-                        else
-                        {
-                            day1 = CurrentPatient.Birthday.Day.ToString().ToCharArray()[0].ToString();
-                            day2 = CurrentPatient.Birthday.Day.ToString().ToCharArray()[1].ToString();
-                        }//«сутки»
-                        if (CurrentPatient.Birthday.Month.ToString().ToCharArray().Length == 1)
-                        {
-                            mnth1 = "0";
-                            mnth2 = CurrentPatient.Birthday.Month.ToString().ToCharArray()[0].ToString();
-                        }
-                        else
-                        {
-                            mnth1 = CurrentPatient.Birthday.Month.ToString().ToCharArray()[0].ToString();
-                            mnth2 = CurrentPatient.Birthday.Month.ToString().ToCharArray()[1].ToString();
-                        }
-                        try
-                        {
-                            year1 = CurrentPatient.Birthday.Year.ToString().ToCharArray()[2].ToString();
-                            year2 = CurrentPatient.Birthday.Year.ToString().ToCharArray()[3].ToString();
-                            document.ReplaceText("Г1", year1);
-                            document.ReplaceText("Г2", year2);
-                        }
-                        catch
-                        {
-                            document.ReplaceText("Г1", CurrentPatient.Birthday.Year.ToString());
+                        document.ReplaceText("Возраст", CurrentPatient.Age.ToString());
 
-                        }
-
-                        document.ReplaceText("Ч1", day1);
-                        document.ReplaceText("Ч2", day2);
-                        document.ReplaceText("М1", mnth1);
-                        document.ReplaceText("М2", mnth2);
 
                         document.ReplaceText("область", "область " + Data.Regions.Get(CurrentPatient.Region).Str);
                         if (CurrentPatient.District != null)
@@ -243,26 +220,9 @@ namespace WpfApp2.ViewModels
 
                         }
 
+                        document.ReplaceText("«Заключение_слева»", lettersLeft);
 
-                        if (SelectedLeg == 0)
-                        {
-                            document.ReplaceText("«Заключение_1»", "«Заключение_справа»");
-
-                            document.ReplaceText("«Заключение_2»", "«Заключение_слева»");
-
-                            document.ReplaceText("буквы_1", lettersRight);
-                            document.ReplaceText("буквы_2", lettersLeft);
-                            //буквы_1
-                            //буквы_2
-                        }
-                        else
-                        {
-                            document.ReplaceText("«Заключение_1»", "«Заключение_слева»");
-                            document.ReplaceText("«Заключение_2»", "«Заключение_справа»");
-                            document.ReplaceText("буквы_1", lettersLeft);
-                            document.ReplaceText("буквы_2", lettersRight);
-
-                        }
+                        document.ReplaceText("«Заключение_справа»", lettersRight);
 
                         document.ReplaceText("«Дата_операции»", Operation.Date.Day.ToString() + "." + Operation.Date.Month.ToString() + "." + Operation.Date.Year.ToString());
 
@@ -271,17 +231,35 @@ namespace WpfApp2.ViewModels
                         else
                             document.ReplaceText("«Операция2»", Data.OperationType.Get(Operation.OperationTypeId).LongName);
 
+                        document.ReplaceText("«Анестетик»", Data.Anestethic.Get(Operation.AnestheticId).Str);
+                        document.ReplaceText("«Антикоагулянты»", Антикоагулянты);
+                        document.ReplaceText("«E1»", E1.ToString());
+                        document.ReplaceText("«E2»", E2.ToString());
+                        document.ReplaceText("«световод»", Svetoootvod);
+                        string brigade = "";
+                        foreach (var brg in DoctorsSelected)
+                        {
+                            brigade += "«" + brg.Surname + " " + brg.initials + "»";
+                        }
+                        document.ReplaceText("«Бригада»", brigade);
+
 
                         document.ReplaceText("«сутки»", days.ToString());
-                        document.ReplaceText("сегодняшнеечисломесяц", DateTime.Now.Day.ToString() + "." + DateTime.Now.Month.ToString());
-                        document.ReplaceText("«год»", DateTime.Now.Year.ToString());
                         document.ReplaceText("«Врач»", Doctors[SelectedDoctor].ToString());
+                        document.ReplaceText("«PNS»", FullScrelizovanie);
+
+                        if (!string.IsNullOrWhiteSpace(Data.OperationType.Get(Operation.OperationTypeId).ShortName))
+                            document.ReplaceText("«Минифлебэктомия»", Data.OperationType.Get(Operation.OperationTypeId).ShortName);
+                        else
+                            document.ReplaceText("«Минифлебэктомия»", Data.OperationType.Get(Operation.OperationTypeId).LongName);
+
+
 
                         //область
 
                         document.Save();
                         //Release this document from memory.
-                        Process.Start("WINWORD.EXE",  fileName);
+                        Process.Start("WINWORD.EXE", fileName);
                     }
 
                     //MessageBus.Default.Call("GetOperationResultForCreateStatement", this, operationId);
