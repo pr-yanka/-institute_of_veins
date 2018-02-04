@@ -2,82 +2,70 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                     xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
-
-
                     xmlns:local="clr-namespace:WpfApp2.Templates">
    
     <DataTemplate x:Key="TemplateNewPatient">
         <Grid Margin="227,67,0,0" >
-            <Grid.Background>
-            <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
-                <LinearGradientBrush.GradientStops>
-                    <GradientStop Color="White" Offset="0.3" />
-                    <GradientStop Color="Azure" Offset=".8" />
-                </LinearGradientBrush.GradientStops>
-            </LinearGradientBrush>
-        </Grid.Background>
-
-            <TextBlock FontFamily="/fonts/#Pescadero" Width="Auto" FontSize="18pt" Margin="227,5,200,200" Height="Auto" Text="{Binding Path=TextHeader}"/>
-
+            <TextBlock FontFamily="/fonts/#Pescadero" Width="Auto" FontSize="18pt" HorizontalAlignment="Center" VerticalAlignment="Top" Height="Auto"  Text="{Binding Path=TextHeader}"/>
             <Button x:Name="button" Visibility="Hidden" Content="Загрузить данные из регистратуры" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" Width="740" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy3" Visibility="{Binding Path=Visibility}" Content="Сбросить" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="24,451,0,0" VerticalAlignment="Top" Width="336" Height="43" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy4" Content="{Binding Path=nameOfButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="395,451,0,0" VerticalAlignment="Top" Width="336" Height="43" Background="#FFBDD649" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-        <Grid HorizontalAlignment="Left" Height="363" Margin="24,90,0,0" VerticalAlignment="Top" Width="707">
+            <Button x:Name="button_Copy3" Visibility="{Binding Path=Visibility}" Content="Сбросить" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="49,512,0,0" VerticalAlignment="Top" Width="307" Height="43" Background="White" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Button x:Name="button_Copy4" Content="{Binding Path=nameOfButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="376,512,0,0" VerticalAlignment="Top" Width="307" Height="43" Background="White" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Grid HorizontalAlignment="Left" Height="417" Margin="24,90,0,0" VerticalAlignment="Top" Width="693">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="186*"/>
-                <ColumnDefinition Width="521*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="25*"/>
-                <RowDefinition Height="30*"/>
-                <RowDefinition Height="28*"/>
-                <RowDefinition Height="27*"/>
-                <RowDefinition Height="28*"/>
-                <RowDefinition Height="27*"/>
-                <RowDefinition Height="29*"/>
-                <RowDefinition Height="26*"/>
-                <RowDefinition Height="27*"/>
-                <RowDefinition Height="22*"/>
-                <RowDefinition Height="26*"/>
-                <RowDefinition Height="18*"/>
-            </Grid.RowDefinitions>
-            
-            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="61,4,0,0" TextWrapping="Wrap" Text="Имя" VerticalAlignment="Top" FontSize="16"/>
-            <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="49,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Grid.Row="1" Text="Фамилия" Grid.RowSpan="2"/>
-            <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="49,7,0,0" TextWrapping="Wrap" Text="Отчество" VerticalAlignment="Top" FontSize="16" Grid.Row="2"/>
-            <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Margin="19,6,0,0" TextWrapping="Wrap" Text="Дата рождения" VerticalAlignment="Top" FontSize="16" Grid.Row="3" Width="144"/>
-            <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="61,5,0,0" TextWrapping="Wrap" Text="Пол" VerticalAlignment="Top" FontSize="16" Grid.Row="4"/>
-            <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="10,3,0,0" TextWrapping="Wrap" Text="Адрес проживания" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Width="166" Grid.RowSpan="3"/>
-                <TextBlock x:Name="textBlock_Copys4" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap" Text="Область" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Grid.Column="2" Width="166" Grid.RowSpan="3"/>
-                <TextBlock x:Name="textBlock_Copys34" HorizontalAlignment="Left" Margin="105,3,0,0" TextWrapping="Wrap" Text="Город" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Grid.Column="3" Width="166" Grid.RowSpan="3"/>
-                <TextBlock x:Name="textBlock_Copаys34" HorizontalAlignment="Left" Margin="215,3,0,0" TextWrapping="Wrap" Text="Район" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Grid.Column="3" Width="166" Grid.RowSpan="3"/>
-                <TextBlock x:Name="textBlock_Copyаs34" HorizontalAlignment="Left" Margin="325,3,0,0" TextWrapping="Wrap" Text="Улица" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Grid.Column="3" Width="166" Grid.RowSpan="3"/>
-                <TextBlock x:Name="textBlock_Copyаs344" HorizontalAlignment="Left" Margin="0,63,0,0" TextWrapping="Wrap" Text="Дом" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Grid.Column="3" Width="166" Grid.RowSpan="3"/>
-                <TextBlock x:Name="textBlock_Copyаs345" HorizontalAlignment="Left" Margin="106,63,0,0" TextWrapping="Wrap" Text="Квартира" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Grid.Column="1" Width="166" Grid.RowSpan="3"/>
+                    <ColumnDefinition Width="521*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25*"/>
+                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="28*"/>
+                    <RowDefinition Height="27*"/>
+                    <RowDefinition Height="28*"/>
+                    <RowDefinition Height="27*"/>
+                    <RowDefinition Height="29*"/>
+                    <RowDefinition Height="26*"/>
+                    <RowDefinition Height="27*"/>
+                    <RowDefinition Height="22*"/>
+                    <RowDefinition Height="26*"/>
+                    <RowDefinition Height="18*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="61,4,0,0" TextWrapping="Wrap" Text="Имя" VerticalAlignment="Top" FontSize="16"/>
+                <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="49,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Grid.Row="1" Text="Фамилия" Grid.RowSpan="2"/>
+                <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="49,7,0,0" TextWrapping="Wrap" Text="Отчество" VerticalAlignment="Top" FontSize="16" Grid.Row="2"/>
+                <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Margin="19,6,0,0" TextWrapping="Wrap" Text="Дата рождения" VerticalAlignment="Top" FontSize="16" Grid.Row="3" Width="144"/>
+                <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="61,5,0,0" TextWrapping="Wrap" Text="Пол" VerticalAlignment="Top" FontSize="16" Grid.Row="4"/>
+                <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="10,3,0,0" TextWrapping="Wrap" Text="Адрес проживания" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Width="166" Grid.RowSpan="3"/>
+                <TextBlock x:Name="textBlock_Copys4" HorizontalAlignment="Left" Margin="22,3,0,0" TextWrapping="Wrap" Text="Область" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Grid.Column="1" Width="68"/>
+                <TextBlock x:Name="textBlock_Copys34" HorizontalAlignment="Left" Margin="135,3,0,0" TextWrapping="Wrap" Text="Город" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Grid.Column="1" Width="56" RenderTransformOrigin="0.5,0.5"/>
+                <TextBlock x:Name="textBlock_Copаys34" HorizontalAlignment="Left" Margin="242,3,0,0" TextWrapping="Wrap" Text="Район" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Grid.Column="1" Width="52"/>
+                <TextBlock x:Name="textBlock_Copyаs34" HorizontalAlignment="Left" Margin="352,3,0,0" TextWrapping="Wrap" Text="Улица" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Grid.Column="1" Width="56"/>
+                <TextBlock x:Name="textBlock_Copyаs344" HorizontalAlignment="Left" Margin="33,3,0,0" TextWrapping="Wrap" Text="Дом" VerticalAlignment="Top" FontSize="16" Grid.Row="7" Grid.Column="1" Width="47"/>
+                <TextBlock x:Name="textBlock_Copyаs345" HorizontalAlignment="Left" Margin="126,3,0,0" TextWrapping="Wrap" Text="Квартира" VerticalAlignment="Top" FontSize="16" Grid.Row="7" Grid.Column="1" Width="79"/>
 
                 <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="49,3,0,0" TextWrapping="Wrap" Text="Телефон" VerticalAlignment="Top" FontSize="16" Grid.Row="9" Width="104"/>
-            <TextBlock x:Name="textBlock_Copy6" HorizontalAlignment="Left" Margin="61,10,0,0" TextWrapping="Wrap" Text="email" VerticalAlignment="Top"   FontSize="16" Grid.Row="10" Width="83"/>
+                <TextBlock x:Name="textBlock_Copy6" HorizontalAlignment="Left" Margin="61,10,0,0" TextWrapping="Wrap" Text="email" VerticalAlignment="Top"   FontSize="16" Grid.Row="10" Width="83"/>
 
-                <TextBox  BorderBrush="{Binding Path=TextBoxNameB}"  x:Name="textBox" Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Width="511">
+                <TextBox  BorderBrush="{Binding Path=TextBoxNameB}"  x:Name="textBox" Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Width="425">
                     <TextBox.InputBindings>
                         <KeyBinding Command="{Binding Path=Changed}"/>
                     </TextBox.InputBindings>
                 </TextBox>
-                <TextBox BorderBrush="{Binding Path=TextBoxSurnameB}" x:Name="textBox_Copy" Text="{Binding Path=Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="511" Grid.Row="1">
+                <TextBox BorderBrush="{Binding Path=TextBoxSurnameB}" x:Name="textBox_Copy" Text="{Binding Path=Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="425" Grid.Row="1">
                     <TextBox.InputBindings>
                         <KeyBinding Command="{Binding Path=Changed}"/>
                     </TextBox.InputBindings>
                 </TextBox>
-                <TextBox BorderBrush="{Binding Path=TextBoxPatronimicB}" x:Name="textBox_Copy1"  Text="{Binding Path=Patronimic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="28" Margin="0,28,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="511" Grid.Row="1" Grid.RowSpan="2">
+                <TextBox BorderBrush="{Binding Path=TextBoxPatronimicB}" x:Name="textBox_Copy1"  Text="{Binding Path=Patronimic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="425" Grid.Row="2">
                     <TextBox.InputBindings>
 
                         <KeyBinding Command="{Binding Path=Changed}"/>
                     </TextBox.InputBindings>
                 </TextBox>
-                <DatePicker x:Name="comboBox" SelectedDate="{Binding Path=Date}" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" Width="106" Height="27"/>
-                <ComboBox x:Name="comboBox_Copy1" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top" Width="106" Height="27" Margin="0,1,0,0" SelectedIndex="{Binding Path=GenderTypeNumber}" >
-                  <TextBlock>М</TextBlock>
-                  <TextBlock>Ж</TextBlock>
+                <DatePicker x:Name="comboBox" SelectedDate="{Binding Path=Date}" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" Width="206" Height="27"/>
+                <ComboBox x:Name="comboBox_Copy1" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top" Width="205" Height="27" Margin="0,1,0,0" SelectedIndex="{Binding Path=GenderTypeNumber}" >
+                    <TextBlock>М</TextBlock>
+                    <TextBlock>Ж</TextBlock>
                 </ComboBox>
                 <controls:AutoCompleteBox Text="{Binding Path=Region, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                       ItemsSource="{Binding Path=RegionList}"  MaxDropDownHeight="260"  
@@ -85,7 +73,7 @@
                     <controls:AutoCompleteBox.InputBindings>
                         <KeyBinding Command="{Binding Path=Changed}"/>
                     </controls:AutoCompleteBox.InputBindings>
-              </controls:AutoCompleteBox>
+                </controls:AutoCompleteBox>
                 <controls:AutoCompleteBox Text="{Binding Path=Town, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                       ItemsSource="{Binding Path=TownsList}"  MaxDropDownHeight="260"            BorderBrush="{Binding Path=TextBoxCityB}" x:Name="textBox_Copy31" Grid.Column="1" HorizontalAlignment="Left" Height="28"  VerticalAlignment="Top" Width="100" Grid.Row="6" Margin="105,0,0,0" Grid.RowSpan="2">
                     <controls:AutoCompleteBox.InputBindings>
@@ -120,13 +108,13 @@
                     </TextBox.InputBindings>
                 </TextBox>
 
-                <TextBox Text="{Binding Path=email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  BorderBrush="{Binding Path=TextBoxEmailB}"  x:Name="textBox_Copy4" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="511" Grid.Row="9" Margin="0,37,0,0" Grid.RowSpan="2">
+                <TextBox Text="{Binding Path=email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  BorderBrush="{Binding Path=TextBoxEmailB}"  x:Name="textBox_Copy4" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="425" Grid.Row="10" Margin="0,8,0,0" Grid.RowSpan="2">
                     <TextBox.InputBindings>
 
                         <KeyBinding Command="{Binding Path=Changed}"/>
                     </TextBox.InputBindings>
                 </TextBox>
-                <TextBox Text="{Binding Path=Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  BorderBrush="{Binding Path=TextBoxPhoneB}"   x:Name="textBox_Copy5" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="511" Grid.Row="9">
+                <TextBox Text="{Binding Path=Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  BorderBrush="{Binding Path=TextBoxPhoneB}"   x:Name="textBox_Copy5" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="425" Grid.Row="9">
                     <TextBox.InputBindings>
 
                         <KeyBinding Command="{Binding Path=Changed}"/>

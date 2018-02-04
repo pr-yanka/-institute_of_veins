@@ -50,8 +50,7 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
                 </PasswordBox>
-                <Image Source="{Binding ImageSource}" Margin="120,0,0,0" Visibility="Visible"  Height="30" HorizontalAlignment="Left" Name="ImgShowHide" Stretch="Fill" VerticalAlignment="Top" Width="30" Grid.Row="1"   Grid.Column="1" 
-              >
+                <Image Source="{Binding ImageSource}" Margin="120,0,0,0" Visibility="Visible"  Height="30" HorizontalAlignment="Left" Name="ImgShowHide" Stretch="Fill" VerticalAlignment="Top" Width="30" Grid.Row="1"   Grid.Column="1" >
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="PreviewMouseDown">
                             <i:InvokeCommandAction  Command="{Binding Path=ShowPassword}" CommandParameter="{Binding ElementName=passwordBox1}"/>
