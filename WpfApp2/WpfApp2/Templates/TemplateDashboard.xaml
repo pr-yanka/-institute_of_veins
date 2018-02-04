@@ -3,16 +3,15 @@
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplateDashboard">
         <Grid Name="RootGrid">
-            
-            <TextBlock  FontSize="24" Margin="273,93,-273,589" Height="38" Foreground="#FFA81E1E"><Run Text="Здравствуйте, "/><TextBlock Text="{Binding AccauntName}"></TextBlock></TextBlock>
+            <TextBlock TextAlignment="Center" FontSize="24" Margin="273,98,144,569" Height="38" Foreground="#FF13283E"><Run Text="Здравствуйте, "/><TextBlock Text="{Binding AccauntName}"></TextBlock></TextBlock>
 
-            <Label FontFamily="Source Sans Pro" x:Name="label" Content="        Ваша следущая операция назначена на 14:30" Margin="273,150,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.338,0.401" Height="31" Background="#FFFFF0F0" HorizontalAlignment="Left" Width="607" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" FontSize="14" />
-            <Label Target="{Binding ElementName=TextArea}" Margin="592,150,231,353" FontFamily="Segoe UI Light" FontSize="14">
+            <Label FontFamily="Source Sans Pro" x:Name="label" Content="   Ваша следущая операция назначена на 14:30" Margin="273,141,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.338,0.401" Height="40" Background="#FFFFF0F0" HorizontalAlignment="Left" Width="607" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" FontSize="20" />
+            <Label Target="{Binding ElementName=TextArea}" Margin="758,140,144,524" FontFamily="Segoe UI Light" FontSize="18">
                 <Hyperlink Command="{Binding Path=ToOperationOverviewCommand}">
                     (подробнее)
                 </Hyperlink>
             </Label>
-            <Image Margin="0,50,685,430" Source="pack://application:,,,/Images/alert.png" MaxHeight="25"/>
+            <Image Margin="131,150,849,510" Source="pack://application:,,,/Images/alert.png" MaxHeight="25"/>
             <Button x:Name="buttonToPatients" Command="{Binding ToTablePatientsCommand}" HorizontalAlignment="Left" Margin="601,222,0,0" VerticalAlignment="Top" Width="227" Height="153" Background="#FFDDF2F3" FontFamily="Segoe UI Symbol" FontSize="16" BorderBrush="{x:Null}" Foreground="#FF686868" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" UseLayoutRounding="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" FontStretch="Condensed">
                 <Image Margin="0,22,0,61" Source="pack://application:,,,/Images/patient.png" Stretch="Fill" Width="60" Height="60"/>
             </Button>
@@ -31,6 +30,7 @@
             <TextBlock FontSize="14" FontFamily="Source Sans Pro" HorizontalAlignment="Left" Margin="359,521,0,0" TextWrapping="Wrap" Text="ПОСМОТРЕТЬ ОБСЛЕДОВАНИЯ" VerticalAlignment="Top" Width="188" Height="47" TextAlignment="Center" Foreground="#FF404040"/>
             <TextBlock FontFamily="Source Sans Pro" HorizontalAlignment="Left" Margin="627,521,0,0" TextWrapping="Wrap" Text="ПОСМОТРЕТЬ ОПЕРАЦИИ" VerticalAlignment="Top" Width="188" Height="47" TextAlignment="Center" FontSize="14" Foreground="#FF404040"/>
             <TextBlock FontFamily="Source Sans Pro" HorizontalAlignment="Left" Margin="359,319,0,0" TextWrapping="Wrap" Text="ОБСЛЕДОВАНИЕ НОВОГО ПАЦИЕНТА" VerticalAlignment="Top" Width="188" Height="47" TextAlignment="Center" FontSize="14" Foreground="#FF404040"/>
+
         </Grid>
     </DataTemplate>
 </ResourceDictionary>
