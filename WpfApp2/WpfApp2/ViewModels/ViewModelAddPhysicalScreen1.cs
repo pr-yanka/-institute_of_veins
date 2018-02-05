@@ -1735,6 +1735,7 @@ namespace WpfApp2.ViewModels
             { LeftDiagnosisList.Add(diag); }
 
         }
+        int docsCreated = 0;
         private void CreateStatement(string docName)
         {
             using (DocX document = DocX.Create(docName))
@@ -1988,7 +1989,7 @@ namespace WpfApp2.ViewModels
             return p4;
 
         }
-
+        int togleforCreateStatement = 0;
         public ViewModelAddPhysical(NavigationController controller) : base(controller)
         {
             CurrentPanelViewModel = new DoctorSelectPanelViewModel(this);
@@ -2454,9 +2455,13 @@ namespace WpfApp2.ViewModels
                 {
                     if (TestAllFIelds())
                     {
-                        int togle = 0;
+                        string docName = "";
                         //string docName = "Консультативное_заключение";
-                        string docName = System.IO.Path.GetTempPath() + "Консультативное_заключение" + ".docx";
+                        if (togleforCreateStatement == 0)
+                            docName = System.IO.Path.GetTempPath() + "Консультативное_заключение" + ".docx";
+                        else
+                            docName = System.IO.Path.GetTempPath() + "Консультативное_заключение" + togleforCreateStatement + ".docx";
+
                         for (; ; )
                         {
                             try
@@ -2464,12 +2469,17 @@ namespace WpfApp2.ViewModels
 
                                 CreateStatement(docName);
 
+
+                                togleforCreateStatement += 1;
+                                docName = System.IO.Path.GetTempPath() + "Консультативное_заключение" + togleforCreateStatement + ".docx";
+
+
                                 break;
                             }
-                            catch
+                            catch (Exception ex)
                             {
-                                togle += 1;
-                                docName = System.IO.Path.GetTempPath() + "Консультативное_заключение" + togle + ".docx";
+                                togleforCreateStatement += 1;
+                                docName = System.IO.Path.GetTempPath() + "Консультативное_заключение" + togleforCreateStatement + ".docx";
                             }
                         }
 
@@ -4954,7 +4964,7 @@ namespace WpfApp2.ViewModels
 
                 MessageBus.Default.Call("SetDComplanesListBecauseOFEdit", this, ComplainsList);
 
-                
+
                 //leftLegExams.additionalText = LeftAdditionalText;
                 //if (LeftCEAR.LegSections[0].SelectedValue != null)
                 //    leftLegExams.C = LeftCEAR.LegSections[0].SelectedValue.Id;
