@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Microsoft.Practices.Prism.Commands;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
@@ -18,8 +19,24 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToPhysicalTableCommand { get; protected set; }
         public DelegateCommand ToTablePatientsCommand { get; protected set; }
         public DelegateCommand ToMainMenuCommand { get; protected set; }
+        public Visibility PanelAdminVisibility { get; protected set; }
+        public Visibility CalendarOperationVisibility { get; protected set; }
+        // 
+        private void SetVisibilityPanelAdmin(object sender, object data)
+        {
+            PanelAdminVisibility = (Visibility)data;
+        }
+        private void SetVisibilityForDocsOrMed(object sender, object data)
+        {
+            CalendarOperationVisibility = (Visibility)data;
+        }
+
+
+
         public ViewModelFullMenu(NavigationController controller) : base(controller)
         {
+            MessageBus.Default.Subscribe("SetVisibilityPanelAdmin", SetVisibilityPanelAdmin);
+            MessageBus.Default.Subscribe("SetVisibilityForDocsOrMed", SetVisibilityForDocsOrMed);
             base.HasNavigation = false;
             ToMainMenuCommand = new DelegateCommand(
                 () =>
@@ -47,8 +64,8 @@ namespace WpfApp2.ViewModels
             ToTablePatientsCommand = new DelegateCommand(
                 () =>
                 {
-                    
-                    MessageBus.Default.Call("UpdateTableOfPatients", this,controller);
+
+                    MessageBus.Default.Call("UpdateTableOfPatients", this, controller);
                     Controller.NavigateTo<ViewModelTablePatients>();
                 });
             ToAdminPanelCommand = new DelegateCommand(

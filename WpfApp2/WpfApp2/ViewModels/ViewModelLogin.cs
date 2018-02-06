@@ -16,7 +16,7 @@ namespace WpfApp2.ViewModels
         //private string Password { get; set; }
 
         public string Name { get; set; }
-     
+
 
         public DelegateCommand ToRegistrationCommand { get; protected set; }
         public DelegateCommand<object> ToDashboardCommand { get; protected set; }
@@ -35,42 +35,62 @@ namespace WpfApp2.ViewModels
                 }
             );
 
-      
+
 
             ToDashboardCommand = new DelegateCommand<object>(
                 (sender) =>
                 {
-                    string  CheckSum = CalculateMD5Hash(((PasswordBox)sender).Password);
+                    string CheckSum = CalculateMD5Hash(((PasswordBox)sender).Password);
                     sender = null;
                     bool isUeserNameCorrect = false;
-                   
+
                     foreach (var acc in Data.Accaunt.GetAll)
                     {
-                    if (Name == acc.Name && acc.isEnabled == true)
+                        if (Name == acc.Name && acc.isEnabled == true)
                         {
                             isUeserNameCorrect = true;
                             if (CheckSum == acc.Password)
                             {
-                                MessageBus.Default.Call("GetAcaunt",this, acc.Id);
+                                MessageBus.Default.Call("GetAcaunt", this, acc.Id);
                                 Controller.NavigateTo<ViewModelDashboard>();
-                               
-                               
+
+
+
+                                if ((acc.isDoctor != null && acc.isDoctor.Value) || (acc.isMedPersonal != null && acc.isMedPersonal.Value))
+                                {
+                                    MessageBus.Default.Call("SetVisibilityPanelAdmin", this, Visibility.Collapsed);
+                                    MessageBus.Default.Call("SetVisibilityForDocsOrMed", this, Visibility.Visible);
+                                    MessageBus.Default.Call("SetCurrentACCOp", this, acc.Id);
+                                }
+                                else if (acc.isAdmin != null && acc.isAdmin.Value)
+                                {
+                                    MessageBus.Default.Call("SetVisibilityPanelAdmin", this, Visibility.Visible);
+                                    MessageBus.Default.Call("SetVisibilityForDocsOrMed", this, Visibility.Collapsed);
+                                }
+                                else
+                                {
+                                    MessageBus.Default.Call("SetVisibilityPanelAdmin", this, Visibility.Collapsed);
+                                    MessageBus.Default.Call("SetVisibilityForDocsOrMed", this, Visibility.Collapsed);
+
+                                }
+
+
                             }
                             else
                             { MessageBox.Show("Неправильный логин или пароль"); }
                             break;
                         }
-                        
+
                     }
-                    if(!isUeserNameCorrect)
+                    if (!isUeserNameCorrect)
                     {
                         MessageBox.Show("Неправильный логин или пароль");
                     }
-                    
+
                 }
             );
         }
-       
+
         public string CalculateMD5Hash(string input)
 
         {

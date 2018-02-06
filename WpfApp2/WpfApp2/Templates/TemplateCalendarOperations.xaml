@@ -3,20 +3,35 @@
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplateCalendarOperations">
         <Grid Margin="220,80,0,0">
-            <TextBlock HorizontalAlignment="Center" Margin="10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Text="Календарь операций" FontSize="20" Foreground="#FF210A0A" Background="#FF899FCD" Width="897"/>
-            <CheckBox Content="сортировать по дате&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" FontSize="16" Height="24" Width="185"/>
-            <CheckBox Content="только мои операции&#xD;&#xA;" HorizontalAlignment="Left" Margin="195,41,0,0" VerticalAlignment="Top" FontSize="16" Height="24" Width="243"/>
-            <DataGrid HorizontalAlignment="Left" Height="428" Margin="10,70,0,0" VerticalAlignment="Top" Width="897" Background="#FFECEFF5">
-                <DataGrid.Columns>
-                    <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Дата" MinWidth="200"/>
-                    <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Время"/>
-                    <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Пациент" MinWidth="200"/>
-                    <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" MinWidth="200" Header="Вид операции"/>
-                    <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Анестезик"/>
+            <TextBlock HorizontalAlignment="Center" Margin="66,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Text="Календарь операций" FontSize="20" Width="auto"/>
+            <CheckBox Content="сортировать по дате&#xD;&#xA;" IsChecked="{Binding IsSortByData}" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" FontSize="16" Height="24" Width="185"/>
+
+            <CheckBox Content="Показать проведённые операции&#xD;&#xA;" IsChecked="{Binding IsCompletedOp}" HorizontalAlignment="Left" Margin="195,41,0,0" VerticalAlignment="Top" FontSize="16" Height="24" Width="243"/>
+
+            <DataGrid  IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="428" Margin="10,70,0,0" VerticalAlignment="Top" Width="745" >
+                <DataGrid.Columns  >
+                    <DataGridTextColumn Binding="{Binding Path=Date}" ClipboardContentBinding="{x:Null}" Header="Дата" Width="auto"/>
+                    <DataGridTextColumn Binding="{Binding Path=Time}" ClipboardContentBinding="{x:Null}" Header="Время"  Width="auto"/>
+                    <DataGridTextColumn Binding="{Binding Path=Patient}" ClipboardContentBinding="{x:Null}" Header="Пациент"  Width="auto"/>
+                    <DataGridTextColumn Binding="{Binding Path=OpType}" ClipboardContentBinding="{x:Null}"  Width="auto" Header="Вид операции"/>
+                    <DataGridTextColumn Binding="{Binding Path=Anestetic}" ClipboardContentBinding="{x:Null}" Header="Анестезик" Width="auto"/>
+                    <DataGridTemplateColumn Header="" > 
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate >
+                                <Grid>
+                                    <Button Command="{Binding Path=ToOperation}" HorizontalAlignment="Left"   Width="30" Height="30"  MaxWidth="30" MaxHeight="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}" >
+                                        <Image Source="pack://application:,,,/Images/forward.png" ></Image>
+                                    </Button>
+                                </Grid>
+                               
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
+
             <TextBlock HorizontalAlignment="Left" Margin="424,41,0,0" TextWrapping="Wrap" Text="Показать операции:" VerticalAlignment="Top" FontSize="16" Width="159"/>
-            <ComboBox HorizontalAlignment="Left" Margin="588,41,0,0" VerticalAlignment="Top" Width="319">
+            <ComboBox HorizontalAlignment="Left" Margin="588,41,0,0" VerticalAlignment="Top" Width="169">
                 <ComboBoxItem Content="на сегодня"/>
                 <ComboBoxItem Content="на ближайшие три дня"/>
                 <ComboBoxItem Content="на ближайшую неделю"/>
