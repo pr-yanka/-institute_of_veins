@@ -478,6 +478,7 @@ namespace WpfApp2.ViewModels
                             Data.Complete();
                             isSetOperResult = false;
                         }
+                        MessageBus.Default.Call("SetCurrentACCOp", this, null);
                         MessageBus.Default.Call("GetOperationForOverwiev", this, Operation.Id);
                         Controller.NavigateTo<ViewModelOperationOverview>();
                         Data.Complete();

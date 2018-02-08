@@ -24,7 +24,7 @@ namespace WpfApp2.Db.Models
 {
     public interface IUnitOfWork : IDisposable
     {
-
+        ChangeHistoryRepository ChangeHistory { get; }
         ComplanesObsRepository ComplanesObs { get; }
         RecomendationObsRepository RecomendationObs { get; }
 

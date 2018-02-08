@@ -55,6 +55,7 @@ namespace WpfApp2.ViewModels
                         Data.OperationResult.Add(buf);
                         Operation.итоги_операции = buf.Id;
                         Data.Complete();
+                        MessageBus.Default.Call("SetCurrentACCOp", this, null);
                         MessageBus.Default.Call("SetCurrentPatientForOperation", this, Operation.PatientId);
                         MessageBus.Default.Call("SetOperationResult", this, buf);
                         Controller.NavigateTo<ViewModelAddOperation>();
@@ -68,6 +69,7 @@ namespace WpfApp2.ViewModels
                         Data.OperationResult.Add(buf);
                         Operation.итоги_операции = buf.Id;
                         Data.Complete();
+                        MessageBus.Default.Call("SetCurrentACCOp", this, null);
                         MessageBus.Default.Call("GetOprForOprResultOverview", this, operationId);
                         Controller.NavigateTo<ViewModelOperationResultOverview>();
 

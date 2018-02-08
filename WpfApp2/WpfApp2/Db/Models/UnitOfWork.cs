@@ -24,6 +24,7 @@ namespace WpfApp2.Db.Models
 {
     public class UnitOfWork : IUnitOfWork
     {
+        public ChangeHistoryRepository ChangeHistory { get; }
         public ComplanesObsRepository ComplanesObs { get; }
         public RecomendationObsRepository RecomendationObs { get; }
 
@@ -179,7 +180,7 @@ namespace WpfApp2.Db.Models
 
             ComplanesObs = new ComplanesObsRepository(_context);
             RecomendationObs = new RecomendationObsRepository(_context);
-
+            ChangeHistory = new ChangeHistoryRepository(_context);
             GVFull = new GVEntryFullRepository(_context);
             PPVFull = new PPVEntryFullRepository(_context);
             TEMPVFull = new TEMPVEntryFullRepository(_context);

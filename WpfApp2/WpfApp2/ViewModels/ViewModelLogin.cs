@@ -51,7 +51,9 @@ namespace WpfApp2.ViewModels
                             isUeserNameCorrect = true;
                             if (CheckSum == acc.Password)
                             {
-                                MessageBus.Default.Call("GetAcaunt", this, acc.Id);
+                              
+                                MessageBus.Default.Call("SetCurrentACCIDForContext", null, acc.Id);
+                                MessageBus.Default.Call("GetAcaunt", null, acc.Id);
                                 Controller.NavigateTo<ViewModelDashboard>();
 
 

@@ -105,6 +105,7 @@ namespace WpfApp2.ViewModels
                     Data.CancelOperation.Add(buf);
                     Operation.отмена_операции = buf.Id;
                     Data.Complete();
+                    MessageBus.Default.Call("SetCurrentACCOp", this, null);
                     MessageBus.Default.Call("GetOperationForOverwiev", this, operationId);
                     Controller.NavigateTo<ViewModelOperationOverview>();
                 }

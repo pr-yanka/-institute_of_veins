@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ using WpfApp2.Db.Models;
 using WpfApp2.Db.Models.GV;
 using WpfApp2.Db.Models.PPV;
 using WpfApp2.Db.Models.SPS;
+using WpfApp2.Messaging;
 
 namespace WpfApp2.Db.Models
 {
@@ -16,7 +18,7 @@ namespace WpfApp2.Db.Models
     {
 
 
-      
+
         public DbSet<ComplanesObs> ComplanesObs { get; set; }
         public DbSet<RecomendationObs> RecomendationObs { get; set; }
 
@@ -32,7 +34,7 @@ namespace WpfApp2.Db.Models
         public DbSet<PPVEntryFull> PPVFull { get; set; }
         public DbSet<GVEntryFull> GVFull { get; set; }
         public DbSet<ZDSVEntryFull> ZDSVFull { get; set; }
-        
+
 
         public DbSet<ExaminationLeg> ExaminationLeg { get; set; }
         public DbSet<doc_templates> doc_template { get; set; }
@@ -55,7 +57,7 @@ namespace WpfApp2.Db.Models
         public DbSet<MPVCombo> MPVCombos { get; set; }
         public DbSet<MPVEntry> MPVEntries { get; set; }
 
-        
+
         public DbSet<TEMPVStructure> TEMPV { get; set; }
         public DbSet<TEMPVCombo> TEMPVCombos { get; set; }
         public DbSet<TEMPVEntry> TEMPVEntries { get; set; }
@@ -149,17 +151,207 @@ namespace WpfApp2.Db.Models
         public DbSet<Perforate_hipCombo> Perforate_hipCombos { get; set; }
         public DbSet<Perforate_hipEntry> Perforate_hipEntries { get; set; }
 
-
+        public DbSet<ChangeHistory> ChangeHistory { get; set; }
 
         public DbSet<ZDSVStructure> ZDSV { get; set; }
         public DbSet<ZDSVCombo> ZDSVCombos { get; set; }
         public DbSet<ZDSVEntry> ZDSVEntries { get; set; }
 
+        object GetPrimaryKeyValue(DbEntityEntry entry)
+        {
+            var objectStateEntry = ((IObjectContextAdapter)this).ObjectContext.ObjectStateManager.GetObjectStateEntry(entry.Entity);
+            return objectStateEntry.EntityKey.EntityKeyValues[0].Value;
+        }
+
+        int CurrAccId;
+
+        private void SetCurrentACCIDForContext(object sender, object data)
+        {
+            CurrAccId = (int)data;
+        }
+
+
+        public override int SaveChanges()
+        {
+            List<ChangeHistory> logsList = new List<Models.ChangeHistory>();
+            //List<DbEntityEntry> modifiedChanges = ChangeTracker.Entries().Where(x => x.State == EntityState.Modified).ToList();
+            List<DbEntityEntry> modifiedEntities = ChangeTracker.Entries().Where(p => p.State == EntityState.Modified).ToList();
+
+            List<DbEntityEntry> addedEntities = ChangeTracker.Entries().Where(p => p.State == EntityState.Added).ToList();
+
+            List<DbEntityEntry> deletedEntities = ChangeTracker.Entries().Where(p => p.State == EntityState.Deleted).ToList();
+
+            ChangeHistory logh = new Models.ChangeHistory();
+
+            DateTime now = DateTime.UtcNow;
+
+            //foreach (var change in addedEntities)
+            //{
+
+            //    var entityName = change.Entity.GetType().Name;
+            //    if (entityName != "ChangeHistory")
+            //    {
+            //        //var primaryKey = GetPrimaryKeyValue(change);
+
+            //        foreach (var prop in change.OriginalValues.PropertyNames)
+            //        {
+            //            if (change.CurrentValues[prop] != null)
+            //            {
+            //                if (entityName == "Analize" && prop == "ImageByte")
+            //                {
+
+            //                    var originalValueBlob = (byte[])change.OriginalValues[prop];
+            //                    var currentValueBlob = (byte[])change.CurrentValues[prop];
+            //                    if (originalValueBlob != currentValueBlob)
+            //                    {
+            //                        logh = new Models.ChangeHistory()
+            //                        {
+                                    
+            //                            TblName = entityName,
+            //                            AccID = CurrAccId,
+                                        
+            //                            //RowId = primaryKey.ToString(),
+                                        
+            //                            TblCollumnName = prop,
+            //                            BlobNew = currentValueBlob,
+            //                            BlobOld = null,
+            //                            OldValue = string.Empty,
+            //                            NewValue = string.Empty,
+            //                            DataChanged = now,
+            //                            ChangeType = 2
+                                    
+            //                        };
+                                    
+
+            //                        logsList.Add(logh);
+            //                    }
+            //                }
+            //                else
+            //                {
+
+
+            //                    var originalValue = change.OriginalValues[prop].ToString();
+            //                    var currentValue = change.CurrentValues[prop].ToString();
+
+            //                    if (originalValue != currentValue)
+            //                    {
+
+
+            //                        logh = new Models.ChangeHistory()
+            //                        {
+            //                            TblName = entityName,
+            //                            AccID = CurrAccId,
+            //                         //   RowId = primaryKey.ToString(),
+            //                            TblCollumnName = prop,
+            //                            OldValue = string.Empty,
+            //                            BlobNew = null,
+            //                            BlobOld = null,
+            //                            NewValue = currentValue,
+            //                            DataChanged = now,
+            //                            ChangeType = 2
+
+            //                        };
+
+            //                        logsList.Add(logh);
+            //                    }
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+            foreach (var change in modifiedEntities)
+            {
+
+                var entityName = change.Entity.GetType().Name;
+                if (entityName != "ChangeHistory")
+                {
+                    var primaryKey = GetPrimaryKeyValue(change);
+
+                    foreach (var prop in change.OriginalValues.PropertyNames)
+                    {
+                        if (change.CurrentValues[prop] != null && change.OriginalValues[prop] != null)
+                        {
+                            if (entityName == "Analize" && prop == "ImageByte")
+                            {
+
+                                var originalValueBlob = (byte[])change.OriginalValues[prop];
+                                var currentValueBlob = (byte[])change.CurrentValues[prop];
+                                if (originalValueBlob != currentValueBlob)
+                                {
+
+
+                                    logh = new Models.ChangeHistory()
+                                    {
+                                        TblName = entityName,
+                                        AccID = CurrAccId,
+                                        RowId = primaryKey.ToString(),
+                                        TblCollumnName = prop,
+                                        BlobNew = currentValueBlob,
+                                        BlobOld = originalValueBlob,
+                                        OldValue = string.Empty,
+                                        NewValue = string.Empty,
+                                        DataChanged = now,
+                                        ChangeType = 1
+
+                                    };
+
+
+                                    logsList.Add(logh);
+                                }
+                            }
+                            else
+                            {
+
+
+                                var originalValue = change.OriginalValues[prop].ToString();
+                                var currentValue = change.CurrentValues[prop].ToString();
+
+                                if (originalValue != currentValue)
+                                {
+
+
+                                    logh = new Models.ChangeHistory()
+                                    {
+                                        TblName = entityName,
+                                        AccID = CurrAccId,
+                                        RowId = primaryKey.ToString(),
+                                        TblCollumnName = prop,
+                                        OldValue = originalValue,
+                                        BlobNew = null,
+                                        BlobOld = null,
+                                        NewValue = currentValue,
+                                        DataChanged = now,
+                                        ChangeType = 1
+
+                                    };
+
+                                    logsList.Add(logh);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (logsList.Count > 0)
+                MessageBus.Default.Call("SaveLogs", null, logsList);
+
+
+
+
+
+
+
+            return base.SaveChanges();
+
+
+        }
 
 
         public MySqlContext() : base("server=localhost;user=root;database=med_db;password=22222;")
         {
-
+            CurrAccId = 0;
+            MessageBus.Default.Subscribe("SetCurrentACCIDForContext", SetCurrentACCIDForContext);
         }
 
 
@@ -192,18 +384,18 @@ namespace WpfApp2.Db.Models
             modelBuilder.Entity<PPVCombo>()
                 .HasOptional<PPVStructure>(s => s.Str2).WithMany(g => g.PPVs2).HasForeignKey<int?>(s => s.IdStr2);
 
-        
+
 
             modelBuilder.Entity<PPVEntry>()
                 .HasRequired<PPVStructure>(s => s.Structure).WithMany(g => g.Entries).HasForeignKey<int>(s => s.StructureID);
 
-          
+
             modelBuilder.Entity<PPVEntryFull>()
             .HasRequired<PPVEntry>(s => s.PPVEntry1).WithMany(g => g.EntriesFull1).HasForeignKey<int>(s => s.EntryId1);
             modelBuilder.Entity<PPVEntryFull>()
             .HasRequired<PPVEntry>(s => s.PPVEntry2).WithMany(g => g.EntriesFull2).HasForeignKey<int?>(s => s.EntryId2);
 
-           
+
 
 
 
@@ -568,6 +760,17 @@ namespace WpfApp2.Db.Models
 
 
 
+        }
+
+        public class ChangeLog
+        {
+            public int Id { get; set; }
+            public string EntityName { get; set; }
+            public string PropertyName { get; set; }
+            public string PrimaryKeyValue { get; set; }
+            public string OldValue { get; set; }
+            public string NewValue { get; set; }
+            public DateTime DateChanged { get; set; }
         }
     }
 }
