@@ -436,6 +436,7 @@ namespace WpfApp2.ViewModels
                                 buf.id_врача = Doctor.id;
                                 buf.id_операции = Operation.Id;
                                 Data.Brigade.Add(buf);
+                                Data.Complete();
                             }
                             else
                             {
@@ -443,10 +444,11 @@ namespace WpfApp2.ViewModels
                                 buf.id_медперсонал = Doctor.id;
                                 buf.id_операции = Operation.Id;
                                 Data.BrigadeMedPersonal.Add(buf);
+                                Data.Complete();
                             }
 
                         }
-                        Data.Complete();
+                       
                         foreach (var diagnozL in LeftDiagnosisList)
                         {
 
@@ -456,9 +458,9 @@ namespace WpfApp2.ViewModels
                             buf.isLeft = true;
 
                             Data.Diagnosis.Add(buf);
-
+                            Data.Complete();
                         }
-                        Data.Complete();
+                     
                         foreach (var diagnozR in RightDiagnosisList)
                         {
 
@@ -468,10 +470,11 @@ namespace WpfApp2.ViewModels
                             buf.isLeft = false;
 
                             Data.Diagnosis.Add(buf);
+                            Data.Complete();
 
                         }
 
-                        Data.Complete();
+                 //       Data.Complete();
                         if (isSetOperResult == true)
                         {
                             OperationResult.IdNextOperation = Operation.Id;
@@ -481,7 +484,7 @@ namespace WpfApp2.ViewModels
                         MessageBus.Default.Call("SetCurrentACCOp", this, null);
                         MessageBus.Default.Call("GetOperationForOverwiev", this, Operation.Id);
                         Controller.NavigateTo<ViewModelOperationOverview>();
-                        Data.Complete();
+                    //    Data.Complete();
                         Operation = new Operation();
                         OperationResult = new OperationResult();
                     }

@@ -8,23 +8,30 @@
 
     <DataTemplate x:Key="FullNavigation">
         <Grid>
-            <Button x:Name="button_Copy0" Content="ГЛАВНОЕ МЕНЮ" FontFamily="Segoe UI Light" Command="{Binding ToMainMenuCommand}" HorizontalAlignment="Left" Margin="7,64,0,0" VerticalAlignment="Top" Width="189" Height="43" Background="{x:Null}" FontSize="14" BorderBrush="{x:Null}" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+            <StackPanel Margin="0,60">
+                <Button x:Name="button_Copy0" Content="ГЛАВНОЕ МЕНЮ" FontFamily="Segoe UI Light" Command="{Binding ToMainMenuCommand}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="189" Height="43" Background="{x:Null}" FontSize="14" BorderBrush="{x:Null}" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+                <Separator HorizontalAlignment="Left"  Width="199"/>
+                <Button x:Name="button_Copy1" Content="ЖУРНАЛ ПАЦИЕНТОВ" FontFamily="Segoe UI Light" Command="{Binding ToTablePatientsCommand}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="189" Height="43" Background="{x:Null}" FontSize="14" BorderBrush="{x:Null}" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+                <Separator HorizontalAlignment="Left" VerticalAlignment="Top" Width="199"/>
+                <Button x:Name="button_Copy2" Content="ЖУРНАЛ ОБСЛЕДОВАНИЙ" FontFamily="Segoe UI Light" Command="{Binding ToPhysicalTableCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="202" Height="43" Background="{x:Null}" FontSize="14" BorderBrush="{x:Null}" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
 
-            <Button x:Name="button_Copy1" Content="ЖУРНАЛ ПАЦИЕНТОВ" FontFamily="Segoe UI Light" Command="{Binding ToTablePatientsCommand}" HorizontalAlignment="Left" Margin="7,107,0,0" VerticalAlignment="Top" Width="189" Height="43" Background="{x:Null}" FontSize="14" BorderBrush="{x:Null}" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
-            <Button x:Name="button_Copy2" Content="ЖУРНАЛ ОБСЛЕДОВАНИЙ" FontFamily="Segoe UI Light" Command="{Binding ToPhysicalTableCommand}" HorizontalAlignment="Left" Margin="7,150,0,0" VerticalAlignment="Top" Width="202" Height="43" Background="{x:Null}" FontSize="14" BorderBrush="{x:Null}" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
-            <Button x:Name="button_Copy3" Content="ЖУРНАЛ ИЗМЕНЕНИЙ" FontFamily="Segoe UI Light" HorizontalAlignment="Left" Margin="7,193,0,0" VerticalAlignment="Top" Width="189" Height="43" Background="{x:Null}" FontSize="14" BorderBrush="{x:Null}" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
-            <Button x:Name="button_Copy4" Content="О ПРИЛОЖЕНИИ" FontFamily="Segoe UI Light" HorizontalAlignment="Left" Margin="7,281,0,0" VerticalAlignment="Top" Width="189" Height="43" Background="{x:Null}" FontSize="14" BorderBrush="{x:Null}"  Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
-            <Button x:Name="button_Copy6"  Visibility="{Binding CalendarOperationVisibility}" Content="КАЛЕНДАРЬ ОПЕРАЦИЙ" FontFamily="Segoe UI Light" Command="{Binding ToCalendarOperationsCommand}" HorizontalAlignment="Left" Margin="7,238,0,0" VerticalAlignment="Top" Width="189" Height="43" Background="{x:Null}" FontSize="14" BorderBrush="{x:Null}" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
-            <Button x:Name="button_Copey4" Visibility="{Binding PanelAdminVisibility}"         Content="ПАНЕЛЬ АДМИНИСТРАТОРА" FontFamily="Segoe UI Light" Command="{Binding ToAdminPanelCommand}" HorizontalAlignment="Left" Margin="7,321,0,0" VerticalAlignment="Top" Width="212" Height="43"  Background="{x:Null}" FontSize="14" BorderBrush="{x:Null}"  Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
-            
-            
-            <Separator HorizontalAlignment="Left" Height="115" Margin="10,263,0,0" VerticalAlignment="Top" Width="199"/>
-            <Separator HorizontalAlignment="Left" Height="115" Margin="10,223,0,0" VerticalAlignment="Top" Width="199"/>
-            <Separator HorizontalAlignment="Left" Height="115" Margin="10,179,0,0" VerticalAlignment="Top" Width="199"/>
-            <Separator HorizontalAlignment="Left" Height="115" Margin="7,136,0,0" VerticalAlignment="Top" Width="199"/>
-            <Separator HorizontalAlignment="Left" Visibility="{Binding CalendarOperationVisibility}" Height="115" Margin="7,93,0,0" VerticalAlignment="Top" Width="199"/>
-            <Separator HorizontalAlignment="Left" Visibility="{Binding PanelAdminVisibility}"        Height="115" Margin="7,49,0,0" VerticalAlignment="Top" Width="199"/>
-            <Image Visibility="{Binding IsAlertActiv}" Margin="131,200,740,420" Source="pack://application:,,,/Images/alert.png" MaxHeight="25"/>
+                <Separator HorizontalAlignment="Left"  VerticalAlignment="Top" Width="199"/>
+
+                <Button x:Name="button_Copy3" Content="ЖУРНАЛ ИЗМЕНЕНИЙ" FontFamily="Segoe UI Light" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="189" Height="43" Background="{x:Null}" FontSize="14" BorderBrush="{x:Null}" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+                <Separator HorizontalAlignment="Left"   VerticalAlignment="Top" Width="199"/>
+                <Button x:Name="button_Copy4" Content="О ПРИЛОЖЕНИИ" FontFamily="Segoe UI Light" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="189" Height="43" Background="{x:Null}" FontSize="14" BorderBrush="{x:Null}"  Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+                <Separator HorizontalAlignment="Left"   Visibility="{Binding CalendarOperationVisibility}" VerticalAlignment="Top" Width="199"/>
+
+                <Button x:Name="button_Copy6"  Visibility="{Binding CalendarOperationVisibility}" Content="КАЛЕНДАРЬ ОПЕРАЦИЙ" FontFamily="Segoe UI Light" Command="{Binding ToCalendarOperationsCommand}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="189" Height="43" Background="{x:Null}" FontSize="14" BorderBrush="{x:Null}" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+                <Separator HorizontalAlignment="Left" Visibility="{Binding PanelAdminVisibility}"         VerticalAlignment="Top" Width="199"/>
+
+                <Button x:Name="button_Copey4" Visibility="{Binding PanelAdminVisibility}"         Content="ПАНЕЛЬ АДМИНИСТРАТОРА" FontFamily="Segoe UI Light" Command="{Binding ToAdminPanelCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="212" Height="43"  Background="{x:Null}" FontSize="14" BorderBrush="{x:Null}"  Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+
+            </StackPanel>
+           
+          
+         
+             <Image Visibility="{Binding IsAlertActiv}" Margin="131,200,740,420" Source="pack://application:,,,/Images/alert.png" MaxHeight="25"/>
 
 
             <Menu Height="61" VerticalAlignment="Top" Background="{x:Null}" HorizontalContentAlignment="Right">

@@ -1281,14 +1281,16 @@ namespace WpfApp2.ViewModels
                         //examnTotal.idRightLegExamination = rightLegExams.Id;
 
                         Data.Complete();
-                        bool test = true;
+                        bool test = false;
                         if (LeftDiagnosisList != null)
                         {
 
                             foreach (var dgOp in Data.DiagnosisObs.GetAll)
                             {
-                                test = true;
+                               
                                 if (dgOp.id_обследование_ноги == examnTotal.Id && dgOp.isLeft == true)
+                                {
+                                    test = true;
                                     foreach (var diag in LeftDiagnosisList)
                                     {
                                         if (diag.IsChecked.Value && dgOp.id_диагноз == diag.Data.Id)
@@ -1297,13 +1299,15 @@ namespace WpfApp2.ViewModels
                                             break;
                                         }
                                     }
+                                }
                                 if (test)
                                 {
                                     Data.DiagnosisObs.Remove(dgOp);
+                                    Data.Complete();
                                 }
                             }
-
-                            Data.Complete();
+                            test = false;
+                            // Data.Complete();
 
                             foreach (var diag in LeftDiagnosisList)
                             {
@@ -1313,6 +1317,7 @@ namespace WpfApp2.ViewModels
                                     test = true;
                                     foreach (var dgOp in Data.DiagnosisObs.GetAll)
                                     {
+
                                         if (dgOp.id_диагноз == diag.Data.Id && dgOp.id_обследование_ноги == examnTotal.Id && dgOp.isLeft == true)
                                         {
                                             test = false;
@@ -1326,17 +1331,21 @@ namespace WpfApp2.ViewModels
                                         newDiag.id_обследование_ноги = examnTotal.Id;
                                         newDiag.isLeft = true;
                                         Data.DiagnosisObs.Add(newDiag);
+                                        Data.Complete();
                                     }
                                 }
                             }
 
                         }
+                        test = false;
                         if (RightDiagnosisList != null)
                         {
                             foreach (var dgOp in Data.DiagnosisObs.GetAll)
                             {
-                                test = true;
+                              
                                 if (dgOp.id_обследование_ноги == examnTotal.Id && dgOp.isLeft == false)
+                                {
+                                    test = true;
                                     foreach (var diag in RightDiagnosisList)
                                     {
                                         if (diag.IsChecked.Value && dgOp.id_диагноз == diag.Data.Id)
@@ -1345,13 +1354,15 @@ namespace WpfApp2.ViewModels
                                             break;
                                         }
                                     }
+                                }
                                 if (test)
                                 {
                                     Data.DiagnosisObs.Remove(dgOp);
+                                    Data.Complete();
                                 }
                             }
-
-                            Data.Complete();
+                            test = false;
+                            //Data.Complete();
                             foreach (var diag in RightDiagnosisList)
                             {
                                 if (diag.IsChecked.Value)
@@ -1372,17 +1383,21 @@ namespace WpfApp2.ViewModels
                                         newDiag.id_обследование_ноги = examnTotal.Id;
                                         newDiag.isLeft = false;
                                         Data.DiagnosisObs.Add(newDiag);
+                                        Data.Complete();
                                     }
                                 }
                             }
                         }
+                        test = false;
                         if (RecomendationsList != null)
                         {
 
                             foreach (var dgOp in Data.RecomendationObs.GetAll)
                             {
-                                test = true;
+                                
                                 if (dgOp.id_обследования == examnTotal.Id)
+                                {
+                                    test = true;
                                     foreach (var diag in RecomendationsList)
                                     {
                                         if (diag.IsChecked.Value && dgOp.id_рекомендации == diag.Data.Id)
@@ -1391,14 +1406,16 @@ namespace WpfApp2.ViewModels
                                             break;
                                         }
                                     }
+                                }
                                 if (test)
                                 {
                                     Data.RecomendationObs.Remove(dgOp);
+                                    Data.Complete();
                                 }
                             }
 
-                            Data.Complete();
-
+                            //   Data.Complete();
+                            test = false;
 
                             foreach (var rec in RecomendationsList)
                             {
@@ -1419,16 +1436,20 @@ namespace WpfApp2.ViewModels
                                         newRec.id_рекомендации = rec.Data.Id;
                                         newRec.id_обследования = examnTotal.Id.Value;
                                         Data.RecomendationObs.Add(newRec);
+                                        Data.Complete();
                                     }
                                 }
                             }
                         }
+                        test = false;
                         if (ComplainsList != null)
                         {
                             foreach (var dgOp in Data.ComplanesObs.GetAll)
                             {
-                                test = true;
+                                
                                 if (dgOp.id_обследования == examnTotal.Id)
+                                {
+                                    test = true;
                                     foreach (var diag in ComplainsList)
                                     {
                                         if (diag.IsChecked.Value && dgOp.id_жалобы == diag.Data.Id)
@@ -1437,15 +1458,17 @@ namespace WpfApp2.ViewModels
                                             break;
                                         }
                                     }
+                                }
                                 if (test)
                                 {
                                     Data.ComplanesObs.Remove(dgOp);
+                                    Data.Complete();
                                 }
                             }
 
-                            Data.Complete();
+                            //  Data.Complete();
 
-
+                            test = false;
 
 
                             foreach (var cmp in ComplainsList)
@@ -1467,11 +1490,12 @@ namespace WpfApp2.ViewModels
                                         newcmp.id_жалобы = cmp.Data.Id;
                                         newcmp.id_обследования = examnTotal.Id.Value;
                                         Data.ComplanesObs.Add(newcmp);
+                                        Data.Complete();
                                     }
                                 }
                             }
                         }
-                        Data.Complete();
+                        //   Data.Complete();
 
 
                     }
@@ -1583,6 +1607,7 @@ namespace WpfApp2.ViewModels
                         rightLegExams.P = RightCEAR.LegSections[3].SelectedValue.Id;
 
                     Data.ExaminationLeg.Add(leftLegExams);
+                    Data.Complete();
                     Data.ExaminationLeg.Add(rightLegExams);
                     Data.Complete();
 
@@ -1611,6 +1636,7 @@ namespace WpfApp2.ViewModels
                                     isLeft = true
                                 };
                                 Data.DiagnosisObs.Add(newDiag);
+                                Data.Complete();
                             }
                         }
                     if (RightDiagnosisList != null)
@@ -1625,6 +1651,7 @@ namespace WpfApp2.ViewModels
                                     isLeft = false
                                 };
                                 Data.DiagnosisObs.Add(newDiag);
+                                Data.Complete();
                             }
                         }
 
@@ -1639,6 +1666,7 @@ namespace WpfApp2.ViewModels
                                     id_обследования = examnTotal.Id.Value
                                 };
                                 Data.RecomendationObs.Add(newRec);
+                                Data.Complete();
                             }
                         }
                     if (ComplainsList != null)
@@ -1651,9 +1679,10 @@ namespace WpfApp2.ViewModels
                                 newcmp.id_жалобы = cmp.Data.Id;
                                 newcmp.id_обследования = examnTotal.Id.Value;
                                 Data.ComplanesObs.Add(newcmp);
+                                Data.Complete();
                             }
                         }
-                    Data.Complete();
+                    //  Data.Complete();
 
                 }
 
@@ -3047,7 +3076,10 @@ namespace WpfApp2.ViewModels
                     }
                 }
                 if (test)
+                {
                     Data.BPVHipsFull.Add(RightBPVEntryFull);
+                    Data.Complete();
+                }
             }
 
 
@@ -3067,7 +3099,10 @@ namespace WpfApp2.ViewModels
                     }
                 }
                 if (test)
+                {
                     Data.BPV_TibiaFull.Add(RightBPV_TibiaEntryFull);
+                    Data.Complete();
+                }
 
             }
 
@@ -3085,7 +3120,10 @@ namespace WpfApp2.ViewModels
                     }
                 }
                 if (test)
+                {
                     Data.GVFull.Add(RightGVEntryFull);
+                    Data.Complete();
+                }
             }
 
             if (!RightMPV.IsEmpty)
@@ -3105,7 +3143,11 @@ namespace WpfApp2.ViewModels
                     }
                 }
                 if (test)
+                {
                     Data.MPVFull.Add(RightMPVEntryFull);
+                    Data.Complete();
+
+                }
             }
 
             if (!RightPDSV.IsEmpty)
@@ -3124,7 +3166,11 @@ namespace WpfApp2.ViewModels
                     }
                 }
                 if (test)
+                {
                     Data.PDSVFull.Add(RightPDSVEntryFull);
+                    Data.Complete();
+
+                }
             }
             if (!RightPerforate.IsEmpty)
             {
@@ -3143,7 +3189,11 @@ namespace WpfApp2.ViewModels
                     }
                 }
                 if (test)
+                {
                     Data.Perforate_hipFull.Add(RightPerforate_hipEntryFull);
+                    Data.Complete();
+
+                }
             }
             if (!RightPPV.IsEmpty)
             {
@@ -3159,7 +3209,11 @@ namespace WpfApp2.ViewModels
                     }
                 }
                 if (test)
+                {
                     Data.PPVFull.Add(RightPPVEntryFull);
+                    Data.Complete();
+
+                }
             }
 
             if (!RightSFS.IsEmpty)
@@ -3180,7 +3234,11 @@ namespace WpfApp2.ViewModels
                     }
                 }
                 if (test)
+                {
                     Data.SFSFull.Add(RightSFSEntryFull);
+                    Data.Complete();
+
+                }
             }
 
             if (!RightSPS.IsEmpty)
@@ -3198,7 +3256,11 @@ namespace WpfApp2.ViewModels
                     }
                 }
                 if (test)
+                {
                     Data.SPSHipFull.Add(RightSPSEntryFull);
+                    Data.Complete();
+
+                }
             }
             if (!RightTEMPV.IsEmpty)
             {
@@ -3217,7 +3279,11 @@ namespace WpfApp2.ViewModels
                     }
                 }
                 if (test)
+                {
                     Data.TEMPVFull.Add(RightTEMPVEntryFull);
+                    Data.Complete();
+
+                }
             }
 
             if (!RightTibiaPerforate.IsEmpty)
@@ -3237,7 +3303,11 @@ namespace WpfApp2.ViewModels
                     }
                 }
                 if (test)
+                {
                     Data.Perforate_shinFull.Add(RightPerforate_shinEntryFull);
+                    Data.Complete();
+
+                }
             }
 
             if (!RightZDSV.IsEmpty)
@@ -3255,7 +3325,10 @@ namespace WpfApp2.ViewModels
                     }
                 }
                 if (test)
+                {
                     Data.ZDSVFull.Add(RightZDSVEntryFull);
+                    Data.Complete();
+                }
             }
             //if (!LeftBPVHip.IsEmpty)
             //    Data.BPVHipsFull.Add(LeftBPVEntryFull);
@@ -3312,7 +3385,11 @@ namespace WpfApp2.ViewModels
                     }
                 }
                 if (test)
+                {
                     Data.BPVHipsFull.Add(LeftBPVEntryFull);
+                    Data.Complete();
+
+                }
             }
             if (!LeftBPVTibia.IsEmpty)
             {
@@ -3330,8 +3407,11 @@ namespace WpfApp2.ViewModels
                     }
                 }
                 if (test)
+                {
                     Data.BPV_TibiaFull.Add(LeftBPV_TibiaEntryFull);
+                    Data.Complete();
 
+                }
             }
 
             if (!LeftGV.IsEmpty)
@@ -3348,7 +3428,11 @@ namespace WpfApp2.ViewModels
                     }
                 }
                 if (test)
+                {
                     Data.GVFull.Add(LeftGVEntryFull);
+                    Data.Complete();
+
+                }
             }
 
             if (!LeftMPV.IsEmpty)
@@ -3368,7 +3452,11 @@ namespace WpfApp2.ViewModels
                     }
                 }
                 if (test)
+                {
                     Data.MPVFull.Add(LeftMPVEntryFull);
+                    Data.Complete();
+
+                }
             }
 
             if (!LeftPDSV.IsEmpty)
@@ -3387,7 +3475,11 @@ namespace WpfApp2.ViewModels
                     }
                 }
                 if (test)
+                {
                     Data.PDSVFull.Add(LeftPDSVEntryFull);
+
+                    Data.Complete();
+                }
             }
             if (!LeftPerforate.IsEmpty)
             {
@@ -3406,7 +3498,11 @@ namespace WpfApp2.ViewModels
                     }
                 }
                 if (test)
+                {
                     Data.Perforate_hipFull.Add(LeftPerforate_hipEntryFull);
+                    Data.Complete();
+
+                }
             }
             if (!LeftPPV.IsEmpty)
             {
@@ -3422,7 +3518,11 @@ namespace WpfApp2.ViewModels
                     }
                 }
                 if (test)
+                {
                     Data.PPVFull.Add(LeftPPVEntryFull);
+                    Data.Complete();
+
+                }
             }
 
             if (!LeftSFS.IsEmpty)
@@ -3443,7 +3543,11 @@ namespace WpfApp2.ViewModels
                     }
                 }
                 if (test)
+                {
                     Data.SFSFull.Add(LeftSFSEntryFull);
+                    Data.Complete();
+
+                }
             }
 
             if (!LeftSPS.IsEmpty)
@@ -3461,7 +3565,11 @@ namespace WpfApp2.ViewModels
                     }
                 }
                 if (test)
+                {
                     Data.SPSHipFull.Add(LeftSPSEntryFull);
+                    Data.Complete();
+
+                }
             }
             if (!LeftTEMPV.IsEmpty)
             {
@@ -3480,7 +3588,11 @@ namespace WpfApp2.ViewModels
                     }
                 }
                 if (test)
+                {
                     Data.TEMPVFull.Add(LeftTEMPVEntryFull);
+
+                    Data.Complete();
+                }
             }
 
             if (!LeftTibiaPerforate.IsEmpty)
@@ -3500,7 +3612,11 @@ namespace WpfApp2.ViewModels
                     }
                 }
                 if (test)
+                {
                     Data.Perforate_shinFull.Add(LeftPerforate_shinEntryFull);
+                    Data.Complete();
+
+                }
             }
 
             if (!LeftZDSV.IsEmpty)
@@ -3518,10 +3634,14 @@ namespace WpfApp2.ViewModels
                     }
                 }
                 if (test)
+                {
                     Data.ZDSVFull.Add(LeftZDSVEntryFull);
+                    Data.Complete();
+
+                }
             }
 
-            Data.Complete();
+            //Data.Complete();
 
         }
 
@@ -4411,7 +4531,7 @@ namespace WpfApp2.ViewModels
                 LegPartEntries LeftSFSEntryFullbuf = FullEntry;
                 foreach (var section in Part.LegSections)
                 {
-                    if (section.SelectedValue == null)
+                    if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                     { continue; }
                     LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
                     newSFSentry.StructureID = section.SelectedValue.Id;
@@ -4427,6 +4547,8 @@ namespace WpfApp2.ViewModels
                         {
 
                             Data.PDSVHipEntries.Add((PDSVHipEntry)newSFSentry);
+                            Data.Complete();
+
                         }
                     }
                     else if (Part is SFSViewModel)
@@ -4440,6 +4562,8 @@ namespace WpfApp2.ViewModels
                         else
                         {
                             Data.SFSHipEntries.Add((SFSHipEntry)newSFSentry);
+                            Data.Complete();
+
                         }
                     }
                     else if (Part is BPVHipViewModel)
@@ -4452,6 +4576,8 @@ namespace WpfApp2.ViewModels
                         else
                         {
                             Data.BPVHipEntries.Add((BPVHipEntry)newSFSentry);
+                            Data.Complete();
+
                         }
                     }
                     else if (Part is BPVTibiaViewModel)
@@ -4464,6 +4590,8 @@ namespace WpfApp2.ViewModels
                         else
                         {
                             Data.BPV_TibiaEntries.Add((BPV_TibiaEntry)newSFSentry);
+                            Data.Complete();
+
                         }
                     }
                     else if (Part is HipPerforateViewModel)
@@ -4477,6 +4605,8 @@ namespace WpfApp2.ViewModels
                         else
                         {
                             Data.Perforate_hipEntries.Add((Perforate_hipEntry)newSFSentry);
+                            Data.Complete();
+
                         }
                     }
                     else if (Part is ZDSVViewModel)
@@ -4489,6 +4619,8 @@ namespace WpfApp2.ViewModels
                         else
                         {
                             Data.ZDSVEntries.Add((ZDSVEntry)newSFSentry);
+                            Data.Complete();
+
                         }
                     }
 
@@ -4502,6 +4634,8 @@ namespace WpfApp2.ViewModels
                         else
                         {
                             Data.SPSEntries.Add((SPSHipEntry)newSFSentry);
+                            Data.Complete();
+
                         }
                     }
                     else if (Part is TibiaPerforateViewModel)
@@ -4514,6 +4648,8 @@ namespace WpfApp2.ViewModels
                         else
                         {
                             Data.Perforate_shinEntries.Add((Perforate_shinEntry)newSFSentry);
+                            Data.Complete();
+
                         }
                     }
                     else if (Part is MPVViewModel)
@@ -4526,6 +4662,8 @@ namespace WpfApp2.ViewModels
                         else
                         {
                             Data.MPVEntries.Add((MPVEntry)newSFSentry);
+                            Data.Complete();
+
                         }
                     }
                     else if (Part is TEMPVViewModel)
@@ -4539,6 +4677,8 @@ namespace WpfApp2.ViewModels
                         else
                         {
                             Data.TEMPVEntries.Add((TEMPVEntry)newSFSentry);
+                            Data.Complete();
+
                         }
                     }
                     else if (Part is PPVViewModel)
@@ -4551,6 +4691,8 @@ namespace WpfApp2.ViewModels
                         else
                         {
                             Data.PPVEntries.Add((PPVEntry)newSFSentry);
+                            Data.Complete();
+
                         }
                     }
                     else if (Part is GVViewModel)
@@ -4563,10 +4705,12 @@ namespace WpfApp2.ViewModels
                         else
                         {
                             Data.GVEntries.Add((GVEntry)newSFSentry);
+                            Data.Complete();
+
                         }
                     }
 
-                    Data.Complete();
+                    //       Data.Complete();
                     if (section.ListNumber == 1)
                     {
                         LeftSFSEntryFullbuf.EntryId1 = newSFSentry.Id;
@@ -4925,7 +5069,7 @@ namespace WpfApp2.ViewModels
                 DiagnosisDataSource diagDSourceBuf;
                 foreach (var diag in Data.DiagnosisObs.GetAll.Where(s => s.isLeft == true && s.id_обследование_ноги == Exam.Id).ToList())
                 {
-                    diagDSourceBuf = new DiagnosisDataSource(diag.DiagnosisType);
+                    diagDSourceBuf = new DiagnosisDataSource(Data.DiagnosisTypes.Get(diag.id_диагноз.Value));
                     diagDSourceBuf.IsChecked = true;
                     LeftDiagnosisList.Add(diagDSourceBuf);
                 }
@@ -4936,7 +5080,7 @@ namespace WpfApp2.ViewModels
 
                 foreach (var diag in Data.DiagnosisObs.GetAll.Where(s => s.isLeft == false && s.id_обследование_ноги == Exam.Id).ToList())
                 {
-                    diagDSourceBuf = new DiagnosisDataSource(diag.DiagnosisType);
+                    diagDSourceBuf = new DiagnosisDataSource(Data.DiagnosisTypes.Get(diag.id_диагноз.Value));
                     diagDSourceBuf.IsChecked = true;
                     RightDiagnosisList.Add(diagDSourceBuf);
                 }
@@ -4947,7 +5091,7 @@ namespace WpfApp2.ViewModels
                 ComplainsDataSource compDSourceBuf;
                 foreach (var diag in Data.ComplanesObs.GetAll.Where(s => s.id_обследования == Exam.Id).ToList())
                 {
-                    compDSourceBuf = new ComplainsDataSource(diag.CompType);
+                    compDSourceBuf = new ComplainsDataSource(Data.ComplainsTypes.Get(diag.id_жалобы));
                     compDSourceBuf.IsChecked = true;
                     ComplainsList.Add(compDSourceBuf);
                 }
@@ -4956,7 +5100,7 @@ namespace WpfApp2.ViewModels
 
                 foreach (var diag in Data.RecomendationObs.GetAll.Where(s => s.id_обследования == Exam.Id).ToList())
                 {
-                    recDSourceBuf = new RecomendationsDataSource(diag.RecType);
+                    recDSourceBuf = new RecomendationsDataSource(Data.RecomendationsTypes.Get(diag.id_рекомендации));
                     recDSourceBuf.IsChecked = true;
                     RecomendationsList.Add(recDSourceBuf);
                 }

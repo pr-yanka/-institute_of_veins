@@ -38,8 +38,7 @@
                 <ComboBoxItem Content="на ближайший месяц"/>
                 <ComboBoxItem Content="все"/>
             </ComboBox>
-            <Button x:Name="buttonViewOperation" Content="Просмотреть операцию" Command="{Binding Path=ToOperationOverviewCommand}" HorizontalAlignment="Left" Margin="383,461,0,0" VerticalAlignment="Top" Width="334" Height="30" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-        </Grid>
+             </Grid>
     </DataTemplate>
 
 </ResourceDictionary>

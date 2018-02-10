@@ -159,8 +159,15 @@ namespace WpfApp2.Db.Models
 
         object GetPrimaryKeyValue(DbEntityEntry entry)
         {
-            var objectStateEntry = ((IObjectContextAdapter)this).ObjectContext.ObjectStateManager.GetObjectStateEntry(entry.Entity);
-            return objectStateEntry.EntityKey.EntityKeyValues[0].Value;
+            try
+            {
+                var objectStateEntry = ((IObjectContextAdapter)this).ObjectContext.ObjectStateManager.GetObjectStateEntry(entry.Entity);
+                return objectStateEntry.EntityKey.EntityKeyValues[0].Value;
+            }
+            catch
+            {
+                return "new_id";
+            }
         }
 
         int CurrAccId;
@@ -169,6 +176,7 @@ namespace WpfApp2.Db.Models
         {
             CurrAccId = (int)data;
         }
+
 
 
         public override int SaveChanges()
@@ -181,104 +189,202 @@ namespace WpfApp2.Db.Models
 
             List<DbEntityEntry> deletedEntities = ChangeTracker.Entries().Where(p => p.State == EntityState.Deleted).ToList();
 
+
+
+
             ChangeHistory logh = new Models.ChangeHistory();
 
             DateTime now = DateTime.UtcNow;
 
-            //foreach (var change in addedEntities)
-            //{
-
-            //    var entityName = change.Entity.GetType().Name;
-            //    if (entityName != "ChangeHistory")
-            //    {
-            //        //var primaryKey = GetPrimaryKeyValue(change);
-
-            //        foreach (var prop in change.OriginalValues.PropertyNames)
-            //        {
-            //            if (change.CurrentValues[prop] != null)
-            //            {
-            //                if (entityName == "Analize" && prop == "ImageByte")
-            //                {
-
-            //                    var originalValueBlob = (byte[])change.OriginalValues[prop];
-            //                    var currentValueBlob = (byte[])change.CurrentValues[prop];
-            //                    if (originalValueBlob != currentValueBlob)
-            //                    {
-            //                        logh = new Models.ChangeHistory()
-            //                        {
-                                    
-            //                            TblName = entityName,
-            //                            AccID = CurrAccId,
-                                        
-            //                            //RowId = primaryKey.ToString(),
-                                        
-            //                            TblCollumnName = prop,
-            //                            BlobNew = currentValueBlob,
-            //                            BlobOld = null,
-            //                            OldValue = string.Empty,
-            //                            NewValue = string.Empty,
-            //                            DataChanged = now,
-            //                            ChangeType = 2
-                                    
-            //                        };
-                                    
-
-            //                        logsList.Add(logh);
-            //                    }
-            //                }
-            //                else
-            //                {
-
-
-            //                    var originalValue = change.OriginalValues[prop].ToString();
-            //                    var currentValue = change.CurrentValues[prop].ToString();
-
-            //                    if (originalValue != currentValue)
-            //                    {
-
-
-            //                        logh = new Models.ChangeHistory()
-            //                        {
-            //                            TblName = entityName,
-            //                            AccID = CurrAccId,
-            //                         //   RowId = primaryKey.ToString(),
-            //                            TblCollumnName = prop,
-            //                            OldValue = string.Empty,
-            //                            BlobNew = null,
-            //                            BlobOld = null,
-            //                            NewValue = currentValue,
-            //                            DataChanged = now,
-            //                            ChangeType = 2
-
-            //                        };
-
-            //                        logsList.Add(logh);
-            //                    }
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
-            foreach (var change in modifiedEntities)
+            foreach (var change in deletedEntities)
             {
 
                 var entityName = change.Entity.GetType().Name;
                 if (entityName != "ChangeHistory")
                 {
+                    //var primaryKey = GetPrimaryKeyValue(change);
+
+                    foreach (var prop in change.OriginalValues.PropertyNames)
+                    {
+                        if (change.OriginalValues[prop] != null)
+                        {
+
+                            var primaryKey = GetPrimaryKeyValue(change);
+                            if (prop != "Id")
+                            {
+                                if (entityName == "Analize" && prop == "ImageByte")
+                                {
+
+                                    var originalValueBlob = (byte[])change.OriginalValues[prop];
+                                    //var currentValueBlob = (byte[])change.CurrentValues[prop];
+
+
+
+
+
+                                    logh = new Models.ChangeHistory()
+                                    {
+
+                                        TblName = entityName,
+                                        AccID = CurrAccId,
+
+                                        RowId = primaryKey.ToString(),
+
+                                        TblCollumnName = prop,
+                                        BlobNew = null,
+                                        BlobOld = originalValueBlob,
+                                        OldValue = string.Empty,
+                                        NewValue = string.Empty,
+                                        DataChanged = now,
+                                        ChangeType = 3
+
+                                    };
+
+
+                                    logsList.Add(logh);
+
+                                }
+                                else
+                                {
+
+
+                                    var originalValue = change.OriginalValues[prop].ToString();
+                                    //var currentValue = change.CurrentValues[prop].ToString();
+
+
+                                    logh = new Models.ChangeHistory()
+                                    {
+                                        TblName = entityName,
+                                        AccID = CurrAccId,
+                                        RowId = primaryKey.ToString(),
+                                        TblCollumnName = prop,
+                                        OldValue = originalValue,
+                                        BlobNew = null,
+                                        BlobOld = null,
+                                        NewValue = string.Empty,
+                                        DataChanged = now,
+                                        ChangeType = 3
+
+                                    };
+
+                                    logsList.Add(logh);
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+
+
+            foreach (var change in addedEntities)
+            {
+
+                var entityName = change.Entity.GetType().Name;
+                if (entityName != "ChangeHistory")
+                {
+                    //var primaryKey = GetPrimaryKeyValue(change);
+
+                    foreach (var prop in change.CurrentValues.PropertyNames)
+                    {
+                        if (change.CurrentValues[prop] != null)
+                        {
+
+                            var primaryKey = GetPrimaryKeyValue(change);
+                            if (prop != "Id")
+                            {
+                                if (entityName == "Analize" && prop == "ImageByte")
+                                {
+
+                                    //   var originalValueBlob = (byte[])change.OriginalValues[prop];
+                                    var currentValueBlob = (byte[])change.CurrentValues[prop];
+
+
+
+
+
+                                    logh = new Models.ChangeHistory()
+                                    {
+
+                                        TblName = entityName,
+                                        AccID = CurrAccId,
+
+                                        RowId = primaryKey.ToString(),
+
+                                        TblCollumnName = prop,
+                                        BlobNew = currentValueBlob,
+                                        BlobOld = null,
+                                        OldValue = string.Empty,
+                                        NewValue = string.Empty,
+                                        DataChanged = now,
+                                        ChangeType = 2
+
+                                    };
+
+
+                                    logsList.Add(logh);
+
+                                }
+                                else
+                                {
+
+
+                                    // var originalValue = change.OriginalValues[prop].ToString();
+                                    var currentValue = change.CurrentValues[prop].ToString();
+
+
+                                    logh = new Models.ChangeHistory()
+                                    {
+                                        TblName = entityName,
+                                        AccID = CurrAccId,
+                                        RowId = primaryKey.ToString(),
+                                        TblCollumnName = prop,
+                                        OldValue = string.Empty,
+                                        BlobNew = null,
+                                        BlobOld = null,
+                                        NewValue = currentValue,
+                                        DataChanged = now,
+                                        ChangeType = 2
+
+                                    };
+
+                                    logsList.Add(logh);
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            foreach (var change in modifiedEntities)
+            {
+
+                var entityName = change.Entity.GetType().Name;
+                if (entityName.Contains("Operation"))
+                {
+                    entityName = "Operation";
+
+                }
+                if (entityName != "ChangeHistory")
+                {
+
                     var primaryKey = GetPrimaryKeyValue(change);
 
                     foreach (var prop in change.OriginalValues.PropertyNames)
                     {
-                        if (change.CurrentValues[prop] != null && change.OriginalValues[prop] != null)
+                        if (change.CurrentValues[prop] != null)
                         {
                             if (entityName == "Analize" && prop == "ImageByte")
                             {
 
                                 var originalValueBlob = (byte[])change.OriginalValues[prop];
                                 var currentValueBlob = (byte[])change.CurrentValues[prop];
+
                                 if (originalValueBlob != currentValueBlob)
                                 {
-
 
                                     logh = new Models.ChangeHistory()
                                     {
@@ -301,10 +407,12 @@ namespace WpfApp2.Db.Models
                             }
                             else
                             {
-
-
-                                var originalValue = change.OriginalValues[prop].ToString();
-                                var currentValue = change.CurrentValues[prop].ToString();
+                                string originalValue = "";
+                                if (change.OriginalValues[prop] != null)
+                                {
+                                    originalValue = change.OriginalValues[prop].ToString();
+                                }
+                                string currentValue = change.CurrentValues[prop].ToString();
 
                                 if (originalValue != currentValue)
                                 {
@@ -330,6 +438,113 @@ namespace WpfApp2.Db.Models
                             }
                         }
                     }
+                }
+            }
+            //Saved
+
+            if (addedEntities.Count > 0)
+            {
+                base.SaveChanges();
+
+
+                foreach (var change in addedEntities)
+                {
+
+                    var entityName = change.Entity.GetType().Name;
+                    if (entityName != "ChangeHistory")
+                    {
+                        //var primaryKey = GetPrimaryKeyValue(change);
+
+                        foreach (var prop in change.CurrentValues.PropertyNames)
+                        {
+                            if (change.CurrentValues[prop] != null)
+                            {
+
+                                var primaryKey = GetPrimaryKeyValue(change);
+                                if (entityName == "Analize" && prop == "ImageByte")
+                                {
+
+                                    var currentValueBlob = (byte[])change.CurrentValues[prop];
+                                    foreach (var x in logsList)
+                                    {
+                                        if (x.TblName == entityName && x.AccID == CurrAccId && x.TblCollumnName == prop && x.ChangeType == 2 && x.BlobNew == currentValueBlob)
+                                        {
+                                            x.RowId = primaryKey.ToString();
+                                        }
+                                    }
+
+                                }
+                                else
+                                {
+
+
+                                    // var originalValue = change.OriginalValues[prop].ToString();
+                                    var currentValue = change.CurrentValues[prop].ToString();
+                                    foreach (var x in logsList)
+                                    {
+                                        if (x.TblName == entityName && x.AccID == CurrAccId && x.TblCollumnName == prop && x.ChangeType == 2 && x.NewValue == currentValue)
+                                        {
+
+                                            x.RowId = primaryKey.ToString();
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+                //Saved
+                foreach (var change in modifiedEntities)
+                {
+
+
+                    var entityName = change.Entity.GetType().Name;
+                    if (entityName.Contains("Operation"))
+                    {
+                        entityName = "Operation";
+
+                    }
+                    if (entityName != "ChangeHistory")
+                    {
+
+                        var primaryKey = GetPrimaryKeyValue(change);
+
+                        foreach (var prop in change.OriginalValues.PropertyNames)
+                        {
+                            if (change.CurrentValues[prop] != null && change.OriginalValues[prop] != null)
+                            {
+                                if (entityName == "Analize" && prop == "ImageByte")
+                                {
+                                    var currentValueBlob = (byte[])change.CurrentValues[prop];
+                                    foreach (var x in logsList)
+                                    {
+                                        if (x.TblName == entityName && x.AccID == CurrAccId && x.TblCollumnName == prop && x.ChangeType == 1 && x.RowId == primaryKey.ToString())
+                                        {
+                                            x.BlobNew = currentValueBlob;
+                                        }
+                                    }
+
+                                }
+                                else
+                                {
+                                    var currentValue = change.CurrentValues[prop].ToString();
+                                    foreach (var x in logsList)
+                                    {
+                                        if (x.TblName == entityName && x.AccID == CurrAccId && x.TblCollumnName == prop && x.ChangeType == 1 && x.RowId == primaryKey.ToString())
+                                        {
+                                            x.NewValue = currentValue;
+                                        }
+                                    }
+
+                                    //  logsList.Add(logh);
+                                }
+                            }
+                        }
+                    }
+
                 }
             }
 

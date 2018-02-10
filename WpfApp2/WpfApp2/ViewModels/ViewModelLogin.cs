@@ -67,10 +67,12 @@ namespace WpfApp2.ViewModels
                                 else if (acc.isAdmin != null && acc.isAdmin.Value)
                                 {
                                     MessageBus.Default.Call("SetVisibilityPanelAdmin", this, Visibility.Visible);
+                                    MessageBus.Default.Call("SetAlertVisibility", this, Visibility.Collapsed);
                                     MessageBus.Default.Call("SetVisibilityForDocsOrMed", this, Visibility.Collapsed);
                                 }
                                 else
                                 {
+                                    MessageBus.Default.Call("SetAlertVisibility", this, Visibility.Collapsed);
                                     MessageBus.Default.Call("SetVisibilityPanelAdmin", this, Visibility.Collapsed);
                                     MessageBus.Default.Call("SetVisibilityForDocsOrMed", this, Visibility.Collapsed);
 

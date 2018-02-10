@@ -287,7 +287,7 @@ namespace WpfApp2.ViewModels
 
                 result = false;
             }
-       
+
             return result;
         }
 
@@ -467,8 +467,10 @@ namespace WpfApp2.ViewModels
                             Data.СategoryType.Add(newСategory);
                             Data.Complete();
                             bufDoc.категория = newСategory.Id;
+                            Data.Complete();
+
                         }
-                      // bufDoc.категория = CategorySelectedId;
+                        // bufDoc.категория = CategorySelectedId;
                         Data.Complete();
 
                         bool specTestbuf = false;
@@ -493,6 +495,8 @@ namespace WpfApp2.ViewModels
                                         if (doctorSpec.id_врача == currentDoctor.Id && doctorSpec.id_специлизации == specOld.id)
                                         {
                                             Data.DoctorsSpecializations.Remove(doctorSpec);
+                                            Data.Complete();
+
                                             specOld.IsChecked = false;
                                             break;
                                         }
@@ -501,7 +505,7 @@ namespace WpfApp2.ViewModels
                                 }
                             }
                         }
-                        Data.Complete();
+                        //     Data.Complete();
                         foreach (var spec in Specializations)
                         {
                             if (spec.IsChecked == true)
@@ -521,11 +525,12 @@ namespace WpfApp2.ViewModels
                                     bufDS.id_врача = currentDoctor.Id;
                                     bufDS.id_специлизации = spec.id;
                                     Data.DoctorsSpecializations.Add(bufDS);
+                                    Data.Complete();
+
                                 }
                             }
                         }
 
-                        Data.Complete();
 
 
 
@@ -554,6 +559,8 @@ namespace WpfApp2.ViewModels
                                         if (doctorSpec.id_врача == currentDoctor.Id && doctorSpec.id_звания == specOld.id)
                                         {
                                             Data.ScientificTitles.Remove(doctorSpec);
+                                            Data.Complete();
+
                                             specOld.IsChecked = false;
                                             break;
                                         }
@@ -582,11 +589,13 @@ namespace WpfApp2.ViewModels
                                     bufDS.id_врача = currentDoctor.Id;
                                     bufDS.id_звания = spec.id;
                                     Data.ScientificTitles.Add(bufDS);
+                                    Data.Complete();
+
                                 }
                             }
                         }
 
-                        Data.Complete();
+                        //    Data.Complete();
 
                         MessageBus.Default.Call("OpenDoctors", this, "");
                         Controller.NavigateTo<ViewModelViewDoctors>();

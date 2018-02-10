@@ -99,7 +99,7 @@ namespace WpfApp2.ViewModels
             {
                 foreach (var datC in LeftDiag)
                 {
-                    if (dg.Data.Id == datC.Data.Id)
+                    if (dg.Data != null && dg.Data.Id == datC.Data.Id)
                     {
                         datC.IsChecked = true;
                     }
@@ -110,7 +110,7 @@ namespace WpfApp2.ViewModels
             {
                 foreach (var datC in RightDiag)
                 {
-                    if (dg.Data.Id == datC.Data.Id)
+                    if (dg.Data != null && dg.Data.Id == datC.Data.Id)
                     {
                         datC.IsChecked = true;
                     }

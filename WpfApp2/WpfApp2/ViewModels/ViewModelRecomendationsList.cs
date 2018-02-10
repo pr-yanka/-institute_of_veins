@@ -86,7 +86,7 @@ namespace WpfApp2.ViewModels
             {
                 foreach (var datC in DataSourceList)
                 {
-                    if(dat.Data.Id == datC.Data.Id)
+                    if(dat.Data != null && dat.Data.Id == datC.Data.Id)
                     {
                         datC.IsChecked = true;
                     }

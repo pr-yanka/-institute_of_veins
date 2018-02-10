@@ -39,11 +39,13 @@ namespace WpfApp2.ViewModels
 
         public ViewModelAddOperationResult(NavigationController controller) : base(controller)
         {
+            comment = "";
             MessageBus.Default.Subscribe("GetOperationIDForAddOperationResult", GetOperationid);
             HasNavigation = false;
             ToOperationCommand = new DelegateCommand(
                 () =>
                 {
+                    
 
                     var result = MessageBox.Show("Назначить ещё одну операцию", "", MessageBoxButton.YesNo);
                     if (result == System.Windows.MessageBoxResult.Yes)
