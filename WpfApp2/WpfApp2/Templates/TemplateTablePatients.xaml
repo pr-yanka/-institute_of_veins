@@ -18,7 +18,7 @@
             <Button x:Name="button_Copy13" Content="В ГЛАВНОЕ МЕНЮ" Command="{Binding Path=ToDashboardCommand}"
                     HorizontalAlignment="Left" Margin="650,651,0,0" VerticalAlignment="Top" Width="300" Height="42" Background="#FF7D83BB" 
                     FontFamily="Segoe UI Light" FontSize="16" Foreground="White" BorderBrush="{x:Null}" />
-            <TextBlock FontFamily="/fonts/#Pescadero" FontSize="16pt" Margin="308,10,309,456" Height="38" Text="Пациенты"/>
+            <TextBlock FontFamily="/fonts/#Pescadero" FontSize="22pt" Margin="308,10,309,456" Height="38" Text="Пациенты"/>
 
             <DataGrid  AutoGenerateColumns="False" ItemsSource="{Binding Path=Controller.CurrentViewModel.Patients}" x:Name="dataGrid" ScrollViewer.VerticalScrollBarVisibility="Visible"
                       Margin="232,20,53,0" Height="500" Width="731" FontSize="14" HorizontalAlignment="Center">

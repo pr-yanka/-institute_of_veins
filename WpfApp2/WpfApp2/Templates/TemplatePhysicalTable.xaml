@@ -2,20 +2,27 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplatePhysicalTable">
-        <Grid Margin="220,80,0,0">
-            <TextBlock HorizontalAlignment="Center" Margin="10,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Text="Обследования" FontSize="20" Foreground="#FF210A0A" Background="#FF899FCD" Width="897"/>
-            <TextBlock HorizontalAlignment="Left" Margin="434,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="36" Width="267" FontSize="20" Text="Поиск по слову:"/>
-            <CheckBox Content="сортировать по дате&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,42,0,0" VerticalAlignment="Top" FontSize="16" Height="24" Width="185"/>
-            <CheckBox Content="только мои обследования&#xD;&#xA;" HorizontalAlignment="Left" Margin="200,42,0,0" VerticalAlignment="Top" FontSize="16" Height="24" Width="243"/>
-            <TextBox HorizontalAlignment="Left" Height="23" Margin="602,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="305"/>
-            <DataGrid HorizontalAlignment="Left" Height="428" Margin="10,70,0,0" VerticalAlignment="Top" Width="897" Background="#FFECEFF5">
+        <Grid Margin="220,75,0,0">
+            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Text="Обследования" FontFamily="/fonts/#Pescadero" FontSize="22pt" RenderTransformOrigin="0.591,0.516">
+                <TextBlock.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="10"/>
+                    </TransformGroup>
+                </TextBlock.RenderTransform>
+            </TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="10,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="164" FontSize="22" Text="Поиск по слову:" RenderTransformOrigin="-0.027,0.471"/>
+            <CheckBox Content="только мои обследования&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,59,0,0" VerticalAlignment="Top" FontSize="22" Height="35" Width="297"/>
+            <TextBox HorizontalAlignment="Left" Height="35" Margin="188,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="422" RenderTransformOrigin="0.632,0.9"/>
+            <DataGrid Margin="10,160,206,10">
                 <DataGrid.Columns>
                     <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Дата" MinWidth="200"/>
                     <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="Пациент" MinWidth="200"/>
                     <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" MinWidth="200"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button Content="Перейти к обследованию" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="413,109,0,0" VerticalAlignment="Top" Width="478"/>
         </Grid>
     </DataTemplate>
 
