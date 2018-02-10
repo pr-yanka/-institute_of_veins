@@ -4,21 +4,34 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WpfApp2"
+             xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
              mc:Ignorable="d" 
              d:DesignHeight="705" d:DesignWidth="1024">
     <Grid Name="RootGrid">
-        <TextBlock FontSize="24" FontFamily="Source Sans Pro" HorizontalAlignment="Left" Margin="432,48,0,0" TextWrapping="Wrap" Text="ПАНЕЛЬ АДМИНИСТРАТОРА" VerticalAlignment="Top" Width="297" Height="75" TextAlignment="Center" Foreground="#FF404040" FontWeight="Bold"/>
-        <Button x:Name="buttonToPatients" Command="{Binding ToMedPersonalCommand}" HorizontalAlignment="Left" Margin="601,222,0,0" VerticalAlignment="Top" Width="227" Height="153" Background="#FFDDF2F3" FontFamily="Segoe UI Symbol" FontSize="16" BorderBrush="{x:Null}" Foreground="#FF686868" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" UseLayoutRounding="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" FontStretch="Condensed">
-            <Image Margin="0,22,0,61" Source="pack://application:,,,/Images/patient.png" Stretch="Fill" Width="60" Height="60"/>
-        </Button>
-        <TextBlock FontSize="14" FontFamily="Source Sans Pro" HorizontalAlignment="Left" Margin="613,319,0,0" TextWrapping="Wrap" Text="МЕДПЕРСОНАЛ" VerticalAlignment="Top" Width="202" Height="75" TextAlignment="Center" Foreground="#FF404040"/>
-        <Button x:Name="buttonToPhysicalTable" Command="{Binding ToUsersCommand}" HorizontalAlignment="Left" Margin="342,431,0,0" VerticalAlignment="Top" Width="227" Height="153" Background="#FFDDF2F3" FontFamily="Segoe UI Symbol" FontSize="16" BorderBrush="{x:Null}" Foreground="#FF686868" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" UseLayoutRounding="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" FontStretch="Condensed">
-            <Image Margin="0,25,0,68" Source="pack://application:,,,/Images/patient.png" Stretch="Fill" Width="54" Height="54"/>
-        </Button>
-        <Button x:Name="buttonToNewPatient" Command="{Binding ToDoctorsCommand}" HorizontalAlignment="Left" Margin="342,222,0,0" VerticalAlignment="Top" Width="227" Height="153" Background="#FFDDF2F3" FontFamily="Segoe UI Symbol" FontSize="16" BorderBrush="{x:Null}" Foreground="#FF686868" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" UseLayoutRounding="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" FontStretch="Condensed">
-            <Image Source="pack://application:,,,/Images/patient.png" Width="50" Height="50" HorizontalAlignment="Left" Margin="0,24,0,69"/>
-        </Button>
-        <TextBlock FontSize="14" FontFamily="Source Sans Pro" HorizontalAlignment="Left" Margin="359,521,0,0" TextWrapping="Wrap" Text="ПОЛЬЗОВАТЕЛИ" VerticalAlignment="Top" Width="188" Height="47" TextAlignment="Center" Foreground="#FF404040"/>
-        <TextBlock FontSize="14" FontFamily="Source Sans Pro" HorizontalAlignment="Left" Margin="359,319,0,0" TextWrapping="Wrap" Text="ВРАЧИ" VerticalAlignment="Top" Width="188" Height="47" TextAlignment="Center" Foreground="#FF404040"/>
+        <TextBlock DockPanel.Dock="Top" FontFamily="/fonts/#Pescadero" FontSize="18pt" Margin="24,10,27,657" Height="38" Text="{Binding Path=CurrentPatient.Name}"><TextBlock Text="{Binding Path=initials}"/></TextBlock>
+        <CheckBox x:Name="button2" Content="Показывать отменённые операции" IsChecked="{Binding Path=isCanceledOprVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Right" Margin="0,49,27,0" VerticalAlignment="Top" Width="auto" Height="42" FontSize="22"/>
+        <Button x:Name="button" Content="Добавить обследование" Command="{Binding Path=ToAddPhysicalCommand}" HorizontalAlignment="Left" Margin="24,529,0,0" VerticalAlignment="Top" Width="225" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+        <Button x:Name="button_Copy3" Content="К ПАЦИЕНТУ" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="24,630,0,0" VerticalAlignment="Top" Width="707" Height="42" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+        <DataGrid HorizontalAlignment="Left" Height="405" VerticalAlignment="Top" Width="973" Margin="24,104,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Foreground="Black"  ItemsSource="{Binding Path=HistoryDataSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserResizeRows="False" Background="#7FFFFFFF">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button  Content="{Binding Type}" Command="{Binding Path=Command}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePickerTextBox IsReadOnly="True" Text="{Binding Date}"  />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="button_Copy4" Content="Добавить операцию" Command="{Binding Path=ToAddOperationCommand}" HorizontalAlignment="Left" Margin="506,529,0,0" VerticalAlignment="Top" Width="225" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+        <Button x:Name="button_Copy6" Content="Добавить анализы" Command="{Binding Path=ToAddAnalizeCommand}" HorizontalAlignment="Left" Margin="266,529,0,0" VerticalAlignment="Top" Width="226" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+        <TextBlock FontSize="18pt"  Margin="24,53,438,614" Height="38" Text="История пациента:"></TextBlock>
     </Grid>
 </UserControl>
