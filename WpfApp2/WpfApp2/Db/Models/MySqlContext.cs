@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Mapping;
+using System.Data.Entity.Core.Metadata.Edm;
+using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
 using System.Linq;
@@ -177,7 +180,40 @@ namespace WpfApp2.Db.Models
             CurrAccId = (int)data;
         }
 
+        public static string GetTableName(Type type, DbContext context)
+        {
+            var metadata = ((IObjectContextAdapter)context).ObjectContext.MetadataWorkspace;
 
+            // Get the part of the model that contains info about the actual CLR types
+            var objectItemCollection = ((ObjectItemCollection)metadata.GetItemCollection(DataSpace.OSpace));
+
+            // Get the entity type from the model that maps to the CLR type
+            var entityType = metadata
+                    .GetItems<EntityType>(DataSpace.OSpace)
+                    .Single(e => objectItemCollection.GetClrType(e) == type);
+
+            // Get the entity set that uses this entity type
+            var entitySet = metadata
+                .GetItems<EntityContainer>(DataSpace.CSpace)
+                .Single()
+                .EntitySets
+                .Single(s => s.ElementType.Name == entityType.Name);
+
+            // Find the mapping between conceptual and storage model for this entity set
+            var mapping = metadata.GetItems<EntityContainerMapping>(DataSpace.CSSpace)
+                    .Single()
+                    .EntitySetMappings
+                    .Single(s => s.EntitySet == entitySet);
+
+            // Find the storage entity set (table) that the entity is mapped
+            var table = mapping
+                .EntityTypeMappings.Single()
+                .Fragments.Single()
+                .StoreEntitySet;
+
+            // Return the table name from the storage entity set
+            return (string)table.MetadataProperties["Table"].Value ?? table.Name;
+        }
 
         public override int SaveChanges()
         {
@@ -198,7 +234,7 @@ namespace WpfApp2.Db.Models
 
             foreach (var change in deletedEntities)
             {
-
+                var tableName = GetTableName(change.Entity.GetType(), this);
                 var entityName = change.Entity.GetType().Name;
                 if (entityName != "ChangeHistory")
                 {
@@ -225,7 +261,7 @@ namespace WpfApp2.Db.Models
                                     logh = new Models.ChangeHistory()
                                     {
 
-                                        TblName = entityName,
+                                        TblName = tableName,
                                         AccID = CurrAccId,
 
                                         RowId = primaryKey.ToString(),
@@ -254,7 +290,7 @@ namespace WpfApp2.Db.Models
 
                                     logh = new Models.ChangeHistory()
                                     {
-                                        TblName = entityName,
+                                        TblName = tableName,
                                         AccID = CurrAccId,
                                         RowId = primaryKey.ToString(),
                                         TblCollumnName = prop,
@@ -282,6 +318,7 @@ namespace WpfApp2.Db.Models
             {
 
                 var entityName = change.Entity.GetType().Name;
+                var tableName = GetTableName(change.Entity.GetType(), this);
                 if (entityName != "ChangeHistory")
                 {
                     //var primaryKey = GetPrimaryKeyValue(change);
@@ -307,7 +344,7 @@ namespace WpfApp2.Db.Models
                                     logh = new Models.ChangeHistory()
                                     {
 
-                                        TblName = entityName,
+                                        TblName = tableName,
                                         AccID = CurrAccId,
 
                                         RowId = primaryKey.ToString(),
@@ -336,7 +373,7 @@ namespace WpfApp2.Db.Models
 
                                     logh = new Models.ChangeHistory()
                                     {
-                                        TblName = entityName,
+                                        TblName = tableName,
                                         AccID = CurrAccId,
                                         RowId = primaryKey.ToString(),
                                         TblCollumnName = prop,
@@ -361,13 +398,9 @@ namespace WpfApp2.Db.Models
 
             foreach (var change in modifiedEntities)
             {
-
+                var tableName = GetTableName(change.Entity.GetType(), this);
                 var entityName = change.Entity.GetType().Name;
-                if (entityName.Contains("Operation"))
-                {
-                    entityName = "Operation";
-
-                }
+               
                 if (entityName != "ChangeHistory")
                 {
 
@@ -388,7 +421,7 @@ namespace WpfApp2.Db.Models
 
                                     logh = new Models.ChangeHistory()
                                     {
-                                        TblName = entityName,
+                                        TblName = tableName,
                                         AccID = CurrAccId,
                                         RowId = primaryKey.ToString(),
                                         TblCollumnName = prop,
@@ -420,7 +453,7 @@ namespace WpfApp2.Db.Models
 
                                     logh = new Models.ChangeHistory()
                                     {
-                                        TblName = entityName,
+                                        TblName = tableName,
                                         AccID = CurrAccId,
                                         RowId = primaryKey.ToString(),
                                         TblCollumnName = prop,
@@ -449,7 +482,7 @@ namespace WpfApp2.Db.Models
 
                 foreach (var change in addedEntities)
                 {
-
+                    var tableName = GetTableName(change.Entity.GetType(), this);
                     var entityName = change.Entity.GetType().Name;
                     if (entityName != "ChangeHistory")
                     {
@@ -467,7 +500,7 @@ namespace WpfApp2.Db.Models
                                     var currentValueBlob = (byte[])change.CurrentValues[prop];
                                     foreach (var x in logsList)
                                     {
-                                        if (x.TblName == entityName && x.AccID == CurrAccId && x.TblCollumnName == prop && x.ChangeType == 2 && x.BlobNew == currentValueBlob)
+                                        if (x.TblName == tableName && x.AccID == CurrAccId && x.TblCollumnName == prop && x.ChangeType == 2 && x.BlobNew == currentValueBlob)
                                         {
                                             x.RowId = primaryKey.ToString();
                                         }
@@ -482,7 +515,7 @@ namespace WpfApp2.Db.Models
                                     var currentValue = change.CurrentValues[prop].ToString();
                                     foreach (var x in logsList)
                                     {
-                                        if (x.TblName == entityName && x.AccID == CurrAccId && x.TblCollumnName == prop && x.ChangeType == 2 && x.NewValue == currentValue)
+                                        if (x.TblName == tableName && x.AccID == CurrAccId && x.TblCollumnName == prop && x.ChangeType == 2 && x.NewValue == currentValue)
                                         {
 
                                             x.RowId = primaryKey.ToString();
@@ -500,7 +533,7 @@ namespace WpfApp2.Db.Models
                 foreach (var change in modifiedEntities)
                 {
 
-
+                    var tableName = GetTableName(change.Entity.GetType(), this);
                     var entityName = change.Entity.GetType().Name;
                     if (entityName.Contains("Operation"))
                     {
@@ -521,7 +554,7 @@ namespace WpfApp2.Db.Models
                                     var currentValueBlob = (byte[])change.CurrentValues[prop];
                                     foreach (var x in logsList)
                                     {
-                                        if (x.TblName == entityName && x.AccID == CurrAccId && x.TblCollumnName == prop && x.ChangeType == 1 && x.RowId == primaryKey.ToString())
+                                        if (x.TblName == tableName && x.AccID == CurrAccId && x.TblCollumnName == prop && x.ChangeType == 1 && x.RowId == primaryKey.ToString())
                                         {
                                             x.BlobNew = currentValueBlob;
                                         }
@@ -533,7 +566,7 @@ namespace WpfApp2.Db.Models
                                     var currentValue = change.CurrentValues[prop].ToString();
                                     foreach (var x in logsList)
                                     {
-                                        if (x.TblName == entityName && x.AccID == CurrAccId && x.TblCollumnName == prop && x.ChangeType == 1 && x.RowId == primaryKey.ToString())
+                                        if (x.TblName == tableName && x.AccID == CurrAccId && x.TblCollumnName == prop && x.ChangeType == 1 && x.RowId == primaryKey.ToString())
                                         {
                                             x.NewValue = currentValue;
                                         }
