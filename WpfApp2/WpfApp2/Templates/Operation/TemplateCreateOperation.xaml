@@ -173,7 +173,7 @@
             <Button x:Name="button_Copy3" Content="{Binding Path=ButtonSaveText}" Command="{Binding Path=ToOperationOverviewCommand}" HorizontalAlignment="Left" Margin="554,558,0,0"              
                     VerticalAlignment="Top" Width="215" Height="34" RenderTransformOrigin="0.502,0.471"/>
             <ListBox HorizontalAlignment="Left" Height="284" Margin="490,211,0,0" VerticalAlignment="Top" Width="259"  
-                       ItemsSource="{Binding Path=LeftDiagnosisList}"   Foreground="Black" Background="White">
+                       ItemsSource="{Binding Path=LeftDiagnosisList.View}"   Foreground="Black" Background="White">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
 
@@ -182,7 +182,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <ListBox ItemsSource="{Binding Path=RightDiagnosisList}" HorizontalAlignment="Left" Height="284" Margin="755,211,0,0" VerticalAlignment="Top" Width="259"  
+            <ListBox ItemsSource="{Binding Path=RightDiagnosisList.View}" HorizontalAlignment="Left" Height="284" Margin="755,211,0,0" VerticalAlignment="Top" Width="259"  
                           Foreground="Black" Background="White">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -194,11 +194,11 @@
             </ListBox>
             <Button x:Name="button_Copy4" Content="Выбрать диагноз слева"  Command="{Binding Path=ToLeftDiagCommand}" HorizontalAlignment="Left" Margin="490,170,0,0"              
                     VerticalAlignment="Top" Width="259" Height="36" RenderTransformOrigin="0.497,0.15"/>
-            <Button x:Name="button_Copy5" Content="Взять из последнего обследования" HorizontalAlignment="Left"  
+            <Button x:Name="button_Copy5" Command="{Binding GetLeftFromLastObs}" Content="Взять из последнего обследования" HorizontalAlignment="Left"  
                     Margin="490,500,0,0"             VerticalAlignment="Top" Width="259" Height="36"/>
             <Button x:Name="button_Copy6" Content="Выбрать диагноз справа" Command="{Binding Path=ToRightDiagCommand}" HorizontalAlignment="Left" Margin="755,170,0,0"              
                     VerticalAlignment="Top" Width="259" Height="36" RenderTransformOrigin="0.484,0.472"/>
-            <Button x:Name="button_Copy7" Content="Взять из последнего обследования" HorizontalAlignment="Left"  
+            <Button x:Name="button_Copy7" Command="{Binding GetRightFromLastObs}"  Content="Взять из последнего обследования" HorizontalAlignment="Left"  
             Margin="755,500,0,0"             VerticalAlignment="Top" Width="259" Height="36"/>
 
             <Border Grid.RowSpan="4" Visibility="{Binding Path = CurrentPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOverlay">

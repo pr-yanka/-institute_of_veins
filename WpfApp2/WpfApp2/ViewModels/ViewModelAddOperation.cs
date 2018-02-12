@@ -92,6 +92,9 @@ namespace WpfApp2.ViewModels
 
         #region everyth connected with panel
 
+        public DelegateCommand GetLeftFromLastObs { set; get; }
+        public DelegateCommand GetRightFromLastObs { set; get; }
+
         public DelegateCommand RevertCommand { set; get; }
         public DelegateCommand SaveCommand { set; get; }
         public DelegateCommand SaveAnesteticCommand { set; get; }
@@ -118,8 +121,8 @@ namespace WpfApp2.ViewModels
         #endregion
 
         #region Bindings
-        public ObservableCollection<DiagnosisDataSource> LeftDiagnosisList { get; set; }
-        public ObservableCollection<DiagnosisDataSource> RightDiagnosisList { get; set; }
+        public CollectionViewSource LeftDiagnosisList { get; set; }
+        public CollectionViewSource RightDiagnosisList { get; set; }
 
         private ObservableCollection<string> _oprTypes;
         private ObservableCollection<string> _anestethicTypes;
@@ -297,16 +300,21 @@ namespace WpfApp2.ViewModels
         bool isSetOperResult = false;
         private void SetRightDiagnosisList(object sender, object data)
         {
-            RightDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
+            var RightDiagnosisList1 = new ObservableCollection<DiagnosisDataSource>();
             foreach (var diag in (List<DiagnosisDataSource>)data)
-            { RightDiagnosisList.Add(diag); }
+            { RightDiagnosisList1.Add(diag); }
+            RightDiagnosisList.Source = RightDiagnosisList1;
+            RightDiagnosisList.View.Refresh();
+            Controller.NavigateTo<ViewModelAddOperation>();
         }
         private void SetLeftDiagnosisList(object sender, object data)
         {
-            LeftDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
+            var LeftDiagnosisList1 = new ObservableCollection<DiagnosisDataSource>();
             foreach (var diag in (List<DiagnosisDataSource>)data)
-            { LeftDiagnosisList.Add(diag); }
-
+            { LeftDiagnosisList1.Add(diag); }
+            LeftDiagnosisList.Source = LeftDiagnosisList1;
+            LeftDiagnosisList.View.Refresh();
+            Controller.NavigateTo<ViewModelAddOperation>();
         }
         private void SetOperResult(object sender, object data)
         {
@@ -399,10 +407,78 @@ namespace WpfApp2.ViewModels
             HasNavigation = false;
             Operation = new Operation();
             Operation.Date = DateTime.Now;
-            LeftDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
-            RightDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
+            LeftDiagnosisList = new CollectionViewSource();
+            RightDiagnosisList = new CollectionViewSource();
+
+            GetLeftFromLastObs = new DelegateCommand(
+                () =>
+                {
+                    using (var context = new MySqlContext())
+                    {
+                        DiagnosisObsRepository DiagObsRep = new DiagnosisObsRepository(context);
+                        ExaminationRepository ExamRep = new ExaminationRepository(context);
+                        var ExamsOfCurrPatient = ExamRep.GetAll.ToList().Where(s => s.PatientId == CurrentPatient.Id).ToList();
+
+                        if (ExamsOfCurrPatient.Count > 0)
+                        {
+                            DateTime MaxExam = ExamsOfCurrPatient.Max(s => s.Date);
+                            var ExamsOfCurrPatientLatest = ExamsOfCurrPatient.Where(s => s.Date == MaxExam).ToList();
+                            List<DiagnosisObs> DiagOfCurrPatienLt = DiagObsRep.GetAll.ToList().Where(s => s.id_обследование_ноги == ExamsOfCurrPatientLatest[0].Id && s.isLeft == true).ToList();
+                          //  List<DiagnosisObs> DiagOfCurrPatientRt = DiagObsRep.GetAll.ToList().Where(s => s.id_обследование_ноги == ExamsOfCurrPatientLatest[0].Id && s.isLeft == false).ToList();
+
+                         //   MessageBus.Default.Call("SetDiagnosisListRight", null, DiagOfCurrPatientRt);
+                            MessageBus.Default.Call("SetDiagnosisListLeft", null, DiagOfCurrPatienLt);
 
 
+                            // ExaminationLeg leftLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idLeftLegExamination.Value);
+                            // ExaminationLeg rightLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idRightLegExamination.Value);
+
+                            // Letters bufLetter = new Letters();
+                            Controller.NavigateTo<ViewModelAddOperation>();
+
+                        }
+                        else{
+                            MessageBox.Show("Нет диагноза слева последнего обследования");
+                        }
+
+                    }
+                }
+            );
+            GetRightFromLastObs = new DelegateCommand(
+                () =>
+                {
+                    using (var context = new MySqlContext())
+                    {
+                        DiagnosisObsRepository DiagObsRep = new DiagnosisObsRepository(context);
+                        ExaminationRepository ExamRep = new ExaminationRepository(context);
+                        var ExamsOfCurrPatient = ExamRep.GetAll.ToList().Where(s => s.PatientId == CurrentPatient.Id).ToList();
+
+                        if (ExamsOfCurrPatient.Count > 0)
+                        {
+                            DateTime MaxExam = ExamsOfCurrPatient.Max(s => s.Date);
+                            var ExamsOfCurrPatientLatest = ExamsOfCurrPatient.Where(s => s.Date == MaxExam).ToList();
+                          //  List<DiagnosisObs> DiagOfCurrPatienLt = DiagObsRep.GetAll.ToList().Where(s => s.id_обследование_ноги == ExamsOfCurrPatientLatest[0].Id && s.isLeft == true).ToList();
+                             List<DiagnosisObs> DiagOfCurrPatientRt = DiagObsRep.GetAll.ToList().Where(s => s.id_обследование_ноги == ExamsOfCurrPatientLatest[0].Id && s.isLeft == false).ToList();
+
+                               MessageBus.Default.Call("SetDiagnosisListRight", null, DiagOfCurrPatientRt);
+                            // MessageBus.Default.Call("SetDiagnosisListLeft", null, DiagOfCurrPatienLt);
+
+
+                            // ExaminationLeg leftLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idLeftLegExamination.Value);
+                            // ExaminationLeg rightLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idRightLegExamination.Value);
+
+                            // Letters bufLetter = new Letters();
+                            Controller.NavigateTo<ViewModelAddOperation>();
+
+                        }
+                        else
+                        {
+                            MessageBox.Show("Нет диагноза справа последнего обследования");
+                        }
+
+                    }
+                }
+            );
 
             ToCurrentPatientCommand = new DelegateCommand(
                 () => { Controller.NavigateTo<ViewModelCurrentPatient>(); }
@@ -412,7 +488,7 @@ namespace WpfApp2.ViewModels
                 () =>
                 {
 
-                    if (LeftDiagnosisList.Count == 0 || RightDiagnosisList.Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false)
+                    if (((ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source).Count == 0 || ((ObservableCollection<DiagnosisDataSource>)RightDiagnosisList.Source).Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false)
                     {
 
                         MessageBox.Show("Не всё заполнено!");
@@ -448,8 +524,8 @@ namespace WpfApp2.ViewModels
                             }
 
                         }
-                       
-                        foreach (var diagnozL in LeftDiagnosisList)
+
+                        foreach (var diagnozL in (ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source)
                         {
 
                             Diagnosis buf = new Diagnosis();
@@ -460,8 +536,8 @@ namespace WpfApp2.ViewModels
                             Data.Diagnosis.Add(buf);
                             Data.Complete();
                         }
-                     
-                        foreach (var diagnozR in RightDiagnosisList)
+
+                        foreach (var diagnozR in (ObservableCollection<DiagnosisDataSource>)RightDiagnosisList.Source)
                         {
 
                             Diagnosis buf = new Diagnosis();
@@ -474,7 +550,7 @@ namespace WpfApp2.ViewModels
 
                         }
 
-                 //       Data.Complete();
+                        //       Data.Complete();
                         if (isSetOperResult == true)
                         {
                             OperationResult.IdNextOperation = Operation.Id;
@@ -484,7 +560,7 @@ namespace WpfApp2.ViewModels
                         MessageBus.Default.Call("SetCurrentACCOp", this, null);
                         MessageBus.Default.Call("GetOperationForOverwiev", this, Operation.Id);
                         Controller.NavigateTo<ViewModelOperationOverview>();
-                    //    Data.Complete();
+                        //    Data.Complete();
                         Operation = new Operation();
                         OperationResult = new OperationResult();
                     }
@@ -507,7 +583,7 @@ namespace WpfApp2.ViewModels
            );
             //for right panel
             CurrentPanelViewModel = new OperationTypePanelViewModel(this);
-           
+
             OpenPanelCommand = new DelegateCommand(() =>
             {
                 CurrentPanelViewModel.ClearPanel();

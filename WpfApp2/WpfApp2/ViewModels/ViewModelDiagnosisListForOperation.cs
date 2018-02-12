@@ -56,6 +56,48 @@ namespace WpfApp2.ViewModels
         public string HeaderText { get; set; }
         public string AddButtonText { get; set; }
         private string ld;
+
+        private void SetDiagnosisListLeft(object sender, object data)
+        {
+            // using
+            var DiagList = (List<DiagnosisObs>)data;
+            List<DiagnosisDataSource> DataSourceListBuffer = new List<DiagnosisDataSource>();
+            for (int i = 0; i < DiagList.Count; ++i)
+            {
+
+                DataSourceListBuffer.Add(new DiagnosisDataSource(DiagList[i].DiagnosisType));
+                DataSourceListBuffer[i].IsChecked = true;
+            }
+            //LeftDiag = new List<DiagnosisDataSource>();
+            //for (int i = 0; i < DiagList.Count; ++i)
+            //{
+            //    LeftDiag.Add(new DiagnosisDataSource(DiagList[i].DiagnosisType));
+            //    LeftDiag[i].IsChecked = true;
+            //}
+            MessageBus.Default.Call("SetLeftDiagnosisListForOperation", this, DataSourceListBuffer);
+            Controller.NavigateTo<ViewModelAddOperation>();
+        }
+        private void SetDiagnosisListRight(object sender, object data)
+        {
+            var DiagList = (List<DiagnosisObs>)data;
+            List<DiagnosisDataSource> DataSourceListBuffer = new List<DiagnosisDataSource>();
+            for (int i = 0; i < DiagList.Count; ++i)
+            {
+
+                DataSourceListBuffer.Add(new DiagnosisDataSource(DiagList[i].DiagnosisType));
+                DataSourceListBuffer[i].IsChecked = true;
+            }
+            //RightDiag = new List<DiagnosisDataSource>();
+            //for (int i = 0; i < DiagList.Count; ++i)
+            //{
+            //    RightDiag.Add(new DiagnosisDataSource(DiagList[i].DiagnosisType));
+            //    RightDiag[i].IsChecked = true;
+            //}
+            MessageBus.Default.Call("SetRightDiagnosisListForOperation", this, DataSourceListBuffer);
+            Controller.NavigateTo<ViewModelAddOperation>();
+        }
+
+
         private void SetDiagnosisList(object sender, object data)
         {
             ld = (string)data;
@@ -71,7 +113,7 @@ namespace WpfApp2.ViewModels
         public List<DiagnosisDataSource> RightDiag { get; set; }
         public List<DiagnosisDataSource> DataSourceList { get; set; }
         public string TextName { get; set; }
-       
+
         public ViewModelDiagnosisListForOperation(NavigationController controller) : base(controller)
         {
             CurrentPanelViewModel = new DiagTypePanelViewModel(this);
@@ -80,9 +122,11 @@ namespace WpfApp2.ViewModels
                 CurrentPanelViewModel.ClearPanel();
                 CurrentPanelViewModel.PanelOpened = true;
             });
-
+            MessageBus.Default.Subscribe("SetDiagnosisListRight", SetDiagnosisListRight);
+            MessageBus.Default.Subscribe("SetDiagnosisListLeft", SetDiagnosisListLeft);
             SaveCommand = new DelegateCommand(() =>
             {
+              
                 var newType = CurrentPanelViewModel.GetPanelType();
                 if (!string.IsNullOrWhiteSpace(newType.Str))
                 {
@@ -143,14 +187,14 @@ namespace WpfApp2.ViewModels
             DataSourceList = new List<DiagnosisDataSource>();
             LeftDiag = new List<DiagnosisDataSource>();
             RightDiag = new List<DiagnosisDataSource>();
-           
+
             foreach (var DiagnosisType in Data.DiagnosisTypes.GetAll)
             {
                 DataSourceList.Add(new DiagnosisDataSource(DiagnosisType));
                 LeftDiag.Add(new DiagnosisDataSource(DiagnosisType));
                 RightDiag.Add(new DiagnosisDataSource(DiagnosisType));
             }
-         
+
 
             ToPhysicalCommand = new DelegateCommand(
                 () =>
@@ -164,7 +208,7 @@ namespace WpfApp2.ViewModels
                         }
                     }
                     if (ld == "Left")
-                    { 
+                    {
                         MessageBus.Default.Call("SetLeftDiagnosisListForOperation", this, DataSourceListBuffer);
                         LeftDiag = DataSourceList;
                     }
@@ -173,7 +217,7 @@ namespace WpfApp2.ViewModels
                         MessageBus.Default.Call("SetRightDiagnosisListForOperation", this, DataSourceListBuffer);
                         RightDiag = DataSourceList;
                     }
-                   
+
                     Controller.NavigateTo<ViewModelAddOperation>();
                 }
             );

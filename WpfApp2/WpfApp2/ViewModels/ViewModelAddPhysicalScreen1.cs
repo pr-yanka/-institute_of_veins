@@ -905,7 +905,8 @@ namespace WpfApp2.ViewModels
         public string TextTip { get { return _textTip; } set { _textTip = value; OnPropertyChanged(); } }
         public DelegateCommand IMTCOUNT { get; protected set; }
         public DelegateCommand ClickOnTextTip { get; protected set; }
-
+        public DelegateCommand LostOnTextTip { get; private set; }
+        public DelegateCommand LostFocusOnGrowth { get; private set; }
         public DelegateCommand ClickOnWeight { get; protected set; }
         public DelegateCommand ClickOnGrowth { get; protected set; }
 
@@ -986,6 +987,9 @@ namespace WpfApp2.ViewModels
         }
 
         private ICommand openDialogCommand = null;
+
+        public DelegateCommand LostFocusOnWeight { get; private set; }
+
         public ICommand OpenDialogCommand
         {
             get { return this.openDialogCommand; }
@@ -1287,7 +1291,7 @@ namespace WpfApp2.ViewModels
 
                             foreach (var dgOp in Data.DiagnosisObs.GetAll)
                             {
-                               
+
                                 if (dgOp.id_обследование_ноги == examnTotal.Id && dgOp.isLeft == true)
                                 {
                                     test = true;
@@ -1342,7 +1346,7 @@ namespace WpfApp2.ViewModels
                         {
                             foreach (var dgOp in Data.DiagnosisObs.GetAll)
                             {
-                              
+
                                 if (dgOp.id_обследование_ноги == examnTotal.Id && dgOp.isLeft == false)
                                 {
                                     test = true;
@@ -1394,7 +1398,7 @@ namespace WpfApp2.ViewModels
 
                             foreach (var dgOp in Data.RecomendationObs.GetAll)
                             {
-                                
+
                                 if (dgOp.id_обследования == examnTotal.Id)
                                 {
                                     test = true;
@@ -1446,7 +1450,7 @@ namespace WpfApp2.ViewModels
                         {
                             foreach (var dgOp in Data.ComplanesObs.GetAll)
                             {
-                                
+
                                 if (dgOp.id_обследования == examnTotal.Id)
                                 {
                                     test = true;
@@ -2464,6 +2468,20 @@ namespace WpfApp2.ViewModels
 
             this.openDialogCommand = new RelayCommand(FinishAdding);
 
+            LostFocusOnWeight = new DelegateCommand(
+              () =>
+              {
+                  if (string.IsNullOrWhiteSpace(Weight))
+                      Weight = "0";
+              }
+          );
+            LostFocusOnGrowth = new DelegateCommand(
+            () =>
+            {
+                if (string.IsNullOrWhiteSpace(Growth))
+                    Growth = "0";
+            }
+        );
             ClickOnWeight = new DelegateCommand(
                 () =>
                 {
@@ -2961,6 +2979,14 @@ namespace WpfApp2.ViewModels
                 {
                     if (TextTip == "Текст пометки")
                         TextTip = "";
+                    //Controller.NavigateTo<ViewModelCurrentPatient>();
+                }
+            );
+            LostOnTextTip = new DelegateCommand(
+                () =>
+                {
+                    if (string.IsNullOrWhiteSpace(TextTip))
+                        TextTip = "Текст пометки";
                     //Controller.NavigateTo<ViewModelCurrentPatient>();
                 }
             );

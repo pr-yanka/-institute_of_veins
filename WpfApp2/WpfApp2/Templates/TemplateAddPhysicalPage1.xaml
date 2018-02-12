@@ -602,13 +602,20 @@
                     <i:EventTrigger EventName="PreviewMouseDown">
                         <i:InvokeCommandAction  Command="{Binding Path=ClickOnTextTip}"/>
                     </i:EventTrigger>
+                    <i:EventTrigger EventName="LostFocus">
+                        <i:InvokeCommandAction  Command="{Binding Path=LostOnTextTip}"/>
+                    </i:EventTrigger>
                 </i:Interaction.Triggers>
             </TextBox>
                 <TextBlock x:Name="textBlock1_Copy6" HorizontalAlignment="Left" Margin="13,36,0,0" TextWrapping="Wrap" Text="Вес:" VerticalAlignment="Top" Width="43" FontSize="18" RenderTransformOrigin="0.674,0.459"/>
-            <TextBox x:Name="textBox_Copy" HorizontalAlignment="Left" Height="23" Margin="56,38,0,0" TextWrapping="Wrap" Text="{Binding Path=Weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="42" RenderTransformOrigin="0.586,0.435">
+            <TextBox   x:Name="textBox_Copy" HorizontalAlignment="Left" Height="23" Margin="56,38,0,0" TextWrapping="Wrap" Text="{Binding Path=Weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="42" RenderTransformOrigin="0.586,0.435">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseDown">
                         <i:InvokeCommandAction  Command="{Binding Path=ClickOnWeight}"/>
+                    </i:EventTrigger>
+
+                    <i:EventTrigger EventName="LostFocus">
+                        <i:InvokeCommandAction  Command="{Binding Path=LostFocusOnWeight}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <TextBox.InputBindings>
@@ -621,6 +628,9 @@
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseDown">
                         <i:InvokeCommandAction  Command="{Binding Path=ClickOnGrowth}"/>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="LostFocus">
+                        <i:InvokeCommandAction  Command="{Binding Path=LostFocusOnGrowth}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <TextBox.InputBindings>
