@@ -107,6 +107,7 @@ namespace WpfApp2.ViewModels
             ToPhysicalTableCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("SetObsForObsTable", null, null);
                     Controller.NavigateTo<ViewModelPhysicalTable>();
                 });
 

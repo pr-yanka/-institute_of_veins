@@ -20,7 +20,7 @@ namespace WpfApp2.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
-   
+
         public string AccauntName { get; set; }
         public DelegateCommand ToOperationOverviewCommand { get; protected set; }
         public DelegateCommand ToNewPatientCommand { get; protected set; }
@@ -32,7 +32,7 @@ namespace WpfApp2.ViewModels
 
         private Visibility _alertOpOperation;
 
-      
+
         public Visibility AlertOpOperation { get { return _alertOpOperation; } set { _alertOpOperation = value; OnPropertyChanged(); } }
 
 
@@ -124,6 +124,7 @@ namespace WpfApp2.ViewModels
             ToPhysicalTableCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("SetObsForObsTable", null, null);
                     Controller.NavigateTo<ViewModelPhysicalTable>();
                 }
             );

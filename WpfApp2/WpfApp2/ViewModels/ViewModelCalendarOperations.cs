@@ -15,7 +15,26 @@ using WpfApp2.Navigation;
 
 namespace WpfApp2.ViewModels
 {
-    public struct OperationStruct
+    public struct docsAndMeds
+    {
+        public bool isDoc;
+        public int id;
+        public string name;
+        //public MedPersonal Med;
+        public docsAndMeds(bool isDoc, int id, string name)
+        {
+            this.isDoc = isDoc;
+            this.id = id;
+            this.name = name;
+        }
+        public override string ToString()
+        {
+            //if ()
+            //  string initials = " " + doc.Name.ToCharArray()[0].ToString() + ". " + doc.Patronimic.ToCharArray()[0].ToString() + ".";
+            return name;
+        }
+    }
+    public class OperationStruct
     {
 
         public DateTime Date { get; set; }
@@ -24,10 +43,34 @@ namespace WpfApp2.ViewModels
         public string OpType { get; set; }
         public string Anestetic { get; set; }
         public DelegateCommand ToOperation { get; set; }
+        public DelegateCommand ToOperationResult { get; set; }
+        public Visibility IsOpResult { get; set; }
+
+        public bool IsFilteredPt { get; set; }
+        public bool IsFilteredOpType { get; set; }
+        public bool IsFilteredAnestetic { get; set; }
+        public bool IsFilteredDate { get; set; }
+        public bool IsVisibleTotal { get; set; }
 
 
-        public OperationStruct(DelegateCommand ToOperation, Operation Op)
+        public OperationStruct(DelegateCommand ToOperation, Operation Op, DelegateCommand ToOpRes)
         {
+            if (Op.итоги_операции != null)
+            {
+                IsOpResult = Visibility.Visible;
+
+                ToOperationResult = ToOpRes;
+            }
+            else
+            {
+                IsOpResult = Visibility.Collapsed;
+            }
+
+            IsFilteredPt = false;
+            IsFilteredOpType = false;
+            IsFilteredAnestetic = false;
+            IsFilteredDate = false;
+            IsVisibleTotal = true;
             Operation = Op;
             this.ToOperation = ToOperation;
             DateTime buf1 = DateTime.Parse(Op.Time);
@@ -67,16 +110,14 @@ namespace WpfApp2.ViewModels
             set
             {
                 _sortId = value;
-
-
-                MessageBus.Default.Call("SetCurrentACCOp", this, CurrentAcaunt);
+                SetSelectedMedOrDocOps();
                 Controller.NavigateTo<ViewModelCalendarOperations>();
-
                 OnPropertyChanged();
             }
         }
-
-
+        public DelegateCommand FilterTextCommand { get; protected set; }
+        private Visibility _isMyOpVisible;
+        public Visibility isMyOpVisible { get { return _isMyOpVisible; } set { _isMyOpVisible = value; OnPropertyChanged(); } }
 
         private bool _isCompletedOp;
         private bool _isSortByData;
@@ -90,9 +131,23 @@ namespace WpfApp2.ViewModels
                 _isCompletedOp = value;
 
 
-                MessageBus.Default.Call("SetCurrentACCOp", this, CurrentAcaunt);
+                SetSelectedMedOrDocOps();
                 Controller.NavigateTo<ViewModelCalendarOperations>();
                 OnPropertyChanged();
+            }
+        }
+        private bool _isMyOpChecked;
+
+        public bool IsMyOpChecked
+        {
+            get { return _isMyOpChecked; }
+            set
+            {
+                _isMyOpChecked = value; OnPropertyChanged();
+                if (value)
+                    SetCurrentACCOp(null, null);
+
+
             }
         }
         public bool IsSortByData
@@ -118,6 +173,177 @@ namespace WpfApp2.ViewModels
             }
         }
         public CollectionViewSource ViewSource { get; set; }
+        private int _selectedIdDocMed;
+        public int SelectedIdDocMed
+        {
+            get
+            {
+                return _selectedIdDocMed;
+            }
+            set { _selectedIdDocMed = value; OnPropertyChanged(); IsMyOpChecked = false; }
+        }
+        //    IsMyOpChecked
+        private docsAndMeds _selectedDocOrMed;
+
+        public docsAndMeds SelectedDocOrMed
+        {
+            get { return _selectedDocOrMed; }
+            set { _selectedDocOrMed = value; OnPropertyChanged(); SetSelectedMedOrDocOps(); }
+        }
+
+        private ObservableCollection<docsAndMeds> _docsAndMedsList;
+
+        public ObservableCollection<docsAndMeds> DocsAndMedsList
+        {
+            get { return _docsAndMedsList; }
+            set { _docsAndMedsList = value; OnPropertyChanged(); }
+        }
+        private void SetSelectedMedOrDocOps()
+        {
+            using (var context = new MySqlContext())
+            {
+                try
+                {
+
+                    MedPersonalRepository MedPersonalRep = new MedPersonalRepository(context);
+                    DoctorRepository DocsRep = new DoctorRepository(context);
+
+
+                    OperationRepository OperationRp = new OperationRepository(context);
+                    //bool testC = false;
+
+
+                    BrigadeRepository BrigadeRep = new BrigadeRepository(context);
+                    BrigadeMedPersonalRepository BrigadeMedRep = new BrigadeMedPersonalRepository(context);
+                    // Accaunt CurrentAc;
+
+
+
+                    Operations = new ObservableCollection<OperationStruct>();
+
+
+
+                    bool test = true;
+
+                    var Operationsbuf = new ObservableCollection<OperationStruct>();
+                    foreach (var Operation in OperationRp.GetAll)
+                    {
+
+                        test = true;
+                        if (SelectedDocOrMed.id == 0)
+                        {
+                            test = false;
+                        }
+                        else if (SelectedDocOrMed.isDoc)
+                            foreach (var Brigade in BrigadeRep.GetAll)
+                            {
+
+                                if (Brigade.id_операции == Operation.Id && SelectedDocOrMed.id == Brigade.id_врача)
+                                {
+                                    test = false;
+                                }
+                            }
+                        else if (!SelectedDocOrMed.isDoc)
+                            foreach (var Brigade in BrigadeMedRep.GetAll)
+                            {
+                                if (Brigade.id_операции == Operation.Id && SelectedDocOrMed.id == Brigade.id_медперсонал)
+                                {
+                                    test = false;
+                                }
+                            }
+
+
+                        if (!test)
+                        {
+                            DelegateCommand bufer = new DelegateCommand(
+                            () =>
+                            {
+                                MessageBus.Default.Call("GetOperationForOverwiev", this, Operation.Id);
+                                Controller.NavigateTo<ViewModelOperationOverview>();
+                            });
+                            DelegateCommand bufer2 = new DelegateCommand(
+                            () =>
+                            {
+
+                            });
+
+                            if (Operation.итоги_операции != null)
+                            {
+                                bufer2 = new DelegateCommand(
+                           () =>
+                           {
+                               MessageBus.Default.Call("GetOperationForOverwiev", this, Operation.Id);
+                               Controller.NavigateTo<ViewModelOperationOverview>();
+                           });
+                            }
+
+
+
+
+                            if (Operation.OpResult != null && IsCompletedOp == false) { }
+                            else if (Operation.OpCancle == null)
+                            {
+                                DateTime buf1 = DateTime.Parse(Operation.Time);
+                                Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, buf1.Hour, buf1.Minute, buf1.Second);
+                                TimeSpan span = Operation.Date - DateTime.Now;
+
+                                if (_sortId == 0 && Operation.Date.Year == DateTime.Now.Year && Operation.Date.Month == DateTime.Now.Month && Operation.Date.Day == DateTime.Now.Day)
+                                {
+                                    Operations.Add(new OperationStruct(bufer, Operation, bufer2));
+                                }
+                                else if (_sortId == 1 && span.Days > 0 && span.Days <= 3)
+                                {
+                                    Operations.Add(new OperationStruct(bufer, Operation, bufer2));
+                                }
+                                else if (_sortId == 2 && span.Days > 0 && span.Days <= 7)
+                                {
+                                    Operations.Add(new OperationStruct(bufer, Operation, bufer2));
+                                }
+                                else if (_sortId == 3 && span.Days > 0 && span.Days <= 32)
+                                {
+                                    Operations.Add(new OperationStruct(bufer, Operation, bufer2));
+                                }
+                                else if (_sortId == 4)
+                                {
+                                    Operations.Add(new OperationStruct(bufer, Operation, bufer2));
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+
+                    ViewSource.Source = Operations;
+
+
+                    if (_isSortByData == true)
+                    {
+
+                        ViewSource.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Descending));
+
+                        // Let the UI control refresh in order for changes to take place.
+                        ViewSource.View.Refresh();
+
+                    }
+                    else
+                    {
+                        ViewSource.SortDescriptions.Clear();
+                        ViewSource.View.Refresh();
+                    }
+                    FilterTextCommand.Execute();
+                    Controller.NavigateTo<ViewModelCalendarOperations>();
+                }
+                catch (Exception exc)
+                {
+                    Operations = new ObservableCollection<OperationStruct>();
+                    ViewSource.Source = Operations;
+                    ViewSource.SortDescriptions.Clear();
+                    ViewSource.View.Refresh();
+                }
+            }
+        }
 
         private void SetCurrentACCOp(object sender, object data)
         {
@@ -125,7 +351,30 @@ namespace WpfApp2.ViewModels
             {
                 try
                 {
+
+                    DocsAndMedsList = new ObservableCollection<docsAndMeds>();
+
+
+
                     MedPersonalRepository MedPersonalRep = new MedPersonalRepository(context);
+                    DoctorRepository DocsRep = new DoctorRepository(context);
+
+                    DocsAndMedsList.Add(new docsAndMeds(false, 0, "Все"));
+
+                    foreach (var x in DocsRep.GetAll)
+                    {
+
+                        DocsAndMedsList.Add(new docsAndMeds(true, x.Id, x.Sirname + " " + x.Name.ToCharArray()[0].ToString() + ". " + x.Patronimic.ToCharArray()[0].ToString() + "."));
+
+                    }
+
+                    foreach (var x in MedPersonalRep.GetAll)
+                    {
+
+                        DocsAndMedsList.Add(new docsAndMeds(false, x.Id, x.Surname + " " + x.Name.ToCharArray()[0].ToString() + ". " + x.Patronimic.ToCharArray()[0].ToString() + "."));
+
+                    }
+
 
 
                     OperationRepository OperationRp = new OperationRepository(context);
@@ -140,17 +389,45 @@ namespace WpfApp2.ViewModels
                     {
                         CurrentAcaunt = (int)data;
                         CurrentAc = Data.Accaunt.Get((int)data);
+                        isMyOpVisible = Visibility.Visible;
+                        for (int i = 0; i < DocsAndMedsList.Count; ++i)
+                        {
+                            if (CurrentAc.isDoctor != null && CurrentAc.isDoctor.Value && DocsAndMedsList[i].isDoc == true && DocsAndMedsList[i].id == CurrentAc.idврач)
+                            { SelectedIdDocMed = i; }
+                            else if (CurrentAc.isMedPersonal != null && CurrentAc.isMedPersonal.Value && DocsAndMedsList[i].isDoc == false && DocsAndMedsList[i].id == CurrentAc.idмедперсонал)
+                            {
+                                SelectedIdDocMed = i;
+                            }
+
+                        }
                     }
                     else
                     {
                         CurrentAc = Data.Accaunt.Get(CurrentAcaunt);
+                        isMyOpVisible = Visibility.Visible;
+                        for (int i = 0; i < DocsAndMedsList.Count; ++i)
+                        {
+                            if (CurrentAc.isDoctor != null && CurrentAc.isDoctor.Value && DocsAndMedsList[i].isDoc == true && DocsAndMedsList[i].id == CurrentAc.idврач)
+                            { SelectedIdDocMed = i; }
+                            else if (CurrentAc.isMedPersonal != null && CurrentAc.isMedPersonal.Value && DocsAndMedsList[i].isDoc == false && DocsAndMedsList[i].id == CurrentAc.idмедперсонал)
+                            {
+                                SelectedIdDocMed = i;
+                            }
+
+                        }
                     }
 
 
                     Operations = new ObservableCollection<OperationStruct>();
 
-                    if (CurrentAc != null)
+                    if (CurrentAc == null)
                     {
+                        isMyOpVisible = Visibility.Collapsed;
+                        SelectedIdDocMed = 1;
+                    }
+                    else
+                    {
+                        _isMyOpChecked = true;
                         bool test = true;
 
                         var Operationsbuf = new ObservableCollection<OperationStruct>();
@@ -186,7 +463,21 @@ namespace WpfApp2.ViewModels
                                     Controller.NavigateTo<ViewModelOperationOverview>();
                                 }
                             );
+                                DelegateCommand bufer2 = new DelegateCommand(
+                        () =>
+                        {
 
+                        });
+
+                                if (Operation.итоги_операции != null)
+                                {
+                                    bufer2 = new DelegateCommand(
+                               () =>
+                               {
+                                   MessageBus.Default.Call("GetOperationForOverwiev", this, Operation.Id);
+                                   Controller.NavigateTo<ViewModelOperationOverview>();
+                               });
+                                }
 
 
                                 if (Operation.OpResult != null && IsCompletedOp == false) { }
@@ -197,28 +488,28 @@ namespace WpfApp2.ViewModels
                                     TimeSpan span = Operation.Date - DateTime.Now;
                                     if (span.Days <= 2 && span.Days >= 0 && Operation.Date > DateTime.Now)
                                     {
-                                        Operationsbuf.Add(new OperationStruct(bufer, Operation));
+                                        Operationsbuf.Add(new OperationStruct(bufer, Operation, bufer2));
                                         testC = true;
                                     }
                                     if (_sortId == 0 && Operation.Date.Year == DateTime.Now.Year && Operation.Date.Month == DateTime.Now.Month && Operation.Date.Day == DateTime.Now.Day)
                                     {
-                                        Operations.Add(new OperationStruct(bufer, Operation));
+                                        Operations.Add(new OperationStruct(bufer, Operation, bufer2));
                                     }
                                     else if (_sortId == 1 && span.Days > 0 && span.Days <= 3)
                                     {
-                                        Operations.Add(new OperationStruct(bufer, Operation));
+                                        Operations.Add(new OperationStruct(bufer, Operation, bufer2));
                                     }
                                     else if (_sortId == 2 && span.Days > 0 && span.Days <= 7)
                                     {
-                                        Operations.Add(new OperationStruct(bufer, Operation));
+                                        Operations.Add(new OperationStruct(bufer, Operation, bufer2));
                                     }
                                     else if (_sortId == 3 && span.Days > 0 && span.Days <= 32)
                                     {
-                                        Operations.Add(new OperationStruct(bufer, Operation));
+                                        Operations.Add(new OperationStruct(bufer, Operation, bufer2));
                                     }
                                     else if (_sortId == 4)
                                     {
-                                        Operations.Add(new OperationStruct(bufer, Operation));
+                                        Operations.Add(new OperationStruct(bufer, Operation, bufer2));
                                     }
 
                                 }
@@ -243,9 +534,9 @@ namespace WpfApp2.ViewModels
                             var bff = viewSourceBuf.View.GetEnumerator();
                             bff.MoveNext();
                             Operation bffs = ((OperationStruct)bff.Current).Operation;
-                           // TimeSpan span = bffs.Date - DateTime.Now;
-                         //   if (span.)
-                                //   int t = ((Operation)viewSourceBuf.View.GetEnumerator().Current).Id;
+                            // TimeSpan span = bffs.Date - DateTime.Now;
+                            //   if (span.)
+                            //   int t = ((Operation)viewSourceBuf.View.GetEnumerator().Current).Id;
 
                             MessageBus.Default.Call("GetAcaunt", bffs, CurrentAcaunt);
                             MessageBus.Default.Call("SetAlertVisibility", this, Visibility.Visible);
@@ -272,6 +563,8 @@ namespace WpfApp2.ViewModels
                             ViewSource.SortDescriptions.Clear();
                             ViewSource.View.Refresh();
                         }
+                        FilterTextCommand.Execute();
+                        Controller.NavigateTo<ViewModelCalendarOperations>();
                     }
                 }
                 catch (Exception exc)
@@ -295,6 +588,8 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToOperationOverviewCommand { get; protected set; }
         public ObservableCollection<OperationStruct> _operations;
         public ObservableCollection<OperationStruct> Operations { get { return _operations; } set { _operations = value; OnPropertyChanged(); } }
+        private string _filterText;
+        public string FilterText { get { return _filterText; } set { _filterText = value; OnPropertyChanged(); FilterTextCommand.Execute(); } }
 
 
 
@@ -305,17 +600,100 @@ namespace WpfApp2.ViewModels
             ViewSource.Source = Operations;
             IsSortByData = true;
             _sortId = 4;
+            SelectedIdDocMed = 1;
             MessageBus.Default.Subscribe("SetCurrentACCOp", SetCurrentACCOp);
             base.HasNavigation = true;
 
+            FilterTextCommand = new DelegateCommand(
+              () =>
+              {
 
+                  if (!string.IsNullOrWhiteSpace(FilterText))
+                  {
+                      for (int i = 0; i < Operations.Count; ++i)
+                      {
+
+
+                          if (Operations[i].Patient.ToLower().Contains(FilterText.ToLower()))
+                          {
+                              Operations[i].IsFilteredPt = true;
+                              Operations[i].IsVisibleTotal = true;
+                          }
+                          else
+                          {
+                              Operations[i].IsFilteredPt = false;
+                          }
+                          if (Operations[i].OpType.ToLower().Contains(FilterText.ToLower()))
+                          {
+                              Operations[i].IsFilteredOpType = true;
+                              Operations[i].IsVisibleTotal = true;
+                          }
+                          else
+                          {
+                              Operations[i].IsFilteredOpType = false;
+                          }
+                          if (Operations[i].Date.ToString().ToLower().Contains(FilterText.ToLower()))
+                          {
+                              Operations[i].IsFilteredDate = true;
+                              Operations[i].IsVisibleTotal = true;
+                          }
+                          else
+                          {
+                              Operations[i].IsFilteredDate = false;
+                          }
+                          if (Operations[i].Anestetic.ToLower().Contains(FilterText.ToLower()))
+                          {
+                              Operations[i].IsFilteredAnestetic = true;
+                              Operations[i].IsVisibleTotal = true;
+                          }
+                          else
+                          {
+                              Operations[i].IsFilteredAnestetic = false;
+                          }
+                          if (!Operations[i].IsFilteredDate && !Operations[i].IsFilteredOpType && !Operations[i].IsFilteredPt && !Operations[i].IsFilteredAnestetic)
+                          {
+                              Operations[i].IsVisibleTotal = false;
+                          }
+
+
+                      }
+                      if (_isSortByData == true)
+                      {
+
+                          ViewSource.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Descending));
+
+                          // Let the UI control refresh in order for changes to take place.
+                          ViewSource.View.Refresh();
+
+                      }
+                      ViewSource.Source = Operations;
+                      ViewSource.View.Refresh();
+                      Controller.NavigateTo<ViewModelCalendarOperations>();
+                  }
+                  else
+                  {
+                      foreach (var x in Operations)
+                      {
+                          x.IsFilteredAnestetic = false;
+                          x.IsFilteredDate = false;
+                          x.IsFilteredOpType = false;
+                          x.IsFilteredPt = false;
+                          x.IsVisibleTotal = true;
+                      }
+                      ViewSource.Source = Operations;
+                      ViewSource.View.Refresh();
+                      Controller.NavigateTo<ViewModelCalendarOperations>();
+                  }
+
+              }
+          );
 
             ToPhysicalCommand = new DelegateCommand(
-                () =>
-                {
-                    Controller.NavigateTo<ViewModelOperationOverview>();
-                }
-            );
+            () =>
+            {
+                Controller.NavigateTo<ViewModelOperationOverview>();
+            }
+        );
 
             ToOperationOverviewCommand = new DelegateCommand(
                 () =>

@@ -8,7 +8,7 @@
             <DataGrid CanUserAddRows="False" CanUserResizeRows="false" CanUserResizeColumns="False" x:Name="dataGrid" HorizontalAlignment="Left" AutoGenerateColumns="False" Margin="17,52,0,0" VerticalAlignment="Top" Height="500" Width="auto" ItemsSource="{Binding Path=PatologyList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
                 <DataGrid.RowStyle>
 
-                    <Style TargetType="DataGridRow">
+                    <Style TargetType="DataGridRow"  BasedOn="{StaticResource {x:Type DataGridRow}}">
                         <Style.Triggers>
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter Property="Background" Value="SkyBlue" ></Setter>
@@ -29,14 +29,14 @@
                 <DataGrid.Columns>
 
                     <DataGridTemplateColumn Header="Патология" >
-                        
+
                         <DataGridTemplateColumn.CellTemplate  >
-                           
+
                             <DataTemplate>
 
-                             
-                                    <TextBlock  Text="{Binding Name}" />
-                               
+
+                                <TextBlock  Text="{Binding Name}" />
+
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -55,16 +55,16 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Архивировать">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Grid>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid>
                                     <Button ToolTip="Можете заархивировать патологию в случае, если пациент от неё избавился" Visibility="{Binding ArchiveButtonVis}" x:Name="ToPatient" Command="{Binding Path=ArchiveCommand}" HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}">
-                                            <Image Source="pack://application:,,,/Images/forward.png"></Image>
-                                        </Button>
-                                    </Grid>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+                                        <Image Source="pack://application:,,,/Images/forward.png"></Image>
+                                    </Button>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Редактировать">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
