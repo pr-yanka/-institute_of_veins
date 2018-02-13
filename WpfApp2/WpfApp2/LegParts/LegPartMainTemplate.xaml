@@ -45,8 +45,8 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="4"  VerticalAlignment="Center">
-                <Button x:Name="AddButton" Command="{Binding Controller.LegViewModel.RevertCommand}" Content="Вернуться к ноге" HorizontalAlignment="Left" VerticalAlignment="Top" Width="512" Background="#FFDBEDF7" FontSize="16"  Grid.ColumnSpan="2"/>
-                <Button x:Name="AddButton_Copy" Command="{Binding Controller.LegViewModel.SaveCommand}" Content="Сохранить" HorizontalAlignment="Right"  VerticalAlignment="Top" Width="512" Background="#FFDBEDF7"  FontSize="16"   Grid.ColumnSpan="2"/>
+                <Button  Style="{StaticResource MyNormalBUTTON}"  x:Name="AddButton" Command="{Binding Controller.LegViewModel.RevertCommand}" Content="Вернуться к ноге" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+                <Button  Style="{StaticResource MyConfirmBUTTON}"   x:Name="AddButton_Copy" Command="{Binding Controller.LegViewModel.SaveCommand}" Content="Сохранить" HorizontalAlignment="Right"  VerticalAlignment="Top" Margin="623,0"  Grid.ColumnSpan="2"/>
             </StackPanel>
 
             <Border Grid.RowSpan="4" Visibility="{Binding Path = Controller.LegViewModel.CurrentPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOverlay">
@@ -100,8 +100,8 @@
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </controls:AutoCompleteBox>
-                        <Button x:Name="button" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Canvas.Left="53" Canvas.Top="232" Command="{Binding Controller.LegViewModel.ClosePanelCommand}"/>
-                        <Button x:Name="ButtonAddStructure" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding Controller.LegViewModel.SavePanelCommand}" Canvas.Left="249" Canvas.Top="232"/>
+                        <Button Style="{StaticResource MyNormalBUTTON}"   x:Name="button" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Canvas.Left="0" Canvas.Top="232" Command="{Binding Controller.LegViewModel.ClosePanelCommand}"/>
+                        <Button   Style="{StaticResource MyConfirmBUTTON}"   x:Name="ButtonAddStructure" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding Controller.LegViewModel.SavePanelCommand}" Canvas.Left="249" Canvas.Top="232"/>
                         <Separator Height="18" Margin="0" Canvas.Top="19" Width="442"/>
                         <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="37" Canvas.Left="10" Text="Первая часть:"/>
                         <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="152" Canvas.Left="10"><Run Text="Вторая часть "/><Run Text="(не обязательно к заполнению):"/></TextBlock>

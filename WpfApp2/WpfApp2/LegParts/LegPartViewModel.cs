@@ -47,7 +47,7 @@ namespace WpfApp2.LegParts
             {
                 return _isEmpty;
             }
-             set
+            set
             {
                 _isEmpty = value;
                 OnPropertyChanged();
@@ -110,7 +110,7 @@ namespace WpfApp2.LegParts
         public DelegateCommand AnimationCompleted { get; set; }
 
         protected static LegSectionViewModel _lastSender;
-        
+
         protected static Type _lastSenderType;
 
         public static bool handled = false;
@@ -122,13 +122,13 @@ namespace WpfApp2.LegParts
             {
                 var curPanel = ((LegPartViewModel)Controller.LegViewModel).CurrentPanelViewModel;
                 var currentPart = (LegSectionViewModel)sender;
-                
-              
-                    _lastSender = currentPart;
-              
-                  //  _lastSenderNewAnswer
-                    
-                
+
+
+                _lastSender = currentPart;
+
+                //  _lastSenderNewAnswer
+
+
                 _lastSenderType = (Type)data;
                 handled = true;
                 curPanel.PanelOpened = true;
@@ -144,6 +144,9 @@ namespace WpfApp2.LegParts
             newStr.Text2 = panel.Text2;
             newStr.HasSize = panel.HasSize;
             newStr.HasDoubleMetric = panel.HasDoubleSize;
+
+
+
 
             if (panel.HasSize)
             {
@@ -233,7 +236,7 @@ namespace WpfApp2.LegParts
             RevertCommand = new DelegateCommand(
                 () =>
                 {
-                   // IsEmpty = false;
+                    // IsEmpty = false;
                     Controller.NavigateTo<ViewModelAddPhysical>();
                 }
             );
@@ -244,6 +247,8 @@ namespace WpfApp2.LegParts
         public LegPartViewModel(NavigationController controller, LegSide side) : base(controller)
         {
             Initialization();
+          
+
             CurrentLegSide = side;
             //MessageBus.Default.Subscribe("LegPart", Handler);
 
@@ -304,5 +309,8 @@ namespace WpfApp2.LegParts
                 OnPropertyChanged();
             }
         }
+
+        public DelegateCommand<object> LostFocus { get; private set; }
+        public DelegateCommand<object> ClickOnWeight { get; private set; }
     }
 }

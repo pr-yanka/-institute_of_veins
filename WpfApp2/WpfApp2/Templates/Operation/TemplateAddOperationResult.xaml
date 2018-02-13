@@ -3,11 +3,11 @@
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplateAddOperationResult">
         <Grid Margin="0,80,0,0">
-            <Label x:Name="label" Content="{Binding Path=TextResultCancle}" HorizontalAlignment="Left" Margin="397,10,0,0" VerticalAlignment="Top" FontSize="24"/>
-            <Button x:Name="button_Copy1" Content="Сохранить" Command="{Binding Path=ToOperationCommand}" HorizontalAlignment="Left" Margin="380,541,0,0" VerticalAlignment="Top"  
-                    Width="300" Height="43" FontSize="22"/>
-            <Button x:Name="buttond_Copy1" Content="Составить выписку" Command="{Binding Path=ToCreateStatementCommand}" HorizontalAlignment="Left" Margin="689,541,0,0" VerticalAlignment="Top"  
-                    Width="300" Height="43" FontSize="22"/>
+            <Label x:Name="label" Content="{Binding Path=TextResultCancle}" HorizontalAlignment="Left" Margin="397,10,0,0" VerticalAlignment="Top" FontSize="22pt"/>
+            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy1" Content="Сохранить" Command="{Binding Path=ToOperationCommand}" HorizontalAlignment="Left" Margin="380,541,0,0" VerticalAlignment="Top"  
+                   />
+            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="buttond_Copy1" Content="Составить выписку" Command="{Binding Path=ToCreateStatementCommand}" HorizontalAlignment="Left" Margin="689,541,0,0" VerticalAlignment="Top"  
+                   />
             <Label x:Name="label1" Content="{Binding Path=DateText}" HorizontalAlignment="Left"  
                    Margin="209,70,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.491,0.474" FontSize="22"/>
                        <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="39,136,0,0" TextWrapping="Wrap"  
@@ -17,8 +17,8 @@
             </TextBox>
             <DatePickerTextBox IsReadOnly="True" x:Name="label1_Copy" Text="{Binding Path=Date}" HorizontalAlignment="Left" Margin="447,70,0,0"  
                    VerticalAlignment="Top" RenderTransformOrigin="0.491,0.474" FontSize="22"/>
-            <Button x:Name="button_Copy" Command="{Binding Path=ToOperationOverviewCommand}" Content="Вернуться к операции" HorizontalAlignment="Left" Margin="69,541,0,0"              
-                    VerticalAlignment="Top" Width="300" Height="46" FontSize="22"/>
+            <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy" Command="{Binding Path=ToOperationOverviewCommand}" Content="Вернуться к операции" HorizontalAlignment="Left" Margin="69,541,0,0"              
+                    VerticalAlignment="Top" />
           
         </Grid>
     </DataTemplate>

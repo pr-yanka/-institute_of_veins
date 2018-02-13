@@ -7,19 +7,19 @@
     </ResourceDictionary.MergedDictionaries>
     <DataTemplate x:Key="TemplateAddPhysicalPage1">
         <Grid Name="RootGrid">
-                <Grid.Resources>
-                    <DataTemplate x:Key="ExpanderHeaderTemplate">
-                        <Button Width="13" Height="26" Content="Редактировать"/>
-                    </DataTemplate>
-                </Grid.Resources>
-                <Grid.Background>
-                    <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
-                        <LinearGradientBrush.GradientStops>
-                            <GradientStop Color="White" Offset="0.3" />
-                            <GradientStop Color="Azure" Offset=".8" />
-                        </LinearGradientBrush.GradientStops>
-                    </LinearGradientBrush>
-                </Grid.Background>
+            <Grid.Resources>
+                <DataTemplate x:Key="ExpanderHeaderTemplate">
+                    <Button Width="13" Height="26" Content="Редактировать"/>
+                </DataTemplate>
+            </Grid.Resources>
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                    <LinearGradientBrush.GradientStops>
+                        <GradientStop Color="White" Offset="0.3" />
+                        <GradientStop Color="Azure" Offset=".8" />
+                    </LinearGradientBrush.GradientStops>
+                </LinearGradientBrush>
+            </Grid.Background>
 
 
 
@@ -55,36 +55,36 @@
 
 
 
-            <TextBlock x:Name="textBlock2" TextAlignment="Center" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap" Text="Добавление обследования" VerticalAlignment="Top" Width="318" FontSize="18" Height="28" FontFamily="Segoe UI Semibold" FontWeight="Bold"/>
-            <TextBlock x:Name="textBlock1" TextAlignment="Center" HorizontalAlignment="Left" Margin="228,3,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="543" FontSize="18" Height="28" FontFamily="Segoe UI Semibold" FontWeight="Bold"><TextBlock Text="{Binding Path=CurrentPatient.Name}" /><TextBlock Text="{Binding Path=initials}" /><TextBlock Text=" (" /><TextBlock Text="{Binding Path=CurrentPatient.Age}" /><TextBlock Text=")" /></TextBlock>
-                <Separator HorizontalAlignment="Left" Height="5" Margin="0,28,0,0" VerticalAlignment="Top" Width="1016" RenderTransformOrigin="0.51,0.49"/>
+            <TextBlock x:Name="textBlock2" TextAlignment="Center" HorizontalAlignment="Left" Margin="357,0,0,0" TextWrapping="Wrap" Text="Добавление обследования" VerticalAlignment="Top" Width="auto" FontSize="18pt" Height="28" FontFamily="Segoe UI Semibold" />
+            <TextBlock x:Name="textBlock1" TextAlignment="Center" HorizontalAlignment="Left" Margin="628,3,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="543" FontSize="18" Height="28" FontFamily="Segoe UI Semibold" FontWeight="Bold"><TextBlock Text="{Binding Path=CurrentPatient.Name}" /><TextBlock Text="{Binding Path=initials}" /><TextBlock Text=" (" /><TextBlock Text="{Binding Path=CurrentPatient.Age}" /><TextBlock Text=")" /></TextBlock>
+            <Separator HorizontalAlignment="Left" Height="5" Margin="0,28,0,0" VerticalAlignment="Top" Width="1016" RenderTransformOrigin="0.51,0.49"/>
 
             <ListBox x:Name="listBox1" ItemsSource="{Binding Path=ComplainsList}" HorizontalAlignment="Left" Height="97" Margin="505,62,0,0" VerticalAlignment="Top" Width="487" BorderThickness="1">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
 
-                            <TextBlock Padding="5,0,5,0" Text="{Binding  Data.Str}" />
+                        <TextBlock Padding="5,0,5,0" Text="{Binding  Data.Str}" />
 
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-            <Button x:Name="button_Copy2" Content="Записать жалобы" Command="{Binding Path=ToSymptomsAddCommand}" HorizontalAlignment="Left" Margin="505,31,0,0" VerticalAlignment="Top" Width="487" Height="31" Background="AliceBlue" FontSize="14"/>
-                <Separator HorizontalAlignment="Left" Height="16" Margin="0,154,0,0" VerticalAlignment="Top" Width="1016" RenderTransformOrigin="0.51,0.49"/>
-                <TextBlock x:Name="textBlock1_Copy2" HorizontalAlignment="Center" Margin="173,120,725,507" TextWrapping="Wrap" VerticalAlignment="Center" Width="118" FontSize="18" Text="Левая нога" TextAlignment="Center"/>
-            <Button x:Name="button_Copy443" Command="{Binding Path=ToRightDiagCommand}" Content="Поставить диагноз" HorizontalAlignment="Left" Margin="518,417,0,0" VerticalAlignment="Top" Width="487" Height="32" Background="Lavender" FontSize="14"/>
-                <TextBlock x:Name="textBlock1_Copy3" HorizontalAlignment="Center" Margin="724,120,122,507" TextWrapping="Wrap" VerticalAlignment="Center" Width="170" FontSize="18"><Run Text="Правая "/><Run Text="нога"/></TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy2" Content="Записать жалобы" Command="{Binding Path=ToSymptomsAddCommand}" HorizontalAlignment="Left" Margin="505,31,0,0" VerticalAlignment="Top" Width="300"/>
+            <Separator HorizontalAlignment="Left" Height="16" Margin="0,154,0,0" VerticalAlignment="Top" Width="1016" RenderTransformOrigin="0.51,0.49"/>
+            <TextBlock x:Name="textBlock1_Copy2" HorizontalAlignment="Center" Margin="173,120,725,507" TextWrapping="Wrap" VerticalAlignment="Center" Width="118" FontSize="18" Text="Левая нога" TextAlignment="Center"/>
+            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy443" Command="{Binding Path=ToRightDiagCommand}" Content="Поставить диагноз" HorizontalAlignment="Left" Margin="518,417,0,0" VerticalAlignment="Top" Width="300"/>
+            <TextBlock x:Name="textBlock1_Copy3" HorizontalAlignment="Center" Margin="724,120,122,507" TextWrapping="Wrap" VerticalAlignment="Center" Width="170" FontSize="18"><Run Text="Правая "/><Run Text="нога"/></TextBlock>
 
 
-                <ScrollViewer Margin="3,190,524,320" RenderTransformOrigin="0.5,0.5" FontSize="16">
-                    <StackPanel Orientation="Vertical">
-                        <Expander FontSize="14">
-                            <Expander.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="I. СФС (Сафено-феморальное соустье)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                    <Button x:Name="buttonSFS1" Command="{Binding ToLeftSFSCommand}" Content="{Binding Path=LeftSFS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
-                                </StackPanel>
-                            </Expander.Header>
-                            <StackPanel Orientation="Vertical">
+            <ScrollViewer Margin="3,190,524,320" RenderTransformOrigin="0.5,0.5" FontSize="16">
+                <StackPanel Orientation="Vertical">
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="I. СФС (Сафено-феморальное соустье)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttonSFS1" Command="{Binding ToLeftSFSCommand}" Content="{Binding Path=LeftSFS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Style="{StaticResource MyNormalBUTTON}" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
                             <TextBlock Visibility="{Binding IsVisibleSFSleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSLeftstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleSFSleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSLeftstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleSFSleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSLeftstr[2]}"></TextBlock>
@@ -93,17 +93,17 @@
                             <TextBlock Visibility="{Binding IsVisibleSFSleft[5],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSLeftstr[5]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleSFSleft[6],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSLeftstr[6]}"></TextBlock>
                         </StackPanel>
-                        </Expander>
-                        <Separator/>
-                        <Expander FontSize="14">
-                            <Expander.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="II. БПВ на бедре (Большая подкожная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                    <Button x:Name="buttonBPVHip1" Command="{Binding ToLeftBPVHipCommand}" Content="{Binding Path=LeftBPVHip.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
-                                </StackPanel>
-                            </Expander.Header>
+                    </Expander>
+                    <Separator/>
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="II. БПВ на бедре (Большая подкожная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttonBPVHip1" Command="{Binding ToLeftBPVHipCommand}" Content="{Binding Path=LeftBPVHip.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Style="{StaticResource MyNormalBUTTON}" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
                         <StackPanel Orientation="Vertical">
-                            <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding LeftBPVHip.SelectedWayType.Name}" FontSize="12"/></TextBlock>
+                            <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisibleBPVleft[0]}" Text="Ход: "> <TextBlock  Text="{Binding LeftBPVHip.SelectedWayType.Name}" FontSize="12"/></TextBlock>
 
                             <TextBlock Visibility="{Binding IsVisibleBPVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvLeftstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleBPVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvLeftstr[1]}"></TextBlock>
@@ -113,88 +113,88 @@
                             <TextBlock Visibility="{Binding IsVisibleBPVleft[5],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvLeftstr[5]}"></TextBlock>
 
                         </StackPanel>
-                        </Expander>
-                        <Separator/>
+                    </Expander>
+                    <Separator/>
 
-                        <Expander FontSize="14">
-                            <Expander.Header>
-                                <StackPanel Orientation="Horizontal">
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
                                 <TextBlock  TextDecorations="Underline" Text="III. ПДСВ (Передняя добавочная сафенная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                    <Button x:Name="buttonPDSV1" Command="{Binding ToLeftPDSVCommand}" Content="{Binding Path=LeftPDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
-                                </StackPanel>
-                            </Expander.Header>
-                            <StackPanel Orientation="Vertical">
-                            <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding LeftPDSV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
+                                <Button x:Name="buttonPDSV1" Command="{Binding ToLeftPDSVCommand}" Content="{Binding Path=LeftPDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Style="{StaticResource MyNormalBUTTON}" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisiblePDSVleft[0]}" Text="Ход: "> <TextBlock  Text="{Binding LeftPDSV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
 
                             <TextBlock Visibility="{Binding IsVisiblePDSVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PDSVLeftstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisiblePDSVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PDSVLeftstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisiblePDSVleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PDSVLeftstr[2]}"></TextBlock>
-                           
-                        </StackPanel>
-                        </Expander>
-                        <Separator/>
 
-                        <Expander FontSize="14">
-                            <Expander.Header>
-                                <StackPanel Orientation="Horizontal">
+                        </StackPanel>
+                    </Expander>
+                    <Separator/>
+
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
                                 <TextBlock TextDecorations="Underline" Text="IV. ЗДСВ (Задняя добавочная сафенная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                    <Button x:Name="buttonZDSV1" Command="{Binding ToLeftZDSVCommand}" Content="{Binding Path=LeftZDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
-                                </StackPanel>
-                            </Expander.Header>
-                            <StackPanel Orientation="Vertical">
+                                <Button x:Name="buttonZDSV1" Command="{Binding ToLeftZDSVCommand}" Content="{Binding Path=LeftZDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Style="{StaticResource MyNormalBUTTON}" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
                             <TextBlock Visibility="{Binding IsVisibleZDSVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding ZDSVLeftstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleZDSVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding ZDSVLeftstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleZDSVleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding ZDSVLeftstr[2]}"></TextBlock>
-                           
-                        </StackPanel>
-                        </Expander>
-                        <Separator/>
 
-                        <Expander FontSize="14">
-                            <Expander.Header>
-                                <StackPanel Orientation="Horizontal">
+                        </StackPanel>
+                    </Expander>
+                    <Separator/>
+
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
                                 <TextBlock TextDecorations="Underline" Text="V. Перфоранты бедра и несафенные вены" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                    <Button x:Name="buttonPerforate1" Command="{Binding ToLeftPerforateCommand}" Content="{Binding Path=LeftPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
-                                </StackPanel>
-                            </Expander.Header>
-                            <StackPanel Orientation="Vertical">
+                                <Button x:Name="buttonPerforate1" Command="{Binding ToLeftPerforateCommand}" Content="{Binding Path=LeftPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Style="{StaticResource MyNormalBUTTON}" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
                             <TextBlock Visibility="{Binding IsVisiblePerforateHIPleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipLeftstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisiblePerforateHIPleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipLeftstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisiblePerforateHIPleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipLeftstr[2]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisiblePerforateHIPleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipLeftstr[3]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisiblePerforateHIPleft[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipLeftstr[4]}"></TextBlock>
-                           
-                        </StackPanel>
-                        </Expander>
-                        <Separator/>
 
-                        <Expander FontSize="14">
-                            <Expander.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="VI. БПВ на голени" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                    <Button x:Name="buttonBPVTibia1" Command="{Binding ToLeftBPVTibiaCommand}" Content="{Binding Path=LeftBPVTibia.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
-                                </StackPanel>
-                            </Expander.Header>
-                            <StackPanel Orientation="Vertical">
-                            
+                        </StackPanel>
+                    </Expander>
+                    <Separator/>
+
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="VI. БПВ на голени" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttonBPVTibia1" Command="{Binding ToLeftBPVTibiaCommand}" Content="{Binding Path=LeftBPVTibia.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Style="{StaticResource MyNormalBUTTON}" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+
                             <TextBlock Visibility="{Binding IsVisibleBPV_Tibialeft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BPV_TibiaLeftstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleBPV_Tibialeft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BPV_TibiaLeftstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleBPV_Tibialeft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BPV_TibiaLeftstr[2]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleBPV_Tibialeft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BPV_TibiaLeftstr[3]}"></TextBlock>
-                           
-                        </StackPanel>
-                        </Expander>
-                        <Separator/>
 
-                        <Expander FontSize="14">
-                            <Expander.Header>
-                                <StackPanel Orientation="Horizontal">
+                        </StackPanel>
+                    </Expander>
+                    <Separator/>
+
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
                                 <TextBlock TextDecorations="Underline" Text="VII. Перфоранты голени" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                    <Button x:Name="buttonPerforateTibia1" Command="{Binding ToLeftTibiaPerforateCommand}" Content="{Binding Path=LeftTibiaPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
-                                </StackPanel>
-                            </Expander.Header>
-                            
-                            <StackPanel Orientation="Vertical">
+                                <Button x:Name="buttonPerforateTibia1" Command="{Binding ToLeftTibiaPerforateCommand}" Content="{Binding Path=LeftTibiaPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Style="{StaticResource MyNormalBUTTON}" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+
+                        <StackPanel Orientation="Vertical">
                             <TextBlock Visibility="{Binding IsVisiblePerforate_shinleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_shinLeftstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisiblePerforate_shinleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_shinLeftstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisiblePerforate_shinleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_shinLeftstr[2]}"></TextBlock>
@@ -202,39 +202,39 @@
                             <TextBlock Visibility="{Binding IsVisiblePerforate_shinleft[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_shinLeftstr[4]}"></TextBlock>
 
                         </StackPanel>
-                        </Expander>
-                        <Separator/>
+                    </Expander>
+                    <Separator/>
 
-                        <Expander FontSize="14">
-                            <Expander.Header>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="VIII. СПС (Сафено-поплитеальное соустье)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                    <Button x:Name="buttonSPS1" Command="{Binding ToLeftSPSCommand}" Content="{Binding Path=LeftSPS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
-                                </StackPanel>
-                            </Expander.Header>
-                            <StackPanel Orientation="Vertical">
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="VIII. СПС (Сафено-поплитеальное соустье)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttonSPS1" Command="{Binding ToLeftSPSCommand}" Content="{Binding Path=LeftSPS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Style="{StaticResource MyNormalBUTTON}" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
                             <TextBlock Visibility="{Binding IsVisibleSPSleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SPSLeftstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleSPSleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SPSLeftstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleSPSleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SPSLeftstr[2]}"></TextBlock>
 
                         </StackPanel>
-                        </Expander>
-                        <Separator/>
+                    </Expander>
+                    <Separator/>
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="IX. МПВ (Малая подкожная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="buttfonPDSV1" Command="{Binding ToLeftMPVCommand}" Content="{Binding Path=LeftMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                                <Button x:Name="buttfonPDSV1" Command="{Binding ToLeftMPVCommand}" Content="{Binding Path=LeftMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Style="{StaticResource MyNormalBUTTON}" FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
-                            <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding LeftMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
+                            <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisibleMPVleft[0]}" Text="Ход: "> <TextBlock  Text="{Binding LeftMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
 
                             <TextBlock Visibility="{Binding IsVisibleMPVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding MPVLeftstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleMPVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding MPVLeftstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleMPVleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding MPVLeftstr[2]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleMPVleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding MPVLeftstr[3]}"></TextBlock>
-                           
+
                         </StackPanel>
                     </Expander>
                     <Separator/>
@@ -242,12 +242,12 @@
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock TextWrapping="Wrap" TextDecorations="Underline" Text="X. ТЕ МПВ (Бедренное продолжение малой подкожной вены)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="buttfonвPDSV1" Command="{Binding ToLeftTEMPVCommand}" Content="{Binding Path=LeftTEMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                                <Button x:Name="buttfonвPDSV1" Command="{Binding ToLeftTEMPVCommand}" Content="{Binding Path=LeftTEMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Style="{StaticResource MyNormalBUTTON}" FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
-                            <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding LeftTEMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
-                            <TextBlock  HorizontalAlignment="Center" Text="Протяжность: "> <TextBlock  Text="{Binding LeftTEMPV.FF_length}" FontSize="12"/></TextBlock>
+                            <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisibleTEMPVleft[0]}" Text="Ход: "> <TextBlock  Text="{Binding LeftTEMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
+                            <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisibleTEMPVleft[0]}" Text="Протяжность: "> <TextBlock  Text="{Binding LeftTEMPV.FF_length}" FontSize="12"/></TextBlock>
 
                             <TextBlock Visibility="{Binding IsVisibleTEMPVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding TEMPVLeftstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleTEMPVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding TEMPVLeftstr[1]}"></TextBlock>
@@ -261,7 +261,7 @@
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock TextDecorations="Underline" Text="XI. ППВ (Подколенная перфорантная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="butаtffohnвPDSV1" Command="{Binding ToLeftPPVCommand}" Content="{Binding Path=LeftPPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                                <Button x:Name="butаtffohnвPDSV1" Command="{Binding ToLeftPPVCommand}" Content="{Binding Path=LeftPPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Style="{StaticResource MyNormalBUTTON}" FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
@@ -271,13 +271,13 @@
 
                         </StackPanel>
                     </Expander>
-                   
+
                     <Separator/>
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock TextDecorations="Underline" Text="CEAP" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="butаtfohnвPDSV1" Command="{Binding ToLeftCEARCommand}" Content="{Binding Path=LeftCEAR.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                                <Button x:Name="butаtfohnвPDSV1" Command="{Binding ToLeftCEARCommand}" Content="{Binding Path=LeftCEAR.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Style="{StaticResource MyNormalBUTTON}" FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
@@ -294,19 +294,19 @@
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock TextDecorations="Underline" Text="XII. Примечание" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                          </StackPanel>
+                            </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
                             <TextBox Width="470"  Height="50"  HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding LeftAdditionalText}"></TextBox>
                         </StackPanel>
                     </Expander>
                     <Separator/>
-                   
+
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock TextDecorations="Underline" Text="XIII. Глубокие вены" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="butаtffohnfвPDSV1" Command="{Binding ToLeftGVCommand}" Content="{Binding Path=LeftGV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                                <Button x:Name="butаtffohnfвPDSV1" Command="{Binding ToLeftGVCommand}" Content="{Binding Path=LeftGV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Style="{StaticResource MyNormalBUTTON}" FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
@@ -318,20 +318,20 @@
                     </Expander>
                     <Separator/>
                     <Separator Margin="10,0,10,0"/>
-                   
 
-                    </StackPanel>
-                </ScrollViewer>
-                <ScrollViewer Margin="518,190,10,320" RenderTransformOrigin="0.5,0.5" FontSize="16">
-                    <StackPanel Orientation="Vertical">
-                        <Expander>
+
+                </StackPanel>
+            </ScrollViewer>
+            <ScrollViewer Margin="518,190,10,320" RenderTransformOrigin="0.5,0.5" FontSize="16">
+                <StackPanel Orientation="Vertical">
+                    <Expander>
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="I. СФС (Сафено-феморальное соустье)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button  x:Name="buttonBPVHip2" Command="{Binding ToRightSFSCommand}" Content="{Binding Path=RightSFS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
-                                </StackPanel>
-                            </Expander.Header>
-                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="I. СФС (Сафено-феморальное соустье)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button  x:Name="buttonBPVHip2" Command="{Binding ToRightSFSCommand}" Content="{Binding Path=RightSFS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Style="{StaticResource MyNormalBUTTON}" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
                             <TextBlock Visibility="{Binding IsVisibleSFSRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSRightstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleSFSRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSRightstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleSFSRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSRightstr[2]}"></TextBlock>
@@ -341,19 +341,19 @@
                             <TextBlock Visibility="{Binding IsVisibleSFSRight[6],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSRightstr[6]}"></TextBlock>
 
                         </StackPanel>
-                        </Expander>
-                        <Separator/>
-                        <Expander>
-                            <Expander.Header>
+                    </Expander>
+                    <Separator/>
+                    <Expander>
+                        <Expander.Header>
                             <StackPanel  Orientation="Horizontal">
-                                    <TextBlock Text="II. БПВ на бедре (Большая подкожная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                    <Button x:Name="buttonSFS2" Command="{Binding ToRightBPVHipCommand}" Content="{Binding Path=RightBPVHip.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
-                               
-                            
+                                <TextBlock Text="II. БПВ на бедре (Большая подкожная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttonSFS2" Command="{Binding ToRightBPVHipCommand}" Content="{Binding Path=RightBPVHip.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Style="{StaticResource MyNormalBUTTON}" FontSize="12"/>
+
+
                             </StackPanel>
-                            </Expander.Header>
-                            <StackPanel Orientation="Vertical">
-                            <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding RightBPVHip.SelectedWayType.Name}" FontSize="12"/></TextBlock>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisibleBPVRight[0]}" Text="Ход: "> <TextBlock  Text="{Binding RightBPVHip.SelectedWayType.Name}" FontSize="12"/></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleBPVRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvRightstr[0]}"></TextBlock>
 
                             <TextBlock Visibility="{Binding IsVisibleBPVRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvRightstr[1]}"></TextBlock>
@@ -362,53 +362,53 @@
                             <TextBlock Visibility="{Binding IsVisibleBPVRight[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvRightstr[4]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleBPVRight[5],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvRightstr[5]}"></TextBlock>
                         </StackPanel>
-                        </Expander>
+                    </Expander>
 
-                        <Separator/>
+                    <Separator/>
 
-                        <Expander FontSize="14">
-                            <Expander.Header>
-                                <StackPanel Orientation="Horizontal">
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
                                 <TextBlock TextDecorations="Underline" Text="III. ПДСВ (Передняя добавочная сафенная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                    <Button x:Name="buttonPDSV2" Command="{Binding ToRightPDSVCommand}" Content="{Binding Path=RightPDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
-                                </StackPanel>
-                            </Expander.Header>
-                            <StackPanel Orientation="Vertical">
-                            <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding RightPDSV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
+                                <Button x:Name="buttonPDSV2" Command="{Binding ToRightPDSVCommand}" Content="{Binding Path=RightPDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Style="{StaticResource MyNormalBUTTON}" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisiblePDSVright[0]}" Text="Ход: "> <TextBlock  Text="{Binding RightPDSV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
 
                             <TextBlock Visibility="{Binding IsVisiblePDSVright[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PDSVRightstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisiblePDSVright[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PDSVRightstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisiblePDSVright[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PDSVRightstr[2]}"></TextBlock>
 
                         </StackPanel>
-                        </Expander>
-                        <Separator/>
+                    </Expander>
+                    <Separator/>
 
-                        <Expander FontSize="14">
-                            <Expander.Header>
-                                <StackPanel Orientation="Horizontal">
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
                                 <TextBlock TextDecorations="Underline" Text="IV. ЗДСВ (Задняя добавочная сафенная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                    <Button x:Name="buttonZDSV2" Command="{Binding ToRightZDSVCommand}" Content="{Binding Path=RightZDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
-                                </StackPanel>
-                            </Expander.Header>
-                            <StackPanel Orientation="Vertical">
+                                <Button x:Name="buttonZDSV2" Command="{Binding ToRightZDSVCommand}" Content="{Binding Path=RightZDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Style="{StaticResource MyNormalBUTTON}" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
                             <TextBlock Visibility="{Binding IsVisibleZDSVright[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding ZDSVRightstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleZDSVright[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding ZDSVRightstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleZDSVright[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding ZDSVRightstr[2]}"></TextBlock>
 
                         </StackPanel>
-                        </Expander>
-                        <Separator/>
+                    </Expander>
+                    <Separator/>
 
-                        <Expander FontSize="14">
-                            <Expander.Header>
-                                <StackPanel Orientation="Horizontal">
+                    <Expander FontSize="14">
+                        <Expander.Header>
+                            <StackPanel Orientation="Horizontal">
                                 <TextBlock TextDecorations="Underline" Text="V. Перфоранты бедра и несафенные вены" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                    <Button x:Name="buttonPerforate2" Command="{Binding ToRightPerforateCommand}" Content="{Binding Path=RightPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
-                                </StackPanel>
-                            </Expander.Header>
-                            <StackPanel Orientation="Vertical">
-                           
+                                <Button x:Name="buttonPerforate2" Command="{Binding ToRightPerforateCommand}" Content="{Binding Path=RightPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Style="{StaticResource MyNormalBUTTON}" FontSize="12"/>
+                            </StackPanel>
+                        </Expander.Header>
+                        <StackPanel Orientation="Vertical">
+
                             <TextBlock Visibility="{Binding IsVisiblePerforateHIPright[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipRightstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisiblePerforateHIPright[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipRightstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisiblePerforateHIPright[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipRightstr[2]}"></TextBlock>
@@ -416,13 +416,13 @@
                             <TextBlock Visibility="{Binding IsVisiblePerforateHIPright[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipRightstr[4]}"></TextBlock>
 
                         </StackPanel>
-                        </Expander>
-                        <Separator/>
+                    </Expander>
+                    <Separator/>
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="VI. БПВ на голени" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="buttonPeвrforate2" Command="{Binding ToRightBPVTibiaCommand}" Content="{Binding Path=RightBPVTibia.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                                <Button x:Name="buttonPeвrforate2" Command="{Binding ToRightBPVTibiaCommand}" Content="{Binding Path=RightBPVTibia.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Style="{StaticResource MyNormalBUTTON}" FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
@@ -433,15 +433,15 @@
                             <TextBlock Visibility="{Binding IsVisibleBPV_Tibiaright[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BPV_TibiaRightstr[3]}"></TextBlock>
 
                         </StackPanel>
-                    
+
                     </Expander>
-                    
+
                     <Separator/>
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock TextDecorations="Underline" Text="VII. Перфоранты голени" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="buttondPeвrforate2" Command="{Binding ToRightTibiaPerforateCommand}" Content="{Binding Path=RightTibiaPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                                <Button x:Name="buttondPeвrforate2" Command="{Binding ToRightTibiaPerforateCommand}" Content="{Binding Path=RightTibiaPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Style="{StaticResource MyNormalBUTTON}" FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
@@ -460,7 +460,7 @@
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="VIII. СПС (Сафено-поплитеальное соустье)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="buttdondPeвrforate2" Command="{Binding ToRightSPSCommand}" Content="{Binding Path=RightSPS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                                <Button x:Name="buttdondPeвrforate2" Command="{Binding ToRightSPSCommand}" Content="{Binding Path=RightSPS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Style="{StaticResource MyNormalBUTTON}" FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
@@ -468,7 +468,7 @@
                             <TextBlock Visibility="{Binding IsVisibleSPSRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SPSRightstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleSPSRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SPSRightstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleSPSRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SPSRightstr[2]}"></TextBlock>
-                           
+
                         </StackPanel>
 
                     </Expander>
@@ -477,11 +477,11 @@
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="IX. МПВ (Малая подкожная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="butаtfonPDSV1" Command="{Binding ToRightMPVCommand}" Content="{Binding Path=RightMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="butаtfonPDSV1" Command="{Binding ToRightMPVCommand}" Content="{Binding Path=RightMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
-                            <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding RightMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
+                            <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisibleMPVRight[0]}" Text="Ход: "> <TextBlock  Text="{Binding RightMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
 
                             <TextBlock Visibility="{Binding IsVisibleMPVRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding MPVRightstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleMPVRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding MPVRightstr[1]}"></TextBlock>
@@ -495,12 +495,12 @@
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock TextDecorations="Underline" Text="X. ТЕ МПВ (Бедренное продолжение малой подкожной вены)" TextWrapping="Wrap" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="butаtfonвPDSV1" Command="{Binding ToRightTEMPVCommand}" Content="{Binding Path=RightTEMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                                <Button Style="{StaticResource MyNormalBUTTON}"   x:Name="butаtfonвPDSV1" Command="{Binding ToRightTEMPVCommand}" Content="{Binding Path=RightTEMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20"  FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
-                            <TextBlock  HorizontalAlignment="Center" Text="Ход: "> <TextBlock  Text="{Binding RightTEMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
-                            <TextBlock  HorizontalAlignment="Center" Text="Протяжность: "> <TextBlock  Text="{Binding RightTEMPV.FF_length}" FontSize="12"/></TextBlock>
+                            <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisibleTEMPVRight[0]}" Text="Ход: "> <TextBlock  Text="{Binding RightTEMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
+                            <TextBlock  HorizontalAlignment="Center"  Visibility="{Binding IsVisibleTEMPVRight[0]}"  Text="Протяжность: "> <TextBlock  Text="{Binding RightTEMPV.FF_length}" FontSize="12"/></TextBlock>
 
                             <TextBlock Visibility="{Binding IsVisibleTEMPVRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding TEMPVRightstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleTEMPVRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding TEMPVRightstr[1]}"></TextBlock>
@@ -515,7 +515,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock TextDecorations="Underline" Text="XI. ППВ (Подколенная перфорантная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0">
                                 </TextBlock>
-                                <Button x:Name="butdsаtfohnвPfDSV1" Command="{Binding ToRightPPVCommand}" Content="{Binding Path=RightPPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                                <Button Style="{StaticResource MyNormalBUTTON}"  x:Name="butdsаtfohnвPfDSV1" Command="{Binding ToRightPPVCommand}" Content="{Binding Path=RightPPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20"  FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
@@ -527,16 +527,16 @@
                     </Expander>
 
                     <Separator/>
-                    
+
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock TextDecorations="Underline" Text="CEAP" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="butаtfohnвPfDSV1" Command="{Binding ToRightCEARCommand}" Content="{Binding Path=RightCEAR.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="butаtfohnвPfDSV1" Command="{Binding ToRightCEARCommand}" Content="{Binding Path=RightCEAR.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20"  FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
-                     
+
                             <TextBlock Visibility="{Binding IsVisibleCEAPRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding CEAPRightstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleCEAPRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding CEAPRightstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleCEAPRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding CEAPRightstr[2]}"></TextBlock>
@@ -545,8 +545,8 @@
                         </StackPanel>
                     </Expander>
                     <Separator/>
-                   
-                   
+
+
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
@@ -562,7 +562,7 @@
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock TextDecorations="Underline" Text="XIII. Глубокие вены" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="butаtffohnffвPDSV1" Command="{Binding ToRightGVCommand}" Content="{Binding Path=RightGV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" Background="#F0FFFF" FontSize="12"/>
+                                <Button  Style="{StaticResource MyNormalBUTTON}" x:Name="butаtffohnffвPDSV1" Command="{Binding ToRightGVCommand}" Content="{Binding Path=RightGV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Width="120" Height="20" FontSize="12"/>
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
@@ -572,30 +572,30 @@
 
                         </StackPanel>
                     </Expander>
-                    
+
                     <Separator/>
-                
-                        <Separator Margin="10,0,10,0"/>
-                     
-                     
-                    </StackPanel>
-                </ScrollViewer>
+
+                    <Separator Margin="10,0,10,0"/>
+
+
+                </StackPanel>
+            </ScrollViewer>
 
 
 
-                <Separator HorizontalAlignment="Left" Height="6" Margin="0,574,0,0" VerticalAlignment="Top" Width="1024" RenderTransformOrigin="0.51,0.49" Background="Black"/>
-                <TextBlock x:Name="textBlock1_Copy4" HorizontalAlignment="Center" Margin="10,578,942,256" TextWrapping="Wrap" VerticalAlignment="Center" Width="199" FontSize="18" Text="Рекомендации" TextAlignment="Center"/>
-            <ListBox x:Name="listBox1_Copy" ItemsSource="{Binding Path=RecomendationsList}" HorizontalAlignment="Left" Height="127" Margin="13,608,0,0" VerticalAlignment="Top" Width="688" FontSize="14" BorderThickness="1">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
+            <Separator HorizontalAlignment="Left" Height="6" Margin="0,574,0,0" VerticalAlignment="Top" Width="1024" RenderTransformOrigin="0.51,0.49" Background="Black"/>
+            <TextBlock x:Name="textBlock1_Copy4" HorizontalAlignment="Center" Margin="10,578,942,256" TextWrapping="Wrap" VerticalAlignment="Center" Width="199" FontSize="18" Text="Рекомендации" TextAlignment="Center"/>
+            <ListBox x:Name="listBox1_Copy" ItemsSource="{Binding Path=RecomendationsList}" HorizontalAlignment="Left" Height="127" Margin="3,608,0,0" VerticalAlignment="Top" Width="688" FontSize="14" BorderThickness="1">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
 
-                            <TextBlock Padding="5,0,5,0" Text="{Binding  Data.Str}" />
+                        <TextBlock Padding="5,0,5,0" Text="{Binding  Data.Str}" />
 
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
 
-                <TextBlock x:Name="textBlock1_Copy5" HorizontalAlignment="Left" Margin="13,71,0,0" TextWrapping="Wrap" Text="NB!" VerticalAlignment="Top" Width="43" FontSize="18"/>
+            <TextBlock x:Name="textBlock1_Copy5" HorizontalAlignment="Left" Margin="13,71,0,0" TextWrapping="Wrap" Text="NB!" VerticalAlignment="Top" Width="43" FontSize="18"/>
 
             <TextBox x:Name="textBox"  HorizontalAlignment="Left" Height="78" Margin="56,76,0,0" TextWrapping="Wrap" Text="{Binding Path=TextTip,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="431" VerticalScrollBarVisibility="Auto">
                 <i:Interaction.Triggers>
@@ -607,7 +607,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </TextBox>
-                <TextBlock x:Name="textBlock1_Copy6" HorizontalAlignment="Left" Margin="13,36,0,0" TextWrapping="Wrap" Text="Вес:" VerticalAlignment="Top" Width="43" FontSize="18" RenderTransformOrigin="0.674,0.459"/>
+            <TextBlock x:Name="textBlock1_Copy6" HorizontalAlignment="Left" Margin="13,36,0,0" TextWrapping="Wrap" Text="Вес:" VerticalAlignment="Top" Width="43" FontSize="18" RenderTransformOrigin="0.674,0.459"/>
             <TextBox   x:Name="textBox_Copy" HorizontalAlignment="Left" Height="23" Margin="56,38,0,0" TextWrapping="Wrap" Text="{Binding Path=Weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="42" RenderTransformOrigin="0.586,0.435">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseDown">
@@ -623,7 +623,7 @@
                 </TextBox.InputBindings>
             </TextBox>
             <TextBlock x:Name="textBlock1_Copy7" HorizontalAlignment="Left" Margin="103,37,0,0" TextWrapping="Wrap" Text="кг" VerticalAlignment="Top" Width="26" FontSize="18"/>
-                <TextBlock x:Name="textBlock1_Copy8" HorizontalAlignment="Left" Margin="175,36,0,0" TextWrapping="Wrap" Text="Рост:" VerticalAlignment="Top" Width="43" FontSize="18" RenderTransformOrigin="0.674,0.459"/>
+            <TextBlock x:Name="textBlock1_Copy8" HorizontalAlignment="Left" Margin="175,36,0,0" TextWrapping="Wrap" Text="Рост:" VerticalAlignment="Top" Width="43" FontSize="18" RenderTransformOrigin="0.674,0.459"/>
             <TextBox x:Name="textBox_Copy1" Text="{Binding Path=Growth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="218,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="42">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseDown">
@@ -644,32 +644,32 @@
                 </TextBlock>
 
             <ListBox x:Name="listBox1_Copy1" ItemsSource="{Binding Path=LeftDiagnosisList}" HorizontalAlignment="Left" Height="127" Margin="3,449,0,0" VerticalAlignment="Top" Width="487" BorderThickness="1">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
 
-                            <TextBlock Padding="5,0,5,0" Text="{Binding  Data.Str}" />
+                        <TextBlock Padding="5,0,5,0" Text="{Binding  Data.Str}" />
 
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
             <ListBox x:Name="listBox1_Copy2" ItemsSource="{Binding Path=RightDiagnosisList}" HorizontalAlignment="Left" Height="127" Margin="518,449,0,0" VerticalAlignment="Top" Width="487" BorderThickness="1">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
 
-                            <TextBlock Padding="5,0,5,0" Text="{Binding  Data.Str}" />
+                        <TextBlock Padding="5,0,5,0" Text="{Binding  Data.Str}" />
 
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-                <Button x:Name="button_Copy4" Content="Добавить рекомендации" Command="{Binding ToAddRecomendationsCommand}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="688" Height="32" Background="AliceBlue" FontSize="14" Margin="13,576,0,0"/>
-                <StackPanel Orientation="Vertical" Margin="710,573,0,0">
-                    <Button x:Name="button_Copy3" Margin="0,5,0,5" Content="Вернуться к пациенту" Command="{Binding ToCurrentPatientCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="297" Height="31" Background="MintCream" FontSize="14"/>
-                    <Button x:Name="button_Copy10" Margin="0,5,0,5" Content="Заключение" Command="{Binding ToPhysicalOverviewCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="297" Height="33" Background="Azure" FontSize="14"/>
-                <Button x:Name="butаton_Copy10" Margin="0,5,0,5" Content="Осмотр хирурга" Command="{Binding ToPhysicalChirurgOverviewCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="297" Height="33" Background="Azure" FontSize="14"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy4" Content="Добавить рекомендации" Command="{Binding ToAddRecomendationsCommand}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="300" Margin="3,576,0,0"/>
+            <StackPanel Orientation="Vertical" Margin="710,573,0,0">
+                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy3" Margin="0,5,0,5" Content="Вернуться к пациенту" Command="{Binding ToCurrentPatientCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300"/>
+                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy10" Margin="0,5,0,5" Content="Заключение" Command="{Binding ToPhysicalOverviewCommand}" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="300"/>
+                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="butаton_Copy10" Margin="0,5,0,5" Content="Осмотр хирурга" Command="{Binding ToPhysicalChirurgOverviewCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" />
 
-                <Button x:Name="button_Copy9" Margin="0,5,0,5" Content="Завершить обследование" Command="{Binding OpenDialogCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="297" Height="31" Background="Honeydew" FontSize="14"/>
-                </StackPanel>
-            <Button x:Name="button_Copy" Command="{Binding Path=ToLeftDiagCommand}" Content="Поставить диагноз" HorizontalAlignment="Left" Margin="3,417,0,0" VerticalAlignment="Top" Width="487" Height="32" Background="Lavender" FontSize="14"/>
+                <Button Style="{StaticResource MyConfirmBUTTON}"  x:Name="button_Copy9" Margin="0,5,0,5" Content="Завершить обследование" Command="{Binding OpenDialogCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300"/>
+            </StackPanel>
+            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy" Command="{Binding Path=ToLeftDiagCommand}" Content="Поставить диагноз" HorizontalAlignment="Left" Margin="3,417,0,0" VerticalAlignment="Top" Width="300" />
 
 
 
@@ -709,11 +709,11 @@
                 <Grid>
                     <Canvas Background="#FFC6E8E6" Margin="0,0,0,29">
 
-                        <TextBlock x:Name="textfBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="135" FontSize="18" Canvas.Top="10" Text="Врач"/>
-                        <ComboBox ItemsSource="{Binding Doctors}" SelectedIndex="{Binding Path=DoctorSelectedId}" x:Name="textBfox1" HorizontalAlignment="Left" Width="280" Height="13"  Text="{Binding Path=ShortText}" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="61" />
-                        <Button x:Name="buttonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding ParentVM.RevertCommand}" Canvas.Left="60" Canvas.Top="120" Height="36"/>
-                        <Button x:Name="ButtonfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding ParentVM.SaveCommand}" Canvas.Left="256" Canvas.Top="120" Height="36"/>
-                       
+                        <TextBlock x:Name="textfBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="200" FontSize="18" Canvas.Top="10" Text="Врач"/>
+                        <ComboBox ItemsSource="{Binding Doctors}" SelectedIndex="{Binding Path=DoctorSelectedId}" x:Name="textBfox1" HorizontalAlignment="Left" Width="420" Height="13"  Text="{Binding Path=ShortText}" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="61" />
+                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding ParentVM.RevertCommand}" Canvas.Left="10" Canvas.Top="120" />
+                        <Button Style="{StaticResource MyConfirmBUTTON}"  x:Name="ButtonfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding ParentVM.SaveCommand}" Canvas.Left="280" Canvas.Top="120" />
+
                     </Canvas>
                 </Grid>
             </Border>

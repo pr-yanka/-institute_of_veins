@@ -147,8 +147,8 @@ namespace WpfApp2.ViewModels
 
 
 
-            base.HasNavigation = false;
-            HasNavigation = false;
+            base.HasNavigation = true;
+            HasNavigation = true;
             MessageBus.Default.Subscribe("OpenHistoryOfPatient", SetCurrentPatientID);
 
             ToAddPhysicalCommand = new DelegateCommand(

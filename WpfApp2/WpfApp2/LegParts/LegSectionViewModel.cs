@@ -11,6 +11,8 @@ using WpfApp2.Db.Models;
 using WpfApp2.Navigation;
 using WpfApp2.Messaging;
 using WpfApp2.Db.Models.LegParts;
+using Microsoft.Practices.Prism.Commands;
+using System.Windows.Controls;
 
 namespace WpfApp2.LegParts
 {
@@ -47,7 +49,7 @@ namespace WpfApp2.LegParts
 
         private int? _selectedIndex;
 
-        public int? SelectedIndex { get { return _selectedIndex; } set { _selectedIndex = value;OnPropertyChanged(); } }
+        public int? SelectedIndex { get { return _selectedIndex; } set { _selectedIndex = value; OnPropertyChanged(); } }
 
         public LegPartDbStructure SelectedValue
         {
@@ -69,8 +71,9 @@ namespace WpfApp2.LegParts
                     {
                         if (value.Custom && value.Text1 == _startCustomText)
                         {
-                           
-                            MessageBus.Default.Call("OpenCustom", this, this.GetType()); }
+
+                            MessageBus.Default.Call("OpenCustom", this, this.GetType());
+                        }
                         else MessageBus.Default.Call("CloseCustom", this, this.GetType());
                     }
                     else
@@ -254,7 +257,27 @@ namespace WpfApp2.LegParts
 
         public LegSectionViewModel(NavigationController controller, LegSectionViewModel prevSection) : base(controller)
         {
+            LostFocus = new DelegateCommand<object>(
+       (sender) =>
+       {
 
+           if (string.IsNullOrWhiteSpace(((TextBox)sender).Text))
+               ((TextBox)sender).Text = "0";
+
+
+
+       }
+   ); ClickOnWeight = new DelegateCommand<object>(
+      (sender) =>
+      {
+
+          if (((TextBox)sender).Text == "0")
+              ((TextBox)sender).Text = "";
+
+
+
+      }
+  );
             _previousSection = prevSection;
             if (prevSection != null)
                 prevSection.PropertyChanged += (e, args) =>
@@ -327,6 +350,7 @@ namespace WpfApp2.LegParts
             }
         }
 
-
+        public DelegateCommand<object> LostFocus { get; private set; }
+        public DelegateCommand<object> ClickOnWeight { get; private set; }
     }
 }

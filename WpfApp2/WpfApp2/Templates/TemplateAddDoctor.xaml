@@ -3,17 +3,23 @@
                     xmlns:local="clr-namespace:WpfApp2.Templates"
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                     xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit">
+   
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/LegParts/Templates/RightPanelAnimation.xaml"/>
     </ResourceDictionary.MergedDictionaries>
+    <Style x:Key="MyDataGridHEADER" TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+        <Setter Property="Width" Value="auto"></Setter>
+        <Setter Property="FontSize" Value="16"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+    </Style>
     <DataTemplate x:Key="TemplateAddDoctor">
         <Grid Name="RootGrid"  Margin="227,70,0,0" >
 
             <TextBlock FontFamily="/fonts/#Pescadero" Width="Auto" FontSize="18pt" Margin="227,5,200,200" Height="Auto" Text="{Binding Path=TextHeader}"/>
 
-            <Button x:Name="button" Visibility="Hidden" Content="Загрузить данные из регистратуры" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" Width="740" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy3" Visibility="{Binding Path=Visibility}" Content="Сбросить" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="24,451,0,0" VerticalAlignment="Top" Width="336" Height="43" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy4" Content="{Binding Path=nameOfButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Command="{Binding Path=SaveAndGoDoctorListCommand}" HorizontalAlignment="Left" Margin="395,451,0,0" VerticalAlignment="Top" Width="336" Height="43" Background="#FFBDD649" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="button" Visibility="Hidden" Content="Загрузить данные из регистратуры" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" />
+            <Button   x:Name="button_Copy3" Visibility="{Binding Path=Visibility}" Content="Сбросить" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="24,451,0,0" VerticalAlignment="Top"  Style="{StaticResource MyNormalBUTTON}"/>
+            <Button x:Name="button_Copy4" Content="{Binding Path=nameOfButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Command="{Binding Path=SaveAndGoDoctorListCommand}" HorizontalAlignment="Left" Margin="395,451,0,0" VerticalAlignment="Top"  Style="{StaticResource MyConfirmBUTTON}" />
             <Grid HorizontalAlignment="Left" Height="313" Margin="24,102,0,0" VerticalAlignment="Top" Width="707">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="186*"/>
@@ -66,7 +72,7 @@
                 </TextBox>
                 <TextBox x:Name="comboBox" Text="{Binding Path=Aditional, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" Width="511" Height="33" Margin="0,0,0,0"/>
                 <Grid Grid.Row="3" Margin="0,30,0,0" Grid.RowSpan="10" Height="100" Width="auto" >
-                    <DataGrid   
+                    <DataGrid  ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" 
                           Foreground="Black"  AutoGenerateColumns="False" HeadersVisibility="None" 
                      ItemsSource="{Binding Path=Controller.CurrentViewModel.Specializations}" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" >
                         <DataGrid.Columns>
@@ -87,11 +93,11 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
-                <Button x:Name="butвton" Command="{Binding Path=OpenAddSpecCommand}" Grid.Row="10" Visibility="Visible" Content="+ Добавить Специальность" HorizontalAlignment="Left" VerticalAlignment="Top" Width="auto" Height="auto" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="10"/>
-                <Button x:Name="butвtoвn" Command="{Binding Path=OpenAddScintificsCommand}" Grid.Column="1" Margin="120,0" Grid.Row="10" Visibility="Visible" Content="+ Добавить Звание" HorizontalAlignment="Left" VerticalAlignment="Top" Width="auto" Height="auto" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="10"/>
+                <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="butвton" Command="{Binding Path=OpenAddSpecCommand}" Grid.Row="10" Visibility="Visible" Content="+ Добавить Специальность" HorizontalAlignment="Left" VerticalAlignment="Top" Width="auto" Height="auto"  FontSize="10"/>
+                <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="butвtoвn" Command="{Binding Path=OpenAddScintificsCommand}" Grid.Column="1" Margin="120,0" Grid.Row="10" Visibility="Visible" Content="+ Добавить Звание" HorizontalAlignment="Left" VerticalAlignment="Top" Width="auto" Height="auto" FontSize="10"/>
 
                 <Grid Grid.Row="3" Grid.Column="2" Margin="120,30,0,0" Grid.RowSpan="10" Height="100" Width="auto" >
-                    <DataGrid HorizontalAlignment="Left" Height="220"  VerticalAlignment="Top" Width="152" Grid.Column="2" 
+                    <DataGrid ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" HorizontalAlignment="Left" Height="220"  VerticalAlignment="Top" Width="152" Grid.Column="2" 
                           Foreground="Black"  AutoGenerateColumns="False" HeadersVisibility="None" Grid.Row="5" Grid.RowSpan="10"
                      ItemsSource="{Binding Path=Controller.CurrentViewModel.Scintifics}" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" >
                         <DataGrid.Columns>
@@ -171,8 +177,8 @@
                     <Canvas Background="#FFC6E8E6" Margin="0,0,0,29">
                         <TextBlock x:Name="textfBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="135" FontSize="18" Canvas.Top="10" Text="Добавить специализацию"/>
                         <TextBox x:Name="textBfox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="61" />
-                        <Button x:Name="buttonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding ParentVM.RevertSpecCommand}" Canvas.Left="60" Canvas.Top="120" Height="36"/>
-                        <Button x:Name="ButtonfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding ParentVM.SaveSpecCommand}" Canvas.Left="256" Canvas.Top="120" Height="36"/>
+                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding ParentVM.RevertSpecCommand}" Canvas.Left="0" Canvas.Top="120" />
+                        <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtonfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding ParentVM.SaveSpecCommand}" Canvas.Left="250" Canvas.Top="120" />
                         <TextBlock x:Name="texftBlock_Copy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="42" Canvas.Left="173" Text="Название:"/>
 
                     </Canvas>
@@ -217,8 +223,8 @@
                     <Canvas Background="#FFC6E8E6" Margin="0,0,0,29">
                         <TextBlock x:Name="tвextfBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="135" FontSize="18" Canvas.Top="10" Text="Добавить научное звание"/>
                         <TextBox x:Name="texвtBfox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="61" />
-                        <Button x:Name="buttoвnfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding ParentVM.RevertScintificsCommand}" Canvas.Left="60" Canvas.Top="120" Height="36"/>
-                        <Button x:Name="ButtoвnfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding ParentVM.SaveScintificsCommand}" Canvas.Left="256" Canvas.Top="120" Height="36"/>
+                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttoвnfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.RevertScintificsCommand}" Canvas.Left="0" Canvas.Top="120"/>
+                        <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtoвnfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.SaveScintificsCommand}" Canvas.Left="250" Canvas.Top="120"/>
                         <TextBlock x:Name="texfвtBlock_Copy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="42" Canvas.Left="173" Text="Название:"/>
 
                     </Canvas>

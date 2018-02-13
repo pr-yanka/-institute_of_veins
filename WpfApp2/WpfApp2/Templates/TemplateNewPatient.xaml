@@ -6,12 +6,22 @@
    
     <DataTemplate x:Key="TemplateNewPatient">
         <Grid Margin="227,67,0,0" >
-            <TextBlock FontFamily="/fonts/#Pescadero" Width="Auto" FontSize="18pt" HorizontalAlignment="Center" VerticalAlignment="Top" Height="Auto"  Text="{Binding Path=TextHeader}"/>
-            <Button x:Name="button" Visibility="Hidden" Content="Загрузить данные из регистратуры" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" Width="740" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <TextBlock FontFamily="/fonts/#Pescadero" Width="Auto" FontSize="22pt" HorizontalAlignment="Center" VerticalAlignment="Top" Height="Auto"  Text="{Binding Path=TextHeader}">
+                
+                <TextBlock.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="10"/>
+                    </TransformGroup>
+                </TextBlock.RenderTransform>
+            </TextBlock>
+            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button" Visibility="Hidden" Content="Загрузить данные из регистратуры" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top"/>
             <Button x:Name="button_Copy3" Visibility="{Binding Path=Visibility}" Content="Сбросить" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="49,512,0,0" VerticalAlignment="Top"
-                    Background="#FF7D83BB" FontFamily="Segoe UI Light" FontSize="16" Foreground="White" Width="300" Height="42"/>
+                 Style="{StaticResource MyNormalBUTTON}" />
             <Button x:Name="button_Copy4" Content="{Binding Path=nameOfButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="400,512,0,0" VerticalAlignment="Top"
-                    Background="#FF7FB282" FontFamily="Segoe UI Light" FontSize="16" Foreground="White" Width="300" Height="42"/>
+                 Style="{StaticResource MyConfirmBUTTON}" Width="300"/>
             <Grid HorizontalAlignment="Left" Height="417" Margin="24,90,0,0" VerticalAlignment="Top" Width="693">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="186*"/>

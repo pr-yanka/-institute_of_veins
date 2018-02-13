@@ -7,8 +7,17 @@
     <DataTemplate x:Key="TemplateCheckboxes">
         <Grid Name="RootGrid">
             <StackPanel Orientation="Vertical" Background="White">
-                <TextBlock x:Name="textBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Path=HeaderText}" VerticalAlignment="Top" FontSize="28"/>
-                <DataGrid  AutoGenerateColumns="False" ItemsSource="{Binding Path=Controller.CurrentViewModel.DataSourceList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                <TextBlock x:Name="textBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Path=HeaderText}" VerticalAlignment="Top" FontSize="28">
+                    <TextBlock.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform Y="10"/>
+                        </TransformGroup>
+                    </TextBlock.RenderTransform>
+                </TextBlock>
+                <DataGrid Margin="0,10" AutoGenerateColumns="False" ItemsSource="{Binding Path=Controller.CurrentViewModel.DataSourceList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn >
                             <DataGridTemplateColumn.CellTemplate>
@@ -27,9 +36,9 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Center" >
-                    <Button FontSize="16" Content="{Binding Path=AddButtonText}" Command="{Binding Path=OpenCommand}" Background="GhostWhite"></Button>
+                    <Button Style="{StaticResource MyNormalBUTTON}" Content="{Binding Path=AddButtonText}" Command="{Binding Path=OpenCommand}" ></Button>
                     <StackPanel Orientation="Horizontal">
-                        <Button FontSize="16" Content="Сохранить"  Command="{Binding Path=ToPhysicalCommand}" Background="GhostWhite" Width="515"></Button>
+                        <Button Style="{StaticResource MyConfirmBUTTON}" Content="Сохранить"  Command="{Binding Path=ToPhysicalCommand}" ></Button>
                              </StackPanel>
                 </StackPanel>
             </StackPanel>
@@ -74,8 +83,8 @@
                     <Canvas Background="#FFC6E8E6" Margin="0,0,0,29">
                         <TextBlock x:Name="textfBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="135" FontSize="18" Canvas.Top="10" Text="{Binding TextOFNewType}"/>
                         <TextBox x:Name="textBfox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="61" />
-                        <Button x:Name="buttonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding ParentVM.RevertCommand}" Canvas.Left="60" Canvas.Top="120" Height="36"/>
-                        <Button x:Name="ButtonfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding ParentVM.SaveCommand}" Canvas.Left="256" Canvas.Top="120" Height="36"/>
+                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.RevertCommand}" Canvas.Left="0" Canvas.Top="120" />
+                        <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtonfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.SaveCommand}" Canvas.Left="250" Canvas.Top="120" />
                         <TextBlock x:Name="texftBlock_Copy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="42" Canvas.Left="173" Text="Название:"/>
 
                     </Canvas>

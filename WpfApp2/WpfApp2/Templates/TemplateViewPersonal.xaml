@@ -1,12 +1,19 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  
                     xmlns:local="clr-namespace:WpfApp2.Templates">
+
+    <Style x:Key="MyDataGridHEADER" TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+        <Setter Property="Width" Value="auto"></Setter>
+        <Setter Property="FontSize" Value="16"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+    </Style>
     <DataTemplate x:Key="TemplateViewPersonal">
         <Grid Name="RootGrid"  Margin="220,63,0,0" >
             <TextBlock x:Name="TextName" Text="{Binding Path=TooltipText}" Visibility="Hidden"/>
             <Button x:Name="button" Content="{Binding Path=TextAddUserOrPersonalOrMed}" Command="{Binding Path=ToAddSomeoneCommand}" HorizontalAlignment="Left" Margin="24,450,0,0" VerticalAlignment="Top" Width="auto" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
             <Grid   Height="360" Width="auto"  HorizontalAlignment="Left"  VerticalAlignment="Top"  Margin="24,68,0,0">
-                <DataGrid  BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Foreground="Black"  ItemsSource="{Binding Path=DataSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserResizeRows="False">
+                <DataGrid  ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Foreground="Black"  ItemsSource="{Binding Path=DataSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserResizeRows="False">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>

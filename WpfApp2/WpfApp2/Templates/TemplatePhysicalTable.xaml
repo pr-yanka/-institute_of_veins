@@ -2,6 +2,13 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:WpfApp2.Templates"
                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
+
+    <Style x:Key="MyDataGridHEADER" TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+        <Setter Property="Width" Value="auto"></Setter>
+        <Setter Property="FontSize" Value="16"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+    </Style>
+
     <Style x:Key="MyDataGridCell" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
         <Setter Property="BorderThickness" Value="0"></Setter>
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
@@ -80,7 +87,7 @@
                     </TransformGroup>
                 </TextBlock.RenderTransform>
             </TextBlock>
-            <TextBlock HorizontalAlignment="Left" Margin="10,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="164" FontSize="22" Text="Поиск по слову:" RenderTransformOrigin="-0.027,0.471"/>
+            <TextBlock HorizontalAlignment="Left" Margin="0,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="164" FontSize="22" Text="Поиск по слову:" RenderTransformOrigin="-0.027,0.471"/>
             <TextBox Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="35" Margin="188,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="422" RenderTransformOrigin="0.632,0.9">
                 <TextBox.InputBindings>
                     <KeyBinding Command="{Binding Path=FilterTextCommand}"/>
@@ -98,7 +105,7 @@
                 <ComboBoxItem Content="все"/>
             </ComboBox>
 
-            <DataGrid RowStyle="{StaticResource MyDataGridRow}"  IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="428" Margin="10,160,206,10" VerticalAlignment="Top" Width="745" >
+            <DataGrid ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" RowStyle="{StaticResource MyDataGridRow}"  IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="428" Margin="10,160,206,10" VerticalAlignment="Top" Width="auto" >
 
                 <DataGrid.Columns  >
 

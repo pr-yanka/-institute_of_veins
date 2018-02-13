@@ -3,9 +3,19 @@
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplateCurrentPatient">
         <Grid Margin="210,70,0,0">
-            <TextBlock HorizontalAlignment="Center" FontFamily="/fonts/#Pescadero" FontSize="22pt" Height="38" VerticalAlignment="Top" > <TextBlock Text="{Binding Path=CurrentPatient.Name}" /><Run Text=" " /><TextBlock Text="{Binding Path=CurrentPatient.Sirname}" /><Run Text=" " /><TextBlock Text="{Binding Path=CurrentPatient.Patronimic}" /></TextBlock>
-            <Button x:Name="button" Content="Редактировать профиль" Command="{Binding Path=ToEditPatientCommand}" HorizontalAlignment="Left" Margin="19,61,0,0" VerticalAlignment="Top" Width="300" Height="41" FontFamily="Franklin Gothic Medium" FontSize="16" Background="#FFB8E2EC"/>
-            <Button x:Name="button_Copy4" Content="Посмотреть историю" Command="{Binding Path=ToViewHistoryCommand}" HorizontalAlignment="Left" Margin="420,61,0,0" VerticalAlignment="Top" Width="300" Height="41" FontFamily="Franklin Gothic Medium" FontSize="16" Background="#FFB8E2EC"/>
+            <TextBlock HorizontalAlignment="Center" FontFamily="/fonts/#Pescadero" FontSize="22pt" Height="38" VerticalAlignment="Top" > 
+             
+                 <TextBlock.RenderTransform>
+            <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="10"/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>
+            <TextBlock Text="{Binding Path=CurrentPatient.Name}" /><Run Text=" " /><TextBlock Text="{Binding Path=CurrentPatient.Sirname}" /><Run Text=" " /><TextBlock Text="{Binding Path=CurrentPatient.Patronimic}" /></TextBlock>
+            <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button" Content="Редактировать профиль" Command="{Binding Path=ToEditPatientCommand}" HorizontalAlignment="Left" Margin="11,61,0,0" VerticalAlignment="Top" Width="300" />
+            <Button  Style="{StaticResource MyNormalBUTTON}"  x:Name="button_Copy4" Content="Посмотреть историю" Command="{Binding Path=ToViewHistoryCommand}" HorizontalAlignment="Left" Margin="420,61,0,0" VerticalAlignment="Top" Width="300" />
 
             <StackPanel Orientation="Vertical" Margin="19,118,0,42">
                 <StackPanel Orientation="Horizontal" Height="29">
@@ -53,11 +63,11 @@
                 </StackPanel>
             </StackPanel>
 
-            <Button x:Name="button_Copy" Content="Остальные пациенты" Command="{Binding Path=ToTablePatientsCommand}" HorizontalAlignment="Left" Margin="532,552,0,0" VerticalAlignment="Top" Width="234" Height="41" FontFamily="Franklin Gothic Medium" FontSize="16" Background="#FFD0EADD"/>
-            <Button x:Name="button_Copy1" Content="Назначить операцию"  Command="{Binding Path=ToNewOperationCommand}" HorizontalAlignment="Left" Margin="275,394,0,0" VerticalAlignment="Top" Width="235" Height="41" FontFamily="Franklin Gothic Medium" FontSize="16" Background="#FFB8E2EC"/>
-            <Button x:Name="button_Copy2" Content="Начать обследование" Command="{Binding Path=ToNewPhysicalCommand}" HorizontalAlignment="Left" Margin="21,394,0,0" VerticalAlignment="Top" Width="234" Height="41" FontFamily="Franklin Gothic Medium" FontSize="16" Background="#FFB8E2EC"/>
-            <Button x:Name="button_Copy5" Content="Добавить анализы" Command="{Binding Path=ToAddAnalizeCommand}" HorizontalAlignment="Left" Margin="532,394,0,0" VerticalAlignment="Top" Width="234" Height="41" FontFamily="Franklin Gothic Medium" FontSize="16" Background="#FFB8E2EC"/>
-            <Button x:Name="button_Copy51" Content="Патологии" Command="{Binding Path=ToPathologyListCommand}" HorizontalAlignment="Left" Margin="21,349,0,0" VerticalAlignment="Top" Width="234" Height="40" FontFamily="Franklin Gothic Medium" FontSize="16" Background="#FFB8E2EC"/>
+            <Button Style="{StaticResource MyNormalBUTTON}"  x:Name="button_Copy" Content="Остальные пациенты" Command="{Binding Path=ToTablePatientsCommand}" HorizontalAlignment="Left" Margin="402,552,0,0" VerticalAlignment="Top" Width="300"/>
+            <Button Style="{StaticResource MyConfirmBUTTON}" Width="300" x:Name="button_Copy1" Content="Назначить операцию"  Command="{Binding Path=ToNewOperationCommand}" HorizontalAlignment="Left" Margin="235,349,0,0" VerticalAlignment="Top" />
+            <Button Style="{StaticResource MyConfirmBUTTON}"  Width="300" x:Name="button_Copy2" Content="Начать обследование" Command="{Binding Path=ToNewPhysicalCommand}" HorizontalAlignment="Left" Margin="11,394,0,0" VerticalAlignment="Top" />
+            <Button Style="{StaticResource MyConfirmBUTTON}"  x:Name="button_Copy5" Content="Добавить анализы" Command="{Binding Path=ToAddAnalizeCommand}" HorizontalAlignment="Left" Margin="342,394,0,0" VerticalAlignment="Top" />
+            <Button Style="{StaticResource MyNormalBUTTON}"  x:Name="button_Copy51" Content="Патологии" Command="{Binding Path=ToPathologyListCommand}" HorizontalAlignment="Left" Margin="11,349,0,0" VerticalAlignment="Top"/>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

@@ -179,8 +179,24 @@ namespace WpfApp2.Db.Models
         {
             CurrAccId = (int)data;
         }
+        private string GetEntytyType(DbEntityEntry ent)
+        {
+            ObjectContext objectContext = ((IObjectContextAdapter)this).ObjectContext;
+            Type entityType = ent.Entity.GetType();
 
-        public static string GetTableName(Type type, DbContext context)
+            if (entityType.BaseType != null && entityType.Namespace == "System.Data.Entity.DynamicProxies")
+                entityType = entityType.BaseType;
+
+            string entityTypeName = entityType.Name;
+
+            EntityContainer container =
+                objectContext.MetadataWorkspace.GetEntityContainer(objectContext.DefaultContainerName, DataSpace.CSpace);
+            string entitySetName = (from meta in container.BaseEntitySets
+                                    where meta.ElementType.Name == entityTypeName
+                                    select meta.Name).First();
+            return entitySetName;
+        }
+        public string GetTableName(Type type, DbContext context)
         {
             var metadata = ((IObjectContextAdapter)context).ObjectContext.MetadataWorkspace;
 
@@ -188,11 +204,13 @@ namespace WpfApp2.Db.Models
             var objectItemCollection = ((ObjectItemCollection)metadata.GetItemCollection(DataSpace.OSpace));
 
             // Get the entity type from the model that maps to the CLR type
+
             var entityType = metadata
-                    .GetItems<EntityType>(DataSpace.OSpace)
-                    .Single(e => objectItemCollection.GetClrType(e) == type);
+                .GetItems<EntityType>(DataSpace.OSpace)
+                .Single(e => objectItemCollection.GetClrType(e) == type);
 
             // Get the entity set that uses this entity type
+
             var entitySet = metadata
                 .GetItems<EntityContainer>(DataSpace.CSpace)
                 .Single()
@@ -213,6 +231,7 @@ namespace WpfApp2.Db.Models
 
             // Return the table name from the storage entity set
             return (string)table.MetadataProperties["Table"].Value ?? table.Name;
+
         }
 
         public override int SaveChanges()
@@ -234,8 +253,8 @@ namespace WpfApp2.Db.Models
 
             foreach (var change in deletedEntities)
             {
-                var tableName = GetTableName(change.Entity.GetType(), this);
-                var entityName = change.Entity.GetType().Name;
+                var tableName = GetTableName(ObjectContext.GetObjectType(change.Entity.GetType()), this);
+                var entityName = GetEntytyType(change);
                 if (entityName != "ChangeHistory")
                 {
                     //var primaryKey = GetPrimaryKeyValue(change);
@@ -317,8 +336,8 @@ namespace WpfApp2.Db.Models
             foreach (var change in addedEntities)
             {
 
-                var entityName = change.Entity.GetType().Name;
-                var tableName = GetTableName(change.Entity.GetType(), this);
+                var entityName = GetEntytyType(change);
+                var tableName = GetTableName(ObjectContext.GetObjectType(change.Entity.GetType()), this);
                 if (entityName != "ChangeHistory")
                 {
                     //var primaryKey = GetPrimaryKeyValue(change);
@@ -398,9 +417,9 @@ namespace WpfApp2.Db.Models
 
             foreach (var change in modifiedEntities)
             {
-                var tableName = GetTableName(change.Entity.GetType(), this);
-                var entityName = change.Entity.GetType().Name;
-               
+                var tableName = GetTableName(ObjectContext.GetObjectType(change.Entity.GetType()), this);
+                // var entityName = GetEntytyType(change);
+                string entityName = GetEntytyType(change);
                 if (entityName != "ChangeHistory")
                 {
 
@@ -482,8 +501,8 @@ namespace WpfApp2.Db.Models
 
                 foreach (var change in addedEntities)
                 {
-                    var tableName = GetTableName(change.Entity.GetType(), this);
-                    var entityName = change.Entity.GetType().Name;
+                    var tableName = GetTableName(ObjectContext.GetObjectType(change.Entity.GetType()), this);
+                    var entityName = GetEntytyType(change);
                     if (entityName != "ChangeHistory")
                     {
                         //var primaryKey = GetPrimaryKeyValue(change);
@@ -533,8 +552,8 @@ namespace WpfApp2.Db.Models
                 foreach (var change in modifiedEntities)
                 {
 
-                    var tableName = GetTableName(change.Entity.GetType(), this);
-                    var entityName = change.Entity.GetType().Name;
+                    var tableName = GetTableName(ObjectContext.GetObjectType(change.Entity.GetType()), this);
+                    var entityName = GetEntytyType(change);
                     if (entityName.Contains("Operation"))
                     {
                         entityName = "Operation";

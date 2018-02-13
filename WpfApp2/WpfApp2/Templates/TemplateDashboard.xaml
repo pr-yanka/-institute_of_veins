@@ -5,7 +5,7 @@
         <Grid Name="RootGrid">
             <TextBlock TextAlignment="Center" FontSize="24" Margin="273,72,144,569" Height="32" Foreground="#FF13283E"><Run Text="Здравствуйте, "/><TextBlock Text="{Binding AccauntName}"></TextBlock></TextBlock>
 
-            <Label Visibility="{Binding AlertOpOperation}" FontFamily="Source Sans Pro" x:Name="label" Content="{Binding NextOpText}" Margin="220,141,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.338,0.401" Height="40" Background="#FFFFF0F0" HorizontalAlignment="Left" Width="807" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" FontSize="20" />
+            <Label Visibility="{Binding AlertOpOperation}" FontFamily="Source Sans Pro" x:Name="label" Content="{Binding NextOpText}" Margin="220,141,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.338,0.401" Height="40" Background="#FFFFF0F0" HorizontalAlignment="Left" Width="757" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" FontSize="20" />
             <Label  Visibility="{Binding AlertOpOperation}" Target="{Binding ElementName=TextArea}" Margin="758,140,144,524" FontFamily="Segoe UI Light" FontSize="18">
                 <Hyperlink Command="{Binding Path=ToOperationOverviewCommand}">
                     (подробнее)
@@ -17,19 +17,21 @@
             </Button>
             <TextBlock FontFamily="Source Sans Pro" HorizontalAlignment="Left" Margin="613,319,0,0" TextWrapping="Wrap" Text="ОБСЛЕДОВАНИЕ СУЩЕСТВУЮЩЕГО ПАЦИЕНТА" VerticalAlignment="Top" Width="202" Height="75" TextAlignment="Center" FontSize="14" Foreground="#FF404040"/>
 
-            <Button x:Name="buttonToPhysicalTable" Command="{Binding ToPhysicalTableCommand}" HorizontalAlignment="Left" Margin="342,431,0,0" VerticalAlignment="Top" Width="227" Height="153" Background="#FFDDF2F3" FontFamily="Segoe UI Symbol" FontSize="16" BorderBrush="{x:Null}" Foreground="#FF686868" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" UseLayoutRounding="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" FontStretch="Condensed">
+            <!--    <Button x:Name="buttonToPhysicalTable" Command="{Binding ToPhysicalTableCommand}" HorizontalAlignment="Left" Margin="342,431,0,0" VerticalAlignment="Top" Width="227" Height="153" Background="#FFDDF2F3" FontFamily="Segoe UI Symbol" FontSize="16" BorderBrush="{x:Null}" Foreground="#FF686868" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" UseLayoutRounding="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" FontStretch="Condensed">
                 <Image Margin="0,25,0,68" Source="pack://application:,,,/Images/view.png" Stretch="Fill" Width="54" Height="54"/>
-            </Button>
+            </Button>-->
 
-            <Button x:Name="buttonToOperationsTable" Command="{Binding ToCalendarOperationsCommand}" HorizontalAlignment="Left" Margin="601,431,0,0" VerticalAlignment="Top" Width="227" Height="153" Background="#FFDDF2F3" FontFamily="Segoe UI Symbol" FontSize="16" BorderBrush="{x:Null}" Foreground="#FF686868" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" UseLayoutRounding="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" FontStretch="Condensed">
+         <!-- <Button x:Name="buttonToOperationsTable" Command="{Binding ToCalendarOperationsCommand}" HorizontalAlignment="Left" Margin="601,431,0,0" VerticalAlignment="Top" Width="227" Height="153" Background="#FFDDF2F3" FontFamily="Segoe UI Symbol" FontSize="16" BorderBrush="{x:Null}" Foreground="#FF686868" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" UseLayoutRounding="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" FontStretch="Condensed">
                 <Image Margin="10,26,0,67" Source="pack://application:,,,/Images/operation.png" Stretch="Fill" Width="54" Height="54"/>
-            </Button>
+            </Button>-->
             <Button x:Name="buttonToNewPatient" Command="{Binding ToNewPatientCommand}" HorizontalAlignment="Left" Margin="342,222,0,0" VerticalAlignment="Top" Width="227" Height="153" Background="#FFDDF2F3" FontFamily="Segoe UI Symbol" FontSize="16" BorderBrush="{x:Null}" Foreground="#FF686868" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" UseLayoutRounding="False" ScrollViewer.VerticalScrollBarVisibility="Disabled" FontStretch="Condensed">
                 <Image Source="pack://application:,,,/Images/new.png" Width="50" Height="50" HorizontalAlignment="Left" Margin="0,24,0,69"/>
             </Button>
-            <TextBlock FontSize="14" FontFamily="Source Sans Pro" HorizontalAlignment="Left" Margin="359,521,0,0" TextWrapping="Wrap" Text="ПОСМОТРЕТЬ ОБСЛЕДОВАНИЯ" VerticalAlignment="Top" Width="188" Height="47" TextAlignment="Center" Foreground="#FF404040"/>
-            <TextBlock FontFamily="Source Sans Pro" HorizontalAlignment="Left" Margin="627,521,0,0" TextWrapping="Wrap" Text="ПОСМОТРЕТЬ ОПЕРАЦИИ" VerticalAlignment="Top" Width="188" Height="47" TextAlignment="Center" FontSize="14" Foreground="#FF404040"/>
             <TextBlock FontFamily="Source Sans Pro" HorizontalAlignment="Left" Margin="359,319,0,0" TextWrapping="Wrap" Text="ОБСЛЕДОВАНИЕ НОВОГО ПАЦИЕНТА" VerticalAlignment="Top" Width="188" Height="47" TextAlignment="Center" FontSize="14" Foreground="#FF404040"/>
+
+            <!-- <TextBlock FontSize="14" FontFamily="Source Sans Pro" HorizontalAlignment="Left" Margin="359,521,0,0" TextWrapping="Wrap" Text="ПОСМОТРЕТЬ ОБСЛЕДОВАНИЯ" VerticalAlignment="Top" Width="188" Height="47" TextAlignment="Center" Foreground="#FF404040"/>
+
+           <TextBlock FontFamily="Source Sans Pro" HorizontalAlignment="Left" Margin="627,521,0,0" TextWrapping="Wrap" Text="ПОСМОТРЕТЬ ОПЕРАЦИИ" VerticalAlignment="Top" Width="188" Height="47" TextAlignment="Center" FontSize="14" Foreground="#FF404040"/>     -->
 
         </Grid>
     </DataTemplate>

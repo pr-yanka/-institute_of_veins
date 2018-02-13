@@ -6,9 +6,9 @@
 
             <TextBlock FontFamily="/fonts/#Pescadero" Width="Auto" FontSize="18pt" Margin="227,5,200,200" Height="Auto" Text="{Binding Path=TextHeader}"/>
 
-            <Button x:Name="button" Visibility="Hidden" Content="Загрузить данные из регистратуры" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" Width="740" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy3" Visibility="{Binding Path=Visibility}" Content="Сбросить" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="24,451,0,0" VerticalAlignment="Top" Width="336" Height="43" Background="#FFEAF7AF" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button x:Name="button_Copy4" Content="{Binding Path=nameOfButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Command="{Binding Path=SaveAndGoDoctorListCommand}" HorizontalAlignment="Left" Margin="395,451,0,0" VerticalAlignment="Top" Width="336" Height="43" Background="#FFBDD649" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button" Visibility="Hidden" Content="Загрузить данные из регистратуры" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" />
+            <Button x:Name="button_Copy3" Visibility="{Binding Path=Visibility}" Content="Сбросить" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="24,451,0,0" VerticalAlignment="Top" Style="{StaticResource MyNormalBUTTON}"/>
+            <Button x:Name="button_Copy4" Content="{Binding Path=nameOfButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Command="{Binding Path=SaveAndGoDoctorListCommand}" HorizontalAlignment="Left" Margin="395,451,0,0" VerticalAlignment="Top" Style="{StaticResource MyConfirmBUTTON}"/>
             <Grid HorizontalAlignment="Left" Height="313" Margin="24,102,0,0" VerticalAlignment="Top" Width="707">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="186*"/>

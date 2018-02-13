@@ -5,8 +5,8 @@
         <Grid>
             <Border BorderThickness="1" HorizontalAlignment="Left" Height="360" Margin="400,92,0,0" VerticalAlignment="Top" Width="353" Background="#FFB0E8EE"></Border>
             <TextBlock Margin="454,217,0,0" Height="49" HorizontalAlignment="Left" x:Name="textBlockHeading" VerticalAlignment="Top" FontSize="16" Padding="5" RenderTransformOrigin="1.955,1.44" Foreground="#FBFF4545" FontFamily="Source Sans Pro Semibold" TextDecorations="{x:Null}" LineHeight="6" TextAlignment="Center" Text="Функционал пока не определён."/>
-            <Button Margin="586,158,0,58" Background="#FFFF4545" Content="РЕГИСТРАЦИЯ" Command="{Binding null}" BorderBrush="{x:Null}" Foreground="White" FontFamily="Source Sans Pro Semibold" FontSize="14" HorizontalAlignment="Left" Width="134" Height="40"/>
-            <Button Margin="430,158,0,58" Background="#FFB0E8EE" Content="Вернуться" Command="{Binding ToLoginCommand}" BorderBrush="{x:Null}" Foreground="#FF6D726C" FontFamily="Source Sans Pro Semibold" FontSize="14" HorizontalAlignment="Left" Width="134" Height="40"/>
+            <Button Style="{StaticResource MyConfirmBUTTON}" Margin="586,158,0,58" Content="РЕГИСТРАЦИЯ" Command="{Binding null}"  HorizontalAlignment="Left"/>
+            <Button Style="{StaticResource MyNormalBUTTON}" Margin="430,158,0,58"  Content="Вернуться" Command="{Binding ToLoginCommand}" BorderBrush="{x:Null}"/>
             <TextBlock Height="23" HorizontalAlignment="Left" Margin="422,135,0,0"  Text="Регистрация:" VerticalAlignment="Top" FontSize="17" FontStretch="ExtraCondensed" Foreground="#FF706C6C"/>
         </Grid>
     </DataTemplate>
