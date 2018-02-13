@@ -57,6 +57,19 @@ namespace WpfApp2.ViewModels
         public string AddButtonText { get; set; }
         private string ld;
 
+        private void SetClear(object sender, object data)
+        {
+            DataSourceList = new List<DiagnosisDataSource>();
+            LeftDiag = new List<DiagnosisDataSource>();
+            RightDiag = new List<DiagnosisDataSource>();
+
+            foreach (var DiagnosisType in Data.DiagnosisTypes.GetAll)
+            {
+                DataSourceList.Add(new DiagnosisDataSource(DiagnosisType));
+                LeftDiag.Add(new DiagnosisDataSource(DiagnosisType));
+                RightDiag.Add(new DiagnosisDataSource(DiagnosisType));
+            }
+        }
         private void SetDiagnosisListLeft(object sender, object data)
         {
             // using
@@ -122,11 +135,13 @@ namespace WpfApp2.ViewModels
                 CurrentPanelViewModel.ClearPanel();
                 CurrentPanelViewModel.PanelOpened = true;
             });
+            //   SetClear
+            MessageBus.Default.Subscribe("SetClearDiagnosisListLeftRightOperation", SetClear);
             MessageBus.Default.Subscribe("SetDiagnosisListRight", SetDiagnosisListRight);
             MessageBus.Default.Subscribe("SetDiagnosisListLeft", SetDiagnosisListLeft);
             SaveCommand = new DelegateCommand(() =>
             {
-              
+
                 var newType = CurrentPanelViewModel.GetPanelType();
                 if (!string.IsNullOrWhiteSpace(newType.Str))
                 {

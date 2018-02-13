@@ -135,8 +135,22 @@ namespace WpfApp2.ViewModels
         public List<DiagnosisDataSource> LeftDiag { get { return _leftDiag; } set { _leftDiag = value; OnPropertyChanged(); } }
         public List<DiagnosisDataSource> RightDiag { get { return _rightDiag; } set { _rightDiag = value; OnPropertyChanged(); } }
 
+        private void SetClear(object sender, object data)
+        {
+            DataSourceList = new List<DiagnosisDataSource>();
+            LeftDiag = new List<DiagnosisDataSource>();
+            RightDiag = new List<DiagnosisDataSource>();
+
+            foreach (var DiagnosisType in Data.DiagnosisTypes.GetAll)
+            {
+                DataSourceList.Add(new DiagnosisDataSource(DiagnosisType));
+                LeftDiag.Add(new DiagnosisDataSource(DiagnosisType));
+                RightDiag.Add(new DiagnosisDataSource(DiagnosisType));
+            }
+        }
         public ViewModelDiagnosisList(NavigationController controller) : base(controller)
         {
+
             TextOFNewType = "Новый тип диагноза";
             TextName = "Вернуться к обследованию";
             HeaderText = "Диагнозы";
@@ -144,7 +158,7 @@ namespace WpfApp2.ViewModels
             DataSourceList = new List<DiagnosisDataSource>();
             LeftDiag = new List<DiagnosisDataSource>();
             RightDiag = new List<DiagnosisDataSource>();
-
+            MessageBus.Default.Subscribe("SetClearDiagnosisListLeftRightObsled", SetClear);
             MessageBus.Default.Subscribe("SetDiagnosisListBecauseOFEdit", SetDiagnosisListBecauseOFEdit);
             MessageBus.Default.Subscribe("SetleftOrRightForObsled", SetDiagnosisList);
             foreach (var DiagnosisType in Data.DiagnosisTypes.GetAll)

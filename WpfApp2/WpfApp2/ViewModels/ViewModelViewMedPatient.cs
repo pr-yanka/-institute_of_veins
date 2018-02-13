@@ -127,8 +127,8 @@ namespace WpfApp2.ViewModels
             ToAddSomeoneCommand = new DelegateCommand(
                 () =>
                 {
-                   
-                   Controller.NavigateTo<ViewModelAddMedPersonal>();
+                    MessageBus.Default.Call("RefreshDataForMedpersonal", null, null);
+                    Controller.NavigateTo<ViewModelAddMedPersonal>();
                 }
             );
 

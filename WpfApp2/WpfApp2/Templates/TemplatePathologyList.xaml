@@ -64,7 +64,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
-                                    <Button ToolTip="Можете заархивировать патологию в случае, если пациент от неё избавился" Visibility="{Binding ArchiveButtonVis}" x:Name="ToPatient" Command="{Binding Path=ArchiveCommand}" HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}">
+                                    <Button HorizontalAlignment="Center" ToolTip="Можете заархивировать патологию в случае, если пациент от неё избавился" Visibility="{Binding ArchiveButtonVis}" x:Name="ToPatient" Command="{Binding Path=ArchiveCommand}"   VerticalAlignment="Top" Width="30" Height="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}">
                                         <Image Source="pack://application:,,,/Images/forward.png"></Image>
                                     </Button>
                                 </Grid>
@@ -75,7 +75,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
-                                    <Button x:Name="ToPatient" Command="{Binding Path=RedactCommand}" HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}">
+                                    <Button HorizontalAlignment="Center" x:Name="ToPatient" Command="{Binding Path=RedactCommand}"   VerticalAlignment="Top" Width="30" Height="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}">
                                         <Image Source="pack://application:,,,/Images/forward.png"></Image>
                                     </Button>
                                 </Grid>

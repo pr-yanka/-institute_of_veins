@@ -339,6 +339,12 @@ namespace WpfApp2.ViewModels
         {
             using (var context = new MySqlContext())
             {
+                LeftDiagnosisList = new CollectionViewSource();
+
+                RightDiagnosisList = new CollectionViewSource();
+
+                MessageBus.Default.Call("SetClearDiagnosisListLeftRightOperation", null, null);
+
                 MedPersonalRepository MedPersonalRep = new MedPersonalRepository(context);
                 DoctorRepository DoctorRep = new DoctorRepository(context);
                 Operation = new Operation();
@@ -424,9 +430,9 @@ namespace WpfApp2.ViewModels
                             DateTime MaxExam = ExamsOfCurrPatient.Max(s => s.Date);
                             var ExamsOfCurrPatientLatest = ExamsOfCurrPatient.Where(s => s.Date == MaxExam).ToList();
                             List<DiagnosisObs> DiagOfCurrPatienLt = DiagObsRep.GetAll.ToList().Where(s => s.id_обследование_ноги == ExamsOfCurrPatientLatest[0].Id && s.isLeft == true).ToList();
-                          //  List<DiagnosisObs> DiagOfCurrPatientRt = DiagObsRep.GetAll.ToList().Where(s => s.id_обследование_ноги == ExamsOfCurrPatientLatest[0].Id && s.isLeft == false).ToList();
+                            //  List<DiagnosisObs> DiagOfCurrPatientRt = DiagObsRep.GetAll.ToList().Where(s => s.id_обследование_ноги == ExamsOfCurrPatientLatest[0].Id && s.isLeft == false).ToList();
 
-                         //   MessageBus.Default.Call("SetDiagnosisListRight", null, DiagOfCurrPatientRt);
+                            //   MessageBus.Default.Call("SetDiagnosisListRight", null, DiagOfCurrPatientRt);
                             MessageBus.Default.Call("SetDiagnosisListLeft", null, DiagOfCurrPatienLt);
 
 
@@ -437,7 +443,8 @@ namespace WpfApp2.ViewModels
                             Controller.NavigateTo<ViewModelAddOperation>();
 
                         }
-                        else{
+                        else
+                        {
                             MessageBox.Show("Нет диагноза слева последнего обследования");
                         }
 
@@ -457,10 +464,10 @@ namespace WpfApp2.ViewModels
                         {
                             DateTime MaxExam = ExamsOfCurrPatient.Max(s => s.Date);
                             var ExamsOfCurrPatientLatest = ExamsOfCurrPatient.Where(s => s.Date == MaxExam).ToList();
-                          //  List<DiagnosisObs> DiagOfCurrPatienLt = DiagObsRep.GetAll.ToList().Where(s => s.id_обследование_ноги == ExamsOfCurrPatientLatest[0].Id && s.isLeft == true).ToList();
-                             List<DiagnosisObs> DiagOfCurrPatientRt = DiagObsRep.GetAll.ToList().Where(s => s.id_обследование_ноги == ExamsOfCurrPatientLatest[0].Id && s.isLeft == false).ToList();
+                            //  List<DiagnosisObs> DiagOfCurrPatienLt = DiagObsRep.GetAll.ToList().Where(s => s.id_обследование_ноги == ExamsOfCurrPatientLatest[0].Id && s.isLeft == true).ToList();
+                            List<DiagnosisObs> DiagOfCurrPatientRt = DiagObsRep.GetAll.ToList().Where(s => s.id_обследование_ноги == ExamsOfCurrPatientLatest[0].Id && s.isLeft == false).ToList();
 
-                               MessageBus.Default.Call("SetDiagnosisListRight", null, DiagOfCurrPatientRt);
+                            MessageBus.Default.Call("SetDiagnosisListRight", null, DiagOfCurrPatientRt);
                             // MessageBus.Default.Call("SetDiagnosisListLeft", null, DiagOfCurrPatienLt);
 
 

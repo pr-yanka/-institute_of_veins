@@ -108,11 +108,18 @@ namespace WpfApp2.ViewModels
         //Жалобы/диагноз/заключение
         public List<ComplainsDataSource> _dataSourceList;
         public List<ComplainsDataSource> DataSourceList { get { return _dataSourceList; } set { _dataSourceList = value; OnPropertyChanged(); } }
-
+        private void SetClear(object sender, object data)
+        {
+            DataSourceList = new List<ComplainsDataSource>();
+            foreach (var ComplainsType in Data.ComplainsTypes.GetAll)
+            {
+                DataSourceList.Add(new ComplainsDataSource(ComplainsType));
+            }
+        }
         public ViewModelComplainsList(NavigationController controller) : base(controller)
         {
             MessageBus.Default.Subscribe("SetDComplanesListBecauseOFEdit", SetDComplanesListBecauseOFEdit);
-
+            MessageBus.Default.Subscribe("SetClearComplanesListObsledovanie", SetClear);
             TextOFNewType = "Новый тип жалобы";
             HeaderText = "Жалобы";
             AddButtonText = "Добавить жалобу";

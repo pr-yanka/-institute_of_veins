@@ -151,6 +151,7 @@ namespace WpfApp2.ViewModels
         {
             using (var context = new MySqlContext())
             {
+                Name = "";
                 MedsDataSource = new ObservableCollection<DocDataSoursForNewUser>();
                 DocsDataSource = new ObservableCollection<DocDataSoursForNewUser>();
                 MedPersonalRepository medRip = new MedPersonalRepository(context);

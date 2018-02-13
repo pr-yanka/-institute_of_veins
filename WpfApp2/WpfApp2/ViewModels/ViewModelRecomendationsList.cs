@@ -79,6 +79,17 @@ namespace WpfApp2.ViewModels
         }
 
         #endregion
+
+
+        private void SetClear(object sender, object data)
+        {
+            DataSourceList = new List<RecomendationsDataSource>();
+
+            foreach (var RecomendationsType in Data.RecomendationsTypes.GetAll)
+            {
+                DataSourceList.Add(new RecomendationsDataSource(RecomendationsType));
+            }
+        }
         private void SetDRecomendationListBecauseOFEdit(object sender, object data)
         {
 
@@ -107,6 +118,7 @@ namespace WpfApp2.ViewModels
 
         public ViewModelRecomendationsList(NavigationController controller) : base(controller)
         {
+            MessageBus.Default.Subscribe("SetClearRecomendationListObsledovanie", SetClear);
             MessageBus.Default.Subscribe("SetDRecomendationListBecauseOFEdit", SetDRecomendationListBecauseOFEdit);
             TextOFNewType = "Новый тип рекомендации";
             HeaderText = "Рекомендации";

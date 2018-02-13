@@ -99,7 +99,10 @@ namespace WpfApp2.ViewModels
         private void SetCurrentPatientID(object sender, object data)
         {
             Index = 1;
-
+            YearAppear = "";
+            MonthAppear = "";
+            MonthDisappear = "";
+            YearDisappear = "";
             isNewTypeAvalible = Visibility.Visible;
             isReadOnly = true;
             CurrentPatient = Data.Patients.Get((int)data);
@@ -284,7 +287,7 @@ namespace WpfApp2.ViewModels
 
             SaveCommand = new DelegateCommand(() =>
             {
-                
+
 
                 var newType = CurrentPanelViewModel.GetPanelType();
                 if (!string.IsNullOrWhiteSpace(newType.Str))

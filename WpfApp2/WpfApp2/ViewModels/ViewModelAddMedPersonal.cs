@@ -38,7 +38,15 @@ namespace WpfApp2.ViewModels
         private string _name;
         private string _surname;
         private string _patronimic;
-    
+        private void RefreshDataForMedpersonal(object sender, object data)
+        {
+
+            Name = "";
+
+            Surname = "";
+
+            Patronimic = "";
+        }
 
         public string Name { get { return _name; } set { _name = value; OnPropertyChanged(); } }
 
@@ -105,6 +113,7 @@ namespace WpfApp2.ViewModels
         #endregion
         public ViewModelAddMedPersonal(NavigationController controller) : base(controller)
         {
+            MessageBus.Default.Subscribe("RefreshDataForMedpersonal", RefreshDataForMedpersonal);
            
             base.HasNavigation = true;
 

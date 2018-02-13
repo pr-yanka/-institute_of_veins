@@ -141,6 +141,13 @@ namespace WpfApp2.ViewModels
 
             using (var context = new MySqlContext())
             {
+                Name = "";
+
+                Surname = "";
+
+                Patronimic = "";
+                Aditional = "";
+                СategoryTypeSelectedText = "";
                 Category = new ObservableCollection<СategoryType>();
                 Specializations = new ObservableCollection<SpecDataSours>();
                 Scintifics = new ObservableCollection<SpecDataSours>();

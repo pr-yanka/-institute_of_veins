@@ -977,6 +977,9 @@ namespace WpfApp2.ViewModels
 
         private void SetCurrentPatientID(object sender, object data)
         {
+            MessageBus.Default.Call("SetClearDiagnosisListLeftRightObsled", null, null);
+            MessageBus.Default.Call("SetClearRecomendationListObsledovanie", null, null);
+            MessageBus.Default.Call("SetClearComplanesListObsledovanie", null, null);
             Clear(null, null);
             Weight = "0";
             Growth = "0";
