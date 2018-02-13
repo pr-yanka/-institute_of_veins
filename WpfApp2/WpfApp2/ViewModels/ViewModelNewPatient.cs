@@ -31,10 +31,14 @@ namespace WpfApp2.ViewModels
         #endregion
         #region Bindings
 
+
+        private IEnumerable<String> _districtList;
+        private IEnumerable<String> _streetList;
+
         public IEnumerable<String> TownsList { get; set; }
-        public IEnumerable<String> DistrictList { get; set; }
+        public IEnumerable<String> DistrictList { get { return _districtList; } set { _districtList = value; OnPropertyChanged(); } }
         public IEnumerable<String> RegionList { get; set; }
-        public IEnumerable<String> StreetList { get; set; }
+        public IEnumerable<String> StreetList { get { return _streetList; } set { _streetList = value; OnPropertyChanged(); } }
 
         private string _currentPatientFlat;
         public string CurrentPatientFlat { get { return _currentPatientFlat; } set { _currentPatientFlat = value; OnPropertyChanged(); } }
@@ -77,7 +81,8 @@ namespace WpfApp2.ViewModels
         private string _district;
 
 
-        public string Town { get { return _town; } set { _town = value; OnPropertyChanged(); } }
+
+        public string Town { get { return _town; } set { _town = value; OnPropertyChanged(); GetStreetAnDistrict(); } }
         public string District { get { return _district; } set { _district = value; OnPropertyChanged(); } }
         public string Region { get { return _region; } set { _region = value; OnPropertyChanged(); } }
         public string Street { get { return _street; } set { _street = value; OnPropertyChanged(); } }
@@ -96,13 +101,14 @@ namespace WpfApp2.ViewModels
         private Brush _textBox_Flat_B;
         private Brush _textBox_Phone_B;
         private Brush _textBox_Email_B;
-
+        private Brush _date_B;
         private Brush _textBox_District_B;
         private Brush _textBox_Region_B;
         public Brush TextBoxDistrictB { get { return _textBox_District_B; } set { _textBox_District_B = value; OnPropertyChanged(); } }
 
         public Brush TextBoxRegionB { get { return _textBox_Region_B; } set { _textBox_Region_B = value; OnPropertyChanged(); } }
 
+        public Brush Date_B { get { return _date_B; } set { _date_B = value; OnPropertyChanged(); } }
 
         private int _genderTypeNumber;
 
@@ -132,6 +138,13 @@ namespace WpfApp2.ViewModels
         private bool TestRequiredFields()
         {
             bool result = true;
+
+            if (Date.Day >= DateTime.Now.Day && Date.Month >= DateTime.Now.Month && Date.Year >= DateTime.Now.Year)
+            {
+                Date_B  = Brushes.Red;
+
+                result = false;
+            }
 
             if (String.IsNullOrWhiteSpace(Name))
             {
@@ -225,47 +238,114 @@ namespace WpfApp2.ViewModels
             TextBoxFlatB = Brushes.Gray;
 
             TextBoxPhoneB = Brushes.Gray;
-
+            Date_B = Brushes.Gray;
             TextBoxEmailB = Brushes.Gray;
         }
 
-
+        int curTwnID = 0;
         #region MessageBus
 
+        private void GetStreetAnDistrict()
+        {
+            using (var context = new MySqlContext())
+            {
+                DistrictsRepository distRep = new DistrictsRepository(context);
+                StreetsRepository strtRep = new StreetsRepository(context);
+
+
+                CitiesRepository ctRep = new CitiesRepository(context);
+                curTwnID = 0;
+                foreach (var Ton in ctRep.GetAll)
+                {
+                    if (Ton.Str == Town)
+                    {
+                        curTwnID = Ton.Id;
+                    }
+                }
+
+                if (curTwnID != 0)
+                {
+                    List<string> DistrictListbuf = new List<string>();
+                    List<string> StreetListbuf = new List<string>();
+                    foreach (var Street in strtRep.GetAll)
+                    {
+                        if (Street.IdCity == curTwnID)
+                            StreetListbuf.Add(Street.Str);
+                    }
+                    foreach (var District in distRep.GetAll)
+                    {
+                        if (District.IdCity == curTwnID)
+                            DistrictListbuf.Add(District.Str);
+                    }
+                    StreetList = StreetListbuf;
+                    DistrictList = DistrictListbuf;
+                }else
+                {
+                    List<string> DistrictListbuf = new List<string>();
+                    List<string> StreetListbuf = new List<string>();
+                    StreetList = StreetListbuf;
+                    DistrictList = DistrictListbuf;
+                }
+                Controller.NavigateTo<ViewModelNewPatient>();
+            }
+        }
         private void GetDictionary(object sender, object data)
         {
 
             using (var context = new MySqlContext())
             {
+                CurrentPatientFlat = "";
+
+                Name = "";
+
+                Surname = "";
+
+                District = "";
+
+                Region = "";
+
+                Patronimic = "";
+
+                Date = DateTime.Now;
+
+                Town = "";
+
+                Street = "";
+
+                House = "";
+
+                Phone = "";
+
+                email = "";
+                Town = "";
+                District = "";
+                Region = "";
+                Street = "";
+
                 nameOfButton = "Добавить пользователя";
                 Date = DateTime.Now;
                 CitiesRepository ctRep = new CitiesRepository(context);
                 RegionsRepository regRep = new RegionsRepository(context);
-                DistrictsRepository distRep = new DistrictsRepository(context);
-                StreetsRepository strtRep = new StreetsRepository(context);
+
                 List<string> TownsListbuf = new List<string>();
                 List<string> RegionListbuf = new List<string>();
-                List<string> DistrictListbuf = new List<string>();
-                List<string> StreetListbuf = new List<string>();
+
                 foreach (var Town in ctRep.GetAll)
                 {
                     TownsListbuf.Add(Town.Str);
                 }
-                foreach (var Street in strtRep.GetAll)
-                {
-                    StreetListbuf.Add(Street.Str);
-                }
+
                 foreach (var Region in regRep.GetAll)
                 {
                     RegionListbuf.Add(Region.Str);
                 }
-                foreach (var District in distRep.GetAll)
-                {
-                    DistrictListbuf.Add(District.Str);
-                }
-                DistrictList = DistrictListbuf;
+
+
+
+
                 RegionList = RegionListbuf;
-                StreetList = StreetListbuf;
+
+
                 TownsList = TownsListbuf;
             }
 
@@ -372,6 +452,7 @@ namespace WpfApp2.ViewModels
                                 Streets bufStreet = new Streets();
                                 bufStreet.Str = Street;
                                 Data.Streets.Add(bufStreet);
+                                bufStreet.IdCity = curTwnID;
                                 Data.Complete();
                                 CurrentPatient.Street = bufStreet.Id;
                             }
@@ -389,6 +470,7 @@ namespace WpfApp2.ViewModels
                             {
                                 Regions bufRegions = new Regions();
                                 bufRegions.Str = Region;
+
                                 Data.Regions.Add(bufRegions);
                                 Data.Complete();
                                 CurrentPatient.Region = bufRegions.Id;
@@ -407,6 +489,7 @@ namespace WpfApp2.ViewModels
                             {
                                 Districts bufDistricts = new Districts();
                                 bufDistricts.Str = District;
+                                bufDistricts.IdCity = curTwnID;
                                 Data.Districts.Add(bufDistricts);
                                 Data.Complete();
                                 CurrentPatient.District = bufDistricts.Id;

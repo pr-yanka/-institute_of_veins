@@ -40,11 +40,14 @@ namespace WpfApp2.ViewModels
 
         private string _phone;
         private string _email;
+        private IEnumerable<String> _districtList;
+        private IEnumerable<String> _streetList;
 
         public IEnumerable<String> TownsList { get; set; }
-        public IEnumerable<String> DistrictList { get; set; }
+        public IEnumerable<String> DistrictList { get { return _districtList; } set { _districtList = value; OnPropertyChanged(); } }
         public IEnumerable<String> RegionList { get; set; }
-        public IEnumerable<String> StreetList { get; set; }
+        public IEnumerable<String> StreetList { get { return _streetList; } set { _streetList = value; OnPropertyChanged(); } }
+        int curTwnID = 0;
         public string Name { get { return _name; } set { _name = value;
 
                 nameOfButton = "Сохранить изменения"; OnPropertyChanged(); } }
@@ -57,7 +60,7 @@ namespace WpfApp2.ViewModels
         private string _region;
         private string _district;
 
-        public string Town { get { return _town; } set { _town = value; nameOfButton = "Сохранить изменения"; OnPropertyChanged(); } }
+        public string Town { get { return _town; } set { _town = value; nameOfButton = "Сохранить изменения"; OnPropertyChanged(); GetStreetAnDistrict(); } }
 
         public string Street { get { return _street; } set { _street = value; nameOfButton = "Сохранить изменения"; OnPropertyChanged(); } }
         public string House { get { return _house; } set { _house = value; nameOfButton = "Сохранить изменения"; OnPropertyChanged(); } }
@@ -79,14 +82,14 @@ namespace WpfApp2.ViewModels
         private Brush _textBox_Flat_B;
         private Brush _textBox_Phone_B;
         private Brush _textBox_Email_B;
-        private int _genderTypeNumber;
+        private int _genderTypeNumber; private Brush _date_B;
         private Brush _textBox_District_B;
         private Brush _textBox_Region_B;
         public Brush TextBoxDistrictB { get { return _textBox_District_B; } set { _textBox_District_B = value; OnPropertyChanged(); } }
 
         public Brush TextBoxRegionB { get { return _textBox_Region_B; } set { _textBox_Region_B = value; OnPropertyChanged(); } }
 
-
+        public Brush Date_B { get { return _date_B; } set { _date_B = value; OnPropertyChanged(); } }
         // public Patient CopyPatient { get; set; }
 
         public Patient CurrentPatient { get { return currentPatient; } set { currentPatient = value; OnPropertyChanged(); } }
@@ -115,6 +118,12 @@ namespace WpfApp2.ViewModels
         {
             bool result = true;
 
+            if (Date.Day >= DateTime.Now.Day && Date.Month >= DateTime.Now.Month && Date.Year >= DateTime.Now.Year)
+            {
+                Date_B = Brushes.Red;
+
+                result = false;
+            }
             if (String.IsNullOrWhiteSpace(Name))
             {
                 TextBoxNameB = Brushes.Red;
@@ -185,7 +194,51 @@ namespace WpfApp2.ViewModels
             }
             return result;
         }
+        private void GetStreetAnDistrict()
+        {
+            using (var context = new MySqlContext())
+            {
+                DistrictsRepository distRep = new DistrictsRepository(context);
+                StreetsRepository strtRep = new StreetsRepository(context);
 
+
+                CitiesRepository ctRep = new CitiesRepository(context);
+                curTwnID = 0;
+                foreach (var Ton in ctRep.GetAll)
+                {
+                    if (Ton.Str == Town)
+                    {
+                        curTwnID = Ton.Id;
+                    }
+                }
+
+                if (curTwnID != 0)
+                {
+                    List<string> DistrictListbuf = new List<string>();
+                    List<string> StreetListbuf = new List<string>();
+                    foreach (var Street in strtRep.GetAll)
+                    {
+                        if (Street.IdCity == curTwnID)
+                            StreetListbuf.Add(Street.Str);
+                    }
+                    foreach (var District in distRep.GetAll)
+                    {
+                        if (District.IdCity == curTwnID)
+                            DistrictListbuf.Add(District.Str);
+                    }
+                    StreetList = StreetListbuf;
+                    DistrictList = DistrictListbuf;
+                }
+                else
+                {
+                    List<string> DistrictListbuf = new List<string>();
+                    List<string> StreetListbuf = new List<string>();
+                    StreetList = StreetListbuf;
+                    DistrictList = DistrictListbuf;
+                }
+                Controller.NavigateTo<ViewModelNewPatient>();
+            }
+        }
         public void SetAllFieldsDefault()
         {
             TextBoxRegionB = Brushes.Gray;
@@ -203,7 +256,7 @@ namespace WpfApp2.ViewModels
             TextBoxStreetB = Brushes.Gray;
 
             TextBoxHouseB = Brushes.Gray;
-
+            Date_B = Brushes.Gray;
             TextBoxFlatB = Brushes.Gray;
 
             TextBoxPhoneB = Brushes.Gray;
