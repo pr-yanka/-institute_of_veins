@@ -33,19 +33,19 @@
             <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Margin="138,182,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="Список всех врачей" FontSize="16" Width="155" TextAlignment="Center"/>
 
-            <CheckBox Content="Врачи" HorizontalAlignment="Left" Margin="140,0,0,250"  Width="100" Height="30" IsChecked="{Binding ShowDoctors}" >
+            <CheckBox Content="врачи" HorizontalAlignment="Left" Margin="141,0,0,250"  Width="100" Height="30" IsChecked="{Binding ShowDoctors}" >
              
             
             </CheckBox>
-            <CheckBox Content="Медперсонал" HorizontalAlignment="Left" Margin="210,0,0,250" Width="100" Height="30" IsChecked="{Binding ShowMeds}" >
+            <CheckBox Content="медперсонал" HorizontalAlignment="Left" Margin="210,0,0,250" Width="100" Height="30" IsChecked="{Binding ShowMeds}" >
 
 
             </CheckBox>
-            <CheckBox Content="Врачи" HorizontalAlignment="Left" Margin="320,0,0,250"  Width="100" Height="30" IsChecked="{Binding ShowDoctorsSelected}" >
+            <CheckBox Content="врачи" HorizontalAlignment="Left" Margin="315,0,0,250"  Width="100" Height="30" IsChecked="{Binding ShowDoctorsSelected}" >
 
 
             </CheckBox>
-            <CheckBox Content="Медперсонал" HorizontalAlignment="Left" Margin="385,0,0,250"  Width="100" Height="30" IsChecked="{Binding ShowMedsSelected}" >
+            <CheckBox Content="медперсонал" HorizontalAlignment="Left" Margin="380,0,0,250"  Width="100" Height="30" IsChecked="{Binding ShowMedsSelected}" >
 
 
             </CheckBox>
@@ -163,9 +163,9 @@
 
                 </DataGrid.Columns>
             </DataGrid>
-            <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="24,450,0,0" TextWrapping="Wrap"  
+            <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="24,460,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="NB!"/>
-            <TextBox Text="{Binding Path=Operation.NB}"  x:Name="richTextBox" HorizontalAlignment="Left" Height="86" Margin="57,450,0,0" VerticalAlignment="Top"  
+            <TextBox Text="{Binding Path=Operation.NB}"  x:Name="richTextBox" HorizontalAlignment="Left" Height="86" Margin="57,460,0,0" VerticalAlignment="Top"  
                          Width="411">
 
 
@@ -194,12 +194,12 @@
             </ListBox>
             <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy4" Content="Выбрать диагноз слева"  Command="{Binding Path=ToLeftDiagCommand}" HorizontalAlignment="Left" Margin="485,170,0,0"              
                     VerticalAlignment="Top" Width="260" />
-            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy5" Command="{Binding GetLeftFromLastObs}" Content="Взять из последнего обследования" HorizontalAlignment="Left"  
-                    Margin="485,500,0,0"             VerticalAlignment="Top" Width="300"/>
+            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy5"  FontSize="12" Command="{Binding GetLeftFromLastObs}" Content="Взять из последнего обследования" HorizontalAlignment="Left"  
+                    Margin="485,500,0,0"             VerticalAlignment="Top" Width="260"/>
             <Button Style="{StaticResource MyConfirmBUTTON}" Width="260" x:Name="button_Copy6" Content="Выбрать диагноз справа" Command="{Binding Path=ToRightDiagCommand}" HorizontalAlignment="Left" Margin="755,170,0,0"              
                     VerticalAlignment="Top"  RenderTransformOrigin="0.484,0.472"/>
             <Button Style="{StaticResource MyConfirmBUTTON}"  x:Name="button_Copy7" Command="{Binding GetRightFromLastObs}"  Content="Взять из последнего обследования" HorizontalAlignment="Left"  
-            Margin="755,500,0,0"             VerticalAlignment="Top" Width="270"/>
+            Margin="755,500,0,0"             VerticalAlignment="Top" Width="260" FontSize="12"/>
 
             <Border Grid.RowSpan="4" Visibility="{Binding Path = CurrentPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOverlay">
                 <Border.Background>

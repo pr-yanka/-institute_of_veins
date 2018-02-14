@@ -28,6 +28,8 @@ namespace WpfApp2.Db.Models
         public ComplanesObsRepository ComplanesObs { get; }
         public RecomendationObsRepository RecomendationObs { get; }
 
+        public ChangesInDBTypeRepository ChangesInDBType { get; }
+
         public ExaminationLegRepository ExaminationLeg { get; }
         public doc_templatesRepository doc_template { get; }
 
@@ -177,7 +179,7 @@ namespace WpfApp2.Db.Models
         public UnitOfWork(MySqlContext context)
         {
             _context = context;
-
+            ChangesInDBType = new ChangesInDBTypeRepository(_context);
             ComplanesObs = new ComplanesObsRepository(_context);
             RecomendationObs = new RecomendationObsRepository(_context);
             ChangeHistory = new ChangeHistoryRepository(_context);

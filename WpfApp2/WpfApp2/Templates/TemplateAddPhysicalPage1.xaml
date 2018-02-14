@@ -68,10 +68,10 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy2" Content="Записать жалобы" Command="{Binding Path=ToSymptomsAddCommand}" HorizontalAlignment="Left" Margin="505,31,0,0" VerticalAlignment="Top" Width="300"/>
+            <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy2" Content="Записать жалобы" Command="{Binding Path=ToSymptomsAddCommand}" Height="30" HorizontalAlignment="Left" Margin="615,32,0,0" VerticalAlignment="Top" Width="300"/>
             <Separator HorizontalAlignment="Left" Height="16" Margin="0,154,0,0" VerticalAlignment="Top" Width="1016" RenderTransformOrigin="0.51,0.49"/>
             <TextBlock x:Name="textBlock1_Copy2" HorizontalAlignment="Center" Margin="173,120,725,507" TextWrapping="Wrap" VerticalAlignment="Center" Width="118" FontSize="18" Text="Левая нога" TextAlignment="Center"/>
-            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy443" Command="{Binding Path=ToRightDiagCommand}" Content="Поставить диагноз" HorizontalAlignment="Left" Margin="518,417,0,0" VerticalAlignment="Top" Width="300"/>
+            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy443" Command="{Binding Path=ToRightDiagCommand}" Content="Поставить диагноз" Height="30" HorizontalAlignment="Left" Margin="615,419,0,0" VerticalAlignment="Top" Width="300"/>
             <TextBlock x:Name="textBlock1_Copy3" HorizontalAlignment="Center" Margin="724,120,122,507" TextWrapping="Wrap" VerticalAlignment="Center" Width="170" FontSize="18"><Run Text="Правая "/><Run Text="нога"/></TextBlock>
 
 
@@ -661,15 +661,15 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy4" Content="Добавить рекомендации" Command="{Binding ToAddRecomendationsCommand}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="300" Margin="3,576,0,0"/>
+            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy4" Content="Добавить рекомендации" Height="30" Command="{Binding ToAddRecomendationsCommand}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="300" Margin="90,578,0,0"/>
             <StackPanel Orientation="Vertical" Margin="710,573,0,0">
-                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy3" Margin="0,5,0,5" Content="Вернуться к пациенту" Command="{Binding ToCurrentPatientCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300"/>
-                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy10" Margin="0,5,0,5" Content="Заключение" Command="{Binding ToPhysicalOverviewCommand}" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="300"/>
-                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="butаton_Copy10" Margin="0,5,0,5" Content="Осмотр хирурга" Command="{Binding ToPhysicalChirurgOverviewCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" />
+                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy3" Margin="0,5,0,5" Height="30" Content="Вернуться к пациенту" Command="{Binding ToCurrentPatientCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300"/>
+                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy10" Margin="0,5,0,5" Height="30" Content="Заключение" Command="{Binding ToPhysicalOverviewCommand}" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="300"/>
+                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="butаton_Copy10" Margin="0,5,0,5" Height="30" Content="Осмотр хирурга" Command="{Binding ToPhysicalChirurgOverviewCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" />
 
-                <Button Style="{StaticResource MyConfirmBUTTON}"  x:Name="button_Copy9" Margin="0,5,0,5" Content="Завершить обследование" Command="{Binding OpenDialogCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300"/>
+                <Button Style="{StaticResource MyConfirmBUTTON}"  x:Name="button_Copy9" Margin="0,5,0,5" Height="30" Content="Завершить обследование"  Command="{Binding OpenDialogCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300"/>
             </StackPanel>
-            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy" Command="{Binding Path=ToLeftDiagCommand}" Content="Поставить диагноз" HorizontalAlignment="Left" Margin="3,417,0,0" VerticalAlignment="Top" Width="300" />
+            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy" Command="{Binding Path=ToLeftDiagCommand}" Content="Поставить диагноз"   Height="30" HorizontalAlignment="Left" Margin="90,419,0,0" VerticalAlignment="Top" Width="300" />
 
 
 

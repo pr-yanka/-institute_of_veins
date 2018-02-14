@@ -36,8 +36,9 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Center" >
-                    <Button Style="{StaticResource MyNormalBUTTON}" Content="{Binding Path=AddButtonText}" Command="{Binding Path=OpenCommand}" ></Button>
-                    <StackPanel Orientation="Horizontal">
+                      <StackPanel Orientation="Vertical">
+                        <Button Style="{StaticResource MyNormalBUTTON}" Content="{Binding Path=AddButtonText}" Width="300"  Command="{Binding Path=OpenCommand}" ></Button>
+
                         <Button Style="{StaticResource MyConfirmBUTTON}" Content="Сохранить"  Command="{Binding Path=ToPhysicalCommand}" ></Button>
                              </StackPanel>
                 </StackPanel>

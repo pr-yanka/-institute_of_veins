@@ -59,7 +59,7 @@ namespace WpfApp2.Navigation
                 new ViewModelCurrentPatient(this),
                 new ViewModelNewPatient(this),
                 new ViewModelTablePatients(this),
-               
+
                 new ViewModelEditPatient(this),
                 new ViewModelViewHistory(this),
                 new ViewModelLegDescribe(this),
@@ -94,7 +94,7 @@ namespace WpfApp2.Navigation
                 new ViewModelEditUser(this),
                 new ViewModelCreateStatement(this),
                 new ViewModelEditMedPersonal(this),
-
+                new ViewModelChangesHistoy(this),
                 new ViewModelAddEpicriz(this),
                 new LegPartViewModel(this)
             };

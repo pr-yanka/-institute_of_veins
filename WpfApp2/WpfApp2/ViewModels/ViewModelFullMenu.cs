@@ -36,6 +36,7 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToLoginCommand { get; protected set; }
         public DelegateCommand ToCalendarOperationsCommand { get; protected set; }
         public DelegateCommand ToAdminPanelCommand { get; protected set; }
+        public DelegateCommand ToChangeHistoryCommand { get; private set; }
         public DelegateCommand ToPhysicalTableCommand { get; protected set; }
         public DelegateCommand ToTablePatientsCommand { get; protected set; }
         public DelegateCommand ToMainMenuCommand { get; protected set; }
@@ -123,6 +124,17 @@ namespace WpfApp2.ViewModels
                 {
                     Controller.NavigateTo<ViewModelAdminPanel>();
                 });
+
+            ToChangeHistoryCommand = new DelegateCommand(
+            () =>
+            {
+                MessageBus.Default.Call("SetChangesForChangesTable", null, null);
+                Controller.NavigateTo<ViewModelChangesHistoy>();
+            });
+
+
+
+            // MessageBus.Default.Subscribe("SetChangesForChangesTable", SetChangesInDB);
         }
     }
 }

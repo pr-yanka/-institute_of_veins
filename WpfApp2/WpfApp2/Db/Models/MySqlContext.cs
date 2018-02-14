@@ -90,7 +90,7 @@ namespace WpfApp2.Db.Models
         public DbSet<Districts> Districts { get; set; }
         public DbSet<Regions> Regions { get; set; }
         public DbSet<Streets> Streets { get; set; }
-
+        public DbSet<ChangesInDBType> ChangesInDBType { get; set; }
         public DbSet<BrigadeMedPersonal> BrigadeMedPersonal { get; set; }
 
         public DbSet<ScientificTitles> ScientificTitles { get; set; }
@@ -229,10 +229,60 @@ namespace WpfApp2.Db.Models
                 .Fragments.Single()
                 .StoreEntitySet;
 
+            //            table.MetadataProperties[0].Name
+
             // Return the table name from the storage entity set
             return (string)table.MetadataProperties["Table"].Value ?? table.Name;
 
         }
+
+        public string GetColumnName(Type type, string propertyName, DbContext context)
+        {
+            var metadata = ((IObjectContextAdapter)context).ObjectContext.MetadataWorkspace;
+
+            // Get the part of the model that contains info about the actual CLR types
+            var objectItemCollection = ((ObjectItemCollection)metadata.GetItemCollection(DataSpace.OSpace));
+
+            // Get the entity type from the model that maps to the CLR type
+            var entityType = metadata
+                    .GetItems<EntityType>(DataSpace.OSpace)
+                          .Single(e => objectItemCollection.GetClrType(e) == type);
+
+            // Get the entity set that uses this entity type
+            var entitySet = metadata
+                .GetItems<EntityContainer>(DataSpace.CSpace)
+                      .Single()
+                      .EntitySets
+                      .Single(s => s.ElementType.Name == entityType.Name);
+
+            // Find the mapping between conceptual and storage model for this entity set
+            var mapping = metadata.GetItems<EntityContainerMapping>(DataSpace.CSSpace)
+                          .Single()
+                          .EntitySetMappings
+                          .Single(s => s.EntitySet == entitySet);
+
+            // Find the storage entity set (table) that the entity is mapped
+            // var tableEntitySet = mapping
+            //.EntityTypeMappings.Single()
+            //.Fragments.Single()
+            //.StoreEntitySet;
+
+            // Return the table name from the storage entity set
+            // var tableName = tableEntitySet.MetadataProperties["Table"].Value ?? tableEntitySet.Name;
+
+            // Find the storage property (column) that the property is mapped
+            var columnName = mapping
+                .EntityTypeMappings.Single()
+                .Fragments.Single()
+                .PropertyMappings
+                .OfType<ScalarPropertyMapping>()
+                      .Single(m => m.Property.Name == propertyName)
+                .Column
+                .Name;
+
+            return columnName;
+        }
+
 
         public override int SaveChanges()
         {
@@ -285,7 +335,7 @@ namespace WpfApp2.Db.Models
 
                                         RowId = primaryKey.ToString(),
 
-                                        TblCollumnName = prop,
+                                        TblCollumnName = GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this),
                                         BlobNew = null,
                                         BlobOld = originalValueBlob,
                                         OldValue = string.Empty,
@@ -312,7 +362,7 @@ namespace WpfApp2.Db.Models
                                         TblName = tableName,
                                         AccID = CurrAccId,
                                         RowId = primaryKey.ToString(),
-                                        TblCollumnName = prop,
+                                        TblCollumnName = GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this),
                                         OldValue = originalValue,
                                         BlobNew = null,
                                         BlobOld = null,
@@ -368,7 +418,7 @@ namespace WpfApp2.Db.Models
 
                                         RowId = primaryKey.ToString(),
 
-                                        TblCollumnName = prop,
+                                        TblCollumnName = GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this),
                                         BlobNew = currentValueBlob,
                                         BlobOld = null,
                                         OldValue = string.Empty,
@@ -395,7 +445,7 @@ namespace WpfApp2.Db.Models
                                         TblName = tableName,
                                         AccID = CurrAccId,
                                         RowId = primaryKey.ToString(),
-                                        TblCollumnName = prop,
+                                        TblCollumnName = GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this),
                                         OldValue = string.Empty,
                                         BlobNew = null,
                                         BlobOld = null,
@@ -419,6 +469,7 @@ namespace WpfApp2.Db.Models
             {
                 var tableName = GetTableName(ObjectContext.GetObjectType(change.Entity.GetType()), this);
                 // var entityName = GetEntytyType(change);
+
                 string entityName = GetEntytyType(change);
                 if (entityName != "ChangeHistory")
                 {
@@ -427,6 +478,7 @@ namespace WpfApp2.Db.Models
 
                     foreach (var prop in change.OriginalValues.PropertyNames)
                     {
+                    
                         if (change.CurrentValues[prop] != null)
                         {
                             if (entityName == "Analize" && prop == "ImageByte")
@@ -443,7 +495,7 @@ namespace WpfApp2.Db.Models
                                         TblName = tableName,
                                         AccID = CurrAccId,
                                         RowId = primaryKey.ToString(),
-                                        TblCollumnName = prop,
+                                        TblCollumnName = GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this),
                                         BlobNew = currentValueBlob,
                                         BlobOld = originalValueBlob,
                                         OldValue = string.Empty,
@@ -475,7 +527,7 @@ namespace WpfApp2.Db.Models
                                         TblName = tableName,
                                         AccID = CurrAccId,
                                         RowId = primaryKey.ToString(),
-                                        TblCollumnName = prop,
+                                        TblCollumnName = GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this),
                                         OldValue = originalValue,
                                         BlobNew = null,
                                         BlobOld = null,
@@ -519,7 +571,7 @@ namespace WpfApp2.Db.Models
                                     var currentValueBlob = (byte[])change.CurrentValues[prop];
                                     foreach (var x in logsList)
                                     {
-                                        if (x.TblName == tableName && x.AccID == CurrAccId && x.TblCollumnName == prop && x.ChangeType == 2 && x.BlobNew == currentValueBlob)
+                                        if (x.TblName == tableName && x.AccID == CurrAccId && x.TblCollumnName == GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this) && x.ChangeType == 2 && x.BlobNew == currentValueBlob)
                                         {
                                             x.RowId = primaryKey.ToString();
                                         }
@@ -534,7 +586,7 @@ namespace WpfApp2.Db.Models
                                     var currentValue = change.CurrentValues[prop].ToString();
                                     foreach (var x in logsList)
                                     {
-                                        if (x.TblName == tableName && x.AccID == CurrAccId && x.TblCollumnName == prop && x.ChangeType == 2 && x.NewValue == currentValue)
+                                        if (x.TblName == tableName && x.AccID == CurrAccId && x.TblCollumnName == GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this) && x.ChangeType == 2 && x.NewValue == currentValue)
                                         {
 
                                             x.RowId = primaryKey.ToString();
@@ -573,7 +625,7 @@ namespace WpfApp2.Db.Models
                                     var currentValueBlob = (byte[])change.CurrentValues[prop];
                                     foreach (var x in logsList)
                                     {
-                                        if (x.TblName == tableName && x.AccID == CurrAccId && x.TblCollumnName == prop && x.ChangeType == 1 && x.RowId == primaryKey.ToString())
+                                        if (x.TblName == tableName && x.AccID == CurrAccId && x.TblCollumnName == GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this) && x.ChangeType == 1 && x.RowId == primaryKey.ToString())
                                         {
                                             x.BlobNew = currentValueBlob;
                                         }
@@ -585,7 +637,7 @@ namespace WpfApp2.Db.Models
                                     var currentValue = change.CurrentValues[prop].ToString();
                                     foreach (var x in logsList)
                                     {
-                                        if (x.TblName == tableName && x.AccID == CurrAccId && x.TblCollumnName == prop && x.ChangeType == 1 && x.RowId == primaryKey.ToString())
+                                        if (x.TblName == tableName && x.AccID == CurrAccId && x.TblCollumnName == GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this) && x.ChangeType == 1 && x.RowId == primaryKey.ToString())
                                         {
                                             x.NewValue = currentValue;
                                         }

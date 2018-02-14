@@ -1690,7 +1690,8 @@ namespace WpfApp2.ViewModels
                             }
                         }
                     //  Data.Complete();
-
+                    MessageBus.Default.Call("GetCurrentPatientId", this, CurrentPatient.Id);
+                    Controller.NavigateTo<ViewModelCurrentPatient>();
                 }
 
 

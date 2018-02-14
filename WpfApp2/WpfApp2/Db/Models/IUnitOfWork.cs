@@ -28,7 +28,7 @@ namespace WpfApp2.Db.Models
         ComplanesObsRepository ComplanesObs { get; }
         RecomendationObsRepository RecomendationObs { get; }
 
-
+        ChangesInDBTypeRepository ChangesInDBType { get; }
 
         BPVHipEntryFullRepository BPVHipsFull { get; }
         PDSVHipEntryFullRepository PDSVFull { get; }

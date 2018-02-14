@@ -51,7 +51,7 @@ namespace WpfApp2.ViewModels
                             isUeserNameCorrect = true;
                             if (CheckSum == acc.Password)
                             {
-                              
+
                                 MessageBus.Default.Call("SetCurrentACCIDForContext", null, acc.Id);
                                 MessageBus.Default.Call("GetAcaunt", null, acc.Id);
                                 Controller.NavigateTo<ViewModelDashboard>();
@@ -66,9 +66,11 @@ namespace WpfApp2.ViewModels
                                 }
                                 else if (acc.isAdmin != null && acc.isAdmin.Value)
                                 {
+                                   // MessageBus.Default.Call("SetVisibilityMyOp", null, null);
                                     MessageBus.Default.Call("SetVisibilityPanelAdmin", this, Visibility.Visible);
                                     MessageBus.Default.Call("SetAlertVisibility", this, Visibility.Collapsed);
                                     MessageBus.Default.Call("SetVisibilityForDocsOrMed", this, Visibility.Collapsed);
+                                    MessageBus.Default.Call("SetCurrentACCOp", this, acc.Id);
                                 }
                                 else
                                 {

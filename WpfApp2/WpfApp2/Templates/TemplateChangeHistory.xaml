@@ -1,0 +1,214 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:WpfApp2.Templates"
+                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
+
+    <Style x:Key="MyDataGridHEADER" TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+        <Setter Property="Width" Value="auto"></Setter>
+        <Setter Property="FontSize" Value="16"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+    </Style>
+
+    <Style x:Key="MyDataGridCell" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsFilteredAccName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="True">
+                <Setter Property="Background" Value="Wheat"/>
+
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsFilteredAccName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="False">
+                <Setter Property="Background" Value="Transparent"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MyDataGridCell1" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsFilteredAccPost,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="True">
+                <Setter Property="Background" Value="Wheat"/>
+
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsFilteredAccPost,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="False">
+                <Setter Property="Background" Value="Transparent"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="MyDataGridCell2" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsFilteredDate,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="True">
+                <Setter Property="Background" Value="Wheat"/>
+
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsFilteredDate,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="False">
+                <Setter Property="Background" Value="Transparent"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+
+
+
+    <Style x:Key="MyDataGridCell3" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsFilteredChangeType,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="True">
+                <Setter Property="Background" Value="Wheat"/>
+
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsFilteredChangeType,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="False">
+                <Setter Property="Background" Value="Transparent"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+
+    <Style x:Key="MyDataGridCell4" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsFilteredTableChanged,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="True">
+                <Setter Property="Background" Value="Wheat"/>
+
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsFilteredTableChanged,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="False">
+                <Setter Property="Background" Value="Transparent"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+
+    <Style x:Key="MyDataGridCell5" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsFilteredPropertyChanged,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="True">
+                <Setter Property="Background" Value="Wheat"/>
+
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsFilteredPropertyChanged,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="False">
+                <Setter Property="Background" Value="Transparent"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+
+    <Style x:Key="MyDataGridCell6" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsFilteredOldValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="True">
+                <Setter Property="Background" Value="Wheat"/>
+
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsFilteredOldValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="False">
+                <Setter Property="Background" Value="Transparent"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+
+    <Style x:Key="MyDataGridCell7" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsFilteredNewValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="True">
+                <Setter Property="Background" Value="Wheat"/>
+
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsFilteredNewValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="False">
+                <Setter Property="Background" Value="Transparent"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style  x:Key="MyDataGridRow" TargetType="DataGridRow"  BasedOn="{StaticResource {x:Type DataGridRow}}">
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="SkyBlue" ></Setter>
+            </Trigger>
+
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="LightSkyBlue" ></Setter>
+            </Trigger>
+            <DataTrigger Binding="{Binding IsVisibleTotal}" Value="False">
+                <Setter Property="Visibility" Value="Collapsed" ></Setter>
+
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsVisibleTotal}" Value="True">
+                <Setter Property="Visibility" Value="Visible" ></Setter>
+
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <DataTemplate x:Key="TemplateChangeHistory">
+        <Grid Margin="0,75,0,0">
+            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Text="Обследования" FontFamily="/fonts/#Pescadero" FontSize="22pt" RenderTransformOrigin="0.591,0.516">
+                <TextBlock.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="10"/>
+                    </TransformGroup>
+                </TextBlock.RenderTransform>
+            </TextBlock>
+            <TextBlock HorizontalAlignment="Left" Margin="240,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="164" FontSize="22" Text="Поиск по слову:" RenderTransformOrigin="-0.027,0.471"/>
+            <TextBox Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="35" Margin="410,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="422" RenderTransformOrigin="0.632,0.9"
+          />
+            <CheckBox  IsChecked="{Binding IsSortByData}"  Content="сортировать по дате&#xD;&#xA;" HorizontalAlignment="Left" Margin="240,59,0,0" VerticalAlignment="Top" FontSize="16" Height="20" Width="297"/>
+
+
+            <DataGrid ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" RowStyle="{StaticResource MyDataGridRow}"  IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="428" Margin="226,160,48,0" VerticalAlignment="Top" Width="auto" >
+
+                <DataGrid.Columns  >
+
+                    <DataGridTextColumn   CellStyle="{StaticResource MyDataGridCell2}" Binding="{Binding Path=Date,StringFormat=dd.MM.yyyy hh:mm}" ClipboardContentBinding="{x:Null}" Header="Дата" Width="auto"/>
+
+
+
+                    <DataGridTextColumn CellStyle="{StaticResource MyDataGridCell}" Binding="{Binding Path=AccName}" ClipboardContentBinding="{x:Null}" Header="Пользователь"  Width="auto">
+
+
+                    </DataGridTextColumn>
+                    <DataGridTextColumn CellStyle="{StaticResource MyDataGridCell1}" Binding="{Binding Path=AccPost}" ClipboardContentBinding="{x:Null}"  Width="auto" Header="Тип"/>
+
+
+                    <DataGridTextColumn CellStyle="{StaticResource MyDataGridCell3}" Binding="{Binding Path=ChangeType}" ClipboardContentBinding="{x:Null}"  Width="auto" Header="Тип изменения"/>
+
+                    <DataGridTextColumn CellStyle="{StaticResource MyDataGridCell4}" Binding="{Binding Path=TableChanged}" ClipboardContentBinding="{x:Null}"  Width="auto" Header="Таблица"/>
+
+                    <DataGridTextColumn CellStyle="{StaticResource MyDataGridCell5}" Binding="{Binding Path=PropertyChanged}" ClipboardContentBinding="{x:Null}"  Width="auto" Header="Параметр"/>
+
+                    <DataGridTextColumn CellStyle="{StaticResource MyDataGridCell6}" Binding="{Binding Path=OldValue}" ClipboardContentBinding="{x:Null}"  Width="auto" Header="Старое значение"/>
+
+                    <DataGridTextColumn CellStyle="{StaticResource MyDataGridCell7}" Binding="{Binding Path=NewValue}" ClipboardContentBinding="{x:Null}"  Width="auto" Header="Новое значение"/>
+
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>

@@ -37,12 +37,14 @@
         <ResourceDictionary Source="TemplateAddUser.xaml"/>
         <ResourceDictionary Source="Operation/TemplateAddStatement.xaml"/>
         <ResourceDictionary Source="Operation/TemplateAddEpicrizen.xaml"/>
+        <ResourceDictionary Source="TemplateChangeHistory.xaml"/>
         
 
 
     </ResourceDictionary.MergedDictionaries>
 
     <local:MyTemplateSelector x:Key="MyTemplateSelector" 
+                              TemplateChangeHistory ="{StaticResource TemplateChangeHistory}"
                               TemplateAddEpicrizen ="{StaticResource TemplateAddEpicrizen}"
                               TemplateAddStatement="{StaticResource TemplateAddStatement}"
                               TemplateAddMedPersonal="{StaticResource TemplateAddMedPersonal}"

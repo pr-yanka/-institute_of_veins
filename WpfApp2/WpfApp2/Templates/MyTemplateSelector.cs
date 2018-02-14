@@ -44,6 +44,8 @@ namespace WpfApp2.Templates
         public DataTemplate TemplateAddMedPersonal { get; set; }
         public DataTemplate TemplateAddUser { get; set; }
         public DataTemplate TemplateAddEpicrizen { get; set; }
+        public DataTemplate TemplateChangeHistory { get; set; }
+
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
@@ -188,6 +190,10 @@ namespace WpfApp2.Templates
             if (item.GetType() == typeof(ViewModelAddEpicriz))
                 return TemplateAddEpicrizen;
 
+
+            if (item.GetType() == typeof(ViewModelChangesHistoy))
+                return TemplateChangeHistory;
+            //ViewModelChangesHistoy  TemplateChangeHistory
             return null;
         }
     }

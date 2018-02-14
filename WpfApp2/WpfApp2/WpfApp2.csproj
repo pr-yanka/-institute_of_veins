@@ -204,6 +204,7 @@
     </Compile>
     <Compile Include="Db\Models\ChangeHistoryRepository.cs" />
     <Compile Include="Db\Models\ComplanesObsRepository.cs" />
+    <Compile Include="Db\Models\ChangesInDBTypeRepository.cs" />
     <Compile Include="Db\Models\RecomendationObsRepository.cs" />
     <Compile Include="Db\Models\doc_templatesRepository.cs" />
     <Compile Include="Db\Models\CitiesRepository.cs" />
@@ -379,6 +380,7 @@
     <Compile Include="ViewModels\ViewModelAddMedPersonal.cs" />
     <Compile Include="ViewModels\ViewModelAddUser.cs" />
     <Compile Include="ViewModels\ViewModelAddDoctor.cs" />
+    <Compile Include="ViewModels\ViewModelChangeHistory.cs" />
     <Compile Include="ViewModels\ViewModelRedactPathology.cs" />
     <Compile Include="ViewModels\ViewModelAddPathology.cs" />
     <Compile Include="ViewModels\ViewModelAnalizeOverview.cs" />
@@ -541,6 +543,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Templates\TemplateLogin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Templates\TemplateChangeHistory.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

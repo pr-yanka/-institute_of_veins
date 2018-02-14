@@ -48,7 +48,7 @@
             </Border>
             <TextBlock x:Name="textBlock_Copy6" HorizontalAlignment="Left" Margin="408,132,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="Диагноз слева" FontSize="16"/>
-            <TextBlock x:Name="textBlock_Copy7" HorizontalAlignment="Left" Margin="695,130,0,0" TextWrapping="Wrap"  
+            <TextBlock x:Name="textBlock_Copy7" HorizontalAlignment="Left" Margin="715,130,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="Диагноз справа" RenderTransformOrigin="2.097,10.521" FontSize="16"/>
             <Button  Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy3"  Visibility="{Binding Path=VisiBIlityOfAddCancle}" Content="Отменить операцию" HorizontalAlignment="Left" Margin="80,558,0,0"              
                     VerticalAlignment="Top" Width="200" Command="{Binding Path=ToCancleOperationCommand}" RenderTransformOrigin="0.502,0.471"/>

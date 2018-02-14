@@ -87,23 +87,14 @@
                     </TransformGroup>
                 </TextBlock.RenderTransform>
             </TextBlock>
-            <TextBlock HorizontalAlignment="Left" Margin="0,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="164" FontSize="22" Text="Поиск по слову:" RenderTransformOrigin="-0.027,0.471"/>
+            <TextBlock HorizontalAlignment="Left" Margin="10,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="164" FontSize="22" Text="Поиск по слову:" RenderTransformOrigin="-0.027,0.471"/>
             <TextBox Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="35" Margin="188,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="422" RenderTransformOrigin="0.632,0.9">
                 <TextBox.InputBindings>
                     <KeyBinding Command="{Binding Path=FilterTextCommand}"/>
                 </TextBox.InputBindings>
             </TextBox>
-            <CheckBox  IsChecked="{Binding IsSortByData}"  Content="сортировать по дате&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,59,0,0" VerticalAlignment="Top" FontSize="22" Height="35" Width="297"/>
+            <CheckBox  IsChecked="{Binding IsSortByData}"  Content="сортировать по дате&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,59,0,0" VerticalAlignment="Top" FontSize="16" Height="20" Width="297"/>
            
-            <TextBlock HorizontalAlignment="Left" Margin="400,45,0,0" TextWrapping="Wrap" Text="Показать обследования:" VerticalAlignment="Top" FontSize="16" Width="190"/>
-
-            <ComboBox SelectedIndex="{Binding SortId}" HorizontalAlignment="Left" Margin="588,41,0,0" VerticalAlignment="Top" Width="169">
-                <ComboBoxItem Content="на сегодня"/>
-                <ComboBoxItem Content="на ближайшие три дня"/>
-                <ComboBoxItem Content="на ближайшую неделю"/>
-                <ComboBoxItem Content="на ближайший месяц"/>
-                <ComboBoxItem Content="все"/>
-            </ComboBox>
 
             <DataGrid ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" RowStyle="{StaticResource MyDataGridRow}"  IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="428" Margin="10,160,206,10" VerticalAlignment="Top" Width="auto" >
 
@@ -118,7 +109,7 @@
 
                     </DataGridTextColumn>
                     <DataGridTextColumn CellStyle="{StaticResource MyDataGridCell1}" Binding="{Binding Path=IsOperationSeted}" ClipboardContentBinding="{x:Null}"  Width="auto" Header="Назначена операция?"/>
-                    <DataGridTemplateColumn  Header="" >
+                    <DataGridTemplateColumn  Header="К обследованию" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <Grid>
