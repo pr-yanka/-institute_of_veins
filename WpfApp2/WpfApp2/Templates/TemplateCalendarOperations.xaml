@@ -119,6 +119,7 @@
             <CheckBox Content="сортировать по дате&#xD;&#xA;" IsChecked="{Binding IsSortByData}" HorizontalAlignment="Left" Margin="10,102,0,0" VerticalAlignment="Top" FontSize="16" Height="18" Width="185"/>
 
             <CheckBox Content="показать проведённые&#xD;&#xA;" IsChecked="{Binding IsCompletedOp}" HorizontalAlignment="Left" Margin="195,101,0,0" VerticalAlignment="Top" FontSize="16" Height="18" Width="243"/>
+            <TextBlock Canvas.ZIndex="2" Visibility="{Binding VisOfNothingFaund}" TextWrapping="Wrap" Height="28" Text="Ничего не найдено" FontFamily="/fonts/#Pescadero" FontSize="14pt" Margin="220,20,0,230" RenderTransformOrigin="0.591,0.516"/>
 
             <DataGrid ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" RowStyle="{StaticResource MyDataGridRow}" IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="428" Margin="10,180,0,0" VerticalAlignment="Top" Width="auto" >
                 <DataGrid.Columns  >

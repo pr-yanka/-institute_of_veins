@@ -102,6 +102,13 @@ namespace WpfApp2.ViewModels
 
     public class ViewModelCalendarOperations : ViewModelBase, INotifyPropertyChanged
     {
+        private Visibility _visOfNothingFaund;
+        public Visibility VisOfNothingFaund
+        {
+            get { return _visOfNothingFaund; }
+            set
+            { _visOfNothingFaund = value; OnPropertyChanged(); }
+        }
         private int _sortId;
 
         public int SortId
@@ -332,7 +339,14 @@ namespace WpfApp2.ViewModels
 
                     }
 
-
+                    if (Operations.Count == 0)
+                    {
+                        VisOfNothingFaund = Visibility.Visible;
+                    }
+                    else
+                    {
+                        VisOfNothingFaund = Visibility.Collapsed;
+                    }
                     ViewSource.Source = Operations;
 
 
@@ -502,7 +516,7 @@ namespace WpfApp2.ViewModels
                     else
                     {
                         Operations = new ObservableCollection<OperationStruct>();
-                       
+
                         bool test = true;
 
                         var Operationsbuf = new ObservableCollection<OperationStruct>();
@@ -611,7 +625,14 @@ namespace WpfApp2.ViewModels
 
                         }
 
-
+                        if (Operations.Count == 0)
+                        {
+                            VisOfNothingFaund = Visibility.Visible;
+                        }
+                        else
+                        {
+                            VisOfNothingFaund = Visibility.Collapsed;
+                        }
                         ViewSource.Source = Operations;
 
 
@@ -690,6 +711,7 @@ namespace WpfApp2.ViewModels
 
         public ViewModelCalendarOperations(NavigationController controller) : base(controller)
         {
+            VisOfNothingFaund = Visibility.Collapsed;
             Operations = new ObservableCollection<OperationStruct>();
             ViewSource = new CollectionViewSource();
             ViewSource.Source = Operations;
@@ -704,7 +726,7 @@ namespace WpfApp2.ViewModels
             FilterTextCommand = new DelegateCommand(
               () =>
               {
-
+                  int count = 0;
                   if (!string.IsNullOrWhiteSpace(FilterText))
                   {
                       for (int i = 0; i < Operations.Count; ++i)
@@ -714,7 +736,7 @@ namespace WpfApp2.ViewModels
                           if (Operations[i].Patient.ToLower().Contains(FilterText.ToLower()))
                           {
                               Operations[i].IsFilteredPt = true;
-                              Operations[i].IsVisibleTotal = true;
+                              Operations[i].IsVisibleTotal = true; ++count;
                           }
                           else
                           {
@@ -723,7 +745,7 @@ namespace WpfApp2.ViewModels
                           if (Operations[i].OpType.ToLower().Contains(FilterText.ToLower()))
                           {
                               Operations[i].IsFilteredOpType = true;
-                              Operations[i].IsVisibleTotal = true;
+                              Operations[i].IsVisibleTotal = true; ++count;
                           }
                           else
                           {
@@ -732,7 +754,7 @@ namespace WpfApp2.ViewModels
                           if (Operations[i].Date.ToString().ToLower().Contains(FilterText.ToLower()))
                           {
                               Operations[i].IsFilteredDate = true;
-                              Operations[i].IsVisibleTotal = true;
+                              Operations[i].IsVisibleTotal = true; ++count;
                           }
                           else
                           {
@@ -741,7 +763,7 @@ namespace WpfApp2.ViewModels
                           if (Operations[i].Anestetic.ToLower().Contains(FilterText.ToLower()))
                           {
                               Operations[i].IsFilteredAnestetic = true;
-                              Operations[i].IsVisibleTotal = true;
+                              Operations[i].IsVisibleTotal = true; ++count;
                           }
                           else
                           {
@@ -763,8 +785,18 @@ namespace WpfApp2.ViewModels
                           ViewSource.View.Refresh();
 
                       }
-                      ViewSource.Source = Operations;
-                      ViewSource.View.Refresh();
+                      if (Operations.Count == 0 || count == 0)
+                      {
+                          VisOfNothingFaund = Visibility.Visible;
+                      }
+                      else
+                      {
+                          ViewSource.Source = Operations;
+                          ViewSource.View.Refresh();
+                          VisOfNothingFaund = Visibility.Collapsed;
+                      }
+
+
                       Controller.NavigateTo<ViewModelCalendarOperations>();
                   }
                   else

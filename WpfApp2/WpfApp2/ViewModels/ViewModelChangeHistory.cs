@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using Microsoft.Practices.Prism.Commands;
 using WpfApp2.Db.Models;
@@ -61,8 +62,19 @@ namespace WpfApp2.ViewModels
 
 
             // TEST
-            OldValue = Ch.OldValue;
-            NewValue = Ch.NewValue;
+            if (Ch.BlobNew != null)
+            {
+                NewValue = "Новое фото анализа";
+            }
+            if (Ch.BlobOld != null)
+            {
+                OldValue = "Старое фото анализа";
+            }
+            else
+            {
+                OldValue = Ch.OldValue;
+                NewValue = Ch.NewValue;
+            }
             TableChanged = Ch.TblName;
             PropertyChanged = Ch.TblCollumnName;
 
@@ -138,13 +150,34 @@ namespace WpfApp2.ViewModels
                 OnPropertyChanged();
             }
         }
-      
+        private int lastLength = 0;
+        private Visibility _visOfNothingFaund;
+        public Visibility VisOfNothingFaund
+        {
+            get { return _visOfNothingFaund; }
+            set
+            { _visOfNothingFaund = value; OnPropertyChanged(); }
+        }
         public ObservableCollection<ChangeHistoryClass> _exams;
         public ObservableCollection<ChangeHistoryClass> Changes { get { return _exams; } set { _exams = value; OnPropertyChanged(); } }
         private string _filterText;
-        public string FilterText { get { return _filterText; } set { _filterText = value; OnPropertyChanged();
+        public string FilterText
+        {
+            get { return _filterText; }
+            set
+            {
+                _filterText = value; OnPropertyChanged();
 
-
+                if (lastLength >= value.Length)
+                {
+                    //foreach(ChangeHistoryClass x in FullCopy)
+                    //{
+                    //    ChangeHistoryClass buf = new ChangeHistoryClass(x.Ch);
+                    //    Changes.Add(buf);
+                    //}
+                    Changes = new ObservableCollection<ChangeHistoryClass>(FullCopy);
+                }
+                lastLength = value.Length;
                 if (!string.IsNullOrWhiteSpace(FilterText))
                 {
                     for (int i = 0; i < Changes.Count; ++i)
@@ -259,13 +292,36 @@ namespace WpfApp2.ViewModels
                     //    ViewSource.View.Refresh();
 
                     //}
-                  //  ViewSource.Source = Changes;
+                    //
+
+
+                    for (int i = 0; i < Changes.Count; ++i)
+                    {
+                        if (Changes[i].IsVisibleTotal == false)
+                        {
+                            Changes.Remove(Changes[i]);
+                            --i;
+                        }
+                    }
+                    if (Changes.Count == 0)
+                    {
+                        VisOfNothingFaund = Visibility.Visible;
+                    }
+                    else
+                    {
+                        VisOfNothingFaund = Visibility.Collapsed;
+                    }
+                    ViewSource.Source = Changes;
+
+
                     ViewSource.View.Refresh();
                     //  Controller.NavigateTo<ViewModelChangesHistoy>();
                 }
                 else
                 {
-                    foreach(ChangeHistoryClass x in Changes)
+                    ViewSource.Source = Changes;
+                    VisOfNothingFaund = Visibility.Collapsed;
+                    foreach (ChangeHistoryClass x in Changes)
                     {
                         x.IsVisibleTotal = true;
                         x.IsFilteredDate = false;
@@ -285,14 +341,15 @@ namespace WpfApp2.ViewModels
 
 
 
-            } }
+            }
+        }
 
         //private void FilterActivater()
         //{
 
 
         //}
-
+        List<ChangeHistoryClass> FullCopy;
         private void SetChangesInDB(object sender, object data)
         {
             using (var context = new MySqlContext())
@@ -311,35 +368,16 @@ namespace WpfApp2.ViewModels
                     ChangeHistoryRepository ChangeRp = new ChangeHistoryRepository(context);
 
 
-
+                    FullCopy = new List<ChangeHistoryClass>();
                     Changes = new ObservableCollection<ChangeHistoryClass>();
 
-
-
-                    //  bool test = true;
-
-                    //  var Examsbuf = new ObservableCollection<ChangeHistory>();
                     foreach (var Ch in ChangeRp.GetAll)
                     {
 
+                        ChangeHistoryClass buf = new ChangeHistoryClass(Ch);
 
+                        FullCopy.Add(buf);
                         Changes.Add(new ChangeHistoryClass(Ch));
-
-                        ////DelegateCommand bufer = new DelegateCommand(
-                        //() =>
-                        //{
-                        //    MessageBus.Default.Call("GetCurrentPatientIdForOperation", this, Exam.PatientId);
-                        //    MessageBus.Default.Call("GetObsForOverview", this, Exam.Id.Value);
-                        //    Controller.NavigateTo<ViewModelAddPhysical>();
-
-                        //}
-                        //);
-
-
-
-
-                        //Exams.Add(new ObsStruct(bufer, Exam));
-
 
 
 
@@ -347,6 +385,14 @@ namespace WpfApp2.ViewModels
 
 
 
+                    if (Changes.Count == 0)
+                    {
+                        VisOfNothingFaund = Visibility.Visible;
+                    }
+                    else
+                    {
+                        VisOfNothingFaund = Visibility.Collapsed;
+                    }
 
                     ViewSource.Source = Changes;
 
@@ -365,7 +411,7 @@ namespace WpfApp2.ViewModels
                         ViewSource.SortDescriptions.Clear();
                         ViewSource.View.Refresh();
                     }
-                //    Controller.NavigateTo<ViewModelChangesHistoy>();
+                    //    Controller.NavigateTo<ViewModelChangesHistoy>();
                 }
                 catch (Exception exc)
                 {
@@ -386,12 +432,13 @@ namespace WpfApp2.ViewModels
             base.HasNavigation = true;
 
             _isSortByData = true;
+            FullCopy = new List<ChangeHistoryClass>();
             Changes = new ObservableCollection<ChangeHistoryClass>();
             FilterTextCommand = new DelegateCommand(
               () =>
               {
 
-                
+
 
               }
           );

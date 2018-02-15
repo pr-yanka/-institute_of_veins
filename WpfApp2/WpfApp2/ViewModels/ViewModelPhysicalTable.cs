@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using Microsoft.Practices.Prism.Commands;
 using WpfApp2.Db.Models;
@@ -68,6 +69,13 @@ namespace WpfApp2.ViewModels
         #endregion
         private bool _isSortByData;
         public CollectionViewSource ViewSource { get; set; }
+        private Visibility _visOfNothingFaund;
+        public Visibility VisOfNothingFaund
+        {
+            get { return _visOfNothingFaund; }
+            set
+            { _visOfNothingFaund = value; OnPropertyChanged(); }
+        }
         public bool IsSortByData
         {
             get { return _isSortByData; }
@@ -185,6 +193,14 @@ namespace WpfApp2.ViewModels
 
 
 
+                    if (Exams.Count == 0)
+                    {
+                        VisOfNothingFaund = Visibility.Visible;
+                    }
+                    else
+                    {
+                        VisOfNothingFaund = Visibility.Collapsed;
+                    }
 
                     ViewSource.Source = Exams;
 
@@ -219,6 +235,7 @@ namespace WpfApp2.ViewModels
         public DelegateCommand FilterTextCommand { get; protected set; }
         public ViewModelPhysicalTable(NavigationController controller) : base(controller)
         {
+            VisOfNothingFaund = Visibility.Collapsed;
             ViewSource = new CollectionViewSource();
             MessageBus.Default.Subscribe("SetObsForObsTable", SetSelectedMedOrDocOps);
             base.HasNavigation = true;
@@ -228,17 +245,21 @@ namespace WpfApp2.ViewModels
             FilterTextCommand = new DelegateCommand(
               () =>
               {
-                  
+                  int count = 0;
+
                   if (!string.IsNullOrWhiteSpace(FilterText))
                   {
                       for (int i = 0; i < Exams.Count; ++i)
                       {
 
 
+
+
                           if (Exams[i].Patient.ToLower().Contains(FilterText.ToLower()))
                           {
                               Exams[i].IsFilteredPt = true;
                               Exams[i].IsVisibleTotal = true;
+                              ++count;
                           }
                           else
                           {
@@ -247,7 +268,7 @@ namespace WpfApp2.ViewModels
                           if (Exams[i].IsOperationSeted.ToLower().Contains(FilterText.ToLower()))
                           {
                               Exams[i].IsFilteredOpSeted = true;
-                              Exams[i].IsVisibleTotal = true;
+                              Exams[i].IsVisibleTotal = true; ++count;
                           }
                           else
                           {
@@ -256,7 +277,7 @@ namespace WpfApp2.ViewModels
                           if (Exams[i].Date.ToString().ToLower().Contains(FilterText.ToLower()))
                           {
                               Exams[i].IsFilteredDate = true;
-                              Exams[i].IsVisibleTotal = true;
+                              Exams[i].IsVisibleTotal = true; ++count;
                           }
                           else
                           {
@@ -266,7 +287,7 @@ namespace WpfApp2.ViewModels
                           {
                               Exams[i].IsVisibleTotal = false;
                           }
-                         
+
 
                       }
                       if (_isSortByData == true)
@@ -278,8 +299,16 @@ namespace WpfApp2.ViewModels
                           ViewSource.View.Refresh();
 
                       }
-                      ViewSource.Source = Exams;
-                      ViewSource.View.Refresh();
+                      if (Exams.Count == 0 || count == 0)
+                      {
+                          VisOfNothingFaund = Visibility.Visible;
+                      }
+                      else
+                      {
+                          ViewSource.Source = Exams;
+                          ViewSource.View.Refresh();
+                          VisOfNothingFaund = Visibility.Collapsed;
+                      }
                       Controller.NavigateTo<ViewModelPhysicalTable>();
                   }
                   else

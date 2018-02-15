@@ -152,14 +152,7 @@
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="LightSkyBlue" ></Setter>
             </Trigger>
-            <DataTrigger Binding="{Binding IsVisibleTotal}" Value="False">
-                <Setter Property="Visibility" Value="Collapsed" ></Setter>
-
-            </DataTrigger>
-            <DataTrigger Binding="{Binding IsVisibleTotal}" Value="True">
-                <Setter Property="Visibility" Value="Visible" ></Setter>
-
-            </DataTrigger>
+           
         </Style.Triggers>
     </Style>
 
@@ -180,6 +173,7 @@
           />
             <CheckBox  IsChecked="{Binding IsSortByData}"  Content="сортировать по дате&#xD;&#xA;" HorizontalAlignment="Left" Margin="240,59,0,0" VerticalAlignment="Top" FontSize="16" Height="20" Width="297"/>
 
+            <TextBlock Canvas.ZIndex="2" Visibility="{Binding VisOfNothingFaund}" TextWrapping="Wrap" Height="28" Text="Ничего не найдено" FontFamily="/fonts/#Pescadero" FontSize="14pt" Margin="474,0,0,230" RenderTransformOrigin="0.591,0.516"/>
 
             <DataGrid ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" RowStyle="{StaticResource MyDataGridRow}"  IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="428" Margin="226,160,48,0" VerticalAlignment="Top" Width="auto" >
 

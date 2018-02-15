@@ -25,7 +25,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="MyDataGridCell1" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+    <Style x:Key="MyDataGridCell55" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
         <Setter Property="BorderThickness" Value="0"></Setter>
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
         <Style.Triggers>
@@ -77,6 +77,8 @@
 
     <DataTemplate x:Key="TemplatePhysicalTable">
         <Grid Margin="220,75,0,0">
+    
+
             <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Text="Обследования" FontFamily="/fonts/#Pescadero" FontSize="22pt" RenderTransformOrigin="0.591,0.516">
                 <TextBlock.RenderTransform>
                     <TransformGroup>
@@ -94,9 +96,11 @@
                 </TextBox.InputBindings>
             </TextBox>
             <CheckBox  IsChecked="{Binding IsSortByData}"  Content="сортировать по дате&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,59,0,0" VerticalAlignment="Top" FontSize="16" Height="20" Width="297"/>
-           
 
-            <DataGrid ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" RowStyle="{StaticResource MyDataGridRow}"  IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="428" Margin="10,160,206,10" VerticalAlignment="Top" Width="auto" >
+              
+                <TextBlock Canvas.ZIndex="2" Visibility="{Binding VisOfNothingFaund}" TextWrapping="Wrap" Height="28" Text="Ничего не найдено" FontFamily="/fonts/#Pescadero" FontSize="14pt" Margin="130,0,0,230" RenderTransformOrigin="0.591,0.516"/>
+
+                <DataGrid Canvas.ZIndex="1" ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" RowStyle="{StaticResource MyDataGridRow}"  IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="428" Margin="10,160,206,10" VerticalAlignment="Top" Width="auto" >
 
                 <DataGrid.Columns  >
 
@@ -108,7 +112,7 @@
 
 
                     </DataGridTextColumn>
-                    <DataGridTextColumn CellStyle="{StaticResource MyDataGridCell1}" Binding="{Binding Path=IsOperationSeted}" ClipboardContentBinding="{x:Null}"  Width="auto" Header="Назначена операция?"/>
+                    <DataGridTextColumn CellStyle="{StaticResource MyDataGridCell55}" Binding="{Binding Path=IsOperationSeted}" ClipboardContentBinding="{x:Null}"  Width="auto" Header="Назначена операция?"/>
                     <DataGridTemplateColumn  Header="К обследованию" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
@@ -121,8 +125,10 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
-            </DataGrid>
+                </DataGrid>
+        
         </Grid>
+       
     </DataTemplate>
 
 </ResourceDictionary>
