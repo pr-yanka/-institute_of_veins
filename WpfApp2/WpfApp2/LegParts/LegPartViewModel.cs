@@ -31,8 +31,8 @@ namespace WpfApp2.LegParts
         public da_Way SelectedWayType { get; set; }
 
 
-
-        public float FF_length { get; set; }
+        private float _fF_length;
+        public float FF_length { get { return _fF_length; } set { _fF_length = value; OnPropertyChanged(); } }
 
 
 
@@ -247,7 +247,27 @@ namespace WpfApp2.LegParts
         public LegPartViewModel(NavigationController controller, LegSide side) : base(controller)
         {
             Initialization();
-          
+            LostFocusOnProtiagnosy = new DelegateCommand<object>(
+     (sender) =>
+     {
+
+         if (string.IsNullOrWhiteSpace(((TextBox)sender).Text))
+             ((TextBox)sender).Text = "0";
+
+
+
+     }
+ ); ClickOnProtiagnosy = new DelegateCommand<object>(
+    (sender) =>
+    {
+
+        if (((TextBox)sender).Text == "0")
+            ((TextBox)sender).Text = "";
+
+
+
+    }
+);
 
             CurrentLegSide = side;
             //MessageBus.Default.Subscribe("LegPart", Handler);
@@ -312,5 +332,7 @@ namespace WpfApp2.LegParts
 
         public DelegateCommand<object> LostFocus { get; private set; }
         public DelegateCommand<object> ClickOnWeight { get; private set; }
+        public DelegateCommand<object> LostFocusOnProtiagnosy { get; private set; }
+        public DelegateCommand<object> ClickOnProtiagnosy { get; private set; }
     }
 }

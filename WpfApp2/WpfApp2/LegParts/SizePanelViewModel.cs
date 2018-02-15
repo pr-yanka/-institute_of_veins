@@ -47,7 +47,7 @@ namespace WpfApp2.LegParts
             Text2 = "";
             HasSize = false;
         }
-
+        private bool TrueTestDoubleSize;
         public SizePanelViewModel(ViewModelBase parentVM) : base(parentVM.Controller)
         {
 
@@ -64,8 +64,16 @@ namespace WpfApp2.LegParts
             Dimentions = new ObservableCollection<Metrics>(Data.Metrics.GetAll);
             //потому что я программист от бога
             if (parentVM.GetType() == typeof(SFSViewModel) || parentVM.GetType() == typeof(SPSViewModel))
+            {
                 DoubleSizeIsAvailable = true;
-            else DoubleSizeIsAvailable = false;
+                TrueTestDoubleSize = true;
+                DoubleSizeAvailable = false;
+            }
+            else
+            {
+                DoubleSizeIsAvailable = false;
+                TrueTestDoubleSize = false;
+            }
         }
 
         private string _text1;
@@ -100,6 +108,10 @@ namespace WpfApp2.LegParts
             set
             {
                 _hasSize = value;
+                if (value && TrueTestDoubleSize == true)
+                    DoubleSizeIsAvailable = true;
+                else
+                { DoubleSizeIsAvailable = false; HasDoubleSize = false; }
                 OnPropertyChanged();
             }
         }

@@ -20,6 +20,13 @@ namespace WpfApp2.Db.Models
         public string ShortName { set; get; }
         [Column("длинное_название")]
         public string LongName { set; get; }
+        public override string ToString()
+        {
+            if (string.IsNullOrWhiteSpace(ShortName))
+                return LongName;
+            else
+                return ShortName;
+        }
 
     }
     public class OperationTypeRepository : Repository<OperationType>
@@ -29,5 +36,5 @@ namespace WpfApp2.Db.Models
 
         }
     }
-  
+
 }

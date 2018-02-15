@@ -61,9 +61,18 @@ namespace WpfApp2.ViewModels
 
 
         public static bool Handled = false;
+
         public UIElement UI;
 
+        private int OpTypeFromDialog;
 
+        private string OpCommentFromDialog;
+
+        private void GetOpTypeAndCommentaryFromDialog(object sender, object data)
+        {
+            OpTypeFromDialog = (int)sender;
+            OpCommentFromDialog = (string)data;
+        }
 
         private void OpenHandler(object sender, object data)
         {
@@ -1147,16 +1156,7 @@ namespace WpfApp2.ViewModels
 
             else
             {
-                DialogViewModelBase vm =
-                    new DialogYesNo.DialogYesNoViewModel("Назначить операцию?");
-                DialogResult result =
-                    DialogService.DialogService.OpenDialog(vm, parameter as Window);
 
-                if (result == DialogResult.Yes)
-                {
-                    vm = new DialogPreOperationViewModel();
-                    result = DialogService.DialogService.OpenDialog(vm, parameter as Window);
-                }
 
                 if (mode == "EDIT")
                 {
@@ -1275,11 +1275,8 @@ namespace WpfApp2.ViewModels
 
 
                         examnTotal.PatientId = CurrentPatient.Id;
-                        examnTotal.Date = DateTime.Now;
-                        if (result == DialogResult.Yes)
-                            examnTotal.isNeedOperation = true;
-                        else
-                            examnTotal.isNeedOperation = false;
+                        //examnTotal.Date = DateTime.Now;
+
                         examnTotal.weight = float.Parse(Weight);
                         examnTotal.NB = TextTip;
                         examnTotal.height = float.Parse(Growth);
@@ -1513,11 +1510,32 @@ namespace WpfApp2.ViewModels
                 }
                 else
                 {
+
+
+                    DialogViewModelBase vm =
+                    new DialogYesNo.DialogYesNoViewModel("Назначить операцию?");
+                    DialogResult result =
+                        DialogService.DialogService.OpenDialog(vm, parameter as Window);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        vm = new DialogPreOperationViewModel();
+                        result = DialogService.DialogService.OpenDialog(vm, parameter as Window);
+
+
+                    }
                     Examination examnTotal = new Examination();
                     ExaminationLeg leftLegExams = new ExaminationLeg();
                     ExaminationLeg rightLegExams = new ExaminationLeg();
                     SaveAll();
-
+                    if (result == DialogResult.Yes)
+                    {
+                        examnTotal.isNeedOperation = true;
+                        examnTotal.OperationType = OpTypeFromDialog;
+                        examnTotal.Comment = OpCommentFromDialog;
+                    }
+                    else
+                        examnTotal.isNeedOperation = false;
                     if (!LeftBPVHip.IsEmpty)
                         leftLegExams.BPVHip = LeftBPVEntryFull.Id;
 
@@ -2006,12 +2024,19 @@ namespace WpfApp2.ViewModels
                     {
                         if (section.HasDoubleSize)
                         {
-                            p4 += section.CurrentEntry.Size + "*" + section.CurrentEntry.Size2 + " " + section.SelectedValue.Metrics + "»";
+                            p4 += " " + section.CurrentEntry.Size + "*" + section.CurrentEntry.Size2 + " " + section.SelectedValue.Metrics + "»";
 
                         }
                         else
                         {
-                            p4 += section.CurrentEntry.Size + " " + section.SelectedValue.Metrics + "»";
+                            if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
+                                p4 += " " + section.CurrentEntry.Size + " " + section.SelectedValue.Metrics + "»";
+                            else
+                            {
+                                p4 += " " + section.CurrentEntry.Size + "»";
+
+                            }
+
                         }
                     }
                     else
@@ -2026,6 +2051,11 @@ namespace WpfApp2.ViewModels
                         p4 += " «" + section.CurrentEntry.Comment + "»";
 
                     }
+
+
+                    //
+
+                    //
 
                 }
             }
@@ -2600,6 +2630,9 @@ namespace WpfApp2.ViewModels
                     Controller.NavigateTo<ViewModelSymptomsAdd>();
                 }
             );
+            OpTypeFromDialog = 0;
+            OpCommentFromDialog = "";
+            MessageBus.Default.Subscribe("GetOpTypeAndCommentaryFromDialog", GetOpTypeAndCommentaryFromDialog);
             ToLeftDiagCommand = new DelegateCommand(
              () =>
              {
@@ -4837,6 +4870,192 @@ namespace WpfApp2.ViewModels
         private void Clear(object sender, object data)
         {
             mode = "Normal";
+            TextTip = "";
+            GVLeftstr = new List<string>();
+            GVRightstr = new List<string>();
+
+
+            PPVLeftstr = new List<string>();
+            PPVRightstr = new List<string>();
+
+            CEAPLeftstr = new List<string>();
+            CEAPRightstr = new List<string>();
+            MPVLeftstr = new List<string>();
+            MPVRightstr = new List<string>();
+            TEMPVLeftstr = new List<string>();
+            TEMPVRightstr = new List<string>();
+
+            Perforate_shinLeftstr = new List<string>();
+            Perforate_shinRightstr = new List<string>();
+            SPSLeftstr = new List<string>();
+            SPSRightstr = new List<string>();
+
+            PDSVLeftstr = new List<string>();
+            PDSVRightstr = new List<string>();
+            BpvLeftstr = new List<string>();
+            BpvRightstr = new List<string>();
+            SFSLeftstr = new List<string>();
+            SFSRightstr = new List<string>();
+
+            ZDSVLeftstr = new List<string>();
+            ZDSVRightstr = new List<string>();
+            Perforate_hipLeftstr = new List<string>();
+            Perforate_hipRightstr = new List<string>();
+            BPV_TibiaLeftstr = new List<string>();
+            BPV_TibiaRightstr = new List<string>();
+
+            IsVisibleGVleft = new ObservableCollection<Visibility>();
+            IsVisibleGVRight = new ObservableCollection<Visibility>();
+
+
+            IsVisiblePPVleft = new ObservableCollection<Visibility>();
+            IsVisiblePPVRight = new ObservableCollection<Visibility>();
+
+            IsVisibleCEAPleft = new ObservableCollection<Visibility>();
+            IsVisibleCEAPRight = new ObservableCollection<Visibility>();
+
+            var IsVisibleBPVleftBuf = new ObservableCollection<Visibility>();
+            //
+            IsVisibleTEMPVleft = new ObservableCollection<Visibility>();
+            IsVisibleTEMPVRight = new ObservableCollection<Visibility>();
+            IsVisibleMPVleft = new ObservableCollection<Visibility>();
+            IsVisibleMPVRight = new ObservableCollection<Visibility>();
+            //
+            IsVisiblePerforate_shinleft = new ObservableCollection<Visibility>();
+            IsVisiblePerforate_shinRight = new ObservableCollection<Visibility>();
+            IsVisibleSPSleft = new ObservableCollection<Visibility>();
+            IsVisibleSPSRight = new ObservableCollection<Visibility>();
+
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleGVleft.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleGVRight.Add(Visibility.Collapsed);
+            }
+
+
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisiblePPVleft.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisiblePPVRight.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleCEAPleft.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleCEAPRight.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleMPVleft.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleMPVRight.Add(Visibility.Collapsed);
+            }
+
+
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleTEMPVleft.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleTEMPVRight.Add(Visibility.Collapsed);
+            }
+
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisiblePerforate_shinleft.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisiblePerforate_shinRight.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleSPSleft.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleSPSRight.Add(Visibility.Collapsed);
+            }
+            //
+            IsVisibleBPV_Tibialeft = new ObservableCollection<Visibility>();
+            IsVisibleBPV_Tibiaright = new ObservableCollection<Visibility>();
+            IsVisiblePerforateHIPleft = new ObservableCollection<Visibility>();
+            IsVisiblePerforateHIPright = new ObservableCollection<Visibility>();
+            IsVisibleZDSVleft = new ObservableCollection<Visibility>();
+            IsVisibleZDSVright = new ObservableCollection<Visibility>();
+            //
+            IsVisiblePDSVleft = new ObservableCollection<Visibility>();
+            IsVisiblePDSVright = new ObservableCollection<Visibility>();
+            IsVisibleBPVRight = new ObservableCollection<Visibility>();
+            IsVisibleBPVleft = new ObservableCollection<Visibility>();
+            IsVisibleSFSRight = new ObservableCollection<Visibility>();
+            IsVisibleSFSleft = new ObservableCollection<Visibility>();
+            //
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleBPV_Tibialeft.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleBPV_Tibiaright.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisiblePerforateHIPleft.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisiblePerforateHIPright.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleZDSVleft.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleZDSVright.Add(Visibility.Collapsed);
+            }
+            //
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisiblePDSVleft.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisiblePDSVright.Add(Visibility.Collapsed);
+            }
+
+
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleBPVleftBuf.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleBPVRight.Add(Visibility.Collapsed);
+            }
+
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleSFSleft.Add(Visibility.Collapsed);
+            }
+            for (int i = 0; i < 6; ++i)
+            {
+                IsVisibleSFSRight.Add(Visibility.Collapsed);
+            }
+
+            IsVisibleBPVleft = IsVisibleBPVleftBuf;
 
             LeftDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
             RightDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
@@ -4846,35 +5065,37 @@ namespace WpfApp2.ViewModels
             LeftCEAR = new LettersViewModel(Controller, LegSide.Left);
             //  if (!RightCEAR.IsEmpty)
             RightCEAR = new LettersViewModel(Controller, LegSide.Right);
-            if (!LeftTEMPV.IsEmpty)
-                LeftTEMPV = new TEMPVViewModel(Controller, LegSide.Left);
-            if (!RightTEMPV.IsEmpty)
-                RightTEMPV = new TEMPVViewModel(Controller, LegSide.Right);
 
-            if (!LeftMPV.IsEmpty)
-                LeftMPV = new MPVViewModel(Controller, LegSide.Left);
-            if (!RightMPV.IsEmpty)
-                RightMPV = new MPVViewModel(Controller, LegSide.Right);
-            if (!LeftZDSV.IsEmpty) LeftZDSV = new ZDSVViewModel(Controller, LegSide.Left);
-            if (!RightZDSV.IsEmpty) RightZDSV = new ZDSVViewModel(Controller, LegSide.Right);
-            if (!LeftTibiaPerforate.IsEmpty) LeftTibiaPerforate = new TibiaPerforateViewModel(Controller, LegSide.Left);
-            if (!RightTibiaPerforate.IsEmpty) RightTibiaPerforate = new TibiaPerforateViewModel(Controller, LegSide.Right);
-            if (!LeftSPS.IsEmpty) LeftSPS = new SPSViewModel(Controller, LegSide.Left);
-            if (!RightSPS.IsEmpty) RightSPS = new SPSViewModel(Controller, LegSide.Right);
-            if (!LeftSFS.IsEmpty) LeftSFS = new SFSViewModel(Controller, LegSide.Left);
-            if (!RightSFS.IsEmpty) RightSFS = new SFSViewModel(Controller, LegSide.Right);
-            if (!LeftPDSV.IsEmpty) LeftPDSV = new PDSVViewModel(Controller, LegSide.Left);
-            if (!RightPDSV.IsEmpty) RightPDSV = new PDSVViewModel(Controller, LegSide.Right);
-            if (!LeftGV.IsEmpty) LeftGV = new GVViewModel(Controller, LegSide.Left);
-            if (!RightGV.IsEmpty) RightGV = new GVViewModel(Controller, LegSide.Right);
-            if (!LeftPPV.IsEmpty) LeftPPV = new PPVViewModel(Controller, LegSide.Left);
-            if (!RightPPV.IsEmpty) RightPPV = new PPVViewModel(Controller, LegSide.Right);
-            if (!LeftPerforate.IsEmpty) LeftPerforate = new HipPerforateViewModel(Controller, LegSide.Left);
-            if (!RightPerforate.IsEmpty) RightPerforate = new HipPerforateViewModel(Controller, LegSide.Right);
-            if (!LeftBPVTibia.IsEmpty) LeftBPVTibia = new BPVTibiaViewModel(Controller, LegSide.Left);
-            if (!RightBPVTibia.IsEmpty) RightBPVTibia = new BPVTibiaViewModel(Controller, LegSide.Right);
-            if (!LeftBPVHip.IsEmpty) LeftBPVHip = new BPVHipViewModel(Controller, LegSide.Left);
-            if (!RightBPVHip.IsEmpty) RightBPVHip = new BPVHipViewModel(Controller, LegSide.Right);
+            LeftTEMPV = new TEMPVViewModel(Controller, LegSide.Left);
+
+            RightTEMPV = new TEMPVViewModel(Controller, LegSide.Right);
+
+
+            LeftMPV = new MPVViewModel(Controller, LegSide.Left);
+
+            RightMPV = new MPVViewModel(Controller, LegSide.Right);
+            LeftZDSV = new ZDSVViewModel(Controller, LegSide.Left);
+            RightZDSV = new ZDSVViewModel(Controller, LegSide.Right);
+            LeftTibiaPerforate = new TibiaPerforateViewModel(Controller, LegSide.Left);
+            RightTibiaPerforate = new TibiaPerforateViewModel(Controller, LegSide.Right);
+            LeftSPS = new SPSViewModel(Controller, LegSide.Left);
+            RightSPS = new SPSViewModel(Controller, LegSide.Right);
+            LeftSFS = new SFSViewModel(Controller, LegSide.Left);
+            RightSFS = new SFSViewModel(Controller, LegSide.Right);
+            LeftPDSV = new PDSVViewModel(Controller, LegSide.Left);
+            RightPDSV = new PDSVViewModel(Controller, LegSide.Right);
+            LeftGV = new GVViewModel(Controller, LegSide.Left);
+            RightGV = new GVViewModel(Controller, LegSide.Right);
+            LeftPPV = new PPVViewModel(Controller, LegSide.Left);
+            RightPPV = new PPVViewModel(Controller, LegSide.Right);
+            LeftPerforate = new HipPerforateViewModel(Controller, LegSide.Left);
+            RightPerforate = new HipPerforateViewModel(Controller, LegSide.Right);
+            LeftBPVTibia = new BPVTibiaViewModel(Controller, LegSide.Left);
+            RightBPVTibia = new BPVTibiaViewModel(Controller, LegSide.Right);
+            LeftBPVHip = new BPVHipViewModel(Controller, LegSide.Left);
+            RightBPVHip = new BPVHipViewModel(Controller, LegSide.Right);
+            LeftAdditionalText = "";
+            RightAdditionalText = "";
         }
         int obsid;
         private void GetObsForOverview(object sender, object data)

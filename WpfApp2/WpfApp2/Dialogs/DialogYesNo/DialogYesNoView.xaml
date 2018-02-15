@@ -7,10 +7,10 @@
              d:DesignHeight="100" d:DesignWidth="300">
     <Grid Margin="4">
         <Label Content="{Binding Message}" Margin="10,10,10,40" HorizontalAlignment="Center" Width="272" FontSize="16" FontFamily="Times New Roman" VerticalAlignment="Center"/>
-        <Button Content="ДА" HorizontalAlignment="Left" Margin="171,57,0,0" VerticalAlignment="Top" Width="75"   
+        <Button Height="32"  Style="{StaticResource MyConfirmBUTTON}" Content="ДА" HorizontalAlignment="Left" Margin="171,57,0,0" VerticalAlignment="Top" Width="75"   
                 Command="{Binding YesCommand}"   
                 CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
-        <Button Content="НЕТ" HorizontalAlignment="Left" Margin="48,57,0,0" VerticalAlignment="Top" Width="75"   
+        <Button Height="32" Style="{StaticResource MyNormalBUTTON}" Content="НЕТ" HorizontalAlignment="Left" Margin="48,57,0,0" VerticalAlignment="Top" Width="75"   
                 Command="{Binding NoCommand}"  
                 CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
     </Grid>

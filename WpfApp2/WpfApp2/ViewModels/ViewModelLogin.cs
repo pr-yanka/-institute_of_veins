@@ -54,7 +54,7 @@ namespace WpfApp2.ViewModels
 
                                 MessageBus.Default.Call("SetCurrentACCIDForContext", null, acc.Id);
                                 MessageBus.Default.Call("GetAcaunt", null, acc.Id);
-                                Controller.NavigateTo<ViewModelDashboard>();
+                              
 
 
 
@@ -79,7 +79,7 @@ namespace WpfApp2.ViewModels
                                     MessageBus.Default.Call("SetVisibilityForDocsOrMed", this, Visibility.Collapsed);
 
                                 }
-
+                                Controller.NavigateTo<ViewModelDashboard>();
 
                             }
                             else
