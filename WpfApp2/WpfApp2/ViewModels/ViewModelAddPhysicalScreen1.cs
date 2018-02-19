@@ -1735,7 +1735,7 @@ namespace WpfApp2.ViewModels
                 if (LegPart.SelectedWayType != null && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name))
                     p4.Append("Вид хода :" + LegPart.SelectedWayType.Name + ";").Font("Times new roman").FontSize(11.0);
                 if (LegPart is TEMPVViewModel)
-                    p4.Append("Протяжность :" + ((TEMPVViewModel)LegPart).FF_length + ";").Font("Times new roman").FontSize(11.0);
+                    p4.Append("Протяженность :" + ((TEMPVViewModel)LegPart).FF_length + ";").Font("Times new roman").FontSize(11.0);
 
 
                 foreach (var section in LegPart.LegSections)
@@ -2009,7 +2009,7 @@ namespace WpfApp2.ViewModels
             if (LegPart.SelectedWayType != null && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name))
                 p4 += "Вид хода :" + LegPart.SelectedWayType.Name + " ";
             if (LegPart is TEMPVViewModel)
-                p4 += "Протяжность :" + ((TEMPVViewModel)LegPart).FF_length + " ";
+                p4 += "Протяженность :" + ((TEMPVViewModel)LegPart).FF_length + " ";
 
 
             foreach (var section in LegPart.LegSections)

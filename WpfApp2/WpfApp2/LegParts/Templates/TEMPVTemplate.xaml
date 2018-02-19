@@ -13,7 +13,7 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <TextBlock x:Name="te3xtBlock"  TextWrapping="Wrap" Text="Протяжность:"   FontSize="16"/>
+            <TextBlock x:Name="te3xtBlock"  TextWrapping="Wrap" Text="Протяженность:"   FontSize="16"/>
 
             <TextBox x:Name="size2Box33"  Width="50" Text="{Binding Path=FF_length,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                 <i:Interaction.Triggers>
