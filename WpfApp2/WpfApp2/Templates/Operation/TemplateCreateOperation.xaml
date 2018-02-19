@@ -7,8 +7,9 @@
     </ResourceDictionary.MergedDictionaries>
     <DataTemplate x:Key="TemplateCreateOperation">
         <Grid Margin="0,62,0,0">
-            <TextBlock HorizontalAlignment="Right" FontSize="22pt" Height="38" VerticalAlignment="Top" Text="{Binding Path=CurrentPatient.Name}"><TextBlock Text="{Binding Path=initials}"></TextBlock>
-            </TextBlock>
+            <TextBlock HorizontalAlignment="Right" FontSize="22pt" Height="38" VerticalAlignment="Top" Margin="70,0" Text="{Binding Path=CurrentPatient.Sirname}"/>
+            <TextBlock HorizontalAlignment="Right" FontSize="22pt" Height="38" VerticalAlignment="Top" Text="{Binding Path=initials}"></TextBlock>
+            
             <TextBlock HorizontalAlignment="Left" FontSize="22pt" Height="38" VerticalAlignment="Top"  Margin="397,0,0,0" Text="Назначение операции" />
             <Button Width="300" Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy1"  Command="{Binding Path=ToCurrentPatientCommand}" Content="Вернуться к пациенту" HorizontalAlignment="Left" Margin="207,558,0,0" VerticalAlignment="Top"  
                    />
@@ -28,8 +29,7 @@
             <xctk:TimePicker Value="{Binding Path=MinuteHour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Format="ShortTime"  HorizontalAlignment="Left" Margin="5,232,0,0" VerticalAlignment="Top" Width="120" Height="20" />
 
 
-            <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="100,204,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top" Text=":"/>
+          
             <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Margin="138,182,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="Список всех врачей" FontSize="16" Width="155" TextAlignment="Center"/>
 

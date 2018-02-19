@@ -994,7 +994,7 @@ namespace WpfApp2.ViewModels
             Growth = "0";
             TextTip = "Текст пометки";
             CurrentPatient = Data.Patients.Get((int)data);
-            initials = " " + CurrentPatient.Sirname.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
+            initials = " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
 
         }
 
@@ -4597,6 +4597,14 @@ namespace WpfApp2.ViewModels
         {
             if (!Part.IsEmpty)
             {
+
+
+                //object PartBuf = Part as PDSVViewModel;
+
+                //if (PartBuf != null)
+                //{
+
+                //}
                 LegPartEntries LeftSFSEntryFullbuf = FullEntry;
                 foreach (var section in Part.LegSections)
                 {
