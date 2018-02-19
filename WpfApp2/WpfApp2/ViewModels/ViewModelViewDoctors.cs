@@ -71,7 +71,7 @@ namespace WpfApp2.ViewModels
 
         private void SetCurrentPatientID(object sender, object data)
         {
-            TextAddUserOrPersonalOrMed = "Добавить Врачи";
+            TextAddUserOrPersonalOrMed = "Добавить врача";
             TooltipText = "Архивация позволяет отключить врача от системы";
             DataSource = new ObservableCollection<DoctorsDataSource>();
 

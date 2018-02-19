@@ -4,16 +4,16 @@
                     >
     <DataTemplate  x:Key="TemplateLogin">
         <Grid>
-
-            <Border BorderThickness="1" HorizontalAlignment="Left" Height="360" Margin="320,92,0,0" VerticalAlignment="Top" Width="453" Background="#FFB0E8EE"></Border>
-            <TextBox Text="{Binding Name}" Height="34" HorizontalAlignment="Left" x:Name="textBoxEmail" VerticalAlignment="Top" Width="246" BorderBrush="{x:Null}" FontSize="18" Foreground="#FF8B8B8B" Cursor="Arrow" CaretBrush="#FC8B8B8B" Margin="440,239,0,0" />
-            <TextBlock Height="23" HorizontalAlignment="Left" Margin="430,170,0,0" x:Name="LoginHeading" Text="Войти в кабинет:" VerticalAlignment="Top" FontSize="20" FontStretch="ExtraCondensed" TextDecorations="{x:Null}" Foreground="#FF958585"/>
-            <TextBlock Height="49" HorizontalAlignment="Left" Margin="418,116,0,0" x:Name="textBlockHeading" VerticalAlignment="Top" FontSize="16" Padding="5" RenderTransformOrigin="1.955,1.44" Foreground="#FBFF4545" TextDecorations="{x:Null}" LineHeight="6" TextAlignment="Center" Text="ДОБРО ПОЖАЛОВАТЬ В ИНСТИТУТ ВЕН!"/>
-            <TextBlock Height="23" HorizontalAlignment="Left" Margin="449,211,0,0" x:Name="textBlock1" Text="Логин" VerticalAlignment="Top" Width="68" FontSize="16" Foreground="#FF6A6A6A" />
-            <TextBlock Height="23" HorizontalAlignment="Left" Margin="449,287,0,0" x:Name="textBlock2" Text="Пароль" VerticalAlignment="Top" Width="77" FontSize="16" Foreground="#FF6A6A6A" RenderTransformOrigin="0.734,1.565" />
-            <PasswordBox   Height="34" HorizontalAlignment="Left" Margin="440,314,0,0" x:Name="passwordBox1" FontSize="18" Foreground="#FF8B8B8B" Cursor="Arrow" CaretBrush="#FC8B8B8B" VerticalAlignment="Top" Width="246" BorderBrush="{x:Null}"  />
-            <Button Style="{StaticResource MyConfirmBUTTON}"     CommandParameter="{Binding ElementName=passwordBox1}"  Margin="464,158,0,58" Content="ВОЙТИ" Command="{Binding Path=ToDashboardCommand}"  HorizontalAlignment="Left"/>
-          
+            <Border BorderThickness="1" HorizontalAlignment="Left" Height="404" Margin="320,92,0,0" VerticalAlignment="Top" Width="453" Background="#FFB0E8EE"></Border>
+            <StackPanel Orientation="Vertical" Margin="320,100,251,236">
+                <TextBlock Margin="0,10,0,10" Height="49" HorizontalAlignment="Center" Width="454" x:Name="textBlockHeading" VerticalAlignment="Top" FontSize="18" Padding="5" RenderTransformOrigin="1.955,1.44" Foreground="#FBFF4545" TextDecorations="{x:Null}" LineHeight="6" TextAlignment="Center" Text="ДОБРО ПОЖАЛОВАТЬ В ИНСТИТУТ ВЕН!"/>
+                <TextBlock Margin="0,10,0,10" Height="23" HorizontalAlignment="Center" x:Name="LoginHeading" Text="Вход в кабинет:" VerticalAlignment="Top" FontSize="24" FontStretch="ExtraCondensed" TextDecorations="{x:Null}" Foreground="#FF958585"/>
+                <TextBlock Height="23" HorizontalAlignment="Center" Margin="0,10,0,10" x:Name="textBlock1" Text="Логин:" VerticalAlignment="Top" Width="68" FontSize="20" Foreground="#FF6A6A6A" />
+                <TextBox Text="{Binding Name}" Height="34" HorizontalAlignment="Center" x:Name="textBoxEmail" VerticalAlignment="Top" Width="300" BorderBrush="{x:Null}" FontSize="18" Foreground="#FF8B8B8B" Cursor="Arrow" CaretBrush="#FC8B8B8B" />
+                <TextBlock Height="23" HorizontalAlignment="Center" Margin="0,10,0,0" x:Name="textBlock2" Text="Пароль:" VerticalAlignment="Top" Width="77" FontSize="20" Foreground="#FF6A6A6A" RenderTransformOrigin="0.734,1.565" />
+                <PasswordBox Height="34" HorizontalAlignment="Center" Margin="0,10,0,10" x:Name="passwordBox1" FontSize="18" Foreground="#FF8B8B8B" Cursor="Arrow" CaretBrush="#FC8B8B8B" VerticalAlignment="Top" Width="300" BorderBrush="{x:Null}"  />
+                <Button Style="{StaticResource MyConfirmBUTTON}" CommandParameter="{Binding ElementName=passwordBox1}" Margin="0,40,0,20" Content="ВОЙТИ" Command="{Binding Path=ToDashboardCommand}"  HorizontalAlignment="Center"/>
+            </StackPanel>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

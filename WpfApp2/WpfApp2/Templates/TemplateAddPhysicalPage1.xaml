@@ -212,7 +212,7 @@
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
                             <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisibleTEMPVleft[0]}" Text="Ход: "> <TextBlock  Text="{Binding LeftTEMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
-                            <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisibleTEMPVleft[0]}" Text="Протяжность: "> <TextBlock  Text="{Binding LeftTEMPV.FF_length}" FontSize="12"/></TextBlock>
+                            <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisibleTEMPVleft[0]}" Text="Протяженность: "> <TextBlock  Text="{Binding LeftTEMPV.FF_length}" FontSize="12"/></TextBlock>
 
                             <TextBlock Visibility="{Binding IsVisibleTEMPVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding TEMPVLeftstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleTEMPVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding TEMPVLeftstr[1]}"></TextBlock>
@@ -465,7 +465,7 @@
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
                             <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisibleTEMPVRight[0]}" Text="Ход: "> <TextBlock  Text="{Binding RightTEMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
-                            <TextBlock  HorizontalAlignment="Center"  Visibility="{Binding IsVisibleTEMPVRight[0]}"  Text="Протяжность: "> <TextBlock  Text="{Binding RightTEMPV.FF_length}" FontSize="12"/></TextBlock>
+                            <TextBlock  HorizontalAlignment="Center"  Visibility="{Binding IsVisibleTEMPVRight[0]}"  Text="Протяженность: "> <TextBlock  Text="{Binding RightTEMPV.FF_length}" FontSize="12"/></TextBlock>
 
                             <TextBlock Visibility="{Binding IsVisibleTEMPVRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding TEMPVRightstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleTEMPVRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding TEMPVRightstr[1]}"></TextBlock>
