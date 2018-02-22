@@ -18,6 +18,7 @@ using WpfApp2.Db.Models.SPS;
 using WpfApp2.Db.Models.PPV;
 using WpfApp2.Db.Models.GV;
 using Xceed.Words.NET;
+using System.Windows.Media;
 using System.Diagnostics;
 using System.IO;
 using WpfApp2.Db.Models.LegParts.PDSVHip;
@@ -45,6 +46,53 @@ namespace WpfApp2.ViewModels
             //если PropertyChanged не нулевое - оно будет разбужено
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+
+
+
+        private Brush _bPDSV;
+        private Brush _bZDSV;
+        private Brush _bPerforate1;
+        private Brush _bPerforateGoleni;
+        private Brush _bTEMPV;
+        private Brush _bPPV;
+        private Brush _bCEAR;
+        private Brush _bAdditionalText;
+        private Brush _bGV;
+
+
+        private Brush _bPDSVL;
+        private Brush _bZDSVL;
+        private Brush _bPerforate1L;
+        private Brush _bPerforateGoleniL;
+        private Brush _bTEMPVL;
+        private Brush _bPPVL;
+        private Brush _bCEARL;
+        private Brush _bAdditionalTextL;
+        private Brush _bGVL;
+
+
+        public Brush BPDSV { get { return _bPDSV; } set { _bPDSV = value; OnPropertyChanged(); } }
+        public Brush BZDSV { get { return _bZDSV; } set { _bZDSV = value; OnPropertyChanged(); } }
+        public Brush BPerforate1 { get { return _bPerforate1; } set { _bPerforate1 = value; OnPropertyChanged(); } }
+        public Brush BPerforateGoleni { get { return _bPerforateGoleni; } set { _bPerforateGoleni = value; OnPropertyChanged(); } }
+        public Brush BTEMPV { get { return _bTEMPV; } set { _bTEMPV = value; OnPropertyChanged(); } }
+        public Brush BPPV { get { return _bPPV; } set { _bPPV = value; OnPropertyChanged(); } }
+        public Brush BCEAR { get { return _bCEAR; } set { _bCEAR = value; OnPropertyChanged(); } }
+        public Brush BAdditionalText { get { return _bAdditionalText; } set { _bAdditionalText = value; OnPropertyChanged(); } }
+        public Brush BGV { get { return _bGV; } set { _bGV = value; OnPropertyChanged(); } }
+
+
+        public Brush BPDSVL { get { return _bPDSVL; } set { _bPDSVL = value; OnPropertyChanged(); } }
+        public Brush BZDSVL { get { return _bZDSVL; } set { _bZDSVL = value; OnPropertyChanged(); } }
+        public Brush BPerforate1L { get { return _bPerforate1L; } set { _bPerforate1L = value; OnPropertyChanged(); } }
+        public Brush BPerforateGoleniL { get { return _bPerforateGoleniL; } set { _bPerforateGoleniL = value; OnPropertyChanged(); } }
+        public Brush BTEMPVL { get { return _bTEMPVL; } set { _bTEMPVL = value; OnPropertyChanged(); } }
+        public Brush BPPVL { get { return _bPPVL; } set { _bPPVL = value; OnPropertyChanged(); } }
+        public Brush BCEARL { get { return _bCEARL; } set { _bCEARL = value; OnPropertyChanged(); } }
+        public Brush BAdditionalTextL { get { return _bAdditionalTextL; } set { _bAdditionalTextL = value; OnPropertyChanged(); } }
+        public Brush BGVL { get { return _bGVL; } set { _bGVL = value; OnPropertyChanged(); } }
+
 
 
         public DelegateCommand RevertCommand { set; get; }
@@ -83,10 +131,11 @@ namespace WpfApp2.ViewModels
         }
 
         //
+        private string _leftAdditionalText;
+        private string _rightAdditionalText;
 
-
-        public string LeftAdditionalText { get; set; }
-        public string RightAdditionalText { get; set; }
+        public string LeftAdditionalText { get { return _leftAdditionalText; } set { _leftAdditionalText = value; OnPropertyChanged(); BrushesFill(); } }
+        public string RightAdditionalText { get { return _rightAdditionalText; } set { _rightAdditionalText = value; OnPropertyChanged(); BrushesFill(); } }
 
         #region GV binds
 
@@ -1073,6 +1122,7 @@ namespace WpfApp2.ViewModels
 
         private void FinishAdding(object parameter)
         {
+            BrushesFill();
             if (LeftGV.IsEmpty == true)
             {
                 MessageBox.Show("ГВ слева не заполнено");
@@ -1919,110 +1969,449 @@ namespace WpfApp2.ViewModels
             }
             Process.Start("WINWORD.EXE", docName);
         }
+
+        private void  BrushesFill()
+        {
+
+
+           
+            if (LeftGV.IsEmpty == true)
+            {
+               
+               
+                BGV = Brushes.Red;
+
+            }
+            else if (LeftGV.IsEmpty != true)
+            {
+                BGV = null;
+            }
+
+
+            if (RightGV.IsEmpty == true)
+            {
+              
+            
+                BGVL = Brushes.Red;
+            }
+            else if (RightGV.IsEmpty != true)
+            {
+                BGVL = null;
+            }
+
+
+            if (LeftPDSV.IsEmpty == true)
+            {
+               
+                BPDSV = Brushes.Red;
+            }
+            else if (LeftPDSV.IsEmpty != true)
+            {
+                BPDSV = null;
+            }
+
+
+            if (RightPDSV.IsEmpty == true)
+            {
+               
+                BPDSVL = Brushes.Red;
+            }
+            else if (RightPDSV.IsEmpty != true)
+            {
+                BPDSVL = null;
+            }
+
+
+
+
+            if (RightZDSV.IsEmpty == true)
+            {
+                
+                BZDSVL = Brushes.Red;
+            }
+            else if (RightZDSV.IsEmpty != true)
+            {
+                BZDSVL = null;
+            }
+
+
+            if (LeftZDSV.IsEmpty == true)
+            {
+                
+                BZDSV = Brushes.Red;
+            }
+            else if (LeftZDSV.IsEmpty != true)
+            {
+                BZDSV = null;
+            }
+
+            if (RightPerforate.IsEmpty == true)
+            {
+                
+                BPerforate1L = Brushes.Red;
+            }
+            else if (RightPerforate.IsEmpty != true)
+            {
+                BPerforate1L = null;
+            }
+
+            if (LeftPerforate.IsEmpty == true)
+            {
+                
+                BPerforate1 = Brushes.Red;
+            }
+            else if (LeftPerforate.IsEmpty != true)
+            {
+                BPerforate1 = null;
+            }
+
+
+            if (RightTibiaPerforate.IsEmpty == true)
+            {
+
+                BPerforateGoleniL = Brushes.Red;
+            }
+
+            else if (RightTibiaPerforate.IsEmpty != true)
+            {
+                BPerforateGoleniL = null;
+            }
+
+
+            if (LeftTibiaPerforate.IsEmpty == true)
+            {
+               
+                BPerforateGoleni = Brushes.Red;
+            }
+            else if (LeftTibiaPerforate.IsEmpty != true)
+            {
+                BPerforateGoleni = null;
+            }
+
+
+            if (RightTEMPV.IsEmpty == true)
+            {
+                
+                BTEMPVL = Brushes.Red;
+            }
+            else if (RightTEMPV.IsEmpty != true)
+            {
+                BTEMPVL = null;
+            }
+            if (LeftTEMPV.IsEmpty == true)
+            {
+               
+                BTEMPV = Brushes.Red;
+            }
+            else if (LeftTEMPV.IsEmpty != true)
+            {
+                BTEMPV = null;
+            }
+
+            if (RightPPV.IsEmpty == true)
+            {
+               
+                BPPVL = Brushes.Red;
+            }
+            else if (RightPPV.IsEmpty != true)
+            {
+                BPPVL = null;
+            }
+
+            if (LeftPPV.IsEmpty == true)
+            {
+                
+                BPPV = Brushes.Red;
+            }
+            else if (LeftPPV.IsEmpty != true)
+            {
+                BPPV = null;
+            }
+
+            if (string.IsNullOrWhiteSpace(RightAdditionalText))
+            {
+                
+                BAdditionalTextL = Brushes.Red;
+            }
+            else if (!string.IsNullOrWhiteSpace(RightAdditionalText))
+            {
+                BAdditionalTextL = null;
+            }
+
+
+            if (string.IsNullOrWhiteSpace(LeftAdditionalText))
+            {
+               
+                BAdditionalText = Brushes.Red;
+            }
+            else if (!string.IsNullOrWhiteSpace(LeftAdditionalText))
+            {
+                BAdditionalText = null;
+            }
+
+            if (LeftCEAR.LegSections[0].SelectedValue == null)
+            {
+               BCEAR = Brushes.Red;
+            }
+
+            if (LeftCEAR.LegSections[1].SelectedValue == null)
+            {
+                 BCEAR = Brushes.Red;
+            }
+
+            if (LeftCEAR.LegSections[2].SelectedValue == null)
+            {
+               BCEAR = Brushes.Red;
+            }
+
+            if (LeftCEAR.LegSections[3].SelectedValue == null)
+            {
+             BCEAR = Brushes.Red;
+            }
+
+            if (LeftCEAR.LegSections[0].SelectedValue != null && LeftCEAR.LegSections[1].SelectedValue != null && LeftCEAR.LegSections[2].SelectedValue != null && LeftCEAR.LegSections[3].SelectedValue != null)
+            {
+                BCEAR = null;
+            }
+
+            if (RightCEAR.LegSections[0].SelectedValue == null)
+            {
+              BCEARL = Brushes.Red;
+            }
+            if (RightCEAR.LegSections[1].SelectedValue == null)
+            {
+                BCEARL = Brushes.Red;
+            }
+            if (RightCEAR.LegSections[2].SelectedValue == null)
+            {
+               BCEARL = Brushes.Red;
+            }
+            if (RightCEAR.LegSections[3].SelectedValue == null)
+            {
+               BCEARL = Brushes.Red;
+            }
+            if (RightCEAR.LegSections[0].SelectedValue != null && RightCEAR.LegSections[1].SelectedValue != null && RightCEAR.LegSections[2].SelectedValue != null && RightCEAR.LegSections[3].SelectedValue != null)
+            {
+                BCEAR = null;
+            }
+            
+        }
+
         private bool TestAllFIelds()
         {
+
+
             bool test = true;
             if (LeftGV.IsEmpty == true)
             {
                 MessageBox.Show("ГВ слева не заполнено");
                 test = false;
+                BGV = Brushes.Red;
+
+            }
+            else if (LeftGV.IsEmpty != true)
+            {
+                BGV = null;
             }
             else if (RightGV.IsEmpty == true)
             {
                 MessageBox.Show("ГВ справа не заполнено");
                 test = false;
+                BGVL = Brushes.Red;
+            }
+            else if (RightGV.IsEmpty != true)
+            {
+                BGVL = null;
             }
 
             else if (LeftPDSV.IsEmpty == true)
             {
                 MessageBox.Show("ПДСВ слева не заполнено"); test = false;
+                BPDSV = Brushes.Red;
             }
+            else if (LeftPDSV.IsEmpty != true)
+            {
+                BPDSV = null;
+            }
+
             else if (RightPDSV.IsEmpty == true)
             {
                 MessageBox.Show("ПДСВ справа не заполнено"); test = false;
+                BPDSVL = Brushes.Red;
             }
+            else if (RightPDSV.IsEmpty != true)
+            {
+                BPDSVL = null;
+            }
+
+
+
             else if (RightZDSV.IsEmpty == true)
             {
                 MessageBox.Show("ЗДСВ справа не заполнено"); test = false;
+                BZDSVL = Brushes.Red;
             }
+            else if (RightZDSV.IsEmpty != true)
+            {
+                BZDSVL = null;
+            }
+
             else if (LeftZDSV.IsEmpty == true)
             {
                 MessageBox.Show("ЗДСВ слева не заполнено"); test = false;
+                BZDSV = Brushes.Red;
+            }
+            else if (LeftZDSV.IsEmpty != true)
+            {
+                BZDSV = null;
             }
             else if (RightPerforate.IsEmpty == true)
             {
                 MessageBox.Show("Перфоранты бедра и несафенные вены справа не заполнено"); test = false;
+                BPerforate1L = Brushes.Red;
+            }
+            else if (RightPerforate.IsEmpty != true)
+            {
+                BPerforate1L = null;
             }
             else if (LeftPerforate.IsEmpty == true)
             {
                 MessageBox.Show("Перфоранты бедра и несафенные вены слева не заполнено"); test = false;
+                BPerforate1 = Brushes.Red;
             }
+            else if (LeftPerforate.IsEmpty != true)
+            {
+                BPerforate1 = null;
+            }
+          
             else if (RightTibiaPerforate.IsEmpty == true)
             {
                 test = false;
                 MessageBox.Show("Перфоранты голени справа не заполнено");
+                BPerforateGoleniL = Brushes.Red;
             }
+
+            else if (RightTibiaPerforate.IsEmpty != true)
+            {
+                BPerforateGoleniL = null;
+            }
+
             else if (LeftTibiaPerforate.IsEmpty == true)
             {
                 MessageBox.Show("Перфоранты голени слева не заполнено"); test = false;
+                BPerforateGoleni = Brushes.Red;
             }
+            else if (LeftTibiaPerforate.IsEmpty != true)
+            {
+                BPerforateGoleni = null;
+            }
+
             else if (RightTEMPV.IsEmpty == true)
             {
                 MessageBox.Show("ТЕ МПВ справа не заполнено"); test = false;
+                BTEMPVL = Brushes.Red;
+            }
+            else if (RightTEMPV.IsEmpty != true)
+            {
+                BTEMPVL = null;
             }
             else if (LeftTEMPV.IsEmpty == true)
             {
                 MessageBox.Show("ТЕ МПВ слева не заполнено"); test = false;
+                BTEMPV = Brushes.Red;
             }
+            else if (LeftTEMPV.IsEmpty != true)
+            {
+                BTEMPV = null;
+            }
+
             else if (RightPPV.IsEmpty == true)
             {
                 MessageBox.Show("ППВ справа не заполнено"); test = false;
+                BPPVL = Brushes.Red;
             }
+            else if (RightPPV.IsEmpty != true)
+            {
+                BPPVL = null;
+            }
+
             else if (LeftPPV.IsEmpty == true)
             {
                 MessageBox.Show("ППВ слева не заполнено"); test = false;
+                BPPV = Brushes.Red;
             }
+            else if (LeftPPV.IsEmpty != true)
+            {
+                BPPV = null;
+            }
+
             else if (string.IsNullOrWhiteSpace(RightAdditionalText))
             {
                 MessageBox.Show("Примечание справа не заполнено"); test = false;
+                BAdditionalTextL = Brushes.Red;
             }
+            else if (!string.IsNullOrWhiteSpace(RightAdditionalText))
+            {
+                BAdditionalTextL = null;
+            }
+
+
             else if (string.IsNullOrWhiteSpace(LeftAdditionalText))
             {
                 MessageBox.Show("Примечание слева не заполнено"); test = false;
+                BAdditionalText = Brushes.Red;
             }
+            else if (!string.IsNullOrWhiteSpace(LeftAdditionalText))
+            {
+                BAdditionalText = null;
+            }
+
             else if (LeftCEAR.LegSections[0].SelectedValue == null)
             {
-                MessageBox.Show("C слева не заполнено"); test = false;
+                MessageBox.Show("C слева не заполнено"); test = false; BCEAR  = Brushes.Red;
             }
+
             else if (LeftCEAR.LegSections[1].SelectedValue == null)
             {
-                MessageBox.Show("E слева не заполнено"); test = false;
+                MessageBox.Show("E слева не заполнено"); test = false; BCEAR = Brushes.Red;
             }
+
             else if (LeftCEAR.LegSections[2].SelectedValue == null)
             {
-                MessageBox.Show("A слева не заполнено"); test = false;
+                MessageBox.Show("A слева не заполнено"); test = false; BCEAR = Brushes.Red;
             }
-            else if (LeftCEAR.LegSections[3].SelectedValue == null)
+
+            else if (LeftCEAR.LegSections[3].SelectedValue == null) 
             {
-                MessageBox.Show("P слева не заполнено"); test = false;
+                MessageBox.Show("P слева не заполнено"); test = false; BCEAR = Brushes.Red;
+            }
+
+            else if(LeftCEAR.LegSections[0].SelectedValue != null && LeftCEAR.LegSections[1].SelectedValue != null && LeftCEAR.LegSections[2].SelectedValue != null && LeftCEAR.LegSections[3].SelectedValue != null)
+            {
+                BCEAR = null;
             }
 
             else if (RightCEAR.LegSections[0].SelectedValue == null)
             {
-                MessageBox.Show("C справа не заполнено"); test = false;
+                MessageBox.Show("C справа не заполнено"); test = false; BCEARL = Brushes.Red;
             }
             else if (RightCEAR.LegSections[1].SelectedValue == null)
             {
-                MessageBox.Show("E справа не заполнено"); test = false;
+                MessageBox.Show("E справа не заполнено"); test = false; BCEARL = Brushes.Red;
             }
             else if (RightCEAR.LegSections[2].SelectedValue == null)
             {
-                MessageBox.Show("A справа не заполнено"); test = false;
+                MessageBox.Show("A справа не заполнено"); test = false; BCEARL = Brushes.Red;
             }
             else if (RightCEAR.LegSections[3].SelectedValue == null)
             {
-                MessageBox.Show("P справа не заполнено"); test = false;
+                MessageBox.Show("P справа не заполнено"); test = false; BCEARL = Brushes.Red;
             }
+            else if (RightCEAR.LegSections[0].SelectedValue != null && RightCEAR.LegSections[1].SelectedValue != null && RightCEAR.LegSections[2].SelectedValue != null && RightCEAR.LegSections[3].SelectedValue != null)
+            {
+                BCEAR = null;
+            }
+            BrushesFill();
             return test;
         }
         public string CreateStrForOverview(LegPartViewModel LegPart)
@@ -2084,9 +2473,40 @@ namespace WpfApp2.ViewModels
             return p4;
 
         }
+
+
+        private void SetAllBordersDefault()
+        {
+            BPDSV = null;
+            BZDSV = null;
+            BPerforate1 = null;
+            BPerforateGoleni = null;
+            BTEMPV = null;
+            BPPV = null;
+            BCEAR = null;
+            BAdditionalText = null;
+            BGV = null;
+
+            BPDSVL = null;
+            BZDSVL = null;
+            BPerforate1L = null;
+            BPerforateGoleniL = null;
+            BTEMPVL = null;
+            BPPVL = null;
+            BCEARL = null;
+            BAdditionalTextL = null;
+            BGVL = null;
+        }
+
+
         int togleforCreateStatement = 0;
         public ViewModelAddPhysical(NavigationController controller) : base(controller)
         {
+
+            SetAllBordersDefault();
+
+
+
             CurrentPanelViewModel = new DoctorSelectPanelViewModel(this);
             using (var context = new MySqlContext())
             {
@@ -5792,7 +6212,7 @@ namespace WpfApp2.ViewModels
 
 
                 }
-            //
+            BrushesFill();
         }
     }
 }
