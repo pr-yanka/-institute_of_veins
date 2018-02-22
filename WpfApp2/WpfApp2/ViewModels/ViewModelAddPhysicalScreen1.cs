@@ -19,7 +19,6 @@ using WpfApp2.Db.Models.PPV;
 using WpfApp2.Db.Models.GV;
 using Xceed.Words.NET;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using WpfApp2.Db.Models.LegParts.PDSVHip;
 using System.Linq;
@@ -889,9 +888,9 @@ namespace WpfApp2.ViewModels
                 if (value.Contains(",")) { _weight = value; }
                 else if (value == "")
                 { _weight = ""; }
-                else if (float.TryParse(value, out buf)) { _weight = buf.ToString(); }
+                else if (float.TryParse(value, out buf) && buf >= 0) { _weight = buf.ToString(); }
 
-                if (float.TryParse(Weight, out buf) && float.TryParse(Growth, out buf)) ITM = float.Parse(Weight) / ((float.Parse(Growth) / 100) * (float.Parse(Growth) / 100)); OnPropertyChanged();
+                if (float.TryParse(Weight, out buf) && float.TryParse(Growth, out buf) && buf >= 0) ITM = float.Parse(Weight) / ((float.Parse(Growth) / 100) * (float.Parse(Growth) / 100)); OnPropertyChanged();
             }
         }
 
@@ -902,8 +901,8 @@ namespace WpfApp2.ViewModels
             set
             {
                 float buf = 0f;
-                if (value.Contains(",")) { _growth = value; } else if (value == "") { _growth = ""; } else if (float.TryParse(value, out buf)) { _growth = buf.ToString(); }
-                if (float.TryParse(Weight, out buf) && float.TryParse(Growth, out buf)) ITM = float.Parse(Weight) / ((float.Parse(Growth) / 100) * (float.Parse(Growth) / 100)); OnPropertyChanged();
+                if (value.Contains(",")) { _growth = value; } else if (value == "") { _growth = ""; } else if (float.TryParse(value, out buf) && buf >= 0) { _growth = buf.ToString(); }
+                if (float.TryParse(Weight, out buf) && float.TryParse(Growth, out buf) && buf >= 0) ITM = float.Parse(Weight) / ((float.Parse(Growth) / 100) * (float.Parse(Growth) / 100)); OnPropertyChanged();
             }
         }
 

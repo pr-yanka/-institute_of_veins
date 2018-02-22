@@ -39,7 +39,8 @@ namespace WpfApp2.ViewModels
             this.Patology = Patology;
             this.Opacity = Opacity;
             if (Opacity == 0.38f)
-            { ArchiveButtonVis = Visibility.Hidden; }else
+            { ArchiveButtonVis = Visibility.Hidden; }
+            else
             {
                 ArchiveButtonVis = Visibility.Visible;
             }
@@ -69,7 +70,38 @@ namespace WpfApp2.ViewModels
         public ObservableCollection<PatologyDataSource> PatologyList { get { return _patologyList; } set { _patologyList = value; OnPropertyChanged(); } }
 
         public Patient CurrentPatient { get; set; }
+        private string getmonthName(int number)
+        {
+            switch (number)
+            {
+                case 1:
+                    return "Январь";
+                case 2:
+                    return "Февраль";
+                case 3:
+                    return "Март";
+                case 4:
+                    return "Апрель";
+                case 5:
+                    return "Май";
+                case 6:
+                    return "Июнь";
+                case 7:
+                    return "Июль";
+                case 8:
+                    return "Август";
+                case 9:
+                    return "Сентябрь";
+                case 10:
+                    return "Октябрь";
+                case 11:
+                    return "Ноябрь";
+                case 12:
+                    return "Декабрь";
+            }
+            return "";
 
+        }
         private void GetPatientForPatology(object sender, object data)
         {
             PatologyList = new ObservableCollection<PatologyDataSource>();
@@ -90,20 +122,22 @@ namespace WpfApp2.ViewModels
                             {
                                 float OpacityBuf = 0.0f;
                                 if (Patology.isArchivatied == true)
-                                 OpacityBuf = 0.38f; 
-                                string DateAppear = Patology.MonthAppear.Value.Month.ToString() + "/" + Patology.YearAppear.Value.Year.ToString();
+                                    OpacityBuf = 0.38f;
+
+
+                                string DateAppear = getmonthName(Patology.MonthAppear.Value.Month) + " " + Patology.YearAppear.Value.Year.ToString() + " года";
                                 string DateDisappear = "";
                                 try
                                 {
-                                    DateDisappear = Patology.MonthDisappear.Value.Month.ToString() + "/" + Patology.YearDisappear.Value.Year.ToString();
+                                    DateDisappear = getmonthName(Patology.MonthDisappear.Value.Month) + " " + Patology.YearDisappear.Value.Year.ToString() + " года";
                                 }
-                                catch {  }
+                                catch { }
                                 DelegateCommand ToRedactP = new DelegateCommand(
                                     () =>
                                     {
                                         MessageBus.Default.Call("GetPatologyForRedactPatology", this, Patology);
                                         Controller.NavigateTo<ViewModelRedactPathology>();
-                                       
+
                                     }
                                     );
                                 DelegateCommand ToArchiveP = new DelegateCommand(
