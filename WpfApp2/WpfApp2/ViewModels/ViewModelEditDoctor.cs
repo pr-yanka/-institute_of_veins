@@ -57,6 +57,7 @@ namespace WpfApp2.ViewModels
         #region DelegateCommands
         public DelegateCommand ToDashboardCommand { get; protected set; }
         public DelegateCommand SaveAndGoDoctorListCommand { get; protected set; }
+        public DelegateCommand GoToDoctorListCommand { get; }
         #endregion
         #region everyth connected with panel
         public DelegateCommand RevertSpecCommand { set; get; }
@@ -608,7 +609,16 @@ namespace WpfApp2.ViewModels
 
                 }
             );
+            GoToDoctorListCommand = new DelegateCommand(
+() =>
+{
 
+    MessageBus.Default.Call("OpenDoctors", this, "");
+    Controller.NavigateTo<ViewModelViewDoctors>();
+
+
+}
+);
         }
     }
 }

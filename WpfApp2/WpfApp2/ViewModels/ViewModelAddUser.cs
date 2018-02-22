@@ -36,7 +36,7 @@ namespace WpfApp2.ViewModels
                     return false;
                 else return _isChecked;
             }
-            set { _isChecked = value; MessageBus.Default.Call("SomethingChangedUserForEditUser", this,this); OnPropertyChanged(); }
+            set { _isChecked = value; MessageBus.Default.Call("SomethingChangedUserForEditUser", this, this); OnPropertyChanged(); }
         }
         public string Name { get; set; }
         public int id { get; set; }
@@ -54,12 +54,18 @@ namespace WpfApp2.ViewModels
     public class ViewModelAddUser : ViewModelBase, INotifyPropertyChanged
     {
         #region DelegateCommands
+
+        private DelegateCommand _addPerson;
+        public DelegateCommand AddPerson { get { return _addPerson; } set { _addPerson = value; OnPropertyChanged(); } }
         public DelegateCommand<object> ShowPassword { get; protected set; }
         public DelegateCommand<object> ToDashboardCommand { get; protected set; }
+        public DelegateCommand GoToDoctorListCommand { get; }
         public DelegateCommand<object> SaveAndGoDoctorListCommand { get; protected set; }
         public DelegateCommand HidePassword { get; protected set; }
         #endregion
         #region Bindings
+        private string _nameOfPerson;
+        public string NameOfPerson { get { return _nameOfPerson; } set { _nameOfPerson = value; OnPropertyChanged(); } }
 
         public List<string> accType { get; set; }
         public ObservableCollection<DocDataSoursForNewUser> DocsDataSource { get; set; }
@@ -74,6 +80,12 @@ namespace WpfApp2.ViewModels
         public Visibility PasswordBoxVisiblity { get { return _passwordBoxVisiblity; } set { _passwordBoxVisiblity = value; OnPropertyChanged(); } }
 
         public Visibility PasswordTextBoxVisiblity { get { return _passwordTextBoxVisiblity; } set { _passwordTextBoxVisiblity = value; OnPropertyChanged(); } }
+
+
+        private Visibility _Vis;
+        public Visibility Vis { get { return _Vis; } set { _Vis = value; OnPropertyChanged(); } }
+
+
         private Visibility _docVis;
         public Visibility DocVis { get { return _docVis; } set { _docVis = value; OnPropertyChanged(); } }
         private Visibility _medVis;
@@ -90,7 +102,51 @@ namespace WpfApp2.ViewModels
 
         private string _name;
         public int _selectedIndexOfAccauntType;
-        public int SelectedIndexOfAccauntType { get { return _selectedIndexOfAccauntType; } set { _selectedIndexOfAccauntType = value; if (accType[_selectedIndexOfAccauntType] == "Врач") { DocVis = Visibility.Visible; MedVis = Visibility.Collapsed; } else if (accType[_selectedIndexOfAccauntType] == "Медперсонал") { DocVis = Visibility.Collapsed; MedVis = Visibility.Visible; } else { DocVis = Visibility.Collapsed; MedVis = Visibility.Collapsed; } OnPropertyChanged(); } }
+        public int SelectedIndexOfAccauntType
+        {
+            get { return _selectedIndexOfAccauntType; }
+            set
+            {
+                _selectedIndexOfAccauntType = value;
+                if (accType[_selectedIndexOfAccauntType] == "Врач")
+                {
+                    NameOfPerson = "+Добавить врача";
+                    AddPerson = new DelegateCommand(
+              () =>
+              {
+                  MessageBus.Default.Call("RefreshDataForNewDoctorsForAddUser", this, "");
+
+                  Controller.NavigateTo<ViewModelAddDoctor>();
+
+              }
+          );
+                    Vis = Visibility.Visible;
+                    DocVis = Visibility.Visible; MedVis = Visibility.Collapsed;
+                }
+                else if (accType[_selectedIndexOfAccauntType] == "Медперсонал")
+                {
+                    AddPerson = new DelegateCommand(
+              () =>
+              {
+                  MessageBus.Default.Call("RefreshDataForMedpersonalForAddUser", null, null);
+                  Controller.NavigateTo<ViewModelAddMedPersonal>();
+
+              }
+          );
+
+                    Vis = Visibility.Visible;
+                    NameOfPerson = "+Добавить медперсонал";
+                    DocVis = Visibility.Collapsed; MedVis = Visibility.Visible;
+                }
+                else
+                {
+                    Vis = Visibility.Hidden;
+                    DocVis = Visibility.Collapsed;
+                    MedVis = Visibility.Collapsed;
+                }
+                OnPropertyChanged();
+            }
+        }
 
         public string Name { get { return _name; } set { _name = value; OnPropertyChanged(); } }
 
@@ -147,6 +203,155 @@ namespace WpfApp2.ViewModels
         }
         #endregion
         #region MessageBus
+
+        private void UpdateAccsEmptyAddMeds(object sender, object data)
+        {
+            using (var context = new MySqlContext())
+            {
+                //Name = "";
+                int curDocId = (int)sender;
+                MedsDataSource = new ObservableCollection<DocDataSoursForNewUser>();
+                DocsDataSource = new ObservableCollection<DocDataSoursForNewUser>();
+                MedPersonalRepository medRip = new MedPersonalRepository(context);
+                AccauntRepository acRep = new AccauntRepository(context);
+                DoctorRepository dcRep = new DoctorRepository(context);
+                bool test = true;
+                foreach (var doc in dcRep.GetAll)
+                {
+                    test = true;
+
+                    foreach (var acc in acRep.GetAll)
+                    {
+                        if (acc.isDoctor != null && acc.isDoctor.Value && doc.isEnabled != null && doc.isEnabled.Value == true)
+                        {
+                            if (doc.Id == acc.idврач)
+                            {
+                                test = false;
+                            }
+                        }
+                    }
+                    if (test)
+                    {
+
+                        string initials = " " + doc.Name.ToCharArray()[0].ToString() + ". " + doc.Patronimic.ToCharArray()[0].ToString() + ". ";
+                        DocDataSoursForNewUser buf = new DocDataSoursForNewUser(doc.Sirname + initials, doc.Id);
+
+                        DocsDataSource.Add(buf);
+
+                    }
+                }
+                foreach (var doc in medRip.GetAll)
+                {
+                    test = true;
+
+                    foreach (var acc in acRep.GetAll)
+                    {
+                        if (acc.isMedPersonal != null && acc.isMedPersonal.Value && doc.isEnabled != null && doc.isEnabled.Value == true)
+                        {
+                            if (doc.Id == acc.idмедперсонал)
+                            {
+                                test = false;
+                            }
+                        }
+                    }
+                    if (test)
+                    {
+                        string initials = " " + doc.Name.ToCharArray()[0].ToString() + ". " + doc.Patronimic.ToCharArray()[0].ToString() + ". ";
+                        DocDataSoursForNewUser buf = new DocDataSoursForNewUser(doc.Surname + initials, doc.Id);
+                        if (curDocId == doc.Id)
+                        {
+                            buf.IsChecked = true;
+                        }
+                        MedsDataSource.Add(buf);
+                        if (MedsDataSource.IndexOf(buf) != 0)
+                        {
+                            var bff = MedsDataSource[0];
+                            int bufint = MedsDataSource.IndexOf(buf);
+                            MedsDataSource[0] = MedsDataSource[MedsDataSource.IndexOf(buf)];
+                            MedsDataSource[bufint] = bff;
+                        }
+
+
+                    }
+                }
+
+                //MedsDataSource.Reverse()
+            }
+
+        }
+
+        private void UpdateAccsEmptyAddDocs(object sender, object data)
+        {
+            using (var context = new MySqlContext())
+            {
+                //Name = "";
+                int curDocId = (int)sender;
+                MedsDataSource = new ObservableCollection<DocDataSoursForNewUser>();
+                DocsDataSource = new ObservableCollection<DocDataSoursForNewUser>();
+                MedPersonalRepository medRip = new MedPersonalRepository(context);
+                AccauntRepository acRep = new AccauntRepository(context);
+                DoctorRepository dcRep = new DoctorRepository(context);
+                bool test = true;
+                foreach (var doc in dcRep.GetAll)
+                {
+                    test = true;
+
+                    foreach (var acc in acRep.GetAll)
+                    {
+                        if (acc.isDoctor != null && acc.isDoctor.Value && doc.isEnabled != null && doc.isEnabled.Value == true)
+                        {
+                            if (doc.Id == acc.idврач)
+                            {
+                                test = false;
+                            }
+                        }
+                    }
+                    if (test)
+                    {
+
+                        string initials = " " + doc.Name.ToCharArray()[0].ToString() + ". " + doc.Patronimic.ToCharArray()[0].ToString() + ". ";
+
+                        DocDataSoursForNewUser buf = new DocDataSoursForNewUser(doc.Sirname + initials, doc.Id);
+                        if (curDocId == doc.Id)
+                        {
+                            buf.IsChecked = true;
+                        }
+                        DocsDataSource.Add(buf);
+                        if (DocsDataSource.IndexOf(buf) != 0)
+                        {
+                            var bff = DocsDataSource[0];
+                            int bufint = DocsDataSource.IndexOf(buf);
+                            DocsDataSource[0] = DocsDataSource[DocsDataSource.IndexOf(buf)];
+                            DocsDataSource[bufint] = bff;
+                        }
+                    }
+                }
+                foreach (var doc in medRip.GetAll)
+                {
+                    test = true;
+
+                    foreach (var acc in acRep.GetAll)
+                    {
+                        if (acc.isMedPersonal != null && acc.isMedPersonal.Value && doc.isEnabled != null && doc.isEnabled.Value == true)
+                        {
+                            if (doc.Id == acc.idмедперсонал)
+                            {
+                                test = false;
+                            }
+                        }
+                    }
+                    if (test)
+                    {
+                        string initials = " " + doc.Name.ToCharArray()[0].ToString() + ". " + doc.Patronimic.ToCharArray()[0].ToString() + ". ";
+
+                        MedsDataSource.Add(new DocDataSoursForNewUser(doc.Surname + initials, doc.Id));
+                    }
+                }
+
+                //MedsDataSource.Reverse()
+            }
+
+        }
         private void UpdateAccsEmpty(object sender, object data)
         {
             using (var context = new MySqlContext())
@@ -207,8 +412,21 @@ namespace WpfApp2.ViewModels
         #endregion
         public ViewModelAddUser(NavigationController controller) : base(controller)
         {
+            NameOfPerson = "+Добавить врача";
+            AddPerson = new DelegateCommand(
+      () =>
+      {
+          MessageBus.Default.Call("RefreshDataForNewDoctorsForAddUser", this, "");
+
+          Controller.NavigateTo<ViewModelAddDoctor>();
+
+      }
+  );
+            Vis = Visibility.Visible;
             DocVis = Visibility.Visible;
             MedVis = Visibility.Collapsed;
+            MessageBus.Default.Subscribe("UpdateAccsEmptyForNewUserForAddNewMedpersonal", UpdateAccsEmptyAddMeds);
+            MessageBus.Default.Subscribe("UpdateAccsEmptyForNewUserForAddNewMed", UpdateAccsEmptyAddDocs);
             MessageBus.Default.Subscribe("UpdateAccsEmptyForNewUser", UpdateAccsEmpty);
             ImageSource = new BitmapImage(new Uri("pack://application:,,,/Images/Hide.PNG"));
             base.HasNavigation = true;
@@ -224,6 +442,7 @@ namespace WpfApp2.ViewModels
             nameOfButton = "Добавить";
 
             SetAllFieldsDefault();
+
             HidePassword = new DelegateCommand(
               () =>
               {
@@ -257,7 +476,17 @@ namespace WpfApp2.ViewModels
 
               }
           );
+            GoToDoctorListCommand = new DelegateCommand(
+             () =>
+             {
 
+
+                 MessageBus.Default.Call("OpenUsers", this, "");
+                 Controller.NavigateTo<ViewModelViewUsers>();
+
+
+             }
+         );
             SaveAndGoDoctorListCommand = new DelegateCommand<object>(
               (sender) =>
               {
@@ -280,7 +509,7 @@ namespace WpfApp2.ViewModels
 
                           foreach (var doc in DocsDataSource)
                           {
-                              if(doc.IsChecked == true)
+                              if (doc.IsChecked == true)
                               {
                                   currentUser.idврач = doc.id;
                               }

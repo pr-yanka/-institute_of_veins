@@ -57,7 +57,7 @@ namespace WpfApp2.ViewModels
         private void SetCurrentPatientID(object sender, object data)
         {
 
-           
+
             using (var context = new MySqlContext())
             {
                 PatientsRepository PatientsRep = new PatientsRepository(context);
@@ -71,18 +71,18 @@ namespace WpfApp2.ViewModels
                 RegionsRepository regRep = new RegionsRepository(context);
                 DistrictsRepository distRep = new DistrictsRepository(context);
                 StreetsRepository strtRep = new StreetsRepository(context);
-                Town = ctRep.Get(CurrentPatient.City).Str;
+                Town = "Город: " + ctRep.Get(CurrentPatient.City).Str;
                 if (CurrentPatient.District != null)
                 {
-                    District = distRep.Get(CurrentPatient.District.Value).Str;
+                    District = "Регион: " + distRep.Get(CurrentPatient.District.Value).Str;
                     IsDistrict = Visibility.Visible;
                 }
                 else
                 {
                     IsDistrict = Visibility.Hidden;
                 }
-                Region = regRep.Get(CurrentPatient.Region).Str;
-                Street = strtRep.Get(CurrentPatient.Street).Str;
+                Region = "Область: " + regRep.Get(CurrentPatient.Region).Str;
+                Street = "Улица: " + strtRep.Get(CurrentPatient.Street).Str + " " + CurrentPatient.House + " кв. " + CurrentPatient.Flat ;
 
             }
 

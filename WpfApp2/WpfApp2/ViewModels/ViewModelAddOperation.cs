@@ -495,7 +495,7 @@ namespace WpfApp2.ViewModels
                 () =>
                 {
 
-                    if (((ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source).Count == 0 || ((ObservableCollection<DiagnosisDataSource>)RightDiagnosisList.Source).Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false)
+                    if (LeftDiagnosisList.Source == null || RightDiagnosisList.Source == null || ((ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source).Count == 0 || ((ObservableCollection<DiagnosisDataSource>)RightDiagnosisList.Source).Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false)
                     {
 
                         MessageBox.Show("Не всё заполнено!");

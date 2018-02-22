@@ -35,6 +35,7 @@ namespace WpfApp2.LegParts
             get { return _panelOpened; }
             set
             {
+                Dimentions = new ObservableCollection<Metrics>(Data.Metrics.GetAll);
                 _panelOpened = value;
                 if (value) ClearPanel();
                 OnPropertyChanged();

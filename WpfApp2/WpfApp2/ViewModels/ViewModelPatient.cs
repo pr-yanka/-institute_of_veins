@@ -17,8 +17,18 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToPatientHistory { get; protected set; }
         private Patient _patient;
 
+        public bool IsFilteredName { get; set; }
+        public bool IsFilteredAge { get; set; }
+
+
+
+        public bool IsVisibleTotal { get; set; }
+
         public ViewModelPatient(NavigationController controller, Patient patient) : base(controller)
         {
+            IsVisibleTotal = true;
+            IsFilteredName = false;
+            IsFilteredAge = false;
             _patient = patient;
             ToPatientCommand = new DelegateCommand(
               () =>
@@ -36,14 +46,14 @@ namespace WpfApp2.ViewModels
          );
         }
 
-       
-    
+
+
         public Patient CurrentPatient
         {
             get { return _patient; }
             set { _patient = value; }
         }
-       
+
 
         private void ToPatient(object sender, RoutedEventArgs e)
         {

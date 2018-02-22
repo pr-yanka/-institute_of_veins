@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 using System.Collections.Generic;
-
+using System.Windows.Controls;
 
 namespace WpfApp2.ViewModels
 {
@@ -34,8 +34,8 @@ namespace WpfApp2.ViewModels
 
         private IEnumerable<String> _districtList;
         private IEnumerable<String> _streetList;
-
-        public IEnumerable<String> TownsList { get; set; }
+        private IEnumerable<String> _townsList;
+        public IEnumerable<String> TownsList { get { return _townsList; } set { _townsList = value; OnPropertyChanged(); } }
         public IEnumerable<String> DistrictList { get { return _districtList; } set { _districtList = value; OnPropertyChanged(); } }
         public IEnumerable<String> RegionList { get; set; }
         public IEnumerable<String> StreetList { get { return _streetList; } set { _streetList = value; OnPropertyChanged(); } }
@@ -69,7 +69,7 @@ namespace WpfApp2.ViewModels
             {
                 _name = value;
 
-                nameOfButton = "Сохранить изменения"; OnPropertyChanged();
+              OnPropertyChanged();
             }
         }
 
@@ -80,17 +80,46 @@ namespace WpfApp2.ViewModels
         private string _region;
         private string _district;
 
-
+        private RegexUtilities mailTester;
 
         public string Town { get { return _town; } set { _town = value; OnPropertyChanged(); GetStreetAnDistrict(); } }
         public string District { get { return _district; } set { _district = value; OnPropertyChanged(); } }
-        public string Region { get { return _region; } set { _region = value; OnPropertyChanged(); } }
+        public string Region { get { return _region; } set { _region = value; OnPropertyChanged(); GetTowns(); } }
         public string Street { get { return _street; } set { _street = value; OnPropertyChanged(); } }
         public string House { get { return _house; } set { _house = value; OnPropertyChanged(); } }
 
         public string Phone { get { return _phone; } set { _phone = value; OnPropertyChanged(); } }
 
-        public string email { get { return _email; } set { _email = value; OnPropertyChanged(); } }
+        public string email
+        {
+            get { return _email; }
+            set
+            {
+                _email = value; if (!String.IsNullOrWhiteSpace(value))
+                {
+
+
+
+                    if (mailTester.IsValidEmail(value))
+                    {
+                        TextBoxEmailB = Brushes.Gray;
+
+                    }
+                    else
+                    {
+
+                        TextBoxEmailB = Brushes.Red;
+                    }
+                }
+                else
+                {
+                    TextBoxEmailB = Brushes.Gray;
+                }
+
+
+                OnPropertyChanged();
+            }
+        }
 
         private Brush _textBox_Name_B;
         private Brush _textBox_Surname_B;
@@ -141,7 +170,7 @@ namespace WpfApp2.ViewModels
 
             if (Date.Day >= DateTime.Now.Day && Date.Month >= DateTime.Now.Month && Date.Year >= DateTime.Now.Year)
             {
-                Date_B  = Brushes.Red;
+                Date_B = Brushes.Red;
 
                 result = false;
             }
@@ -188,13 +217,12 @@ namespace WpfApp2.ViewModels
 
                 result = false;
             }
+            //if (String.IsNullOrWhiteSpace(District))
+            //{
+            //    TextBoxDistrictB = Brushes.Red;
 
-            if (String.IsNullOrWhiteSpace(District))
-            {
-                TextBoxDistrictB = Brushes.Red;
-
-                result = false;
-            }
+            //    result = false;
+            //}
             if (String.IsNullOrWhiteSpace(Region))
             {
                 TextBoxRegionB = Brushes.Red;
@@ -202,18 +230,28 @@ namespace WpfApp2.ViewModels
                 result = false;
             }
 
-
-            int flatBuffer = 0;
-            if (!int.TryParse(CurrentPatientFlat, out flatBuffer))
+            if (!String.IsNullOrWhiteSpace(email))
             {
-                TextBoxFlatB = Brushes.Red;
+                if (!mailTester.IsValidEmail(email))
+                {
+                    result = false;
+                    TextBoxEmailB = Brushes.Red;
 
-                result = false;
+                }
+
             }
-            else
-            {
-                CurrentPatient.Flat = flatBuffer;
-            }
+
+            //int flatBuffer = 0;
+            //if (!int.TryParse(CurrentPatientFlat, out flatBuffer))
+            //{
+            //    TextBoxFlatB = Brushes.Red;
+
+            //    result = false;
+            //}
+            //else
+            //{
+            //    CurrentPatient.Flat = flatBuffer;
+            //}
             return result;
         }
 
@@ -241,9 +279,47 @@ namespace WpfApp2.ViewModels
             Date_B = Brushes.Gray;
             TextBoxEmailB = Brushes.Gray;
         }
-
+        int curOblID = 0;
         int curTwnID = 0;
+        public DelegateCommand<object> ClickOnAutoComplete { get; set; }
         #region MessageBus
+        private void GetTowns()
+        {
+            using (var context = new MySqlContext())
+            {
+                //DistrictsRepository distRep = new DistrictsRepository(context);
+                //StreetsRepository strtRep = new StreetsRepository(context);
+                CitiesRepository ctRep = new CitiesRepository(context);
+                RegionsRepository regRep = new RegionsRepository(context);
+
+                curOblID = 0;
+                foreach (var Ton in regRep.GetAll)
+                {
+                    if (Ton.Str == Region)
+                    {
+                        curOblID = Ton.Id;
+                    }
+                }
+
+                if (curOblID != 0)
+                {
+                    List<string> TownListbuf = new List<string>();
+
+                    foreach (var Town in ctRep.GetAll)
+                    {
+                        if (Town.OblId == curOblID)
+                            TownListbuf.Add(Town.Str);
+                    }
+                    TownsList = TownListbuf;
+                }
+                else
+                {
+                    List<string> TownListbuf = new List<string>();
+                    TownsList = TownListbuf;
+                }
+                Controller.NavigateTo<ViewModelNewPatient>();
+            }
+        }
 
         private void GetStreetAnDistrict()
         {
@@ -279,7 +355,8 @@ namespace WpfApp2.ViewModels
                     }
                     StreetList = StreetListbuf;
                     DistrictList = DistrictListbuf;
-                }else
+                }
+                else
                 {
                     List<string> DistrictListbuf = new List<string>();
                     List<string> StreetListbuf = new List<string>();
@@ -357,6 +434,15 @@ namespace WpfApp2.ViewModels
 
         public ViewModelNewPatient(NavigationController controller) : base(controller)
         {
+            mailTester = new RegexUtilities();
+            ClickOnAutoComplete = new DelegateCommand<object>(
+               (sender) =>
+               {
+                   var buf = (AutoCompleteBox)sender;
+                   buf.IsDropDownOpen = true;
+
+               }
+           );
             base.HasNavigation = true;
 
             MessageBus.Default.Subscribe("UpdateDictionariesOfLocationForNewPatient", GetDictionary);
@@ -420,43 +506,6 @@ namespace WpfApp2.ViewModels
                             DistrictsRepository distRep = new DistrictsRepository(context);
                             StreetsRepository strtRep = new StreetsRepository(context);
                             bool isExist = false;
-                            foreach (var Town1 in ctRep.GetAll)
-                            {
-                                if (Town1.Str == Town)
-                                {
-                                    isExist = true;
-                                    CurrentPatient.City = Town1.Id;
-                                    break;
-                                }
-                            }
-                            if (isExist == false)
-                            {
-                                Cities bufCity = new Cities();
-                                bufCity.Str = Town;
-                                Data.Cities.Add(bufCity);
-                                Data.Complete();
-                                CurrentPatient.City = bufCity.Id;
-                            }
-                            isExist = false;
-                            foreach (var Street1 in strtRep.GetAll)
-                            {
-                                if (Street1.Str == Street)
-                                {
-                                    isExist = true;
-                                    CurrentPatient.Street = Street1.Id;
-                                    break;
-                                }
-                            }
-                            if (isExist == false)
-                            {
-                                Streets bufStreet = new Streets();
-                                bufStreet.Str = Street;
-                                Data.Streets.Add(bufStreet);
-                                bufStreet.IdCity = curTwnID;
-                                Data.Complete();
-                                CurrentPatient.Street = bufStreet.Id;
-                            }
-                            isExist = false;
                             foreach (var Region1 in regRep.GetAll)
                             {
                                 if (Region1.Str == Region)
@@ -473,12 +522,53 @@ namespace WpfApp2.ViewModels
 
                                 Data.Regions.Add(bufRegions);
                                 Data.Complete();
+                                curOblID = bufRegions.Id;
                                 CurrentPatient.Region = bufRegions.Id;
                             }
                             isExist = false;
+                            foreach (var Town1 in ctRep.GetAll)
+                            {
+                                if (Town1.Str == Town && Town1.OblId == curOblID)
+                                {
+                                    isExist = true;
+                                    CurrentPatient.City = Town1.Id;
+                                    break;
+                                }
+                            }
+                            if (isExist == false)
+                            {
+                                Cities bufCity = new Cities();
+                                bufCity.Str = Town;
+                                bufCity.OblId = curOblID;
+                                Data.Cities.Add(bufCity);
+                                Data.Complete();
+                                curTwnID = bufCity.Id;
+                                CurrentPatient.City = bufCity.Id;
+                            }
+                            isExist = false;
+                            foreach (var Street1 in strtRep.GetAll)
+                            {
+                                if (Street1.Str == Street && Street1.IdCity == curTwnID)
+                                {
+                                    isExist = true;
+                                    CurrentPatient.Street = Street1.Id;
+                                    break;
+                                }
+                            }
+                            if (isExist == false)
+                            {
+                                Streets bufStreet = new Streets();
+                                bufStreet.Str = Street;
+                                Data.Streets.Add(bufStreet);
+                                bufStreet.IdCity = curTwnID;
+                                Data.Complete();
+                                CurrentPatient.Street = bufStreet.Id;
+                            }
+
+                            isExist = false;
                             foreach (var District1 in distRep.GetAll)
                             {
-                                if (District1.Str == District)
+                                if (District1.Str == District && District1.IdCity == curTwnID)
                                 {
                                     isExist = true;
                                     CurrentPatient.District = District1.Id;
@@ -498,6 +588,18 @@ namespace WpfApp2.ViewModels
                         }
                         CurrentPatient.House = House;
                         CurrentPatient.Phone = Phone;
+
+                        int flatBuffer = 0;
+                        if (!int.TryParse(CurrentPatientFlat, out flatBuffer))
+                        {
+
+                            CurrentPatient.Flat = null;
+
+                        }
+                        else
+                        {
+                            CurrentPatient.Flat = flatBuffer;
+                        }
                         CurrentPatient.Email = email;
                         if (GenderTypeNumber == 0)
                         {

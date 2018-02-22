@@ -247,6 +247,7 @@ namespace WpfApp2.LegParts
         public LegPartViewModel(NavigationController controller, LegSide side) : base(controller)
         {
             Initialization();
+            LegSections = new List<LegSectionViewModel>();
             LostFocusOnProtiagnosy = new DelegateCommand<object>(
      (sender) =>
      {

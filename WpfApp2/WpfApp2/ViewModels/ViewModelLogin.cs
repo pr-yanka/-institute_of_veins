@@ -17,15 +17,24 @@ namespace WpfApp2.ViewModels
 
         public string Name { get; set; }
 
+        int CurrAccId;
 
         public DelegateCommand ToRegistrationCommand { get; protected set; }
         public DelegateCommand<object> ToDashboardCommand { get; protected set; }
 
         public BPVHipRepository rep;
 
+        private void SetCurrAccIdBack(object sender, object data)
+        {
+
+            MessageBus.Default.Call("SetCurrentACCIDForContext", null, CurrAccId);
+
+        }
+
         public ViewModelLogin(NavigationController controller) : base(controller)
         {
             HasNavigation = false;
+            MessageBus.Default.Subscribe("SetCurrAccIdBack", SetCurrAccIdBack);
             ToRegistrationCommand = new DelegateCommand(
                 () =>
                 {
@@ -52,9 +61,10 @@ namespace WpfApp2.ViewModels
                             if (CheckSum == acc.Password)
                             {
 
+                                CurrAccId = acc.Id;
                                 MessageBus.Default.Call("SetCurrentACCIDForContext", null, acc.Id);
                                 MessageBus.Default.Call("GetAcaunt", null, acc.Id);
-                              
+
 
 
 
@@ -66,7 +76,7 @@ namespace WpfApp2.ViewModels
                                 }
                                 else if (acc.isAdmin != null && acc.isAdmin.Value)
                                 {
-                                   // MessageBus.Default.Call("SetVisibilityMyOp", null, null);
+                                    // MessageBus.Default.Call("SetVisibilityMyOp", null, null);
                                     MessageBus.Default.Call("SetVisibilityPanelAdmin", this, Visibility.Visible);
                                     MessageBus.Default.Call("SetAlertVisibility", this, Visibility.Collapsed);
                                     MessageBus.Default.Call("SetVisibilityForDocsOrMed", this, Visibility.Collapsed);

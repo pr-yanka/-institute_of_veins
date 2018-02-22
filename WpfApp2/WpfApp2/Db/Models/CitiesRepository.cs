@@ -14,6 +14,9 @@ namespace WpfApp2.Db.Models
         public int Id { set; get; }
         [Column("название")]
         public string Str { set; get; }
+        [Column("Область")]
+        public int OblId { set; get; }
+
 
         public override string ToString()
         {

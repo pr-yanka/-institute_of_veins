@@ -65,9 +65,9 @@ namespace WpfApp2.Db.Models
         [Column("номер_дома")]
         public string House { set; get; }
 
-        [Required]
+     
         [Column("номер_квартиры")]
-        public int Flat { set; get; }
+        public int? Flat { set; get; }
 
         [Required]
         [Column("телефон")]

@@ -16,7 +16,7 @@ using System.Windows.Media;
 namespace WpfApp2.ViewModels
 {
 
-   
+
 
 
     public class ViewModelEditMedPersonal : ViewModelBase, INotifyPropertyChanged
@@ -24,9 +24,10 @@ namespace WpfApp2.ViewModels
         #region DelegateCommands
         public DelegateCommand ToDashboardCommand { get; protected set; }
         public DelegateCommand SaveAndGoDoctorListCommand { get; protected set; }
+        public DelegateCommand GoToDoctorListCommand { get; }
         #endregion
         #region Bindings
-        
+
         public string _nameOfButton;
         public string nameOfButton { get { return _nameOfButton; } set { _nameOfButton = value; OnPropertyChanged(); } }
         //public DelegateCommand ToCurrentPatientCommand { get; protected set; }
@@ -34,11 +35,11 @@ namespace WpfApp2.ViewModels
         //public DelegateCommand Changed { get; protected set; }
         private string _textHeader;
         public string TextHeader { get { return _textHeader; } set { _textHeader = value; OnPropertyChanged(); } }
-     
+
         private string _name;
         private string _surname;
         private string _patronimic;
-    
+
 
         public string Name { get { return _name; } set { _name = value; nameOfButton = "Сохранить"; OnPropertyChanged(); } }
 
@@ -62,7 +63,7 @@ namespace WpfApp2.ViewModels
         #region MessageBus
         private void GetMedForMedEdit(object sender, object data)
         {
-            currentMedPersonal =  Data.MedPersonal.Get((int)data);
+            currentMedPersonal = Data.MedPersonal.Get((int)data);
             Name = currentMedPersonal.Name;
             Surname = currentMedPersonal.Surname;
             Patronimic = currentMedPersonal.Patronimic;
@@ -91,7 +92,7 @@ namespace WpfApp2.ViewModels
 
                 result = false;
             }
-           
+
             return result;
         }
 
@@ -114,7 +115,7 @@ namespace WpfApp2.ViewModels
         #endregion
         public ViewModelEditMedPersonal(NavigationController controller) : base(controller)
         {
-           
+
             base.HasNavigation = true;
             MessageBus.Default.Subscribe("GetMedForMedEdit", GetMedForMedEdit);
 
@@ -143,7 +144,7 @@ namespace WpfApp2.ViewModels
                         currentMedPersonalBuf.Surname = Surname;
                         currentMedPersonalBuf.Patronimic = Patronimic;
                         //currentMedPersonal.isEnabled = true;
-                       
+
                         Data.Complete();
 
 
@@ -158,7 +159,16 @@ namespace WpfApp2.ViewModels
 
                 }
             );
+            GoToDoctorListCommand = new DelegateCommand(
+         () =>
+         {
 
+             MessageBus.Default.Call("OpenMeds", this, "");
+             Controller.NavigateTo<ViewModelViewMedPatient>();
+
+
+         }
+     );
         }
     }
 }

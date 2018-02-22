@@ -27,6 +27,7 @@ namespace WpfApp2.ViewModels
         public DelegateCommand<object> ShowPassword { get; protected set; }
         public DelegateCommand<object> ToDashboardCommand { get; protected set; }
         public DelegateCommand<object> SaveAndGoDoctorListCommand { get; protected set; }
+        public DelegateCommand GoToDoctorListCommand { get; }
         public DelegateCommand HidePassword { get; protected set; }
         #endregion
         #region Bindings
@@ -355,7 +356,17 @@ namespace WpfApp2.ViewModels
 
               }
             );
+            GoToDoctorListCommand = new DelegateCommand(
+          () =>
+          {
 
+
+              MessageBus.Default.Call("OpenUsers", this, "");
+              Controller.NavigateTo<ViewModelViewUsers>();
+
+
+          }
+      );
         }
         public string CalculateMD5Hash(string input)
 

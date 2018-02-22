@@ -30,44 +30,52 @@
                 </InlineUIContainer></TextBlock>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock x:Name="textBlock_phone" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto"><Run Text="Телефон"/><Run Text=": "/><TextBlock Text="{Binding Path=CurrentPatient.Phone}"/><LineBreak/><Run/></TextBlock>
+                    <TextBlock x:Name="textBlock_phone" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto"><Run Text="Телефон"/><Run Text=": "/><TextBlock  Text="{Binding Path=CurrentPatient.Phone, Converter={StaticResource StringToPhone}}"/><LineBreak/><Run/></TextBlock>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Width="auto">
+                <StackPanel    Width="auto">
+
+                    <TextBlock  Text="{Binding Path=Region}"   TextWrapping="Wrap" FontSize="24" Height="30" Width="auto"> 
+                       </TextBlock>
 
 
-                <TextBlock x:Name="textBlock_adres" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="auto"> 
-                <Run Text="Область:"/>
-                <TextBlock Text="{Binding Path=Region}"/>
-                <Run Text="Город:"/>
-                <TextBlock Text="{Binding Path=Town}"/>
-                <TextBlock Visibility="{Binding IsDistrict}" Text="Регион"/>
-                <TextBlock Visibility="{Binding IsDistrict}" Text="{Binding Path=District}"/>
-         
+                    <TextBlock TextWrapping="Wrap" FontSize="24" Height="30" Text="{Binding Path=Town}">     
+                       </TextBlock>
+
+
+
+                    <TextBlock TextWrapping="Wrap" Visibility="{Binding IsDistrict}"  FontSize="24" Height="30" Text="{Binding Path=District}">
+                           
+                    </TextBlock>
+
+
+
+
+
+                    <TextBlock TextWrapping="Wrap" FontSize="24" Height="30"  Text="{Binding Path=Street}">
+
+
+
+                    </TextBlock>
+
+                    <TextBlock TextWrapping="Wrap" FontSize="24" Height="30"  Text="Почта: " > <TextBlock x:Name="textBlock_email"  TextWrapping="Wrap" FontSize="24" Height="30" Text="{Binding Path=CurrentPatient.Email}">                  
+                       
+                    </TextBlock></TextBlock>
+                   
+
+
+
+
+                </StackPanel>
                
-                <LineBreak/><Run/></TextBlock>
-                  
-                </StackPanel>
-                <TextBlock x:Name="textBslock_adres" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto"> 
-                
-                    <TextBlock Text="улица"/>
-                    <TextBlock Text="{Binding Path=Street}"/>
-                    <TextBlock Text="{Binding Path=CurrentPatient.House}"/>
-                    <TextBlock Text=" кв. "/>
-                    <TextBlock Text="{Binding Path=CurrentPatient.Flat}"/>
-                        </TextBlock>
-                <StackPanel Margin="0,20,0,0" Width="Auto" Orientation="Horizontal" Height="61">
-                    <TextBlock x:Name="email" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto" ><TextBlock  Text="Почта :" /></TextBlock>
-                    <TextBlock x:Name="textBlock_email" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto" Text="{Binding Path=CurrentPatient.Email}"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                </StackPanel>
+               
+             
             </StackPanel>
 
-            <Button Style="{StaticResource MyNormalBUTTON}"  x:Name="button_Copy" Content="Остальные пациенты" Command="{Binding Path=ToTablePatientsCommand}" HorizontalAlignment="Left" Margin="402,552,0,0" VerticalAlignment="Top" Width="300"/>
-            <Button Style="{StaticResource MyConfirmBUTTON}" Width="300" x:Name="button_Copy1" Content="Назначить операцию"  Command="{Binding Path=ToNewOperationCommand}" HorizontalAlignment="Left" Margin="235,349,0,0" VerticalAlignment="Top" />
-            <Button Style="{StaticResource MyConfirmBUTTON}"  Width="300" x:Name="button_Copy2" Content="Начать обследование" Command="{Binding Path=ToNewPhysicalCommand}" HorizontalAlignment="Left" Margin="11,394,0,0" VerticalAlignment="Top" />
-            <Button Style="{StaticResource MyConfirmBUTTON}"  x:Name="button_Copy5" Content="Добавить анализы" Command="{Binding Path=ToAddAnalizeCommand}" HorizontalAlignment="Left" Margin="342,394,0,0" VerticalAlignment="Top" />
-            <Button Style="{StaticResource MyNormalBUTTON}"  x:Name="button_Copy51" Content="Патологии" Command="{Binding Path=ToPathologyListCommand}" HorizontalAlignment="Left" Margin="11,349,0,0" VerticalAlignment="Top"/>
+            <Button Style="{StaticResource MyNormalBUTTON}"  x:Name="button_Copy" Content="Остальные пациенты" Command="{Binding Path=ToTablePatientsCommand}" HorizontalAlignment="Left" Margin="402,562,0,0" VerticalAlignment="Top" Width="300"/>
+            <Button Style="{StaticResource MyConfirmBUTTON}" Width="300" x:Name="button_Copy1" Content="Назначить операцию"  Command="{Binding Path=ToNewOperationCommand}" HorizontalAlignment="Left" Margin="235,359,0,0" VerticalAlignment="Top" />
+            <Button Style="{StaticResource MyConfirmBUTTON}"  Width="300" x:Name="button_Copy2" Content="Начать обследование" Command="{Binding Path=ToNewPhysicalCommand}" HorizontalAlignment="Left" Margin="11,404,0,0" VerticalAlignment="Top" />
+            <Button Style="{StaticResource MyConfirmBUTTON}"  x:Name="button_Copy5" Content="Добавить анализы" Command="{Binding Path=ToAddAnalizeCommand}" HorizontalAlignment="Left" Margin="342,404,0,0" VerticalAlignment="Top" />
+            <Button Style="{StaticResource MyNormalBUTTON}"  x:Name="button_Copy51" Content="Патологии" Command="{Binding Path=ToPathologyListCommand}" HorizontalAlignment="Left" Margin="11,359,0,0" VerticalAlignment="Top"/>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

@@ -8,7 +8,7 @@
     </Style>
     <DataTemplate x:Key="TemplateViewHistory">
         <Grid Name="RootGrid"  Margin="220,65,0,0" >
-            <TextBlock DockPanel.Dock="Top" FontFamily="/fonts/#Pescadero" FontSize="22pt" VerticalAlignment="Center" Margin="254,10,-24,586" Height="38" Text="{Binding Path=CurrentPatient.Name}"><TextBlock Text="{Binding Path=initials}"/></TextBlock>
+            <TextBlock DockPanel.Dock="Top" FontFamily="/fonts/#Pescadero" FontSize="22pt" VerticalAlignment="Center" Margin="254,10,-24,586" Height="38" Text="{Binding Path=CurrentPatient.Sirname}"><TextBlock Text="{Binding Path=initials}"/></TextBlock>
             <CheckBox x:Name="button2" Content="показывать отменённые операции" IsChecked="{Binding Path=isCanceledOprVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Margin="30,60,0,0" VerticalAlignment="Top" Width="auto"  Height="44" FontFamily="Franklin Gothic Medium" FontSize="20"/>
             <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button" Content="НОВОЕ обследование" Command="{Binding Path=ToAddPhysicalCommand}" HorizontalAlignment="Left" Margin="24,450,0,0" VerticalAlignment="Top" Width="300"/>
             <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy3" Content="ВЕРНУТЬСЯ К ПАЦИЕНТУ" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="24,496,0,0" VerticalAlignment="Top" Width="300" />

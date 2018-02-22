@@ -286,6 +286,11 @@ namespace WpfApp2.Db.Models
 
         public override int SaveChanges()
         {
+
+            if (CurrAccId == 0)
+            {
+                MessageBus.Default.Call("SetCurrAccIdBack", null, null);
+            }
             List<ChangeHistory> logsList = new List<Models.ChangeHistory>();
             //List<DbEntityEntry> modifiedChanges = ChangeTracker.Entries().Where(x => x.State == EntityState.Modified).ToList();
             List<DbEntityEntry> modifiedEntities = ChangeTracker.Entries().Where(p => p.State == EntityState.Modified).ToList();
@@ -478,7 +483,7 @@ namespace WpfApp2.Db.Models
 
                     foreach (var prop in change.OriginalValues.PropertyNames)
                     {
-                    
+
                         if (change.CurrentValues[prop] != null)
                         {
                             if (entityName == "Analize" && prop == "ImageByte")

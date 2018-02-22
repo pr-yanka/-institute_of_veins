@@ -33,6 +33,11 @@ namespace WpfApp2.Navigation
             set { _legViewModel = value; OnPropertyChanged(nameof(LegViewModel)); }
         }
 
+        public void ClearLegPartVM()
+        {
+            _legViewModels = new List<LegPartViewModel>();
+        }
+
         public void AddLegPartVM(LegPartViewModel vm)
         {
             if (_legViewModels == null)

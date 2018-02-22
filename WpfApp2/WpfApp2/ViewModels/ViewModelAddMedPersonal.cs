@@ -16,17 +16,22 @@ using System.Windows.Media;
 namespace WpfApp2.ViewModels
 {
 
-   
+
 
 
     public class ViewModelAddMedPersonal : ViewModelBase, INotifyPropertyChanged
     {
         #region DelegateCommands
         public DelegateCommand ToDashboardCommand { get; protected set; }
-        public DelegateCommand SaveAndGoDoctorListCommand { get; protected set; }
+
+        public DelegateCommand _goToDoctorListCommand;
+        public DelegateCommand _saveAndGoDoctorListCommand;
+
+        public DelegateCommand GoToDoctorListCommand { get { return _goToDoctorListCommand; } set { _goToDoctorListCommand = value; OnPropertyChanged(); } }
+        public DelegateCommand SaveAndGoDoctorListCommand { get { return _saveAndGoDoctorListCommand; } set { _saveAndGoDoctorListCommand = value; OnPropertyChanged(); } }
         #endregion
         #region Bindings
-        
+
         public string _nameOfButton;
         public string nameOfButton { get { return _nameOfButton; } set { _nameOfButton = value; OnPropertyChanged(); } }
         //public DelegateCommand ToCurrentPatientCommand { get; protected set; }
@@ -34,10 +39,59 @@ namespace WpfApp2.ViewModels
         //public DelegateCommand Changed { get; protected set; }
         private string _textHeader;
         public string TextHeader { get { return _textHeader; } set { _textHeader = value; OnPropertyChanged(); } }
-     
+
         private string _name;
         private string _surname;
         private string _patronimic;
+
+
+
+        private void RefreshDataForMedpersonalForAddUser(object sender, object data)
+        {
+
+            Name = "";
+
+            Surname = "";
+
+            Patronimic = "";
+            GoToDoctorListCommand = new DelegateCommand(
+        () =>
+        {
+
+            //   MessageBus.Default.Call("OpenMeds", this, "");
+            Controller.NavigateTo<ViewModelAddUser>();
+
+
+        }
+    );
+            SaveAndGoDoctorListCommand = new DelegateCommand(
+               () =>
+               {
+                   if (TestRequiredFields())
+                   {
+                       currentMedPersonal = new MedPersonal();
+                       currentMedPersonal.Name = Name;
+                       currentMedPersonal.Surname = Surname;
+                       currentMedPersonal.Patronimic = Patronimic;
+                       currentMedPersonal.isEnabled = true;
+                       Data.MedPersonal.Add(currentMedPersonal);
+                       Data.Complete();
+
+                       MessageBus.Default.Call("UpdateAccsEmptyForNewUserForAddNewMedpersonal", currentMedPersonal.Id, null);
+                       //    MessageBus.Default.Call("OpenMeds", this, "");
+                       Controller.NavigateTo<ViewModelAddUser>();
+                   }
+                   else
+                   {
+
+                       MessageBox.Show("Не все поля заполнены");
+                   }
+
+               }
+           );
+        }
+
+
         private void RefreshDataForMedpersonal(object sender, object data)
         {
 
@@ -46,6 +100,42 @@ namespace WpfApp2.ViewModels
             Surname = "";
 
             Patronimic = "";
+
+            GoToDoctorListCommand = new DelegateCommand(
+        () =>
+        {
+
+            MessageBus.Default.Call("OpenMeds", this, "");
+            Controller.NavigateTo<ViewModelViewMedPatient>();
+
+
+        }
+    );
+            SaveAndGoDoctorListCommand = new DelegateCommand(
+                () =>
+                {
+                    if (TestRequiredFields())
+                    {
+                        currentMedPersonal = new MedPersonal();
+                        currentMedPersonal.Name = Name;
+                        currentMedPersonal.Surname = Surname;
+                        currentMedPersonal.Patronimic = Patronimic;
+                        currentMedPersonal.isEnabled = true;
+                        Data.MedPersonal.Add(currentMedPersonal);
+                        Data.Complete();
+
+
+                        MessageBus.Default.Call("OpenMeds", this, "");
+                        Controller.NavigateTo<ViewModelViewMedPatient>();
+                    }
+                    else
+                    {
+
+                        MessageBox.Show("Не все поля заполнены");
+                    }
+
+                }
+            );
         }
 
         public string Name { get { return _name; } set { _name = value; OnPropertyChanged(); } }
@@ -67,7 +157,7 @@ namespace WpfApp2.ViewModels
         public Brush TextBoxPatronimicB { get { return _textBox_Patronimic_B; } set { _textBox_Patronimic_B = value; OnPropertyChanged(); } }
         #endregion
 
-     
+
         private bool TestRequiredFields()
         {
             bool result = true;
@@ -90,7 +180,7 @@ namespace WpfApp2.ViewModels
 
                 result = false;
             }
-           
+
             return result;
         }
 
@@ -113,8 +203,9 @@ namespace WpfApp2.ViewModels
         #endregion
         public ViewModelAddMedPersonal(NavigationController controller) : base(controller)
         {
+            MessageBus.Default.Subscribe("RefreshDataForMedpersonalForAddUser", RefreshDataForMedpersonalForAddUser);
             MessageBus.Default.Subscribe("RefreshDataForMedpersonal", RefreshDataForMedpersonal);
-           
+
             base.HasNavigation = true;
 
             TextHeader = "Добавление медперсонала";
@@ -128,10 +219,19 @@ namespace WpfApp2.ViewModels
                   Name = "";
                   Surname = "";
                   Patronimic = "";
-                  
+
               }
           );
+            GoToDoctorListCommand = new DelegateCommand(
+           () =>
+           {
 
+               MessageBus.Default.Call("OpenMeds", this, "");
+               Controller.NavigateTo<ViewModelViewMedPatient>();
+
+
+           }
+       );
             SaveAndGoDoctorListCommand = new DelegateCommand(
                 () =>
                 {

@@ -91,7 +91,10 @@
                 <Setter Property="Height" Value="30"></Setter>
             </Style>
             <BooleanToVisibilityConverter x:Key="BoolToVis" />
+            
             <local:FloatToString x:Key="FloatConvert" />
+            <local:StringToPhoneConverter x:Key="StringToPhone" />
+            
 
         </ResourceDictionary>
     </Application.Resources>

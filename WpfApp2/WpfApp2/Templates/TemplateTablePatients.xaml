@@ -2,8 +2,38 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:WpfApp2.Templates">
 
-  
 
+    <Style x:Key="MyDataGridCell" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsFilteredName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="True">
+                <Setter Property="Background" Value="Wheat"/>
+
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsFilteredName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="False">
+                <Setter Property="Background" Value="Transparent"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MyDataGridCell1" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsFilteredAge,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="True">
+                <Setter Property="Background" Value="Wheat"/>
+
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsFilteredAge,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="False">
+                <Setter Property="Background" Value="Transparent"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
     <DataTemplate x:Key="TemplateTablePatients">
         <Grid>
             <Menu Height="61" VerticalAlignment="Top" Background="{x:Null}" HorizontalContentAlignment="Right">
@@ -22,34 +52,18 @@
                     HorizontalAlignment="Left" Margin="650,651,0,0" VerticalAlignment="Top" Width="200" Height="42" 
                   BorderBrush="{x:Null}" />
             <TextBlock FontFamily="/fonts/#Pescadero" FontSize="22pt" VerticalAlignment="Center" Margin="500,10,0,530" Height="38" Text="Пациенты"/>
+            <TextBlock HorizontalAlignment="Left" Margin="240,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="164" FontSize="22" Text="Поиск по слову:" RenderTransformOrigin="-0.027,0.471"/>
+            <TextBox Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="35" Margin="410,135,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="422" RenderTransformOrigin="0.632,0.9"
+          />
+            <TextBlock Canvas.ZIndex="2" Visibility="{Binding VisOfNothingFaund}" TextWrapping="Wrap" Height="28" Text="Ничего не найдено" FontFamily="/fonts/#Pescadero" FontSize="14pt" Margin="474,0,0,230" RenderTransformOrigin="0.591,0.516"/>
 
-            <DataGrid ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" AutoGenerateColumns="False" ItemsSource="{Binding Path=Controller.CurrentViewModel.Patients}" x:Name="dataGrid" ScrollViewer.VerticalScrollBarVisibility="Visible"
-                      Margin="230,0,0,0" Height="500" Width="auto" FontSize="14" HorizontalAlignment="Left">
+            <DataGrid ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" AutoGenerateColumns="False" ItemsSource="{Binding Path=ViewSource.View}" x:Name="dataGrid" ScrollViewer.VerticalScrollBarVisibility="Visible"
+                      Margin="230,132,0,0" Height="500" Width="auto" FontSize="14" HorizontalAlignment="Left">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Имя">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock TextAlignment="Center" Text="{Binding CurrentPatient.Name}" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                        <DataGridTemplateColumn.CellEditingTemplate>
-                            <DataTemplate>
-                                <TextBlock TextAlignment="Center" Text="{Binding CurrentPatient.Name,Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}"></TextBlock>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellEditingTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Возраст">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock TextAlignment="Center" Text="{Binding CurrentPatient.Age}" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                        <DataGridTemplateColumn.CellEditingTemplate>
-                            <DataTemplate>
-                                <TextBlock TextAlignment="Center" Text="{Binding CurrentPatient.Name,Mode=TwoWay, ValidatesOnExceptions=true, NotifyOnValidationError=true}"></TextBlock>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellEditingTemplate>
-                    </DataGridTemplateColumn>
+                    <DataGridTextColumn  Header="Имя" CellStyle="{StaticResource MyDataGridCell}"  Binding="{Binding CurrentPatient.Name}" ></DataGridTextColumn>
+                    <DataGridTextColumn   Header="Возраст"  CellStyle="{StaticResource MyDataGridCell1}"  Binding="{Binding CurrentPatient.Age}" ></DataGridTextColumn>
+
+                
                     <DataGridTemplateColumn Header="История">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

@@ -1009,44 +1009,67 @@ namespace WpfApp2.ViewModels
         }
 
 
+        private BPVHipViewModel _leftBPVHip;
+        private SFSViewModel _leftSFS;
+        private PDSVViewModel _leftPDSV;
+        private ZDSVViewModel _leftZDSV;
+        private HipPerforateViewModel _leftPerforate;
+        private TibiaPerforateViewModel _leftTibiaPerforate;
+        private BPVTibiaViewModel _leftBPVTibia;
+        private SPSViewModel _leftSPS;
+        private MPVViewModel _leftMPV;
+        private MPVViewModel _rightMPV;
+        private PPVViewModel _leftPPV;
+        private PPVViewModel _rightPPV;
+        private TEMPVViewModel _leftTEMPV;
+        private TEMPVViewModel _rightTEMPV;
+        private BPVHipViewModel _rightBPVHip;
+        private SFSViewModel _rightSFS;
+        private LettersViewModel _leftCEAR;
+        private LettersViewModel _rightCEAR;
+        private PDSVViewModel _rightPDSV;
+        private ZDSVViewModel _rightZDSV;
+        private HipPerforateViewModel _rightPerforate;
+        private TibiaPerforateViewModel _rightTibiaPerforate;
+        private BPVTibiaViewModel _rightBPVTibia;
+        private SPSViewModel _rightSPS;
+        private GVViewModel _leftGV;
+        private GVViewModel _rightGV;
+
+        public BPVHipViewModel LeftBPVHip { get { return _leftBPVHip; } set { _leftBPVHip = value; OnPropertyChanged(); } }
+        public SFSViewModel LeftSFS { get { return _leftSFS; } set { _leftSFS = value; OnPropertyChanged(); } }
+        public PDSVViewModel LeftPDSV { get { return _leftPDSV; } set { _leftPDSV = value; OnPropertyChanged(); } }
+        public ZDSVViewModel LeftZDSV { get { return _leftZDSV; } set { _leftZDSV = value; OnPropertyChanged(); } }
+        public HipPerforateViewModel LeftPerforate { get { return _leftPerforate; } set { _leftPerforate = value; OnPropertyChanged(); } }
+        public TibiaPerforateViewModel LeftTibiaPerforate { get { return _leftTibiaPerforate; } set { _leftTibiaPerforate = value; OnPropertyChanged(); } }
+        public BPVTibiaViewModel LeftBPVTibia { get { return _leftBPVTibia; } set { _leftBPVTibia = value; OnPropertyChanged(); } }
+        public SPSViewModel LeftSPS { get { return _leftSPS; } set { _leftSPS = value; OnPropertyChanged(); } }
+        public MPVViewModel LeftMPV { get { return _leftMPV; } set { _leftMPV = value; OnPropertyChanged(); } }
+        public MPVViewModel RightMPV { get { return _rightMPV; } set { _rightMPV = value; OnPropertyChanged(); } }
+        public PPVViewModel LeftPPV { get { return _leftPPV; } set { _leftPPV = value; OnPropertyChanged(); } }
+        public PPVViewModel RightPPV { get { return _rightPPV; } set { _rightPPV = value; OnPropertyChanged(); } }
+        public TEMPVViewModel LeftTEMPV { get { return _leftTEMPV; } set { _leftTEMPV = value; OnPropertyChanged(); } }
+        public TEMPVViewModel RightTEMPV { get { return _rightTEMPV; } set { _rightTEMPV = value; OnPropertyChanged(); } }
+        public BPVHipViewModel RightBPVHip { get { return _rightBPVHip; } set { _rightBPVHip = value; OnPropertyChanged(); } }
+        public SFSViewModel RightSFS { get { return _rightSFS; } set { _rightSFS = value; OnPropertyChanged(); } }
+        public LettersViewModel LeftCEAR { get { return _leftCEAR; } set { _leftCEAR = value; OnPropertyChanged(); } }
+        public LettersViewModel RightCEAR { get { return _rightCEAR; } set { _rightCEAR = value; OnPropertyChanged(); } }
+        public PDSVViewModel RightPDSV { get { return _rightPDSV; } set { _rightPDSV = value; OnPropertyChanged(); } }
+        public ZDSVViewModel RightZDSV { get { return _rightZDSV; } set { _rightZDSV = value; OnPropertyChanged(); } }
+        public HipPerforateViewModel RightPerforate { get { return _rightPerforate; } set { _rightPerforate = value; OnPropertyChanged(); } }
+        public TibiaPerforateViewModel RightTibiaPerforate { get { return _rightTibiaPerforate; } set { _rightTibiaPerforate = value; OnPropertyChanged(); } }
+        public BPVTibiaViewModel RightBPVTibia { get { return _rightBPVTibia; } set { _rightBPVTibia = value; OnPropertyChanged(); } }
+        public SPSViewModel RightSPS { get { return _rightSPS; } set { _rightSPS = value; OnPropertyChanged(); } }
+        public GVViewModel LeftGV { get { return _leftGV; } set { _leftGV = value; OnPropertyChanged(); } }
+        public GVViewModel RightGV { get { return _rightGV; } set { _rightGV = value; OnPropertyChanged(); } }
 
 
-        public BPVHipViewModel LeftBPVHip { get; protected set; }
-        public SFSViewModel LeftSFS { get; protected set; }
-        public PDSVViewModel LeftPDSV { get; set; }
-        public ZDSVViewModel LeftZDSV { get; protected set; }
-        public HipPerforateViewModel LeftPerforate { get; protected set; }
-        public TibiaPerforateViewModel LeftTibiaPerforate { get; protected set; }
-        public BPVTibiaViewModel LeftBPVTibia { get; protected set; }
-        public SPSViewModel LeftSPS { get; protected set; }
-        public MPVViewModel LeftMPV { get; protected set; }
-        public MPVViewModel RightMPV { get; protected set; }
-
-
-        public PPVViewModel LeftPPV { get; protected set; }
-        public PPVViewModel RightPPV { get; protected set; }
-
-        public TEMPVViewModel LeftTEMPV { get; protected set; }
-        public TEMPVViewModel RightTEMPV { get; protected set; }
-
-        public BPVHipViewModel RightBPVHip { get; protected set; }
-        public SFSViewModel RightSFS { get; protected set; }
-        public LettersViewModel LeftCEAR { get; protected set; }
-        public LettersViewModel RightCEAR { get; protected set; }
-        public PDSVViewModel RightPDSV { get; protected set; }
-        public ZDSVViewModel RightZDSV { get; protected set; }
-        public HipPerforateViewModel RightPerforate { get; protected set; }
-        public TibiaPerforateViewModel RightTibiaPerforate { get; protected set; }
-        public BPVTibiaViewModel RightBPVTibia { get; protected set; }
-        public SPSViewModel RightSPS { get; protected set; }
+        public DelegateCommand ToLeftGVCommand { get; private set; }
+        public DelegateCommand ToRightGVCommand { get; private set; }
         public DelegateCommand ToLeftCEARCommand { get; private set; }
         public DelegateCommand ToRightCEARCommand { get; private set; }
         public DelegateCommand ToLeftPPVCommand { get; private set; }
         public DelegateCommand ToRightPPVCommand { get; private set; }
-        public GVViewModel LeftGV { get; private set; }
-        public GVViewModel RightGV { get; private set; }
-        public DelegateCommand ToLeftGVCommand { get; private set; }
-        public DelegateCommand ToRightGVCommand { get; private set; }
         public string Doctor { get; private set; }
 
         private void FinishAdding(object parameter)
@@ -4877,6 +4900,8 @@ namespace WpfApp2.ViewModels
         public string mode;
         private void Clear(object sender, object data)
         {
+
+            Controller.ClearLegPartVM();
             mode = "Normal";
             TextTip = "";
             GVLeftstr = new List<string>();
@@ -5074,6 +5099,7 @@ namespace WpfApp2.ViewModels
             //  if (!RightCEAR.IsEmpty)
             RightCEAR = new LettersViewModel(Controller, LegSide.Right);
 
+
             LeftTEMPV = new TEMPVViewModel(Controller, LegSide.Left);
 
             RightTEMPV = new TEMPVViewModel(Controller, LegSide.Right);
@@ -5102,6 +5128,30 @@ namespace WpfApp2.ViewModels
             RightBPVTibia = new BPVTibiaViewModel(Controller, LegSide.Right);
             LeftBPVHip = new BPVHipViewModel(Controller, LegSide.Left);
             RightBPVHip = new BPVHipViewModel(Controller, LegSide.Right);
+            Controller.AddLegPartVM(LeftTEMPV);
+            Controller.AddLegPartVM(RightTEMPV);
+            Controller.AddLegPartVM(LeftMPV);
+            Controller.AddLegPartVM(RightMPV);
+            Controller.AddLegPartVM(LeftZDSV);
+            Controller.AddLegPartVM(RightZDSV);
+            Controller.AddLegPartVM(LeftTibiaPerforate);
+            Controller.AddLegPartVM(RightTibiaPerforate);
+            Controller.AddLegPartVM(LeftSPS);
+            Controller.AddLegPartVM(RightSPS);
+            Controller.AddLegPartVM(LeftSFS);
+            Controller.AddLegPartVM(RightSFS);
+            Controller.AddLegPartVM(LeftPDSV);
+            Controller.AddLegPartVM(RightPDSV);
+            Controller.AddLegPartVM(LeftGV);
+            Controller.AddLegPartVM(RightGV);
+            Controller.AddLegPartVM(LeftPPV);
+            Controller.AddLegPartVM(RightPPV);
+            Controller.AddLegPartVM(LeftPerforate);
+            Controller.AddLegPartVM(RightPerforate);
+            Controller.AddLegPartVM(LeftBPVTibia);
+            Controller.AddLegPartVM(RightBPVTibia);
+            Controller.AddLegPartVM(LeftBPVHip);
+            Controller.AddLegPartVM(RightBPVHip);
             LeftAdditionalText = "";
             RightAdditionalText = "";
         }
