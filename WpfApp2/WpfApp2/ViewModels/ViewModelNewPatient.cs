@@ -399,7 +399,7 @@ namespace WpfApp2.ViewModels
                 Region = "";
                 Street = "";
 
-                nameOfButton = "Добавить пользователя";
+                nameOfButton = "Добавить";
                 Date = DateTime.Now;
                 CitiesRepository ctRep = new CitiesRepository(context);
                 RegionsRepository regRep = new RegionsRepository(context);
