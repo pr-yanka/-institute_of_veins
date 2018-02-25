@@ -165,7 +165,7 @@ namespace WpfApp2.Db.Models
             try
             {
                 var objectStateEntry = ((IObjectContextAdapter)this).ObjectContext.ObjectStateManager.GetObjectStateEntry(entry.Entity);
-                if(objectStateEntry.EntityKey.EntityKeyValues[0] != null)
+                if(objectStateEntry.EntityKey.EntityKeyValues != null)
                 return objectStateEntry.EntityKey.EntityKeyValues[0].Value;
                 else
                 {
