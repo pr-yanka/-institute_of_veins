@@ -70,17 +70,29 @@ namespace WpfApp2.LegParts
         public string Title
         {
             get { return _title; }
-            set { this._title = value; }
+            set { this._title = value; OnPropertyChanged(); }
         }
 
         private int _levelCount = 1;
         public int LevelCount
         {
             get { return _levelCount; }
-            set { this._levelCount = value; }
+            set { this._levelCount = value; OnPropertyChanged(); }
         }
 
         public List<string> Source { get; } = new List<string>();
+
+
+
+        //private LegSectionViewModel _selectedSection;
+
+        //public LegSectionViewModel SelectedSection
+        //{
+        //    get { return _selectedSection; }
+        //    set { _selectedSection = value; }
+        //}
+
+
 
         public virtual List<LegSectionViewModel> LegSections { get; set; }
 
@@ -95,10 +107,37 @@ namespace WpfApp2.LegParts
         }
 
         public ICommand OpenPanelCommand { protected set; get; }
-        public ICommand ClosePanelCommand { protected set; get; }
+
+        private ICommand _сlosePanelCommand;
+
+        private Visibility _isRedactVis;
+       private Visibility _iSAddVis;
+
+       public Visibility IsRedactVis
+        {
+            get { return _isRedactVis; }
+            set { _isRedactVis = value; OnPropertyChanged(); }
+        }
+        public Visibility ISAddVis
+        {
+            get { return _iSAddVis; }
+            set { _iSAddVis = value; OnPropertyChanged(); }
+        }
+
+        public ICommand ClosePanelCommand
+        {
+            get { return _сlosePanelCommand; }
+            set { _сlosePanelCommand = value; OnPropertyChanged(); }
+        }
         public ICommand SavePanelCommand { protected set; get; }
 
-        public SizePanelViewModel CurrentPanelViewModel { get; protected set; }
+
+        private SizePanelViewModel _currentPanelViewModel;
+        public SizePanelViewModel CurrentPanelViewModel
+        {
+            get { return _currentPanelViewModel; }
+            set { _currentPanelViewModel = value; OnPropertyChanged(); }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -134,7 +173,79 @@ namespace WpfApp2.LegParts
                 curPanel.PanelOpened = true;
             }
         }
+        private void OpenStructRedact(object sender, object data)
+        {
+            if (Controller.CurrentViewModel.Controller.LegViewModel == this)
+            {
+                IsRedactVis = Visibility.Visible;
+                ISAddVis = Visibility.Collapsed;
+                ClosePanelCommand = new DelegateCommand(() =>
+                {
+                    CurrentPanelViewModel.PanelOpened = false;
+                    handled = false;
 
+                });
+
+
+                CurrentLegSide = CurrentLegSide;
+
+                CurrentPanelViewModel.PanelOpened = true;
+                LegPartDbStructure structure = (LegPartDbStructure)sender;
+
+                if (structure.Text1 != null)
+                    CurrentPanelViewModel.Text1 = structure.Text1;
+                if (structure.Text2 != null)
+                    CurrentPanelViewModel.Text2 = structure.Text2;
+                if (structure.HasSize)
+                {
+                    CurrentPanelViewModel.HasSize = true;
+                    foreach (Metrics x in CurrentPanelViewModel.Dimentions)
+                    {
+                        if (x.Str == structure.Metrics)
+                        {
+                            CurrentPanelViewModel.SelectedMetricText = x.Str;
+                            CurrentPanelViewModel.SelectedMetric = x;
+                        }
+                    }
+                    if (structure.HasDoubleMetric)
+                    {
+                        CurrentPanelViewModel.HasDoubleSize = true;
+                    }
+                    // bool test = true;
+                    //foreach (var metric in Data.Metrics.GetAll)
+                    //{
+                    //    if (metric.Str == panel.SelectedMetricText)
+                    //    {
+                    //        test = false;
+                    //        newStr.Size = metric.Id;
+                    //        newStr.Metrics = metric.Str;
+                    //        break;
+                    //    }
+                    //}
+                    //if (test)
+                    //{
+                    //    Metrics newMetric = new Metrics();
+                    //    newMetric.Str = panel.SelectedMetricText;
+                    //    Data.Metrics.Add(newMetric);
+                    //    Data.Complete();
+                    //    newStr.Size = newMetric.Id;
+                    //    newStr.Metrics = newMetric.Str;
+                    //}
+
+
+
+                    //  CurrentPanelViewModel.
+
+
+                }
+
+
+
+                // CurrentPanelViewModel.Text1 = section.Se
+
+
+            }
+        }
         public LegPartDbStructure GetPanelStructure()
         {
             var newStr = (LegPartDbStructure)Activator.CreateInstance(LegSections[0].StructureSource[0].GetType());
@@ -196,6 +307,8 @@ namespace WpfApp2.LegParts
 
         public void Initialization()
         {
+
+            MessageBus.Default.Subscribe("OpenStructRedact", OpenStructRedact);
             MessageBus.Default.Subscribe("SetMode", SetModeHandler);
             CurrentPanelViewModel = new SizePanelViewModel(this);
 
@@ -228,10 +341,33 @@ namespace WpfApp2.LegParts
             MessageBus.Default.Subscribe("OpenCustom", OpenHandler);
 
             _hasNavigation = false;
+
             OpenPanelCommand = new DelegateCommand(() =>
             {
+                IsRedactVis = Visibility.Collapsed;
+                ISAddVis = Visibility.Visible;
                 CurrentLegSide = CurrentLegSide;
                 CurrentPanelViewModel.PanelOpened = true;
+                ClosePanelCommand = new DelegateCommand(() =>
+                {
+                    if (_lastSender.SelectedValue == null)
+                    {
+                        foreach (var structr in _lastSender.StructureSource)
+                        {
+                            if (structr.Text1 == "" && structr.Text2 == "")
+                            {
+                                _lastSender.SelectedValue = structr;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        LegSections[_lastSender.ListNumber - 1].SelectedValue = _lastSender.SelectedValue;
+                    }
+                    CurrentPanelViewModel.PanelOpened = false;
+                    handled = false;
+
+                });
             });
             RevertCommand = new DelegateCommand(
                 () =>
@@ -246,6 +382,8 @@ namespace WpfApp2.LegParts
 
         public LegPartViewModel(NavigationController controller, LegSide side) : base(controller)
         {
+            IsRedactVis = Visibility.Collapsed;
+            ISAddVis = Visibility.Visible;
             Initialization();
             LegSections = new List<LegSectionViewModel>();
             LostFocusOnProtiagnosy = new DelegateCommand<object>(

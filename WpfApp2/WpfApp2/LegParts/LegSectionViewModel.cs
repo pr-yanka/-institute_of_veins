@@ -257,6 +257,10 @@ namespace WpfApp2.LegParts
 
         public LegSectionViewModel(NavigationController controller, LegSectionViewModel prevSection) : base(controller)
         {
+            
+
+
+
             LostFocus = new DelegateCommand<object>(
        (sender) =>
        {
@@ -350,6 +354,7 @@ namespace WpfApp2.LegParts
             }
         }
 
+       // public DelegateCommand<object> ToRedactStruct { get; private set; }
         public DelegateCommand<object> LostFocus { get; private set; }
         public DelegateCommand<object> ClickOnWeight { get; private set; }
     }

@@ -134,8 +134,10 @@ namespace WpfApp2.ViewModels
         private string _leftAdditionalText;
         private string _rightAdditionalText;
 
-        public string LeftAdditionalText { get { return _leftAdditionalText; } set { _leftAdditionalText = value; OnPropertyChanged(); BrushesFill(); } }
-        public string RightAdditionalText { get { return _rightAdditionalText; } set { _rightAdditionalText = value; OnPropertyChanged(); BrushesFill(); } }
+        public string LeftAdditionalText { get { return _leftAdditionalText; } set {
+                _leftAdditionalText = value; OnPropertyChanged(); BrushesFill(); } }
+        public string RightAdditionalText { get { return _rightAdditionalText; } set {
+                _rightAdditionalText = value; OnPropertyChanged(); BrushesFill(); } }
 
         #region GV binds
 
@@ -1043,7 +1045,7 @@ namespace WpfApp2.ViewModels
             TextTip = "Текст пометки";
             CurrentPatient = Data.Patients.Get((int)data);
             initials = " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
-
+            SetAllBordersDefault();
         }
 
         private ICommand openDialogCommand = null;
@@ -5571,8 +5573,11 @@ namespace WpfApp2.ViewModels
             Controller.AddLegPartVM(RightBPVTibia);
             Controller.AddLegPartVM(LeftBPVHip);
             Controller.AddLegPartVM(RightBPVHip);
+            Controller.AddLegPartVM(LeftCEAR);
+            Controller.AddLegPartVM(RightCEAR);
             LeftAdditionalText = "";
             RightAdditionalText = "";
+            SetAllBordersDefault();
         }
         int obsid;
         private void GetObsForOverview(object sender, object data)

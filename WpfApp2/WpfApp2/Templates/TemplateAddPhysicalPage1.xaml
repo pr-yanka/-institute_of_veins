@@ -262,7 +262,7 @@
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
-                            <TextBox Width="470"  Height="50"  HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding LeftAdditionalText}"></TextBox>
+                            <TextBox Width="470"  Height="50"  HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding LeftAdditionalText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
                         </StackPanel>
                     </Expander>
                     <Separator/>
@@ -519,7 +519,7 @@
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel Orientation="Vertical">
-                            <TextBox  Height="50" Width="470"  HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding RightAdditionalText}"></TextBox>
+                            <TextBox  Height="50" Width="470"  HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding RightAdditionalText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
                         </StackPanel>
                     </Expander>
                     <Separator/>

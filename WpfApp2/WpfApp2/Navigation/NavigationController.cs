@@ -106,7 +106,7 @@ namespace WpfApp2.Navigation
 
             _currentViewModel = _viewModels.First();
 
-            AddLegPartVM(new SFSViewModel(this, LegSide.Left));
+         //   AddLegPartVM(new SFSViewModel(this, LegSide.Left));
             /*
             _legViewModels = new List<LegPartViewModel>
             {

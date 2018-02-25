@@ -1,10 +1,13 @@
-﻿using System;
+﻿using Microsoft.Practices.Prism.Commands;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using WpfApp2.Messaging;
 
 namespace WpfApp2.Db.Models
 {
@@ -47,13 +50,33 @@ namespace WpfApp2.Db.Models
         [Column("двойная_метрика")] 
         public virtual bool HasDoubleMetric { get; set; }
 
+
+        [NotMapped]
+        public string NameContext { get { return Text1 + " " + Metrics + " " + Text2; }  set { } }
+
+        [NotMapped]
+        public DelegateCommand<object> ToRedactStruct { get; private set; }
+
         public override string ToString()
         {
             return Text1 + " " + Metrics + " " + Text2;
         }
 
+
+
         public LegPartDbStructure()
         {
+
+            ToRedactStruct = new DelegateCommand<object>((combox) =>
+       {
+           ComboBox x = combox as ComboBox;
+           x.IsDropDownOpen = false;
+           MessageBus.Default.Call("OpenStructRedact", this, null);
+
+
+       }
+   );
+            //NameContext = Text1 + " " + Metrics + " " + Text2;
             ToNextPart = false;
             Custom = false;
         }

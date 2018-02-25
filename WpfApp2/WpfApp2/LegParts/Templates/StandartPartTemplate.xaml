@@ -8,7 +8,18 @@
                 <DockPanel Margin="0,5,0,5" Width="Auto" LastChildFill="True">
                     <Label x:Name="label" Content="{Binding Path=ListNumber}" HorizontalAlignment="Left" Margin="5,0,5,0" VerticalAlignment="Top" Height="30" Width="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" FontFamily="Georgia" Background="#FFD2E6F7" BorderThickness="1" BorderBrush="Black"/>
                     <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="5,0,5,0" TextWrapping="Wrap" Text="Выбор:" VerticalAlignment="Top" FontSize="18"/>
-                    <ComboBox x:Name="firstLevelBlock" SelectedIndex="{Binding Path=SelectedIndex}" SelectedValue="{Binding Path=SelectedValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Path=StructureSource}" Margin="5,0,5,0" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
+                    <ComboBox x:Name="firstLevelBlock" SelectedIndex="{Binding Path=SelectedIndex}" SelectedValue="{Binding Path=SelectedValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Path=StructureSource}" Margin="5,0,5,0" VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding NameContext}" Width="700" />
+                                    <Button Content="+" Command="{Binding ToRedactStruct}"  CommandParameter="{Binding ElementName=firstLevelBlock}" />
+                                    <Button Content="-" Command="{Binding ToDeleteStruct}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                        
+                    </ComboBox>
                 </DockPanel>
                 <DockPanel Width="Auto" LastChildFill="True" Margin="0,5,0,5">
                     <Label x:Name="inches1Text_Copy1" Content="{Binding Path=SelectedValue.Text1}" Visibility="{Binding Path=HasFirstPart, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Margin="5,0,5,0" VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>

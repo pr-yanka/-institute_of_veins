@@ -25,7 +25,7 @@
 
             <TextBlock Grid.Row="0" x:Name="textBlock" HorizontalAlignment="Center" VerticalAlignment="Center" Height="auto" Margin="0,10,0,10" TextWrapping="Wrap" Text="{Binding Path=Controller.LegViewModel.Title}" FontSize="28"/>
             <ContentControl Grid.Row="1" Content="{Binding Controller.LegViewModel}" VerticalAlignment="Center" Margin="0,10,0,10" ContentTemplateSelector="{StaticResource LegTemplateSelector}" Background="#FFF7F7F7"/>
-            <ListView Grid.Row="2" ItemsSource="{Binding Path=Controller.LegViewModel.LegSections}" Margin="5,10,5,10" ScrollViewer.VerticalScrollBarVisibility="Visible">
+            <ListView Grid.Row="2"  ItemsSource="{Binding Path=Controller.LegViewModel.LegSections}" Margin="5,10,5,10" ScrollViewer.VerticalScrollBarVisibility="Visible">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="Template">
@@ -87,12 +87,12 @@
                 <Grid>
                     <Canvas Background="#FFC6E8E6">
                         <TextBlock x:Name="textBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="135" FontSize="14" Canvas.Top="4"><Run Text="Добавить сво"/><Run Text="ё описание"/><Run Text=" "/><Run Text=" "/></TextBlock>
-                        <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=Text1}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="61" />
-                        <TextBox x:Name="textBox2" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=Text2}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="173"/>
-                        <CheckBox x:Name="checkBox" Content="есть поле для размерности" HorizontalAlignment="Left" IsChecked="{Binding Path=HasSize}" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="109"/>
+                        <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=Text1 ,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="61" />
+                        <TextBox x:Name="textBox2" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=Text2 ,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="173"/>
+                        <CheckBox x:Name="checkBox" Content="есть поле для размерности" HorizontalAlignment="Left" IsChecked="{Binding Path=HasSize,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="109"/>
 
                         <controls:AutoCompleteBox Canvas.Left="199" Canvas.Top="113" MinimumPrefixLength ="0"  IsDropDownOpen="True" Visibility="{Binding Path=HasSize, Converter={StaticResource BoolToVis}}"  Text="{Binding Path=SelectedMetricText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                          ItemsSource="{Binding Path=Dimentions}"  MaxDropDownHeight="260"   SelectedItem="{Binding Path=SelectedMetric,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                          ItemsSource="{Binding Path=Dimentions}"  MaxDropDownHeight="260"   SelectedItem="{Binding Path=SelectedMetric,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                         x:Name="textBox_Copy3" Grid.Column="1" HorizontalAlignment="Left" Height="28"  VerticalAlignment="Top" Width="100" Grid.Row="6"  Grid.RowSpan="2">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="PreviewMouseDown">
@@ -101,7 +101,8 @@
                             </i:Interaction.Triggers>
                         </controls:AutoCompleteBox>
                         <Button Style="{StaticResource MyNormalBUTTON}"   x:Name="button" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Canvas.Left="0" Canvas.Top="232" Command="{Binding Controller.LegViewModel.ClosePanelCommand}"/>
-                        <Button   Style="{StaticResource MyConfirmBUTTON}"   x:Name="ButtonAddStructure" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding Controller.LegViewModel.SavePanelCommand}" Canvas.Left="249" Canvas.Top="232"/>
+                        <Button   Style="{StaticResource MyConfirmBUTTON}" Visibility = "{Binding IsRedactVis}"  x:Name="ButtonAddfStructure" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding Controller.LegViewModel.SavePanelRedactCommand}" Canvas.Left="249" Canvas.Top="232"/>
+                        <Button   Style="{StaticResource MyConfirmBUTTON}" Visibility = "{Binding ISAddVis}"  x:Name="ButtonAddStructure" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding Controller.LegViewModel.SavePanelCommand}" Canvas.Left="249" Canvas.Top="232"/>
                         <Separator Height="18" Margin="0" Canvas.Top="19" Width="442"/>
                         <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="37" Canvas.Left="10" Text="Первая часть:"/>
                         <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="152" Canvas.Left="10"><Run Text="Вторая часть "/><Run Text="(не обязательно к заполнению):"/></TextBlock>
@@ -109,6 +110,21 @@
                     </Canvas>
                 </Grid>
             </Border>
+
+
+
+
+
+
+
+
+           
+
+           
+
+
+
+
 
 
 
