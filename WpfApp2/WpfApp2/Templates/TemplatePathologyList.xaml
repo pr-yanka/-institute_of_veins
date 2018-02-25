@@ -10,8 +10,8 @@
     <DataTemplate x:Key="TemplatePathologyList">
         <Grid Margin="220,80,0,0" >
 
-            <Label x:Name="label" Content="Патологии" HorizontalAlignment="Left" Margin="254,10,0,0" FontFamily="/fonts/#Pescadero" FontSize="22pt" VerticalAlignment="Top"/>
-            <DataGrid ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" CanUserAddRows="False" CanUserResizeRows="false" CanUserResizeColumns="False" x:Name="dataGrid" HorizontalAlignment="Left" AutoGenerateColumns="False" Margin="17,52,0,0" VerticalAlignment="Top" Height="500" Width="auto" ItemsSource="{Binding Path=PatologyList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
+            <Label x:Name="label" Content="Патологии" HorizontalAlignment="Left" Margin="324,10,0,0" FontFamily="/fonts/#Pescadero" FontSize="22pt" VerticalAlignment="Top"/>
+            <DataGrid ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" CanUserAddRows="False" CanUserResizeRows="false" CanUserResizeColumns="False" x:Name="dataGrid" HorizontalAlignment="Left" AutoGenerateColumns="False" Margin="21,81,0,0" VerticalAlignment="Top" Height="372" Width="735" ItemsSource="{Binding Path=PatologyList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
                 <DataGrid.RowStyle>
 
                     <Style TargetType="DataGridRow"  BasedOn="{StaticResource {x:Type DataGridRow}}">
@@ -84,10 +84,10 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy1" Command="{Binding Path=ToAddPathologyCommand}" Content="Указать патологию" HorizontalAlignment="Left" Margin="286,470,0,0"  
+            <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy1" Command="{Binding Path=ToAddPathologyCommand}" Content="Указать патологию" HorizontalAlignment="Left" Margin="21,470,0,0"  
                     VerticalAlignment="Top" Width="300" />
-            <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy2" Command="{Binding Path=ToCurrentPatientCommand}" Content="Возврат" HorizontalAlignment="Left" Margin="86,470,0,0"  
-                    VerticalAlignment="Top"/>
+            <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy2" Command="{Binding Path=ToCurrentPatientCommand}" Content="Возврат" HorizontalAlignment="Left" Margin="361,470,0,0"  
+                    VerticalAlignment="Top" Width="300"/>
         </Grid>
     </DataTemplate>
 

@@ -68,12 +68,12 @@
                 </Border.RenderTransform>
 
                 <Grid>
-                    <Canvas Background="#FFC6E8E6" Margin="0,0,0,20">
-                        <TextBlock x:Name="textBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="135" FontSize="18" Canvas.Top="10" Text="Новый тип патологии"/>
-                        <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=NewPtName}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="61" />
-                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttonCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.RevertCommand}" Canvas.Left="0" Canvas.Top="110"/>
-                        <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtonAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.SaveCommand}" Canvas.Left="250" Canvas.Top="110"/>
-                        <TextBlock x:Name="textBlock_Copy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="42" Canvas.Left="173" Text="Название:"/>
+                    <Canvas Background="#FFC6E8E6" Margin="0,0,0,-66">
+                        <TextBlock x:Name="textBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="116" FontSize="22" Canvas.Top="10" Text="Новый тип патологии"/>
+                        <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="86" TextWrapping="Wrap" Text="{Binding Path=NewPtName}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="89" />
+                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttonCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.RevertCommand}" Canvas.Left="10" Canvas.Top="189" Width="190" Height="42"/>
+                        <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtonAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.SaveCommand}" Canvas.Left="232" Canvas.Top="189"/>
+                        <TextBlock x:Name="textBlock_Copy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="62" Canvas.Left="10" Text="Название:" FontSize="18"/>
 
                     </Canvas>
                 </Grid>

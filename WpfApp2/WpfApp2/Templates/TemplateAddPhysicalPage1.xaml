@@ -33,10 +33,10 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy2" Content="Записать жалобы" Command="{Binding Path=ToSymptomsAddCommand}" Height="30" HorizontalAlignment="Left" Margin="615,32,0,0" VerticalAlignment="Top" Width="300"/>
+            <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy2" Content="Записать жалобы" Command="{Binding Path=ToSymptomsAddCommand}" Height="25" HorizontalAlignment="Left" Margin="505,32,0,0" VerticalAlignment="Top" Width="487" FontSize="12"/>
             <Separator HorizontalAlignment="Left" Height="16" Margin="0,154,0,0" VerticalAlignment="Top" Width="1016" RenderTransformOrigin="0.51,0.49"/>
             <TextBlock x:Name="textBlock1_Copy2" HorizontalAlignment="Center" Margin="173,120,725,507" TextWrapping="Wrap" VerticalAlignment="Center" Width="118" FontSize="18" Text="Левая нога" TextAlignment="Center"/>
-            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy443" Command="{Binding Path=ToRightDiagCommand}" Content="Поставить диагноз" Height="30" HorizontalAlignment="Left" Margin="615,419,0,0" VerticalAlignment="Top" Width="300"/>
+            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy443" Command="{Binding Path=ToRightDiagCommand}" Content="Поставить диагноз" Height="25" HorizontalAlignment="Left" Margin="518,419,0,0" VerticalAlignment="Top" Width="487" FontSize="12"/>
             <TextBlock x:Name="textBlock1_Copy3" HorizontalAlignment="Center" Margin="724,120,122,507" TextWrapping="Wrap" VerticalAlignment="Center" Width="170" FontSize="18"><Run Text="Правая "/><Run Text="нога"/></TextBlock>
 
 
@@ -560,7 +560,7 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <TextBlock x:Name="textBlock1_Copy5" HorizontalAlignment="Left" Margin="13,71,0,0" TextWrapping="Wrap" Text="NB!" VerticalAlignment="Top" Width="43" FontSize="18"/>
+            <TextBlock x:Name="textBlock1_Copy5" HorizontalAlignment="Left" Margin="13,76,0,0" TextWrapping="Wrap" Text="NB!" VerticalAlignment="Top" Width="43" FontSize="18" RenderTransformOrigin="0.504,0.985"/>
 
             <TextBox x:Name="textBox"  HorizontalAlignment="Left" Height="78" Margin="56,76,0,0" TextWrapping="Wrap" Text="{Binding Path=TextTip,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="431" VerticalScrollBarVisibility="Auto">
                 <i:Interaction.Triggers>
@@ -572,7 +572,7 @@
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </TextBox>
-            <TextBlock x:Name="textBlock1_Copy6" HorizontalAlignment="Left" Margin="13,36,0,0" TextWrapping="Wrap" Text="Вес:" VerticalAlignment="Top" Width="43" FontSize="18" RenderTransformOrigin="0.674,0.459"/>
+            <TextBlock x:Name="textBlock1_Copy6" HorizontalAlignment="Left" Margin="13,39,0,0" TextWrapping="Wrap" Text="Вес:" VerticalAlignment="Top" Width="43" FontSize="18" RenderTransformOrigin="0.674,0.459"/>
             <TextBox   x:Name="textBox_Copy" HorizontalAlignment="Left" Height="23" Margin="56,38,0,0" TextWrapping="Wrap" Text="{Binding Path=Weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="42" RenderTransformOrigin="0.586,0.435">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseDown">
@@ -587,8 +587,8 @@
                     <KeyBinding Command="{Binding Path=IMTCOUNT}"/>
                 </TextBox.InputBindings>
             </TextBox>
-            <TextBlock x:Name="textBlock1_Copy7" HorizontalAlignment="Left" Margin="103,37,0,0" TextWrapping="Wrap" Text="кг" VerticalAlignment="Top" Width="26" FontSize="18"/>
-            <TextBlock x:Name="textBlock1_Copy8" HorizontalAlignment="Left" Margin="175,36,0,0" TextWrapping="Wrap" Text="Рост:" VerticalAlignment="Top" Width="43" FontSize="18" RenderTransformOrigin="0.674,0.459"/>
+            <TextBlock x:Name="textBlock1_Copy7" HorizontalAlignment="Left" Margin="103,39,0,0" TextWrapping="Wrap" Text="кг" VerticalAlignment="Top" Width="26" FontSize="18" RenderTransformOrigin="0.5,0.591"/>
+            <TextBlock x:Name="textBlock1_Copy8" HorizontalAlignment="Left" Margin="170,39,0,0" TextWrapping="Wrap" Text="Рост:" VerticalAlignment="Top" Width="43" FontSize="18" RenderTransformOrigin="0.674,0.459"/>
             <TextBox x:Name="textBox_Copy1" Text="{Binding Path=Growth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="23" Margin="218,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="42">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseDown">
@@ -602,8 +602,8 @@
                     <KeyBinding Command="{Binding Path=IMTCOUNT}"/>
                 </TextBox.InputBindings>
             </TextBox>
-            <TextBlock x:Name="textBlock1_Copy9" HorizontalAlignment="Left" Margin="265,37,0,0" TextWrapping="Wrap" Text="см" VerticalAlignment="Top" Width="26" FontSize="18"/>
-            <TextBlock x:Name="textBlock1_Copy10" HorizontalAlignment="Left" Margin="343,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="auto" FontSize="18" RenderTransformOrigin="0.674,0.459"><Run Text="ИМТ: "/><TextBlock  Text="{Binding Path=ITM}">  
+            <TextBlock x:Name="textBlock1_Copy9" HorizontalAlignment="Left" Margin="265,39,0,0" TextWrapping="Wrap" Text="см" VerticalAlignment="Top" Width="26" FontSize="18"/>
+            <TextBlock x:Name="textBlock1_Copy10" HorizontalAlignment="Left" Margin="341,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="auto" FontSize="18" RenderTransformOrigin="0.674,0.459"><Run Text="ИМТ: "/><TextBlock  Text="{Binding Path=ITM}">  
                  </TextBlock>
                 
                 </TextBlock>
@@ -626,15 +626,15 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy4" Content="Добавить рекомендации" Height="30" Command="{Binding ToAddRecomendationsCommand}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="300" Margin="90,578,0,0"/>
-            <StackPanel Orientation="Vertical" Margin="710,573,0,0">
-                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy3" Margin="0,5,0,5" Height="30" Content="Вернуться к пациенту" Command="{Binding ToCurrentPatientCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300"/>
-                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy10" Margin="0,5,0,5" Height="30" Content="Заключение" Command="{Binding ToPhysicalOverviewCommand}" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="300"/>
-                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="butаton_Copy10" Margin="0,5,0,5" Height="30" Content="Осмотр хирурга" Command="{Binding ToPhysicalChirurgOverviewCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" />
+            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy4" Content="Добавить рекомендации" Height="23" Command="{Binding ToAddRecomendationsCommand}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="688" Margin="3,580,0,0" FontSize="12"/>
+            <StackPanel Orientation="Vertical" Margin="710,583,0,0">
+                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy3" Margin="0,5,0,5" Height="30" Content="Вернуться к пациенту" Command="{Binding ToCurrentPatientCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="12"/>
+                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy10" Margin="0,0,0,5" Height="30" Content="Заключение" Command="{Binding ToPhysicalOverviewCommand}" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="300" FontSize="12"/>
+                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="butаton_Copy10" Margin="0,0,0,5" Height="30" Content="Осмотр хирурга" Command="{Binding ToPhysicalChirurgOverviewCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="12" />
 
-                <Button Style="{StaticResource MyConfirmBUTTON}"  x:Name="button_Copy9" Margin="0,5,0,5" Height="30" Content="Завершить обследование"  Command="{Binding OpenDialogCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300"/>
+                <Button Style="{StaticResource MyConfirmBUTTON}"  x:Name="button_Copy9" Margin="0,0,0,5" Height="30" Content="Завершить обследование"  Command="{Binding OpenDialogCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="12"/>
             </StackPanel>
-            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy" Command="{Binding Path=ToLeftDiagCommand}" Content="Поставить диагноз"   Height="30" HorizontalAlignment="Left" Margin="90,419,0,0" VerticalAlignment="Top" Width="300" />
+            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy" Command="{Binding Path=ToLeftDiagCommand}" Content="Поставить диагноз"   Height="25" HorizontalAlignment="Left" Margin="3,419,0,0" VerticalAlignment="Top" Width="487" FontSize="12" />
 
 
 
@@ -674,19 +674,14 @@
                 <Grid>
                     <Canvas Background="#FFC6E8E6" Margin="0,0,0,29">
 
-                        <TextBlock x:Name="textfBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="200" FontSize="18" Canvas.Top="10" Text="Врач"/>
+                        <TextBlock x:Name="textfBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="161" FontSize="18" Canvas.Top="10"><Run Text="Лечащий "/><Run Text="в"/><Run Text="рач"/></TextBlock>
                         <ComboBox ItemsSource="{Binding Doctors}" SelectedIndex="{Binding Path=DoctorSelectedId}" x:Name="textBfox1" HorizontalAlignment="Left" Width="420" Height="13"  Text="{Binding Path=ShortText}" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="61" />
-                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding ParentVM.RevertCommand}" Canvas.Left="10" Canvas.Top="120" />
-                        <Button Style="{StaticResource MyConfirmBUTTON}"  x:Name="ButtonfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" Command="{Binding ParentVM.SaveCommand}" Canvas.Left="280" Canvas.Top="120" />
+                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Command="{Binding ParentVM.RevertCommand}" Canvas.Left="10" Canvas.Top="120" />
+                        <Button Style="{StaticResource MyConfirmBUTTON}"  x:Name="ButtonfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Command="{Binding ParentVM.SaveCommand}" Canvas.Left="230" Canvas.Top="120" />
 
                     </Canvas>
                 </Grid>
             </Border>
-
-
-
-
         </Grid>
-
     </DataTemplate>
 </ResourceDictionary>
