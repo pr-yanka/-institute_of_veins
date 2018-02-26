@@ -1,5 +1,6 @@
 ﻿using JetBrains.Annotations;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -23,7 +24,13 @@ namespace WpfApp2.Navigation
             set { _currentViewModel = value; OnPropertyChanged(nameof(CurrentViewModel)); }
         }
 
-        private List<LegPartViewModel> _legViewModels;
+
+        private ObservableCollection<LegPartViewModel> _legViewModels;
+        public ObservableCollection<LegPartViewModel> LegViewModels
+        {
+            get { return _legViewModels; }
+            set { _legViewModels = value; OnPropertyChanged(); }
+        }
 
         private ViewModelBase _legViewModel;
 
@@ -35,17 +42,17 @@ namespace WpfApp2.Navigation
 
         public void ClearLegPartVM()
         {
-            _legViewModels = new List<LegPartViewModel>();
+            LegViewModels = new ObservableCollection<LegPartViewModel>();
         }
 
         public void AddLegPartVM(LegPartViewModel vm)
         {
-            if (_legViewModels == null)
+            if (LegViewModels == null)
             {
-                _legViewModels = new List<LegPartViewModel>();
+                LegViewModels = new ObservableCollection<LegPartViewModel>();
                 //_viewModels = new List<ViewModelBase>();
             }
-            _legViewModels.Add(vm);
+            LegViewModels.Add(vm);
             //_viewModels.Add(vm);
         }
 

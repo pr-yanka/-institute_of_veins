@@ -18,7 +18,18 @@ namespace WpfApp2.LegParts
     {
         public DelegateCommand<object> ClickOnAutoComplete { get; set; }
         public bool DoubleSizeAvailable;
+        private LegPartDbStructure _legPrt;
+        public LegPartDbStructure LegPrt
+        {
+            get { return _legPrt; }
+            set
+            {
 
+                _legPrt = value;
+
+                OnPropertyChanged();
+            }
+        }
         private ViewModelBase _parentVM;
 
         private bool _panelOpened = false;

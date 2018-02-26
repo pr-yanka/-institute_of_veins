@@ -231,8 +231,8 @@ namespace WpfApp2.LegParts.VMs
 
 
 
-        private List<LegSectionViewModel> _sections;
-        public override List<LegSectionViewModel> LegSections
+        private ObservableCollection <LegSectionViewModel> _sections;
+        public override ObservableCollection <LegSectionViewModel> LegSections
         {
             get { return _sections; }
             set { _sections = value; }
@@ -245,7 +245,7 @@ namespace WpfApp2.LegParts.VMs
             MessageBus.Default.Subscribe("RebuildFirstSFS", RebuildFirst);
             MessageBus.Default.Subscribe("RebuildLegSectionViewModel", Rebuild);
             LevelCount = 6;
-            _sections = new List<LegSectionViewModel>();
+            _sections = new ObservableCollection<LegSectionViewModel>();
             for (int i = 0; i < LevelCount; i++)
             {
                 if (i != 0)
