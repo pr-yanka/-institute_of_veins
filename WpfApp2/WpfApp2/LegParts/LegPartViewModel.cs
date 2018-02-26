@@ -50,6 +50,16 @@ namespace WpfApp2.LegParts
                     //int selectCombo = 0;
                     //int selectComboNext = 0;
                     int selectedIndex = 0;
+                    if (section.SelectedValue != null && section.SelectedValue.Text1 == "" && section.SelectedValue.Text2 == "")
+                    { selectedIndex = -1; }
+                    else if (section.SelectedIndex != null)
+                    {
+                        selectedIndex = section.SelectedIndex.Value;
+                    }
+                    else
+                    { selectedIndex = -1; }
+
+
                     if (section.SelectedIndex != null)
                         selectedIndex = section.SelectedIndex.Value;
 
@@ -158,12 +168,10 @@ namespace WpfApp2.LegParts
                     //}
                     //LegSections[section.ListNumber].SelectedIndex = 0;
                     //LegSections[section.ListNumber].SelectedIndex = section.ListNumber;
-                    if (section.SelectedValue != null)
-                    {
-                        section.SelectedIndex = selectedIndex;
-                        //  if (section.SelectedIndex != null)
-                        section.SelectedValue = section.StructureSource[section.SelectedIndex.Value];
-                    }
+
+                    section.SelectedIndex = selectedIndex;
+                    //  if (section.SelectedIndex != null)
+
 
 
 
