@@ -67,8 +67,86 @@ namespace WpfApp2.LegParts
                     bufSave = section.StructureSource;
                     using (MySqlContext context = new MySqlContext())
                     {
-                        PDSVHipRepository pdsvRep = new PDSVHipRepository(context);
-                        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+
+                        var Part = Controller.CurrentViewModel.Controller.LegViewModel;
+
+                        if (Part is PDSVViewModel)
+                        {
+                            PDSVHipRepository pdsvRep = new PDSVHipRepository(context);
+                            section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+                        }
+                        else if (Part is SFSViewModel)
+                        {
+
+                            SFSHipRepository pdsvRep = new SFSHipRepository(context);
+                            section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+                        }
+                        else if (Part is BPVHipViewModel)
+                        {
+                            BPVHipRepository pdsvRep = new BPVHipRepository(context);
+                            section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+                        }
+                        else if (Part is BPVTibiaViewModel)
+                        {
+                            BPV_TibiaRepository pdsvRep = new BPV_TibiaRepository(context);
+                            section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+                        }
+                        else if (Part is HipPerforateViewModel)
+                        {
+
+                            Perforate_hipRepository pdsvRep = new Perforate_hipRepository(context);
+                            section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+                        }
+                        else if (Part is ZDSVViewModel)
+                        {
+                           ZDSVRepository pdsvRep = new ZDSVRepository(context);
+                            section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+                        }
+
+                        else if (Part is SPSViewModel)
+                        {
+                            SPSHipRepository pdsvRep = new SPSHipRepository(context);
+                            section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+                        }
+                        else if (Part is TibiaPerforateViewModel)
+                        {
+                            Perforate_shinRepository pdsvRep = new Perforate_shinRepository(context);
+                            section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+                        }
+                        else if (Part is MPVViewModel)
+                        {
+                            MPVRepository pdsvRep = new MPVRepository(context);
+                            section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+                        }
+                        else if (Part is TEMPVViewModel)
+                        {
+                            TEMPVRepository pdsvRep = new TEMPVRepository(context);
+                            section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+                        }
+                        else if (Part is PPVViewModel)
+                        {
+                            PPVRepository pdsvRep = new PPVRepository(context);
+                            section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+                        }
+                        else if (Part is GVViewModel)
+                        {
+                            GVRepository pdsvRep = new GVRepository(context);
+                            section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+                        }
+
 
                     }
 
