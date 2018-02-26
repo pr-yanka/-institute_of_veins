@@ -42,133 +42,130 @@ namespace WpfApp2.LegParts
             {
                 foreach (var section in LegSections)
                 {
-                    if (section.ListNumber != 3 && section.SelectedValue != null)
+
+
+
+                    var StructureSourceBuf = new List<int>();
+                    //bool test = true;
+                    //int selectCombo = 0;
+                    //int selectComboNext = 0;
+                    int selectedIndex = 0;
+                    if (section.SelectedIndex != null)
+                        selectedIndex = section.SelectedIndex.Value;
+
+                    var bufSave = new ObservableCollection<LegPartDbStructure>();
+                    bufSave = section.StructureSource;
+                    using (MySqlContext context = new MySqlContext())
+                    {
+                        PDSVHipRepository pdsvRep = new PDSVHipRepository(context);
+                        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+                    }
+
+                    foreach (var variant in bufSave)
                     {
 
-
-                        var StructureSourceBuf = new List<int>();
-                        //bool test = true;
-                        //int selectCombo = 0;
-                        //int selectComboNext = 0;
-                        int selectedIndex = 0;
-                        if (section.SelectedIndex != null)
-                            selectedIndex = section.SelectedIndex.Value;
-
-                        var bufSave = new ObservableCollection<LegPartDbStructure>();
-                        bufSave = section.StructureSource;
-                        using (MySqlContext context = new MySqlContext())
+                        if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
                         {
-                            PDSVHipRepository pdsvRep = new PDSVHipRepository(context);
-                            section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
-
+                            section.StructureSource.Add(variant);
                         }
-
-                        foreach (var variant in bufSave)
-                        {
-
-                            if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
-                            {
-                                section.StructureSource.Add(variant);
-                            }
-                            else if (variant.Text1 == "" && variant.Text2 == "")
-                            { section.StructureSource.Add(variant); }
+                        else if (variant.Text1 == "" && variant.Text2 == "")
+                        { section.StructureSource.Add(variant); }
 
 
-                        }
-                        foreach (var structure in section.StructureSource)
-                        {
-                            structure.Metrics = Data.Metrics.GetStr(structure.Size);
-                        }
-                        // StructureSource = new ObservableCollection<LegPartDbStructure>();
-                        //foreach (var Combo in Data.PDSVCombos.GetAll)
-                        //{
-                        //    if (section.ListNumber == 1)
-                        //    {
-                        //        try
-                        //        {
-                        //            selectCombo = Combo.IdStr1;
-                        //            selectComboNext = Combo.IdStr2.Value;
-                        //        }
-                        //        catch { continue; }
-                        //    }
-                        //    if (section.ListNumber == 2)
-                        //    {
-                        //        try
-                        //        {
-                        //            selectCombo = Combo.IdStr2.Value;
-                        //            selectComboNext = Combo.IdStr3.Value;
-                        //        }
-                        //        catch { continue; }
-                        //    }
+                    }
+                    foreach (var structure in section.StructureSource)
+                    {
+                        structure.Metrics = Data.Metrics.GetStr(structure.Size);
+                    }
+                    // StructureSource = new ObservableCollection<LegPartDbStructure>();
+                    //foreach (var Combo in Data.PDSVCombos.GetAll)
+                    //{
+                    //    if (section.ListNumber == 1)
+                    //    {
+                    //        try
+                    //        {
+                    //            selectCombo = Combo.IdStr1;
+                    //            selectComboNext = Combo.IdStr2.Value;
+                    //        }
+                    //        catch { continue; }
+                    //    }
+                    //    if (section.ListNumber == 2)
+                    //    {
+                    //        try
+                    //        {
+                    //            selectCombo = Combo.IdStr2.Value;
+                    //            selectComboNext = Combo.IdStr3.Value;
+                    //        }
+                    //        catch { continue; }
+                    //    }
 
 
 
 
 
-                        //    if (section.SelectedValue.Id == selectCombo)
-                        //    {
-                        //        test = true;
+                    //    if (section.SelectedValue.Id == selectCombo)
+                    //    {
+                    //        test = true;
 
-                        //        foreach (var bufId in StructureSourceBuf)
-                        //        {
+                    //        foreach (var bufId in StructureSourceBuf)
+                    //        {
 
-                        //            if (bufId == selectComboNext)
-                        //            {
-                        //                test = false;
-                        //                break;
-                        //            }
+                    //            if (bufId == selectComboNext)
+                    //            {
+                    //                test = false;
+                    //                break;
+                    //            }
 
-                        //        }
-                        //        if (test)
-                        //        {
-                        //            StructureSourceBuf.Add(selectComboNext);
-                        //        }
-
-
-                        //    }
+                    //        }
+                    //        if (test)
+                    //        {
+                    //            StructureSourceBuf.Add(selectComboNext);
+                    //        }
 
 
-                        //}
-
-                        //List<LegPartDbStructure> buf = section.StructureSource.ToList();
-                        //foreach (var variant in buf)
-                        //{
-                        //    test = true;
-                        //    foreach (var bufId in StructureSourceBuf)
-                        //    {
-
-                        //        if (bufId == variant.Id)
-                        //        {
-                        //            test = false;
-                        //            break;
-                        //        }
-
-                        //    }
-                        //    if (test && variant.Text1 != "Свой вариант ответа" && variant.Text1 != "Переход к следующему разделу")
-                        //    {
-                        //        if (variant.Text1 == "" && variant.Text2 == "")
-                        //        {
-                        //        }
-                        //        else
-                        //        {
-                        //            section.StructureSource.Remove(variant);
-                        //        }
-                        //    }
+                    //    }
 
 
-                        //}
-                        //LegSections[section.ListNumber].SelectedIndex = 0;
-                        //LegSections[section.ListNumber].SelectedIndex = section.ListNumber;
+                    //}
 
+                    //List<LegPartDbStructure> buf = section.StructureSource.ToList();
+                    //foreach (var variant in buf)
+                    //{
+                    //    test = true;
+                    //    foreach (var bufId in StructureSourceBuf)
+                    //    {
+
+                    //        if (bufId == variant.Id)
+                    //        {
+                    //            test = false;
+                    //            break;
+                    //        }
+
+                    //    }
+                    //    if (test && variant.Text1 != "Свой вариант ответа" && variant.Text1 != "Переход к следующему разделу")
+                    //    {
+                    //        if (variant.Text1 == "" && variant.Text2 == "")
+                    //        {
+                    //        }
+                    //        else
+                    //        {
+                    //            section.StructureSource.Remove(variant);
+                    //        }
+                    //    }
+
+
+                    //}
+                    //LegSections[section.ListNumber].SelectedIndex = 0;
+                    //LegSections[section.ListNumber].SelectedIndex = section.ListNumber;
+                    if (section.SelectedValue != null)
+                    {
                         section.SelectedIndex = selectedIndex;
-                        if (section.SelectedIndex != null)
-                            section.SelectedValue = section.StructureSource[section.SelectedIndex.Value];
+                        //  if (section.SelectedIndex != null)
+                        section.SelectedValue = section.StructureSource[section.SelectedIndex.Value];
+                    }
 
-                    }
-                    else
-                    {
-                        break;
-                    }
+
 
                 }
             }
@@ -428,12 +425,12 @@ namespace WpfApp2.LegParts
                         LegPartDbStructure newStruct = GetPanelStructureForEdit();
                         newStruct.Custom = false;
                         //   LegPartDbStructure.legPrt. = newStruct;\
-                
+
                         if (Controller.CurrentViewModel.Controller.LegViewModel is PDSVViewModel)
                         {
-                            foreach(var x in Data.PDSVHips.GetAll)
+                            foreach (var x in Data.PDSVHips.GetAll)
                             {
-                                if(x.Id == LegPrt.Id)
+                                if (x.Id == LegPrt.Id)
                                 {
                                     LegPrt = x;
                                     break;
