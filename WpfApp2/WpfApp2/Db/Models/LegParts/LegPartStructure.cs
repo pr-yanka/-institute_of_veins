@@ -1,9 +1,11 @@
 ﻿using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -11,15 +13,30 @@ using WpfApp2.Messaging;
 
 namespace WpfApp2.Db.Models
 {
-    public abstract class LegPartDbStructure
+    public abstract class LegPartDbStructure : INotifyPropertyChanged
     {
+        #region Inotify realisation
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            //если PropertyChanged не нулевое - оно будет разбужено
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+
         [Key]
         [Column("id")]
         public int Id { get; set; }
 
-        [Column("название1")]
-        public string Text1 { get; set; }
+        [NotMapped]
+        private string _text1;
 
+        [Column("название1")]
+        public string Text1
+        {
+            get { return _text1; }
+            set { _text1 = value; OnPropertyChanged(); OnPropertyChanged("NameContext"); }
+        }
         [Column("название2")]
         public string Text2 { get; set; }
 
@@ -47,12 +64,12 @@ namespace WpfApp2.Db.Models
         [NotMapped]
         public bool ToNextPart { get; internal set; }
 
-        [Column("двойная_метрика")] 
+        [Column("двойная_метрика")]
         public virtual bool HasDoubleMetric { get; set; }
 
 
         [NotMapped]
-        public string NameContext { get { return Text1 + " " + Metrics + " " + Text2; }  set { } }
+        public string NameContext { get { return Text1 + " " + Metrics + " " + Text2; } set { } }
 
         [NotMapped]
         public DelegateCommand<object> ToRedactStruct { get; private set; }

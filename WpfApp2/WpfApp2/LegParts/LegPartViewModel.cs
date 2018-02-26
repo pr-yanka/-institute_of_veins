@@ -60,112 +60,122 @@ namespace WpfApp2.LegParts
                     { selectedIndex = -1; }
 
 
-                    if (section.SelectedIndex != null)
-                        selectedIndex = section.SelectedIndex.Value;
+                    //if (section.SelectedIndex != null)
+                    //    selectedIndex = section.SelectedIndex.Value;
 
                     var bufSave = new ObservableCollection<LegPartDbStructure>();
-                    bufSave = section.StructureSource;
-                    using (MySqlContext context = new MySqlContext())
+                    foreach (var x in section.StructureSource)
                     {
 
-
-                        var Part = Controller.CurrentViewModel.Controller.LegViewModel;
-
-                        if (Part is PDSVViewModel)
-                        {
-                            PDSVHipRepository pdsvRep = new PDSVHipRepository(context);
-                            section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
-
-                        }
-                        else if (Part is SFSViewModel)
-                        {
-
-                            SFSHipRepository pdsvRep = new SFSHipRepository(context);
-                            section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
-
-                        }
-                        else if (Part is BPVHipViewModel)
-                        {
-                            BPVHipRepository pdsvRep = new BPVHipRepository(context);
-                            section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
-
-                        }
-                        else if (Part is BPVTibiaViewModel)
-                        {
-                            BPV_TibiaRepository pdsvRep = new BPV_TibiaRepository(context);
-                            section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
-
-                        }
-                        else if (Part is HipPerforateViewModel)
-                        {
-
-                            Perforate_hipRepository pdsvRep = new Perforate_hipRepository(context);
-                            section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
-
-                        }
-                        else if (Part is ZDSVViewModel)
-                        {
-                           ZDSVRepository pdsvRep = new ZDSVRepository(context);
-                            section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
-
-                        }
-
-                        else if (Part is SPSViewModel)
-                        {
-                            SPSHipRepository pdsvRep = new SPSHipRepository(context);
-                            section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
-
-                        }
-                        else if (Part is TibiaPerforateViewModel)
-                        {
-                            Perforate_shinRepository pdsvRep = new Perforate_shinRepository(context);
-                            section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
-
-                        }
-                        else if (Part is MPVViewModel)
-                        {
-                            MPVRepository pdsvRep = new MPVRepository(context);
-                            section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
-
-                        }
-                        else if (Part is TEMPVViewModel)
-                        {
-                            TEMPVRepository pdsvRep = new TEMPVRepository(context);
-                            section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
-
-                        }
-                        else if (Part is PPVViewModel)
-                        {
-                            PPVRepository pdsvRep = new PPVRepository(context);
-                            section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
-
-                        }
-                        else if (Part is GVViewModel)
-                        {
-                            GVRepository pdsvRep = new GVRepository(context);
-                            section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
-
-                        }
-
+                        bufSave.Add(x);
 
                     }
-
-                    foreach (var variant in bufSave)
-                    {
-
-                        if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
-                        {
-                            section.StructureSource.Add(variant);
-                        }
-                        else if (variant.Text1 == "" && variant.Text2 == "")
-                        { section.StructureSource.Add(variant); }
+                    section.StructureSource = new ObservableCollection<LegPartDbStructure>(bufSave);
+                    //bufSave = section.StructureSource;
+                    //using (MySqlContext context = new MySqlContext())
+                    //{
 
 
-                    }
-                    foreach (var structure in section.StructureSource)
-                    {
-                        structure.Metrics = Data.Metrics.GetStr(structure.Size);
-                    }
+                    //    var Part = Controller.CurrentViewModel.Controller.LegViewModel;
+
+                    //    if (Part is PDSVViewModel)
+                    //    {
+                    //        PDSVHipRepository pdsvRep = new PDSVHipRepository(context);
+                    //        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+                    //    }
+                    //    else if (Part is SFSViewModel)
+                    //    {
+
+                    //        SFSHipRepository pdsvRep = new SFSHipRepository(context);
+                    //        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+                    //    }
+                    //    else if (Part is BPVHipViewModel)
+                    //    {
+                    //        BPVHipRepository pdsvRep = new BPVHipRepository(context);
+                    //        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+                    //    }
+                    //    else if (Part is BPVTibiaViewModel)
+                    //    {
+                    //        BPV_TibiaRepository pdsvRep = new BPV_TibiaRepository(context);
+                    //        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+                    //    }
+                    //    else if (Part is HipPerforateViewModel)
+                    //    {
+
+                    //        Perforate_hipRepository pdsvRep = new Perforate_hipRepository(context);
+                    //        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+                    //    }
+                    //    else if (Part is ZDSVViewModel)
+                    //    {
+                    //       ZDSVRepository pdsvRep = new ZDSVRepository(context);
+                    //        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+                    //    }
+
+                    //    else if (Part is SPSViewModel)
+                    //    {
+                    //        SPSHipRepository pdsvRep = new SPSHipRepository(context);
+                    //        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+                    //    }
+                    //    else if (Part is TibiaPerforateViewModel)
+                    //    {
+                    //        Perforate_shinRepository pdsvRep = new Perforate_shinRepository(context);
+                    //        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+                    //    }
+                    //    else if (Part is MPVViewModel)
+                    //    {
+                    //        MPVRepository pdsvRep = new MPVRepository(context);
+                    //        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+                    //    }
+                    //    else if (Part is TEMPVViewModel)
+                    //    {
+                    //        TEMPVRepository pdsvRep = new TEMPVRepository(context);
+                    //        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+                    //    }
+                    //    else if (Part is PPVViewModel)
+                    //    {
+                    //        PPVRepository pdsvRep = new PPVRepository(context);
+                    //        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+                    //    }
+                    //    else if (Part is GVViewModel)
+                    //    {
+                    //        GVRepository pdsvRep = new GVRepository(context);
+                    //        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
+
+                    //    }
+
+
+                    //}
+
+                    //foreach (var variant in bufSave)
+                    //{
+
+                    //    if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
+                    //    {
+                    //        section.StructureSource.Add(variant);
+                    //    }
+                    //    else if (variant.Text1 == "" && variant.Text2 == "")
+                    //    { section.StructureSource.Add(variant); }
+
+
+                    //}
+                    //foreach (var structure in section.StructureSource)
+                    //{
+                    //    structure.Metrics = Data.Metrics.GetStr(structure.Size);
+                    //}
+
+
+
                     // StructureSource = new ObservableCollection<LegPartDbStructure>();
                     //foreach (var Combo in Data.PDSVCombos.GetAll)
                     //{
