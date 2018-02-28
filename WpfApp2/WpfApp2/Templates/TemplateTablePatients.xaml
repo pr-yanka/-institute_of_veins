@@ -58,8 +58,11 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn  Header="Имя" CellStyle="{StaticResource MyDataGridCell}"  Binding="{Binding CurrentPatient.Name}" ></DataGridTextColumn>
                     <DataGridTextColumn   Header="Возраст"  CellStyle="{StaticResource MyDataGridCell1}"  Binding="{Binding CurrentPatient.Age}" ></DataGridTextColumn>
+                    <!--
+                   <DataGridTextColumn   Header="Пол"  CellStyle="{StaticResource MyDataGridCell2}"  Binding="{Binding CurrentPatient.Gender}" ></DataGridTextColumn>
+                    <DataGridTextColumn   Header="Адрес проживания"  CellStyle="{StaticResource MyDataGridCell3}"  Binding="{Binding CurrentPatient.Region}" ></DataGridTextColumn>
+                     -->
 
-                
                     <DataGridTemplateColumn Header="История">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

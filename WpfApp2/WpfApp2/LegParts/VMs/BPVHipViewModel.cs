@@ -77,7 +77,12 @@ namespace WpfApp2.LegParts.VMs
 
                             if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
                             {
-                                LegSections[section.ListNumber].StructureSource.Add(variant);
+                                if (variant.Text1 == "Переход к следующему разделу" && section.ListNumber == 1)
+                                { }
+                                else
+                                {
+                                    LegSections[section.ListNumber].StructureSource.Add(variant);
+                                }
                             }
                             else if (variant.Text1 == "" && variant.Text2 == "")
                             { LegSections[section.ListNumber].StructureSource.Add(variant); }
@@ -216,15 +221,15 @@ namespace WpfApp2.LegParts.VMs
                     structure.Metrics = Data.Metrics.GetStr(structure.Size);
                 }
 
-              
+
 
             }
-           
+
 
         }
 
-        private ObservableCollection <LegSectionViewModel> _sections;
-        public override ObservableCollection <LegSectionViewModel> LegSections
+        private ObservableCollection<LegSectionViewModel> _sections;
+        public override ObservableCollection<LegSectionViewModel> LegSections
         {
             get { return _sections; }
             set { _sections = value; }

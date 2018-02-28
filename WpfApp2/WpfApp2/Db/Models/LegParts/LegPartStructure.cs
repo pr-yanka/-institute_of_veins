@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using WpfApp2.Messaging;
 
@@ -24,13 +25,31 @@ namespace WpfApp2.Db.Models
         }
         #endregion
 
+
+
         [Key]
         [Column("id")]
         public int Id { get; set; }
+        //[NotMapped]
+        //private Visibility _isButtonsVisible;
+        //[NotMapped]
+        //public Visibility IsButtonsVisible
+        //{
+        //    get { return _isButtonsVisible; }
+        //    set { _isButtonsVisible = value; OnPropertyChanged(); }
+        //}
+
+
+
 
         [NotMapped]
+        private string _text2;
+        [NotMapped]
+        private string _metric;
+        [NotMapped]
         private string _text1;
-
+        [NotMapped]
+        private int? _size;
         [Column("название1")]
         public string Text1
         {
@@ -38,7 +57,11 @@ namespace WpfApp2.Db.Models
             set { _text1 = value; OnPropertyChanged(); OnPropertyChanged("NameContext"); }
         }
         [Column("название2")]
-        public string Text2 { get; set; }
+        public string Text2
+        {
+            get { return _text2; }
+            set { _text2 = value; OnPropertyChanged(); OnPropertyChanged("NameContext"); }
+        }
 
         [Required]
         [Column("есть_метрика")]
@@ -49,14 +72,22 @@ namespace WpfApp2.Db.Models
         }
 
         [Column("id_метрики")]
-        public int? Size { get; set; }
+        public int? Size
+        {
+            get { return _size; }
+            set { _size = value; OnPropertyChanged(); }
+        }
 
         [Required]
         [Column("уровень_вложенности")]
         public int Level { get; set; }
 
         [NotMapped]
-        public string Metrics { get; internal set; }
+        public string Metrics
+        {
+            get { return _metric; }
+            set { _metric = value; OnPropertyChanged(); OnPropertyChanged("NameContext"); }
+        }
 
         [NotMapped]
         public bool Custom { get; internal set; }
@@ -70,9 +101,10 @@ namespace WpfApp2.Db.Models
 
         [NotMapped]
         public string NameContext { get { return Text1 + " " + Metrics + " " + Text2; } set { } }
-
-        [NotMapped]
-        public DelegateCommand<object> ToRedactStruct { get; private set; }
+        //[NotMapped]
+        //public DelegateCommand<object> ToDeleteStruct { get; private set; }
+        //[NotMapped]
+        //public DelegateCommand<object> ToRedactStruct { get; private set; }
 
         public override string ToString()
         {
@@ -83,16 +115,8 @@ namespace WpfApp2.Db.Models
 
         public LegPartDbStructure()
         {
-
-            ToRedactStruct = new DelegateCommand<object>((combox) =>
-       {
-           ComboBox x = combox as ComboBox;
-           x.IsDropDownOpen = false;
-           MessageBus.Default.Call("OpenStructRedact", this, null);
-
-
-       }
-   );
+            //IsButtonsVisible = Visibility.Visible;
+          
             //NameContext = Text1 + " " + Metrics + " " + Text2;
             ToNextPart = false;
             Custom = false;

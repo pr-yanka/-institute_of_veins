@@ -45,6 +45,10 @@ namespace WpfApp2.LegParts
 
         //selected value
 
+        private bool _isButtonsEnabled;
+
+        public bool IsButtonsEnabled { get { return _isButtonsEnabled; } set { _isButtonsEnabled = value; OnPropertyChanged(); } }
+
         private LegPartDbStructure _selectedValue;
 
         private int? _selectedIndex;
@@ -60,7 +64,7 @@ namespace WpfApp2.LegParts
                 {
                     _selectedValue = value; OnPropertyChanged();
 
-
+                    IsButtonsEnabled = false;
 
                     MessageBus.Default.Call("RebuildLegSectionViewModel", "Empty", this);
                 }
@@ -71,17 +75,23 @@ namespace WpfApp2.LegParts
                     {
                         if (value.Custom && value.Text1 == _startCustomText)
                         {
-
+                            IsButtonsEnabled = false;
                             MessageBus.Default.Call("OpenCustom", this, this.GetType());
                         }
                         else MessageBus.Default.Call("CloseCustom", this, this.GetType());
                     }
                     else
                     {
-
+                        IsButtonsEnabled = true;
                         _selectedValue = value;
 
                         SelectedIndex = StructureSource.IndexOf(StructureSource.Where(s => s.Id == _selectedValue.Id).ToList()[0]);
+
+                        //foreach(var x in StructureSource)
+                        //{
+                        //    x.IsButtonsVisible = Visibility.Visible;
+                        //}
+                        //_selectedValue.IsButtonsVisible = Visibility.Collapsed;
 
                         if (_selectedValue == null)
                         {
@@ -104,7 +114,10 @@ namespace WpfApp2.LegParts
                         if (_selectedValue.HasDoubleMetric) HasDoubleSize = true;
                         else { HasDoubleSize = false; }
                         if (_selectedValue.ToNextPart)
+                        {
                             HasComment = false;
+                            IsButtonsEnabled = false;
+                        }
                         else
                             HasComment = true;
                         MessageBus.Default.Call("RebuildLegSectionViewModel", this, this);
@@ -257,8 +270,29 @@ namespace WpfApp2.LegParts
 
         public LegSectionViewModel(NavigationController controller, LegSectionViewModel prevSection) : base(controller)
         {
-            
+            IsButtonsEnabled = false;
+            //         ClickOnBorder = new DelegateCommand<object>(
+            //    (sender) =>
+            //    {
+            //        ComboBox x = sender as ComboBox;
+            //        x.MouseDoubleClick.I
+            //        x.IsDropDownOpen = true;
 
+
+
+            //    }
+            //);
+
+            ToRedactStruct = new DelegateCommand(() =>
+            {
+
+                // x.SelectedValue 
+                // LegSectionViewModel section = x.SelectedValue as LegSectionViewModel;
+                MessageBus.Default.Call("OpenStructRedact", SelectedValue, null);
+
+
+            }
+   );
 
 
             LostFocus = new DelegateCommand<object>(
@@ -354,8 +388,10 @@ namespace WpfApp2.LegParts
             }
         }
 
-       // public DelegateCommand<object> ToRedactStruct { get; private set; }
+   
         public DelegateCommand<object> LostFocus { get; private set; }
         public DelegateCommand<object> ClickOnWeight { get; private set; }
+      
+        public DelegateCommand ToRedactStruct { get; private set; }
     }
 }

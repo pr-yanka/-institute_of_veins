@@ -3570,6 +3570,7 @@ namespace WpfApp2.ViewModels
             LeftGVEntryFull = (GVEntryFull)SaveFullEntry(LeftGV, LeftGVEntryFull);
 
 
+
             bool test = true;
             if (!RightBPVHip.IsEmpty)
             {

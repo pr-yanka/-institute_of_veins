@@ -13,7 +13,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using WpfApp2.Db.Models;
+using WpfApp2.Db.Models.GV;
 using WpfApp2.Db.Models.LegParts;
+using WpfApp2.Db.Models.LegParts.GV;
 using WpfApp2.LegParts.DialogConfirmStructure;
 using WpfApp2.LegParts.VMs;
 using WpfApp2.Messaging;
@@ -71,194 +73,11 @@ namespace WpfApp2.LegParts
 
                     }
                     section.StructureSource = new ObservableCollection<LegPartDbStructure>(bufSave);
-                    //bufSave = section.StructureSource;
-                    //using (MySqlContext context = new MySqlContext())
-                    //{
 
 
-                    //    var Part = Controller.CurrentViewModel.Controller.LegViewModel;
-
-                    //    if (Part is PDSVViewModel)
-                    //    {
-                    //        PDSVHipRepository pdsvRep = new PDSVHipRepository(context);
-                    //        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
-
-                    //    }
-                    //    else if (Part is SFSViewModel)
-                    //    {
-
-                    //        SFSHipRepository pdsvRep = new SFSHipRepository(context);
-                    //        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
-
-                    //    }
-                    //    else if (Part is BPVHipViewModel)
-                    //    {
-                    //        BPVHipRepository pdsvRep = new BPVHipRepository(context);
-                    //        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
-
-                    //    }
-                    //    else if (Part is BPVTibiaViewModel)
-                    //    {
-                    //        BPV_TibiaRepository pdsvRep = new BPV_TibiaRepository(context);
-                    //        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
-
-                    //    }
-                    //    else if (Part is HipPerforateViewModel)
-                    //    {
-
-                    //        Perforate_hipRepository pdsvRep = new Perforate_hipRepository(context);
-                    //        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
-
-                    //    }
-                    //    else if (Part is ZDSVViewModel)
-                    //    {
-                    //       ZDSVRepository pdsvRep = new ZDSVRepository(context);
-                    //        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
-
-                    //    }
-
-                    //    else if (Part is SPSViewModel)
-                    //    {
-                    //        SPSHipRepository pdsvRep = new SPSHipRepository(context);
-                    //        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
-
-                    //    }
-                    //    else if (Part is TibiaPerforateViewModel)
-                    //    {
-                    //        Perforate_shinRepository pdsvRep = new Perforate_shinRepository(context);
-                    //        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
-
-                    //    }
-                    //    else if (Part is MPVViewModel)
-                    //    {
-                    //        MPVRepository pdsvRep = new MPVRepository(context);
-                    //        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
-
-                    //    }
-                    //    else if (Part is TEMPVViewModel)
-                    //    {
-                    //        TEMPVRepository pdsvRep = new TEMPVRepository(context);
-                    //        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
-
-                    //    }
-                    //    else if (Part is PPVViewModel)
-                    //    {
-                    //        PPVRepository pdsvRep = new PPVRepository(context);
-                    //        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
-
-                    //    }
-                    //    else if (Part is GVViewModel)
-                    //    {
-                    //        GVRepository pdsvRep = new GVRepository(context);
-                    //        section.StructureSource = new ObservableCollection<LegPartDbStructure>(pdsvRep.LevelStructures(section.ListNumber).ToList());
-
-                    //    }
-
-
-                    //}
-
-                    //foreach (var variant in bufSave)
-                    //{
-
-                    //    if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
-                    //    {
-                    //        section.StructureSource.Add(variant);
-                    //    }
-                    //    else if (variant.Text1 == "" && variant.Text2 == "")
-                    //    { section.StructureSource.Add(variant); }
-
-
-                    //}
-                    //foreach (var structure in section.StructureSource)
-                    //{
-                    //    structure.Metrics = Data.Metrics.GetStr(structure.Size);
-                    //}
-
-
-
-                    // StructureSource = new ObservableCollection<LegPartDbStructure>();
-                    //foreach (var Combo in Data.PDSVCombos.GetAll)
-                    //{
-                    //    if (section.ListNumber == 1)
-                    //    {
-                    //        try
-                    //        {
-                    //            selectCombo = Combo.IdStr1;
-                    //            selectComboNext = Combo.IdStr2.Value;
-                    //        }
-                    //        catch { continue; }
-                    //    }
-                    //    if (section.ListNumber == 2)
-                    //    {
-                    //        try
-                    //        {
-                    //            selectCombo = Combo.IdStr2.Value;
-                    //            selectComboNext = Combo.IdStr3.Value;
-                    //        }
-                    //        catch { continue; }
-                    //    }
-
-
-
-
-
-                    //    if (section.SelectedValue.Id == selectCombo)
-                    //    {
-                    //        test = true;
-
-                    //        foreach (var bufId in StructureSourceBuf)
-                    //        {
-
-                    //            if (bufId == selectComboNext)
-                    //            {
-                    //                test = false;
-                    //                break;
-                    //            }
-
-                    //        }
-                    //        if (test)
-                    //        {
-                    //            StructureSourceBuf.Add(selectComboNext);
-                    //        }
-
-
-                    //    }
-
-
-                    //}
-
-                    //List<LegPartDbStructure> buf = section.StructureSource.ToList();
-                    //foreach (var variant in buf)
-                    //{
-                    //    test = true;
-                    //    foreach (var bufId in StructureSourceBuf)
-                    //    {
-
-                    //        if (bufId == variant.Id)
-                    //        {
-                    //            test = false;
-                    //            break;
-                    //        }
-
-                    //    }
-                    //    if (test && variant.Text1 != "Свой вариант ответа" && variant.Text1 != "Переход к следующему разделу")
-                    //    {
-                    //        if (variant.Text1 == "" && variant.Text2 == "")
-                    //        {
-                    //        }
-                    //        else
-                    //        {
-                    //            section.StructureSource.Remove(variant);
-                    //        }
-                    //    }
-
-
-                    //}
-                    //LegSections[section.ListNumber].SelectedIndex = 0;
-                    //LegSections[section.ListNumber].SelectedIndex = section.ListNumber;
-
-                    section.SelectedIndex = selectedIndex;
-                    //  if (section.SelectedIndex != null)
+                 //   section.SelectedIndex = selectedIndex;
+                    if(selectedIndex != -1)
+                    section.SelectedValue = section.StructureSource[selectedIndex];
 
 
 
@@ -341,19 +160,7 @@ namespace WpfApp2.LegParts
 
         private ICommand _сlosePanelCommand;
         private ICommand _savePanelCommand;
-        // private Visibility _isRedactVis;
-        //private Visibility _iSAddVis;
 
-        //public Visibility IsRedactVis
-        // {
-        //     get { return _isRedactVis; }
-        //     set { _isRedactVis = value; OnPropertyChanged(); }
-        // }
-        // public Visibility ISAddVis
-        // {
-        //     get { return _iSAddVis; }
-        //     set { _iSAddVis = value; OnPropertyChanged(); }
-        // }
 
         public ICommand ClosePanelCommand
         {
@@ -376,6 +183,8 @@ namespace WpfApp2.LegParts
             set { _currentPanelViewModel = value; OnPropertyChanged(); }
         }
 
+
+
         private DelegateCommand SaveEditPanelCommand;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -393,14 +202,9 @@ namespace WpfApp2.LegParts
 
         public static bool handled = false;
         public UIElement ui;
-        //public Storyboard myS { get; set; }
+
         private void OpenHandler(object sender, object data)
         {
-            //IsRedactVis = Visibility.Collapsed;
-            //ISAddVis = Visibility.Visible;
-
-            //if (buff != null)
-            //    SavePanelCommand = buff;
 
             ClosePanelCommand = new DelegateCommand(() =>
             {
@@ -431,7 +235,7 @@ namespace WpfApp2.LegParts
 
                 _lastSender = currentPart;
 
-                //  _lastSenderNewAnswer
+
 
 
                 _lastSenderType = (Type)data;
@@ -440,7 +244,10 @@ namespace WpfApp2.LegParts
             }
         }
 
+
         LegPartDbStructure LegPrt;
+
+
 
         private void OpenStructRedact(object sender, object data)
         {
@@ -479,30 +286,7 @@ namespace WpfApp2.LegParts
                     {
                         CurrentPanelViewModel.HasDoubleSize = true;
                     }
-                    // bool test = true;
-                    //foreach (var metric in Data.Metrics.GetAll)
-                    //{
-                    //    if (metric.Str == panel.SelectedMetricText)
-                    //    {
-                    //        test = false;
-                    //        newStr.Size = metric.Id;
-                    //        newStr.Metrics = metric.Str;
-                    //        break;
-                    //    }
-                    //}
-                    //if (test)
-                    //{
-                    //    Metrics newMetric = new Metrics();
-                    //    newMetric.Str = panel.SelectedMetricText;
-                    //    Data.Metrics.Add(newMetric);
-                    //    Data.Complete();
-                    //    newStr.Size = newMetric.Id;
-                    //    newStr.Metrics = newMetric.Str;
-                    //}
 
-
-
-                    //  CurrentPanelViewModel.
 
 
                 }
@@ -815,43 +599,6 @@ namespace WpfApp2.LegParts
             CurrentPanelViewModel = new SizePanelViewModel(this);
 
 
-
-            //SaveEditPanelCommand = new DelegateCommand(() =>
-            // {
-
-            //     var panel = CurrentPanelViewModel;
-            //     if (!string.IsNullOrWhiteSpace(panel.Text1) || !string.IsNullOrWhiteSpace(panel.Text2))
-            //     {
-            //         CurrentLegSide = CurrentLegSide;
-            //         CurrentPanelViewModel.PanelOpened = false;
-            //         handled = false;
-            //         var newStruct = GetPanelStructure();
-            //         newStruct.Custom = false;
-            //         CurrentPanelViewModel.LegPrt.Custom = newStruct.Custom;
-            //         CurrentPanelViewModel.LegPrt.HasDoubleMetric = newStruct.HasDoubleMetric;
-            //         CurrentPanelViewModel.LegPrt.HasSize = newStruct.HasSize;
-            //         CurrentPanelViewModel.LegPrt.Level = newStruct.Level;
-            //         CurrentPanelViewModel.LegPrt.Metrics = newStruct.Metrics;
-            //         CurrentPanelViewModel.LegPrt.NameContext = newStruct.NameContext;
-            //         CurrentPanelViewModel.LegPrt.Size = newStruct.Size;
-            //         CurrentPanelViewModel.LegPrt.Text1 = newStruct.Text1;
-            //         CurrentPanelViewModel.LegPrt.Text2 = newStruct.Text2;
-            //         CurrentPanelViewModel.LegPrt.ToNextPart = newStruct.ToNextPart;
-
-            //         //Data.MPV.Add((MPVStructure)newStruct);
-
-            //         Data.Complete();
-            //         //  _lastSender.StructureSource.Add(newStruct);
-            //         // _lastSender.SelectedValue = newStruct;
-            //         CurrentPanelViewModel.PanelOpened = false;
-            //         handled = false;
-            //     }
-            //     else
-            //     {
-            //         MessageBox.Show("Не все поля заполнены");
-            //     }
-
-            // });
 
 
 
