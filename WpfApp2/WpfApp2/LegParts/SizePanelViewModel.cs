@@ -32,6 +32,21 @@ namespace WpfApp2.LegParts
         }
         private ViewModelBase _parentVM;
 
+        private string _textSaveBTN;
+        private string _textCancleOrResetBTN;
+        public string TextSaveBTN
+        {
+            get { return _textSaveBTN; }
+            set { _textSaveBTN = value; OnPropertyChanged(); }
+        }
+        public string TextCancleOrResetBTN
+        {
+            get { return _textCancleOrResetBTN; }
+            set { _textCancleOrResetBTN = value; OnPropertyChanged(); }
+        }
+
+        public string mode;
+
         private bool _panelOpened = false;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -67,7 +82,7 @@ namespace WpfApp2.LegParts
             ClickOnAutoComplete = new DelegateCommand<object>(
              (sender) =>
              {
-                 
+
                  if (sender != null)
                  {
                      AutoCompleteBox buf = (AutoCompleteBox)sender;
@@ -98,6 +113,8 @@ namespace WpfApp2.LegParts
             set
             {
                 _text1 = value;
+                if (mode == "Edit")
+                    TextSaveBTN = "Сохранить";
                 OnPropertyChanged();
             }
         }
@@ -109,6 +126,8 @@ namespace WpfApp2.LegParts
             set
             {
                 _text2 = value;
+                if (mode == "Edit")
+                    TextSaveBTN = "Сохранить";
                 OnPropertyChanged();
             }
         }
@@ -123,6 +142,8 @@ namespace WpfApp2.LegParts
             set
             {
                 _hasSize = value;
+                if (mode == "Edit")
+                    TextSaveBTN = "Сохранить";
                 if (value && TrueTestDoubleSize == true)
                     DoubleSizeIsAvailable = true;
                 else
@@ -138,6 +159,8 @@ namespace WpfApp2.LegParts
             set
             {
                 _hasDoubleSize = value;
+                if (mode == "Edit")
+                    TextSaveBTN = "Сохранить";
                 OnPropertyChanged();
             }
         }
@@ -163,6 +186,9 @@ namespace WpfApp2.LegParts
             set
             {
                 _selectedMetric = value;
+
+                if (mode == "Edit")
+                    TextSaveBTN = "Сохранить";
                 OnPropertyChanged();
             }
         }
@@ -178,6 +204,8 @@ namespace WpfApp2.LegParts
             set
             {
                 _selectedMetricText = value;
+                if (mode == "Edit")
+                    TextSaveBTN = "Сохранить";
                 OnPropertyChanged();
             }
         }

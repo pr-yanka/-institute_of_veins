@@ -75,9 +75,9 @@ namespace WpfApp2.LegParts
                     section.StructureSource = new ObservableCollection<LegPartDbStructure>(bufSave);
 
 
-                 //   section.SelectedIndex = selectedIndex;
-                    if(selectedIndex != -1)
-                    section.SelectedValue = section.StructureSource[selectedIndex];
+                    //   section.SelectedIndex = selectedIndex;
+                    if (selectedIndex != -1)
+                        section.SelectedValue = section.StructureSource[selectedIndex];
 
 
 
@@ -168,6 +168,8 @@ namespace WpfApp2.LegParts
             set { _сlosePanelCommand = value; OnPropertyChanged(); }
         }
 
+
+
         private ICommand buff;
         public ICommand SavePanelCommand
         {
@@ -205,27 +207,29 @@ namespace WpfApp2.LegParts
 
         private void OpenHandler(object sender, object data)
         {
-
+            CurrentPanelViewModel.TextSaveBTN = "Добавить";
+            CurrentPanelViewModel.mode = "Add";
+            CurrentPanelViewModel.TextCancleOrResetBTN = "Вернуться";
             ClosePanelCommand = new DelegateCommand(() =>
-            {
-                if (_lastSender.SelectedValue == null)
-                {
-                    foreach (var structr in _lastSender.StructureSource)
-                    {
-                        if (structr.Text1 == "" && structr.Text2 == "")
-                        {
-                            _lastSender.SelectedValue = structr;
-                        }
-                    }
-                }
-                else
-                {
-                    LegSections[_lastSender.ListNumber - 1].SelectedValue = _lastSender.SelectedValue;
-                }
-                CurrentPanelViewModel.PanelOpened = false;
-                handled = false;
+         {
+             if (_lastSender.SelectedValue == null)
+             {
+                 foreach (var structr in _lastSender.StructureSource)
+                 {
+                     if (structr.Text1 == "" && structr.Text2 == "")
+                     {
+                         _lastSender.SelectedValue = structr;
+                     }
+                 }
+             }
+             else
+             {
+                 LegSections[_lastSender.ListNumber - 1].SelectedValue = _lastSender.SelectedValue;
+             }
+             CurrentPanelViewModel.PanelOpened = false;
+             handled = false;
 
-            });
+         });
             if (!handled)
             {
 
@@ -262,6 +266,7 @@ namespace WpfApp2.LegParts
 
                 LegPartDbStructure structure = (LegPartDbStructure)sender;
                 CurrentPanelViewModel.LegPrt = structure;
+                CurrentPanelViewModel.mode = "Edit";
                 LegPrt = structure;
                 CurrentLegSide = CurrentLegSide;
 
@@ -290,8 +295,8 @@ namespace WpfApp2.LegParts
 
 
                 }
-
-
+                CurrentPanelViewModel.TextSaveBTN = "Вернуться";
+                CurrentPanelViewModel.TextCancleOrResetBTN = "Сбросить";
 
                 // CurrentPanelViewModel.Text1 = section.Se
                 SavePanelCommand = new DelegateCommand(() =>
@@ -481,8 +486,45 @@ namespace WpfApp2.LegParts
 
                 ClosePanelCommand = new DelegateCommand(() =>
                 {
-                    CurrentPanelViewModel.PanelOpened = false;
-                    handled = false;
+
+
+
+                    if (structure.Text1 != null)
+                        CurrentPanelViewModel.Text1 = structure.Text1;
+                    else
+                        CurrentPanelViewModel.Text1 = "";
+                    if (structure.Text2 != null)
+                        CurrentPanelViewModel.Text2 = structure.Text2;
+                    else
+                        CurrentPanelViewModel.Text2 = "";
+                    if (structure.HasSize)
+                    {
+                        CurrentPanelViewModel.HasSize = true;
+                        foreach (Metrics x in CurrentPanelViewModel.Dimentions)
+                        {
+                            if (x.Str == structure.Metrics)
+                            {
+                                CurrentPanelViewModel.SelectedMetricText = x.Str;
+                                CurrentPanelViewModel.SelectedMetric = x;
+                            }
+                        }
+                        if (structure.HasDoubleMetric)
+                        {
+                            CurrentPanelViewModel.HasDoubleSize = true;
+                        }
+
+
+
+                    }else
+                    {
+
+                        CurrentPanelViewModel.SelectedMetricText = "";
+                    
+                        CurrentPanelViewModel.HasDoubleSize = false;
+                        CurrentPanelViewModel.HasSize = false;
+                    }
+                    CurrentPanelViewModel.TextSaveBTN = "Вернуться";
+
 
                 });
 
@@ -599,6 +641,7 @@ namespace WpfApp2.LegParts
             MessageBus.Default.Subscribe("OpenStructRedact", OpenStructRedact);
             MessageBus.Default.Subscribe("SetMode", SetModeHandler);
             CurrentPanelViewModel = new SizePanelViewModel(this);
+
 
 
 
