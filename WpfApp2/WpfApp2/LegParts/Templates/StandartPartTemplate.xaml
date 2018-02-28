@@ -28,7 +28,7 @@
                             </Border.Style>
                         </Border>
                    -->
-                    <ComboBox Height="28" Canvas.ZIndex="1" x:Name="firstLevelBlock" SelectedIndex="{Binding Path=SelectedIndex,UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding Path=SelectedValue,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Path=StructureSource,UpdateSourceTrigger=PropertyChanged}" Margin="5,0,5,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Width="770">
+                    <ComboBox Height="28" x:Name="firstLevelBlock" SelectedIndex="{Binding Path=SelectedIndex,UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding Path=SelectedValue,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Path=StructureSource,UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Width="830">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -40,12 +40,12 @@
                         </ComboBox.ItemTemplate>
 
                         </ComboBox>
-                        <Button IsEnabled="{Binding IsButtonsEnabled}" Content="+" Margin="19,0" Command="{Binding ToRedactStruct}" Visibility="Visible" HorizontalAlignment="Right"  MaxWidth="50" MaxHeight="25"/>
+                        <Button IsEnabled="{Binding IsButtonsEnabled}" Content="+" Margin="0,0,20,0"  Command="{Binding ToRedactStruct}"  HorizontalAlignment="Right"  MaxWidth="50" MaxHeight="25"/>
                       
                 </DockPanel>
                 <DockPanel Width="Auto" LastChildFill="True" Margin="0,5,0,5">
-                    <TextBlock TextWrapping="Wrap" x:Name="inches1Text_Copy1" Text="{Binding Path=SelectedValue.Text1}" Visibility="{Binding Path=HasFirstPart, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Margin="5,0,5,0" VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18" Width="800"/>
-                    <TextBox x:Name="size1Box" Text="{Binding Path = CurrentEntry.Size, Converter={StaticResource FloatConvert}}" Visibility="{Binding Path = SelectedValue.HasSize,UpdateSourceTrigger=PropertyChanged, FallbackValue=Hidden, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap"  VerticalAlignment="Top" Width="30">
+                    <TextBlock  Margin="0,5,0,5" TextWrapping="Wrap" x:Name="inches1Text_Copy1" Text="{Binding Path=SelectedValue.Text1}" Visibility="{Binding Path=HasFirstPart, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left"  VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
+                    <TextBox  Margin="0,5,0,5" x:Name="size1Box" Text="{Binding Path = CurrentEntry.Size, Converter={StaticResource FloatConvert}}" Visibility="{Binding Path = SelectedValue.HasSize,UpdateSourceTrigger=PropertyChanged, FallbackValue=Hidden, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="30">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PreviewMouseDown">
                                 <i:InvokeCommandAction  Command="{Binding Path=ClickOnWeight}" CommandParameter="{Binding ElementName=size1Box}" />
@@ -56,8 +56,8 @@
                         </i:Interaction.Triggers>
                     </TextBox>
                     <!--for 1*1 size-->
-                    <Label x:Name="inches2Text_Copy" Content="*" Visibility="{Binding Path = HasDoubleSize, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
-                    <TextBox x:Name="size2Box" Text="{Binding Path = CurrentEntry.Size2, Converter={StaticResource FloatConvert}}" Visibility="{Binding Path = HasDoubleSize, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="30">
+                    <Label  Margin="0,5,0,5" x:Name="inches2Text_Copy" Content="*" Visibility="{Binding Path = HasDoubleSize, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
+                    <TextBox  Margin="0,5,0,5" x:Name="size2Box" Text="{Binding Path = CurrentEntry.Size2, Converter={StaticResource FloatConvert}}" Visibility="{Binding Path = HasDoubleSize, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="30">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PreviewMouseDown">
                                 <i:InvokeCommandAction  Command="{Binding Path=ClickOnWeight}" CommandParameter="{Binding ElementName=size2Box}" />
@@ -68,8 +68,8 @@
                         </i:Interaction.Triggers>
                     </TextBox>
 
-                    <Label x:Name="inches1Text_Copy" Content="{Binding Path=SelectedValue.Metrics}" Visibility="{Binding Path = HasSize, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Margin="5,0,5,0" VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
-                    <Label x:Name="inches1Text_Copy2" Content="{Binding Path=SelectedValue.Text2}" Visibility="{Binding Path = HasSecondPart, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Margin="5,0,5,0" VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
+                    <Label x:Name="inches1Text_Copy"   Content="{Binding Path=SelectedValue.Metrics}" Visibility="{Binding Path = HasSize, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left"  VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
+                    <Label x:Name="inches1Text_Copy2"  Content="{Binding Path=SelectedValue.Text2}" Visibility="{Binding Path = HasSecondPart, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left"  VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
                 </DockPanel>
                 <DockPanel Width="Auto" LastChildFill="True" Margin="0,5,0,5" Visibility="{Binding Path = HasComment, Converter={StaticResource BoolToVis}}">
                     <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="5,0,5,0" TextWrapping="Wrap" Text="Комментарий:" VerticalAlignment="Top" FontSize="18"/>

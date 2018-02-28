@@ -23,6 +23,10 @@ namespace WpfApp2.Db.Models
         [Column("хвостик")]
         public string Text1 { get; set; }
 
+        [NotMapped]
+        public string NameContext { get { return Text1; } set { } }
+
+
 
         public override string ToString()
         {

@@ -33,6 +33,11 @@ namespace WpfApp2.LegParts
                 OnPropertyChanged();
             }
         }
+
+        private bool _isButtonsEnabled;
+
+        public bool IsButtonsEnabled { get { return _isButtonsEnabled; } set { _isButtonsEnabled = value; OnPropertyChanged(); } }
+
         private ObservableCollection<Letters> _structureSource;
 
         public ObservableCollection<Letters> StructureSource
@@ -97,7 +102,7 @@ namespace WpfApp2.LegParts
 
         public LettersSectionViewModel(NavigationController controller, LettersSectionViewModel prevSection) : base(controller)
         {
-
+            IsButtonsEnabled = false;
             HasComment = false;
             HasDoubleSize = false;
             StructureSource = new ObservableCollection<Letters>();

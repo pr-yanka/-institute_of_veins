@@ -67,9 +67,12 @@ namespace WpfApp2.LegParts
             ClickOnAutoComplete = new DelegateCommand<object>(
              (sender) =>
              {
-                 var buf = (AutoCompleteBox)sender;
-                 buf.IsDropDownOpen = true;
-
+                 
+                 if (sender != null)
+                 {
+                     AutoCompleteBox buf = (AutoCompleteBox)sender;
+                     buf.IsDropDownOpen = true;
+                 }
              }
          );
             _parentVM = parentVM;

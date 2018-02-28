@@ -77,12 +77,10 @@ namespace WpfApp2.LegParts.VMs
 
                             if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
                             {
-                                if (variant.Text1 == "Переход к следующему разделу" && section.ListNumber == 1)
-                                { }
-                                else
-                                {
+                              
+                                
                                     LegSections[section.ListNumber].StructureSource.Add(variant);
-                                }
+                                
                             }
                             else if (variant.Text1 == "" && variant.Text2 == "")
                             { LegSections[section.ListNumber].StructureSource.Add(variant); }
@@ -209,7 +207,13 @@ namespace WpfApp2.LegParts.VMs
 
                     if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
                     {
-                        LegSections[i].StructureSource.Add(variant);
+                        if (variant.Text1 == "Переход к следующему разделу" && i == 0)
+                        { }
+                        else
+                        {
+                            LegSections[i].StructureSource.Add(variant);
+                        }
+                     
                     }
                     else if (variant.Text1 == "" && variant.Text2 == "")
                     { LegSections[i].StructureSource.Add(variant); }
