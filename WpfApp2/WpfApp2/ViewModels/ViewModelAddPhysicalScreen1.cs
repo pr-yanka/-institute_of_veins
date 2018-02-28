@@ -2194,7 +2194,7 @@ namespace WpfApp2.ViewModels
             }
             if (RightCEAR.LegSections[0].SelectedValue != null && RightCEAR.LegSections[1].SelectedValue != null && RightCEAR.LegSections[2].SelectedValue != null && RightCEAR.LegSections[3].SelectedValue != null)
             {
-                BCEAR = null;
+                BCEARL = null;
             }
             
         }
@@ -2411,7 +2411,7 @@ namespace WpfApp2.ViewModels
             }
             else if (RightCEAR.LegSections[0].SelectedValue != null && RightCEAR.LegSections[1].SelectedValue != null && RightCEAR.LegSections[2].SelectedValue != null && RightCEAR.LegSections[3].SelectedValue != null)
             {
-                BCEAR = null;
+                BCEARL = null;
             }
             BrushesFill();
             return test;
