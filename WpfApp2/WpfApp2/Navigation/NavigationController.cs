@@ -42,19 +42,21 @@ namespace WpfApp2.Navigation
 
         public void ClearLegPartVM()
         {
-            LegViewModels = new ObservableCollection<LegPartViewModel>();
+          
+            //LegViewModels = new ObservableCollection<LegPartViewModel>();
         }
 
-        public void AddLegPartVM(LegPartViewModel vm)
-        {
-            if (LegViewModels == null)
-            {
-                LegViewModels = new ObservableCollection<LegPartViewModel>();
-                //_viewModels = new List<ViewModelBase>();
-            }
-            LegViewModels.Add(vm);
-            //_viewModels.Add(vm);
-        }
+        //public void AddLegPartVM(LegPartViewModel vm)
+        //{
+        //    if (LegViewModels == null)
+        //    {
+        //        LegViewModels = new ObservableCollection<LegPartViewModel>();
+        //        //_viewModels = new List<ViewModelBase>();
+        //    }
+        //    LegViewModels.Add(vm);
+        //    vm.idInController = LegViewModels.IndexOf(vm);
+        //    //_viewModels.Add(vm);
+        //}
 
         public NavigationController()
         {
@@ -129,7 +131,7 @@ namespace WpfApp2.Navigation
                 new SPSViewModel(this)
             };*/
 
-            _legViewModel = _legViewModels.First();
+           // _legViewModel = _legViewModels.First();
         }
 
         public void NavigateTo<T>()

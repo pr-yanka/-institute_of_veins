@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using WpfApp2.Db.Models;
 using WpfApp2.Db.Models.GV;
+using WpfApp2.Db.Models.LegParts;
+using WpfApp2.Db.Models.LegParts.GV;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 using WpfApp2.ViewModels;
@@ -19,44 +21,78 @@ namespace WpfApp2.LegParts.VMs
 
         private void RebuildFirst(object sender, object data)
         {
-
-            for (int i = 0; i < LegSections.Count; ++i)
+            using (MySqlContext context = new MySqlContext())
             {
-                var bufSave = new ObservableCollection<LegPartDbStructure>();
-                bufSave = LegSections[i].StructureSource;
-
-                LegSections[i].StructureSource = new ObservableCollection<LegPartDbStructure>(base.Data.GV.LevelStructures(i + 1).ToList());
-
-                foreach (var variant in bufSave)
+                GVRepository GV = new GVRepository(context);
+                MetricsRepository Metrics = new MetricsRepository(context);
+                var bufSaveLegSection = new List<int?>();
+                foreach (var x in LegSections)
                 {
-
-                    if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
+                    if (x.SelectedValue != null)
+                        bufSaveLegSection.Add(x.SelectedValue.Id);
+                    else
                     {
-                        if (variant.Text1 == "Переход к следующему разделу" && i == 0)
-                        { }
-                        else
+                        bufSaveLegSection.Add(null);
+                    }
+                }
+
+                for (int i = 0; i < LegSections.Count; ++i)
+                {
+                    var bufSave = new ObservableCollection<LegPartDbStructure>();
+                    bufSave = LegSections[i].StructureSource;
+
+                    LegSections[i].StructureSource = new ObservableCollection<LegPartDbStructure>(GV.LevelStructures(i + 1).ToList());
+
+                    int selectedIndex = -1;
+                    if (bufSaveLegSection[i] != null)
+                    {
+                        for (int j = 0; j < LegSections[i].StructureSource.Count; ++j)
                         {
-                            LegSections[i].StructureSource.Add(variant);
+                            if (LegSections[i].StructureSource[j].Id == bufSaveLegSection[i])
+                            {
+                                selectedIndex = j;
+                            }
                         }
                     }
-                    else if (variant.Text1 == "" && variant.Text2 == "")
-                    { LegSections[i].StructureSource.Add(variant); }
 
+
+
+
+                    if (selectedIndex != -1)
+                        LegSections[i].SelectedValue = LegSections[i].StructureSource[selectedIndex];
+                    foreach (var variant in bufSave)
+                    {
+
+                        if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
+                        {
+                            if (variant.Text1 == "Переход к следующему разделу" && i == 0)
+                            { }
+                            else
+                            {
+                                LegSections[i].StructureSource.Add(variant);
+                            }
+                        }
+                        else if (variant.Text1 == "" && variant.Text2 == "")
+                        { LegSections[i].StructureSource.Add(variant); }
+
+
+                    }
+                    foreach (var structure in LegSections[i].StructureSource)
+                    {
+                        structure.Metrics = Metrics.GetStr(structure.Size);
+                    }
+
+                 
 
                 }
-                foreach (var structure in LegSections[i].StructureSource)
-                {
-                    structure.Metrics = Data.Metrics.GetStr(structure.Size);
-                }
-
             }
-          
+            MessageBus.Default.Call("LegDataSaved", this, this.GetType());
         }
         private void Rebuild(object sender, object data)
         {
             if (Controller.CurrentViewModel.Controller.LegViewModel == this && mode == "Normal")
             {
-                
+
                 var section = (LegSectionViewModel)data;
                 if (section.SelectedValue != null && section.SelectedValue.Text1 == "" && section.SelectedValue.Text2 == "")
                 {
@@ -93,7 +129,7 @@ namespace WpfApp2.LegParts.VMs
                     {
 
 
-                        
+
 
                         var StructureSourceBuf = new List<int>();
                         bool test = true;
@@ -102,66 +138,73 @@ namespace WpfApp2.LegParts.VMs
 
                         var bufSave = new ObservableCollection<LegPartDbStructure>();
                         bufSave = LegSections[section.ListNumber].StructureSource;
-
-                        LegSections[section.ListNumber].StructureSource = new ObservableCollection<LegPartDbStructure>(base.Data.GV.LevelStructures(LegSections[section.ListNumber].ListNumber).ToList());
-
-                        foreach (var variant in bufSave)
+                        using (MySqlContext context = new MySqlContext())
                         {
+                            GVRepository GV = new GVRepository(context);
+                            GVComboRepository GVCombos = new GVComboRepository(context);
+                            MetricsRepository Metrics = new MetricsRepository(context);
 
-                            if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
+
+
+                            LegSections[section.ListNumber].StructureSource = new ObservableCollection<LegPartDbStructure>(GV.LevelStructures(LegSections[section.ListNumber].ListNumber).ToList());
+
+                            foreach (var variant in bufSave)
                             {
-                                LegSections[section.ListNumber].StructureSource.Add(variant);
-                            }
-                            else if (variant.Text1 == "" && variant.Text2 == "")
-                            { LegSections[section.ListNumber].StructureSource.Add(variant); }
 
-
-                        }
-                        foreach (var structure in LegSections[section.ListNumber].StructureSource)
-                        {
-                            structure.Metrics = Data.Metrics.GetStr(structure.Size);
-                        }
-                        // StructureSource = new ObservableCollection<LegPartDbStructure>();
-                        foreach (var Combo in Data.GVCombos.GetAll)
-                        {
-                            if (section.ListNumber == 1)
-                            {
-                                try
+                                if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
                                 {
-                                    selectCombo = Combo.IdStr1;
-                                    selectComboNext = Combo.IdStr2.Value;
+                                    LegSections[section.ListNumber].StructureSource.Add(variant);
                                 }
-                                catch { continue; }
+                                else if (variant.Text1 == "" && variant.Text2 == "")
+                                { LegSections[section.ListNumber].StructureSource.Add(variant); }
+
+
                             }
-                           
-
-
-
-                            if (section.SelectedValue.Id == selectCombo)
+                            foreach (var structure in LegSections[section.ListNumber].StructureSource)
                             {
-                                test = true;
-
-                                foreach (var bufId in StructureSourceBuf)
+                                structure.Metrics = Metrics.GetStr(structure.Size);
+                            }
+                            // StructureSource = new ObservableCollection<LegPartDbStructure>();
+                            foreach (var Combo in GVCombos.GetAll)
+                            {
+                                if (section.ListNumber == 1)
                                 {
-
-                                    if (bufId == selectComboNext)
+                                    try
                                     {
-                                        test = false;
-                                        break;
+                                        selectCombo = Combo.IdStr1;
+                                        selectComboNext = Combo.IdStr2.Value;
+                                    }
+                                    catch { continue; }
+                                }
+
+
+
+
+                                if (section.SelectedValue.Id == selectCombo)
+                                {
+                                    test = true;
+
+                                    foreach (var bufId in StructureSourceBuf)
+                                    {
+
+                                        if (bufId == selectComboNext)
+                                        {
+                                            test = false;
+                                            break;
+                                        }
+
+                                    }
+                                    if (test)
+                                    {
+                                        StructureSourceBuf.Add(selectComboNext);
                                     }
 
-                                }
-                                if (test)
-                                {
-                                    StructureSourceBuf.Add(selectComboNext);
+
                                 }
 
 
                             }
-
-
                         }
-
                         List<LegPartDbStructure> buf = LegSections[section.ListNumber].StructureSource.ToList();
                         foreach (var variant in buf)
                         {
@@ -199,8 +242,8 @@ namespace WpfApp2.LegParts.VMs
 
 
 
-        private ObservableCollection <LegSectionViewModel> _sections;
-        public override ObservableCollection <LegSectionViewModel> LegSections
+        private ObservableCollection<LegSectionViewModel> _sections;
+        public override ObservableCollection<LegSectionViewModel> LegSections
         {
             get { return _sections; }
             set { _sections = value; }
@@ -209,7 +252,7 @@ namespace WpfApp2.LegParts.VMs
 
         public void Initialize()
         {
-            
+
             MessageBus.Default.Subscribe("RebuildFirstGV", RebuildFirst);
             MessageBus.Default.Subscribe("RebuildLegSectionViewModel", Rebuild);
             LevelCount = 2;
@@ -236,7 +279,7 @@ namespace WpfApp2.LegParts.VMs
                     newStruct.Custom = false;
                     Data.GV.Add((GVStructure)newStruct);
                     Data.Complete();
-                 
+
                     _lastSender.StructureSource.Add(newStruct);
                     _lastSender.SelectedValue = newStruct;
                     CurrentPanelViewModel.PanelOpened = false;
@@ -314,7 +357,7 @@ namespace WpfApp2.LegParts.VMs
                              MessageBus.Default.Call("RebuildFirstGV", this, LegSections[0]);
                              MessageBus.Default.Call("RebuildLegSectionViewModel", this, LegSections[0]);
                              MessageBus.Default.Call("RebuildLegSectionViewModel", this, LegSections[1]);
-                           
+
                          }
 
                          MessageBus.Default.Call("LegDataSaved", this, this.GetType());

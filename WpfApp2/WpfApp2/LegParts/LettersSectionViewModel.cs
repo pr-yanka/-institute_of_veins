@@ -61,8 +61,11 @@ namespace WpfApp2.LegParts
             get { return _selectedValue; }
             set
             {
-
-                if (value.Id == 0 && value.Leter == "" && value.Text1 == "")
+                if (value == null)
+                {
+                    _selectedValue = null;
+                }
+                else if (value.Id == 0 && value.Leter == "" && value.Text1 == "")
                     _selectedValue = null;
                 else
                 {

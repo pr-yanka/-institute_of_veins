@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using WpfApp2.Db.Models;
+using WpfApp2.Db.Models.LegParts;
 using WpfApp2.Db.Models.PPV;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
@@ -19,39 +20,70 @@ namespace WpfApp2.LegParts.VMs
 
         private void RebuildFirst(object sender, object data)
         {
-
-            for (int i = 0; i < LegSections.Count; ++i)
+            using (MySqlContext context = new MySqlContext())
             {
-                var bufSave = new ObservableCollection<LegPartDbStructure>();
-                bufSave = LegSections[i].StructureSource;
+                PPVRepository PPV = new PPVRepository(context);
+                MetricsRepository Metrics = new MetricsRepository(context);
+                var bufSaveLegSection = new List<int?>();
 
-                LegSections[i].StructureSource = new ObservableCollection<LegPartDbStructure>(base.Data.PPV.LevelStructures(i + 1).ToList());
-
-                foreach (var variant in bufSave)
+                foreach (var x in LegSections)
                 {
-
-                    if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
+                    if (x.SelectedValue != null)
+                        bufSaveLegSection.Add(x.SelectedValue.Id);
+                    else
                     {
-                        if (variant.Text1 == "Переход к следующему разделу" && i == 0)
-                        { }
-                        else
+                        bufSaveLegSection.Add(null);
+                    }
+                }
+                for (int i = 0; i < LegSections.Count; ++i)
+                {
+                    var bufSave = new ObservableCollection<LegPartDbStructure>();
+                    bufSave = LegSections[i].StructureSource;
+
+                    LegSections[i].StructureSource = new ObservableCollection<LegPartDbStructure>(PPV.LevelStructures(i + 1).ToList());
+                    int selectedIndex = -1;
+                    if (bufSaveLegSection[i] != null)
+                    {
+                        for (int j = 0; j < LegSections[i].StructureSource.Count; ++j)
                         {
-                            LegSections[i].StructureSource.Add(variant);
+                            if (LegSections[i].StructureSource[j].Id == bufSaveLegSection[i])
+                            {
+                                selectedIndex = j;
+                            }
                         }
                     }
-                    else if (variant.Text1 == "" && variant.Text2 == "")
-                    { LegSections[i].StructureSource.Add(variant); }
 
 
-                }
-                foreach (var structure in LegSections[i].StructureSource)
-                {
-                    structure.Metrics = Data.Metrics.GetStr(structure.Size);
+
+
+                    if (selectedIndex != -1)
+                        LegSections[i].SelectedValue = LegSections[i].StructureSource[selectedIndex];
+                    foreach (var variant in bufSave)
+                    {
+
+                        if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
+                        {
+                            if (variant.Text1 == "Переход к следующему разделу" && i == 0)
+                            { }
+                            else
+                            {
+                                LegSections[i].StructureSource.Add(variant);
+                            }
+                        }
+                        else if (variant.Text1 == "" && variant.Text2 == "")
+                        { LegSections[i].StructureSource.Add(variant); }
+
+
+                    }
+                    foreach (var structure in LegSections[i].StructureSource)
+                    {
+                        structure.Metrics = Metrics.GetStr(structure.Size);
+                    }
+
                 }
 
             }
-          
-
+            MessageBus.Default.Call("LegDataSaved", this, this.GetType());
         }
         private void Rebuild(object sender, object data)
         {

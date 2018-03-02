@@ -42,51 +42,89 @@ namespace WpfApp2.LegParts
         {
             if (Controller.CurrentViewModel.Controller.LegViewModel == this && mode == "Normal")
             {
-                foreach (var section in LegSections)
+
+                if (Controller.CurrentViewModel.Controller.LegViewModel is PDSVViewModel)
                 {
 
 
-
-                    var StructureSourceBuf = new List<int>();
-                    //bool test = true;
-                    //int selectCombo = 0;
-                    //int selectComboNext = 0;
-                    int selectedIndex = 0;
-                    if (section.SelectedValue != null && section.SelectedValue.Text1 == "" && section.SelectedValue.Text2 == "")
-                    { selectedIndex = -1; }
-                    else if (section.SelectedIndex != null)
-                    {
-                        selectedIndex = section.SelectedIndex.Value;
-                    }
-                    else
-                    { selectedIndex = -1; }
+                    MessageBus.Default.Call("RebuildFirstPDSV", null, null);
 
 
-                    //if (section.SelectedIndex != null)
-                    //    selectedIndex = section.SelectedIndex.Value;
+                }
+                else if (Controller.CurrentViewModel.Controller.LegViewModel is SFSViewModel)
+                {
 
-                    var bufSave = new ObservableCollection<LegPartDbStructure>();
-                    foreach (var x in section.StructureSource)
-                    {
-
-                        bufSave.Add(x);
-
-                    }
-                    section.StructureSource = new ObservableCollection<LegPartDbStructure>(bufSave);
+                    MessageBus.Default.Call("RebuildFirstSFS", this, LegSections[0]);
 
 
-                    //   section.SelectedIndex = selectedIndex;
-                    if (selectedIndex != -1)
-                        section.SelectedValue = section.StructureSource[selectedIndex];
+
+                }
+                else if (Controller.CurrentViewModel.Controller.LegViewModel is BPVHipViewModel)
+                {
+
+                    MessageBus.Default.Call("RebuildFirstBPV", this, LegSections[0]);
+
+
+                }
+                else if (Controller.CurrentViewModel.Controller.LegViewModel is BPVTibiaViewModel)
+                {
+
+                    MessageBus.Default.Call("RebuildFirstBPV_Tibia", null, null);
+
+
+                }
+                else if (Controller.CurrentViewModel.Controller.LegViewModel is HipPerforateViewModel)
+                {
+                    MessageBus.Default.Call("RebuildFirstPerforateHip", null, null);
 
 
 
 
                 }
+                else if (Controller.CurrentViewModel.Controller.LegViewModel is ZDSVViewModel)
+                {
+                    MessageBus.Default.Call("RebuildFirstZDSV", null, null);
+
+                }
+
+                else if (Controller.CurrentViewModel.Controller.LegViewModel is SPSViewModel)
+                {
+                    MessageBus.Default.Call("RebuildFirstSPS", null, null);
+                }
+                else if (Controller.CurrentViewModel.Controller.LegViewModel is TibiaPerforateViewModel)
+                {
+
+                    MessageBus.Default.Call("RebuildFirstPerforateTibia", null, null);
+
+                }
+                else if (Controller.CurrentViewModel.Controller.LegViewModel is MPVViewModel)
+                {
+                    MessageBus.Default.Call("RebuildFirstMPV", null, null);
+
+
+                }
+                else if (Controller.CurrentViewModel.Controller.LegViewModel is TEMPVViewModel)
+                {
+
+                    MessageBus.Default.Call("RebuildFirstTEMPV", null, null);
+
+                }
+                else if (Controller.CurrentViewModel.Controller.LegViewModel is PPVViewModel)
+                {
+                    MessageBus.Default.Call("RebuildFirstPPV", null, null);
+
+
+                }
+                else if (Controller.CurrentViewModel.Controller.LegViewModel is GVViewModel)
+                {
+                    MessageBus.Default.Call("RebuildFirstGV", null, null);
+
+
+                }
+
             }
 
         }
-
 
 
 
@@ -515,11 +553,12 @@ namespace WpfApp2.LegParts
 
 
 
-                    }else
+                    }
+                    else
                     {
 
                         CurrentPanelViewModel.SelectedMetricText = "";
-                    
+
                         CurrentPanelViewModel.HasDoubleSize = false;
                         CurrentPanelViewModel.HasSize = false;
                     }

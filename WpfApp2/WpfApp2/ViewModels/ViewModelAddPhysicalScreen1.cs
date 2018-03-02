@@ -1270,7 +1270,7 @@ namespace WpfApp2.ViewModels
                             leftLegExams.BPVTibiaid = LeftBPV_TibiaEntryFull.Id;
 
 
-                        if (!LeftGV.IsEmpty && leftLegExams.GVid == null )
+                        if (!LeftGV.IsEmpty && leftLegExams.GVid == null)
                             leftLegExams.GVid = LeftGVEntryFull.Id;
 
                         if (!LeftMPV.IsEmpty && leftLegExams.MPVid == null)
@@ -3106,15 +3106,15 @@ namespace WpfApp2.ViewModels
             //БПВ
             LeftBPVHip = new BPVHipViewModel(Controller, LegSide.Left);
             RightBPVHip = new BPVHipViewModel(Controller, LegSide.Right);
-            Controller.AddLegPartVM(LeftBPVHip);
-            Controller.AddLegPartVM(RightBPVHip);
+            //Controller.AddLegPartVM(LeftBPVHip);
+            //Controller.AddLegPartVM(RightBPVHip);
 
             ToLeftBPVHipCommand = new DelegateCommand(
                 () =>
                 {
                     MessageBus.Default.Call("RebuildFirstBPV", this, this);
                     Controller.LegViewModel = LeftBPVHip;
-                    Controller.NavigateTo<BPVHipViewModel>(LegSide.Left);
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
@@ -3123,7 +3123,7 @@ namespace WpfApp2.ViewModels
                 {
                     MessageBus.Default.Call("RebuildFirstBPV", this, this);
                     Controller.LegViewModel = RightBPVHip;
-                    Controller.NavigateTo<BPVHipViewModel>(LegSide.Right);
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
@@ -3132,15 +3132,15 @@ namespace WpfApp2.ViewModels
 
             LeftBPVTibia = new BPVTibiaViewModel(Controller, LegSide.Left);
             RightBPVTibia = new BPVTibiaViewModel(Controller, LegSide.Right);
-            Controller.AddLegPartVM(LeftBPVTibia);
-            Controller.AddLegPartVM(RightBPVTibia);
+            //Controller.AddLegPartVM(LeftBPVTibia);
+            //Controller.AddLegPartVM(RightBPVTibia);
 
             ToLeftBPVTibiaCommand = new DelegateCommand(
                 () =>
                 {
                     MessageBus.Default.Call("RebuildFirstBPV_Tibia", this, this);
                     Controller.LegViewModel = LeftBPVTibia;
-                    Controller.NavigateTo<BPVTibiaViewModel>(LegSide.Left);
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
@@ -3149,22 +3149,25 @@ namespace WpfApp2.ViewModels
                 {
                     MessageBus.Default.Call("RebuildFirstBPV_Tibia", this, this);
                     Controller.LegViewModel = RightBPVTibia;
-                    Controller.NavigateTo<BPVTibiaViewModel>(LegSide.Right);
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
             //Бедро перфорант
 
             LeftPerforate = new HipPerforateViewModel(Controller, LegSide.Left);
+           // LeftPerforate.isFromSomewearElse = false;
             RightPerforate = new HipPerforateViewModel(Controller, LegSide.Right);
-            Controller.AddLegPartVM(LeftPerforate);
-            Controller.AddLegPartVM(RightPerforate);
+          //  RightPerforate.isFromSomewearElse = false;
+            //Controller.AddLegPartVM(LeftPerforate);
+            //Controller.AddLegPartVM(RightPerforate);
             ToLeftPerforateCommand = new DelegateCommand(
                 () =>
                 {
                     MessageBus.Default.Call("RebuildFirstPerforateHip", this, this);
                     Controller.LegViewModel = LeftPerforate;
-                    Controller.NavigateTo<HipPerforateViewModel>(LegSide.Left);
+
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
@@ -3173,7 +3176,7 @@ namespace WpfApp2.ViewModels
                 {
                     MessageBus.Default.Call("RebuildFirstPerforateHip", this, this);
                     Controller.LegViewModel = RightPerforate;
-                    Controller.NavigateTo<HipPerforateViewModel>(LegSide.Right);
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
@@ -3182,14 +3185,14 @@ namespace WpfApp2.ViewModels
 
             LeftPPV = new PPVViewModel(Controller, LegSide.Left);
             RightPPV = new PPVViewModel(Controller, LegSide.Right);
-            Controller.AddLegPartVM(LeftPPV);
-            Controller.AddLegPartVM(RightPPV);
+            //Controller.AddLegPartVM(LeftPPV);
+            //Controller.AddLegPartVM(RightPPV);
             ToLeftPPVCommand = new DelegateCommand(
                 () =>
                 {
                     MessageBus.Default.Call("RebuildFirstPPV", this, this);
                     Controller.LegViewModel = LeftPPV;
-                    Controller.NavigateTo<PPVViewModel>(LegSide.Left);
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
@@ -3198,21 +3201,21 @@ namespace WpfApp2.ViewModels
                 {
                     MessageBus.Default.Call("RebuildFirstPPV", this, this);
                     Controller.LegViewModel = RightPPV;
-                    Controller.NavigateTo<PPVViewModel>(LegSide.Right);
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
             //GV
 
             LeftGV = new GVViewModel(Controller, LegSide.Left);
             RightGV = new GVViewModel(Controller, LegSide.Right);
-            Controller.AddLegPartVM(LeftGV);
-            Controller.AddLegPartVM(RightGV);
+            //Controller.AddLegPartVM(LeftGV);
+            //Controller.AddLegPartVM(RightGV);
             ToLeftGVCommand = new DelegateCommand(
                 () =>
                 {
                     MessageBus.Default.Call("RebuildFirstGV", this, this);
                     Controller.LegViewModel = LeftGV;
-                    Controller.NavigateTo<GVViewModel>(LegSide.Left);
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
@@ -3221,21 +3224,21 @@ namespace WpfApp2.ViewModels
                 {
                     MessageBus.Default.Call("RebuildFirstGV", this, this);
                     Controller.LegViewModel = RightGV;
-                    Controller.NavigateTo<GVViewModel>(LegSide.Right);
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
             //ПДСВ
             LeftPDSV = new PDSVViewModel(Controller, LegSide.Left);
             RightPDSV = new PDSVViewModel(Controller, LegSide.Right);
-            Controller.AddLegPartVM(LeftPDSV);
-            Controller.AddLegPartVM(RightPDSV);
+            //Controller.AddLegPartVM(LeftPDSV);
+            //Controller.AddLegPartVM(RightPDSV);
 
             ToLeftPDSVCommand = new DelegateCommand(
                 () =>
                 {
                     MessageBus.Default.Call("RebuildFirstPDSV", this, this);
                     Controller.LegViewModel = LeftPDSV;
-                    Controller.NavigateTo<PDSVViewModel>(LegSide.Left);
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
@@ -3244,7 +3247,7 @@ namespace WpfApp2.ViewModels
                 {
                     MessageBus.Default.Call("RebuildFirstPDSV", this, this);
                     Controller.LegViewModel = RightPDSV;
-                    Controller.NavigateTo<PDSVViewModel>(LegSide.Right);
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
@@ -3253,15 +3256,15 @@ namespace WpfApp2.ViewModels
             LeftSFS = new SFSViewModel(Controller, LegSide.Left);
             RightSFS = new SFSViewModel(Controller, LegSide.Right);
 
-            Controller.AddLegPartVM(LeftSFS);
-            Controller.AddLegPartVM(RightSFS);
+            //Controller.AddLegPartVM(LeftSFS);
+            //Controller.AddLegPartVM(RightSFS);
 
             ToLeftSFSCommand = new DelegateCommand(
                 () =>
                 {
                     MessageBus.Default.Call("RebuildFirstSFS", this, this);
                     Controller.LegViewModel = LeftSFS;
-                    Controller.NavigateTo<SFSViewModel>(LegSide.Left);
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
@@ -3270,7 +3273,7 @@ namespace WpfApp2.ViewModels
                 {
                     MessageBus.Default.Call("RebuildFirstSFS", this, this);
                     Controller.LegViewModel = RightSFS;
-                    Controller.NavigateTo<SFSViewModel>(LegSide.Right);
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
@@ -3279,8 +3282,8 @@ namespace WpfApp2.ViewModels
             LeftSPS = new SPSViewModel(Controller, LegSide.Left);
             RightSPS = new SPSViewModel(Controller, LegSide.Right);
 
-            Controller.AddLegPartVM(LeftSPS);
-            Controller.AddLegPartVM(RightSPS);
+            //Controller.AddLegPartVM(LeftSPS);
+            //Controller.AddLegPartVM(RightSPS);
             IMTCOUNT = new DelegateCommand(
             () =>
             {
@@ -3292,7 +3295,7 @@ namespace WpfApp2.ViewModels
                 {
                     MessageBus.Default.Call("RebuildFirstSPS", this, this);
                     Controller.LegViewModel = LeftSPS;
-                    Controller.NavigateTo<SPSViewModel>(LegSide.Left);
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
@@ -3301,7 +3304,7 @@ namespace WpfApp2.ViewModels
                 {
                     MessageBus.Default.Call("RebuildFirstSPS", this, this);
                     Controller.LegViewModel = RightSPS;
-                    Controller.NavigateTo<SPSViewModel>(LegSide.Right);
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
@@ -3309,14 +3312,14 @@ namespace WpfApp2.ViewModels
 
             LeftTibiaPerforate = new TibiaPerforateViewModel(Controller, LegSide.Left);
             RightTibiaPerforate = new TibiaPerforateViewModel(Controller, LegSide.Right);
-            Controller.AddLegPartVM(LeftTibiaPerforate);
-            Controller.AddLegPartVM(RightTibiaPerforate);
+            //Controller.AddLegPartVM(LeftTibiaPerforate);
+            //Controller.AddLegPartVM(RightTibiaPerforate);
             ToLeftTibiaPerforateCommand = new DelegateCommand(
                 () =>
                 {
                     MessageBus.Default.Call("RebuildFirstPerforateTibia", this, this);
                     Controller.LegViewModel = LeftTibiaPerforate;
-                    Controller.NavigateTo<TibiaPerforateViewModel>(LegSide.Left);
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
@@ -3325,7 +3328,7 @@ namespace WpfApp2.ViewModels
                 {
                     MessageBus.Default.Call("RebuildFirstPerforateTibia", this, this);
                     Controller.LegViewModel = RightTibiaPerforate;
-                    Controller.NavigateTo<TibiaPerforateViewModel>(LegSide.Right);
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
@@ -3334,15 +3337,15 @@ namespace WpfApp2.ViewModels
             LeftZDSV = new ZDSVViewModel(Controller, LegSide.Left);
             RightZDSV = new ZDSVViewModel(Controller, LegSide.Right);
 
-            Controller.AddLegPartVM(LeftZDSV);
-            Controller.AddLegPartVM(RightZDSV);
+            //Controller.AddLegPartVM(LeftZDSV);
+            //Controller.AddLegPartVM(RightZDSV);
 
             ToLeftZDSVCommand = new DelegateCommand(
                 () =>
                 {
                     MessageBus.Default.Call("RebuildFirstZDSV", this, this);
                     Controller.LegViewModel = LeftZDSV;
-                    Controller.NavigateTo<ZDSVViewModel>(LegSide.Left);
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
@@ -3351,7 +3354,7 @@ namespace WpfApp2.ViewModels
                 {
                     MessageBus.Default.Call("RebuildFirstZDSV", this, this);
                     Controller.LegViewModel = RightZDSV;
-                    Controller.NavigateTo<ZDSVViewModel>(LegSide.Right);
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
@@ -3361,15 +3364,15 @@ namespace WpfApp2.ViewModels
             LeftMPV = new MPVViewModel(Controller, LegSide.Left);
             RightMPV = new MPVViewModel(Controller, LegSide.Right);
 
-            Controller.AddLegPartVM(LeftMPV);
-            Controller.AddLegPartVM(RightMPV);
+            //Controller.AddLegPartVM(LeftMPV);
+            //Controller.AddLegPartVM(RightMPV);
 
             ToLeftMPVCommand = new DelegateCommand(
                 () =>
                 {
                     MessageBus.Default.Call("RebuildFirstMPV", this, this);
                     Controller.LegViewModel = LeftMPV;
-                    Controller.NavigateTo<MPVViewModel>(LegSide.Left);
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
@@ -3378,7 +3381,7 @@ namespace WpfApp2.ViewModels
                 {
                     MessageBus.Default.Call("RebuildFirstMPV", this, this);
                     Controller.LegViewModel = RightMPV;
-                    Controller.NavigateTo<MPVViewModel>(LegSide.Right);
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
@@ -3388,15 +3391,15 @@ namespace WpfApp2.ViewModels
             LeftTEMPV = new TEMPVViewModel(Controller, LegSide.Left);
             RightTEMPV = new TEMPVViewModel(Controller, LegSide.Right);
 
-            Controller.AddLegPartVM(LeftTEMPV);
-            Controller.AddLegPartVM(RightTEMPV);
+            //Controller.AddLegPartVM(LeftTEMPV);
+            //Controller.AddLegPartVM(RightTEMPV);
 
             ToLeftTEMPVCommand = new DelegateCommand(
                 () =>
                 {
                     MessageBus.Default.Call("RebuildFirstTEMPV", this, this);
                     Controller.LegViewModel = LeftTEMPV;
-                    Controller.NavigateTo<TEMPVViewModel>(LegSide.Left);
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
@@ -3405,7 +3408,7 @@ namespace WpfApp2.ViewModels
                 {
                     MessageBus.Default.Call("RebuildFirstTEMPV", this, this);
                     Controller.LegViewModel = RightTEMPV;
-                    Controller.NavigateTo<TEMPVViewModel>(LegSide.Right);
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
@@ -3414,8 +3417,8 @@ namespace WpfApp2.ViewModels
             LeftCEAR = new LettersViewModel(Controller, LegSide.Left);
             RightCEAR = new LettersViewModel(Controller, LegSide.Right);
 
-            Controller.AddLegPartVM(LeftCEAR);
-            Controller.AddLegPartVM(RightCEAR);
+            //Controller.AddLegPartVM(LeftCEAR);
+            //Controller.AddLegPartVM(RightCEAR);
 
             ToLeftCEARCommand = new DelegateCommand(
                 () =>
@@ -3423,7 +3426,7 @@ namespace WpfApp2.ViewModels
                     //MessageBus.Default.Call("RebuildFirstTEMPV", this, this);
                     Controller.LegViewModel = LeftCEAR;
                     MessageBus.Default.Call("RebuildFirstCEAP", this, null);
-                    Controller.NavigateTo<LettersViewModel>(LegSide.Left);
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
@@ -3433,7 +3436,7 @@ namespace WpfApp2.ViewModels
                     //MessageBus.Default.Call("RebuildFirstTEMPV", this, this);
                     Controller.LegViewModel = RightCEAR;
                     MessageBus.Default.Call("RebuildFirstCEAP", this, null);
-                    Controller.NavigateTo<LettersViewModel>(LegSide.Right);
+                    Controller.NavigateTo<LegPartViewModel>();
                 }
             );
 
@@ -5049,7 +5052,7 @@ namespace WpfApp2.ViewModels
                 return LeftSFSEntryFullbuf;
 
             }
-            else 
+            else
             {
 
                 Examination Exam = Data.Examination.Get(obsid);
@@ -7055,6 +7058,7 @@ namespace WpfApp2.ViewModels
 
                     TEMPVEntry EntToChange = new TEMPVEntry();
                     TEMPVEntryFull EntFullToChange = Data.TEMPVFull.Get(LegExam.TEMPVid.Value);
+                    EntFullToChange.FF_Length = Part.FF_length;
                     for (int i = 0; i < Part.LegSections.Count; ++i)
                     {
                         if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
@@ -7749,7 +7753,7 @@ namespace WpfApp2.ViewModels
         private void Clear(object sender, object data)
         {
 
-            Controller.ClearLegPartVM();
+            //   Controller.ClearLegPartVM();
             mode = "Normal";
             TextTip = "";
             GVLeftstr = new List<string>();
@@ -7942,709 +7946,1013 @@ namespace WpfApp2.ViewModels
             RightDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
             RecomendationsList = new List<RecomendationsDataSource>();
             ComplainsList = new List<ComplainsDataSource>();
-            // if (!LeftCEAR.IsEmpty)
-            LeftCEAR = new LettersViewModel(Controller, LegSide.Left);
-            //  if (!RightCEAR.IsEmpty)
-            RightCEAR = new LettersViewModel(Controller, LegSide.Right);
 
-
-            LeftTEMPV = new TEMPVViewModel(Controller, LegSide.Left);
-
-            RightTEMPV = new TEMPVViewModel(Controller, LegSide.Right);
-
-
-            LeftMPV = new MPVViewModel(Controller, LegSide.Left);
-
-            RightMPV = new MPVViewModel(Controller, LegSide.Right);
-            LeftZDSV = new ZDSVViewModel(Controller, LegSide.Left);
-            RightZDSV = new ZDSVViewModel(Controller, LegSide.Right);
-            LeftTibiaPerforate = new TibiaPerforateViewModel(Controller, LegSide.Left);
-            RightTibiaPerforate = new TibiaPerforateViewModel(Controller, LegSide.Right);
-            LeftSPS = new SPSViewModel(Controller, LegSide.Left);
-            RightSPS = new SPSViewModel(Controller, LegSide.Right);
-            LeftSFS = new SFSViewModel(Controller, LegSide.Left);
-            RightSFS = new SFSViewModel(Controller, LegSide.Right);
-            LeftPDSV = new PDSVViewModel(Controller, LegSide.Left);
-            RightPDSV = new PDSVViewModel(Controller, LegSide.Right);
-            LeftGV = new GVViewModel(Controller, LegSide.Left);
-            RightGV = new GVViewModel(Controller, LegSide.Right);
-            LeftPPV = new PPVViewModel(Controller, LegSide.Left);
-            RightPPV = new PPVViewModel(Controller, LegSide.Right);
-            LeftPerforate = new HipPerforateViewModel(Controller, LegSide.Left);
-            RightPerforate = new HipPerforateViewModel(Controller, LegSide.Right);
-            LeftBPVTibia = new BPVTibiaViewModel(Controller, LegSide.Left);
-            RightBPVTibia = new BPVTibiaViewModel(Controller, LegSide.Right);
-            LeftBPVHip = new BPVHipViewModel(Controller, LegSide.Left);
-            RightBPVHip = new BPVHipViewModel(Controller, LegSide.Right);
-            Controller.AddLegPartVM(LeftTEMPV);
-            Controller.AddLegPartVM(RightTEMPV);
-            Controller.AddLegPartVM(LeftMPV);
-            Controller.AddLegPartVM(RightMPV);
-            Controller.AddLegPartVM(LeftZDSV);
-            Controller.AddLegPartVM(RightZDSV);
-            Controller.AddLegPartVM(LeftTibiaPerforate);
-            Controller.AddLegPartVM(RightTibiaPerforate);
-            Controller.AddLegPartVM(LeftSPS);
-            Controller.AddLegPartVM(RightSPS);
-            Controller.AddLegPartVM(LeftSFS);
-            Controller.AddLegPartVM(RightSFS);
-            Controller.AddLegPartVM(LeftPDSV);
-            Controller.AddLegPartVM(RightPDSV);
-            Controller.AddLegPartVM(LeftGV);
-            Controller.AddLegPartVM(RightGV);
-            Controller.AddLegPartVM(LeftPPV);
-            Controller.AddLegPartVM(RightPPV);
-            Controller.AddLegPartVM(LeftPerforate);
-            Controller.AddLegPartVM(RightPerforate);
-            Controller.AddLegPartVM(LeftBPVTibia);
-            Controller.AddLegPartVM(RightBPVTibia);
-            Controller.AddLegPartVM(LeftBPVHip);
-            Controller.AddLegPartVM(RightBPVHip);
-            Controller.AddLegPartVM(LeftCEAR);
-            Controller.AddLegPartVM(RightCEAR);
-            LeftAdditionalText = "";
-            RightAdditionalText = "";
-            SetAllBordersDefault();
-        }
-        int obsid;
-        private void GetObsForOverview(object sender, object data)
-        {
-            Clear(this, null);//?
-            mode = "EDIT";
-            MessageBus.Default.Call("SetMode", this, "EDIT");
-            obsid = (int)data;
-
-            using (var context = new MySqlContext())
+           
+            for (int i = 0; i < RightCEAR.LevelCount; i++)
             {
-                ExaminationRepository ExamRep = new ExaminationRepository(context);
-                ExaminationLegRepository LegExamRep = new ExaminationLegRepository(context);
-                LettersRepository LettersRep = new LettersRepository(context);
-
-
-
-                Examination Exam = ExamRep.Get(obsid);
-                ExaminationLeg leftLegExam = LegExamRep.Get(Exam.idLeftLegExamination.Value);
-                ExaminationLeg rightLegExam = LegExamRep.Get(Exam.idRightLegExamination.Value);
-
-
-
-
-                Weight = Exam.weight.ToString();
-                Growth = Exam.height.ToString();
-                TextTip = Exam.NB;
-
-
-                LeftAdditionalText = leftLegExam.additionalText;
-
-                PDSVHipEntryFullRepository PDSVEntryFullRep = new PDSVHipEntryFullRepository(context);
-                if (leftLegExam.PDSVid != null)
+                if (i != 0)
                 {
-                    GetLegPartFromEntry(PDSVEntryFullRep.Get(leftLegExam.PDSVid.Value), LeftPDSV, true);
+                    RightCEAR.LegSections.Add(new LettersSectionViewModel(Controller, RightCEAR.LegSections[i - 1]));
+
                 }
-
-
-                BPVHipEntryFullRepository BPVEntryFullRep = new BPVHipEntryFullRepository(context);
-                if (leftLegExam.BPVHip != null)
-                    GetLegPartFromEntry(BPVEntryFullRep.Get(leftLegExam.BPVHip.Value), LeftBPVHip, true);
-
-
-                BPV_TibiaEntryFullRepository BPVTibiaEntryFullRep = new BPV_TibiaEntryFullRepository(context);
-                if (leftLegExam.BPVTibiaid != null)
-                    GetLegPartFromEntry(BPVTibiaEntryFullRep.Get(leftLegExam.BPVTibiaid.Value), LeftBPVTibia, true);
-
-
-
-                GVEntryFullRepository GVEntryFullRep = new GVEntryFullRepository(context);
-                if (leftLegExam.GVid != null)
-                    GetLegPartFromEntry(GVEntryFullRep.Get(leftLegExam.GVid.Value), LeftGV, true);
-
-
-                MPVEntryFullRepository MPVEntryFullRep = new MPVEntryFullRepository(context);
-                if (leftLegExam.MPVid != null)
-                    GetLegPartFromEntry(MPVEntryFullRep.Get(leftLegExam.MPVid.Value), LeftMPV, true);
-
-
-                Perforate_hipEntryFullRepository PerforateEntryFullRep = new Perforate_hipEntryFullRepository(context);
-                if (leftLegExam.PerforateHipid != null)
-                    GetLegPartFromEntry(PerforateEntryFullRep.Get(leftLegExam.PerforateHipid.Value), LeftPerforate, true);
-
-
-
-                PPVEntryFullRepository PPVEntryFullRep = new PPVEntryFullRepository(context);
-                if (leftLegExam.PPVid != null)
-                    GetLegPartFromEntry(PPVEntryFullRep.Get(leftLegExam.PPVid.Value), LeftPPV, true);
-
-
-
-                SFSHipEntryFullRepository SFSEntryFullRep = new SFSHipEntryFullRepository(context);
-                if (leftLegExam.SFSid != null)
-                    GetLegPartFromEntry(SFSEntryFullRep.Get(leftLegExam.SFSid.Value), LeftSFS, true);
-
-
-                SPSHipEntryFullRepository SPSEntryFullRep = new SPSHipEntryFullRepository(context);
-                if (leftLegExam.SPSid != null)
-                    GetLegPartFromEntry(SPSEntryFullRep.Get(leftLegExam.SPSid.Value), LeftSPS, true);
-
-
-
-
-                TEMPVEntryFullRepository TEMPVEntryFullRep = new TEMPVEntryFullRepository(context);
-                if (leftLegExam.TEMPVid != null)
-                    GetLegPartFromEntry(TEMPVEntryFullRep.Get(leftLegExam.TEMPVid.Value), LeftTEMPV, true);
-
-
-
-                Perforate_shinEntryFullRepository TibiaPerforateEntryFullRep = new Perforate_shinEntryFullRepository(context);
-                if (leftLegExam.TibiaPerforateid != null)
-                    GetLegPartFromEntry(TibiaPerforateEntryFullRep.Get(leftLegExam.TibiaPerforateid.Value), LeftTibiaPerforate, true);
-
-
-
-
-
-                ZDSVEntryFullRepository ZDSVEntryFullRep = new ZDSVEntryFullRepository(context);
-
-                if (leftLegExam.ZDSVid != null)
-                    GetLegPartFromEntry(ZDSVEntryFullRep.Get(leftLegExam.ZDSVid.Value), LeftZDSV, true);
-
-
-                if (leftLegExam.C != null)
-                    LeftCEAR.LegSections[0].SelectedValue = LettersRep.Get(leftLegExam.C.Value);
-
-                if (leftLegExam.E != null)
-                    LeftCEAR.LegSections[1].SelectedValue = LettersRep.Get(leftLegExam.E.Value);
-
-                if (leftLegExam.A != null)
-                    LeftCEAR.LegSections[2].SelectedValue = LettersRep.Get(leftLegExam.A.Value);
-
-                if (leftLegExam.P != null)
-                    LeftCEAR.LegSections[3].SelectedValue = LettersRep.Get(leftLegExam.P.Value);
-
-
-
-                LeftCEAR.SaveCommand.Execute();
-
-
-
-
-
-
-
-
-
-
-
-
-
-                RightAdditionalText = rightLegExam.additionalText;
-
-
-
-                if (rightLegExam.PDSVid != null)
-                    GetLegPartFromEntry(PDSVEntryFullRep.Get(rightLegExam.PDSVid.Value), RightPDSV, false);
-
-
-
-
-                if (rightLegExam.BPVHip != null)
-                    GetLegPartFromEntry(BPVEntryFullRep.Get(rightLegExam.BPVHip.Value), RightBPVHip, false);
-
-
-
-                if (rightLegExam.BPVTibiaid != null)
-                    GetLegPartFromEntry(BPVTibiaEntryFullRep.Get(rightLegExam.BPVTibiaid.Value), RightBPVTibia, false);
-
-
-
-
-                if (rightLegExam.GVid != null)
-                    GetLegPartFromEntry(GVEntryFullRep.Get(rightLegExam.GVid.Value), RightGV, false);
-
-
-
-                if (rightLegExam.MPVid != null)
-                    GetLegPartFromEntry(MPVEntryFullRep.Get(rightLegExam.MPVid.Value), RightMPV, false);
-
-
-
-                if (rightLegExam.PerforateHipid != null)
-                    GetLegPartFromEntry(PerforateEntryFullRep.Get(rightLegExam.PerforateHipid.Value), RightPerforate, false);
-
-
-
-
-                if (rightLegExam.PPVid != null)
-                    GetLegPartFromEntry(PPVEntryFullRep.Get(rightLegExam.PPVid.Value), RightPPV, false);
-
-
-
-                if (rightLegExam.SFSid != null)
-                    GetLegPartFromEntry(SFSEntryFullRep.Get(rightLegExam.SFSid.Value), RightSFS, false);
-
-
-
-                if (rightLegExam.SPSid != null)
-                    GetLegPartFromEntry(SPSEntryFullRep.Get(rightLegExam.SPSid.Value), RightSPS, false);
-
-
-
-
-
-                if (rightLegExam.TEMPVid != null)
-                    GetLegPartFromEntry(TEMPVEntryFullRep.Get(rightLegExam.TEMPVid.Value), RightTEMPV, false);
-
-                if (rightLegExam.TibiaPerforateid != null)
-                    GetLegPartFromEntry(TibiaPerforateEntryFullRep.Get(rightLegExam.TibiaPerforateid.Value), RightTibiaPerforate, false);
-
-                if (rightLegExam.ZDSVid != null)
-                    GetLegPartFromEntry(ZDSVEntryFullRep.Get(rightLegExam.ZDSVid.Value), RightZDSV, false);
-
-                if (rightLegExam.C != null)
-                    RightCEAR.LegSections[0].SelectedValue = LettersRep.Get(rightLegExam.C.Value);
-
-                if (rightLegExam.E != null)
-                    RightCEAR.LegSections[1].SelectedValue = LettersRep.Get(rightLegExam.E.Value);
-
-                if (rightLegExam.A != null)
-                    RightCEAR.LegSections[2].SelectedValue = LettersRep.Get(rightLegExam.A.Value);
-
-                if (rightLegExam.P != null)
-                    RightCEAR.LegSections[3].SelectedValue = LettersRep.Get(rightLegExam.P.Value);
-
-                RightCEAR.SaveCommand.Execute();
-
-
-
-
-
-
-
-
-
-
-
-                DiagnosisObsRepository diagRep = new DiagnosisObsRepository(context);
-                ComplanesObsRepository compRep = new ComplanesObsRepository(context);
-                RecomendationObsRepository recRep = new RecomendationObsRepository(context);
-
-
-
-                LeftDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
-
-
-                DiagnosisDataSource diagDSourceBuf;
-                foreach (var diag in Data.DiagnosisObs.GetAll.Where(s => s.isLeft == true && s.id_обследование_ноги == Exam.Id).ToList())
+                else
                 {
-                    diagDSourceBuf = new DiagnosisDataSource(Data.DiagnosisTypes.Get(diag.id_диагноз.Value));
-                    diagDSourceBuf.IsChecked = true;
-                    LeftDiagnosisList.Add(diagDSourceBuf);
+                    RightCEAR.LegSections.Add(new LettersSectionViewModel(Controller, null));
                 }
+                RightCEAR.LegSections[i].IsVisible = Visibility.Visible;
 
-                RightDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
-
-
-
-                foreach (var diag in Data.DiagnosisObs.GetAll.Where(s => s.isLeft == false && s.id_обследование_ноги == Exam.Id).ToList())
+                if (i == 0)
                 {
-                    diagDSourceBuf = new DiagnosisDataSource(Data.DiagnosisTypes.Get(diag.id_диагноз.Value));
-                    diagDSourceBuf.IsChecked = true;
-                    RightDiagnosisList.Add(diagDSourceBuf);
+                    RightCEAR.LegSections[i].StructureSource = new ObservableCollection<Letters>(Data.Letters.GetAll.ToList().Where(x => x.Leter == "C").ToList());
+                    RightCEAR.LegSections[i].ListNumber = "C";
                 }
-
-                MessageBus.Default.Call("SetDiagnosisListBecauseOFEdit", LeftDiagnosisList, RightDiagnosisList);
-
-                ComplainsList = new List<ComplainsDataSource>();
-                ComplainsDataSource compDSourceBuf;
-                foreach (var diag in Data.ComplanesObs.GetAll.Where(s => s.id_обследования == Exam.Id).ToList())
+                else if (i == 1)
                 {
-                    compDSourceBuf = new ComplainsDataSource(Data.ComplainsTypes.Get(diag.id_жалобы));
-                    compDSourceBuf.IsChecked = true;
-                    ComplainsList.Add(compDSourceBuf);
+                    RightCEAR.LegSections[i].StructureSource = new ObservableCollection<Letters>(Data.Letters.GetAll.ToList().Where(x => x.Leter == "E").ToList());
+                    RightCEAR.LegSections[i].ListNumber = "E";
                 }
-                RecomendationsList = new List<RecomendationsDataSource>();
-                RecomendationsDataSource recDSourceBuf;
-
-                foreach (var diag in Data.RecomendationObs.GetAll.Where(s => s.id_обследования == Exam.Id).ToList())
+                else if (i == 2)
                 {
-                    recDSourceBuf = new RecomendationsDataSource(Data.RecomendationsTypes.Get(diag.id_рекомендации));
-                    recDSourceBuf.IsChecked = true;
-                    RecomendationsList.Add(recDSourceBuf);
+                    RightCEAR.LegSections[i].StructureSource = new ObservableCollection<Letters>(Data.Letters.GetAll.ToList().Where(x => x.Leter == "A").ToList());
+                    RightCEAR.LegSections[i].ListNumber = "A";
                 }
-                MessageBus.Default.Call("SetDRecomendationListBecauseOFEdit", this, RecomendationsList);
-
-                MessageBus.Default.Call("SetDComplanesListBecauseOFEdit", this, ComplainsList);
-
-
-                //leftLegExams.additionalText = LeftAdditionalText;
-                //if (LeftCEAR.LegSections[0].SelectedValue != null)
-                //    leftLegExams.C = LeftCEAR.LegSections[0].SelectedValue.Id;
-                //if (LeftCEAR.LegSections[1].SelectedValue != null)
-                //    leftLegExams.E = LeftCEAR.LegSections[1].SelectedValue.Id;
-                //if (LeftCEAR.LegSections[2].SelectedValue != null)
-                //    leftLegExams.A = LeftCEAR.LegSections[2].SelectedValue.Id;
-                //if (LeftCEAR.LegSections[3].SelectedValue != null)
-                //    leftLegExams.P = LeftCEAR.LegSections[3].SelectedValue.Id;
-
-
+                else if (i == 3)
+                {
+                    RightCEAR.LegSections[i].StructureSource = new ObservableCollection<Letters>(Data.Letters.GetAll.ToList().Where(x => x.Leter == "P").ToList());
+                    RightCEAR.LegSections[i].ListNumber = "P";
+                }
+                Letters emptyLetter = new Letters();
+                emptyLetter.Id = 0;
+                emptyLetter.Text1 = "";
+                emptyLetter.Leter = "";
+                RightCEAR.LegSections[i].StructureSource.Add(emptyLetter);
             }
-            MessageBus.Default.Call("SetMode", this, "Normal");
-        }
-        //  public ObservableCollection<>
-        //кто присылает и что присылает
-        private void Handler(object sender, object data)
-        {
-            Type senderType = sender.GetType();
-            LegPartViewModel senderVM = (LegPartViewModel)sender;
-            //  BPVHipEntryFull bpv = new BPVHipEntryFull();
-            if (senderType == typeof(GVViewModel))
-                if (senderVM.CurrentLegSide == LegSide.Left)
+
+
+
+            for (int i = 0; i < LeftCEAR.LevelCount; i++)
+            {
+                if (i != 0)
                 {
-                    GVLeftstr = new List<string>();
-                    LeftGVEntryFull = new GVEntryFull();
-                    //to do тут должно быть сохранение
-                    LeftGV = (GVViewModel)sender;
-                    SaveSet result = SaveViewModel(LeftGV);
-                    GVLeftstr = result.stringList;
-                    IsVisibleGVleft = result.listVisibility;
-
-                }
-
-                else
-                {
-                    GVRightstr = new List<string>();
-                    RightGVEntryFull = new GVEntryFull();
-                    //to do тут должно быть сохранение
-                    RightGV = (GVViewModel)sender;
-                    SaveSet result = SaveViewModel(RightGV);
-                    GVRightstr = result.stringList;
-                    IsVisibleGVRight = result.listVisibility;
-
-                }
-
-
-
-
-            if (senderType == typeof(MPVViewModel))
-                if (senderVM.CurrentLegSide == LegSide.Left)
-                {
-                    MPVLeftstr = new List<string>();
-                    LeftMPVEntryFull = new MPVEntryFull();
-                    //to do тут должно быть сохранение
-                    LeftMPV = (MPVViewModel)sender;
-                    SaveSet result = SaveViewModel(LeftMPV);
-                    MPVLeftstr = result.stringList;
-                    IsVisibleMPVleft = result.listVisibility;
-
-                }
-
-                else
-                {
-                    MPVRightstr = new List<string>();
-                    RightMPVEntryFull = new MPVEntryFull();
-                    //to do тут должно быть сохранение
-                    RightMPV = (MPVViewModel)sender;
-                    SaveSet result = SaveViewModel(RightMPV);
-                    MPVRightstr = result.stringList;
-                    IsVisibleMPVRight = result.listVisibility;
-
-                }
-
-
-
-            if (senderType == typeof(PPVViewModel))
-                if (senderVM.CurrentLegSide == LegSide.Left)
-                {
-                    PPVLeftstr = new List<string>();
-                    LeftPPVEntryFull = new PPVEntryFull();
-                    //to do тут должно быть сохранение
-                    LeftPPV = (PPVViewModel)sender;
-                    SaveSet result = SaveViewModel(LeftPPV);
-                    PPVLeftstr = result.stringList;
-                    IsVisiblePPVleft = result.listVisibility;
-
-                }
-
-                else
-                {
-                    PPVRightstr = new List<string>();
-                    RightPPVEntryFull = new PPVEntryFull();
-                    //to do тут должно быть сохранение
-                    RightPPV = (PPVViewModel)sender;
-                    SaveSet result = SaveViewModel(RightPPV);
-                    PPVRightstr = result.stringList;
-                    IsVisiblePPVRight = result.listVisibility;
-
-                }
-
-
-
-
-
-            if (senderType == typeof(TEMPVViewModel))
-                if (senderVM.CurrentLegSide == LegSide.Left)
-                {
-                    TEMPVLeftstr = new List<string>();
-                    LeftTEMPVEntryFull = new TEMPVEntryFull();
-                    //to do тут должно быть сохранение
-                    LeftTEMPV = (TEMPVViewModel)sender;
-                    SaveSet result = SaveViewModel(LeftTEMPV);
-                    TEMPVLeftstr = result.stringList;
-                    IsVisibleTEMPVleft = result.listVisibility;
-
-                }
-
-                else
-                {
-                    TEMPVRightstr = new List<string>();
-                    RightTEMPVEntryFull = new TEMPVEntryFull();
-                    //to do тут должно быть сохранение
-                    RightTEMPV = (TEMPVViewModel)sender;
-                    SaveSet result = SaveViewModel(RightTEMPV);
-                    TEMPVRightstr = result.stringList;
-                    IsVisibleTEMPVRight = result.listVisibility;
-
-                }
-            //sender проверять какого типа
-            if (senderType == typeof(SFSViewModel))
-                if (senderVM.CurrentLegSide == LegSide.Left)
-                {
-                    SFSLeftstr = new List<string>();
-                    LeftSFSEntryFull = new SFSHipEntryFull();
-                    //to do тут должно быть сохранение
-                    LeftSFS = (SFSViewModel)sender;
-                    SaveSet result = SaveViewModel(LeftSFS);
-                    SFSLeftstr = result.stringList;
-                    IsVisibleSFSleft = result.listVisibility;
-
-                }
-
-                else
-                {
-                    SFSRightstr = new List<string>();
-                    RightSFSEntryFull = new SFSHipEntryFull();
-                    //to do тут должно быть сохранение
-                    RightSFS = (SFSViewModel)sender;
-                    SaveSet result = SaveViewModel(RightSFS);
-                    SFSRightstr = result.stringList;
-                    IsVisibleSFSRight = result.listVisibility;
-
-                }
-
-            //
-
-
-            if (senderType == typeof(SPSViewModel))
-                if (senderVM.CurrentLegSide == LegSide.Left)
-                {
-                    SPSLeftstr = new List<string>();
-                    LeftSPSEntryFull = new SPSHipEntryFull();
-                    //to do тут должно быть сохранение
-                    LeftSPS = (SPSViewModel)sender;
-                    SaveSet result = SaveViewModel(LeftSPS);
-                    SPSLeftstr = result.stringList;
-                    IsVisibleSPSleft = result.listVisibility;
-
-                }
-
-                else
-                {
-                    SPSRightstr = new List<string>();
-                    RightSPSEntryFull = new SPSHipEntryFull();
-                    //to do тут должно быть сохранение
-                    RightSPS = (SPSViewModel)sender;
-                    SaveSet result = SaveViewModel(RightSPS);
-                    SPSRightstr = result.stringList;
-                    IsVisibleSPSRight = result.listVisibility;
-
-                }
-
-
-            if (senderType == typeof(TibiaPerforateViewModel))
-                if (senderVM.CurrentLegSide == LegSide.Left)
-                {
-                    Perforate_shinLeftstr = new List<string>();
-                    LeftPerforate_shinEntryFull = new Perforate_shinEntryFull();
-                    //to do тут должно быть сохранение
-                    LeftTibiaPerforate = (TibiaPerforateViewModel)sender;
-                    SaveSet result = SaveViewModel(LeftTibiaPerforate);
-                    Perforate_shinLeftstr = result.stringList;
-                    IsVisiblePerforate_shinleft = result.listVisibility;
-
-                }
-
-                else
-                {
-                    Perforate_shinRightstr = new List<string>();
-                    RightPerforate_shinEntryFull = new Perforate_shinEntryFull();
-                    //to do тут должно быть сохранение
-                    RightTibiaPerforate = (TibiaPerforateViewModel)sender;
-                    SaveSet result = SaveViewModel(RightTibiaPerforate);
-                    Perforate_shinRightstr = result.stringList;
-                    IsVisiblePerforate_shinRight = result.listVisibility;
-
-                }
-
-
-
-            //
-
-
-
-
-            if (senderType == typeof(BPVHipViewModel))
-                if (senderVM.CurrentLegSide == LegSide.Left)
-                {
-                    LeftBPVEntryFull = new BPVHipEntryFull();
-                    //to do тут должно быть сохранение
-                    LeftBPVHip = (BPVHipViewModel)sender;
-                    SaveSet result = SaveViewModel(LeftBPVHip);
-                    BpvLeftstr = result.stringList;
-                    IsVisibleBPVleft = result.listVisibility;
+                    LeftCEAR.LegSections.Add(new LettersSectionViewModel(Controller, LeftCEAR.LegSections[i - 1]));
 
                 }
                 else
                 {
-                    RightBPVEntryFull = new BPVHipEntryFull();
-                    BpvRightstr = new List<string>();
-                    RightBPVHip = (BPVHipViewModel)sender;
-                    SaveSet result = SaveViewModel(RightBPVHip);
-                    BpvRightstr = result.stringList;
-                    IsVisibleBPVRight = result.listVisibility;
+                    LeftCEAR.LegSections.Add(new LettersSectionViewModel(Controller, null));
+                }
+                LeftCEAR.LegSections[i].IsVisible = Visibility.Visible;
 
+                if (i == 0)
+                {
+                    LeftCEAR.LegSections[i].StructureSource = new ObservableCollection<Letters>(Data.Letters.GetAll.ToList().Where(x => x.Leter == "C").ToList());
+                    LeftCEAR.LegSections[i].ListNumber = "C";
+                }
+                else if (i == 1)
+                {
+                    LeftCEAR.LegSections[i].StructureSource = new ObservableCollection<Letters>(Data.Letters.GetAll.ToList().Where(x => x.Leter == "E").ToList());
+                    LeftCEAR.LegSections[i].ListNumber = "E";
+                }
+                else if (i == 2)
+                {
+                    LeftCEAR.LegSections[i].StructureSource = new ObservableCollection<Letters>(Data.Letters.GetAll.ToList().Where(x => x.Leter == "A").ToList());
+                    LeftCEAR.LegSections[i].ListNumber = "A";
+                }
+                else if (i == 3)
+                {
+                    LeftCEAR.LegSections[i].StructureSource = new ObservableCollection<Letters>(Data.Letters.GetAll.ToList().Where(x => x.Leter == "P").ToList());
+                    LeftCEAR.LegSections[i].ListNumber = "P";
+                }
+                Letters emptyLetter = new Letters();
+                emptyLetter.Id = 0;
+                emptyLetter.Text1 = "";
+                emptyLetter.Leter = "";
+                LeftCEAR.LegSections[i].StructureSource.Add(emptyLetter);
+            }
+
+
+
+
+
+            LeftTEMPV.FF_length = 0;
+                LeftTEMPV.IsEmpty = true;
+                LeftTEMPV.LegSections = new ObservableCollection<LegSectionViewModel>();
+                for (int i = 0; i < LeftTEMPV.LevelCount; i++)
+                {
+                    if (i != 0)
+                        LeftTEMPV.LegSections.Add(new TEMPVSectionViewModel(Controller, LeftTEMPV.LegSections[i - 1], i + 1));
+                    else
+                        LeftTEMPV.LegSections.Add(new TEMPVSectionViewModel(Controller, null, i + 1));
+                }
+                RightTEMPV.FF_length = 0;
+                RightTEMPV.IsEmpty = true;
+                RightTEMPV.LegSections = new ObservableCollection<LegSectionViewModel>();
+                for (int i = 0; i < LeftTEMPV.LevelCount; i++)
+                {
+                    if (i != 0)
+                        RightTEMPV.LegSections.Add(new TEMPVSectionViewModel(Controller, RightTEMPV.LegSections[i - 1], i + 1));
+                    else
+                        RightTEMPV.LegSections.Add(new TEMPVSectionViewModel(Controller, null, i + 1));
                 }
 
-            if (senderType == typeof(PDSVViewModel))
-                if (senderVM.CurrentLegSide == LegSide.Left)
+
+
+
+
+                LeftMPV.IsEmpty = true;
+                LeftMPV.LegSections = new ObservableCollection<LegSectionViewModel>();
+                for (int i = 0; i < LeftMPV.LevelCount; i++)
                 {
-                    LeftPDSVEntryFull = new PDSVHipEntryFull();
-                    //to do тут должно быть сохранение
-                    LeftPDSV = (PDSVViewModel)sender;
-                    SaveSet result = SaveViewModel(LeftPDSV);
-                    PDSVLeftstr = result.stringList;
-                    IsVisiblePDSVleft = result.listVisibility;
-                    //SaveAll();
-
-
-                }
-                else
-                {
-                    RightPDSVEntryFull = new PDSVHipEntryFull();
-                    //to do тут должно быть сохранение
-                    RightPDSV = (PDSVViewModel)sender;
-                    SaveSet result = SaveViewModel(RightPDSV);
-                    PDSVRightstr = result.stringList;
-                    IsVisiblePDSVright = result.listVisibility;
-
+                    if (i != 0)
+                        LeftMPV.LegSections.Add(new MPVSectionViewModel(Controller, LeftMPV.LegSections[i - 1], i + 1));
+                    else
+                        LeftMPV.LegSections.Add(new MPVSectionViewModel(Controller, null, i + 1));
                 }
 
-            //
-            if (senderType == typeof(ZDSVViewModel))
-                if (senderVM.CurrentLegSide == LegSide.Left)
+                RightMPV.IsEmpty = true;
+                RightMPV.LegSections = new ObservableCollection<LegSectionViewModel>();
+                for (int i = 0; i < LeftMPV.LevelCount; i++)
                 {
-                    LeftZDSVEntryFull = new ZDSVEntryFull();
-                    //to do тут должно быть сохранение
-                    LeftZDSV = (ZDSVViewModel)sender;
-                    SaveSet result = SaveViewModel(LeftZDSV);
-                    ZDSVLeftstr = result.stringList;
-                    IsVisibleZDSVleft = result.listVisibility;
-
-                }
-                else
-                {
-                    RightZDSVEntryFull = new ZDSVEntryFull();
-                    //to do тут должно быть сохранение
-                    RightZDSV = (ZDSVViewModel)sender;
-                    SaveSet result = SaveViewModel(RightZDSV);
-                    ZDSVRightstr = result.stringList;
-                    IsVisibleZDSVright = result.listVisibility;
-
-                }
-            if (senderType == typeof(HipPerforateViewModel))
-                if (senderVM.CurrentLegSide == LegSide.Left)
-                {
-                    LeftPerforate_hipEntryFull = new Perforate_hipEntryFull();
-                    //to do тут должно быть сохранение
-                    LeftPerforate = (HipPerforateViewModel)sender;
-                    SaveSet result = SaveViewModel(LeftPerforate);
-                    Perforate_hipLeftstr = result.stringList;
-                    IsVisiblePerforateHIPleft = result.listVisibility;
-
-                }
-                else
-                {
-                    RightPerforate_hipEntryFull = new Perforate_hipEntryFull();
-                    //to do тут должно быть сохранение
-                    RightPerforate = (HipPerforateViewModel)sender;
-                    SaveSet result = SaveViewModel(RightPerforate);
-                    Perforate_hipRightstr = result.stringList;
-                    IsVisiblePerforateHIPright = result.listVisibility;
-
-                }
-            if (senderType == typeof(BPVTibiaViewModel))
-                if (senderVM.CurrentLegSide == LegSide.Left)
-                {
-                    LeftBPV_TibiaEntryFull = new BPV_TibiaEntryFull();
-                    //to do тут должно быть сохранение
-                    LeftBPVTibia = (BPVTibiaViewModel)sender;
-                    SaveSet result = SaveViewModel(LeftBPVTibia);
-                    BPV_TibiaLeftstr = result.stringList;
-                    IsVisibleBPV_Tibialeft = result.listVisibility;
-
-                }
-                else
-                {
-                    RightBPV_TibiaEntryFull = new BPV_TibiaEntryFull();
-                    //to do тут должно быть сохранение
-                    RightBPVTibia = (BPVTibiaViewModel)sender;
-                    SaveSet result = SaveViewModel(RightBPVTibia);
-                    BPV_TibiaRightstr = result.stringList;
-                    IsVisibleBPV_Tibiaright = result.listVisibility;
-
+                    if (i != 0)
+                        RightMPV.LegSections.Add(new MPVSectionViewModel(Controller, RightMPV.LegSections[i - 1], i + 1));
+                    else
+                        RightMPV.LegSections.Add(new MPVSectionViewModel(Controller, null, i + 1));
                 }
 
-            if (senderType == typeof(LettersViewModel))
-                if (senderVM.CurrentLegSide == LegSide.Left)
-                {
 
-                    IsVisibleCEAPleft = new ObservableCollection<Visibility>();
-                    LeftCEAR = (LettersViewModel)sender;
-                    CEAPLeftstr = new List<string>();
-                    foreach (var leter in LeftCEAR.LegSections)
+                LeftZDSV.IsEmpty = true;
+                LeftZDSV.LegSections = new ObservableCollection<LegSectionViewModel>();
+                for (int i = 0; i < LeftZDSV.LevelCount; i++)
+                {
+                    if (i != 0)
+                        LeftZDSV.LegSections.Add(new ZDSVSectionViewModel(Controller, LeftZDSV.LegSections[i - 1], i + 1));
+                    else
+                        LeftZDSV.LegSections.Add(new ZDSVSectionViewModel(Controller, null, i + 1));
+                }
+
+                RightZDSV.IsEmpty = true;
+                RightZDSV.LegSections = new ObservableCollection<LegSectionViewModel>();
+                for (int i = 0; i < LeftZDSV.LevelCount; i++)
+                {
+                    if (i != 0)
+                        RightZDSV.LegSections.Add(new ZDSVSectionViewModel(Controller, RightZDSV.LegSections[i - 1], i + 1));
+                    else
+                        RightZDSV.LegSections.Add(new ZDSVSectionViewModel(Controller, null, i + 1));
+                }
+
+
+
+                LeftTibiaPerforate.IsEmpty = true;
+                LeftTibiaPerforate.LegSections = new ObservableCollection<LegSectionViewModel>();
+                for (int i = 0; i < LeftTibiaPerforate.LevelCount; i++)
+                {
+                    if (i != 0)
+                        LeftTibiaPerforate.LegSections.Add(new TibiaPerforateSectionViewModel(Controller, LeftTibiaPerforate.LegSections[i - 1], i + 1));
+                    else
+                        LeftTibiaPerforate.LegSections.Add(new TibiaPerforateSectionViewModel(Controller, null, i + 1));
+                }
+
+                RightTibiaPerforate.IsEmpty = true;
+                RightTibiaPerforate.LegSections = new ObservableCollection<LegSectionViewModel>();
+                for (int i = 0; i < LeftTibiaPerforate.LevelCount; i++)
+                {
+                    if (i != 0)
+                        RightTibiaPerforate.LegSections.Add(new TibiaPerforateSectionViewModel(Controller, RightTibiaPerforate.LegSections[i - 1], i + 1));
+                    else
+                        RightTibiaPerforate.LegSections.Add(new TibiaPerforateSectionViewModel(Controller, null, i + 1));
+                }
+
+
+
+
+                LeftSPS.IsEmpty = true;
+                LeftSPS.LegSections = new ObservableCollection<LegSectionViewModel>();
+                for (int i = 0; i < LeftSPS.LevelCount; i++)
+                {
+                    if (i != 0)
+                        LeftSPS.LegSections.Add(new SPSSectionViewModel(Controller, LeftSPS.LegSections[i - 1], i + 1));
+                    else
+                        LeftSPS.LegSections.Add(new SPSSectionViewModel(Controller, null, i + 1));
+                }
+
+                RightSPS.IsEmpty = true;
+                RightSPS.LegSections = new ObservableCollection<LegSectionViewModel>();
+                for (int i = 0; i < LeftSPS.LevelCount; i++)
+                {
+                    if (i != 0)
+                        RightSPS.LegSections.Add(new SPSSectionViewModel(Controller, RightSPS.LegSections[i - 1], i + 1));
+                    else
+                        RightSPS.LegSections.Add(new SPSSectionViewModel(Controller, null, i + 1));
+                }
+
+
+
+                LeftSFS.IsEmpty = true;
+                LeftSFS.LegSections = new ObservableCollection<LegSectionViewModel>();
+                for (int i = 0; i < LeftSFS.LevelCount; i++)
+                {
+                    if (i != 0)
+                        LeftSFS.LegSections.Add(new SFSSectionViewModel(Controller, LeftSFS.LegSections[i - 1], i + 1));
+                    else
+                        LeftSFS.LegSections.Add(new SFSSectionViewModel(Controller, null, i + 1));
+                }
+
+                RightSFS.IsEmpty = true;
+                RightSFS.LegSections = new ObservableCollection<LegSectionViewModel>();
+                for (int i = 0; i < LeftSFS.LevelCount; i++)
+                {
+                    if (i != 0)
+                        RightSFS.LegSections.Add(new SFSSectionViewModel(Controller, RightSFS.LegSections[i - 1], i + 1));
+                    else
+                        RightSFS.LegSections.Add(new SFSSectionViewModel(Controller, null, i + 1));
+                }
+
+
+
+                LeftPDSV.IsEmpty = true;
+                LeftPDSV.LegSections = new ObservableCollection<LegSectionViewModel>();
+                for (int i = 0; i < LeftPDSV.LevelCount; i++)
+                {
+                    if (i != 0)
+                        LeftPDSV.LegSections.Add(new PDSVSectionViewModel(Controller, LeftPDSV.LegSections[i - 1], i + 1));
+                    else
+                        LeftPDSV.LegSections.Add(new PDSVSectionViewModel(Controller, null, i + 1));
+                }
+
+                RightPDSV.IsEmpty = true;
+                RightPDSV.LegSections = new ObservableCollection<LegSectionViewModel>();
+                for (int i = 0; i < LeftPDSV.LevelCount; i++)
+                {
+                    if (i != 0)
+                        RightPDSV.LegSections.Add(new PDSVSectionViewModel(Controller, RightPDSV.LegSections[i - 1], i + 1));
+                    else
+                        RightPDSV.LegSections.Add(new PDSVSectionViewModel(Controller, null, i + 1));
+                }
+
+
+
+                LeftGV.IsEmpty = true;
+                LeftGV.LegSections = new ObservableCollection<LegSectionViewModel>();
+                for (int i = 0; i < LeftGV.LevelCount; i++)
+                {
+                    if (i != 0)
+                        LeftGV.LegSections.Add(new GVSectionViewModel(Controller, LeftGV.LegSections[i - 1], i + 1));
+                    else
+                        LeftGV.LegSections.Add(new GVSectionViewModel(Controller, null, i + 1));
+                }
+
+                RightGV.IsEmpty = true;
+                RightGV.LegSections = new ObservableCollection<LegSectionViewModel>();
+                for (int i = 0; i < LeftGV.LevelCount; i++)
+                {
+                    if (i != 0)
+                        RightGV.LegSections.Add(new GVSectionViewModel(Controller, RightGV.LegSections[i - 1], i + 1));
+                    else
+                        RightGV.LegSections.Add(new GVSectionViewModel(Controller, null, i + 1));
+                }
+
+
+
+
+
+                LeftPPV.IsEmpty = true;
+                LeftPPV.LegSections = new ObservableCollection<LegSectionViewModel>();
+                for (int i = 0; i < LeftPPV.LevelCount; i++)
+                {
+                    if (i != 0)
+                        LeftPPV.LegSections.Add(new PPVSectionViewModel(Controller, LeftPPV.LegSections[i - 1], i + 1));
+                    else
+                        LeftPPV.LegSections.Add(new PPVSectionViewModel(Controller, null, i + 1));
+                }
+
+                RightPPV.IsEmpty = true;
+                RightPPV.LegSections = new ObservableCollection<LegSectionViewModel>();
+                for (int i = 0; i < LeftPPV.LevelCount; i++)
+                {
+                    if (i != 0)
+                        RightPPV.LegSections.Add(new PPVSectionViewModel(Controller, RightPPV.LegSections[i - 1], i + 1));
+                    else
+                        RightPPV.LegSections.Add(new PPVSectionViewModel(Controller, null, i + 1));
+                }
+
+
+
+
+                LeftPerforate.IsEmpty = true;
+                LeftPerforate.LegSections = new ObservableCollection<LegSectionViewModel>();
+                for (int i = 0; i < LeftPerforate.LevelCount; i++)
+                {
+                    if (i != 0)
+                        LeftPerforate.LegSections.Add(new HipPerforateSectionViewModel(Controller, LeftPerforate.LegSections[i - 1], i + 1));
+                    else
+                        LeftPerforate.LegSections.Add(new HipPerforateSectionViewModel(Controller, null, i + 1));
+                }
+
+                RightPerforate.IsEmpty = true;
+                RightPerforate.LegSections = new ObservableCollection<LegSectionViewModel>();
+                for (int i = 0; i < LeftPerforate.LevelCount; i++)
+                {
+                    if (i != 0)
+                        RightPerforate.LegSections.Add(new HipPerforateSectionViewModel(Controller, RightPerforate.LegSections[i - 1], i + 1));
+                    else
+                        RightPerforate.LegSections.Add(new HipPerforateSectionViewModel(Controller, null, i + 1));
+                }
+
+
+
+
+                LeftBPVTibia.IsEmpty = true;
+                LeftBPVTibia.LegSections = new ObservableCollection<LegSectionViewModel>();
+                for (int i = 0; i < LeftBPVTibia.LevelCount; i++)
+                {
+                    if (i != 0)
+                        LeftBPVTibia.LegSections.Add(new BPVTibiaSectionViewModel(Controller, LeftBPVTibia.LegSections[i - 1], i + 1));
+                    else
+                        LeftBPVTibia.LegSections.Add(new BPVTibiaSectionViewModel(Controller, null, i + 1));
+                }
+
+                RightBPVTibia.IsEmpty = true;
+                RightBPVTibia.LegSections = new ObservableCollection<LegSectionViewModel>();
+                for (int i = 0; i < LeftBPVTibia.LevelCount; i++)
+                {
+                    if (i != 0)
+                        RightBPVTibia.LegSections.Add(new BPVTibiaSectionViewModel(Controller, RightBPVTibia.LegSections[i - 1], i + 1));
+                    else
+                        RightBPVTibia.LegSections.Add(new BPVTibiaSectionViewModel(Controller, null, i + 1));
+                }
+
+
+
+
+
+
+                LeftBPVHip.IsEmpty = true;
+                LeftBPVHip.LegSections = new ObservableCollection<LegSectionViewModel>();
+                for (int i = 0; i < LeftBPVHip.LevelCount; i++)
+                {
+                    if (i != 0)
+                        LeftBPVHip.LegSections.Add(new BPVHipSectionViewModel(Controller, LeftBPVHip.LegSections[i - 1], i + 1));
+                    else
+                        LeftBPVHip.LegSections.Add(new BPVHipSectionViewModel(Controller, null, i + 1));
+                }
+
+                RightBPVHip.IsEmpty = true;
+                RightBPVHip.LegSections = new ObservableCollection<LegSectionViewModel>();
+                for (int i = 0; i < LeftBPVHip.LevelCount; i++)
+                {
+                    if (i != 0)
+                        RightBPVHip.LegSections.Add(new BPVHipSectionViewModel(Controller, RightBPVHip.LegSections[i - 1], i + 1));
+                    else
+                        RightBPVHip.LegSections.Add(new BPVHipSectionViewModel(Controller, null, i + 1));
+                }
+
+                LeftAdditionalText = "";
+                RightAdditionalText = "";
+                SetAllBordersDefault();
+            }
+
+
+
+
+            int obsid;
+            private void GetObsForOverview(object sender, object data)
+            {
+                Clear(this, null);//?
+                mode = "EDIT";
+                MessageBus.Default.Call("SetMode", this, "EDIT");
+                obsid = (int)data;
+
+                using (var context = new MySqlContext())
+                {
+                    ExaminationRepository ExamRep = new ExaminationRepository(context);
+                    ExaminationLegRepository LegExamRep = new ExaminationLegRepository(context);
+                    LettersRepository LettersRep = new LettersRepository(context);
+
+
+
+                    Examination Exam = ExamRep.Get(obsid);
+                    ExaminationLeg leftLegExam = LegExamRep.Get(Exam.idLeftLegExamination.Value);
+                    ExaminationLeg rightLegExam = LegExamRep.Get(Exam.idRightLegExamination.Value);
+
+
+
+
+                    Weight = Exam.weight.ToString();
+                    Growth = Exam.height.ToString();
+                    TextTip = Exam.NB;
+
+
+                    LeftAdditionalText = leftLegExam.additionalText;
+
+                    PDSVHipEntryFullRepository PDSVEntryFullRep = new PDSVHipEntryFullRepository(context);
+                    if (leftLegExam.PDSVid != null)
                     {
-                        if (leter.SelectedValue != null)
-                        {
-                            IsVisibleCEAPleft.Add(Visibility.Visible);
-                            CEAPLeftstr.Add(leter.SelectedValue.Leter + leter.SelectedValue.Text1);
-                        }
-                        else
-                        {
-                            CEAPLeftstr.Add("");
-                            IsVisibleCEAPleft.Add(Visibility.Collapsed);
-                        }
+                        GetLegPartFromEntry(PDSVEntryFullRep.Get(leftLegExam.PDSVid.Value), LeftPDSV, true);
+                    }
+
+
+                    BPVHipEntryFullRepository BPVEntryFullRep = new BPVHipEntryFullRepository(context);
+                    if (leftLegExam.BPVHip != null)
+                        GetLegPartFromEntry(BPVEntryFullRep.Get(leftLegExam.BPVHip.Value), LeftBPVHip, true);
+
+
+                    BPV_TibiaEntryFullRepository BPVTibiaEntryFullRep = new BPV_TibiaEntryFullRepository(context);
+                    if (leftLegExam.BPVTibiaid != null)
+                        GetLegPartFromEntry(BPVTibiaEntryFullRep.Get(leftLegExam.BPVTibiaid.Value), LeftBPVTibia, true);
+
+
+
+                    GVEntryFullRepository GVEntryFullRep = new GVEntryFullRepository(context);
+                    if (leftLegExam.GVid != null)
+                        GetLegPartFromEntry(GVEntryFullRep.Get(leftLegExam.GVid.Value), LeftGV, true);
+
+
+                    MPVEntryFullRepository MPVEntryFullRep = new MPVEntryFullRepository(context);
+                    if (leftLegExam.MPVid != null)
+                        GetLegPartFromEntry(MPVEntryFullRep.Get(leftLegExam.MPVid.Value), LeftMPV, true);
+
+
+                    Perforate_hipEntryFullRepository PerforateEntryFullRep = new Perforate_hipEntryFullRepository(context);
+                    if (leftLegExam.PerforateHipid != null)
+                        GetLegPartFromEntry(PerforateEntryFullRep.Get(leftLegExam.PerforateHipid.Value), LeftPerforate, true);
+
+
+
+                    PPVEntryFullRepository PPVEntryFullRep = new PPVEntryFullRepository(context);
+                    if (leftLegExam.PPVid != null)
+                        GetLegPartFromEntry(PPVEntryFullRep.Get(leftLegExam.PPVid.Value), LeftPPV, true);
+
+
+
+                    SFSHipEntryFullRepository SFSEntryFullRep = new SFSHipEntryFullRepository(context);
+                    if (leftLegExam.SFSid != null)
+                        GetLegPartFromEntry(SFSEntryFullRep.Get(leftLegExam.SFSid.Value), LeftSFS, true);
+
+
+                    SPSHipEntryFullRepository SPSEntryFullRep = new SPSHipEntryFullRepository(context);
+                    if (leftLegExam.SPSid != null)
+                        GetLegPartFromEntry(SPSEntryFullRep.Get(leftLegExam.SPSid.Value), LeftSPS, true);
+
+
+
+
+                    TEMPVEntryFullRepository TEMPVEntryFullRep = new TEMPVEntryFullRepository(context);
+                    if (leftLegExam.TEMPVid != null)
+                        GetLegPartFromEntry(TEMPVEntryFullRep.Get(leftLegExam.TEMPVid.Value), LeftTEMPV, true);
+
+
+
+                    Perforate_shinEntryFullRepository TibiaPerforateEntryFullRep = new Perforate_shinEntryFullRepository(context);
+                    if (leftLegExam.TibiaPerforateid != null)
+                        GetLegPartFromEntry(TibiaPerforateEntryFullRep.Get(leftLegExam.TibiaPerforateid.Value), LeftTibiaPerforate, true);
+
+
+
+
+
+                    ZDSVEntryFullRepository ZDSVEntryFullRep = new ZDSVEntryFullRepository(context);
+
+                    if (leftLegExam.ZDSVid != null)
+                        GetLegPartFromEntry(ZDSVEntryFullRep.Get(leftLegExam.ZDSVid.Value), LeftZDSV, true);
+
+
+                    if (leftLegExam.C != null)
+                        LeftCEAR.LegSections[0].SelectedValue = LettersRep.Get(leftLegExam.C.Value);
+
+                    if (leftLegExam.E != null)
+                        LeftCEAR.LegSections[1].SelectedValue = LettersRep.Get(leftLegExam.E.Value);
+
+                    if (leftLegExam.A != null)
+                        LeftCEAR.LegSections[2].SelectedValue = LettersRep.Get(leftLegExam.A.Value);
+
+                    if (leftLegExam.P != null)
+                        LeftCEAR.LegSections[3].SelectedValue = LettersRep.Get(leftLegExam.P.Value);
+
+
+
+                    LeftCEAR.SaveCommand.Execute();
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    RightAdditionalText = rightLegExam.additionalText;
+
+
+
+                    if (rightLegExam.PDSVid != null)
+                        GetLegPartFromEntry(PDSVEntryFullRep.Get(rightLegExam.PDSVid.Value), RightPDSV, false);
+
+
+
+
+                    if (rightLegExam.BPVHip != null)
+                        GetLegPartFromEntry(BPVEntryFullRep.Get(rightLegExam.BPVHip.Value), RightBPVHip, false);
+
+
+
+                    if (rightLegExam.BPVTibiaid != null)
+                        GetLegPartFromEntry(BPVTibiaEntryFullRep.Get(rightLegExam.BPVTibiaid.Value), RightBPVTibia, false);
+
+
+
+
+                    if (rightLegExam.GVid != null)
+                        GetLegPartFromEntry(GVEntryFullRep.Get(rightLegExam.GVid.Value), RightGV, false);
+
+
+
+                    if (rightLegExam.MPVid != null)
+                        GetLegPartFromEntry(MPVEntryFullRep.Get(rightLegExam.MPVid.Value), RightMPV, false);
+
+
+
+                    if (rightLegExam.PerforateHipid != null)
+                        GetLegPartFromEntry(PerforateEntryFullRep.Get(rightLegExam.PerforateHipid.Value), RightPerforate, false);
+
+
+
+
+                    if (rightLegExam.PPVid != null)
+                        GetLegPartFromEntry(PPVEntryFullRep.Get(rightLegExam.PPVid.Value), RightPPV, false);
+
+
+
+                    if (rightLegExam.SFSid != null)
+                        GetLegPartFromEntry(SFSEntryFullRep.Get(rightLegExam.SFSid.Value), RightSFS, false);
+
+
+
+                    if (rightLegExam.SPSid != null)
+                        GetLegPartFromEntry(SPSEntryFullRep.Get(rightLegExam.SPSid.Value), RightSPS, false);
+
+
+
+
+
+                    if (rightLegExam.TEMPVid != null)
+                        GetLegPartFromEntry(TEMPVEntryFullRep.Get(rightLegExam.TEMPVid.Value), RightTEMPV, false);
+
+                    if (rightLegExam.TibiaPerforateid != null)
+                        GetLegPartFromEntry(TibiaPerforateEntryFullRep.Get(rightLegExam.TibiaPerforateid.Value), RightTibiaPerforate, false);
+
+                    if (rightLegExam.ZDSVid != null)
+                        GetLegPartFromEntry(ZDSVEntryFullRep.Get(rightLegExam.ZDSVid.Value), RightZDSV, false);
+
+                    if (rightLegExam.C != null)
+                        RightCEAR.LegSections[0].SelectedValue = LettersRep.Get(rightLegExam.C.Value);
+
+                    if (rightLegExam.E != null)
+                        RightCEAR.LegSections[1].SelectedValue = LettersRep.Get(rightLegExam.E.Value);
+
+                    if (rightLegExam.A != null)
+                        RightCEAR.LegSections[2].SelectedValue = LettersRep.Get(rightLegExam.A.Value);
+
+                    if (rightLegExam.P != null)
+                        RightCEAR.LegSections[3].SelectedValue = LettersRep.Get(rightLegExam.P.Value);
+
+                    RightCEAR.SaveCommand.Execute();
+
+
+
+
+
+
+
+
+
+
+
+                    DiagnosisObsRepository diagRep = new DiagnosisObsRepository(context);
+                    ComplanesObsRepository compRep = new ComplanesObsRepository(context);
+                    RecomendationObsRepository recRep = new RecomendationObsRepository(context);
+
+
+
+                    LeftDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
+
+
+                    DiagnosisDataSource diagDSourceBuf;
+                    foreach (var diag in Data.DiagnosisObs.GetAll.Where(s => s.isLeft == true && s.id_обследование_ноги == Exam.Id).ToList())
+                    {
+                        diagDSourceBuf = new DiagnosisDataSource(Data.DiagnosisTypes.Get(diag.id_диагноз.Value));
+                        diagDSourceBuf.IsChecked = true;
+                        LeftDiagnosisList.Add(diagDSourceBuf);
+                    }
+
+                    RightDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
+
+
+
+                    foreach (var diag in Data.DiagnosisObs.GetAll.Where(s => s.isLeft == false && s.id_обследование_ноги == Exam.Id).ToList())
+                    {
+                        diagDSourceBuf = new DiagnosisDataSource(Data.DiagnosisTypes.Get(diag.id_диагноз.Value));
+                        diagDSourceBuf.IsChecked = true;
+                        RightDiagnosisList.Add(diagDSourceBuf);
+                    }
+
+                    MessageBus.Default.Call("SetDiagnosisListBecauseOFEdit", LeftDiagnosisList, RightDiagnosisList);
+
+                    ComplainsList = new List<ComplainsDataSource>();
+                    ComplainsDataSource compDSourceBuf;
+                    foreach (var diag in Data.ComplanesObs.GetAll.Where(s => s.id_обследования == Exam.Id).ToList())
+                    {
+                        compDSourceBuf = new ComplainsDataSource(Data.ComplainsTypes.Get(diag.id_жалобы));
+                        compDSourceBuf.IsChecked = true;
+                        ComplainsList.Add(compDSourceBuf);
+                    }
+                    RecomendationsList = new List<RecomendationsDataSource>();
+                    RecomendationsDataSource recDSourceBuf;
+
+                    foreach (var diag in Data.RecomendationObs.GetAll.Where(s => s.id_обследования == Exam.Id).ToList())
+                    {
+                        recDSourceBuf = new RecomendationsDataSource(Data.RecomendationsTypes.Get(diag.id_рекомендации));
+                        recDSourceBuf.IsChecked = true;
+                        RecomendationsList.Add(recDSourceBuf);
+                    }
+                    MessageBus.Default.Call("SetDRecomendationListBecauseOFEdit", this, RecomendationsList);
+
+                    MessageBus.Default.Call("SetDComplanesListBecauseOFEdit", this, ComplainsList);
+
+
+                    //leftLegExams.additionalText = LeftAdditionalText;
+                    //if (LeftCEAR.LegSections[0].SelectedValue != null)
+                    //    leftLegExams.C = LeftCEAR.LegSections[0].SelectedValue.Id;
+                    //if (LeftCEAR.LegSections[1].SelectedValue != null)
+                    //    leftLegExams.E = LeftCEAR.LegSections[1].SelectedValue.Id;
+                    //if (LeftCEAR.LegSections[2].SelectedValue != null)
+                    //    leftLegExams.A = LeftCEAR.LegSections[2].SelectedValue.Id;
+                    //if (LeftCEAR.LegSections[3].SelectedValue != null)
+                    //    leftLegExams.P = LeftCEAR.LegSections[3].SelectedValue.Id;
+
+
+                }
+                MessageBus.Default.Call("SetMode", this, "Normal");
+            }
+            //  public ObservableCollection<>
+            //кто присылает и что присылает
+            private void Handler(object sender, object data)
+            {
+                Type senderType = sender.GetType();
+                LegPartViewModel senderVM = (LegPartViewModel)sender;
+                //  BPVHipEntryFull bpv = new BPVHipEntryFull();
+                if (senderType == typeof(GVViewModel))
+                    if (senderVM.CurrentLegSide == LegSide.Left)
+                    {
+                        GVLeftstr = new List<string>();
+                        LeftGVEntryFull = new GVEntryFull();
+                        //to do тут должно быть сохранение
+                        LeftGV = (GVViewModel)sender;
+                        SaveSet result = SaveViewModel(LeftGV);
+                        GVLeftstr = result.stringList;
+                        IsVisibleGVleft = result.listVisibility;
+
+                    }
+
+                    else
+                    {
+                        GVRightstr = new List<string>();
+                        RightGVEntryFull = new GVEntryFull();
+                        //to do тут должно быть сохранение
+                        RightGV = (GVViewModel)sender;
+                        SaveSet result = SaveViewModel(RightGV);
+                        GVRightstr = result.stringList;
+                        IsVisibleGVRight = result.listVisibility;
+
                     }
 
 
 
-                }
-                else
-                {
-                    IsVisibleCEAPRight = new ObservableCollection<Visibility>();
-                    RightCEAR = (LettersViewModel)sender;
-                    CEAPRightstr = new List<string>();
-                    foreach (var leter in RightCEAR.LegSections)
+
+                if (senderType == typeof(MPVViewModel))
+                    if (senderVM.CurrentLegSide == LegSide.Left)
                     {
-                        if (leter.SelectedValue != null)
-                        {
-                            IsVisibleCEAPRight.Add(Visibility.Visible);
-                            CEAPRightstr.Add(leter.SelectedValue.Leter + leter.SelectedValue.Text1);
-                        }
-                        else
-                        { IsVisibleCEAPRight.Add(Visibility.Collapsed); }
+                        MPVLeftstr = new List<string>();
+                        LeftMPVEntryFull = new MPVEntryFull();
+                        //to do тут должно быть сохранение
+                        LeftMPV = (MPVViewModel)sender;
+                        SaveSet result = SaveViewModel(LeftMPV);
+                        MPVLeftstr = result.stringList;
+                        IsVisibleMPVleft = result.listVisibility;
+
+                    }
+
+                    else
+                    {
+                        MPVRightstr = new List<string>();
+                        RightMPVEntryFull = new MPVEntryFull();
+                        //to do тут должно быть сохранение
+                        RightMPV = (MPVViewModel)sender;
+                        SaveSet result = SaveViewModel(RightMPV);
+                        MPVRightstr = result.stringList;
+                        IsVisibleMPVRight = result.listVisibility;
+
                     }
 
 
-                }
-            BrushesFill();
+
+                if (senderType == typeof(PPVViewModel))
+                    if (senderVM.CurrentLegSide == LegSide.Left)
+                    {
+                        PPVLeftstr = new List<string>();
+                        LeftPPVEntryFull = new PPVEntryFull();
+                        //to do тут должно быть сохранение
+                        LeftPPV = (PPVViewModel)sender;
+                        SaveSet result = SaveViewModel(LeftPPV);
+                        PPVLeftstr = result.stringList;
+                        IsVisiblePPVleft = result.listVisibility;
+
+                    }
+
+                    else
+                    {
+                        PPVRightstr = new List<string>();
+                        RightPPVEntryFull = new PPVEntryFull();
+                        //to do тут должно быть сохранение
+                        RightPPV = (PPVViewModel)sender;
+                        SaveSet result = SaveViewModel(RightPPV);
+                        PPVRightstr = result.stringList;
+                        IsVisiblePPVRight = result.listVisibility;
+
+                    }
+
+
+
+
+
+                if (senderType == typeof(TEMPVViewModel))
+                    if (senderVM.CurrentLegSide == LegSide.Left)
+                    {
+                        TEMPVLeftstr = new List<string>();
+                        LeftTEMPVEntryFull = new TEMPVEntryFull();
+                        //to do тут должно быть сохранение
+                        LeftTEMPV = (TEMPVViewModel)sender;
+                        SaveSet result = SaveViewModel(LeftTEMPV);
+                        TEMPVLeftstr = result.stringList;
+                        IsVisibleTEMPVleft = result.listVisibility;
+
+                    }
+
+                    else
+                    {
+                        TEMPVRightstr = new List<string>();
+                        RightTEMPVEntryFull = new TEMPVEntryFull();
+                        //to do тут должно быть сохранение
+                        RightTEMPV = (TEMPVViewModel)sender;
+                        SaveSet result = SaveViewModel(RightTEMPV);
+                        TEMPVRightstr = result.stringList;
+                        IsVisibleTEMPVRight = result.listVisibility;
+
+                    }
+                //sender проверять какого типа
+                if (senderType == typeof(SFSViewModel))
+                    if (senderVM.CurrentLegSide == LegSide.Left)
+                    {
+                        SFSLeftstr = new List<string>();
+                        LeftSFSEntryFull = new SFSHipEntryFull();
+                        //to do тут должно быть сохранение
+                        LeftSFS = (SFSViewModel)sender;
+                        SaveSet result = SaveViewModel(LeftSFS);
+                        SFSLeftstr = result.stringList;
+                        IsVisibleSFSleft = result.listVisibility;
+
+                    }
+
+                    else
+                    {
+                        SFSRightstr = new List<string>();
+                        RightSFSEntryFull = new SFSHipEntryFull();
+                        //to do тут должно быть сохранение
+                        RightSFS = (SFSViewModel)sender;
+                        SaveSet result = SaveViewModel(RightSFS);
+                        SFSRightstr = result.stringList;
+                        IsVisibleSFSRight = result.listVisibility;
+
+                    }
+
+                //
+
+
+                if (senderType == typeof(SPSViewModel))
+                    if (senderVM.CurrentLegSide == LegSide.Left)
+                    {
+                        SPSLeftstr = new List<string>();
+                        LeftSPSEntryFull = new SPSHipEntryFull();
+                        //to do тут должно быть сохранение
+                        LeftSPS = (SPSViewModel)sender;
+                        SaveSet result = SaveViewModel(LeftSPS);
+                        SPSLeftstr = result.stringList;
+                        IsVisibleSPSleft = result.listVisibility;
+
+                    }
+
+                    else
+                    {
+                        SPSRightstr = new List<string>();
+                        RightSPSEntryFull = new SPSHipEntryFull();
+                        //to do тут должно быть сохранение
+                        RightSPS = (SPSViewModel)sender;
+                        SaveSet result = SaveViewModel(RightSPS);
+                        SPSRightstr = result.stringList;
+                        IsVisibleSPSRight = result.listVisibility;
+
+                    }
+
+
+                if (senderType == typeof(TibiaPerforateViewModel))
+                    if (senderVM.CurrentLegSide == LegSide.Left)
+                    {
+                        Perforate_shinLeftstr = new List<string>();
+                        LeftPerforate_shinEntryFull = new Perforate_shinEntryFull();
+                        //to do тут должно быть сохранение
+                        LeftTibiaPerforate = (TibiaPerforateViewModel)sender;
+                        SaveSet result = SaveViewModel(LeftTibiaPerforate);
+                        Perforate_shinLeftstr = result.stringList;
+                        IsVisiblePerforate_shinleft = result.listVisibility;
+
+                    }
+
+                    else
+                    {
+                        Perforate_shinRightstr = new List<string>();
+                        RightPerforate_shinEntryFull = new Perforate_shinEntryFull();
+                        //to do тут должно быть сохранение
+                        RightTibiaPerforate = (TibiaPerforateViewModel)sender;
+                        SaveSet result = SaveViewModel(RightTibiaPerforate);
+                        Perforate_shinRightstr = result.stringList;
+                        IsVisiblePerforate_shinRight = result.listVisibility;
+
+                    }
+
+
+
+                //
+
+
+
+
+                if (senderType == typeof(BPVHipViewModel))
+                    if (senderVM.CurrentLegSide == LegSide.Left)
+                    {
+                        LeftBPVEntryFull = new BPVHipEntryFull();
+                        //to do тут должно быть сохранение
+                        LeftBPVHip = (BPVHipViewModel)sender;
+                        SaveSet result = SaveViewModel(LeftBPVHip);
+                        BpvLeftstr = result.stringList;
+                        IsVisibleBPVleft = result.listVisibility;
+
+                    }
+                    else
+                    {
+                        RightBPVEntryFull = new BPVHipEntryFull();
+                        BpvRightstr = new List<string>();
+                        RightBPVHip = (BPVHipViewModel)sender;
+                        SaveSet result = SaveViewModel(RightBPVHip);
+                        BpvRightstr = result.stringList;
+                        IsVisibleBPVRight = result.listVisibility;
+
+                    }
+
+                if (senderType == typeof(PDSVViewModel))
+                    if (senderVM.CurrentLegSide == LegSide.Left)
+                    {
+                        LeftPDSVEntryFull = new PDSVHipEntryFull();
+                        //to do тут должно быть сохранение
+                        LeftPDSV = (PDSVViewModel)sender;
+                        SaveSet result = SaveViewModel(LeftPDSV);
+                        PDSVLeftstr = result.stringList;
+                        IsVisiblePDSVleft = result.listVisibility;
+                        //SaveAll();
+
+
+                    }
+                    else
+                    {
+                        RightPDSVEntryFull = new PDSVHipEntryFull();
+                        //to do тут должно быть сохранение
+                        RightPDSV = (PDSVViewModel)sender;
+                        SaveSet result = SaveViewModel(RightPDSV);
+                        PDSVRightstr = result.stringList;
+                        IsVisiblePDSVright = result.listVisibility;
+
+                    }
+
+                //
+                if (senderType == typeof(ZDSVViewModel))
+                    if (senderVM.CurrentLegSide == LegSide.Left)
+                    {
+                        LeftZDSVEntryFull = new ZDSVEntryFull();
+                        //to do тут должно быть сохранение
+                        LeftZDSV = (ZDSVViewModel)sender;
+                        SaveSet result = SaveViewModel(LeftZDSV);
+                        ZDSVLeftstr = result.stringList;
+                        IsVisibleZDSVleft = result.listVisibility;
+
+                    }
+                    else
+                    {
+                        RightZDSVEntryFull = new ZDSVEntryFull();
+                        //to do тут должно быть сохранение
+                        RightZDSV = (ZDSVViewModel)sender;
+                        SaveSet result = SaveViewModel(RightZDSV);
+                        ZDSVRightstr = result.stringList;
+                        IsVisibleZDSVright = result.listVisibility;
+
+                    }
+                if (senderType == typeof(HipPerforateViewModel))
+                    if (senderVM.CurrentLegSide == LegSide.Left)
+                    {
+                        LeftPerforate_hipEntryFull = new Perforate_hipEntryFull();
+                        //to do тут должно быть сохранение
+                        LeftPerforate = (HipPerforateViewModel)sender;
+                        SaveSet result = SaveViewModel(LeftPerforate);
+                        Perforate_hipLeftstr = result.stringList;
+                        IsVisiblePerforateHIPleft = result.listVisibility;
+
+                    }
+                    else
+                    {
+                        RightPerforate_hipEntryFull = new Perforate_hipEntryFull();
+                        //to do тут должно быть сохранение
+                        RightPerforate = (HipPerforateViewModel)sender;
+                        SaveSet result = SaveViewModel(RightPerforate);
+                        Perforate_hipRightstr = result.stringList;
+                        IsVisiblePerforateHIPright = result.listVisibility;
+
+                    }
+                if (senderType == typeof(BPVTibiaViewModel))
+                    if (senderVM.CurrentLegSide == LegSide.Left)
+                    {
+                        LeftBPV_TibiaEntryFull = new BPV_TibiaEntryFull();
+                        //to do тут должно быть сохранение
+                        LeftBPVTibia = (BPVTibiaViewModel)sender;
+                        SaveSet result = SaveViewModel(LeftBPVTibia);
+                        BPV_TibiaLeftstr = result.stringList;
+                        IsVisibleBPV_Tibialeft = result.listVisibility;
+
+                    }
+                    else
+                    {
+                        RightBPV_TibiaEntryFull = new BPV_TibiaEntryFull();
+                        //to do тут должно быть сохранение
+                        RightBPVTibia = (BPVTibiaViewModel)sender;
+                        SaveSet result = SaveViewModel(RightBPVTibia);
+                        BPV_TibiaRightstr = result.stringList;
+                        IsVisibleBPV_Tibiaright = result.listVisibility;
+
+                    }
+
+                if (senderType == typeof(LettersViewModel))
+                    if (senderVM.CurrentLegSide == LegSide.Left)
+                    {
+
+                        IsVisibleCEAPleft = new ObservableCollection<Visibility>();
+                        LeftCEAR = (LettersViewModel)sender;
+                        CEAPLeftstr = new List<string>();
+                        foreach (var leter in LeftCEAR.LegSections)
+                        {
+                            if (leter.SelectedValue != null)
+                            {
+                                IsVisibleCEAPleft.Add(Visibility.Visible);
+                                CEAPLeftstr.Add(leter.SelectedValue.Leter + leter.SelectedValue.Text1);
+                            }
+                            else
+                            {
+                                CEAPLeftstr.Add("");
+                                IsVisibleCEAPleft.Add(Visibility.Collapsed);
+                            }
+                        }
+
+
+
+                    }
+                    else
+                    {
+                        IsVisibleCEAPRight = new ObservableCollection<Visibility>();
+                        RightCEAR = (LettersViewModel)sender;
+                        CEAPRightstr = new List<string>();
+                        foreach (var leter in RightCEAR.LegSections)
+                        {
+                            if (leter.SelectedValue != null)
+                            {
+                                IsVisibleCEAPRight.Add(Visibility.Visible);
+                                CEAPRightstr.Add(leter.SelectedValue.Leter + leter.SelectedValue.Text1);
+                            }
+                            else
+                            { IsVisibleCEAPRight.Add(Visibility.Collapsed); }
+                        }
+
+
+                    }
+                BrushesFill();
+            }
         }
     }
-}
