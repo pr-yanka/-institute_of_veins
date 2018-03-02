@@ -25,7 +25,7 @@
             <StackPanel Orientation="Vertical" Margin="19,118,0,42" Grid.ColumnSpan="3">
                 <StackPanel Orientation="Horizontal" Height="29">
                     <TextBlock x:Name="age" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto" ><TextBlock  Text="Возраст :" /></TextBlock>
-                    <TextBlock x:Name="textBlock_ageAndBirthday" HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto" Text="{Binding Path=CurrentPatient.Age}"><TextBlock  Text=" лет ("/><TextBlock Text="{Binding Path=PatientBirthday}" /><TextBlock Text=")"/></TextBlock>
+                    <TextBlock x:Name="textBlock_ageAndBirthday" HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto" Text="{Binding Path=CurrentPatient.Age}"><TextBlock  Text="{Binding Path=AgeText}"/><TextBlock Text="{Binding Path=PatientBirthday}" /><TextBlock Text=""/></TextBlock>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock x:Name="textBlock_1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Height="30" Width="Auto" ><InlineUIContainer>
