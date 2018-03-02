@@ -40,7 +40,7 @@
             <TextBlock x:Name="textBlock1_Copy3" HorizontalAlignment="Center" Margin="724,120,122,507" TextWrapping="Wrap" VerticalAlignment="Center" Width="170" FontSize="18"><Run Text="Правая "/><Run Text="нога"/></TextBlock>
 
 
-            <ScrollViewer Margin="3,190,524,320" RenderTransformOrigin="0.5,0.5" FontSize="16">
+            <ScrollViewer Margin="3,190,524,320" RenderTransformOrigin="0.5,0.5" FontSize="14">
                 <StackPanel Orientation="Vertical">
                     <Expander FontSize="14">
                         <Expander.Header>
@@ -287,7 +287,7 @@
 
                 </StackPanel>
             </ScrollViewer>
-            <ScrollViewer Margin="518,190,10,320" RenderTransformOrigin="0.5,0.5" FontSize="16">
+            <ScrollViewer Margin="518,190,10,320" RenderTransformOrigin="0.5,0.5" FontSize="14">
                 <StackPanel Orientation="Vertical">
                     <Expander>
                         <Expander.Header>

@@ -294,7 +294,7 @@ namespace WpfApp2.LegParts
         {
             if (CurrentPanelViewModel.mode != "Edit")
             {
-                return false;
+                return true;
             }
 
             bool test = false;
@@ -311,18 +311,18 @@ namespace WpfApp2.LegParts
 
             if (CurrentPanelViewModel.HasSize != structure.HasSize)
             {
-
-                if (structure.Metrics != CurrentPanelViewModel.SelectedMetricText)
-                {
-                    test = true;
-                }
-
-                if (structure.HasDoubleMetric != CurrentPanelViewModel.HasDoubleSize)
-                {
-                    test = true;
-                }
+                test = true;
+           
+            }
+            if (structure.Metrics != CurrentPanelViewModel.SelectedMetricText && CurrentPanelViewModel.HasSize == true)
+            {
+                test = true;
             }
 
+            if (structure.HasDoubleMetric != CurrentPanelViewModel.HasDoubleSize)
+            {
+                test = true;
+            }
 
             return test;
         }

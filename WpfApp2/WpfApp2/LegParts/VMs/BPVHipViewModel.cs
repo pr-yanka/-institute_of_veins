@@ -59,7 +59,7 @@ namespace WpfApp2.LegParts.VMs
                 {
 
 
-                    if (section.ListNumber != 5 && LegSections[section.ListNumber].SelectedValue == null)
+                    if (section.ListNumber < 5 && LegSections[section.ListNumber].SelectedValue == null)
                     {
 
 
