@@ -257,15 +257,16 @@ namespace WpfApp2.LegParts.VMs
                 {
 
                     CurrentLegSide = CurrentLegSide;
-                    CurrentPanelViewModel.PanelOpened = false;
-                    handled = false;
-                    var newStruct = GetPanelStructure();
-                    newStruct.Custom = false;
-                    Data.SPS.Add((SPSHipStructure)newStruct);
-                    Data.Complete();
+                    if (IsStructEdited(CurrentPanelViewModel.LegPrt))
+                    {
+                        var newStruct = GetPanelStructure();
+                        newStruct.Custom = false;
+                        Data.SPS.Add((SPSHipStructure)newStruct);
+                        Data.Complete();
 
-                    _lastSender.StructureSource.Add(newStruct);
-                    _lastSender.SelectedValue = newStruct;
+                        _lastSender.StructureSource.Add(newStruct);
+                        _lastSender.SelectedValue = newStruct;
+                    }
                     CurrentPanelViewModel.PanelOpened = false;
                     handled = false;
                 }

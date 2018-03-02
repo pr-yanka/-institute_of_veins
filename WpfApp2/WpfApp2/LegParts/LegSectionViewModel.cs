@@ -288,7 +288,8 @@ namespace WpfApp2.LegParts
 
                 // x.SelectedValue 
                 // LegSectionViewModel section = x.SelectedValue as LegSectionViewModel;
-                MessageBus.Default.Call("OpenStructRedact", SelectedValue, null);
+             //   MessageBus.Default.Call("OpenCustom", this, this.GetType());
+                MessageBus.Default.Call("OpenStructRedact", this, this.GetType());
 
 
             }

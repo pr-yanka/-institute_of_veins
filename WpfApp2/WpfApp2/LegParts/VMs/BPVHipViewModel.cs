@@ -289,14 +289,15 @@ namespace WpfApp2.LegParts.VMs
                 if (!string.IsNullOrWhiteSpace(panel.Text1) || !string.IsNullOrWhiteSpace(panel.Text2))
                 {
                     CurrentLegSide = CurrentLegSide;
-                    CurrentPanelViewModel.PanelOpened = false;
-                    handled = false;
-                    var newStruct = GetPanelStructure();
-                    newStruct.Custom = false;
-                    Data.BPVHips.Add((BPVHipStructure)newStruct);
-                    Data.Complete();
-                    _lastSender.StructureSource.Add(newStruct);
-                    _lastSender.SelectedValue = newStruct;
+                    if (IsStructEdited(CurrentPanelViewModel.LegPrt))
+                    {
+                        var newStruct = GetPanelStructure();
+                        newStruct.Custom = false;
+                        Data.BPVHips.Add((BPVHipStructure)newStruct);
+                        Data.Complete();
+                        _lastSender.StructureSource.Add(newStruct);
+                        _lastSender.SelectedValue = newStruct;
+                    }
                     CurrentPanelViewModel.PanelOpened = false;
                     handled = false;
                 }
