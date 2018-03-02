@@ -21,7 +21,7 @@
                 </LinearGradientBrush>
             </Grid.Background>
             <TextBlock x:Name="textBlock2" TextAlignment="Center" HorizontalAlignment="Left" Margin="357,0,0,0" TextWrapping="Wrap" Text="Добавление обследования" VerticalAlignment="Top" Width="auto" FontSize="18pt" Height="28" FontFamily="Segoe UI Semibold" />
-            <TextBlock x:Name="textBlock1" TextAlignment="Center" HorizontalAlignment="Left" Margin="600,3,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="543" FontSize="18" Height="28" FontFamily="Segoe UI Semibold" FontWeight="Bold"><TextBlock Text="{Binding Path=CurrentPatient.Sirname}" /><TextBlock Text="{Binding Path=initials}" /><TextBlock Text=" (" /><TextBlock Text="{Binding Path=CurrentPatient.Age}" /><TextBlock Text=") лет\года" /></TextBlock>
+            <TextBlock x:Name="textBlock1" TextAlignment="Center" HorizontalAlignment="Left" Margin="600,3,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="543" FontSize="18" Height="28" FontFamily="Segoe UI Semibold" FontWeight="Bold"><TextBlock Text="{Binding Path=CurrentPatient.Sirname}" /><TextBlock Text="{Binding Path=initials}" /><TextBlock Text="{Binding Path=CurrentPatient.Age}" /><TextBlock Text="{Binding Path=AgeText}" /></TextBlock>
             <Separator HorizontalAlignment="Left" Height="5" Margin="0,28,0,0" VerticalAlignment="Top" Width="1016" RenderTransformOrigin="0.51,0.49"/>
 
             <ListBox x:Name="listBox1" ItemsSource="{Binding Path=ComplainsList}" HorizontalAlignment="Left" Height="97" Margin="505,62,0,0" VerticalAlignment="Top" Width="487" BorderThickness="1">

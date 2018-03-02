@@ -1064,7 +1064,8 @@ namespace WpfApp2.ViewModels
         {
             DiagnosisList = (List<DiagnosisDataSource>)data;
         }
-
+        private string _ageText;
+        public string AgeText { get { return _ageText; } set { _ageText = value; OnPropertyChanged(); } }
         private void SetCurrentPatientID(object sender, object data)
         {
             MessageBus.Default.Call("SetClearDiagnosisListLeftRightObsled", null, null);
@@ -1076,6 +1077,30 @@ namespace WpfApp2.ViewModels
             TextTip = "Текст пометки";
             CurrentPatient = Data.Patients.Get((int)data);
             initials = " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
+            char[] chararr = CurrentPatient.Age.ToString().ToCharArray();
+            try
+            {
+                string agelastNumb = chararr[chararr.Length - 1].ToString();
+                float buff = 0f;
+                if (float.TryParse(agelastNumb, out buff))
+                {
+                    if (CurrentPatient.Age >= 10 && CurrentPatient.Age <= 19)
+                    {
+                        AgeText = " лет";
+                    }
+                    else if (buff == 1)
+                    { AgeText = " год"; }
+                    else if (buff >= 2 && buff <= 4)
+                    {
+                        AgeText = " года";
+                    }
+                    else if (buff == 0 || (buff >= 5 && buff <= 9))
+                    {
+                        AgeText = " лет";
+                    }
+                }
+            }
+            catch { }
             SetAllBordersDefault();
         }
 
