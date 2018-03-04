@@ -45,8 +45,8 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Grid.Row="4"  VerticalAlignment="Center">
-                <Button  Style="{StaticResource MyNormalBUTTON}"  x:Name="AddButton" Command="{Binding Controller.LegViewModel.RevertCommand}" Content="Вернуться к ноге" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-                <Button  Style="{StaticResource MyConfirmBUTTON}"   x:Name="AddButton_Copy" Command="{Binding Controller.LegViewModel.SaveCommand}" Content="Сохранить" HorizontalAlignment="Right"  VerticalAlignment="Top" Margin="623,0"  Grid.ColumnSpan="2"/>
+                <Button  Style="{StaticResource MyNormalBUTTON}"  x:Name="AddButton" Command="{Binding Controller.LegViewModel.RevertCommand}" Content="Вернуться к ноге" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="200,0" Grid.ColumnSpan="2"/>
+                <Button  Style="{StaticResource MyConfirmBUTTON}"   x:Name="AddButton_Copy" Command="{Binding Controller.LegViewModel.SaveCommand}" Content="Сохранить" HorizontalAlignment="Right"  VerticalAlignment="Top" Margin="0,0,200,0"  Grid.ColumnSpan="2"/>
             </StackPanel>
 
             <Border Grid.RowSpan="4" Visibility="{Binding Path = Controller.LegViewModel.CurrentPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOverlay">
@@ -86,48 +86,30 @@
 
                 <Grid>
                     <Canvas Background="#FFC6E8E6">
-                        <TextBlock x:Name="textBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="135" FontSize="14" Canvas.Top="4"><Run Text="Добавить сво"/><Run Text="ё описание"/><Run Text=" "/><Run Text=" "/></TextBlock>
-                        <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=Text1 ,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="61" />
-                        <TextBox x:Name="textBox2" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=Text2 ,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="173"/>
+                        <TextBlock x:Name="textBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="146" FontSize="14" Canvas.Top="6"><Run Text="Добавить сво"/><Run Text="ё описание"/><Run Text=" "/><Run Text=" "/></TextBlock>
+                        <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=Text1 ,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="56" />
+                        <TextBox x:Name="textBox2" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=Text2 ,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="177"/>
                         <CheckBox x:Name="checkBox" Content="есть поле для размерности" HorizontalAlignment="Left" IsChecked="{Binding Path=HasSize,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="109"/>
 
-                        <controls:AutoCompleteBox Canvas.Left="199" Canvas.Top="113" MinimumPrefixLength ="0"  IsDropDownOpen="True" Visibility="{Binding Path=HasSize, Converter={StaticResource BoolToVis}}"  Text="{Binding Path=SelectedMetricText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                        <controls:AutoCompleteBox Canvas.Left="221" Canvas.Top="117" MinimumPrefixLength ="0"  IsDropDownOpen="True" Visibility="{Binding Path=HasSize, Converter={StaticResource BoolToVis}}"  Text="{Binding Path=SelectedMetricText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                           ItemsSource="{Binding Path=Dimentions}"  MaxDropDownHeight="260"   SelectedItem="{Binding Path=SelectedMetric,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
-                        x:Name="textBox_Copy3" Grid.Column="1" HorizontalAlignment="Left" Height="28"  VerticalAlignment="Top" Width="100" Grid.Row="6"  Grid.RowSpan="2">
+                        x:Name="textBox_Copy3" Grid.Column="1" HorizontalAlignment="Left" Height="28"  VerticalAlignment="Top" Width="124" Grid.Row="6"  Grid.RowSpan="2">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="PreviewMouseDown">
                                     <i:InvokeCommandAction  Command="{Binding Path=ClickOnAutoComplete}" CommandParameter="{Binding ElementName=textBox_Copy3}"></i:InvokeCommandAction>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </controls:AutoCompleteBox>
-                        <Button Style="{StaticResource MyNormalBUTTON}"   x:Name="button" Content="{Binding TextCancleOrResetBTN,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Top"  Canvas.Left="0" Canvas.Top="232" Command="{Binding Controller.LegViewModel.ClosePanelCommand,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                        <Button Style="{StaticResource MyNormalBUTTON}"   x:Name="button" Content="{Binding TextCancleOrResetBTN,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Top"  Canvas.Left="10" Canvas.Top="225" Command="{Binding Controller.LegViewModel.ClosePanelCommand,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
-                        <Button   Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtonAddStructure" Content="{Binding TextSaveBTN,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding Controller.LegViewModel.SavePanelCommand,UpdateSourceTrigger=PropertyChanged}" Canvas.Left="249" Canvas.Top="232"/>
+                        <Button   Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtonAddStructure" Content="{Binding TextSaveBTN,UpdateSourceTrigger=PropertyChanged,Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding Controller.LegViewModel.SavePanelCommand,UpdateSourceTrigger=PropertyChanged}" Canvas.Left="232" Canvas.Top="225"/>
                         <Separator Height="18" Margin="0" Canvas.Top="19" Width="442"/>
                         <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="37" Canvas.Left="10" Text="Первая часть:"/>
-                        <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="152" Canvas.Left="10"><Run Text="Вторая часть "/><Run Text="(не обязательно к заполнению):"/></TextBlock>
+                        <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="158" Canvas.Left="10"><Run Text="Вторая часть "/><Run Text="(не обязательно к заполнению):"/></TextBlock>
                         <CheckBox x:Name="checkBox_Copy" Content="двойная размерность (х*х)" IsChecked="{Binding Path=HasDoubleSize}" Visibility="{Binding Path=DoubleSizeIsAvailable, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left"  VerticalAlignment="Top" Canvas.Left="10" Canvas.Top="132"/>
                     </Canvas>
                 </Grid>
             </Border>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         </Grid>
     </DataTemplate>
 </ResourceDictionary>
