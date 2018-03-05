@@ -16,7 +16,7 @@
             <TextBlock Text="Врач " Width="200" Height="23" Margin="0,0,820,220"></TextBlock>
 
             <ComboBox ItemsSource="{Binding Path=Doctors}" SelectedIndex="{Binding Path=SelectedDoctor}"  Width="100" Height="13" Margin="0,0,750,230"></ComboBox>
-            <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy" Command="{Binding Path=ToOperationOverviewCommand}" Content="Вернуться к операции" HorizontalAlignment="Left" Margin="69,541,0,0"              
+            <Button Style="{StaticResource MyNormalBUTTON}" Width="215" x:Name="button_Copy" Command="{Binding Path=ToOperationOverviewCommand}" Content="Вернуться к операции" HorizontalAlignment="Left" Margin="69,541,0,0"              
                     VerticalAlignment="Top" />
 
             <TextBlock Text="Пенное склерозирование : " Width="200" Height="23" Margin="0,0,850,120"></TextBlock>

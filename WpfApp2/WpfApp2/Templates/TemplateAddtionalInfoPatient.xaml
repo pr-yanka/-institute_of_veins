@@ -1,0 +1,246 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                          xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                    xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls.Input.Toolkit"
+                    xmlns:local="clr-namespace:WpfApp2.Templates">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/LegParts/Templates/RightPanelAnimation.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+    <Style x:Key="MyDataGridHEADER" TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+        <Setter Property="Width" Value="auto"></Setter>
+        <Setter Property="FontSize" Value="16"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+    </Style>
+    <DataTemplate x:Key="TemplateAddtionalInfoPatient">
+        <Grid Margin="227,57,0,0" >
+            <TextBlock FontFamily="/fonts/#Pescadero" Width="Auto" FontSize="22pt" HorizontalAlignment="Center" VerticalAlignment="Top" Height="Auto"  Text="Амбулаторная карта">
+
+                <TextBlock.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="10"/>
+                    </TransformGroup>
+                </TextBlock.RenderTransform>
+            </TextBlock>
+            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button" Visibility="Hidden" Content="Загрузить данные из регистратуры" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top"/>
+            <Button x:Name="button_Copy3" Visibility="{Binding Path=Visibility}" Content="Сбросить" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="49,630,0,0" VerticalAlignment="Top"
+                 Style="{StaticResource MyNormalBUTTON}" Width="300"/>
+            <Button x:Name="button_Copy4" Content="{Binding Path=NameOfButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="400,630,0,0" VerticalAlignment="Top"
+                 Style="{StaticResource MyConfirmBUTTON}" Width="300"/>
+            <ScrollViewer  MaxHeight="500" Margin="24,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                <Grid  Height="770"   Width="993">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="186*"/>
+                        <ColumnDefinition Width="1021*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="16*"/>
+                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="19*"/>
+                        <RowDefinition Height="19*"/>
+                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="19*"/>
+                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="19*"/>
+                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="19*"/>
+                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="27*"/>
+                        <RowDefinition Height="19*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="Группа крови" VerticalAlignment="Top" FontSize="16"/>
+                    <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Grid.Row="1" Text="Переливание крови" Grid.RowSpan="2"/>
+                    <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="0,7,0,0" TextWrapping="Wrap" Text="Сахарный диабет" VerticalAlignment="Top" FontSize="16" Grid.Row="3"/>
+                    <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap" Grid.RowSpan="2" Text="Хирургические вмешательства" VerticalAlignment="Top" FontSize="16" Grid.Row="4" Width="144"/>
+                    <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap"  Grid.RowSpan="2" Text="Аллергологический анамнез" VerticalAlignment="Top" FontSize="16" Grid.Row="6"/>
+                    <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap" Text="Операции" VerticalAlignment="Top" FontSize="16" Grid.Row="8" Width="166" Grid.RowSpan="3"/>
+
+                    <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="Непереносимость лекарственных препаратов" VerticalAlignment="Top" FontSize="16" Grid.Row="10" Width="auto"/>
+
+
+                    <ComboBox SelectedIndex="{Binding BloodGroupID}" SelectedValue="{Binding BloodGroup}"  x:Name="comboBoвx_Copy2" Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="205" Height="24"   >
+                        <TextBlock>1</TextBlock>
+                        <TextBlock>2</TextBlock>
+                        <TextBlock>3</TextBlock>
+                        <TextBlock>4</TextBlock>
+                    </ComboBox>
+
+                    <ComboBox SelectedIndex="{Binding Path=IsPositiveGroupTypeID}" SelectedValue="{Binding IsPositiveGroupType}" x:Name="comboBox_Copy2" Grid.Column="2" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="205" Height="24" Margin="220,0,0,0"   >
+                        <TextBlock>положительная</TextBlock>
+                        <TextBlock>отрицательная</TextBlock>
+                    </ComboBox>
+
+
+                    <DataGrid CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False" AutoGenerateColumns="False" ColumnHeaderStyle="{StaticResource MyDataGridHEADER}"  ItemsSource="{Binding Path=BloodExchangeList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="97"  VerticalAlignment="Top" Width="425" Grid.Row="1" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
+
+                        <DataGrid.Columns  >
+
+                            <DataGridTemplateColumn  Header="Дата" Width="109" >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate >
+
+                                        <DatePicker   SelectedDate="{Binding Data.Date,UpdateSourceTrigger=PropertyChanged}"  ></DatePicker>
+
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTextColumn Binding="{Binding  Data.Volume,UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}"   Header="Объём"></DataGridTextColumn>
+                            <DataGridTextColumn MinWidth="187" Binding="{Binding  Commentary,UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" Header="Комментарий"></DataGridTextColumn>
+                        <DataGridTemplateColumn  Header="Удалить" >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate >
+                                    <Grid>
+                                        <Button Command="{Binding Path=DeleteCommand}" HorizontalAlignment="Left"   Width="25" Height="20"  MaxWidth="25" MaxHeight="20"  FontFamily="Franklin Gothic Medium" FontSize="14"  >
+
+                                        </Button>
+                                    </Grid>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Command="{Binding OpenCommand}" Margin="0,5"  Height="27" FontSize="12" Width="425" Content="добавить переливание" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top"></Button>
+
+                    <TextBox  Margin="0,0" x:Name="textBox_Copy1"  Text="{Binding Path=Sugar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="425" Grid.Row="3">
+                       
+                    </TextBox>
+                    <ListBox ItemsSource="{Binding Path=HirurgInteruptList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="97"  VerticalAlignment="Top" Width="425" Grid.Row="4" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox TextWrapping="Wrap"  HorizontalAlignment="Center" Height="25"  Width="395"  Text="{Binding  Data.Str,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                    <Button Command="{Binding Path=DeleteCommand}" HorizontalAlignment="Left"   Width="25" Height="20"  MaxWidth="25" MaxHeight="20"  FontFamily="Franklin Gothic Medium" FontSize="14"  >
+
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <Button  Margin="0,5" Command="{Binding ToSetHirurgInterruptCommand}" Height="27" FontSize="12" Width="425" Content="добавить хирургическое вмешательство" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top"></Button>
+                    <ComboBox x:Name="comboBox_Cаopy1" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="6" VerticalAlignment="Top" Width="425" Height="27" Margin="0,1,0,0" SelectedIndex="{Binding Path=GenderTypeNumber}" >
+
+                    </ComboBox>
+                    <ListBox ItemsSource="{Binding Path=AlergicAnevrizmList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="97"  VerticalAlignment="Top" Width="425" Grid.Row="6" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox TextWrapping="Wrap"  HorizontalAlignment="Center" Height="25"  Width="395"  Text="{Binding  Data.Str,UpdateSourceTrigger=PropertyChanged}" />
+                                    <Button Command="{Binding Path=DeleteCommand}" HorizontalAlignment="Left"   Width="25" Height="20"  MaxWidth="25" MaxHeight="20"  FontFamily="Franklin Gothic Medium" FontSize="14"  >
+
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <Button Command="{Binding ToSetAlergicAnevrizmCommand}" Margin="0,5" Height="27" FontSize="12" Width="425" Content="добавить анамнез" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="7" VerticalAlignment="Top"></Button>
+
+
+
+
+                    <ListBox ItemsSource="{Binding Path=OperationForAmbCard.View,UpdateSourceTrigger=PropertyChanged}"  Grid.Column="1" HorizontalAlignment="Left" Height="97"  VerticalAlignment="Top" Width="425" Grid.Row="8" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+
+                                    <TextBox HorizontalAlignment="Center" TextWrapping="Wrap" Height="25"  Width="395"  Text="{Binding  Data.Str,UpdateSourceTrigger=PropertyChanged}" />
+                                    <Button Command="{Binding Path=DeleteCommand,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"   Width="25" Height="20"  MaxWidth="25" MaxHeight="20"  FontFamily="Franklin Gothic Medium" FontSize="14"  >
+
+                                    </Button>
+                                </StackPanel>
+                             
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <Button Command="{Binding ToSetOprerationForAmbCardListCommand}"  Margin="0,5" Height="27" FontSize="12" Width="425" Content="добавить операцию" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="9" VerticalAlignment="Top"></Button>
+
+
+
+
+
+
+                    <ListBox ItemsSource="{Binding Path=PreparateHateList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="97"  VerticalAlignment="Top" Width="425" Grid.Row="10"  Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel>
+                                        <TextBox TextWrapping="Wrap" Width="395"  HorizontalAlignment="Center" Height="auto" Text="{Binding  Data.Str,UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBox TextWrapping="Wrap" Width="395"  Text="{Binding Commentary,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                       
+                                    </StackPanel>
+                                    <Button Command="{Binding Path=DeleteCommand}" HorizontalAlignment="Left"   Width="25" Height="20"  MaxWidth="25" MaxHeight="20"  FontFamily="Franklin Gothic Medium" FontSize="14"  >
+
+                                    </Button>
+                                </StackPanel>
+                                
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Button Command="{Binding ToSetPreparateHateCommand}"  Height="27" FontSize="12" Width="425" Content="добавить препарат" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="1" Grid.ColumnSpan="22" Margin="0,5" HorizontalAlignment="Left" Grid.Row="11" VerticalAlignment="Top"></Button>
+
+
+                </Grid>
+            </ScrollViewer>
+
+            <Border Grid.RowSpan="4" Visibility="{Binding Path = CurrentPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOv5erlay">
+                <Border.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.78"/>
+                </Border.Background>
+            </Border>
+
+            <Border x:Name="panel34Corntrol" Grid.RowSpan="4" Margin="0,0,-450,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="450" Height="225" DataContext="{Binding Path=CurrentPanelViewModel}" >
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=PanelOpened}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <RemoveStoryboard BeginStoryboardName="AnimationCloseStoryboard"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Open}" x:Name="AnimationBeginStoryboard"/>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <RemoveStoryboard BeginStoryboardName="AnimationBeginStoryboard"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Close}" x:Name="AnimationCloseStoryboard"/>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Border.RenderTransform>
+
+                <Grid>
+                    <Canvas Background="#FFC6E8E6" Margin="0,0,0,29">
+                        <TextBlock x:Name="textfBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="135" FontSize="18" Canvas.Top="10" Text="Переливание крови"/>
+                        <DatePicker x:Name="texвtBfox1" HorizontalAlignment="Left" Height="22" SelectedDate="{Binding ShortTime}" VerticalAlignment="Top" Width="150" Canvas.Left="270" Canvas.Top="37" />
+                        <TextBox x:Name="textBfox1" HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" Width="120" Canvas.Left="75" Canvas.Top="40" />
+                        <TextBox x:Name="textвBппfox1" HorizontalAlignment="Center" Height="42" TextWrapping="Wrap" Text="{Binding Path=LongText}" VerticalAlignment="Top" Width="400" Canvas.Left="26" Canvas.Top="90" />
+
+                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.RevertCommand}" Canvas.Left="0" Canvas.Top="150" />
+                        <TextBox x:Name="textBвіаfox1" HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" Width="120" Canvas.Left="75" Canvas.Top="40" />
+
+                        <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtonfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.SaveCommand}" Canvas.Left="250" Canvas.Top="150" />
+                        <TextBlock x:Name="texftBlock_Copy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="42" Canvas.Left="30" Text="Объём:"/>
+                        <TextBlock x:Name="texftBlock_Copвy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="42" Canvas.Left="238" Text="Дата:"/>
+                        <TextBlock x:Name="texftBlocуk_Copвy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="70" Canvas.Left="188" Text="Комментарий:"/>
+                    </Canvas>
+                </Grid>
+            </Border>
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>

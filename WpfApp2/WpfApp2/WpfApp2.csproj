@@ -202,9 +202,19 @@
     <Compile Include="Controls\AddReport.xaml.cs">
       <DependentUpon>AddReport.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Db\Models\OperationForAmbulatornCardPatientsRepository.cs" />
+    <Compile Include="Db\Models\AlergicAnevrizmPatientsRepository.cs" />
+    <Compile Include="Db\Models\OperationForAmbulatornCardRepository.cs" />
+    <Compile Include="Db\Models\PreparateHatePatientsRepository.cs" />
+    <Compile Include="Db\Models\HirurgInteruptPatientsRepository.cs" />
+    <Compile Include="Db\Models\BloodExchangePatientsRepository.cs" />
+    <Compile Include="Db\Models\PreparateHateRepository.cs" />
+    <Compile Include="Db\Models\AlergicAnevrizmRepository.cs" />
+    <Compile Include="Db\Models\HirurgInteruptRepository.cs" />
     <Compile Include="Db\Models\ChangeHistoryRepository.cs" />
     <Compile Include="Db\Models\ComplanesObsRepository.cs" />
     <Compile Include="Db\Models\ChangesInDBTypeRepository.cs" />
+    <Compile Include="Db\Models\BloodExchangeRepository.cs" />
     <Compile Include="Db\Models\RecomendationObsRepository.cs" />
     <Compile Include="Db\Models\doc_templatesRepository.cs" />
     <Compile Include="Db\Models\CitiesRepository.cs" />
@@ -357,8 +367,13 @@
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="LegParts\VMs\MPVSectionViewModel.cs" />
     <Compile Include="LegParts\VMs\MPVViewModel.cs" />
+    <Compile Include="ViewModels\Panels\OperationForAmbullatorCardPanelViewModel.cs" />
+    <Compile Include="ViewModels\Panels\AlergicAnevrizmPanelViewModel.cs" />
+    <Compile Include="ViewModels\Panels\BloodExchangePanelViewModel.cs" />
+    <Compile Include="ViewModels\Panels\PreparateHatePanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\OperatyonTypePanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\DoctorSelectPanelViewModel.cs" />
+    <Compile Include="ViewModels\Panels\HirurgInterruptPanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\ScintificsPanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\SpecPanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\DiagTypePanelViewModel.cs" />
@@ -382,6 +397,11 @@
     <Compile Include="ViewModels\ViewModelAddUser.cs" />
     <Compile Include="ViewModels\ViewModelAddDoctor.cs" />
     <Compile Include="ViewModels\ViewModelChangeHistory.cs" />
+    <Compile Include="ViewModels\ViewModelAdditionalInfoPatient.cs" />
+    <Compile Include="ViewModels\ViewModelAlergicAnevrizmList.cs" />
+    <Compile Include="ViewModels\ViewModelOperationForAmbullatorCardList.cs" />
+    <Compile Include="ViewModels\ViewModelPreparateHate.cs" />
+    <Compile Include="ViewModels\ViewModelHirurgInterruptList.cs" />
     <Compile Include="ViewModels\ViewModelRedactPathology.cs" />
     <Compile Include="ViewModels\ViewModelAddPathology.cs" />
     <Compile Include="ViewModels\ViewModelAnalizeOverview.cs" />
@@ -535,6 +555,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Templates\TemplateCheckboxesWithFilter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Templates\TemplateCheckboxes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -548,6 +572,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Templates\TemplateChangeHistory.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Templates\TemplateAddtionalInfoPatient.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

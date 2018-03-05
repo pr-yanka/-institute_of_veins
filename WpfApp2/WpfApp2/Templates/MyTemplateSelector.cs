@@ -45,6 +45,8 @@ namespace WpfApp2.Templates
         public DataTemplate TemplateAddUser { get; set; }
         public DataTemplate TemplateAddEpicrizen { get; set; }
         public DataTemplate TemplateChangeHistory { get; set; }
+        public DataTemplate TemplateAddtionalInfoPatient { get; set; }
+        public DataTemplate TemplateCheckboxesWithFilter { get; set; }
 
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
@@ -193,7 +195,26 @@ namespace WpfApp2.Templates
 
             if (item.GetType() == typeof(ViewModelChangesHistoy))
                 return TemplateChangeHistory;
-            //ViewModelChangesHistoy  TemplateChangeHistory
+
+
+
+            if (item.GetType() == typeof(ViewModelAdditionalInfoPatient))
+                return TemplateAddtionalInfoPatient;
+
+
+            if (item.GetType() == typeof(ViewModelHirurgInterruptList))
+                return TemplateCheckboxesWithFilter;
+
+            if (item.GetType() == typeof(ViewModelPreparateHate))
+                return TemplateCheckboxesWithFilter;
+
+            if (item.GetType() == typeof(ViewModelAlergicAnevrizmList))
+                return TemplateCheckboxesWithFilter;
+
+            if (item.GetType() == typeof(ViewModelOperationForAmbullatorCardList))
+                return TemplateCheckboxesWithFilter;
+
+            //ViewModelChangesHistoy  TemplateChangeHistory   ViewModelOperationForAmbullatorCardList
             return null;
         }
     }

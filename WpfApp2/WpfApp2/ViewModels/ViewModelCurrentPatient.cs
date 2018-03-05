@@ -32,7 +32,7 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToViewHistoryCommand { get; protected set; }
         public DelegateCommand ToPathologyListCommand { get; protected set; }
         public DelegateCommand ToAddAnalizeCommand { get; protected set; }
-
+        public DelegateCommand ToAdditionalInfoCommand { get; protected set; }
         //protected int CurrentPatientID;  
 
         public string PatientBirthday { get; set; }
@@ -128,6 +128,13 @@ namespace WpfApp2.ViewModels
                 }
             );
 
+            ToAdditionalInfoCommand = new DelegateCommand( ()=>
+                {
+                MessageBus.Default.Call("SetCurrentPatientIDForAmbCard", this, currentPatient.Id);
+
+                Controller.NavigateTo<ViewModelAdditionalInfoPatient>();
+            }
+            );
             ToPathologyListCommand = new DelegateCommand(
                 () =>
                 {

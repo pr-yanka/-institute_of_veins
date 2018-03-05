@@ -1,0 +1,120 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:WpfApp2.Templates">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/LegParts/Templates/RightPanelAnimation.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+    <Style x:Key="MyDataGridCell" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsFilteredPt,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="True">
+                <Setter Property="Background" Value="Wheat"/>
+
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsFilteredPt,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="False">
+                <Setter Property="Background" Value="Transparent"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <DataTemplate x:Key="TemplateCheckboxesWithFilter">
+        <Grid Name="RootGrid">
+           
+            <StackPanel Orientation="Vertical" Background="White">
+                <TextBlock x:Name="textBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Path=HeaderText}" VerticalAlignment="Top" FontSize="28">
+                    <TextBlock.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform Y="10"/>
+                        </TransformGroup>
+                    </TextBlock.RenderTransform>
+                </TextBlock>
+                <TextBox  Margin="0,20" Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Height="26"  TextWrapping="Wrap"  Width="565" >
+                
+                </TextBox>
+                <DataGrid MinHeight="500"  Margin="0,0" AutoGenerateColumns="False" ItemsSource="{Binding Path=Controller.CurrentViewModel.DataSourceList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn  >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock  TextAlignment="Left" Width="Auto" Text="{Binding Path=Data.Str}" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Center" >
+                      <StackPanel Orientation="Vertical">
+                        <Button Style="{StaticResource MyNormalBUTTON}" Content="{Binding Path=AddButtonText}"  Command="{Binding Path=OpenCommand}" ></Button>
+
+                        <Button Style="{StaticResource MyConfirmBUTTON}" Content="Сохранить"  Command="{Binding Path=ToPhysicalCommand}" ></Button>
+                             </StackPanel>
+                </StackPanel>
+            </StackPanel>
+
+
+
+
+            <Border Grid.RowSpan="4" Visibility="{Binding Path = CurrentPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOv5erlay">
+                <Border.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.78"/>
+                </Border.Background>
+            </Border>
+
+            <Border x:Name="panel34Corntrol" Grid.RowSpan="4" Margin="0,0,-450,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="450" Height="225" DataContext="{Binding Path=CurrentPanelViewModel}" >
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=PanelOpened}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <RemoveStoryboard BeginStoryboardName="AnimationCloseStoryboard"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Open}" x:Name="AnimationBeginStoryboard"/>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <RemoveStoryboard BeginStoryboardName="AnimationBeginStoryboard"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Close}" x:Name="AnimationCloseStoryboard"/>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Border.RenderTransform>
+
+                <Grid>
+                    <Canvas Background="#FFC6E8E6" Margin="0,0,0,29">
+                        <TextBlock x:Name="textfBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="135" FontSize="18" Canvas.Top="10" Text="{Binding TextOFNewType}"/>
+                        <TextBox x:Name="textBfox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="61" />
+                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.RevertCommand}" Canvas.Left="0" Canvas.Top="120" />
+                        <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtonfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.SaveCommand}" Canvas.Left="250" Canvas.Top="120" />
+                        <TextBlock x:Name="texftBlock_Copy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="42" Canvas.Left="173" Text="Название:"/>
+
+                    </Canvas>
+                </Grid>
+            </Border>
+
+
+
+
+
+        </Grid>
+    </DataTemplate>
+</ResourceDictionary>

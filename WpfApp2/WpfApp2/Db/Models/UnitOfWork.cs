@@ -24,6 +24,20 @@ namespace WpfApp2.Db.Models
 {
     public class UnitOfWork : IUnitOfWork
     {
+        public OperationForAmbulatornCardRepository OperationForAmbulatornCard { get; }
+        public OperationForAmbulatornCardPatientsRepository OperationForAmbulatornCardPatients { get; }
+        public AlergicAnevrizmRepository AlergicAnevrizm { get; }
+        public BloodExchangeRepository BloodExchange { get; }
+        public HirurgInteruptRepository HirurgInterup { get; }
+        public PreparateHateRepository PreparateHate { get; }
+
+        public AlergicAnevrizmPatientsRepository AlergicAnevrizmPatients { get; }
+        public BloodExchangePatientsRepository BloodExchangePatients { get; }
+        public HirurgInteruptPatientsRepository HirurgInterupPatients { get; }
+        public PreparateHatePatientsRepository PreparateHatePatients { get; }
+
+
+
         public ChangeHistoryRepository ChangeHistory { get; }
         public ComplanesObsRepository ComplanesObs { get; }
         public RecomendationObsRepository RecomendationObs { get; }
@@ -50,7 +64,7 @@ namespace WpfApp2.Db.Models
         public GVEntryRepository GVEntries { get; }
 
 
-       
+
 
         public PPVRepository PPV { get; }
         public PPVComboRepository PPVCombos { get; }
@@ -58,14 +72,14 @@ namespace WpfApp2.Db.Models
         public LettersRepository Letters { get; }
 
 
-        
+
 
         public TEMPVRepository TEMPV { get; }
         public TEMPVComboRepository TEMPVCombos { get; }
         public TEMPVEntryRepository TEMPVEntries { get; }
 
 
-   
+
 
 
         public MPVRepository MPV { get; }
@@ -73,7 +87,7 @@ namespace WpfApp2.Db.Models
         public MPVEntryRepository MPVEntries { get; }
 
 
-       
+
 
 
         public Perforate_shinRepository Perforate_shin { get; }
@@ -82,7 +96,7 @@ namespace WpfApp2.Db.Models
 
 
 
-       
+
 
 
         public SPSHipRepository SPS { get; }
@@ -90,12 +104,12 @@ namespace WpfApp2.Db.Models
         public SPSHipEntryRepository SPSEntries { get; }
 
 
-       
+
 
         public BPV_TibiaRepository BPV_Tibia { get; }
         public BPV_TibiaComboRepository BPV_TibiaCombos { get; }
         public BPV_TibiaEntryRepository BPV_TibiaEntries { get; }
-      
+
         public Perforate_hipRepository Perforate_hip { get; }
         public Perforate_hipComboRepository Perforate_hipCombos { get; }
         public Perforate_hipEntryRepository Perforate_hipEntries { get; }
@@ -112,20 +126,20 @@ namespace WpfApp2.Db.Models
 
 
 
-       
+
         public SFSHipRepository SFSHips { get; }
         public SFSComboRepository SFSCombos { get; }
         public SFSHipEntryRepository SFSHipEntries { get; }
 
         public СategoryTypeRepository СategoryType { get; }
-     
+
         public PDSVHipRepository PDSVHips { get; }
         public PDSVComboRepository PDSVCombos { get; }
         public PDSVHipEntryRepository PDSVHipEntries { get; }
         public PDSVHipWayRepository PDSVHipWay { get; }
 
 
-     
+
         public BPVHipRepository BPVHips { get; }
         public BPVComboRepository BPVCombos { get; }
         public BPVHipEntryRepository BPVHipEntries { get; }
@@ -179,6 +193,19 @@ namespace WpfApp2.Db.Models
         public UnitOfWork(MySqlContext context)
         {
             _context = context;
+            OperationForAmbulatornCard = new OperationForAmbulatornCardRepository(_context);
+            OperationForAmbulatornCardPatients = new OperationForAmbulatornCardPatientsRepository(_context);
+            AlergicAnevrizmPatients = new AlergicAnevrizmPatientsRepository(_context);
+            BloodExchangePatients = new BloodExchangePatientsRepository(_context);
+            HirurgInterupPatients = new HirurgInteruptPatientsRepository(_context);
+            PreparateHatePatients = new PreparateHatePatientsRepository(_context);
+
+            AlergicAnevrizm = new AlergicAnevrizmRepository(_context);
+            BloodExchange = new BloodExchangeRepository(_context);
+            HirurgInterup = new HirurgInteruptRepository(_context);
+            PreparateHate = new PreparateHateRepository(_context);
+
+
             ChangesInDBType = new ChangesInDBTypeRepository(_context);
             ComplanesObs = new ComplanesObsRepository(_context);
             RecomendationObs = new RecomendationObsRepository(_context);

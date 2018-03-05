@@ -3,11 +3,7 @@
                     xmlns:local="clr-namespace:WpfApp2.Templates"
                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity">
 
-    <Style x:Key="MyDataGridHEADER" TargetType="DataGridColumnHeader" BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
-        <Setter Property="Width" Value="auto"></Setter>
-        <Setter Property="FontSize" Value="16"></Setter>
-        <Setter Property="VerticalAlignment" Value="Center"></Setter>
-    </Style>
+    
 
     <Style x:Key="MyDataGridCell" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
         <Setter Property="BorderThickness" Value="0"></Setter>
@@ -56,6 +52,7 @@
         </Style.Triggers>
     </Style>
     <Style  x:Key="MyDataGridRow" TargetType="DataGridRow"  BasedOn="{StaticResource {x:Type DataGridRow}}">
+        <Setter Property="HeaderStyle" Value="{StaticResource MyDataGridHEADER}"></Setter>
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">
                 <Setter Property="Background" Value="SkyBlue" ></Setter>
@@ -76,7 +73,7 @@
     </Style>
 
     <DataTemplate x:Key="TemplatePhysicalTable">
-        <Grid Margin="220,75,0,0">
+        <Grid Margin="220,75,0,0" >
     
 
             <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Text="Обследования" FontFamily="/fonts/#Pescadero" FontSize="22pt" RenderTransformOrigin="0.591,0.516">
@@ -100,15 +97,15 @@
               
                 <TextBlock Canvas.ZIndex="2" Visibility="{Binding VisOfNothingFaund}" TextWrapping="Wrap" Height="28" Text="Ничего не найдено" FontFamily="/fonts/#Pescadero" FontSize="14pt" Margin="130,0,0,230" RenderTransformOrigin="0.591,0.516"/>
 
-                <DataGrid Canvas.ZIndex="1" ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" RowStyle="{StaticResource MyDataGridRow}"  IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="428" Margin="10,160,206,10" VerticalAlignment="Top" Width="auto" >
+            <DataGrid ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  Canvas.ZIndex="1"  RowStyle="{StaticResource MyDataGridRow}"  IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="428" Margin="30,160,0,0" VerticalAlignment="Top" Width="696" >
 
                 <DataGrid.Columns  >
 
-                    <DataGridTextColumn   CellStyle="{StaticResource MyDataGridCell2}" Binding="{Binding Path=Date,StringFormat=dd.MM.yyyy hh:mm}" ClipboardContentBinding="{x:Null}" Header="Дата" Width="auto"/>
+                    <DataGridTextColumn   CellStyle="{StaticResource MyDataGridCell2}" Binding="{Binding Path=Date,StringFormat=dd.MM.yyyy hh:mm}" ClipboardContentBinding="{x:Null}" Header="Дата" Width="120"/>
 
 
 
-                    <DataGridTextColumn CellStyle="{StaticResource MyDataGridCell}" Binding="{Binding Path=Patient}" ClipboardContentBinding="{x:Null}" Header="Пациент"  Width="auto">
+                    <DataGridTextColumn CellStyle="{StaticResource MyDataGridCell}" Binding="{Binding Path=Patient}" ClipboardContentBinding="{x:Null}" Header="Пациент"  Width="120">
 
 
                     </DataGridTextColumn>

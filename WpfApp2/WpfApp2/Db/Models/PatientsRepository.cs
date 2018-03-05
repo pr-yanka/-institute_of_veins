@@ -16,6 +16,17 @@ namespace WpfApp2.Db.Models
         [Column("id")]
         public int Id { set; get; }
 
+     
+        [Column("группа_крови")]
+        public string BloodGroup { set; get; }
+        [Column("Сахарний диабет")]
+        public string Sugar { set; get; }
+        [Column("ПоложительнаяЛиГруппа")]
+        public bool? IsPositiveGroupType { set; get; }
+
+    
+        
+
         [Required]
         [Column("имя")]
         public string Name { set; get; }

@@ -20,6 +20,20 @@ namespace WpfApp2.Db.Models
     public class MySqlContext : DbContext
     {
 
+     
+        public DbSet<OperationForAmbulatornCard> OperationForAmbulatornCard { get; set; }
+        public DbSet<OperationForAmbulatornCardPatients> OperationForAmbulatornCardPatients { get; set; }
+
+        public DbSet<AlergicAnevrizm> AlergicAnevrizm { get; set; }
+        public DbSet<BloodExchange> BloodExchange { get; set; }
+        public DbSet<HirurgInterupt> HirurgInterup { get; set; }
+        public DbSet<PreparateHate> PreparateHate { get; set; }
+
+        public DbSet<AlergicAnevrizmPatients> AlergicAnevrizmPatients { get; set; }
+        public DbSet<BloodExchangePatients> BloodExchangePatients { get; set; }
+        public DbSet<HirurgInteruptPatients> HirurgInterupPatients { get; set; }
+        public DbSet<PreparateHatePatients> PreparateHatePatients { get; set; }
+
 
 
         public DbSet<ComplanesObs> ComplanesObs { get; set; }
@@ -165,8 +179,8 @@ namespace WpfApp2.Db.Models
             try
             {
                 var objectStateEntry = ((IObjectContextAdapter)this).ObjectContext.ObjectStateManager.GetObjectStateEntry(entry.Entity);
-                if(objectStateEntry.EntityKey.EntityKeyValues != null)
-                return objectStateEntry.EntityKey.EntityKeyValues[0].Value;
+                if (objectStateEntry.EntityKey.EntityKeyValues != null)
+                    return objectStateEntry.EntityKey.EntityKeyValues[0].Value;
                 else
                 {
                     return "new_id";

@@ -53,17 +53,17 @@
             <TextBox Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="28" Margin="430,135,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="422" RenderTransformOrigin="0.632,0.9"/>
             <TextBlock Canvas.ZIndex="2" Visibility="{Binding VisOfNothingFaund}" TextWrapping="Wrap" Height="28" Text="Ничего не найдено" FontFamily="/fonts/#Pescadero" FontSize="14pt" Margin="474,0,0,230" RenderTransformOrigin="0.591,0.516"/>
 
-            <DataGrid ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" AutoGenerateColumns="False" ItemsSource="{Binding Path=ViewSource.View}" x:Name="dataGrid" ScrollViewer.VerticalScrollBarVisibility="Visible"
+            <DataGrid ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  AutoGenerateColumns="False" ItemsSource="{Binding Path=ViewSource.View}" x:Name="dataGrid" ScrollViewer.VerticalScrollBarVisibility="Visible"
                       Margin="230,132,0,0" Height="500" Width="auto" FontSize="14" HorizontalAlignment="Left">
-                <DataGrid.Columns>
-                    <DataGridTextColumn  Header="Имя" CellStyle="{StaticResource MyDataGridCell}"  Binding="{Binding CurrentPatient.Name}" ></DataGridTextColumn>
+                <DataGrid.Columns >
+                    <DataGridTextColumn   Header="Имя" CellStyle="{StaticResource MyDataGridCell}"  Binding="{Binding CurrentPatient.Name}" ></DataGridTextColumn>
                     <DataGridTextColumn   Header="Возраст"  CellStyle="{StaticResource MyDataGridCell1}"  Binding="{Binding CurrentPatient.Age}" ></DataGridTextColumn>
                     <!--
                    <DataGridTextColumn   Header="Пол"  CellStyle="{StaticResource MyDataGridCell2}"  Binding="{Binding CurrentPatient.Gender}" ></DataGridTextColumn>
                     <DataGridTextColumn   Header="Адрес проживания"  CellStyle="{StaticResource MyDataGridCell3}"  Binding="{Binding CurrentPatient.Region}" ></DataGridTextColumn>
                      -->
 
-                    <DataGridTemplateColumn Header="История">
+                    <DataGridTemplateColumn  Header="История">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -74,7 +74,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="Перейти">
+                    <DataGridTemplateColumn  Header="Перейти">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>

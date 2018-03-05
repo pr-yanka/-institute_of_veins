@@ -95,8 +95,8 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
-                <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="butвton" Command="{Binding Path=OpenAddSpecCommand}" Grid.Row="10" Visibility="Visible" Content="+ Добавить Специальность" HorizontalAlignment="Left" VerticalAlignment="Top" Width="auto" Height="auto"  FontSize="10"/>
-                <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="butвtoвn" Command="{Binding Path=OpenAddScintificsCommand}" Grid.Column="1" Margin="120,0" Grid.Row="10" Visibility="Visible" Content="+ Добавить Звание" HorizontalAlignment="Left" VerticalAlignment="Top" Width="auto" Height="auto" FontSize="10"/>
+                <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="butвton" Command="{Binding Path=OpenAddSpecCommand}" Grid.Row="10" Visibility="Visible" Content="+ Добавить Специальность" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Height="auto"  FontSize="10"/>
+                <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="butвtoвn" Command="{Binding Path=OpenAddScintificsCommand}" Grid.Column="1" Margin="120,0" Grid.Row="10" Visibility="Visible" Content="+ Добавить Звание" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Height="auto" FontSize="10"/>
 
                 <Grid Grid.Row="3" Grid.Column="2" Margin="120,30,0,0" Grid.RowSpan="10" Height="100" Width="auto" >
                     <DataGrid ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" HorizontalAlignment="Left" Height="220"  VerticalAlignment="Top" Width="152" Grid.Column="2" 

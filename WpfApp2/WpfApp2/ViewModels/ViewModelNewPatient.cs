@@ -69,7 +69,7 @@ namespace WpfApp2.ViewModels
             {
                 _name = value;
 
-              OnPropertyChanged();
+                OnPropertyChanged();
             }
         }
 
@@ -438,9 +438,20 @@ namespace WpfApp2.ViewModels
             ClickOnAutoComplete = new DelegateCommand<object>(
                (sender) =>
                {
-                   var buf = (AutoCompleteBox)sender;
-                   buf.IsDropDownOpen = true;
+                   try
+                   {
 
+                       if (sender != null)
+                       {
+                           var buf = (AutoCompleteBox)sender;
+                           if (!buf.IsDropDownOpen)
+                               buf.IsDropDownOpen = true;
+                       }
+                   }
+                   catch
+                   {
+
+                   }
                }
            );
             base.HasNavigation = true;

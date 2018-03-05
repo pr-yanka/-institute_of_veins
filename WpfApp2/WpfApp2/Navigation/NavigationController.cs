@@ -42,7 +42,7 @@ namespace WpfApp2.Navigation
 
         public void ClearLegPartVM()
         {
-          
+
             //LegViewModels = new ObservableCollection<LegPartViewModel>();
         }
 
@@ -110,12 +110,19 @@ namespace WpfApp2.Navigation
                 new ViewModelEditMedPersonal(this),
                 new ViewModelChangesHistoy(this),
                 new ViewModelAddEpicriz(this),
+                new ViewModelAdditionalInfoPatient(this),
+                new ViewModelHirurgInterruptList(this),
+                 new ViewModelPreparateHate(this),
+                new  ViewModelAlergicAnevrizmList(this),
+                   new  ViewModelOperationForAmbullatorCardList(this),
                 new LegPartViewModel(this)
+
+
             };
 
             _currentViewModel = _viewModels.First();
 
-         //   AddLegPartVM(new SFSViewModel(this, LegSide.Left));
+            //   AddLegPartVM(new SFSViewModel(this, LegSide.Left));
             /*
             _legViewModels = new List<LegPartViewModel>
             {
@@ -131,7 +138,7 @@ namespace WpfApp2.Navigation
                 new SPSViewModel(this)
             };*/
 
-           // _legViewModel = _legViewModels.First();
+            // _legViewModel = _legViewModels.First();
         }
 
         public void NavigateTo<T>()

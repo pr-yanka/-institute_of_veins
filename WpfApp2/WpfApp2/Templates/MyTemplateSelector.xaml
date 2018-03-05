@@ -38,12 +38,15 @@
         <ResourceDictionary Source="Operation/TemplateAddStatement.xaml"/>
         <ResourceDictionary Source="Operation/TemplateAddEpicrizen.xaml"/>
         <ResourceDictionary Source="TemplateChangeHistory.xaml"/>
+        <ResourceDictionary Source="TemplateCheckboxesWithFilter.xaml"/>
         
-
+        <ResourceDictionary Source="TemplateAddtionalInfoPatient.xaml"/>
 
     </ResourceDictionary.MergedDictionaries>
 
     <local:MyTemplateSelector x:Key="MyTemplateSelector" 
+                              TemplateCheckboxesWithFilter="{StaticResource TemplateCheckboxesWithFilter}"
+                              TemplateAddtionalInfoPatient="{StaticResource TemplateAddtionalInfoPatient}"
                               TemplateChangeHistory ="{StaticResource TemplateChangeHistory}"
                               TemplateAddEpicrizen ="{StaticResource TemplateAddEpicrizen}"
                               TemplateAddStatement="{StaticResource TemplateAddStatement}"
