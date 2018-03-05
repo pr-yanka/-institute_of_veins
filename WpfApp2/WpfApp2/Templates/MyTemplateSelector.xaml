@@ -16,7 +16,6 @@
         <ResourceDictionary Source="TemplateLegDescribe.xaml"/>
         <ResourceDictionary Source="TemplateAddPhysicalPage1.xaml"/>
         <ResourceDictionary Source="TemplateLegDescribe.xaml"/>
-        <ResourceDictionary Source="TemplateSymptomsAdd.xaml"/>
         <ResourceDictionary Source="TemplateRecomendationAdd.xaml"/>
         <ResourceDictionary Source="TemplatePhysicalTable.xaml"/>
         <ResourceDictionary Source="Operation/TemplateOperationOverview.xaml"/>
@@ -77,7 +76,6 @@
                               TemplateOperationResultOverview="{StaticResource TemplateOperationResultOverview}"
                               TemplateAddOperationResult="{StaticResource TemplateAddOperationResult}"
                               TemplateAnalize="{StaticResource TemplateAnalize}"
-                              TemplateSymptomsAdd="{StaticResource TemplateSymptomsAdd}"
                               TemplateCheckboxes="{StaticResource TemplateCheckboxes}"
                               LegPartMainTemplate="{StaticResource LegPartTemplate}"/>
 </ResourceDictionary>

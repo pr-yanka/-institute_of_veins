@@ -3,7 +3,6 @@
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplateAnalize">
         <Grid >
-
             <Grid.RowDefinitions>
                 <RowDefinition Height="90"></RowDefinition>
                 <RowDefinition Height="35"></RowDefinition>
@@ -30,12 +29,11 @@
                     </TransformGroup>
                 </TextBlock.RenderTransform>
            
-
             <TextBlock Text="{Binding Path=CurrentPatient.Name}" /><Run Text=" " /><TextBlock Text="{Binding Path=CurrentPatient.Sirname}" /><Run Text=" " /><TextBlock Text="{Binding Path=CurrentPatient.Patronimic}" /></TextBlock>
-            <TextBlock Grid.Column="1" Grid.Row="3"   FontFamily="/fonts/#Pescadero" FontSize="18pt" Height="25" Text="Тип :"/>
-            <TextBlock Grid.Column="2" Grid.Row="3"  FontFamily="/fonts/#Pescadero" FontSize="18pt" Height="auto" Text="{Binding Path=AnalizeType.Str}"/>
-            <TextBlock Grid.Column="1" Grid.Row="4"  FontFamily="/fonts/#Pescadero" FontSize="18pt" Height="25" Text="Дата :"/>
-            <DatePicker SelectedDate="{Binding Path=Analize.data}" Grid.Column="2" Grid.Row="4" Height="18" Width="140" HorizontalAlignment="Left"/>
+            <TextBlock Grid.Column="1" Grid.Row="3"   FontFamily="/fonts/#Pescadero" FontSize="18pt" Text="Тип :" Margin="0,2,188,0" Grid.ColumnSpan="2"/>
+            <TextBlock Grid.Column="2" Grid.Row="3"  FontFamily="/fonts/#Pescadero" FontSize="18pt" Height="auto" Text="{Binding Path=AnalizeType.Str}" Margin="5,0,-82,0"/>
+            <TextBlock Grid.Column="1" Grid.Row="4"  FontFamily="/fonts/#Pescadero" FontSize="18pt" Text="Дата :" Margin="0,2,178,1" Grid.ColumnSpan="2"/>
+            <DatePicker SelectedDate="{Binding Path=Analize.data}" Grid.Column="2" Grid.Row="4" Width="225" HorizontalAlignment="Left" Margin="111,1,-81,1"/>
             <Button Style="{StaticResource MyNormalBUTTON}" Grid.Column="2" Grid.Row="6" x:Name="button_Copy13" Content="{Binding Path=ButtonName}" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
         </Grid>
     </DataTemplate>
