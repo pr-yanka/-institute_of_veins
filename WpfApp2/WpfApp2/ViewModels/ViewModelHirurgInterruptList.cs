@@ -200,6 +200,7 @@ namespace WpfApp2.ViewModels
         private void SetDRecomendationListBecauseOFEdit(object sender, object data)
         {
 
+            SetClear(null, null);
             foreach (var dat in (List<HirurgInterruptDataSource>)data)
             {
                 foreach (var datC in DataSourceList)

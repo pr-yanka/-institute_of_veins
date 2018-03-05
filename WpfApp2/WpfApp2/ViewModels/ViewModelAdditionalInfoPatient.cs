@@ -27,7 +27,10 @@ namespace WpfApp2.ViewModels
         public DelegateCommand DeleteCommand { set; get; }
 
         public BloodExchange Data { get; set; }
-        public string Commentary { get; set; }
+        public string Commentary { set { _str = value; MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null); } get { return _str; } }
+    
+        private string _str;
+
         private bool? _isChecked;
         public bool? IsChecked
         {
@@ -130,15 +133,19 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToSetAlergicAnevrizmCommand { get; private set; }
 
         //public ObservableCollection<string> OprTypes { get { return _oprTypes; } set { _oprTypes = value; OnPropertyChanged(); } }
-        public ObservableCollection<BloodExchangeListDataSource> BloodExchange { get { return _bloodExchange; } set { _bloodExchange = value; OnPropertyChanged(); } }
-        ObservableCollection<OperationForAmbullatorCardDataSource> OperationForAmbulatornCardBuf { get { return _operationForAmbulatornCardBuf; } set { _operationForAmbulatornCardBuf = value; OnPropertyChanged(); } }
+        public ObservableCollection<BloodExchangeListDataSource> BloodExchange { get { return _bloodExchange; } set { _bloodExchange = value; NameOfButton = "Сохранить"; OnPropertyChanged(); } }
+        ObservableCollection<OperationForAmbullatorCardDataSource> OperationForAmbulatornCardBuf { get { return _operationForAmbulatornCardBuf; } set { _operationForAmbulatornCardBuf = value; NameOfButton = "Сохранить"; OnPropertyChanged(); } }
 
-        ObservableCollection<AlergicAnevrizmListDataSource> AlergicAnevrizmBuf { get { return _alergicAnevrizmTypes; } set { _alergicAnevrizmTypes = value; OnPropertyChanged(); } }
+        ObservableCollection<AlergicAnevrizmListDataSource> AlergicAnevrizmBuf { get { return _alergicAnevrizmTypes; } set { _alergicAnevrizmTypes = value; NameOfButton = "Сохранить"; OnPropertyChanged(); } }
 
-        ObservableCollection<HirurgInterruptDataSource> HirurgInteruptBuf { get { return _hirurgIntruptTypes; } set { _hirurgIntruptTypes = value; OnPropertyChanged(); } }
+        ObservableCollection<HirurgInterruptDataSource> HirurgInteruptBuf { get { return _hirurgIntruptTypes; } set { _hirurgIntruptTypes = value; NameOfButton = "Сохранить"; OnPropertyChanged(); } }
 
-        ObservableCollection<PreparateHateDataSource> PreparateHateBuf { get { return _preparateHateTypes; } set { _preparateHateTypes = value; OnPropertyChanged(); } }
+        ObservableCollection<PreparateHateDataSource> PreparateHateBuf { get { return _preparateHateTypes; } set { _preparateHateTypes = value; NameOfButton = "Сохранить"; OnPropertyChanged(); } }
 
+        private void SetDNameToSave(object sender, object data)
+        {
+            NameOfButton = "Сохранить";
+        }
 
         private string _bloodGroup;
 
@@ -157,7 +164,7 @@ namespace WpfApp2.ViewModels
             set
             {
                 _bloodGroupID = value;
-
+                NameOfButton = "Сохранить";
                 OnPropertyChanged();
             }
         }
@@ -168,7 +175,7 @@ namespace WpfApp2.ViewModels
             set
             {
                 _isPositiveGroupTypeID = value;
-
+                NameOfButton = "Сохранить";
                 OnPropertyChanged();
             }
         }
@@ -195,7 +202,7 @@ namespace WpfApp2.ViewModels
             set
             {
                 _bloodGroup = value;
-                NameOfButton = "Сохранить";
+          
                 OnPropertyChanged();
             }
         }
@@ -217,7 +224,7 @@ namespace WpfApp2.ViewModels
             set
             {
                 _isPositiveGroupType = value;
-                NameOfButton = "Сохранить";
+               
                 OnPropertyChanged();
             }
         }
@@ -259,12 +266,13 @@ namespace WpfApp2.ViewModels
                             ((ObservableCollection<PreparateHateDataSource>)PreparateHateList.Source).RemoveAt(i);
                         }
                     }
-
+                    MessageBus.Default.Call("SetPreparateHateListBecauseOFEdit", null, PreparateHateBuf.ToList());
+                    MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null);
                 });
 
                 x.DeleteCommand = DelThis;
             }
-
+            MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null);
             PreparateHateList.Source = PreparateHateBuf;
             PreparateHateList.View.Refresh();
         }
@@ -282,11 +290,13 @@ namespace WpfApp2.ViewModels
                             ((ObservableCollection<AlergicAnevrizmListDataSource>)AlergicAnevrizmList.Source).RemoveAt(i);
                         }
                     }
-
+                    MessageBus.Default.Call("SetAlergicAnevrizmListBecauseOFEdit", null, AlergicAnevrizmBuf.ToList());
+                    MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null);
                 });
 
                 x.DeleteCommand = DelThis;
             }
+            MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null);
             AlergicAnevrizmList.Source = AlergicAnevrizmBuf;
             AlergicAnevrizmList.View.Refresh();
         }
@@ -304,11 +314,13 @@ namespace WpfApp2.ViewModels
                             ((ObservableCollection<HirurgInterruptDataSource>)HirurgInteruptList.Source).RemoveAt(i);
                         }
                     }
-
+                    MessageBus.Default.Call("SetHirurgInterruptListBecauseOFEdit", null, HirurgInteruptBuf.ToList());
+                    MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null);
                 });
 
                 x.DeleteCommand = DelThis;
             }
+            MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null);
             HirurgInteruptList.Source = HirurgInteruptBuf;
             HirurgInteruptList.View.Refresh();
         }
@@ -326,11 +338,14 @@ namespace WpfApp2.ViewModels
                             ((ObservableCollection<OperationForAmbullatorCardDataSource>)OperationForAmbCard.Source).RemoveAt(i);
                         }
                     }
+                    MessageBus.Default.Call("SetOprerationForAmbCardListBecauseOFEdit", null, OperationForAmbulatornCardBuf);
 
+                    MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null);
                 });
 
                 x.DeleteCommand = DelThis;
             }
+            MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null);
             OperationForAmbCard.Source = OperationForAmbulatornCardBuf;
             OperationForAmbCard.View.Refresh();
         }
@@ -431,7 +446,8 @@ namespace WpfApp2.ViewModels
                                     ((ObservableCollection<OperationForAmbullatorCardDataSource>)OperationForAmbCard.Source).RemoveAt(i);
                                 }
                             }
-
+                            MessageBus.Default.Call("SetOprerationForAmbCardListBecauseOFEdit", null, OperationForAmbulatornCardBuf);
+                            MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null);
                         });
 
 
@@ -467,7 +483,8 @@ namespace WpfApp2.ViewModels
                                     ((ObservableCollection<AlergicAnevrizmListDataSource>)AlergicAnevrizmList.Source).RemoveAt(i);
                                 }
                             }
-
+                            MessageBus.Default.Call("SetAlergicAnevrizmListBecauseOFEdit", null, AlergicAnevrizmBuf.ToList());
+                            MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null);
                         });
 
                         z.DeleteCommand = DelThis;
@@ -506,7 +523,7 @@ namespace WpfApp2.ViewModels
                                 }
                             }
 
-
+                            MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null);
 
 
                         });
@@ -549,7 +566,8 @@ namespace WpfApp2.ViewModels
                                     ((ObservableCollection<HirurgInterruptDataSource>)HirurgInteruptList.Source).RemoveAt(i);
                                 }
                             }
-
+                            MessageBus.Default.Call("SetHirurgInterruptListBecauseOFEdit", null, HirurgInteruptBuf.ToList());
+                            MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null);
                         });
 
                         z.DeleteCommand = DelThis;
@@ -577,7 +595,8 @@ namespace WpfApp2.ViewModels
                                     ((ObservableCollection<PreparateHateDataSource>)PreparateHateList.Source).RemoveAt(i);
                                 }
                             }
-
+                            MessageBus.Default.Call("SetPreparateHateListBecauseOFEdit", null, PreparateHateBuf.ToList());
+                            MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null);
                         });
 
                         z.DeleteCommand = DelThis;
@@ -610,13 +629,16 @@ namespace WpfApp2.ViewModels
                 }
             }
             NameOfButton = "Вернуться";
-            Controller.NavigateTo<ViewModelAdditionalInfoPatient>();
+       //     Controller.NavigateTo<ViewModelAdditionalInfoPatient>();
+            NameOfButton = "Вернуться";
         }
 
         public ViewModelAdditionalInfoPatient(NavigationController controller) : base(controller)
         {
 
             BloodExchange = new ObservableCollection<BloodExchangeListDataSource>();
+            
+            MessageBus.Default.Subscribe("SetnameOfButtonForAmbCard", SetDNameToSave);
             MessageBus.Default.Subscribe("SetCurrentPatientIDForAmbCard", SetCurrentPatientID);
             MessageBus.Default.Subscribe("SetOprerationForAmbCardList", SetOprerationForAmbCardList);
             MessageBus.Default.Subscribe("SetHirurgInterruptList", SetHirurgInteruptListList);
@@ -716,7 +738,7 @@ namespace WpfApp2.ViewModels
                     newType.DeleteCommand = DelThis;
                     BloodExchange.Add(newType);
                     BloodExchangeList.View.Refresh();
-
+                    NameOfButton = "Сохранить";
                     CurrentPanelViewModel.PanelOpened = false;
 
                     Handled = false;

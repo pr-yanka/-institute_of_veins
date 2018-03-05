@@ -28,26 +28,26 @@
             <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button" Visibility="Hidden" Content="Загрузить данные из регистратуры" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top"/>
             <Button x:Name="button_Copy3" Visibility="{Binding Path=Visibility}" Content="Сбросить" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="49,630,0,0" VerticalAlignment="Top"
                  Style="{StaticResource MyNormalBUTTON}" Width="300"/>
-            <Button x:Name="button_Copy4" Content="{Binding Path=NameOfButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="400,630,0,0" VerticalAlignment="Top"
+            <Button x:Name="button_Copy4" Content="{Binding Path=NameOfButton}"  Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="400,630,0,0" VerticalAlignment="Top"
                  Style="{StaticResource MyConfirmBUTTON}" Width="300"/>
-            <ScrollViewer  MaxHeight="500" Margin="24,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" >
-                <Grid  Height="770"   Width="993">
+            <ScrollViewer  MaxHeight="570" Margin="24,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                <Grid  Height="1000"   Width="993">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="186*"/>
                         <ColumnDefinition Width="1021*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="16*"/>
-                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="70*"/>
                         <RowDefinition Height="19*"/>
                         <RowDefinition Height="19*"/>
-                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="70*"/>
                         <RowDefinition Height="19*"/>
-                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="70*"/>
                         <RowDefinition Height="19*"/>
-                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="70*"/>
                         <RowDefinition Height="19*"/>
-                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="70*"/>
                         <RowDefinition Height="27*"/>
                         <RowDefinition Height="19*"/>
                         <RowDefinition Height="1*"/>
@@ -76,7 +76,7 @@
                     </ComboBox>
 
 
-                    <DataGrid CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False" AutoGenerateColumns="False" ColumnHeaderStyle="{StaticResource MyDataGridHEADER}"  ItemsSource="{Binding Path=BloodExchangeList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="97"  VerticalAlignment="Top" Width="425" Grid.Row="1" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
+                    <DataGrid ColumnHeaderStyle="{StaticResource DGCHeaderStyle}" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False" AutoGenerateColumns="False"  ItemsSource="{Binding Path=BloodExchangeList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="137"  VerticalAlignment="Top" Width="425" Grid.Row="1" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" BorderBrush="Black" BorderThickness="1">
 
                         <DataGrid.Columns  >
 
@@ -84,21 +84,45 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate >
 
-                                        <DatePicker   SelectedDate="{Binding Data.Date,UpdateSourceTrigger=PropertyChanged}"  ></DatePicker>
+                                        <DatePicker Height="29"  SelectedDate="{Binding Data.Date,UpdateSourceTrigger=PropertyChanged}"  ></DatePicker>
 
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
+                            <DataGridTemplateColumn   Header="Объём"  >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate >
 
-                            <DataGridTextColumn Binding="{Binding  Data.Volume,UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}"   Header="Объём"></DataGridTextColumn>
-                            <DataGridTextColumn MinWidth="187" Binding="{Binding  Commentary,UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}" Header="Комментарий"></DataGridTextColumn>
-                        <DataGridTemplateColumn  Header="Удалить" >
+                                        <TextBox  Padding="4" Height="29"  Text="{Binding  Data.Volume,UpdateSourceTrigger=PropertyChanged}"  ></TextBox>
+
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn   Header="Комментарий" MinWidth="221" MaxWidth="221">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate >
+
+                                        <TextBox Padding="4" Height="29"  Text="{Binding  Commentary,UpdateSourceTrigger=PropertyChanged}"  ></TextBox>
+
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            
+                        <DataGridTemplateColumn >
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate >
                                     <Grid>
-                                        <Button Command="{Binding Path=DeleteCommand}" HorizontalAlignment="Left"   Width="25" Height="20"  MaxWidth="25" MaxHeight="20"  FontFamily="Franklin Gothic Medium" FontSize="14"  >
-
-                                        </Button>
+                                            <Button BorderThickness="0" Command="{Binding Path=DeleteCommand}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="30" Height="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}" >
+                                                <Button.Template>
+                                                    <ControlTemplate>
+                                                        <Border HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                                            <Image Source="pack://application:,,,/Images/delete.png"
+                               Width="27" 
+                               Height="27"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                            </Button>
                                     </Grid>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
@@ -110,13 +134,21 @@
                     <TextBox  Margin="0,0" x:Name="textBox_Copy1"  Text="{Binding Path=Sugar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="425" Grid.Row="3">
                        
                     </TextBox>
-                    <ListBox ItemsSource="{Binding Path=HirurgInteruptList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="97"  VerticalAlignment="Top" Width="425" Grid.Row="4" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
+                    <ListBox ItemsSource="{Binding Path=HirurgInteruptList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="137"  VerticalAlignment="Top" Width="425" Grid.Row="4" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBox TextWrapping="Wrap"  HorizontalAlignment="Center" Height="25"  Width="395"  Text="{Binding  Data.Str,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-                                    <Button Command="{Binding Path=DeleteCommand}" HorizontalAlignment="Left"   Width="25" Height="20"  MaxWidth="25" MaxHeight="20"  FontFamily="Franklin Gothic Medium" FontSize="14"  >
-
+                                    <TextBox Padding="4"  TextWrapping="Wrap"  HorizontalAlignment="Center" Width="390"  Height="29"  Text="{Binding  Data.Str,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                    <Button BorderThickness="0" Command="{Binding Path=DeleteCommand}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="30" Height="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}" >
+                                        <Button.Template>
+                                            <ControlTemplate>
+                                                <Border HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                                    <Image Source="pack://application:,,,/Images/delete.png"
+                               Width="27" 
+                               Height="27"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
                                     </Button>
                                 </StackPanel>
                             </DataTemplate>
@@ -127,13 +159,21 @@
                     <ComboBox x:Name="comboBox_Cаopy1" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="6" VerticalAlignment="Top" Width="425" Height="27" Margin="0,1,0,0" SelectedIndex="{Binding Path=GenderTypeNumber}" >
 
                     </ComboBox>
-                    <ListBox ItemsSource="{Binding Path=AlergicAnevrizmList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="97"  VerticalAlignment="Top" Width="425" Grid.Row="6" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
+                    <ListBox ItemsSource="{Binding Path=AlergicAnevrizmList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="137"  VerticalAlignment="Top" Width="425" Grid.Row="6" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBox TextWrapping="Wrap"  HorizontalAlignment="Center" Height="25"  Width="395"  Text="{Binding  Data.Str,UpdateSourceTrigger=PropertyChanged}" />
-                                    <Button Command="{Binding Path=DeleteCommand}" HorizontalAlignment="Left"   Width="25" Height="20"  MaxWidth="25" MaxHeight="20"  FontFamily="Franklin Gothic Medium" FontSize="14"  >
-
+                                    <TextBox Padding="4"  TextWrapping="Wrap"  HorizontalAlignment="Center" Width="390"  Height="29"  Text="{Binding  Data.Str,UpdateSourceTrigger=PropertyChanged}" />
+                                    <Button BorderThickness="0" Command="{Binding Path=DeleteCommand}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="30" Height="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}"  >
+                                        <Button.Template>
+                                            <ControlTemplate>
+                                                <Border HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                                    <Image Source="pack://application:,,,/Images/delete.png"
+                               Width="27" 
+                               Height="27"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
                                     </Button>
                                 </StackPanel>
                             </DataTemplate>
@@ -145,13 +185,22 @@
 
 
 
-                    <ListBox ItemsSource="{Binding Path=OperationForAmbCard.View,UpdateSourceTrigger=PropertyChanged}"  Grid.Column="1" HorizontalAlignment="Left" Height="97"  VerticalAlignment="Top" Width="425" Grid.Row="8" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
+                    <ListBox ItemsSource="{Binding Path=OperationForAmbCard.View,UpdateSourceTrigger=PropertyChanged}"  Grid.Column="1" HorizontalAlignment="Left" Height="137"  VerticalAlignment="Top" Width="425" Grid.Row="8" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
 
-                                    <TextBox HorizontalAlignment="Center" TextWrapping="Wrap" Height="25"  Width="395"  Text="{Binding  Data.Str,UpdateSourceTrigger=PropertyChanged}" />
-                                    <Button Command="{Binding Path=DeleteCommand,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"   Width="25" Height="20"  MaxWidth="25" MaxHeight="20"  FontFamily="Franklin Gothic Medium" FontSize="14"  >
+                                    <TextBox Padding="4"  HorizontalAlignment="Center" TextWrapping="Wrap" Width="390"  Height="29"  Text="{Binding  Data.Str,UpdateSourceTrigger=PropertyChanged}" />
+                                    <Button BorderThickness="0" Command="{Binding Path=DeleteCommand,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="30" Height="30" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}" >
+                                        <Button.Template>
+                                            <ControlTemplate>
+                                                <Border HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                                    <Image Source="pack://application:,,,/Images/delete.png"
+                               Width="27" 
+                               Height="27"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
 
                                     </Button>
                                 </StackPanel>
@@ -167,18 +216,27 @@
 
 
 
-                    <ListBox ItemsSource="{Binding Path=PreparateHateList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="97"  VerticalAlignment="Top" Width="425" Grid.Row="10"  Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
+                    <ListBox ItemsSource="{Binding Path=PreparateHateList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="137"  VerticalAlignment="Top" Width="425" Grid.Row="10"  Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <StackPanel>
-                                        <TextBox TextWrapping="Wrap" Width="395"  HorizontalAlignment="Center" Height="auto" Text="{Binding  Data.Str,UpdateSourceTrigger=PropertyChanged}" />
-                                        <TextBox TextWrapping="Wrap" Width="395"  Text="{Binding Commentary,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                        <TextBox  TextWrapping="Wrap" Width="390"  HorizontalAlignment="Center" Height="auto" Text="{Binding  Data.Str,UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBox  TextWrapping="Wrap" Width="390" Text="{Binding Commentary,UpdateSourceTrigger=PropertyChanged}"></TextBox>
                                        
-                                    </StackPanel>
-                                    <Button Command="{Binding Path=DeleteCommand}" HorizontalAlignment="Left"   Width="25" Height="20"  MaxWidth="25" MaxHeight="20"  FontFamily="Franklin Gothic Medium" FontSize="14"  >
-
+                                    </StackPanel >
+                                    <Button VerticalAlignment="Center"  Command="{Binding Path=DeleteCommand}" x:Name="btn16x16" HorizontalAlignment="Left"   Width="30" Height="30" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}" >
+                                        <Button.Template>
+                                            <ControlTemplate>
+                                                <Border HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                                    <Image Source="pack://application:,,,/Images/delete.png"
+                               Width="27" 
+                               Height="27"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Button.Template>
                                     </Button>
+                                   
                                 </StackPanel>
                                 
                             </DataTemplate>

@@ -5,6 +5,7 @@
 
     <Style x:Key="MyDataGridCell" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
         <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsFilteredName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
@@ -21,6 +22,7 @@
 
     <Style x:Key="MyDataGridCell1" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
         <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsFilteredAge,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
@@ -29,6 +31,86 @@
 
             </DataTrigger>
             <DataTrigger Binding="{Binding IsFilteredAge,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="False">
+                <Setter Property="Background" Value="Transparent"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="MyDataGridCell2" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsFilteredSurname,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="True">
+                <Setter Property="Background" Value="Wheat"/>
+
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsFilteredSurname,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="False">
+                <Setter Property="Background" Value="Transparent"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="MyDataGridCell3" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsFilteredPatronimic,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="True">
+                <Setter Property="Background" Value="Wheat"/>
+
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsFilteredPatronimic,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="False">
+                <Setter Property="Background" Value="Transparent"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="MyDataGridCell4" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsFilteredBirthday,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="True">
+                <Setter Property="Background" Value="Wheat"/>
+
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsFilteredBirthday,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="False">
+                <Setter Property="Background" Value="Transparent"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="MyDataGridCell5" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsFilteredGender,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="True">
+                <Setter Property="Background" Value="Wheat"/>
+
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsFilteredGender,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="False">
+                <Setter Property="Background" Value="Transparent"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="MyDataGridCell6" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsFilteredTown,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
+                                         Value="True">
+                <Setter Property="Background" Value="Wheat"/>
+
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsFilteredTown,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                                          Value="False">
                 <Setter Property="Background" Value="Transparent"/>
             </DataTrigger>
@@ -54,16 +136,24 @@
             <TextBlock Canvas.ZIndex="2" Visibility="{Binding VisOfNothingFaund}" TextWrapping="Wrap" Height="28" Text="Ничего не найдено" FontFamily="/fonts/#Pescadero" FontSize="14pt" Margin="474,0,0,230" RenderTransformOrigin="0.591,0.516"/>
 
             <DataGrid ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  AutoGenerateColumns="False" ItemsSource="{Binding Path=ViewSource.View}" x:Name="dataGrid" ScrollViewer.VerticalScrollBarVisibility="Visible"
-                      Margin="230,132,0,0" Height="500" Width="auto" FontSize="14" HorizontalAlignment="Left">
+                 Margin="230,132,0,0" Height="500" Width="auto" FontSize="14" HorizontalAlignment="Left">
                 <DataGrid.Columns >
-                    <DataGridTextColumn   Header="Имя" CellStyle="{StaticResource MyDataGridCell}"  Binding="{Binding CurrentPatient.Name}" ></DataGridTextColumn>
-                    <DataGridTextColumn   Header="Возраст"  CellStyle="{StaticResource MyDataGridCell1}"  Binding="{Binding CurrentPatient.Age}" ></DataGridTextColumn>
+                    <DataGridTextColumn IsReadOnly="True"   Header="Фамилия" CellStyle="{StaticResource MyDataGridCell2}"  Binding="{Binding CurrentPatient.Sirname}" ></DataGridTextColumn>
+                    <DataGridTextColumn  IsReadOnly="True"   Header="Имя" CellStyle="{StaticResource MyDataGridCell}"  Binding="{Binding CurrentPatient.Name}" ></DataGridTextColumn>
+                    <DataGridTextColumn  IsReadOnly="True"  Header="Отчество" CellStyle="{StaticResource MyDataGridCell3}"  Binding="{Binding CurrentPatient.Patronimic}" ></DataGridTextColumn>
+
+                    <DataGridTextColumn   IsReadOnly="True" Header="Возраст"  CellStyle="{StaticResource MyDataGridCell1}"  Binding="{Binding CurrentPatient.Age}" ></DataGridTextColumn>
+                    <DataGridTextColumn  IsReadOnly="True"  Header="Дата рождения" CellStyle="{StaticResource MyDataGridCell4}"   Binding="{Binding CurrentPatient.Birthday,StringFormat=dd.MM.yyyy}" ></DataGridTextColumn>
+                    <DataGridTextColumn   IsReadOnly="True" Header="Пол" CellStyle="{StaticResource MyDataGridCell5}"  Binding="{Binding CurrentPatient.Gender}" ></DataGridTextColumn>
+
+                    <DataGridTextColumn   IsReadOnly="True" Header="Город"   CellStyle="{StaticResource MyDataGridCell6}" Binding="{Binding Town}" ></DataGridTextColumn>
+
                     <!--
                    <DataGridTextColumn   Header="Пол"  CellStyle="{StaticResource MyDataGridCell2}"  Binding="{Binding CurrentPatient.Gender}" ></DataGridTextColumn>
                     <DataGridTextColumn   Header="Адрес проживания"  CellStyle="{StaticResource MyDataGridCell3}"  Binding="{Binding CurrentPatient.Region}" ></DataGridTextColumn>
                      -->
 
-                    <DataGridTemplateColumn  Header="История">
+                    <DataGridTemplateColumn   Header="История">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>

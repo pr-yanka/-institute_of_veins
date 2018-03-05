@@ -22,8 +22,11 @@ namespace WpfApp2.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         public PreparateHate Data { get; set; }
-        public string Commentary { get; set; } public bool IsVisibleTotal { get; set; }
-        private bool? _isChecked; 
+        public string Commentary { set { _str = value; MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null); } get { return _str; } }
+
+        private string _str;
+        public bool IsVisibleTotal { get; set; }
+        private bool? _isChecked;
         public DelegateCommand DeleteCommand { set; get; }
         public bool? IsChecked
         {
@@ -110,7 +113,7 @@ namespace WpfApp2.ViewModels
                     //    ChangeHistoryClass buf = new ChangeHistoryClass(x.Ch);
                     //    Changes.Add(buf);
                     //}
-                  
+
                     DataSourceList = new ObservableCollection<PreparateHateDataSource>(FullCopy);
                 }
                 lastLength = value.Length;
@@ -123,13 +126,13 @@ namespace WpfApp2.ViewModels
 
                         if (DataSourceList[i].Data.Str.ToLower().Contains(FilterText.ToLower()))
                         {
-                          
+
                             DataSourceList[i].IsVisibleTotal = true;
-                         
+
                         }
                         else
                         {
-                            
+
                             DataSourceList[i].IsVisibleTotal = false;
                         }
 
@@ -166,10 +169,10 @@ namespace WpfApp2.ViewModels
                     foreach (var x in DataSourceList)
                     {
                         x.IsVisibleTotal = true;
-                       
+
 
                     }
-                 
+
                     // SetChangesInDB(null, null);
                 }
 
@@ -201,6 +204,7 @@ namespace WpfApp2.ViewModels
         private void SetDRecomendationListBecauseOFEdit(object sender, object data)
         {
 
+            SetClear(null, null);
             foreach (var dat in (List<PreparateHateDataSource>)data)
             {
                 foreach (var datC in DataSourceList)

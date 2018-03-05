@@ -52,7 +52,7 @@
         </Style.Triggers>
     </Style>
     <Style  x:Key="MyDataGridRow" TargetType="DataGridRow"  BasedOn="{StaticResource {x:Type DataGridRow}}">
-        <Setter Property="HeaderStyle" Value="{StaticResource MyDataGridHEADER}"></Setter>
+        
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">
                 <Setter Property="Background" Value="SkyBlue" ></Setter>

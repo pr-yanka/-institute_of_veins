@@ -675,10 +675,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Templates\TemplateSymptomsAdd.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Templates\TemplateTablePatients.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -784,6 +780,22 @@
     <Resource Include="Images\Hide.PNG" />
     <Resource Include="Images\Show.PNG" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\delete.png" />
+    <Resource Include="Images\edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\delete-sign.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Dell2.png" />
+    <Resource Include="Images\edit1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\121113.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\trash_can_2_small.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

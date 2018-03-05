@@ -7,24 +7,25 @@ using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Text;
-
+using WpfApp2.Messaging;
 namespace WpfApp2.Db.Models
 {
     [Table("переливание_крови")]
     public class BloodExchange
-    {
+    {//SetnameOfButtonForAmbCard
 
         [Key]
         [Column("id")]
         public int Id { set; get; }
 
         [Column("Дата")]
-        public DateTime Date { set; get; }
-
+        public DateTime Date { set { _date = value; MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null); } get { return _date; } }
+        [NotMapped]
+        private DateTime _date;
         [Column("Объём")]
-        public float Volume { set; get; }
-
-
+        public float Volume { set { _volume = value; MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null); } get { return _volume; } }
+        [NotMapped]
+        private float _volume;
     }
     public class BloodExchangeRepository : Repository<BloodExchange>
     {

@@ -19,8 +19,12 @@ namespace WpfApp2.ViewModels
 
         public bool IsFilteredName { get; set; }
         public bool IsFilteredAge { get; set; }
-
-
+        public bool IsFilteredSurname { get; set; }
+        public bool IsFilteredPatronimic { get; set; }
+        public bool IsFilteredBirthday { get; set; }
+        public bool IsFilteredGender { get; set; }
+        public bool IsFilteredTown { get; set; }
+        public string Town { get; set; }
 
         public bool IsVisibleTotal { get; set; }
 
@@ -29,14 +33,20 @@ namespace WpfApp2.ViewModels
             IsVisibleTotal = true;
             IsFilteredName = false;
             IsFilteredAge = false;
+            IsFilteredSurname = false;
             _patient = patient;
+            try
+            {
+                Town = Data.Cities.Get(patient.City).Str;
+            }
+            catch { }
             ToPatientCommand = new DelegateCommand(
-              () =>
-              {
-                  MessageBus.Default.Call("OpenCurrentPatient", this, patient.Id);
-                  Controller.NavigateTo<ViewModelCurrentPatient>();
-              }
-            );
+          () =>
+          {
+              MessageBus.Default.Call("OpenCurrentPatient", this, patient.Id);
+              Controller.NavigateTo<ViewModelCurrentPatient>();
+          }
+        );
             ToPatientHistory = new DelegateCommand(
             () =>
             {

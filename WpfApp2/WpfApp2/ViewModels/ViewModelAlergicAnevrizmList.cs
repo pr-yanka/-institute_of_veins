@@ -114,7 +114,7 @@ namespace WpfApp2.ViewModels
                     //    ChangeHistoryClass buf = new ChangeHistoryClass(x.Ch);
                     //    Changes.Add(buf);
                     //}
-                   
+
                     DataSourceList = new ObservableCollection<AlergicAnevrizmListDataSource>(FullCopy);
                 }
                 lastLength = value.Length;
@@ -202,18 +202,24 @@ namespace WpfApp2.ViewModels
                 }
             }
         }
+
+      
         private void SetDRecomendationListBecauseOFEdit(object sender, object data)
         {
-
+            SetClear(null, null);
             foreach (var dat in (List<AlergicAnevrizmListDataSource>)data)
             {
+           
                 foreach (var datC in DataSourceList)
                 {
                     if (dat.Data != null && dat.Data.Id == datC.Data.Id)
                     {
+                        
                         datC.IsChecked = true;
                     }
+                    
                 }
+                
             }
 
         }

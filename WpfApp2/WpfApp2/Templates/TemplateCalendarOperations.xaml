@@ -9,6 +9,7 @@
     <Style x:Key="MyDataGridCell" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
         <Setter Property="BorderThickness" Value="0"></Setter>
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsFilteredPt,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                                          Value="True">
@@ -24,6 +25,7 @@
 
     <Style x:Key="MyDataGridCell1" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
         <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsFilteredOpType,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
@@ -38,6 +40,7 @@
         </Style.Triggers>
     </Style>
     <Style x:Key="MyDataGridCell2" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
+        <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="BorderThickness" Value="0"></Setter>
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
         <Style.Triggers>
@@ -55,6 +58,7 @@
 
     <Style x:Key="MyDataGridCell3" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
         <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsFilteredAnestetic,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Value="True">
@@ -111,8 +115,8 @@
 
             <DataGrid ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  RowStyle="{StaticResource MyDataGridRow}" IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="404" Margin="10,204,0,0" VerticalAlignment="Top" Width="743" >
                 <DataGrid.Columns  >
-                    <DataGridTextColumn  CellStyle="{StaticResource MyDataGridCell2}" Binding="{Binding Path=Date,StringFormat=dd.MM.yyyy hh:mm}" ClipboardContentBinding="{x:Null}" Header="Дата" Width="auto"/>
-                    <DataGridTextColumn CellStyle="{StaticResource MyDataGridCell}" Binding="{Binding Path=Patient}" ClipboardContentBinding="{x:Null}" Header="Пациент"  Width="auto"/>
+                    <DataGridTextColumn  CellStyle="{StaticResource MyDataGridCell2}" Binding="{Binding Path=Date,StringFormat=dd.MM.yyyy hh:mm}" ClipboardContentBinding="{x:Null}" Header="Дата" Width="120"/>
+                    <DataGridTextColumn  CellStyle="{StaticResource MyDataGridCell}" Binding="{Binding Path=Patient}" ClipboardContentBinding="{x:Null}" Header="Пациент"  Width="auto"/>
                     <DataGridTextColumn  CellStyle="{StaticResource MyDataGridCell1}" Binding="{Binding Path=OpType}" ClipboardContentBinding="{x:Null}"  Width="auto" Header="Вид операции"/>
                     <DataGridTextColumn  CellStyle="{StaticResource MyDataGridCell3}" Binding="{Binding Path=Anestetic}" ClipboardContentBinding="{x:Null}" Header="Анестезик" Width="auto"/>
                     <DataGridTemplateColumn Header="к операции" >
