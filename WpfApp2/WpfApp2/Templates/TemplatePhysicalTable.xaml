@@ -7,6 +7,7 @@
 
     <Style x:Key="MyDataGridCell" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
         <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsFilteredPt,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
@@ -23,6 +24,7 @@
 
     <Style x:Key="MyDataGridCell55" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
         <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsFilteredOpSeted,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
@@ -38,6 +40,7 @@
     </Style>
     <Style x:Key="MyDataGridCell2" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
         <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsFilteredDate,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
@@ -86,18 +89,16 @@
                     </TransformGroup>
                 </TextBlock.RenderTransform>
             </TextBlock>
-            <TextBlock HorizontalAlignment="Left" Margin="10,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="164" FontSize="22" Text="Поиск по слову:" RenderTransformOrigin="-0.027,0.471"/>
-            <TextBox Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="35" Margin="188,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="422" RenderTransformOrigin="0.632,0.9">
-                <TextBox.InputBindings>
-                    <KeyBinding Command="{Binding Path=FilterTextCommand}"/>
-                </TextBox.InputBindings>
+            <TextBlock HorizontalAlignment="Left" Margin="30,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="164" FontSize="20" Text="Поиск по слову:" RenderTransformOrigin="-0.027,0.471"/>
+            <TextBox Padding="4" Height="29" Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"  Margin="188,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="540" RenderTransformOrigin="0.632,0.9">
+              
             </TextBox>
-            <CheckBox  IsChecked="{Binding IsSortByData}"  Content="сортировать по дате&#xD;&#xA;" HorizontalAlignment="Left" Margin="10,59,0,0" VerticalAlignment="Top" FontSize="16" Height="20" Width="297"/>
+            <CheckBox  IsChecked="{Binding IsSortByData}"  Content="сортировать по дате&#xD;&#xA;" HorizontalAlignment="Left" Margin="30,59,0,0" VerticalAlignment="Top" FontSize="16" Height="20" Width="297"/>
 
               
                 <TextBlock Canvas.ZIndex="2" Visibility="{Binding VisOfNothingFaund}" TextWrapping="Wrap" Height="28" Text="Ничего не найдено" FontFamily="/fonts/#Pescadero" FontSize="14pt" Margin="130,0,0,230" RenderTransformOrigin="0.591,0.516"/>
 
-            <DataGrid ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  Canvas.ZIndex="1"  RowStyle="{StaticResource MyDataGridRow}"  IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="428" Margin="30,160,0,0" VerticalAlignment="Top" Width="696" >
+            <DataGrid VerticalScrollBarVisibility="Visible" CanUserReorderColumns="False" FontSize="14" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  Canvas.ZIndex="1"  RowStyle="{StaticResource MyDataGridRow}"  IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="400" Margin="30,160,0,0" VerticalAlignment="Top" Width="709" >
 
                 <DataGrid.Columns  >
 
@@ -110,11 +111,11 @@
 
                     </DataGridTextColumn>
                     <DataGridTextColumn CellStyle="{StaticResource MyDataGridCell55}" Binding="{Binding Path=IsOperationSeted}" ClipboardContentBinding="{x:Null}"  Width="auto" Header="Назначена операция?"/>
-                    <DataGridTemplateColumn  Header="К обследованию" >
+                    <DataGridTemplateColumn Width="282" Header="К обследованию" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <Grid>
-                                    <Button Command="{Binding Path=ToObs}" HorizontalAlignment="Left"   Width="30" Height="30"  MaxWidth="30" MaxHeight="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}" >
+                                    <Button Command="{Binding Path=ToObs}" HorizontalAlignment="Center"   Width="30" Height="30"  MaxWidth="30" MaxHeight="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}" >
                                         <Image Source="pack://application:,,,/Images/forward.png" ></Image>
                                     </Button>
                                 </Grid>

@@ -91,13 +91,13 @@
     </Style>
     <DataTemplate x:Key="TemplateCalendarOperations">
         <Grid Margin="220,80,0,0">
-            <TextBlock HorizontalAlignment="Left" Margin="10,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="164" FontSize="22" Text="Поиск по слову:" RenderTransformOrigin="-0.027,0.471"/>
-            <TextBox Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="26" Margin="188,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="565" RenderTransformOrigin="0.632,0.9">
+            <TextBlock HorizontalAlignment="Left" Margin="30,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="164" FontSize="22" Text="Поиск по слову:" RenderTransformOrigin="-0.027,0.471"/>
+            <TextBox Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="26" Margin="205,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="521" RenderTransformOrigin="0.632,0.9">
                 <TextBox.InputBindings>
                     <KeyBinding Command="{Binding Path=FilterTextCommand}"/>
                 </TextBox.InputBindings>
             </TextBox>
-            <TextBlock Margin="254,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Text="Календарь операций" FontSize="22pt" Width="auto">
+            <TextBlock Margin="244,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Text="Календарь операций" FontSize="22pt" Width="auto">
                 <TextBlock.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -109,28 +109,28 @@
             </TextBlock>
 
             <CheckBox Content="отображать только мои операции&#xD;&#xA;" IsChecked="{Binding IsMyOpChecked}" Visibility="{Binding isMyOpVisible}" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" FontSize="18" Height="25" Width="397"/>
-            <CheckBox Content="сортировать по дате&#xD;&#xA;" IsChecked="{Binding IsSortByData}" HorizontalAlignment="Left" Margin="10,73,0,0" VerticalAlignment="Top" FontSize="18" Height="29" Width="245"/>
-            <CheckBox Content="отображать проведённые&#xD;&#xA;" IsChecked="{Binding IsCompletedOp}" HorizontalAlignment="Left" Margin="10,107,0,0" VerticalAlignment="Top" FontSize="18" Height="29" Width="243"/>
+            <CheckBox Content="сортировать по дате&#xD;&#xA;" IsChecked="{Binding IsSortByData}" HorizontalAlignment="Left" Margin="30,73,0,0" VerticalAlignment="Top" FontSize="18" Height="29" Width="245"/>
+            <CheckBox Content="отображать проведённые&#xD;&#xA;" IsChecked="{Binding IsCompletedOp}" HorizontalAlignment="Left" Margin="30,107,0,0" VerticalAlignment="Top" FontSize="18" Height="29" Width="243"/>
             <TextBlock Canvas.ZIndex="2" Visibility="{Binding VisOfNothingFaund}" TextWrapping="Wrap" Height="28" Text="Ничего не найдено" FontFamily="/fonts/#Pescadero" FontSize="14pt" Margin="300,409,324,188" RenderTransformOrigin="0.591,0.516"/>
 
-            <DataGrid ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  RowStyle="{StaticResource MyDataGridRow}" IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="404" Margin="10,204,0,0" VerticalAlignment="Top" Width="743" >
+            <DataGrid FontSize="14" VerticalScrollBarVisibility="Visible" CanUserReorderColumns="False" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  RowStyle="{StaticResource MyDataGridRow}" IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="404" Margin="30,204,0,0" VerticalAlignment="Top" Width="709" >
                 <DataGrid.Columns  >
-                    <DataGridTextColumn  CellStyle="{StaticResource MyDataGridCell2}" Binding="{Binding Path=Date,StringFormat=dd.MM.yyyy hh:mm}" ClipboardContentBinding="{x:Null}" Header="Дата" Width="120"/>
-                    <DataGridTextColumn  CellStyle="{StaticResource MyDataGridCell}" Binding="{Binding Path=Patient}" ClipboardContentBinding="{x:Null}" Header="Пациент"  Width="auto"/>
+                    <DataGridTextColumn Width="120"  CellStyle="{StaticResource MyDataGridCell2}" Binding="{Binding Path=Date,StringFormat=dd.MM.yyyy hh:mm}" ClipboardContentBinding="{x:Null}" Header="Дата" />
+                    <DataGridTextColumn Width="120" CellStyle="{StaticResource MyDataGridCell}" Binding="{Binding Path=Patient}" ClipboardContentBinding="{x:Null}" Header="Пациент"  />
                     <DataGridTextColumn  CellStyle="{StaticResource MyDataGridCell1}" Binding="{Binding Path=OpType}" ClipboardContentBinding="{x:Null}"  Width="auto" Header="Вид операции"/>
                     <DataGridTextColumn  CellStyle="{StaticResource MyDataGridCell3}" Binding="{Binding Path=Anestetic}" ClipboardContentBinding="{x:Null}" Header="Анестезик" Width="auto"/>
                     <DataGridTemplateColumn Header="к операции" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
-                                <Grid>
-                                    <Button Command="{Binding Path=ToOperation}" HorizontalAlignment="Left"   Width="30" Height="30"  MaxWidth="30" MaxHeight="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}" >
+                                <Grid >
+                                    <Button  Command="{Binding Path=ToOperation}" HorizontalAlignment="Center"   Width="30" Height="30"  MaxWidth="30" MaxHeight="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}" >
                                         <Image Source="pack://application:,,,/Images/forward.png" ></Image>
                                     </Button>
                                 </Grid>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="К итогам" >
+                    <DataGridTemplateColumn Header="К итогам" Width="161" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <Grid Visibility="{Binding IsOpResult,UpdateSourceTrigger=PropertyChanged}">
@@ -143,10 +143,10 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <ComboBox SelectedItem="{Binding SelectedDocOrMed}" SelectedIndex="{Binding SelectedIdDocMed}" ItemsSource="{Binding DocsAndMedsList}" HorizontalAlignment="Left" Margin="473,60,0,0" VerticalAlignment="Top" Width="280" FontSize="18" Height="21"/>
-            <TextBlock HorizontalAlignment="Left" Margin="358,59,0,0" TextWrapping="Wrap" Text="С участием:" VerticalAlignment="Top" FontSize="18" Width="110"/>
-            <TextBlock HorizontalAlignment="Left" Margin="358,91,0,0" TextWrapping="Wrap" Text="Показать операции:" VerticalAlignment="Top" FontSize="18" Width="110"/>
-            <ComboBox SelectedIndex="{Binding SortId}" HorizontalAlignment="Left" Margin="473,104,0,0" VerticalAlignment="Top" Width="280" FontSize="18">
+            <ComboBox SelectedItem="{Binding SelectedDocOrMed}" SelectedIndex="{Binding SelectedIdDocMed}" ItemsSource="{Binding DocsAndMedsList}" HorizontalAlignment="Left" Margin="473,60,0,0" VerticalAlignment="Top" Width="255" FontSize="18" Height="21"/>
+            <TextBlock HorizontalAlignment="Left" Margin="358,62,0,0" TextWrapping="Wrap" Text="С участием:" VerticalAlignment="Top" FontSize="18" Width="110"/>
+            <TextBlock HorizontalAlignment="Left" Margin="358,85,0,0" TextWrapping="Wrap" Text="Показать операции:" VerticalAlignment="Top" FontSize="18" Width="110"/>
+            <ComboBox SelectedIndex="{Binding SortId}" HorizontalAlignment="Left" Margin="473,104,0,0" VerticalAlignment="Top" Width="255" FontSize="18">
                 <ComboBoxItem Content="на сегодня"/>
                 <ComboBoxItem Content="на ближайшие три дня"/>
                 <ComboBoxItem Content="на ближайшую неделю"/>

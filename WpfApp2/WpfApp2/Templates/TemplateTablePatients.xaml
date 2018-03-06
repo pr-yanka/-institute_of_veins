@@ -130,15 +130,15 @@
                 </MenuItem>
             </Menu>
 
-            <TextBlock FontFamily="/fonts/#Pescadero" FontSize="22pt" VerticalAlignment="Center" Margin="500,10,0,530" Height="38" Text="Пациенты"/>
-            <TextBlock HorizontalAlignment="Left" Margin="240,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="164" FontSize="20" Text="Поиск по слову:" RenderTransformOrigin="-0.027,0.471"/>
-            <TextBox Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="28" Margin="430,135,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="422" RenderTransformOrigin="0.632,0.9"/>
-            <TextBlock Canvas.ZIndex="2" Visibility="{Binding VisOfNothingFaund}" TextWrapping="Wrap" Height="28" Text="Ничего не найдено" FontFamily="/fonts/#Pescadero" FontSize="14pt" Margin="474,0,0,230" RenderTransformOrigin="0.591,0.516"/>
+            <TextBlock FontFamily="/fonts/#Pescadero" FontSize="22pt" VerticalAlignment="Center" Margin="540,0,0,530" Height="38" Text="Пациенты"/>
+            <TextBlock HorizontalAlignment="Left" Margin="250,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="164" FontSize="20" Text="Поиск по слову:" RenderTransformOrigin="-0.027,0.471"/>
+            <TextBox Padding="4" Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="28" Margin="410,135,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="522" RenderTransformOrigin="0.632,0.9"/>
+            <TextBlock Canvas.ZIndex="2" Visibility="{Binding VisOfNothingFaund}" TextWrapping="Wrap" Height="28" Text="Ничего не найдено" FontFamily="/fonts/#Pescadero" FontSize="14pt" Margin="544,350,0,230" RenderTransformOrigin="0.591,0.516"/>
 
-            <DataGrid ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  AutoGenerateColumns="False" ItemsSource="{Binding Path=ViewSource.View}" x:Name="dataGrid" ScrollViewer.VerticalScrollBarVisibility="Visible"
-                 Margin="230,132,0,0" Height="500" Width="auto" FontSize="14" HorizontalAlignment="Left">
+            <DataGrid CanUserReorderColumns="False" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  AutoGenerateColumns="False" ItemsSource="{Binding Path=ViewSource.View}" x:Name="dataGrid" ScrollViewer.VerticalScrollBarVisibility="Visible"
+                 Margin="251,40,0,0" Height="400" VerticalScrollBarVisibility="Visible" Width="709" FontSize="14" HorizontalAlignment="Left">
                 <DataGrid.Columns >
-                    <DataGridTextColumn IsReadOnly="True"   Header="Фамилия" CellStyle="{StaticResource MyDataGridCell2}"  Binding="{Binding CurrentPatient.Sirname}" ></DataGridTextColumn>
+                    <DataGridTextColumn  IsReadOnly="True"   Header="Фамилия" CellStyle="{StaticResource MyDataGridCell2}"  Binding="{Binding CurrentPatient.Sirname}" ></DataGridTextColumn>
                     <DataGridTextColumn  IsReadOnly="True"   Header="Имя" CellStyle="{StaticResource MyDataGridCell}"  Binding="{Binding CurrentPatient.Name}" ></DataGridTextColumn>
                     <DataGridTextColumn  IsReadOnly="True"  Header="Отчество" CellStyle="{StaticResource MyDataGridCell3}"  Binding="{Binding CurrentPatient.Patronimic}" ></DataGridTextColumn>
 
@@ -157,18 +157,18 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
-                                    <Button x:Name="ToHistory" Command="{Binding Path=ToPatientHistory}" HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}">
+                                    <Button x:Name="ToHistory" Command="{Binding Path=ToPatientHistory}" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}">
                                         <Image Source="pack://application:,,,/Images/history.png"></Image>
                                     </Button>
                                 </Grid>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn  Header="Перейти">
+                    <DataGridTemplateColumn Width="96" Header="Перейти">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
-                                    <Button x:Name="ToPatient" Command="{Binding Path=ToPatientCommand}" HorizontalAlignment="Left" Margin="25,0,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}">
+                                    <Button x:Name="ToPatient" Command="{Binding Path=ToPatientCommand}" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}">
                                         <Image Source="pack://application:,,,/Images/forward.png"></Image>
                                     </Button>
                                 </Grid>

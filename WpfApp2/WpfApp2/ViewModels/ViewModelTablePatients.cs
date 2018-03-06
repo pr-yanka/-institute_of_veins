@@ -110,7 +110,56 @@ namespace WpfApp2.ViewModels
                             Patients[i].IsFilteredAge = false;
                         }
 
-                        if (!Patients[i].IsFilteredName && !Patients[i].IsFilteredAge)
+                        if (Patients[i].CurrentPatient.Sirname.ToString().ToLower().Contains(FilterText.ToLower()))
+                        {
+                            Patients[i].IsFilteredSurname = true;
+                            Patients[i].IsVisibleTotal = true;
+                        }
+                        else
+                        {
+                            Patients[i].IsFilteredSurname = false;
+                        }
+
+                        if (Patients[i].CurrentPatient.Patronimic.ToString().ToLower().Contains(FilterText.ToLower()))
+                        {
+                            Patients[i].IsFilteredPatronimic = true;
+                            Patients[i].IsVisibleTotal = true;
+                        }
+                        else
+                        {
+                            Patients[i].IsFilteredPatronimic = false;
+                        }
+
+                        if (Patients[i].CurrentPatient.Birthday.ToString().ToLower().Contains(FilterText.ToLower()))
+                        {
+                            Patients[i].IsFilteredBirthday = true;
+                            Patients[i].IsVisibleTotal = true;
+                        }
+                        else
+                        {
+                            Patients[i].IsFilteredBirthday = false;
+                        }
+
+                        if (Patients[i].Town.ToString().ToLower().Contains(FilterText.ToLower()))
+                        {
+                            Patients[i].IsFilteredTown = true;
+                            Patients[i].IsVisibleTotal = true;
+                        }
+                        else
+                        {
+                            Patients[i].IsFilteredTown = false;
+                        }
+                        if (Patients[i].CurrentPatient.Gender.ToString().ToLower().Contains(FilterText.ToLower()))
+                        {
+                            Patients[i].IsFilteredGender = true;
+                            Patients[i].IsVisibleTotal = true;
+                        }
+                        else
+                        {
+                            Patients[i].IsFilteredGender = false;
+                        }
+
+                        if (!Patients[i].IsFilteredName && !Patients[i].IsFilteredAge && !Patients[i].IsFilteredSurname && !Patients[i].IsFilteredPatronimic && !Patients[i].IsFilteredBirthday && !Patients[i].IsFilteredTown && !Patients[i].IsFilteredGender)
                         {
                             Patients[i].IsVisibleTotal = false;
                         }
@@ -167,6 +216,11 @@ namespace WpfApp2.ViewModels
                         x.IsVisibleTotal = true;
                         x.IsFilteredAge = false;
                         x.IsFilteredName = false;
+                        x.IsFilteredGender = false;
+                        x.IsFilteredPatronimic = false;
+                        x.IsFilteredSurname = false;
+                        x.IsFilteredTown = false;
+                        x.IsFilteredBirthday = false;
                     }
                     ViewSource.View.Refresh();
                     // SetPatientsInDB(null, null);

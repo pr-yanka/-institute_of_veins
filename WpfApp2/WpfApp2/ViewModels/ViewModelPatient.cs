@@ -34,6 +34,10 @@ namespace WpfApp2.ViewModels
             IsFilteredName = false;
             IsFilteredAge = false;
             IsFilteredSurname = false;
+            IsFilteredPatronimic = false;
+            IsFilteredBirthday = false;
+            IsFilteredGender = false;
+            IsFilteredTown = false;
             _patient = patient;
             try
             {
