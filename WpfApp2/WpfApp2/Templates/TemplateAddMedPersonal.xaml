@@ -2,14 +2,17 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplateAddMedPersonal">
-        <Grid Name="RootGrid"  Margin="227,70,0,0" >
-
-            <TextBlock FontFamily="/fonts/#Pescadero" Width="Auto" FontSize="18pt" Margin="227,5,200,200" Height="Auto" Text="{Binding Path=TextHeader}"/>
-            <Button   x:Name="button_Coаpy3" Visibility="{Binding Path=Visibility}" Content="Вернуться" Command="{Binding Path=GoToDoctorListCommand}" HorizontalAlignment="Left" Margin="24,499,0,0" VerticalAlignment="Top"  Style="{StaticResource MyNormalBUTTON}"/>
-
+        <Grid Name="RootGrid"  Margin="220,70,0,0" >
             <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button" Visibility="Hidden" Content="Загрузить данные из регистратуры" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" />
-            <Button x:Name="button_Copy3" Visibility="{Binding Path=Visibility}" Content="Сбросить" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="24,451,0,0" VerticalAlignment="Top" Style="{StaticResource MyNormalBUTTON}"/>
-            <Button x:Name="button_Copy4" Content="{Binding Path=nameOfButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Command="{Binding Path=SaveAndGoDoctorListCommand}" HorizontalAlignment="Left" Margin="395,451,0,0" VerticalAlignment="Top" Style="{StaticResource MyConfirmBUTTON}"/>
+
+            <TextBlock FontFamily="/fonts/#Pescadero" Width="Auto" FontSize="18pt" Margin="227,15,200,200" Height="Auto" Text="{Binding Path=TextHeader}"/>
+            <StackPanel  Orientation="Horizontal" Margin="0,300,0,0"  >
+                <Button Visibility="{Binding Path=VisibilityOfGoBAck}"  x:Name="button_Coаpy3" Content="Вернуться" Command="{Binding Path=GoToDoctorListCommand}"   Style="{StaticResource MyNormalBUTTON}"/>
+
+                <Button  Margin="79,0" x:Name="button_Copy3" Visibility="{Binding Path=Visibility}" Content="Сбросить" Command="{Binding Path=ToDashboardCommand}" Style="{StaticResource MyNormalBUTTON}"/>
+                <Button Width="{Binding WidthOfBtn}"  x:Name="button_Copy4" Content="{Binding Path=nameOfButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Command="{Binding Path=SaveAndGoDoctorListCommand}" Style="{StaticResource MyConfirmBUTTON}"/>
+
+            </StackPanel>
             <Grid HorizontalAlignment="Left" Height="313" Margin="24,102,0,0" VerticalAlignment="Top" Width="707">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="186*"/>

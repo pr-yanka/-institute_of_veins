@@ -27,12 +27,13 @@ namespace WpfApp2.ViewModels
         public bool IsFilteredDate { get; set; }
         public bool IsVisibleTotal { get; set; }
         public DelegateCommand ToObs { get; set; }
+        public DelegateCommand ToPt { get; set; }
 
-
-        public ObsStruct(DelegateCommand ToObs, Examination Ex)
+        public ObsStruct(DelegateCommand ToObs, DelegateCommand ToPt, Examination Ex, MySqlContext context)
         {
             this.Ex = Ex;
             this.ToObs = ToObs;
+            this.ToPt = ToPt;
             IsVisibleTotal = true;
             IsFilteredPt = false;
             IsFilteredOpSeted = false;
@@ -44,15 +45,14 @@ namespace WpfApp2.ViewModels
 
             IsOperationSeted = Ex.isNeedOperation ? "Да" : "Нет";
 
-            using (var context = new MySqlContext())
-            {
+        
                 PatientsRepository PtRep = new PatientsRepository(context);
 
                 var CurrentPatient = PtRep.Get(Ex.PatientId.Value);
                 Patient = CurrentPatient.Sirname + " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
 
 
-            }
+           
 
         }
 
@@ -124,6 +124,7 @@ namespace WpfApp2.ViewModels
 
         private void SetSelectedMedOrDocOps(object sender, object data)
         {
+         
             using (var context = new MySqlContext())
             {
                 try
@@ -150,6 +151,15 @@ namespace WpfApp2.ViewModels
                     var Examsbuf = new ObservableCollection<ObsStruct>();
                     foreach (var Exam in ExamRp.GetAll)
                     {
+                        DelegateCommand buferToPt = new DelegateCommand(
+                          () =>
+                          {
+                             
+                          MessageBus.Default.Call("OpenCurrentPatient", this, Exam.PatientId);
+                          Controller.NavigateTo<ViewModelCurrentPatient>();
+   
+                          }
+                      );
 
 
                         DelegateCommand bufer = new DelegateCommand(
@@ -168,23 +178,23 @@ namespace WpfApp2.ViewModels
 
                         if (_sortId == 0 && Exam.Date.Year == DateTime.Now.Year && Exam.Date.Month == DateTime.Now.Month && Exam.Date.Day == DateTime.Now.Day)
                         {
-                            Exams.Add(new ObsStruct(bufer, Exam));
+                            Exams.Add(new ObsStruct(bufer, buferToPt, Exam, context));
                         }
                         else if (_sortId == 1 && span.Days > 0 && span.Days <= 3)
                         {
-                            Exams.Add(new ObsStruct(bufer, Exam));
+                            Exams.Add(new ObsStruct(bufer, buferToPt, Exam, context));
                         }
                         else if (_sortId == 2 && span.Days > 0 && span.Days <= 7)
                         {
-                            Exams.Add(new ObsStruct(bufer, Exam));
+                            Exams.Add(new ObsStruct(bufer, buferToPt, Exam, context));
                         }
                         else if (_sortId == 3 && span.Days > 0 && span.Days <= 32)
                         {
-                            Exams.Add(new ObsStruct(bufer, Exam));
+                            Exams.Add(new ObsStruct(bufer, buferToPt, Exam, context));
                         }
                         else if (_sortId == 4)
                         {
-                            Exams.Add(new ObsStruct(bufer, Exam));
+                            Exams.Add(new ObsStruct(bufer, buferToPt, Exam, context));
                         }
 
 
@@ -229,6 +239,8 @@ namespace WpfApp2.ViewModels
                     ViewSource.View.Refresh();
                 }
             }
+            _filterText = "";
+            OnPropertyChanged("FilterText");
         }
 
         public DelegateCommand ToPhysicalCommand { get; protected set; }
@@ -245,6 +257,7 @@ namespace WpfApp2.ViewModels
             FilterTextCommand = new DelegateCommand(
               () =>
               {
+                 
                   int count = 0;
 
                   if (!string.IsNullOrWhiteSpace(FilterText))

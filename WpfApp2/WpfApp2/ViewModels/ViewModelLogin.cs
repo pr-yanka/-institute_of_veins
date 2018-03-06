@@ -8,6 +8,8 @@ using System.Security;
 using System.Windows.Controls;
 using System.Windows;
 using WpfApp2.Messaging;
+using System.IO;
+using System.Collections.Generic;
 
 namespace WpfApp2.ViewModels
 {
@@ -20,6 +22,7 @@ namespace WpfApp2.ViewModels
         int CurrAccId;
 
         public DelegateCommand ToRegistrationCommand { get; protected set; }
+
         public DelegateCommand<object> ToDashboardCommand { get; protected set; }
 
         public BPVHipRepository rep;
@@ -46,65 +49,137 @@ namespace WpfApp2.ViewModels
 
 
 
+
+
             ToDashboardCommand = new DelegateCommand<object>(
-                (sender) =>
+        (sender) =>
+        {
+
+
+            List<string> listFullScriotOBl = new List<string>();
+            List<string> listFullScriotRegi = new List<string>();
+            List<string> listFullScriotTwn = new List<string>();
+            List<string> listFullScriotVul = new List<string>();
+            List<string> listObls = new List<string>();
+            List<string> listRaion = new List<string>();
+            List<string> listTown = new List<string>();
+            List<string> listVul = new List<string>();
+
+            using (var reader = new StreamReader(@"C:\test.txt"))
+            {
+
+                while (!reader.EndOfStream)
                 {
-                    string CheckSum = CalculateMD5Hash(((PasswordBox)sender).Password);
-                    sender = null;
-                    bool isUeserNameCorrect = false;
-
-                    foreach (var acc in Data.Accaunt.GetAll)
-                    {
-                        if (Name == acc.Name && acc.isEnabled == true)
-                        {
-                            isUeserNameCorrect = true;
-                            if (CheckSum == acc.Password)
-                            {
-
-                                CurrAccId = acc.Id;
-                                MessageBus.Default.Call("SetCurrentACCIDForContext", null, acc.Id);
-                                MessageBus.Default.Call("GetAcaunt", null, acc.Id);
+                    var line = reader.ReadLine();
+                    var values = line.Split(';');
 
 
+                    listObls.Add(values[0]);
 
 
-                                if ((acc.isDoctor != null && acc.isDoctor.Value) || (acc.isMedPersonal != null && acc.isMedPersonal.Value))
-                                {
-                                    MessageBus.Default.Call("SetVisibilityPanelAdmin", this, Visibility.Collapsed);
-                                    MessageBus.Default.Call("SetVisibilityForDocsOrMed", this, Visibility.Visible);
-                                    MessageBus.Default.Call("SetCurrentACCOp", this, acc.Id);
-                                }
-                                else if (acc.isAdmin != null && acc.isAdmin.Value)
-                                {
-                                    // MessageBus.Default.Call("SetVisibilityMyOp", null, null);
-                                    MessageBus.Default.Call("SetVisibilityPanelAdmin", this, Visibility.Visible);
-                                    MessageBus.Default.Call("SetAlertVisibility", this, Visibility.Collapsed);
-                                    MessageBus.Default.Call("SetVisibilityForDocsOrMed", this, Visibility.Collapsed);
-                                    MessageBus.Default.Call("SetCurrentACCOp", this, acc.Id);
-                                }
-                                else
-                                {
-                                    MessageBus.Default.Call("SetAlertVisibility", this, Visibility.Collapsed);
-                                    MessageBus.Default.Call("SetVisibilityPanelAdmin", this, Visibility.Collapsed);
-                                    MessageBus.Default.Call("SetVisibilityForDocsOrMed", this, Visibility.Collapsed);
+                    listRaion.Add(values[1]);
 
-                                }
-                                Controller.NavigateTo<ViewModelDashboard>();
 
-                            }
-                            else
-                            { MessageBox.Show("Неправильный логин или пароль"); }
-                            break;
-                        }
+                    listTown.Add(values[2]);
 
-                    }
-                    if (!isUeserNameCorrect)
-                    {
-                        MessageBox.Show("Неправильный логин или пароль");
-                    }
+                    listVul.Add(values[4]);
+
+
 
                 }
-            );
+            }
+
+
+            int colvoTowns = 1;
+            for (int i = 1; i <= listObls.Count; ++i)
+            {
+                string str = "INSERT INTO `med_db`.`справочник_область` (`id`, `название`) VALUES ('" + (i) + "', '" + listObls[i] + "');";
+
+
+                for (; listObls[i - 1] == listObls[i]; colvoTowns++)
+                {
+                    string str1 = "INSERT INTO `med_db`.`справочник_города` (`id`, `название`, `Область`) VALUES('" + (colvoTowns) + "', '" + listTown[colvoTowns] + "', '" + i + "); ";
+
+                    listFullScriotTwn.Add(str1);
+
+                }
+
+                listFullScriotOBl.Add(str);
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            string CheckSum = CalculateMD5Hash(((PasswordBox)sender).Password);
+            sender = null;
+            bool isUeserNameCorrect = false;
+
+            foreach (var acc in Data.Accaunt.GetAll)
+            {
+                if (Name == acc.Name && acc.isEnabled == true)
+                {
+                    isUeserNameCorrect = true;
+                    if (CheckSum == acc.Password)
+                    {
+
+                        CurrAccId = acc.Id;
+                        MessageBus.Default.Call("SetCurrentACCIDForContext", null, acc.Id);
+                        MessageBus.Default.Call("GetAcaunt", null, acc.Id);
+
+
+
+
+                        if ((acc.isDoctor != null && acc.isDoctor.Value) || (acc.isMedPersonal != null && acc.isMedPersonal.Value))
+                        {
+                            MessageBus.Default.Call("SetVisibilityPanelAdmin", this, Visibility.Collapsed);
+                            MessageBus.Default.Call("SetVisibilityForDocsOrMed", this, Visibility.Visible);
+                            MessageBus.Default.Call("SetCurrentACCOp", this, acc.Id);
+                        }
+                        else if (acc.isAdmin != null && acc.isAdmin.Value)
+                        {
+                            // MessageBus.Default.Call("SetVisibilityMyOp", null, null);
+                            MessageBus.Default.Call("SetVisibilityPanelAdmin", this, Visibility.Visible);
+                            MessageBus.Default.Call("SetAlertVisibility", this, Visibility.Collapsed);
+                            MessageBus.Default.Call("SetVisibilityForDocsOrMed", this, Visibility.Collapsed);
+                            MessageBus.Default.Call("SetCurrentACCOp", this, acc.Id);
+                        }
+                        else
+                        {
+                            MessageBus.Default.Call("SetAlertVisibility", this, Visibility.Collapsed);
+                            MessageBus.Default.Call("SetVisibilityPanelAdmin", this, Visibility.Collapsed);
+                            MessageBus.Default.Call("SetVisibilityForDocsOrMed", this, Visibility.Collapsed);
+
+                        }
+                        Controller.NavigateTo<ViewModelDashboard>();
+
+                    }
+                    else
+                    { MessageBox.Show("Неправильный логин или пароль"); }
+                    break;
+                }
+
+            }
+            if (!isUeserNameCorrect)
+            {
+                MessageBox.Show("Неправильный логин или пароль");
+            }
+
+        }
+    );
         }
 
         public string CalculateMD5Hash(string input)

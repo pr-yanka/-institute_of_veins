@@ -44,7 +44,56 @@ namespace WpfApp2.ViewModels
         private string _surname;
         private string _patronimic;
 
+        private void RefreshDataForMedpersonalForEditUser(object sender, object data)
+        {
 
+            Name = "";
+
+            Surname = "";
+
+            Patronimic = "";
+            GoToDoctorListCommand = new DelegateCommand(
+        () =>
+        {
+
+            //   MessageBus.Default.Call("OpenMeds", this, "");
+            Controller.NavigateTo<ViewModelEditUser>();
+
+
+        }
+    );
+            SaveAndGoDoctorListCommand = new DelegateCommand(
+               () =>
+               {
+                   if (TestRequiredFields())
+                   {
+                       currentMedPersonal = new MedPersonal();
+                       currentMedPersonal.Name = Name;
+                       currentMedPersonal.Surname = Surname;
+                       currentMedPersonal.Patronimic = Patronimic;
+                       currentMedPersonal.isEnabled = true;
+                       Data.MedPersonal.Add(currentMedPersonal);
+                       Data.Complete();
+
+                       MessageBus.Default.Call("UpdateAccsEmptyForNewUserForAddNewMedpersonal", currentMedPersonal.Id, null);
+                       //    MessageBus.Default.Call("OpenMeds", this, "");
+                       Controller.NavigateTo<ViewModelEditUser>();
+                   }
+                   else
+                   {
+
+                       MessageBox.Show("Не все поля заполнены");
+                   }
+
+               }
+           );
+        }
+
+        private int _widthOfBtn;
+        public int WidthOfBtn { get { return _widthOfBtn; } set { _widthOfBtn = value; OnPropertyChanged(); } }
+
+        private Visibility _visibilityOfGoBAck;
+        public Visibility VisibilityOfGoBAck { get { return _visibilityOfGoBAck; } set { _visibilityOfGoBAck = value; OnPropertyChanged(); } }
 
         private void RefreshDataForMedpersonalForAddUser(object sender, object data)
         {
@@ -203,6 +252,9 @@ namespace WpfApp2.ViewModels
         #endregion
         public ViewModelAddMedPersonal(NavigationController controller) : base(controller)
         {
+            WidthOfBtn = 200;
+            VisibilityOfGoBAck = Visibility.Visible;
+            MessageBus.Default.Subscribe("RefreshDataForMedpersonalForEditUser", RefreshDataForMedpersonalForEditUser);
             MessageBus.Default.Subscribe("RefreshDataForMedpersonalForAddUser", RefreshDataForMedpersonalForAddUser);
             MessageBus.Default.Subscribe("RefreshDataForMedpersonal", RefreshDataForMedpersonal);
 

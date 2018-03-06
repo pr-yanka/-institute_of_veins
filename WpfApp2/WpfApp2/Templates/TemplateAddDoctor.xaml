@@ -13,15 +13,17 @@
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
     </Style>
     <DataTemplate x:Key="TemplateAddDoctor">
-        <Grid Name="RootGrid"  Margin="227,70,0,0" >
+        <Grid Name="RootGrid"  Margin="220,67,0,0" >
 
-            <TextBlock FontFamily="/fonts/#Pescadero" Width="Auto" FontSize="18pt" Margin="227,5,200,200" Height="Auto" Text="{Binding Path=TextHeader}"/>
-
+            <TextBlock FontFamily="/fonts/#Pescadero" Width="Auto" FontSize="18pt" Margin="227,15,200,200" Height="Auto" Text="{Binding Path=TextHeader}"/>
             <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="button" Visibility="Hidden" Content="Загрузить данные из регистратуры" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" />
-            <Button   x:Name="button_Coаpy3" Visibility="{Binding Path=Visibility}" Content="Вернуться" Command="{Binding Path=GoToDoctorListCommand}" HorizontalAlignment="Left" Margin="24,499,0,0" VerticalAlignment="Top"  Style="{StaticResource MyNormalBUTTON}"/>
 
-            <Button   x:Name="button_Copy3" Visibility="{Binding Path=Visibility}" Content="Сбросить" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="24,451,0,0" VerticalAlignment="Top"  Style="{StaticResource MyNormalBUTTON}"/>
-            <Button x:Name="button_Copy4" Content="{Binding Path=nameOfButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Command="{Binding Path=SaveAndGoDoctorListCommand}" HorizontalAlignment="Left" Margin="395,451,0,0" VerticalAlignment="Top"  Style="{StaticResource MyConfirmBUTTON}" />
+            <StackPanel  Orientation="Horizontal" Margin="0,300,0,0"  >
+               <Button   x:Name="button_Coаpy3" Visibility="{Binding Path=VisibilityOfGoBAck}" Content="Вернуться" Command="{Binding Path=GoToDoctorListCommand}"   Style="{StaticResource MyNormalBUTTON}"/>
+
+                <Button  Margin="79,0"  x:Name="button_Copy3" Visibility="{Binding Path=Visibility}" Content="Сбросить" Command="{Binding Path=ToDashboardCommand}"   Style="{StaticResource MyNormalBUTTON}"/>
+            <Button Width="{Binding WidthOfBtn}" x:Name="button_Copy4" Content="{Binding Path=nameOfButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Command="{Binding Path=SaveAndGoDoctorListCommand}"   Style="{StaticResource MyConfirmBUTTON}" />
+            </StackPanel>
             <Grid HorizontalAlignment="Left" Height="313" Margin="24,102,0,0" VerticalAlignment="Top" Width="707">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="186*"/>
@@ -95,8 +97,8 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
-                <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="butвton" Command="{Binding Path=OpenAddSpecCommand}" Grid.Row="10" Visibility="Visible" Content="+ Добавить Специальность" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Height="auto"  FontSize="10"/>
-                <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="butвtoвn" Command="{Binding Path=OpenAddScintificsCommand}" Grid.Column="1" Margin="120,0" Grid.Row="10" Visibility="Visible" Content="+ Добавить Звание" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Height="auto" FontSize="10"/>
+                <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="butвton" Command="{Binding Path=OpenAddSpecCommand}" Grid.Row="10" Visibility="Visible" Content="Добавить Специальность" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Height="auto"  FontSize="10"/>
+                <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="butвtoвn" Command="{Binding Path=OpenAddScintificsCommand}" Grid.Column="1" Margin="120,0" Grid.Row="10" Visibility="Visible" Content="Добавить Звание" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Height="auto" FontSize="10"/>
 
                 <Grid Grid.Row="3" Grid.Column="2" Margin="120,30,0,0" Grid.RowSpan="10" Height="100" Width="auto" >
                     <DataGrid ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" HorizontalAlignment="Left" Height="220"  VerticalAlignment="Top" Width="152" Grid.Column="2" 

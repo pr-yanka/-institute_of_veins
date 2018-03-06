@@ -39,6 +39,7 @@ namespace WpfApp2.ViewModels
         protected int CurrentPatientID;
         private void SetCurrentPatientID(object sender, object data)
         {
+           
             CurrentPatientID = (int)data;
             MessageBus.Default.Call("GetCurrentPatientId", this, CurrentPatientID);
         }
@@ -46,7 +47,7 @@ namespace WpfApp2.ViewModels
 
         private void GetListOfPatients(object sender, object data)
         {
-
+        
             using (var context = new MySqlContext())
             {
                 PatientsRepository PatientsRep = new PatientsRepository(context);
@@ -59,6 +60,7 @@ namespace WpfApp2.ViewModels
                 }
                 ViewSource.Source = Patients;
             }
+            FilterText = "";
         }
         #endregion
         List<ViewModelPatient> FullCopy;

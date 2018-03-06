@@ -96,9 +96,11 @@ namespace WpfApp2.ViewModels
 
         private void SetCurrentPatientID(object sender, object data)
         {
-
-            setCurrMonth(DateTime.Now.Year);
-            MonthAndYearDissapearSelectedId = MonthAndYeard.Count - 1;
+            YearSelectedId = Year.Count - 1;
+           
+            setCurrMonth(DateTime.Now.Month);
+            YearDissapearSelectedId = Yeard.Count - 1;
+            MonthDissapearSelectedId = Monthd.Count - 1;
             YearAppear = "";
             MonthAppear = "";
             MonthDisappear = "";
@@ -152,7 +154,7 @@ namespace WpfApp2.ViewModels
             }
 
             Index = 0;
-           // Controller.NavigateTo<ViewModelAddPathology>();
+            // Controller.NavigateTo<ViewModelAddPathology>();
         }
         #endregion
 
@@ -166,35 +168,55 @@ namespace WpfApp2.ViewModels
 
         private void rebuildMonthDissapearList()
         {
-            MonthAndYeard = new ObservableCollection<string>();
-            for (int i = MonthAndYearSelectedId; i < MonthAndYear.Count; ++i)
+            Monthd = new ObservableCollection<string>();
+            for (int i = MonthSelectedId; i < Month.Count; ++i)
             {
 
-                string buf = MonthAndYear[i];
-                MonthAndYeard.Add(buf);
+                string buf = Month[i];
+                Monthd.Add(buf);
 
 
             }
-            MonthAndYeard.Add("-");
-            MonthAndYearDissapearSelectedId = MonthAndYeard.Count - 1;
+            Monthd.Add("-");
+            MonthDissapearSelectedId = Monthd.Count - 1;
+
+
+        }
+
+        private void rebuildYearDissapearList()
+        {
+            Yeard = new ObservableCollection<string>();
+            for (int i = YearSelectedId; i < Year.Count; ++i)
+            {
+
+                string buf = Year[i];
+                Yeard.Add(buf);
+
+
+            }
+            Yeard.Add("-");
+            YearDissapearSelectedId = Yeard.Count - 1;
 
 
         }
 
 
+        private int _yearSelectedId;
 
-        private int _monthAndYearSelectedId;
+        public int YearSelectedId { get { return _yearSelectedId; } set { _yearSelectedId = value; rebuildYearDissapearList(); OnPropertyChanged(); } }
 
-        public int MonthAndYearSelectedId { get { return _monthAndYearSelectedId; } set { _monthAndYearSelectedId = value; OnPropertyChanged(); rebuildMonthDissapearList(); } }
+        private int _monthSelectedId;
 
-        private int _monthAndYearDissapearSelectedId;
+        public int MonthSelectedId { get { return _monthSelectedId; } set { _monthSelectedId = value; rebuildMonthDissapearList(); OnPropertyChanged(); } }
 
-        public int MonthAndYearDissapearSelectedId { get { return _monthAndYearDissapearSelectedId; } set { _monthAndYearDissapearSelectedId = value; OnPropertyChanged(); } }
+        private int _yearDissapearSelectedId;
 
+        public int YearDissapearSelectedId { get { return _yearDissapearSelectedId; } set { _yearDissapearSelectedId = value;  OnPropertyChanged(); } }
 
-        private ObservableCollection<string> _monthAndYeard;
+        private int _monthDissapearSelectedId;
 
-        public ObservableCollection<string> MonthAndYeard { get { return _monthAndYeard; } set { _monthAndYeard = value; OnPropertyChanged(); } }
+        public int MonthDissapearSelectedId { get { return _monthDissapearSelectedId; } set { _monthDissapearSelectedId = value; OnPropertyChanged(); } }
+
 
         private int getmonthName(string number)
         {
@@ -235,126 +257,155 @@ namespace WpfApp2.ViewModels
             switch (DateTime.Now.Month)
             {
                 case 1:
-                    _monthAndYearSelectedId = MonthAndYear.IndexOf("Январь " + i);
+                    MonthSelectedId = Month.IndexOf("Январь");
                     break;
                 case 2:
-                    _monthAndYearSelectedId = MonthAndYear.IndexOf("Февраль " + i);
+                    MonthSelectedId = Month.IndexOf("Февраль");
                     break;
                 case 3:
-                    _monthAndYearSelectedId = MonthAndYear.IndexOf("Март " + i);
+                    MonthSelectedId = Month.IndexOf("Март");
                     break;
                 case 4:
-                    _monthAndYearSelectedId = MonthAndYear.IndexOf("Апрель " + i);
+                    MonthSelectedId = Month.IndexOf("Апрель");
                     break;
                 case 5:
-                    _monthAndYearSelectedId = MonthAndYear.IndexOf("Май " + i);
+                    MonthSelectedId = Month.IndexOf("Май");
                     break;
                 case 6:
-                    _monthAndYearSelectedId = MonthAndYear.IndexOf("Июнь " + i);
+                    MonthSelectedId = Month.IndexOf("Июнь");
                     break;
                 case 7:
-                    _monthAndYearSelectedId = MonthAndYear.IndexOf("Июль " + i);
+                    MonthSelectedId = Month.IndexOf("Июль");
                     break;
                 case 8:
-                    _monthAndYearSelectedId = MonthAndYear.IndexOf("Август " + i);
+                    MonthSelectedId = Month.IndexOf("Август");
                     break;
                 case 9:
-                    _monthAndYearSelectedId = MonthAndYear.IndexOf("Сентябрь " + i);
+                    MonthSelectedId = Month.IndexOf("Сентябрь");
                     break;
                 case 10:
-                    _monthAndYearSelectedId = MonthAndYear.IndexOf("Октябрь " + i);
+                    MonthSelectedId = Month.IndexOf("Октябрь");
                     break;
                 case 11:
-                    _monthAndYearSelectedId = MonthAndYear.IndexOf("Ноябрь " + i);
+                    MonthSelectedId = Month.IndexOf("Ноябрь");
                     break;
                 case 12:
-                    _monthAndYearSelectedId = MonthAndYear.IndexOf("Декабрь " + i);
+                    MonthSelectedId = Month.IndexOf("Декабрь");
                     break;
             }
 
 
         }
+        private List<string> _month;
 
-        private List<string> _monthAndYear;
+        public List<string> Month { get { return _month; } set { _month = value; OnPropertyChanged(); } }
 
-        public List<string> MonthAndYear { get { return _monthAndYear; } set { _monthAndYear = value; OnPropertyChanged(); } }
+        private List<string> _year;
+
+        public List<string> Year { get { return _year; } set { _year = value; OnPropertyChanged(); } }
+
+        private ObservableCollection<string> _monthd;
+
+        public ObservableCollection<string> Monthd { get { return _monthd; } set { _monthd = value; OnPropertyChanged(); } }
+
+        private ObservableCollection<string> _yeard;
+
+        public ObservableCollection<string> Yeard { get { return _yeard; } set { _yeard = value; OnPropertyChanged(); } }
+
 
         public ViewModelAddPathology(NavigationController controller) : base(controller)
         {
-            MonthAndYeard = new ObservableCollection<string>();
-            MonthAndYear = new List<string>();
+            Monthd = new ObservableCollection<string>();
+            Yeard = new ObservableCollection<string>();
+            Month = new List<string>();
+            Year = new List<string>();
 
+            // MonthAndYear = new List<string>();
+
+            Month.Add("Январь");
+            Month.Add("Февраль");
+            Month.Add("Март");
+            Month.Add("Апрель");
+            Month.Add("Май");
+            Month.Add("Июнь");
+            Month.Add("Июль");
+            Month.Add("Август");
+            Month.Add("Сентябрь");
+            Month.Add("Октябрь");
+            Month.Add("Ноябрь");
+            Month.Add("Декабрь");
+            Monthd = new ObservableCollection<string>(Month);
             for (int i = 1950; i <= DateTime.Now.Year; ++i)
             {
 
 
-                MonthAndYear.Add("Январь " + i);
+                Year.Add(i.ToString());
                 if (DateTime.Now.Month == 1 && i == DateTime.Now.Year)
                 {
                     setCurrMonth(i);
                     break;
                 }
-                MonthAndYear.Add("Февраль " + i);
+               
                 if (DateTime.Now.Month == 2 && i == DateTime.Now.Year)
                 {
                     setCurrMonth(i);
                     break;
                 }
-                MonthAndYear.Add("Март " + i);
+             
                 if (DateTime.Now.Month == 3 && i == DateTime.Now.Year)
                 {
                     setCurrMonth(i);
                     break;
                 }
-                MonthAndYear.Add("Апрель " + i);
+               
                 if (DateTime.Now.Month == 4 && i == DateTime.Now.Year)
                 {
                     setCurrMonth(i);
                     break;
                 }
-                MonthAndYear.Add("Май " + i);
+             
                 if (DateTime.Now.Month == 5 && i == DateTime.Now.Year)
                 {
                     setCurrMonth(i);
                     break;
                 }
-                MonthAndYear.Add("Июнь " + i);
+             
                 if (DateTime.Now.Month == 6 && i == DateTime.Now.Year)
                 {
                     setCurrMonth(i);
                     break;
                 }
-                MonthAndYear.Add("Июль " + i);
+               
                 if (DateTime.Now.Month == 7 && i == DateTime.Now.Year)
                 {
                     setCurrMonth(i);
                     break;
                 }
-                MonthAndYear.Add("Август " + i);
+           
                 if (DateTime.Now.Month == 8 && i == DateTime.Now.Year)
                 {
                     setCurrMonth(i);
                     break;
                 }
-                MonthAndYear.Add("Сентябрь " + i);
+            
                 if (DateTime.Now.Month == 9 && i == DateTime.Now.Year)
                 {
                     setCurrMonth(i);
                     break;
                 }
-                MonthAndYear.Add("Октябрь " + i);
+               
                 if (DateTime.Now.Month == 10 && i == DateTime.Now.Year)
                 {
                     setCurrMonth(i);
                     break;
                 }
-                MonthAndYear.Add("Ноябрь " + i);
+               
                 if (DateTime.Now.Month == 11 && i == DateTime.Now.Year)
                 {
                     setCurrMonth(i);
                     break;
                 }
-                MonthAndYear.Add("Декабрь " + i);
+              
                 if (DateTime.Now.Month == 12 && i == DateTime.Now.Year)
                 {
                     setCurrMonth(i);
@@ -362,9 +413,10 @@ namespace WpfApp2.ViewModels
                 }
 
             }
-            rebuildMonthDissapearList();
-
-
+        
+            Yeard = new ObservableCollection<string>(Year);
+            Yeard.Add("-");
+            Monthd.Add("-");
             ReturnBtnName = "Вернуться";
 
             TextAddOrSave = "Добавить";
@@ -395,20 +447,22 @@ namespace WpfApp2.ViewModels
                         {
                             Patology buff = new Patology();
 
-                            string[] curDate = MonthAndYear[MonthAndYearSelectedId].Split(' ');
+                           // string[] curDate = MonthAndYear[MonthAndYearSelectedId].Split(' ');
 
-                            DateAppear = new DateTime(int.Parse(curDate[1]), getmonthName(curDate[0]), 1);
+                            DateAppear = new DateTime(int.Parse(Year[YearSelectedId]), getmonthName(Month[MonthSelectedId]), 1);
                             buff.MonthAppear = DateAppear;
                             buff.YearAppear = DateAppear;
 
 
-                            if (MonthAndYeard[MonthAndYearDissapearSelectedId] != "-")
+                            if (Monthd[MonthDissapearSelectedId] != "-" && Yeard[YearDissapearSelectedId] != "-")
                             {
-                                string[] curDatedsp = MonthAndYeard[MonthAndYearDissapearSelectedId].Split(' ');
+                           
 
-                                DateDisappear = new DateTime(int.Parse(curDatedsp[1]), getmonthName(curDatedsp[0]), 1);
+                                DateDisappear = new DateTime(int.Parse(Yeard[YearDissapearSelectedId]), getmonthName(Monthd[MonthDissapearSelectedId]), 1);
                                 buff.MonthDisappear = DateDisappear;
                                 buff.YearDisappear = DateDisappear;
+
+
                             }
                             else
                             {

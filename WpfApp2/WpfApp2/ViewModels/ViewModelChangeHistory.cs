@@ -45,11 +45,16 @@ namespace WpfApp2.ViewModels
 
 
 
-        public ChangeHistoryClass(ChangeHistory Ch)
+        public ChangeHistoryClass(ChangeHistory Ch, MySqlContext context)
         {
             this.Ch = Ch;
-
-
+            AccName = "";
+            AccPost = "";
+            ChangeType = "";
+            TableChanged = "";
+            PropertyChanged = "";
+            OldValue = "";
+            NewValue = "";
             IsVisibleTotal = true;
             IsFilteredDate = false;
             IsFilteredAccName = false;
@@ -84,8 +89,7 @@ namespace WpfApp2.ViewModels
             // Date = Op.Date.Day.ToString() + "." + Op.Date.Month.ToString() + "." + Op.Date.Year.ToString();
             // Time = buf1.Hour.ToString() + ":" + buf1.Minute.ToString();
             Date = Ch.DataChanged;
-            using (var context = new MySqlContext())
-            {
+          
                 AccauntRepository acRep = new AccauntRepository(context);
                 ChangesInDBTypeRepository chindbRep = new ChangesInDBTypeRepository(context);
                 Accaunt CurAcc = acRep.Get(Ch.AccID);
@@ -111,7 +115,7 @@ namespace WpfApp2.ViewModels
                 //Patient = CurrentPatient.Sirname + " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
 
 
-            }
+            
 
         }
 
@@ -347,12 +351,13 @@ namespace WpfApp2.ViewModels
         //private void FilterActivater()
         //{
 
-
+        bool test;
         //}
         List<ChangeHistoryClass> FullCopy;
         private void SetChangesInDB(object sender, object data)
         {
-            using (var context = new MySqlContext())
+
+            using (MySqlContext context = new MySqlContext())
             {
                 try
                 {
@@ -367,18 +372,30 @@ namespace WpfApp2.ViewModels
 
                     ChangeHistoryRepository ChangeRp = new ChangeHistoryRepository(context);
 
-
-                    FullCopy = new List<ChangeHistoryClass>();
-                    Changes = new ObservableCollection<ChangeHistoryClass>();
-
-                    foreach (var Ch in ChangeRp.GetAll)
+                    if(Changes.Count != FullCopy.Count)
+                        Changes = new ObservableCollection<ChangeHistoryClass>(FullCopy);
+                    //FullCopy = new List<ChangeHistoryClass>();
+                    //  Changes = new ObservableCollection<ChangeHistoryClass>();
+                    //  ViewSource = new CollectionViewSource();
+                    test = true;
+                    foreach (ChangeHistory Ch in ChangeRp.GetAll)
                     {
 
-                        ChangeHistoryClass buf = new ChangeHistoryClass(Ch);
 
-                        FullCopy.Add(buf);
-                        Changes.Add(new ChangeHistoryClass(Ch));
-
+                        test = true;
+                        for (int i = 0; i < Changes.Count; ++i)
+                        {
+                          
+                            if (Changes[i].Ch.Id == Ch.Id)
+                            { test = false;break; }
+                          
+                        }
+                        if (test)
+                        {
+                            ChangeHistoryClass buf = new ChangeHistoryClass(Ch, context);
+                            FullCopy.Add(buf);
+                            Changes.Add(buf);
+                        }
 
 
                     }
@@ -415,12 +432,15 @@ namespace WpfApp2.ViewModels
                 }
                 catch (Exception exc)
                 {
+                    ViewSource = new CollectionViewSource();
                     Changes = new ObservableCollection<ChangeHistoryClass>();
                     ViewSource.Source = Changes;
                     ViewSource.SortDescriptions.Clear();
                     ViewSource.View.Refresh();
                 }
             }
+            _filterText = "";
+            OnPropertyChanged("FilterText");
         }
 
         public DelegateCommand ToPhysicalCommand { get; protected set; }

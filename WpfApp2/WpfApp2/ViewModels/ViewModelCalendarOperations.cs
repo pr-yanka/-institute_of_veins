@@ -207,6 +207,7 @@ namespace WpfApp2.ViewModels
         }
         private void SetSelectedMedOrDocOps()
         {
+           
             using (var context = new MySqlContext())
             {
                 try
@@ -375,6 +376,8 @@ namespace WpfApp2.ViewModels
                     ViewSource.View.Refresh();
                 }
             }
+            _filterText = "";
+            OnPropertyChanged("FilterText");
         }
 
 
@@ -388,7 +391,7 @@ namespace WpfApp2.ViewModels
                     DoctorRepository DocsRep = new DoctorRepository(context);
                     isMyOpVisible = Visibility.Collapsed;
                     DocsAndMedsList = new ObservableCollection<docsAndMeds>();
-                    DocsAndMedsList.Add(new docsAndMeds(false, 0, "Все"));
+                    DocsAndMedsList.Add(new docsAndMeds(false, 0, "всех"));
 
 
                     foreach (var x in DocsRep.GetAll)
@@ -414,6 +417,7 @@ namespace WpfApp2.ViewModels
 
         private void SetCurrentACCOp(object sender, object data)
         {
+          
             using (var context = new MySqlContext())
             {
                 try
@@ -426,7 +430,7 @@ namespace WpfApp2.ViewModels
                     MedPersonalRepository MedPersonalRep = new MedPersonalRepository(context);
                     DoctorRepository DocsRep = new DoctorRepository(context);
 
-                    DocsAndMedsList.Add(new docsAndMeds(false, 0, "Все"));
+                    DocsAndMedsList.Add(new docsAndMeds(false, 0, "всех"));
 
                     foreach (var x in DocsRep.GetAll)
                     {
@@ -691,6 +695,8 @@ namespace WpfApp2.ViewModels
                     ViewSource.View.Refresh();
                 }
             }
+            _filterText = "";
+            OnPropertyChanged("FilterText");
         }
         #region Inotify realisation
         public event PropertyChangedEventHandler PropertyChanged;

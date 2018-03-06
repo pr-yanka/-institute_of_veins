@@ -3,16 +3,20 @@
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplateAddUser">
-        <Grid Name="RootGrid"  Margin="227,70,0,0" >
+        <Grid Name="RootGrid"  Margin="220,67,0,0" >
 
-            <TextBlock FontFamily="/fonts/#Pescadero" Width="Auto" FontSize="18pt" Margin="227,5,200,200" Height="Auto" Text="{Binding Path=TextHeader}"/>
+            <TextBlock FontFamily="/fonts/#Pescadero" Width="Auto" FontSize="18pt" Margin="227,15,200,200" Height="Auto" Text="{Binding Path=TextHeader}"/>
+            
+            <StackPanel  Orientation="Horizontal" Margin="0,300,0,0"  >
+              
+                <Button Style="{StaticResource MyNormalBUTTON}"  x:Name="button_Coвpy3" Visibility="{Binding Path=VisibilityOfGoBAck}" Content="Вернуться" Command="{Binding Path=GoToDoctorListCommand}"  CommandParameter="{Binding ElementName=passwordBox1}" />
 
-            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button" Visibility="Hidden" Content="Загрузить данные из регистратуры" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" Width="300"/>
-            <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Coвpy3" Visibility="{Binding Path=Visibility}" Content="Вернуться" Command="{Binding Path=GoToDoctorListCommand}"  CommandParameter="{Binding ElementName=passwordBox1}" HorizontalAlignment="Left" Margin="24,501,0,0" VerticalAlignment="Top" />
+                <Button Margin="79,0" Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy3" Visibility="{Binding Path=Visibility}" Content="Сбросить" Command="{Binding Path=ToDashboardCommand}"  CommandParameter="{Binding ElementName=passwordBox1}" />
+                <Button x:Name="button_Copy4" Content="{Binding Path=nameOfButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Command="{Binding Path=SaveAndGoDoctorListCommand}"  CommandParameter="{Binding ElementName=passwordBox1}"  Width="{Binding WidthOfBtn}" Style="{StaticResource MyConfirmBUTTON}"/>
 
-            <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy3" Visibility="{Binding Path=Visibility}" Content="Сбросить" Command="{Binding Path=ToDashboardCommand}"  CommandParameter="{Binding ElementName=passwordBox1}" HorizontalAlignment="Left" Margin="24,451,0,0" VerticalAlignment="Top" />
-            <Button x:Name="button_Copy4" Content="{Binding Path=nameOfButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Command="{Binding Path=SaveAndGoDoctorListCommand}"  CommandParameter="{Binding ElementName=passwordBox1}"  HorizontalAlignment="Left" Margin="395,451,0,0" VerticalAlignment="Top" Style="{StaticResource MyConfirmBUTTON}"/>
-            <Grid HorizontalAlignment="Left" Height="313" Margin="24,102,0,0" VerticalAlignment="Top" Width="707">
+            </StackPanel>
+            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button" Visibility="Hidden" Content="Загрузить данные из регистратуры" HorizontalAlignment="Left" Width="3003" Margin="10,40,0,0" VerticalAlignment="Top" />
+           <Grid HorizontalAlignment="Left" Height="343" Margin="24,102,0,0" VerticalAlignment="Top" Width="707">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="186*"/>
                     <ColumnDefinition Width="521*"/>
@@ -22,7 +26,7 @@
                     <RowDefinition Height="25*"/>
                     <RowDefinition Height="30*"/>
                     <RowDefinition Height="28*"/>
-                    <RowDefinition Height="27*"/>
+                    <RowDefinition Height="29*"/>
                     <RowDefinition Height="28*"/>
                     <RowDefinition Height="27*"/>
                     <RowDefinition Height="29*"/>
@@ -68,7 +72,7 @@
 
                 </Image>
                
-                <Button Visibility="{Binding Vis}" Command="{Binding Path=AddPerson}"   Grid.Column="1" Content ="{Binding NameOfPerson}"  Grid.Row="4" Style="{StaticResource MyConfirmBUTTON}" Height="29" Width="300"></Button>
+                <Button Visibility="{Binding Vis}" Command="{Binding Path=AddPerson}"   Grid.Column="1" Content ="{Binding NameOfPerson}"  Grid.Row="4" Style="{StaticResource MyConfirmBUTTON}" Height="30" Width="260"></Button>
                 <ComboBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Path=accType}" SelectedIndex="{Binding Path=SelectedIndexOfAccauntType}"  FontFamily="/fonts/#Pescadero" FontSize="14pt" Height="18" Width="155" HorizontalAlignment="Left">
 
                 </ComboBox>

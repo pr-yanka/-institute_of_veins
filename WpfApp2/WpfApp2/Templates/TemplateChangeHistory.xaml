@@ -7,6 +7,7 @@
 
     <Style x:Key="MyDataGridCell" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
         <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsFilteredAccName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
@@ -23,6 +24,7 @@
 
     <Style x:Key="MyDataGridCell1" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
         <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsFilteredAccPost,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
@@ -38,6 +40,7 @@
     </Style>
     <Style x:Key="MyDataGridCell2" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
         <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsFilteredDate,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
@@ -57,6 +60,7 @@
 
     <Style x:Key="MyDataGridCell3" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
         <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsFilteredChangeType,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
@@ -74,6 +78,7 @@
 
     <Style x:Key="MyDataGridCell4" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
         <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsFilteredTableChanged,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
@@ -92,6 +97,7 @@
     <Style x:Key="MyDataGridCell5" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
         <Setter Property="BorderThickness" Value="0"></Setter>
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsFilteredPropertyChanged,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                                          Value="True">
@@ -108,6 +114,7 @@
 
     <Style x:Key="MyDataGridCell6" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
         <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsFilteredOldValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
@@ -125,6 +132,7 @@
 
     <Style x:Key="MyDataGridCell7" TargetType="DataGridCell" BasedOn="{StaticResource {x:Type DataGridCell}}">
         <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
         <Style.Triggers>
             <DataTrigger Binding="{Binding IsFilteredNewValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
@@ -154,24 +162,24 @@
 
     <DataTemplate x:Key="TemplateChangeHistory">
         <Grid Margin="0,75,0,0">
-            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Margin="220,0" Text="История изменений" FontFamily="/fonts/#Pescadero" FontSize="22pt" RenderTransformOrigin="0.591,0.516">
+            <TextBlock  TextWrapping="Wrap"  Height="32" Margin="460,0,0,610" Text="История изменений" FontFamily="/fonts/#Pescadero" FontSize="22pt" RenderTransformOrigin="0.591,0.516">
                 <TextBlock.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
                         <SkewTransform/>
                         <RotateTransform/>
-                        <TranslateTransform Y="10"/>
+                        <TranslateTransform Y="0"/>
                     </TransformGroup>
                 </TextBlock.RenderTransform>
             </TextBlock>
-            <TextBlock HorizontalAlignment="Left" Margin="250,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="164" FontSize="22" Text="Поиск по слову:" RenderTransformOrigin="-0.027,0.471"/>
-            <TextBox  Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="30" Margin="425,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="515" RenderTransformOrigin="0.632,0.9"
+            <TextBlock HorizontalAlignment="Left" Margin="250,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="164" FontSize="20" Text="Поиск по слову:" RenderTransformOrigin="-0.027,0.471"/>
+            <TextBox  Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="26" Margin="409,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="552" RenderTransformOrigin="0.632,0.9"
           />
             <CheckBox  IsChecked="{Binding IsSortByData}"  Content="сортировать по дате&#xD;&#xA;" HorizontalAlignment="Left" Margin="250,59,0,0" VerticalAlignment="Top" FontSize="16" Height="20" Width="297"/>
 
-            <TextBlock Canvas.ZIndex="2" Visibility="{Binding VisOfNothingFaund}" TextWrapping="Wrap" Height="28" Text="Ничего не найдено" FontFamily="/fonts/#Pescadero" FontSize="14pt" Margin="474,0,0,230" RenderTransformOrigin="0.591,0.516"/>
+            <TextBlock Canvas.ZIndex="2" Visibility="{Binding VisOfNothingFaund}" TextWrapping="Wrap" Height="28" Text="Ничего не найдено" FontFamily="/fonts/#Pescadero" FontSize="14pt" Margin="510,280,0,230" RenderTransformOrigin="0.591,0.516"/>
 
-            <DataGrid FontSize="14" Width="709" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  RowStyle="{StaticResource MyDataGridRow}"  IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="428" Margin="251,160,0,0" VerticalAlignment="Top"  >
+            <DataGrid BorderBrush="Black" BorderThickness="1"  Visibility="Visible" FontSize="14" Width="709" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  RowStyle="{StaticResource MyDataGridRow}"  IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="500" Margin="251,160,0,0" VerticalAlignment="Top"  >
 
                 <DataGrid.Columns  >
 

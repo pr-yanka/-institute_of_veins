@@ -54,6 +54,12 @@ namespace WpfApp2.ViewModels
     public class ViewModelAddUser : ViewModelBase, INotifyPropertyChanged
     {
         #region DelegateCommands
+        private int _widthOfBtn;
+        public int WidthOfBtn { get { return _widthOfBtn; } set { _widthOfBtn = value; OnPropertyChanged(); } }
+
+        private Visibility _visibilityOfGoBAck;
+        public Visibility VisibilityOfGoBAck { get { return _visibilityOfGoBAck; } set { _visibilityOfGoBAck = value; OnPropertyChanged(); } }
+
 
         private DelegateCommand _addPerson;
         public DelegateCommand AddPerson { get { return _addPerson; } set { _addPerson = value; OnPropertyChanged(); } }
@@ -110,7 +116,7 @@ namespace WpfApp2.ViewModels
                 _selectedIndexOfAccauntType = value;
                 if (accType[_selectedIndexOfAccauntType] == "Врач")
                 {
-                    NameOfPerson = "+Добавить врача";
+                    NameOfPerson = "Добавить врача";
                     AddPerson = new DelegateCommand(
               () =>
               {
@@ -135,7 +141,7 @@ namespace WpfApp2.ViewModels
           );
 
                     Vis = Visibility.Visible;
-                    NameOfPerson = "+Добавить медперсонал";
+                    NameOfPerson = "Добавить медперсонал";
                     DocVis = Visibility.Collapsed; MedVis = Visibility.Visible;
                 }
                 else
@@ -421,7 +427,8 @@ namespace WpfApp2.ViewModels
           Controller.NavigateTo<ViewModelAddDoctor>();
 
       }
-  );
+  ); WidthOfBtn = 200;
+            VisibilityOfGoBAck = Visibility.Visible;
             Vis = Visibility.Visible;
             DocVis = Visibility.Visible;
             MedVis = Visibility.Collapsed;

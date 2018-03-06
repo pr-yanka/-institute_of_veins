@@ -78,6 +78,11 @@ namespace WpfApp2.ViewModels
         //        CurrentSpecPanelViewModel.PanelOpened = true;
         //    }
         //}
+        private int _widthOfBtn;
+        public int WidthOfBtn { get { return _widthOfBtn; } set { _widthOfBtn = value; OnPropertyChanged(); } }
+
+        private Visibility _visibilityOfGoBAck;
+        public Visibility VisibilityOfGoBAck { get { return _visibilityOfGoBAck; } set { _visibilityOfGoBAck = value; OnPropertyChanged(); } }
 
         #endregion
         #region Bindings
@@ -313,7 +318,9 @@ namespace WpfApp2.ViewModels
         #endregion
         public ViewModelEditDoctor(NavigationController controller) : base(controller)
         {
+            WidthOfBtn = 300;
 
+            VisibilityOfGoBAck = Visibility.Collapsed;
             CurrentSpecPanelViewModel = new SpecPanelViewModel(this);
             OpenAddSpecCommand = new DelegateCommand(() =>
             {

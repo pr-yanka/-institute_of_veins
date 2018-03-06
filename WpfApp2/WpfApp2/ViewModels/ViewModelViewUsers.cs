@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using WpfApp2.Db.Models;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 
@@ -55,7 +56,7 @@ namespace WpfApp2.ViewModels
         #endregion
 
         public ObservableCollection<UsersDataSource> _historyDataSource;
-        public ObservableCollection<UsersDataSource> DataSource { get { return _historyDataSource; } set { _historyDataSource = value; OnPropertyChanged();  } }
+        public ObservableCollection<UsersDataSource> DataSource { get { return _historyDataSource; } set { _historyDataSource = value; OnPropertyChanged(); } }
 
         public DelegateCommand ToAddSomeoneCommand { get; protected set; }
         public string TooltipText { get; set; }
@@ -71,41 +72,48 @@ namespace WpfApp2.ViewModels
             TooltipText = "Архивация позволяет отключить пользователя от системы";
             DataSource = new ObservableCollection<UsersDataSource>();
 
-           
 
-            foreach (var User in Data.Accaunt.GetAll)
+            using (MySqlContext context = new MySqlContext())
             {
-                DelegateCommand Redact = new DelegateCommand(
-              () =>
-              {
-                  
-                  MessageBus.Default.Call("GetUserForEditUser", this, User.Id);
-                  Controller.NavigateTo<ViewModelEditUser>();
-              }
-              );
+                AccauntRepository accRep = new AccauntRepository(context);
 
-                string BtnName = "Разархивировать";
-                DelegateCommand Archivate = new DelegateCommand(
-                    () =>
-                    {
-                        Data.Accaunt.Get(User.Id).isEnabled = true;
-                        Data.Complete();
-                        MessageBus.Default.Call("OpenUsers", this, "");
-                    }
-                    );
-                if (User.isEnabled == true)
+
+
+
+                foreach (var User in accRep.GetAll)
                 {
-                    BtnName = "Архивировать";
-                    Archivate = new DelegateCommand(
-                   () =>
-                   {
-                       Data.Accaunt.Get(User.Id).isEnabled = false;
-                       Data.Complete();
-                       MessageBus.Default.Call("OpenUsers", this, "");
-                   }
-                   );
+                    DelegateCommand Redact = new DelegateCommand(
+                  () =>
+                  {
+
+                      MessageBus.Default.Call("GetUserForEditUser", this, User.Id);
+                      Controller.NavigateTo<ViewModelEditUser>();
+                  }
+                  );
+
+                    string BtnName = "Разархивировать";
+                    DelegateCommand Archivate = new DelegateCommand(
+                        () =>
+                        {
+                            Data.Accaunt.Get(User.Id).isEnabled = true;
+                            Data.Complete();
+                            MessageBus.Default.Call("OpenUsers", this, "");
+                        }
+                        );
+                    if (User.isEnabled == true)
+                    {
+                        BtnName = "Архивировать";
+                        Archivate = new DelegateCommand(
+                       () =>
+                       {
+                           Data.Accaunt.Get(User.Id).isEnabled = false;
+                           Data.Complete();
+                           MessageBus.Default.Call("OpenUsers", this, "");
+                       }
+                       );
+                    }
+                    DataSource.Add(new UsersDataSource(Redact, User.Name, Archivate, BtnName));
                 }
-                DataSource.Add(new UsersDataSource(Redact, User.Name, Archivate, BtnName));
             }
 
         }
@@ -120,7 +128,7 @@ namespace WpfApp2.ViewModels
             ToAddSomeoneCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("UpdateAccsEmptyForNewUser", this,this);
+                    MessageBus.Default.Call("UpdateAccsEmptyForNewUser", this, this);
 
                     Controller.NavigateTo<ViewModelAddUser>();
                 }

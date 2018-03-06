@@ -56,6 +56,11 @@ namespace WpfApp2.ViewModels
         public Brush TextBoxNameB { get { return _textBox_Name_B; } set { _textBox_Name_B = value; OnPropertyChanged(); } }
 
         public Brush TextBoxSurnameB { get { return _textBox_Surname_B; } set { _textBox_Surname_B = value; OnPropertyChanged(); } }
+        private int _widthOfBtn;
+        public int WidthOfBtn { get { return _widthOfBtn; } set { _widthOfBtn = value; OnPropertyChanged(); } }
+
+        private Visibility _visibilityOfGoBAck;
+        public Visibility VisibilityOfGoBAck { get { return _visibilityOfGoBAck; } set { _visibilityOfGoBAck = value; OnPropertyChanged(); } }
 
         public Brush TextBoxPatronimicB { get { return _textBox_Patronimic_B; } set { _textBox_Patronimic_B = value; OnPropertyChanged(); } }
         #endregion
@@ -115,7 +120,9 @@ namespace WpfApp2.ViewModels
         #endregion
         public ViewModelEditMedPersonal(NavigationController controller) : base(controller)
         {
+            WidthOfBtn = 300;
 
+            VisibilityOfGoBAck = Visibility.Collapsed;
             base.HasNavigation = true;
             MessageBus.Default.Subscribe("GetMedForMedEdit", GetMedForMedEdit);
 

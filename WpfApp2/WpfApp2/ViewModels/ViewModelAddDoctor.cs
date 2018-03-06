@@ -77,6 +77,11 @@ namespace WpfApp2.ViewModels
         //        CurrentSpecPanelViewModel.PanelOpened = true;
         //    }
         //}
+        private int _widthOfBtn;
+        public int WidthOfBtn { get { return _widthOfBtn; } set { _widthOfBtn = value; OnPropertyChanged(); } }
+
+        private Visibility _visibilityOfGoBAck;
+        public Visibility VisibilityOfGoBAck { get { return _visibilityOfGoBAck; } set { _visibilityOfGoBAck = value; OnPropertyChanged(); } }
 
         #endregion
 
@@ -140,6 +145,126 @@ namespace WpfApp2.ViewModels
         public Brush TextBoxPatronimicB { get { return _textBox_Patronimic_B; } set { _textBox_Patronimic_B = value; OnPropertyChanged(); } }
         #endregion
         #region MessageBus
+        private void RefreshDataForDoctorsForEditUser(object sender, object data)
+        {
+
+            using (var context = new MySqlContext())
+            {
+                Name = "";
+
+                Surname = "";
+
+                Patronimic = "";
+                Aditional = "";
+                СategoryTypeSelectedText = "";
+                Category = new ObservableCollection<СategoryType>();
+                Specializations = new ObservableCollection<SpecDataSours>();
+                Scintifics = new ObservableCollection<SpecDataSours>();
+                СategoryTypeRepository ctRep = new СategoryTypeRepository(context);
+                SpecializationTypeRepository spRep = new SpecializationTypeRepository(context);
+                ScientificTitleTypeRepository scRep = new ScientificTitleTypeRepository(context);
+
+                foreach (var category in ctRep.GetAll)
+                {
+                    Category.Add(category);
+                }
+
+                foreach (var spec in spRep.GetAll)
+                {
+                    Specializations.Add(new SpecDataSours(spec.Str, spec.id_специлизации));
+                }
+
+                foreach (var title in scRep.GetAll)
+                {
+                    Scintifics.Add(new SpecDataSours(title.Str, title.Id));
+                }
+                CategorySelectedId = 0;
+                СategoryTypeSelected = Category[CategorySelectedId];
+                GoToDoctorListCommand = new DelegateCommand(
+   () =>
+   {
+
+
+       Controller.NavigateTo<ViewModelEditUser>();
+
+
+   }
+);
+                SaveAndGoDoctorListCommand = new DelegateCommand(
+               () =>
+               {
+                   if (TestRequiredFields())
+                   {
+                       currentDoctor = new Doctor();
+                       bool test = true;
+                       foreach (var Category in Data.СategoryType.GetAll)
+                       {
+                           if (Category.Str == СategoryTypeSelectedText)
+                           {
+                               test = false;
+                               currentDoctor.категория = Category.Id;
+                               break;
+                           }
+                       }
+                       if (test)
+                       {
+                           СategoryType newСategory = new СategoryType();
+                           newСategory.Str = СategoryTypeSelectedText;
+                           Data.СategoryType.Add(newСategory);
+                           Data.Complete();
+                           currentDoctor.категория = newСategory.Id;
+                       }
+
+                       currentDoctor.Name = Name;
+                       currentDoctor.Sirname = Surname;
+                       currentDoctor.Patronimic = Patronimic;
+                       currentDoctor.Aditional = Aditional;
+                       currentDoctor.isEnabled = true;
+
+                       Data.Doctor.Add(currentDoctor);
+                       Data.Complete();
+                       foreach (var spec in Specializations)
+                       {
+                           if (spec.IsChecked == true)
+                           {
+                               DoctorsSpecializations DoctorSpec = new DoctorsSpecializations();
+                               DoctorSpec.id_врача = currentDoctor.Id;
+                               DoctorSpec.id_специлизации = spec.id;
+                               Data.DoctorsSpecializations.Add(DoctorSpec);
+                               Data.Complete();
+
+                           }
+
+                       }
+                       Data.Complete();
+                       foreach (var Tytle in Scintifics)
+                       {
+                           if (Tytle.IsChecked == true)
+                           {
+                               ScientificTitles DoctorTitle = new ScientificTitles();
+                               DoctorTitle.id_врача = currentDoctor.Id;
+                               DoctorTitle.id_звания = Tytle.id;
+                               Data.ScientificTitles.Add(DoctorTitle);
+
+                           }
+
+                       }
+                       Data.Complete();
+                       //  MessageBus.Default.Call("OpenDoctors", this, "");
+                       MessageBus.Default.Call("UpdateAccsEmptyForNewUserForAddNewMed", currentDoctor.Id, null);
+                       Controller.NavigateTo<ViewModelEditUser>();
+                   }
+                   else
+                   {
+
+                       MessageBox.Show("Не все поля заполнены");
+                   }
+
+               }
+           );
+                //СategoryTypeSelectedText = СategoryTypeSelected.Str;
+            }
+        }
         private void RefreshDataForDoctorsForAddUser(object sender, object data)
         {
 
@@ -432,7 +557,8 @@ namespace WpfApp2.ViewModels
         #endregion
         public ViewModelAddDoctor(NavigationController controller) : base(controller)
         {
-
+            WidthOfBtn = 200;
+            VisibilityOfGoBAck = Visibility.Visible;
 
             CurrentSpecPanelViewModel = new SpecPanelViewModel(this);
             OpenAddSpecCommand = new DelegateCommand(() =>
@@ -546,7 +672,11 @@ namespace WpfApp2.ViewModels
                 buf.IsDropDownOpen = true;
 
             }
-            ); MessageBus.Default.Subscribe("RefreshDataForNewDoctorsForAddUser", RefreshDataForDoctorsForAddUser);
+            );
+
+            
+            MessageBus.Default.Subscribe("RefreshDataForDoctorsForEditUser", RefreshDataForDoctorsForEditUser);
+            MessageBus.Default.Subscribe("RefreshDataForNewDoctorsForAddUser", RefreshDataForDoctorsForAddUser);
             MessageBus.Default.Subscribe("RefreshDataForNewDoctors", RefreshDataForDoctors);
             //Date = DateTime.Now;
             base.HasNavigation = true;

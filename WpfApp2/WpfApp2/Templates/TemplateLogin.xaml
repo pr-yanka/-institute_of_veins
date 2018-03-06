@@ -1,9 +1,16 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:WpfApp2.Templates"
+                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                     >
     <DataTemplate  x:Key="TemplateLogin">
         <Grid>
+            <Grid.InputBindings>
+                <KeyBinding 
+            Key="Enter" 
+            Command="{Binding ToDashboardCommand}" 
+            CommandParameter="{Binding ElementName=passwordBox1}" />
+            </Grid.InputBindings>
             <Border BorderThickness="1" HorizontalAlignment="Left" Height="404" Margin="320,92,0,0" VerticalAlignment="Top" Width="453" Background="#FFB0E8EE"></Border>
             <StackPanel Orientation="Vertical" Margin="320,100,251,236">
                 <TextBlock Margin="0,10,0,10" Height="49" HorizontalAlignment="Center" Width="454" x:Name="textBlockHeading" VerticalAlignment="Top" FontSize="18" Padding="5" RenderTransformOrigin="1.955,1.44" Foreground="#FBFF4545" TextDecorations="{x:Null}" LineHeight="6" TextAlignment="Center" Text="ДОБРО ПОЖАЛОВАТЬ В ИНСТИТУТ ВЕН!"/>
