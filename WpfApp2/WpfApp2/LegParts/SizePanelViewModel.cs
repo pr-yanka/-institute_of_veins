@@ -53,7 +53,13 @@ namespace WpfApp2.LegParts
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             //если PropertyChanged не нулевое - оно будет разбужено
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            try
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+            catch
+            {
+            }
         }
 
         public bool PanelOpened
@@ -77,7 +83,7 @@ namespace WpfApp2.LegParts
         private bool TrueTestDoubleSize;
         public SizePanelViewModel(ViewModelBase parentVM) : base(parentVM.Controller)
         {
-
+          //  SelectedMetricText = "";
 
             ClickOnAutoComplete = new DelegateCommand<object>(
              (sender) =>
@@ -86,13 +92,15 @@ namespace WpfApp2.LegParts
                  {
                      if (sender != null)
                      {
+                         //Dimentions = new ObservableCollection<Metrics>(Data.Metrics.GetAll);
                          AutoCompleteBox buf = (AutoCompleteBox)sender;
                          if (!buf.IsDropDownOpen)
                              buf.IsDropDownOpen = true;
                      }
                  }
-                 catch {
-
+                 catch(Exception ex)
+                 {
+                   
                  }
              }
          );

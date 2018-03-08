@@ -242,13 +242,13 @@ namespace WpfApp2.ViewModels
                         if (CurrentPatient.Gender.ToLower() == "м")
                         {
                             document.ReplaceText("«ась»", "ся");
-                            document.ReplaceText("«ки» ", "a");
+                            document.ReplaceText("«ки» ", "a ");
                         }
                         else
                         {
                             document.ReplaceText("«ась»", "ась");
 
-                            document.ReplaceText("«ки» ", "ки");
+                            document.ReplaceText("«ки» ", "ки ");
 
                         }
                         char[] chararr = CurrentPatient.Age.ToString().ToCharArray();

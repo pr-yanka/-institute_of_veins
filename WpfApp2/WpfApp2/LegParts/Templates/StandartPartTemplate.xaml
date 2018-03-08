@@ -47,7 +47,7 @@
                 </DockPanel>
                 <DockPanel Width="Auto" LastChildFill="True" Margin="0,5,0,5">
                     <TextBlock  Margin="0,5,0,5" TextWrapping="Wrap" x:Name="inches1Text_Copy1" Text="{Binding Path=SelectedValue.Text1}" Visibility="{Binding Path=HasFirstPart, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left"  VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
-                    <TextBox  Margin="0,5,0,5" x:Name="size1Box" Text="{Binding Path = CurrentEntry.Size, Converter={StaticResource FloatConvert}}" Visibility="{Binding Path = SelectedValue.HasSize,UpdateSourceTrigger=PropertyChanged, FallbackValue=Hidden, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="30">
+                    <TextBox  Margin="10,5,0,5" x:Name="size1Box" Text="{Binding Path = CurrentEntry.Size, Converter={StaticResource FloatConvert}}" Visibility="{Binding Path = SelectedValue.HasSize,UpdateSourceTrigger=PropertyChanged, FallbackValue=Hidden, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="30">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PreviewMouseDown">
                                 <i:InvokeCommandAction  Command="{Binding Path=ClickOnWeight}" CommandParameter="{Binding ElementName=size1Box}" />
@@ -58,8 +58,8 @@
                         </i:Interaction.Triggers>
                     </TextBox>
                     <!--for 1*1 size-->
-                    <Label  Margin="0,5,0,5" x:Name="inches2Text_Copy" Content="*" Visibility="{Binding Path = HasDoubleSize, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
-                    <TextBox  Margin="0,5,0,5" x:Name="size2Box" Text="{Binding Path = CurrentEntry.Size2, Converter={StaticResource FloatConvert}}" Visibility="{Binding Path = HasDoubleSize, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="30">
+                    <Label  Margin="5,5,0,5" x:Name="inches2Text_Copy" Content="*" Visibility="{Binding Path = HasDoubleSize, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
+                    <TextBox  Margin="10,5,0,5" x:Name="size2Box" Text="{Binding Path = CurrentEntry.Size2, Converter={StaticResource FloatConvert}}" Visibility="{Binding Path = HasDoubleSize, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="30">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PreviewMouseDown">
                                 <i:InvokeCommandAction  Command="{Binding Path=ClickOnWeight}" CommandParameter="{Binding ElementName=size2Box}" />
