@@ -19,7 +19,13 @@ namespace WpfApp2.Db.Models
 {
     public class MySqlContext : DbContext
     {
-       
+
+      
+
+        public DbSet<BloodExchangeComment> BloodExchangeComment { get; set; }
+        public DbSet<PreparateHateComment> PreparateHateComment { get; set; }
+
+
         public DbSet<OperationTypeOperations> OperationTypeOperations { get; set; }
         public DbSet<OperationForAmbulatornCard> OperationForAmbulatornCard { get; set; }
         public DbSet<OperationForAmbulatornCardPatients> OperationForAmbulatornCardPatients { get; set; }

@@ -202,6 +202,8 @@
     <Compile Include="Controls\AddReport.xaml.cs">
       <DependentUpon>AddReport.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Db\Models\PreparateHateCommentRepository.cs" />
+    <Compile Include="Db\Models\BloodExchangeCommentRepository.cs" />
     <Compile Include="Db\Models\OperationTypeOperationsRepository.cs" />
     <Compile Include="Db\Models\OperationForAmbulatornCardPatientsRepository.cs" />
     <Compile Include="Db\Models\AlergicAnevrizmPatientsRepository.cs" />

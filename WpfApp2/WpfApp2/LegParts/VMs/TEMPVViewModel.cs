@@ -237,6 +237,28 @@ namespace WpfApp2.LegParts.VMs
             }
             MessageBus.Default.Call("LegDataSaved", this, this.GetType());
 
+            FF_lengthSave = FF_length;
+            SelectedWayTypeSave = SelectedWayType;
+            LegSectionsSaved = new List<LegSectionViewModel>();
+            for (int i = 0; i < LevelCount; i++)
+            {
+                if (i != 0)
+                    LegSectionsSaved.Add(new TEMPVSectionViewModel(Controller, _sections[i - 1], i + 1));
+                else
+                    LegSectionsSaved.Add(new TEMPVSectionViewModel(Controller, null, i + 1));
+            }
+
+            for (int i = 0; i < LegSections.Count; i++)
+            {
+
+                LegSectionsSaved[i].Comment = LegSections[i].Comment;
+                LegSectionsSaved[i].Size = LegSections[i].Size;
+                LegSectionsSaved[i].Size2 = LegSections[i].Size2;
+                LegSectionsSaved[i].Text1 = LegSections[i].Text1;
+                LegSectionsSaved[i].Text2 = LegSections[i].Text2;
+                LegSectionsSaved[i].SelectedValue = LegSections[i].SelectedValue;
+                LegSectionsSaved[i].CurrentEntry = LegSections[i].CurrentEntry;
+            }
         }
 
         private ObservableCollection<LegSectionViewModel> _sections;
@@ -290,6 +312,11 @@ namespace WpfApp2.LegParts.VMs
                           //{
                           //    test = false;
                           //}
+                      }
+                      if((SelectedWayType != null && FF_length == 0 ) || (FF_length != 0 && SelectedWayType == null) )
+                      {
+                          test = false;
+                          MessageBox.Show("Введите ход и протяжность");
                       }
                       if (test)
                       {

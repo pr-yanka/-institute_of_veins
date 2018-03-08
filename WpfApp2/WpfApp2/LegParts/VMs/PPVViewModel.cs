@@ -84,6 +84,30 @@ namespace WpfApp2.LegParts.VMs
 
             }
             MessageBus.Default.Call("LegDataSaved", this, this.GetType());
+
+
+            FF_lengthSave = FF_length;
+            SelectedWayTypeSave = SelectedWayType;
+            LegSectionsSaved = new List<LegSectionViewModel>();
+            for (int i = 0; i < LevelCount; i++)
+            {
+                if (i != 0)
+                    LegSectionsSaved.Add(new PPVSectionViewModel(Controller, _sections[i - 1], i + 1));
+                else
+                    LegSectionsSaved.Add(new PPVSectionViewModel(Controller, null, i + 1));
+            }
+
+            for (int i = 0; i < LegSections.Count; i++)
+            {
+
+                LegSectionsSaved[i].Comment = LegSections[i].Comment;
+                LegSectionsSaved[i].Size = LegSections[i].Size;
+                LegSectionsSaved[i].Size2 = LegSections[i].Size2;
+                LegSectionsSaved[i].Text1 = LegSections[i].Text1;
+                LegSectionsSaved[i].Text2 = LegSections[i].Text2;
+                LegSectionsSaved[i].SelectedValue = LegSections[i].SelectedValue;
+                LegSectionsSaved[i].CurrentEntry = LegSections[i].CurrentEntry;
+            }
         }
         private void Rebuild(object sender, object data)
         {

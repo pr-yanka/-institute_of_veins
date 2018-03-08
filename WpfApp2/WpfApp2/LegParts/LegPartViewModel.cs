@@ -31,8 +31,10 @@ namespace WpfApp2.LegParts
         public string Comment { get; set; }
 
         public da_Way SelectedWayType { get; set; }
+        public da_Way SelectedWayTypeSave { get; set; }
 
 
+        public float FF_lengthSave;
         private float _fF_length;
         public float FF_length { get { return _fF_length; } set { _fF_length = value; OnPropertyChanged(); } }
 
@@ -183,7 +185,7 @@ namespace WpfApp2.LegParts
 
         //public virtual ObservableCollection<LegSectionViewModel> LegSections { get; set; }
         public virtual ObservableCollection<LegSectionViewModel> LegSections { get; set; }
-
+        public virtual List<LegSectionViewModel> LegSectionsSaved { get; set; }
         public DelegateCommand RevertCommand { set; get; }
         public DelegateCommand SaveCommand { set; get; }
 
@@ -298,21 +300,29 @@ namespace WpfApp2.LegParts
             }
 
             bool test = false;
-            if (CurrentPanelViewModel.Text1 != structure.Text1)
+            if (  (CurrentPanelViewModel.Text1 != structure.Text1))
             {
-                test = true;
+                if (structure.Text1 == null && CurrentPanelViewModel.Text1 == "" || structure.Text1 == "" && CurrentPanelViewModel.Text1 == null) { }
+                    else {
+                    test = true;
+                }
             }
 
 
-            if (CurrentPanelViewModel.Text2 != structure.Text2)
+            if ( (CurrentPanelViewModel.Text2 != structure.Text2) )
             {
-                test = true;
+                if (structure.Text2 == null && CurrentPanelViewModel.Text2 == "" || structure.Text2 == "" && CurrentPanelViewModel.Text2 == null) { }
+                else
+                {
+                    test = true;
+                }
+           
             }
 
             if (CurrentPanelViewModel.HasSize != structure.HasSize)
             {
                 test = true;
-           
+
             }
             if (structure.Metrics != CurrentPanelViewModel.SelectedMetricText && CurrentPanelViewModel.HasSize == true)
             {
@@ -791,7 +801,20 @@ namespace WpfApp2.LegParts
             RevertCommand = new DelegateCommand(
                 () =>
                 {
+                    FF_length = FF_lengthSave;
+                    SelectedWayType = SelectedWayTypeSave;
+                    for (int i = 0; i < LegSections.Count; i++)
+                    {
+                        LegSections[i].Comment = LegSectionsSaved[i].Comment;
+                        LegSections[i].Size = LegSectionsSaved[i].Size;
+                        LegSections[i].Size2 = LegSectionsSaved[i].Size2;
+                        LegSections[i].Text1 = LegSectionsSaved[i].Text1;
+                        LegSections[i].Text2 = LegSectionsSaved[i].Text2;
+                        LegSections[i].SelectedValue = LegSectionsSaved[i].SelectedValue;
+                        LegSections[i].CurrentEntry = LegSectionsSaved[i].CurrentEntry;
+                    }
                     // IsEmpty = false;
+                    MessageBus.Default.Call("SetAllDefaultForCreateObsled", null, null);
                     Controller.NavigateTo<ViewModelAddPhysical>();
                 }
             );

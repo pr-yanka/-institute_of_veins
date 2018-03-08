@@ -3040,6 +3040,10 @@ namespace WpfApp2.ViewModels
             MessageBus.Default.Subscribe("SetRecomendationsList", SetRecomendationsList);
             MessageBus.Default.Subscribe("SetDiagnosisList", SetDiagnosisList);
             MessageBus.Default.Subscribe("SetComplainsList", SetComplainsList);
+
+
+            MessageBus.Default.Subscribe("SetAllDefaultForCreateObsled", SetAllDefault);
+            
             TextTip = "Текст пометки";
             Controller = controller;
             base.HasNavigation = false;
@@ -8394,9 +8398,10 @@ namespace WpfApp2.ViewModels
             SetAllBordersDefault();
         }
 
-
-
-
+        private void SetAllDefault(object sender, object data)
+        {
+            SetAllBordersDefault();
+        }
         int obsid;
         private void GetObsForOverview(object sender, object data)
         {

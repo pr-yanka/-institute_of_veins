@@ -191,9 +191,16 @@ namespace WpfApp2.Db.Models
         public RecomendationsTypeRepository RecomendationsTypes { get; }
         public DiagnosisTypeRepository DiagnosisTypes { get; }
 
+
+
+        public PreparateHateCommentRepository PreparateHateComment { get; }
+        public BloodExchangeCommentRepository BloodExchangeComment { get; }
+
         public UnitOfWork(MySqlContext context)
         {
             _context = context;
+            PreparateHateComment = new PreparateHateCommentRepository(_context);
+            BloodExchangeComment = new BloodExchangeCommentRepository(_context);
             OperationTypeOperations = new OperationTypeOperationsRepository(_context);
             OperationForAmbulatornCard = new OperationForAmbulatornCardRepository(_context);
             OperationForAmbulatornCardPatients = new OperationForAmbulatornCardPatientsRepository(_context);

@@ -18,6 +18,9 @@ namespace WpfApp2.ViewModels
 {
     public class BloodExchangeListDataSource : INotifyPropertyChanged
     {
+        private IEnumerable<String> _districtList;
+        public IEnumerable<String> BloodExchangeCommentList { get { return _districtList; } set { _districtList = value; OnPropertyChanged(); } }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -28,7 +31,7 @@ namespace WpfApp2.ViewModels
 
         public BloodExchange Data { get; set; }
         public string Commentary { set { _str = value; MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null); } get { return _str; } }
-    
+
         private string _str;
 
         private bool? _isChecked;
@@ -44,6 +47,7 @@ namespace WpfApp2.ViewModels
         }
         public BloodExchangeListDataSource(BloodExchange Recomendations, DelegateCommand DeleteThis)
         {
+            
             DeleteCommand = DeleteThis;
             this.Data = Recomendations;
             IsChecked = false;
@@ -94,13 +98,11 @@ namespace WpfApp2.ViewModels
         }
 
         private IEnumerable<String> _districtList;
-        private IEnumerable<String> _streetList;
-        private IEnumerable<String> _townsList;
-        public IEnumerable<String> TownsList { get { return _townsList; } set { _townsList = value; OnPropertyChanged(); } }
-        public IEnumerable<String> DistrictList { get { return _districtList; } set { _districtList = value; OnPropertyChanged(); } }
-        public IEnumerable<String> RegionList { get; set; }
-        public IEnumerable<String> StreetList { get { return _streetList; } set { _streetList = value; OnPropertyChanged(); } }
+        public IEnumerable<String> BloodExchangeCommentList { get { return _districtList; } set { _districtList = value; OnPropertyChanged(); } }
 
+        private IEnumerable<String> _townsList;
+        public IEnumerable<String> PreparateHateCommentList { get { return _townsList; } set { _townsList = value; OnPropertyChanged(); } }
+        
         private Patient currentPatient;
         private Visibility _visibility;
         public Visibility Visibility { get { return _visibility; } set { _visibility = value; OnPropertyChanged(); } }
@@ -121,10 +123,10 @@ namespace WpfApp2.ViewModels
         private CollectionViewSource _operationForAmbCard;
 
 
-        public CollectionViewSource BloodExchangeList   { get { return _bloodExchangeList; } set { _bloodExchangeList = value; OnPropertyChanged(); NameOfButton = "Сохранить"; } }
-        public CollectionViewSource PreparateHateList   { get { return _preparateHateList; } set { _preparateHateList = value; OnPropertyChanged(); NameOfButton = "Сохранить"; } }
+        public CollectionViewSource BloodExchangeList { get { return _bloodExchangeList; } set { _bloodExchangeList = value; OnPropertyChanged(); NameOfButton = "Сохранить"; } }
+        public CollectionViewSource PreparateHateList { get { return _preparateHateList; } set { _preparateHateList = value; OnPropertyChanged(); NameOfButton = "Сохранить"; } }
         public CollectionViewSource AlergicAnevrizmList { get { return _alergicAnevrizmList; } set { _alergicAnevrizmList = value; OnPropertyChanged(); NameOfButton = "Сохранить"; } }
-        public CollectionViewSource HirurgInteruptList   { get { return _hirurgInteruptList; } set { _hirurgInteruptList = value; OnPropertyChanged(); NameOfButton = "Сохранить"; } }
+        public CollectionViewSource HirurgInteruptList { get { return _hirurgInteruptList; } set { _hirurgInteruptList = value; OnPropertyChanged(); NameOfButton = "Сохранить"; } }
         public DelegateCommand ToSetOprerationForAmbCardListCommand { get; set; }
         public CollectionViewSource OperationForAmbCard { get { return _operationForAmbCard; } set { _operationForAmbCard = value; OnPropertyChanged(); NameOfButton = "Сохранить"; } }
 
@@ -202,7 +204,7 @@ namespace WpfApp2.ViewModels
             set
             {
                 _bloodGroup = value;
-          
+
                 OnPropertyChanged();
             }
         }
@@ -224,7 +226,7 @@ namespace WpfApp2.ViewModels
             set
             {
                 _isPositiveGroupType = value;
-               
+
                 OnPropertyChanged();
             }
         }
@@ -302,7 +304,7 @@ namespace WpfApp2.ViewModels
         }
         private void SetHirurgInteruptListList(object sender, object data)
         {
-            HirurgInteruptBuf =   (ObservableCollection<HirurgInterruptDataSource>)data;
+            HirurgInteruptBuf = (ObservableCollection<HirurgInterruptDataSource>)data;
             foreach (var x in HirurgInteruptBuf)
             {
                 DelegateCommand DelThis = new DelegateCommand(() =>
@@ -326,7 +328,7 @@ namespace WpfApp2.ViewModels
         }
         private void SetOprerationForAmbCardList(object sender, object data)
         {
-            OperationForAmbulatornCardBuf =  (ObservableCollection<OperationForAmbullatorCardDataSource>)data;
+            OperationForAmbulatornCardBuf = (ObservableCollection<OperationForAmbullatorCardDataSource>)data;
             foreach (var x in OperationForAmbulatornCardBuf)
             {
                 DelegateCommand DelThis = new DelegateCommand(() =>
@@ -350,12 +352,26 @@ namespace WpfApp2.ViewModels
             OperationForAmbCard.View.Refresh();
         }
 
+
+
+
         public DelegateCommand<object> ClickOnAutoComplete { get; set; }
-       
+
         List<BloodExchangeListDataSource> BloodExchangeBuf;
         private void SetCurrentPatientID(object sender, object data)
         {
+            List<String> buff1 = new List<string>();
+            foreach (var x in Data.BloodExchangeComment.GetAll)
+                buff1.Add(x.Str);
 
+            List<String> buff2 = new List<string>();
+            foreach (var x in Data.PreparateHateComment.GetAll)
+                buff2.Add(x.Str);
+
+
+            PreparateHateCommentList = buff2;
+            // BloodExchangeComment
+            BloodExchangeCommentList = buff1; //PreparateHateComment
             MessageBus.Default.Call("SetClearOprerationForAmbCardList", null, null);
             MessageBus.Default.Call("SetClearPreparateHateList", null, null);
             MessageBus.Default.Call("SetClearHirurgInterruptList", null, null);
@@ -528,6 +544,7 @@ namespace WpfApp2.ViewModels
 
                         });
                         var z = new BloodExchangeListDataSource(BloodExchangeRep.Get(x.id_переливания), DelThis);
+                        z.BloodExchangeCommentList = BloodExchangeCommentList;
                         z.Commentary = x.Комментарий;
                         z.IsChecked = true;
                         BloodExchange.Add(z);
@@ -629,7 +646,7 @@ namespace WpfApp2.ViewModels
                 }
             }
             NameOfButton = "Вернуться";
-       //     Controller.NavigateTo<ViewModelAdditionalInfoPatient>();
+            //     Controller.NavigateTo<ViewModelAdditionalInfoPatient>();
             NameOfButton = "Вернуться";
         }
 
@@ -637,7 +654,7 @@ namespace WpfApp2.ViewModels
         {
 
             BloodExchange = new ObservableCollection<BloodExchangeListDataSource>();
-            
+
             MessageBus.Default.Subscribe("SetnameOfButtonForAmbCard", SetDNameToSave);
             MessageBus.Default.Subscribe("SetCurrentPatientIDForAmbCard", SetCurrentPatientID);
             MessageBus.Default.Subscribe("SetOprerationForAmbCardList", SetOprerationForAmbCardList);
@@ -705,8 +722,8 @@ namespace WpfApp2.ViewModels
             OperationForAmbCard.Source = OperationForAmbulatornCardBuf;
             //    MessageBus.Default.Subscribe("UpdateDictionariesOfLocationForNewPatient", GetDictionary);
             BloodExchangeList.Source = BloodExchange;
-           
-       
+
+
 
             CurrentPanelViewModel = new BloodExchangePanelViewModel(this);
             OpenCommand = new DelegateCommand(() =>
@@ -778,6 +795,9 @@ namespace WpfApp2.ViewModels
                 () =>
                 {
 
+                    
+
+
                     bool test = false;
                     CurrentPatient = Data.Patients.Get(CurrentPatient.Id);
                     CurrentPatient.Sugar = Sugar;
@@ -846,12 +866,45 @@ namespace WpfApp2.ViewModels
                                             newRec.id_пациента = CurrentPatient.Id;
                                             newRec.id_переливания = buff.Id;
                                             newRec.Комментарий = rec.Commentary;
+
+                                            bool xtest = false;
+                                            foreach(var x in BloodExchangeCommentList)
+                                            {
+                                                if(x == rec.Commentary)
+                                                {
+                                                    xtest = true;
+                                                    break;
+                                                }
+                                            }
+                                            if(!xtest)
+                                            {
+                                                var bff = new BloodExchangeComment();
+                                                bff.Str = rec.Commentary;
+                                                Data.BloodExchangeComment.Add(bff);
+                                                Data.Complete();
+                                            }
+
                                             Data.BloodExchangePatients.Add(newRec);
                                             Data.Complete();
                                         }
                                         else
                                         {
-
+                                            bool xtest = false;
+                                            foreach (var x in BloodExchangeCommentList)
+                                            {
+                                                if (x == rec.Commentary)
+                                                {
+                                                    xtest = true;
+                                                    break;
+                                                }
+                                            }
+                                            if (!xtest)
+                                            {
+                                                var bff = new BloodExchangeComment();
+                                                bff.Str = rec.Commentary;
+                                                Data.BloodExchangeComment.Add(bff);
+                                                Data.Complete();
+                                            }
                                             rcOp.Комментарий = rec.Commentary;
                                         }
                                         Data.Complete();
@@ -867,6 +920,7 @@ namespace WpfApp2.ViewModels
                                     newRec.Комментарий = rec.Commentary;
                                     Data.BloodExchangePatients.Add(newRec);
                                     Data.Complete();
+                                    
                                 }
                             }
                         }
@@ -970,8 +1024,8 @@ namespace WpfApp2.ViewModels
                                         Data.AlergicAnevrizmPatients.Add(newRec);
                                         Data.Complete();
                                     }
-                                 
-                                    
+
+
                                 }
                             }
                         }
@@ -1041,14 +1095,48 @@ namespace WpfApp2.ViewModels
                                             newRec.Комментарий = rec.Commentary;
                                             Data.PreparateHatePatients.Add(newRec);
                                             Data.Complete();
+
+                                            bool xtest = false;
+                                            foreach (var x in PreparateHateCommentList)
+                                            {
+                                                if (x == rec.Commentary)
+                                                {
+                                                    xtest = true;
+                                                    break;
+                                                }
+                                            }
+                                            if (!xtest)
+                                            {
+                                                var bff = new PreparateHateComment();
+                                                bff.Str = rec.Commentary;
+                                                Data.PreparateHateComment.Add(bff);
+                                                Data.Complete();
+                                            }
                                         }
                                         else
                                         {
 
                                             rcOp.Комментарий = rec.Commentary;
+                                            bool xtest = false;
+                                            foreach (var x in PreparateHateCommentList)
+                                            {
+                                                if (x == rec.Commentary)
+                                                {
+                                                    xtest = true;
+                                                    break;
+                                                }
+                                            }
+                                            if (!xtest)
+                                            {
+                                                var bff = new PreparateHateComment();
+                                                bff.Str = rec.Commentary;
+                                                Data.PreparateHateComment.Add(bff);
+                                                Data.Complete();
+                                            }
                                         }
 
                                         Data.Complete();
+
                                         test = false;
                                         break;
                                     }
@@ -1058,6 +1146,7 @@ namespace WpfApp2.ViewModels
                                     var newRec = new PreparateHatePatients();
                                     newRec.id_пациент = CurrentPatient.Id;
                                     newRec.Комментарий = rec.Commentary;
+
                                     var ToChange = Data.PreparateHate.Get(rec.Data.Id);
                                     if (ToChange.Str != rec.Data.Str)
                                     {
@@ -1083,10 +1172,10 @@ namespace WpfApp2.ViewModels
                                         Data.Complete();
                                     }
 
-                                 
 
 
-                                
+
+
                                 }
                             }
                         }
@@ -1190,9 +1279,9 @@ namespace WpfApp2.ViewModels
                                         Data.HirurgInterupPatients.Add(newRec);
                                         Data.Complete();
                                     }
-                                  
-                                 
-                                 
+
+
+
                                 }
                             }
                         }
@@ -1271,7 +1360,7 @@ namespace WpfApp2.ViewModels
                                     var newRec = new OperationForAmbulatornCardPatients();
                                     newRec.id_пациента = CurrentPatient.Id;
                                     var ToChange = Data.OperationForAmbulatornCard.Get(rec.Data.Id);
-                                    if(ToChange.Str != rec.Data.Str)
+                                    if (ToChange.Str != rec.Data.Str)
                                     {
                                         var buff = new OperationForAmbulatornCard();
                                         buff.Str = rec.Data.Str;
@@ -1284,13 +1373,14 @@ namespace WpfApp2.ViewModels
                                         Data.Complete();
 
                                     }
-                                    else { 
+                                    else
+                                    {
 
-                                 
-                                  
-                                    newRec.id_операции = rec.Data.Id;
-                                    Data.OperationForAmbulatornCardPatients.Add(newRec);
-                                    Data.Complete();
+
+
+                                        newRec.id_операции = rec.Data.Id;
+                                        Data.OperationForAmbulatornCardPatients.Add(newRec);
+                                        Data.Complete();
                                     }
                                 }
                             }

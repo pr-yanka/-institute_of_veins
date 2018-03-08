@@ -24,6 +24,8 @@ namespace WpfApp2.Db.Models
 {
     public interface IUnitOfWork : IDisposable
     {
+        PreparateHateCommentRepository PreparateHateComment { get; }
+        BloodExchangeCommentRepository   BloodExchangeComment { get; }
         OperationTypeOperationsRepository OperationTypeOperations { get; }
         OperationForAmbulatornCardRepository OperationForAmbulatornCard { get; }
         OperationForAmbulatornCardPatientsRepository OperationForAmbulatornCardPatients { get; }   AlergicAnevrizmRepository AlergicAnevrizm { get; }

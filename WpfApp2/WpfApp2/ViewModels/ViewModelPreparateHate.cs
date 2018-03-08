@@ -1,4 +1,5 @@
 ﻿using Microsoft.Practices.Prism.Commands;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -15,6 +16,9 @@ namespace WpfApp2.ViewModels
 {
     public class PreparateHateDataSource : INotifyPropertyChanged
     {
+        private IEnumerable<String> _townsList;
+        public IEnumerable<String> PreparateHateCommentList { get { return _townsList; } set { _townsList = value; OnPropertyChanged(); } }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -40,6 +44,17 @@ namespace WpfApp2.ViewModels
         }
         public PreparateHateDataSource(PreparateHate Recomendations)
         {
+            using (var context = new MySqlContext())
+            {
+                PreparateHateCommentRepository prpH = new PreparateHateCommentRepository(context);
+                List<string> buff2 = new List<string>();
+                foreach (var x in prpH.GetAll)
+                    buff2.Add(x.Str);
+
+
+                PreparateHateCommentList = buff2;
+            }
+             
             IsVisibleTotal = true;
             this.Data = Recomendations;
             IsChecked = false;

@@ -32,10 +32,15 @@
                             <TranslateTransform Y="10"/>
                         </TransformGroup>
                     </TextBlock.RenderTransform>
+                    
                 </TextBlock>
-                <TextBox  Margin="0,20" Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Height="26"  TextWrapping="Wrap"  Width="565" >
-                
-                </TextBox>
+                <StackPanel Margin="140,0"  Orientation="Horizontal"> <TextBlock  Margin="0,25" Text="Поиск по слову : "  Height="26"  TextWrapping="Wrap"  FontSize="18" Width="auto" >
+
+                </TextBlock>
+                <TextBox  Margin="0,20" Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Height="26"  TextWrapping="Wrap"  Width="565" >
+
+                    </TextBox>
+                </StackPanel>
                 <DataGrid MinHeight="500"  Margin="0,0" AutoGenerateColumns="False" ItemsSource="{Binding Path=Controller.CurrentViewModel.DataSourceList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn >
