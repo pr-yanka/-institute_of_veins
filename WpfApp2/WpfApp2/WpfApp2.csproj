@@ -202,6 +202,7 @@
     <Compile Include="Controls\AddReport.xaml.cs">
       <DependentUpon>AddReport.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Db\Models\OperationTypeOperationsRepository.cs" />
     <Compile Include="Db\Models\OperationForAmbulatornCardPatientsRepository.cs" />
     <Compile Include="Db\Models\AlergicAnevrizmPatientsRepository.cs" />
     <Compile Include="Db\Models\OperationForAmbulatornCardRepository.cs" />
@@ -387,6 +388,7 @@
     <Compile Include="ViewModels\ViewModelAddAnalize.cs" />
     <Compile Include="ViewModels\ViewModelAddEpicriz.cs" />
     <Compile Include="ViewModels\ViewModelCreateStatement.cs" />
+    <Compile Include="ViewModels\ViewModelOperationListForOperation.cs" />
     <Compile Include="ViewModels\ViewModelEditUser.cs" />
     <Compile Include="ViewModels\ViewModelEditMedPersonal.cs" />
     <Compile Include="ViewModels\ViewModelEditDoctor.cs" />

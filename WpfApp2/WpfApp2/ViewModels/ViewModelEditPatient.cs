@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-//using System.Drawing;
+//using System.Drawing;  5448217
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -16,6 +16,38 @@ using System.Windows.Controls;
 
 namespace WpfApp2.ViewModels
 {
+    public class StreetsForQuery
+    {
+       
+
+        public int id { set; get; }
+
+        public string название { set; get; }
+
+        public int Город { set; get; }
+   
+    }
+    public class CitiesForQuery
+    {
+
+      
+        public int id { set; get; }
+     
+        public string название { set; get; }
+      
+        public int Область { set; get; }
+    }
+    public class DistrictsForQuery
+    {
+       
+     
+        public int id { set; get; }
+     
+        public string название { set; get; }
+       
+        public int Город { set; get; }
+        
+    }
     public class ViewModelEditPatient : ViewModelBase, INotifyPropertyChanged
     {
         public DelegateCommand ToDashboardCommand { get; protected set; }
@@ -50,6 +82,7 @@ namespace WpfApp2.ViewModels
         public IEnumerable<String> DistrictList { get { return _districtList; } set { _districtList = value; OnPropertyChanged(); } }
         public IEnumerable<String> RegionList { get; set; }
         public IEnumerable<String> StreetList { get { return _streetList; } set { _streetList = value; OnPropertyChanged(); } }
+        public List<int> TownListID;
         int curTwnID = 0;
         public string Name
         {
@@ -154,6 +187,7 @@ namespace WpfApp2.ViewModels
 
         int curOblID = 0;
 
+
         private void GetTowns()
         {
             using (var context = new MySqlContext())
@@ -162,7 +196,7 @@ namespace WpfApp2.ViewModels
                 //DistrictsRepository distRep = new DistrictsRepository(context);
                 //StreetsRepository strtRep = new StreetsRepository(context);
 
-                CitiesRepository ctRep = new CitiesRepository(context);
+
                 RegionsRepository regRep = new RegionsRepository(context);
 
                 curOblID = 0;
@@ -176,19 +210,16 @@ namespace WpfApp2.ViewModels
 
                 if (curOblID != 0)
                 {
-                    List<string> TownListbuf = new List<string>();
 
-                    foreach (var Town in ctRep.GetAll)
-                    {
-                        if (Town.OblId == curOblID)
-                            TownListbuf.Add(Town.Str);
-                    }
-                    TownsList = TownListbuf;
+                    TownsList = context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_города where Область = " + curOblID).ToList();
+                    //  TownListID = context.Database.SqlQuery<int>("SELECT id FROM med_db.справочник_города where Область = " + curOblID).ToList();
+                    DistrictList = context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_районы where Город = " + curOblID).ToList();
+
                 }
                 else
                 {
-                    List<string> TownListbuf = new List<string>();
-                    TownsList = TownListbuf;
+                    DistrictList = new List<string>();
+                    TownsList = new List<string>();
                 }
                 Controller.NavigateTo<ViewModelEditPatient>();
             }
@@ -290,36 +321,20 @@ namespace WpfApp2.ViewModels
         {
             using (var context = new MySqlContext())
             {
-                DistrictsRepository distRep = new DistrictsRepository(context);
-                StreetsRepository strtRep = new StreetsRepository(context);
-
-
-                CitiesRepository ctRep = new CitiesRepository(context);
                 curTwnID = 0;
-                foreach (var Ton in ctRep.GetAll)
-                {
-                    if (Ton.Str == Town)
-                    {
-                        curTwnID = Ton.Id;
-                    }
-                }
+           
+
+                curTwnID = context.Database.SqlQuery<int>("SELECT id FROM med_db.справочник_города where название = '" + Town + "' and Область = " + curOblID).ToList().FirstOrDefault();
+
+                // context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_города where Область = ").ToList();
+
 
                 if (curTwnID != 0)
                 {
-                    List<string> DistrictListbuf = new List<string>();
-                    List<string> StreetListbuf = new List<string>();
-                    foreach (var Street in strtRep.GetAll)
-                    {
-                        if (Street.IdCity == curTwnID)
-                            StreetListbuf.Add(Street.Str);
-                    }
-                    foreach (var District in distRep.GetAll)
-                    {
-                        if (District.IdCity == curTwnID)
-                            DistrictListbuf.Add(District.Str);
-                    }
-                    StreetList = StreetListbuf;
-                    DistrictList = DistrictListbuf;
+                   
+                    StreetList = context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_улицы where Город = " + curTwnID).ToList();
+
+                    // DistrictList = DistrictListbuf;
                 }
                 else
                 {
@@ -330,6 +345,96 @@ namespace WpfApp2.ViewModels
                 }
                 Controller.NavigateTo<ViewModelEditPatient>();
             }
+        }
+        private void TestRequiredFieldsMessageBox()
+        {
+
+
+            if (Date.Day >= DateTime.Now.Day && Date.Month >= DateTime.Now.Month && Date.Year >= DateTime.Now.Year)
+            {
+                Date_B = Brushes.Red;
+                MessageBox.Show("Дата заполнена неправильно");
+
+            }
+
+            else if (String.IsNullOrWhiteSpace(Name))
+            {
+                TextBoxNameB = Brushes.Red;
+                MessageBox.Show("Имя не заполнено");
+
+            }
+            else if (String.IsNullOrWhiteSpace(Surname))
+            {
+                TextBoxSurnameB = Brushes.Red;
+                MessageBox.Show("Фамилия не заполнена");
+
+            }
+            else if (String.IsNullOrWhiteSpace(Patronimic))
+            {
+                TextBoxPatronimicB = Brushes.Red;
+
+                MessageBox.Show("Отчество не заполнено");
+            }
+            else if (String.IsNullOrWhiteSpace(Town))
+            {
+                TextBoxCityB = Brushes.Red;
+                MessageBox.Show("Город не заполнен");
+
+            }
+            else if (String.IsNullOrWhiteSpace(Street))
+            {
+                TextBoxStreetB = Brushes.Red;
+                MessageBox.Show("Улица не заполнена");
+
+            }
+            else if (String.IsNullOrWhiteSpace(House))
+            {
+                TextBoxHouseB = Brushes.Red;
+                MessageBox.Show("Дом не заполнен");
+
+            }
+            else if (String.IsNullOrWhiteSpace(Phone))
+            {
+                TextBoxPhoneB = Brushes.Red;
+
+                MessageBox.Show("Телефон не заполнена");
+            }
+            //if (String.IsNullOrWhiteSpace(District))
+            //{
+            //    TextBoxDistrictB = Brushes.Red;
+
+            //    result = false;
+            //}
+            else if (String.IsNullOrWhiteSpace(Region))
+            {
+                TextBoxRegionB = Brushes.Red;
+
+                MessageBox.Show("Область не заполнена");
+            }
+
+            else if (!String.IsNullOrWhiteSpace(email))
+            {
+                if (!mailTester.IsValidEmail(email))
+                {
+
+                    TextBoxEmailB = Brushes.Red;
+                    MessageBox.Show("Еmail заполнен неправильно");
+                }
+
+            }
+
+            //int flatBuffer = 0;
+            //if (!int.TryParse(CurrentPatientFlat, out flatBuffer))
+            //{
+            //    TextBoxFlatB = Brushes.Red;
+
+            //    result = false;
+            //}
+            //else
+            //{
+            //    CurrentPatient.Flat = flatBuffer;
+            //}
+
         }
         public void SetAllFieldsDefault()
         {
@@ -376,31 +481,6 @@ namespace WpfApp2.ViewModels
                 DistrictsRepository distRep = new DistrictsRepository(context);
                 StreetsRepository strtRep = new StreetsRepository(context);
 
-                List<string> TownsListbuf = new List<string>();
-                List<string> RegionListbuf = new List<string>();
-                List<string> DistrictListbuf = new List<string>();
-                List<string> StreetListbuf = new List<string>();
-                foreach (var Town in ctRep.GetAll)
-                {
-                    TownsListbuf.Add(Town.Str);
-                }
-                foreach (var Street in strtRep.GetAll)
-                {
-                    StreetListbuf.Add(Street.Str);
-                }
-                foreach (var Region in regRep.GetAll)
-                {
-                    RegionListbuf.Add(Region.Str);
-                }
-                foreach (var District in distRep.GetAll)
-                {
-                    DistrictListbuf.Add(District.Str);
-                }
-                DistrictList = DistrictListbuf;
-                RegionList = RegionListbuf;
-                StreetList = StreetListbuf;
-                TownsList = TownsListbuf;
-
 
                 Town = ctRep.Get(CurrentPatient.City).Str;
                 if (CurrentPatient.District != null)
@@ -409,6 +489,40 @@ namespace WpfApp2.ViewModels
                 }
                 Region = regRep.Get(CurrentPatient.Region).Str;
                 Street = strtRep.Get(CurrentPatient.Street).Str;
+
+                List<string> TownsListbuf = new List<string>();
+                List<string> RegionListbuf = new List<string>();
+                List<string> DistrictListbuf = new List<string>();
+                List<string> StreetListbuf = new List<string>();
+                //foreach (var Town in ctRep.GetAll)
+                //{
+                //    TownsListbuf.Add(Town.Str);
+                //}
+                //foreach (var Street in strtRep.GetAll)
+                //{
+                //    StreetListbuf.Add(Street.Str);
+                //}
+                foreach (var Region in regRep.GetAll)
+                {
+                    RegionListbuf.Add(Region.Str);
+                }
+                //foreach (var District in distRep.GetAll)
+                //{
+                //    DistrictListbuf.Add(District.Str);
+                //}
+                DistrictList = DistrictListbuf;
+                RegionList = RegionListbuf;
+                StreetList = StreetListbuf;
+                TownsList = TownsListbuf;
+
+
+                //Town = ctRep.Get(CurrentPatient.City).Str;
+                //if (CurrentPatient.District != null)
+                //{
+                //    District = distRep.Get(CurrentPatient.District.Value).Str;
+                //}
+            
+                //Street = strtRep.Get(CurrentPatient.Street).Str;
             }
             House = CurrentPatient.House;
             Phone = CurrentPatient.Phone;
@@ -527,10 +641,10 @@ namespace WpfApp2.ViewModels
                         {
 
                             CurrentPatient = Data.Patients.Get(CurrentPatient.Id);
-                            CitiesRepository ctRep = new CitiesRepository(context);
+                            //CitiesRepository ctRep = new CitiesRepository(context);
                             RegionsRepository regRep = new RegionsRepository(context);
-                            DistrictsRepository distRep = new DistrictsRepository(context);
-                            StreetsRepository strtRep = new StreetsRepository(context);
+                            //DistrictsRepository distRep = new DistrictsRepository(context);
+             //               StreetsRepository strtRep = new StreetsRepository(context);
                             CurrentPatient.Name = Name;
                             CurrentPatient.Sirname = Surname;
                             CurrentPatient.Patronimic = Patronimic;
@@ -554,16 +668,19 @@ namespace WpfApp2.ViewModels
                                 curOblID = bufRegions.Id;
                                 CurrentPatient.Region = bufRegions.Id;
                             }
+
                             isExist = false;
-                            foreach (var Town1 in ctRep.GetAll)
+
+                            foreach (var Town1 in context.Database.SqlQuery<CitiesForQuery>("SELECT * FROM med_db.справочник_города where Область = " + curOblID).ToList())
                             {
-                                if (Town1.Str == Town && Town1.OblId == curOblID)
+                                if (Town1.название == Town && Town1.Область == curOblID)
                                 {
                                     isExist = true;
-                                    CurrentPatient.City = Town1.Id;
+                                    CurrentPatient.City = Town1.id;
                                     break;
                                 }
                             }
+
                             if (isExist == false)
                             {
                                 Cities bufCity = new Cities();
@@ -575,12 +692,13 @@ namespace WpfApp2.ViewModels
                                 CurrentPatient.City = bufCity.Id;
                             }
                             isExist = false;
-                            foreach (var Street1 in strtRep.GetAll)
+                            //StreetsForQuery
+                            foreach (var Street1 in context.Database.SqlQuery<StreetsForQuery>("SELECT * FROM med_db.справочник_улицы where Город = " + curTwnID).ToList())
                             {
-                                if (Street1.Str == Street && Street1.IdCity == curTwnID)
+                                if (Street1.название == Street && Street1.Город == curTwnID)
                                 {
                                     isExist = true;
-                                    CurrentPatient.Street = Street1.Id;
+                                    CurrentPatient.Street = Street1.id;
                                     break;
                                 }
                             }
@@ -593,13 +711,14 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                                 CurrentPatient.Street = bufStreet.Id;
                             }
+                            //DistrictsForQuery
                             isExist = false;
-                            foreach (var District1 in distRep.GetAll)
+                            foreach (var District1 in context.Database.SqlQuery<DistrictsForQuery>("SELECT * FROM med_db.справочник_районы where Город = " + curOblID).ToList())
                             {
-                                if (District1.Str == District && District1.IdCity == curTwnID)
+                                if (District1.название == District && District1.Город == curOblID)
                                 {
                                     isExist = true;
-                                    CurrentPatient.District = District1.Id;
+                                    CurrentPatient.District = District1.id;
                                     break;
                                 }
                             }
@@ -607,7 +726,7 @@ namespace WpfApp2.ViewModels
                             {
                                 Districts bufDistricts = new Districts();
                                 bufDistricts.Str = District;
-                                bufDistricts.IdCity = curTwnID;
+                                bufDistricts.IdCity = curOblID;
                                 Data.Districts.Add(bufDistricts);
                                 Data.Complete();
                                 CurrentPatient.District = bufDistricts.Id;
@@ -616,8 +735,8 @@ namespace WpfApp2.ViewModels
                         }
 
 
-                        //  CurrentPatient.City = Town;
-                        // CurrentPatient.Street = Street;
+                        //CurrentPatient.City = Town;
+                        //CurrentPatient.Street = Street;
                         CurrentPatient.House = House;
                         CurrentPatient.Phone = Phone;
                         CurrentPatient.Email = email;
@@ -650,7 +769,7 @@ namespace WpfApp2.ViewModels
                     }
                     else
                     {
-                        MessageBox.Show("Не все поля заполнены");
+                        TestRequiredFieldsMessageBox();
                     }
                 }
             );

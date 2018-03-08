@@ -31,7 +31,49 @@ namespace WpfApp2.ViewModels
 
             Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
             Date = Operation.Date;
-            operationType = Data.OperationType.Get(Operation.OperationTypeId).LongName;
+
+            int i1 = 0;
+            int i2 = 0;
+            string leftP = "";
+            string rightP = "";
+            foreach (var Diagnosis in Data.OperationTypeOperations.GetAll)
+            {
+                if (Diagnosis.id_операции == Operation.Id)
+                {
+                    if (Diagnosis.isLeft == true)
+                    {
+                        if (i1 != 0)
+                            leftP += ", " + Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                        else
+                        {
+                            leftP += Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                        }
+                        i1++;
+                    }
+                    else
+                    {
+                        if (i2 != 0)
+                            rightP += ", " + Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                        else
+                        {
+                            rightP += Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                        }
+                        i2++;
+                    }
+                }
+            }
+            if (Operation.OnWhatLegOp == "0")
+            {
+                operationType = "На левую ногу :" + leftP;
+            }
+            if (Operation.OnWhatLegOp == "1")
+            {
+                operationType = "На правую ногу :" + rightP;
+            }
+            if (Operation.OnWhatLegOp == "2")
+            {
+                operationType = "На левую ногу :" + leftP + " " + "На правую ногу :" + rightP;
+            }
             TextResultCancle = "Итоги операции";
             DateText = "Операция проведена :";
             OtmenOrProv = "Проведённая ";
@@ -45,7 +87,7 @@ namespace WpfApp2.ViewModels
             ToOperationCommand = new DelegateCommand(
                 () =>
                 {
-                    
+
 
                     var result = MessageBox.Show("Назначить ещё одну операцию", "", MessageBoxButton.YesNo);
                     if (result == System.Windows.MessageBoxResult.Yes)

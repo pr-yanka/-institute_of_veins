@@ -20,6 +20,9 @@ namespace WpfApp2.Db.Models
         public string ShortName { set; get; }
         [Column("длинное_название")]
         public string LongName { set; get; }
+       
+        [NotMapped]
+        public string Str { get { return ToString(); } }
         public override string ToString()
         {
             if (string.IsNullOrWhiteSpace(ShortName))

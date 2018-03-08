@@ -11,78 +11,91 @@
                   Width="300" />
             <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copfy1"  Command="{Binding Path=ToCreateEpicrizCommand}" Visibility="{Binding Path=VisiBIlityOfAddCancle}" Content="Предоперационный эпикриз" HorizontalAlignment="Left" Margin="693,558,0,0" VerticalAlignment="Top"  
                   Width="300"/>
-            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="20,167,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top" FontSize="18" Height="44" Width="357"><Run Text="Тип операции"/><Run Text=":"/> <TextBlock Text="{Binding Path=OprTypeSelected}"></TextBlock></TextBlock>
-            <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="20,130,0,0" TextWrapping="Wrap"  
+            <TextBlock Visibility="{Binding IsLeftLegInOperation}" x:Name="textBlock" HorizontalAlignment="Left" Margin="1,167,0,0" TextWrapping="Wrap"  
+                       VerticalAlignment="Top"  FontSize="16" Height="44" Width="357"><Run  FontSize="16"  Text="Операции слева"/><Run Text=":"/> <TextBlock Text="{Binding Path=OprTypeSelected}"></TextBlock></TextBlock>
+            <TextBlock x:Name="tвextBlock" HorizontalAlignment="Left" Margin="184,167,0,0" TextWrapping="Wrap"  
+                  Visibility="{Binding IsRightLegInOperation}"      VerticalAlignment="Top"  FontSize="16" Height="44" Width="357"><Run  FontSize="16" Text="Операции справа"/><Run Text=":"/> <TextBlock Text="{Binding Path=OprTypeSelected}"></TextBlock></TextBlock>
+
+            <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="1,130,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" FontSize="18" Height="32" Width="247"><Run Text="А"/><Run Text="нестетик"/><Run Text=": "/><TextBlock Text="{Binding Path=AnesteticSelected}"/></TextBlock>
-            <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="305,130,0,0" TextWrapping="Wrap"  
+            <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="369,130,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" FontSize="16"><Run Text="Б"/><Run Text="ригада"/></TextBlock>
-            <DataGrid HorizontalAlignment="Left" Height="375" Margin="305,161,0,0" VerticalAlignment="Top" Width="auto"  
+
+            <ListBox Visibility="{Binding IsLeftLegInOperation}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Left" Height="170" Margin="0,190,0,0" VerticalAlignment="Top" Width="169"  
+                       ItemsSource="{Binding Path=LeftOperationList}"   Foreground="Black" Background="White">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock TextWrapping="Wrap" Width="259" Height="auto" Padding="5,0,5,0" Text="{Binding  Data}" />
+
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Left" Height="170" Margin="184,190,0,0" VerticalAlignment="Top" Width="169"  
+                   Visibility="{Binding IsRightLegInOperation}"    ItemsSource="{Binding Path=RightOperationList}"   Foreground="Black" Background="White">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock TextWrapping="Wrap" Width="259" Height="auto" Padding="5,0,5,0" Text="{Binding  Data}" />
+
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+
+            <DataGrid HorizontalAlignment="Left" Height="375" Margin="369,161,0,0" VerticalAlignment="Top" Width="auto"  
                           Foreground="Black"  
                      ItemsSource="{Binding Path=Controller.CurrentViewModel.DoctorsSelected}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" >
                 <DataGrid.Columns>
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock TextAlignment="Left" Width="Auto" Text="{Binding Path=Surname}" />
+                                <TextBlock TextWrapping="Wrap" TextAlignment="Left" Width="Auto" Text="{Binding Path=Surname}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock TextAlignment="Left" Width="Auto" Text="{Binding Path=initials}" />
+                                <TextBlock TextWrapping="Wrap" TextAlignment="Left" Width="Auto" Text="{Binding Path=initials}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="20,227,0,0" TextWrapping="Wrap"  
+            <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="20,450,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="NB!"/>
-            <Border BorderThickness="1" BorderBrush="Black"  Width="230" HorizontalAlignment="Left" Height="276" Margin="20,261,0,0" VerticalAlignment="Top">
+            <Border BorderThickness="1" BorderBrush="Black"  Width="230" HorizontalAlignment="Left" Height="86" Margin="57,450,0,0" VerticalAlignment="Top">
                 
             
-            <TextBlock Text="{Binding Path=Operation.NB}" x:Name="richTextBox">
+            <TextBlock  Text="{Binding Path=Operation.NB}" x:Name="richTextBox">
                
             </TextBlock>
             </Border>
-            <TextBlock x:Name="textBlock_Copy6" HorizontalAlignment="Left" Margin="408,132,0,0" TextWrapping="Wrap"  
+            <TextBlock Visibility="{Binding IsLeftLegInOperation}" x:Name="textBlock_Copy6" HorizontalAlignment="Left" Margin="468,132,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="Диагноз слева" FontSize="16"/>
-            <TextBlock x:Name="textBlock_Copy7" HorizontalAlignment="Left" Margin="715,130,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top" Text="Диагноз справа" RenderTransformOrigin="2.097,10.521" FontSize="16"/>
+            <TextBlock x:Name="textBlock_Copy7" HorizontalAlignment="Left" Margin="750,130,0,0" TextWrapping="Wrap"  
+                    Visibility="{Binding IsRightLegInOperation}"     VerticalAlignment="Top" Text="Диагноз справа" RenderTransformOrigin="2.097,10.521" FontSize="16"/>
             <Button  Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy3"  Visibility="{Binding Path=VisiBIlityOfAddCancle}" Content="Отменить операцию" HorizontalAlignment="Left" Margin="80,558,0,0"              
                     VerticalAlignment="Top" Width="200" Command="{Binding Path=ToCancleOperationCommand}" RenderTransformOrigin="0.502,0.471"/>
 
-            <DataGrid  AutoGenerateColumns="False" HeadersVisibility="None" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" HorizontalAlignment="Left" Height="375" Margin="408,161,0,0" VerticalAlignment="Top" Width="289"  
+            <ListBox  Visibility="{Binding IsLeftLegInOperation}" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  HorizontalAlignment="Left" Height="375" Margin="468,161,0,0" VerticalAlignment="Top" Width="259"   
                           Foreground="Black" 
                        ItemsSource="{Binding Path=Controller.CurrentViewModel.LeftDiagnosisList}">
-                <DataGrid.Columns>
-
-                    <DataGridTemplateColumn >
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Padding="5,0,5,0" Text="{Binding  Data.Str}" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-
-                    </DataGrid.Columns>
-            </DataGrid>
-            <DataGrid  AutoGenerateColumns="False" HeadersVisibility="None" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" HorizontalAlignment="Left" Height="375" Margin="710,161,0,0" VerticalAlignment="Top" Width="289"  
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock TextWrapping="Wrap" Width="259" Height="auto" Padding="5,0,5,0" Text="{Binding  Data.Str}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <ListBox  ScrollViewer.HorizontalScrollBarVisibility="Disabled"  HorizontalAlignment="Left" Height="375" Margin="750,161,0,0" VerticalAlignment="Top" Width="259"  
                           Foreground="Black"
-                       ItemsSource="{Binding Path=Controller.CurrentViewModel.RightDiagnosisList}"   >
-                <DataGrid.Columns>
-
-                    <DataGridTemplateColumn >
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Padding="5,0,5,0" Text="{Binding  Data.Str}" />
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-
-                </DataGrid.Columns>
-            </DataGrid>
+                   Visibility="{Binding IsRightLegInOperation}"     ItemsSource="{Binding Path=Controller.CurrentViewModel.RightDiagnosisList}"   >
+           
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock TextWrapping="Wrap" Width="259" Height="auto" Padding="5,0,5,0" Text="{Binding  Data.Str}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
 
             <!--<TextBlock HorizontalAlignment="Left" FontSize="24" Height="38" VerticalAlignment="Top" Margin="45,38,0,0" Text="дата время" ><DatePickerTextBox IsReadOnly="True" Text="{Binding Path=Operation.Date}"></DatePickerTextBox></TextBlock>-->
             <TextBlock HorizontalAlignment="Left" FontSize="24" Height="33" VerticalAlignment="Top" Margin="0,76,0,0" Text="{Binding Path=OperationResults}" Foreground="#FF5D140D" Width="1024" Background="#FFB9E0E6" TextAlignment="Center" />

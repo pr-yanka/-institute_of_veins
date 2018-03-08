@@ -86,12 +86,12 @@ namespace WpfApp2.ViewModels
                 var CurrentPatient = PtRep.Get(Op.PatientId);
                 Patient = CurrentPatient.Sirname + " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
 
-                if (!string.IsNullOrWhiteSpace(OperationTypeRep.Get(Op.OperationTypeId).ShortName))
-                    OpType = OperationTypeRep.Get(Op.OperationTypeId).ShortName;
-                else
-                {
-                    OpType = OperationTypeRep.Get(Op.OperationTypeId).LongName;
-                }
+                //if (!string.IsNullOrWhiteSpace(OperationTypeRep.Get(Op.OperationTypeId).ShortName))
+                //    OpType = OperationTypeRep.Get(Op.OperationTypeId).ShortName;
+                //else
+                //{
+                //    OpType = OperationTypeRep.Get(Op.OperationTypeId).LongName;
+                //}
 
                 Anestetic = AnestethicRep.Get(Op.AnestheticId).Str;
             }

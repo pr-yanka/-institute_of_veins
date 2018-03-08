@@ -83,7 +83,7 @@ namespace WpfApp2.ViewModels
                     IsDistrict = Visibility.Hidden;
                 }
                 Region = "Область: " + regRep.Get(CurrentPatient.Region).Str;
-                Street = "Улица: " + strtRep.Get(CurrentPatient.Street).Str + " " + CurrentPatient.House + " кв. " + CurrentPatient.Flat ;
+                Street = "Улица: " + strtRep.Get(CurrentPatient.Street).Str + " " + CurrentPatient.House + " кв. " + CurrentPatient.Flat;
                 char[] chararr = CurrentPatient.Age.ToString().ToCharArray();
                 try
                 {
@@ -128,12 +128,12 @@ namespace WpfApp2.ViewModels
                 }
             );
 
-            ToAdditionalInfoCommand = new DelegateCommand( ()=>
-                {
-                MessageBus.Default.Call("SetCurrentPatientIDForAmbCard", this, currentPatient.Id);
+            ToAdditionalInfoCommand = new DelegateCommand(() =>
+               {
+                   MessageBus.Default.Call("SetCurrentPatientIDForAmbCard", this, currentPatient.Id);
 
-                Controller.NavigateTo<ViewModelAdditionalInfoPatient>();
-            }
+                   Controller.NavigateTo<ViewModelAdditionalInfoPatient>();
+               }
             );
             ToPathologyListCommand = new DelegateCommand(
                 () =>

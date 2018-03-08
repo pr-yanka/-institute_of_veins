@@ -210,7 +210,9 @@ namespace WpfApp2.Templates
             if (item.GetType() == typeof(ViewModelOperationForAmbullatorCardList))
                 return TemplateCheckboxesWithFilter;
 
-            //ViewModelChangesHistoy  TemplateChangeHistory   ViewModelOperationForAmbullatorCardList
+            if (item.GetType() == typeof(ViewModelOperationListForOperation))
+                return TemplateCheckboxes;
+            // 
             return null;
         }
     }

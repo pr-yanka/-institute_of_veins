@@ -63,7 +63,7 @@ namespace WpfApp2.ViewModels
             Operation = Data.Operation.Get((int)data);
             operationId = (int)data;
             Date = DateTime.Now;
-            operationType = Data.OperationType.Get(Operation.OperationTypeId).LongName;
+            //operationType = Data.OperationType.Get(Operation.OperationTypeId).LongName;
             TextResultCancle = "Отмена операции";
             DateText = "Операция отменена :";
             OtmenOrProv = "Отмененная ";

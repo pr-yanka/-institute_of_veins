@@ -41,6 +41,32 @@ namespace WpfApp2.ViewModels
         public string ResultButtonName { get; set; }
         public Visibility VisiBIlityOfAddCancle { get; set; }
         public Visibility VisiBIlityOfAddResult { get; set; }
+
+        private List<OperationTypesDataSource> _leftOperationList;
+        private List<OperationTypesDataSource> _rightOperationList;
+
+        public List<OperationTypesDataSource> LeftOperationList
+        {
+            get
+            {
+                return _leftOperationList;
+            }
+            set
+            {
+                _leftOperationList = value; OnPropertyChanged();
+            }
+        }
+        public List<OperationTypesDataSource> RightOperationList
+        {
+            get
+            {
+                return _rightOperationList;
+            }
+            set
+            {
+                _rightOperationList = value; OnPropertyChanged();
+            }
+        }
         private List<DiagnosisDataSource> _leftDiagnosisList;
         private List<DiagnosisDataSource> _rightDiagnosisList;
         private List<DoctorDataSource> _doctorsSelected;
@@ -83,11 +109,37 @@ namespace WpfApp2.ViewModels
         public string OprTypeSelected { get; set; }
 
         #endregion
+        private Visibility _isRightLegInOperation;
 
+        private Visibility _isLeftLegInOperation;
+
+
+        public Visibility IsRightLegInOperation
+        {
+            get
+            {
+
+                return _isRightLegInOperation;
+
+            }
+            set { _isRightLegInOperation = value; OnPropertyChanged(); }
+        }
+
+        public Visibility IsLeftLegInOperation
+        {
+            get
+            {
+
+                return _isLeftLegInOperation;
+
+            }
+            set { _isLeftLegInOperation = value; OnPropertyChanged(); }
+        }
         private void GetOperation(object sender, object data)
         {
             using (var context = new MySqlContext())
             {
+                OperationTypeOperationsRepository OperationOpRep = new OperationTypeOperationsRepository(context);
                 DiagnosisRepository DiagnosisRep = new DiagnosisRepository(context);
                 DiagnosisTypeRepository DiagnosisTypeRep = new DiagnosisTypeRepository(context);
                 MedPersonalRepository MedPersonalRep = new MedPersonalRepository(context);
@@ -154,9 +206,17 @@ namespace WpfApp2.ViewModels
                 LeftDiagnosisList = new List<DiagnosisDataSource>();
                 RightDiagnosisList = new List<DiagnosisDataSource>();
                 DoctorsSelected = new List<DoctorDataSource>();
+                RightOperationList = new List<OperationTypesDataSource>();
+                LeftOperationList = new List<OperationTypesDataSource>();
                 AnesteticSelected = AnestethicRep.Get(Operation.AnestheticId).Str;
-                OprTypeSelected = OperationTypeRep.Get(Operation.OperationTypeId).LongName;
+
+
+                //OprTypeSelected = OperationTypeRep.Get(Operation.OperationTypeId).LongName;
+
+
                 CurrentPatient = PatientsRep.Get(Operation.PatientId);
+
+
                 initials = " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
 
 
@@ -199,6 +259,44 @@ namespace WpfApp2.ViewModels
                         }
                     }
                 }
+
+
+
+
+                foreach (var Diagnosis in OperationOpRep.GetAll)
+                {
+                    if (Diagnosis.id_операции == Operation.Id)
+                    {
+                        if (Diagnosis.isLeft == true)
+                        {
+                            var buf1 = new OperationTypesDataSource(OperationTypeRep.Get(Diagnosis.id_типОперации.Value));
+                            buf1.IsChecked = true;
+                            LeftOperationList.Add(buf1);
+                        }
+                        else
+                        {
+                            var buf2 = new OperationTypesDataSource(OperationTypeRep.Get(Diagnosis.id_типОперации.Value));
+                            buf2.IsChecked = true;
+                            RightOperationList.Add(buf2);
+                        }
+                    }
+                }
+                if (Operation.OnWhatLegOp == "0")
+                {
+                    IsLeftLegInOperation = Visibility.Visible;
+                    IsRightLegInOperation = Visibility.Collapsed;
+                }
+                if (Operation.OnWhatLegOp == "1")
+                {
+                    IsLeftLegInOperation = Visibility.Collapsed;
+                    IsRightLegInOperation = Visibility.Visible;
+                }
+                if (Operation.OnWhatLegOp == "2")
+                {
+                    IsLeftLegInOperation = Visibility.Visible;
+                    IsRightLegInOperation = Visibility.Visible;
+                }
+
             }
         }
 

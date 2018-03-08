@@ -17,12 +17,12 @@
             </TextBlock>
             <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="buttond_Copyd1" Content="Составить выписку" Command="{Binding Path=ToCreateStatementCommand}" HorizontalAlignment="Left" Margin="589,541,0,0" VerticalAlignment="Top"  
                     Width="200" />
-            <Label x:Name="label1" Content="{Binding Path=ResultOrOtmenaName}" HorizontalAlignment="Left"  
-                   Margin="209,70,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.491,0.474" FontSize="22"/>
+            <TextBlock TextWrapping="Wrap" x:Name="label1" Text="{Binding Path=ResultOrOtmenaName}" HorizontalAlignment="Left"  
+                   Margin="209,75,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.491,0.474" Width="auto" FontSize="22"/>
             <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="39,136,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top" Foreground="#FF234A72" FontSize="24" Width="603"><Run Text="Проведённая "/><Run Text="операция:"/><Run Text=" "/><TextBlock Text="{Binding Path=operationType}"/></TextBlock>
-            <TextBlock Visibility="{Binding Path=visibilityOfNextOP}"  x:Name="textBlock_Copy23" HorizontalAlignment="Left" Margin="39,136,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top" Foreground="#FF234A72" FontSize="24" Width="603"><Run Text="Запланированная "/><Run Text="операция:"/><Run Text=" "/><TextBlock Text="{Binding Path=PlanedOpr}"/></TextBlock>
+                       VerticalAlignment="Top" Foreground="#FF234A72" FontSize="20" Width="auto"><Run Text="Проведённые "/><Run Text="операции:"/><Run Text=" "/><TextBlock Text="{Binding Path=operationType}"/></TextBlock>
+            <TextBlock Visibility="{Binding Path=visibilityOfNextOP}"  x:Name="textBlock_Copy23" HorizontalAlignment="Left" Margin="39,176,0,0" TextWrapping="Wrap"  
+                       VerticalAlignment="Top" Foreground="#FF234A72" FontSize="20" Width="auto"><Run Text="Запланированная "/><Run Text="операция:"/><Run Text=" "/><TextBlock Text="{Binding Path=PlanedOpr}"/></TextBlock>
             <TextBlock Text="{Binding Path=comment}"  x:Name="richTextBox" HorizontalAlignment="Left" Height="125" Margin="39,216,0,0" VerticalAlignment="Top"  
                          Width="946" FontSize="22">
             </TextBlock>

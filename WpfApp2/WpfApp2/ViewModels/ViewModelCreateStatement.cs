@@ -53,7 +53,7 @@ namespace WpfApp2.ViewModels
 
             Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
             Date = Operation.Date;
-            OperationType = Data.OperationType.Get(Operation.OperationTypeId).LongName;
+            //OperationType = Data.OperationType.Get(Operation.OperationTypeId).LongName;
             //TextResultCancle = "Итоги операции"; 
             using (var context = new MySqlContext())
             {
@@ -266,10 +266,10 @@ namespace WpfApp2.ViewModels
 
                         document.ReplaceText("«Дата_операции»", Operation.Date.Day.ToString() + "." + Operation.Date.Month.ToString() + "." + Operation.Date.Year.ToString());
 
-                        if (!string.IsNullOrWhiteSpace(Data.OperationType.Get(Operation.OperationTypeId).ShortName))
-                            document.ReplaceText("«Операция2»", Data.OperationType.Get(Operation.OperationTypeId).ShortName);
-                        else
-                            document.ReplaceText("«Операция2»", Data.OperationType.Get(Operation.OperationTypeId).LongName);
+                        //if (!string.IsNullOrWhiteSpace(Data.OperationType.Get(Operation.OperationTypeId).ShortName))
+                        //    document.ReplaceText("«Операция2»", Data.OperationType.Get(Operation.OperationTypeId).ShortName);
+                        //else
+                        //    document.ReplaceText("«Операция2»", Data.OperationType.Get(Operation.OperationTypeId).LongName);
 
 
                         document.ReplaceText("«сутки»", days.ToString());

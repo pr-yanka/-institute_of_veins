@@ -22,8 +22,8 @@ namespace WpfApp2.Db.Models
         public DateTime Date { set; get; }
         [Column("время_операции")]
         public string Time { set; get; }
-        [Column("id_вида_операции")]
-        public int OperationTypeId { set; get; }
+        [Column("на_какую_ногу_операция")]
+        public string OnWhatLegOp { set; get; }
         [Column("id_вида_анестетика")]
         public int AnestheticId { set; get; }
         [Column("NB!")]

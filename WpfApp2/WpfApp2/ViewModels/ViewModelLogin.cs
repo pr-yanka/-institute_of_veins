@@ -10,6 +10,7 @@ using System.Windows;
 using WpfApp2.Messaging;
 using System.IO;
 using System.Collections.Generic;
+using System;
 
 namespace WpfApp2.ViewModels
 {
@@ -54,67 +55,6 @@ namespace WpfApp2.ViewModels
             ToDashboardCommand = new DelegateCommand<object>(
         (sender) =>
         {
-
-
-            List<string> listFullScriotOBl = new List<string>();
-            List<string> listFullScriotRegi = new List<string>();
-            List<string> listFullScriotTwn = new List<string>();
-            List<string> listFullScriotVul = new List<string>();
-            List<string> listObls = new List<string>();
-            List<string> listRaion = new List<string>();
-            List<string> listTown = new List<string>();
-            List<string> listVul = new List<string>();
-
-            using (var reader = new StreamReader(@"C:\test.txt"))
-            {
-
-                while (!reader.EndOfStream)
-                {
-                    var line = reader.ReadLine();
-                    var values = line.Split(';');
-
-
-                    listObls.Add(values[0]);
-
-
-                    listRaion.Add(values[1]);
-
-
-                    listTown.Add(values[2]);
-
-                    listVul.Add(values[4]);
-
-
-
-                }
-            }
-
-
-            int colvoTowns = 1;
-            for (int i = 1; i <= listObls.Count; ++i)
-            {
-                string str = "INSERT INTO `med_db`.`справочник_область` (`id`, `название`) VALUES ('" + (i) + "', '" + listObls[i] + "');";
-
-
-                for (; listObls[i - 1] == listObls[i]; colvoTowns++)
-                {
-                    string str1 = "INSERT INTO `med_db`.`справочник_города` (`id`, `название`, `Область`) VALUES('" + (colvoTowns) + "', '" + listTown[colvoTowns] + "', '" + i + "); ";
-
-                    listFullScriotTwn.Add(str1);
-
-                }
-
-                listFullScriotOBl.Add(str);
-            }
-
-
-
-
-
-
-
-
-
 
 
 

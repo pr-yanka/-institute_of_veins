@@ -9,37 +9,56 @@
         <Grid Margin="0,62,0,0">
             <TextBlock HorizontalAlignment="Right" FontSize="22pt" Height="38" VerticalAlignment="Top" Margin="70,0" Text="{Binding Path=CurrentPatient.Sirname}"/>
             <TextBlock HorizontalAlignment="Right" FontSize="22pt" Height="38" VerticalAlignment="Top" Text="{Binding Path=initials}"></TextBlock>
-            <TextBlock HorizontalAlignment="Left" FontSize="22pt" Height="38" VerticalAlignment="Top"  Margin="397,0,0,0" Text="Назначение операции" />
-            <Button Width="300" Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy1"  Command="{Binding Path=ToCurrentPatientCommand}" Content="Вернуться к пациенту" HorizontalAlignment="Left" Margin="207,558,0,0" VerticalAlignment="Top"  
+            <TextBlock HorizontalAlignment="Left" FontSize="22pt" Height="38" VerticalAlignment="Top"  Margin="397,0,0,0" Text="Назначение операций" />
+            <Button Width="300" Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy1"  Command="{Binding Path=ToCurrentPatientCommand}" Content="Вернуться к пациенту" HorizontalAlignment="Left" Margin="207,629,0,0" VerticalAlignment="Top"  
                    />
-            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="24,68,0,0" TextWrapping="Wrap" Text="Тип операции"  
+            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="24,48,0,0" TextWrapping="Wrap" Visibility="Collapsed" Text="Тип операции"  
                        VerticalAlignment="Top" FontSize="18"/>
-            <ComboBox x:Name="comboBox"  ItemsSource="{Binding Path=OprTypes}" SelectedIndex="{Binding Path=OprTypeSelected}" HorizontalAlignment="Left" Margin="24,110,0,0" VerticalAlignment="Top" Width="468"  
-                      Height="40"/>
-            <Button Width="300"  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy" Content="Добавить новый тип" HorizontalAlignment="Left" Margin="166,62,0,0" Command="{Binding Path=OpenPanelCommand}"            
+            <ListBox Visibility="{Binding IsLeftLegInOperation}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Left" Height="170" Margin="24,89,0,0" VerticalAlignment="Top" Width="209"  
+                       ItemsSource="{Binding Path=LeftOperationList.View}"   Foreground="Black" Background="White">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock TextWrapping="Wrap" Width="259" Height="auto" Padding="5,0,5,0" Text="{Binding  Data}" />
+
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Left" Height="170" Margin="244,89,0,0" VerticalAlignment="Top" Width="209"  
+                   Visibility="{Binding IsRightLegInOperation}"    ItemsSource="{Binding Path=RightOperationList.View}"   Foreground="Black" Background="White">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock TextWrapping="Wrap" Width="259" Height="auto" Padding="5,0,5,0" Text="{Binding  Data}" />
+
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <Button Width="209"  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy"  FontSize="13" Content="выбрать операции слева" HorizontalAlignment="Left" Margin="24,40,0,0" Visibility="{Binding IsLeftLegInOperation}" Command="{Binding Path=ToLeftOprCommand}"            
                     VerticalAlignment="Top" />
-            <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="24,211,0,0" TextWrapping="Wrap"  
+            <Button Width="209"  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_вCopy" FontSize="13" Content="выбрать операции справа" HorizontalAlignment="Left" Margin="244,40,0,0" Visibility="{Binding IsRightLegInOperation}" Command="{Binding Path=ToRightOprCommand}"            
+                    VerticalAlignment="Top" />
+            <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="24,281,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top"><Run Text="Выб"/><Run Text="ерите"/><Run Text=" время"/></TextBlock>
-            <DatePicker SelectedDate="{Binding Path=Operation.Date}" HorizontalAlignment="Left" Margin="5,274,0,0" VerticalAlignment="Top" Width="119" Height="auto"  
+            <DatePicker SelectedDate="{Binding Path=Operation.Date}" HorizontalAlignment="Left" Margin="5,344,0,0" VerticalAlignment="Top" Width="119" Height="auto"  
                       FontStretch="Expanded" FontSize="10">
             </DatePicker>
-            <xctk:TimePicker Value="{Binding Path=MinuteHour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Format="ShortTime"  HorizontalAlignment="Left" Margin="5,232,0,0" VerticalAlignment="Top" Width="120" Height="20" />
-            <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Margin="138,182,0,0" TextWrapping="Wrap"  
+            <xctk:TimePicker Value="{Binding Path=MinuteHour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Format="ShortTime"  HorizontalAlignment="Left" Margin="5,302,0,0" VerticalAlignment="Top" Width="120" Height="20" />
+            <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Margin="138,299,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="Список всех врачей" FontSize="16" Width="155" TextAlignment="Center"/>
-            <CheckBox Content="врачи" HorizontalAlignment="Left" Margin="141,0,0,250"  Width="100" Height="30" IsChecked="{Binding ShowDoctors}" >
+            <CheckBox Content="врачи" HorizontalAlignment="Left" Margin="141,145,0,250"  Width="100" Height="30" IsChecked="{Binding ShowDoctors}" >
             </CheckBox>
-            <CheckBox Content="медперсонал" HorizontalAlignment="Left" Margin="210,0,0,250" Width="100" Height="30" IsChecked="{Binding ShowMeds}" >
+            <CheckBox Content="медперсонал" HorizontalAlignment="Left" Margin="210,145,0,250" Width="100" Height="30" IsChecked="{Binding ShowMeds}" >
             </CheckBox>
-            <CheckBox Content="врачи" HorizontalAlignment="Left" Margin="315,0,0,250"  Width="100" Height="30" IsChecked="{Binding ShowDoctorsSelected}" >
+            <CheckBox Content="врачи" HorizontalAlignment="Left" Margin="315,145,0,250"  Width="100" Height="30" IsChecked="{Binding ShowDoctorsSelected}" >
             </CheckBox>
-            <CheckBox Content="медперсонал" HorizontalAlignment="Left" Margin="380,0,0,250"  Width="100" Height="30" IsChecked="{Binding ShowMedsSelected}" >
+            <CheckBox Content="медперсонал" HorizontalAlignment="Left" Margin="380,145,0,250"  Width="100" Height="30" IsChecked="{Binding ShowMedsSelected}" >
             </CheckBox>
             <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="546,68,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" FontSize="18"><Run Text="А"/><Run Text="нестетик"/></TextBlock>
             <ComboBox x:Name="comboBox_Copy2"   HorizontalAlignment="Left" ItemsSource="{Binding Path=AnestethicTypes}" SelectedIndex="{Binding Path=AnesteticSelected}" Margin="546,109,0,0" VerticalAlignment="Top" Width="468" Height="40"/>
             <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy2" Content="Добавить новый вид" Command="{Binding Path=OpenPanelAnesteticCommand}" HorizontalAlignment="Left" Margin="688,62,0,0"              
                     VerticalAlignment="Top"  Width="300" />
-            <DataGrid HorizontalAlignment="Left" Height="220" Margin="141,231,0,0" VerticalAlignment="Top" Width="152"  
+            <DataGrid HorizontalAlignment="Left" Height="200" Margin="141,321,0,0" VerticalAlignment="Top" Width="152"  
                           Foreground="Black" Background="White" AutoGenerateColumns="False" HeadersVisibility="None"
                      ItemsSource="{Binding Path=Controller.CurrentViewModel.Doctors}" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" >
                 <DataGrid.RowStyle>
@@ -97,9 +116,9 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="343,182,0,0" TextWrapping="Wrap"  
+            <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="343,299,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="Ваша бригада" FontSize="16"/>
-            <DataGrid HorizontalAlignment="Left" Height="220" Margin="316,231,0,0" VerticalAlignment="Top" Width="152"  
+            <DataGrid HorizontalAlignment="Left" Height="200" Margin="316,321,0,0" VerticalAlignment="Top" Width="152"  
                           Foreground="Black" Background="White"  AutoGenerateColumns="False" HeadersVisibility="None"
                      ItemsSource="{Binding Path=Controller.CurrentViewModel.DoctorsSelected}" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" >
                 <DataGrid.RowStyle>
@@ -143,15 +162,15 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="24,460,0,0" TextWrapping="Wrap"  
+            <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="24,530,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="NB!"/>
-            <TextBox Text="{Binding Path=Operation.NB}"  x:Name="richTextBox" HorizontalAlignment="Left" Height="86" Margin="57,460,0,0" VerticalAlignment="Top"  
+            <TextBox Text="{Binding Path=Operation.NB}"  x:Name="richTextBox" HorizontalAlignment="Left" Height="86" Margin="57,530,0,0" VerticalAlignment="Top"  
                          Width="411">
             </TextBox>
-            <Button Width="300" Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy3" Content="{Binding Path=ButtonSaveText}" Command="{Binding Path=ToOperationOverviewCommand}" HorizontalAlignment="Left" Margin="554,558,0,0"              
+            <Button Width="300" Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy3" Content="{Binding Path=ButtonSaveText}" Command="{Binding Path=ToOperationOverviewCommand}" HorizontalAlignment="Left" Margin="554,629,0,0"              
                     VerticalAlignment="Top"  RenderTransformOrigin="0.502,0.471"/>
-            <ListBox HorizontalAlignment="Left" Height="284" Margin="485,211,0,0" VerticalAlignment="Top" Width="259"  
-                       ItemsSource="{Binding Path=LeftDiagnosisList.View}"   Foreground="Black" Background="White">
+            <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Left" Height="284" Margin="485,215,0,0" VerticalAlignment="Top" Width="259"  
+                    Visibility="{Binding IsLeftLegInOperation}"   ItemsSource="{Binding Path=LeftDiagnosisList.View}"   Foreground="Black" Background="White">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock TextWrapping="Wrap" Width="259" Height="auto" Padding="5,0,5,0" Text="{Binding  Data.Str}" />
@@ -159,7 +178,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <ListBox ItemsSource="{Binding Path=RightDiagnosisList.View}" HorizontalAlignment="Left" Height="284" Margin="755,211,0,0" VerticalAlignment="Top" Width="259"  
+            <ListBox Visibility="{Binding IsRightLegInOperation}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=RightDiagnosisList.View}" HorizontalAlignment="Left" Height="284" Margin="755,215,0,0" VerticalAlignment="Top" Width="259"  
                           Foreground="Black" Background="White">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -167,14 +186,14 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy4" Content="Выбрать диагноз слева"  Command="{Binding Path=ToLeftDiagCommand}" HorizontalAlignment="Left" Margin="485,170,0,0"              
+            <Button Visibility="{Binding IsLeftLegInOperation}" Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy4" Content="Выбрать диагноз слева"  Command="{Binding Path=ToLeftDiagCommand}" HorizontalAlignment="Left" Margin="485,170,0,0"              
                     VerticalAlignment="Top" Width="260" />
-            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy5"  FontSize="12" Command="{Binding GetLeftFromLastObs}" Content="Взять из последнего обследования" HorizontalAlignment="Left"  
-                    Margin="485,500,0,0"             VerticalAlignment="Top" Width="260"/>
-            <Button Style="{StaticResource MyConfirmBUTTON}" Width="260" x:Name="button_Copy6" Content="Выбрать диагноз справа" Command="{Binding Path=ToRightDiagCommand}" HorizontalAlignment="Left" Margin="755,170,0,0"              
+            <Button Visibility="{Binding IsLeftLegInOperation}" Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy5"  FontSize="12" Command="{Binding GetLeftFromLastObs}" Content="Взять из последнего обследования" HorizontalAlignment="Left"  
+                    Margin="485,503,0,0"             VerticalAlignment="Top" Width="260"/>
+            <Button  Style="{StaticResource MyConfirmBUTTON}" Width="260" x:Name="button_Copy6" Visibility="{Binding IsRightLegInOperation}" Content="Выбрать диагноз справа" Command="{Binding Path=ToRightDiagCommand}" HorizontalAlignment="Left" Margin="755,170,0,0"              
                     VerticalAlignment="Top"  RenderTransformOrigin="0.484,0.472"/>
-            <Button Style="{StaticResource MyConfirmBUTTON}"  x:Name="button_Copy7" Command="{Binding GetRightFromLastObs}"  Content="Взять из последнего обследования" HorizontalAlignment="Left"  
-            Margin="755,500,0,0"             VerticalAlignment="Top" Width="260" FontSize="12"/>
+            <Button Style="{StaticResource MyConfirmBUTTON}"  x:Name="button_Copy7" Command="{Binding GetRightFromLastObs}" Visibility="{Binding IsRightLegInOperation}"  Content="Взять из последнего обследования" HorizontalAlignment="Left"  
+            Margin="755,503,0,0"             VerticalAlignment="Top" Width="260" FontSize="12"/>
             <Border Grid.RowSpan="4" Visibility="{Binding Path = CurrentPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOverlay">
                 <Border.Background>
                     <SolidColorBrush Color="Black" Opacity="0.78"/>
@@ -185,7 +204,7 @@
                     <SolidColorBrush Color="Black" Opacity="0.78"/>
                 </Border.Background>
             </Border>
-            <Border x:Name="panelControl" Grid.RowSpan="4" Margin="0,0,-450,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="450" Height="275" DataContext="{Binding Path=CurrentPanelViewModel}" >
+            <Border x:Name="panelControl" Grid.RowSpan="4" Margin="0,0,-450,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="450" Height="180" DataContext="{Binding Path=CurrentPanelViewModel}" >
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
                         <Style.Triggers>
@@ -212,14 +231,17 @@
                 </Border.RenderTransform>
                 <Grid>
                     <Canvas Background="#FFC6E8E6" Margin="0,-26,0,39">
-                        <TextBlock x:Name="textBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="135" FontSize="18" Canvas.Top="10" Text="Новый тип операции"/>
-                        <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="66" />
-                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttonCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.RevertCommand}" Canvas.Left="10" Canvas.Top="210" />
-                        <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtonAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding ParentVM.SaveCommand}" Canvas.Left="232" Canvas.Top="210" />
-                        <TextBlock x:Name="textBlock_Copy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="42" Canvas.Left="10" Text="Короткое название:" FontSize="16"/>
-                        <TextBlock x:Name="textBlock_Copy31" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="124" Canvas.Left="10" Text="Длинное название:" FontSize="16"/>
-                        <TextBox x:Name="textBox1_Copy" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding LongText}" VerticalAlignment="Top" Width="422" Canvas.Top="148" RenderTransformOrigin="0.502,0.488" Canvas.Left="10" />
-                    </Canvas>
+                        <TextBlock x:Name="textBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="135" FontSize="18" Canvas.Top="10" Text=" "/>
+                        <ComboBox SelectedIndex="{Binding ParentVM.SelectedLegId}" x:Name="textBox1" HorizontalAlignment="Left" Height="29"   VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="75" >
+                            <TextBlock>Левую ногу</TextBlock>
+                            <TextBlock>Правую ногу</TextBlock>
+                            <TextBlock>Обе ноги</TextBlock>
+                        </ComboBox>
+                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttonCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.RevertCommand}" Canvas.Left="10" Canvas.Top="120" />
+                        <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtonAdd" Content="Выбрать" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding ParentVM.SaveCommand}" Canvas.Left="232" Canvas.Top="120" />
+                        <TextBlock x:Name="textBlock_Copy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="42" Canvas.Left="10" Text="Операции на:" FontSize="16"/>
+                        
+                       </Canvas>
                 </Grid>
             </Border>
             <Border x:Name="panel34Corntrol" Grid.RowSpan="4" Margin="0,0,-450,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="450" Height="225" DataContext="{Binding Path=CurrentPanelAnestViewModel}" >

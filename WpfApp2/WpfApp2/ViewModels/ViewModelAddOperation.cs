@@ -53,6 +53,10 @@ namespace WpfApp2.ViewModels
             }
             set { _isVisible = value; OnPropertyChanged(); }
         }
+
+
+
+
         public bool isDoctor
         {
             get
@@ -123,6 +127,10 @@ namespace WpfApp2.ViewModels
         #region Bindings
         public CollectionViewSource LeftDiagnosisList { get; set; }
         public CollectionViewSource RightDiagnosisList { get; set; }
+
+        public CollectionViewSource LeftOperationList { get; set; }
+        public CollectionViewSource RightOperationList { get; set; }
+
 
         private ObservableCollection<string> _oprTypes;
         private ObservableCollection<string> _anestethicTypes;
@@ -289,6 +297,8 @@ namespace WpfApp2.ViewModels
         public string ButtonSaveText { get; set; }
         public DelegateCommand ToLeftDiagCommand { get; protected set; }
         public DelegateCommand ToRightDiagCommand { get; protected set; }
+        public DelegateCommand ToLeftOprCommand { get; protected set; }
+        public DelegateCommand ToRightOprCommand { get; protected set; }
         public DelegateCommand ToCurrentPatientCommand { get; protected set; }
         public DelegateCommand ToOperationOverviewCommand { get; protected set; }
 
@@ -296,6 +306,18 @@ namespace WpfApp2.ViewModels
         public string initials { get; set; }
         #endregion
 
+        private int _selectedLegId;
+
+        public int SelectedLegId
+        {
+            get
+            {
+
+                return _selectedLegId;
+
+            }
+            set { _selectedLegId = value; OnPropertyChanged(); }
+        }
         #region MessageBus
         bool isSetOperResult = false;
         private void SetRightDiagnosisList(object sender, object data)
@@ -316,6 +338,28 @@ namespace WpfApp2.ViewModels
             LeftDiagnosisList.View.Refresh();
             Controller.NavigateTo<ViewModelAddOperation>();
         }
+
+
+        private void SetRightOpList(object sender, object data)
+        {
+            var RightDiagnosisList1 = new ObservableCollection<OperationTypesDataSource>();
+            foreach (var diag in (List<OperationTypesDataSource>)data)
+            { RightDiagnosisList1.Add(diag); }
+            RightOperationList.Source = RightDiagnosisList1;
+            RightOperationList.View.Refresh();
+            Controller.NavigateTo<ViewModelAddOperation>();
+        }
+        private void SetLeftOpList(object sender, object data)
+        {
+            var LeftDiagnosisList1 = new ObservableCollection<OperationTypesDataSource>();
+            foreach (var diag in (List<OperationTypesDataSource>)data)
+            { LeftDiagnosisList1.Add(diag); }
+            LeftOperationList.Source = LeftDiagnosisList1;
+            LeftOperationList.View.Refresh();
+            Controller.NavigateTo<ViewModelAddOperation>();
+        }
+
+
         private void SetOperResult(object sender, object data)
         {
             isSetOperResult = true;
@@ -334,16 +378,29 @@ namespace WpfApp2.ViewModels
                     { DoctorsSelected.Add(doctor); }
                 }
             }
+            ShowDoctorsSelected = ShowDoctorsSelected;
+            ShowMedsSelected = ShowMedsSelected;
         }
         private void SetCurrentPatientID(object sender, object data)
         {
+
+
+            CurrentPanelViewModel.PanelOpened = true;
+
+
             using (var context = new MySqlContext())
             {
                 LeftDiagnosisList = new CollectionViewSource();
 
                 RightDiagnosisList = new CollectionViewSource();
 
+                LeftOperationList = new CollectionViewSource();
+
+                RightOperationList = new CollectionViewSource();
+
+
                 MessageBus.Default.Call("SetClearDiagnosisListLeftRightOperation", null, null);
+                MessageBus.Default.Call("SetClearOperationListLeftRightOperation", null, null);
 
                 MedPersonalRepository MedPersonalRep = new MedPersonalRepository(context);
                 DoctorRepository DoctorRep = new DoctorRepository(context);
@@ -385,6 +442,33 @@ namespace WpfApp2.ViewModels
         }
         #endregion
 
+        private Visibility _isRightLegInOperation;
+
+        private Visibility _isLeftLegInOperation;
+
+
+        public Visibility IsRightLegInOperation
+        {
+            get
+            {
+
+                return _isRightLegInOperation;
+
+            }
+            set { _isRightLegInOperation = value; OnPropertyChanged(); }
+        }
+
+        public Visibility IsLeftLegInOperation
+        {
+            get
+            {
+
+                return _isLeftLegInOperation;
+
+            }
+            set { _isLeftLegInOperation = value; OnPropertyChanged(); }
+        }
+
         public ViewModelAddOperation(NavigationController controller) : base(controller)
         {
             Doctors = new ObservableCollection<DoctorDataSource>();
@@ -409,13 +493,20 @@ namespace WpfApp2.ViewModels
             MessageBus.Default.Subscribe("SetLeftDiagnosisListForOperation", SetLeftDiagnosisList);
             MessageBus.Default.Subscribe("UpdateSelectedDoctors", UpdateSelectedDoctors);
 
+            MessageBus.Default.Subscribe("SetRightOperationListForOperation", SetRightOpList);
+            MessageBus.Default.Subscribe("SetLeftOperationListForOperation", SetLeftOpList);
+
+
+
+
             Controller = controller;
             HasNavigation = false;
             Operation = new Operation();
             Operation.Date = DateTime.Now;
             LeftDiagnosisList = new CollectionViewSource();
             RightDiagnosisList = new CollectionViewSource();
-
+            LeftOperationList = new CollectionViewSource();
+            RightOperationList = new CollectionViewSource();
             GetLeftFromLastObs = new DelegateCommand(
                 () =>
                 {
@@ -494,13 +585,41 @@ namespace WpfApp2.ViewModels
             ToOperationOverviewCommand = new DelegateCommand(
                 () =>
                 {
-
-                    if (LeftDiagnosisList.Source == null || RightDiagnosisList.Source == null || ((ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source).Count == 0 || ((ObservableCollection<DiagnosisDataSource>)RightDiagnosisList.Source).Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false)
+                    bool test = false;
+                    if (SelectedLegId == 0)
+                    {
+                        if (LeftDiagnosisList.Source == null || ((ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source).Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false)
+                        {
+                            MessageBox.Show("Не всё заполнено!");
+                        }
+                        else
+                        {
+                            test = true;
+                        }
+                    }
+                    else if (SelectedLegId == 1)
                     {
 
+                        if (RightDiagnosisList.Source == null || ((ObservableCollection<DiagnosisDataSource>)RightDiagnosisList.Source).Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false)
+                        {
+                            MessageBox.Show("Не всё заполнено!");
+                        }
+                        else
+                        {
+                            test = true;
+                        }
+
+                    }
+                    else if (LeftDiagnosisList.Source == null || RightDiagnosisList.Source == null || ((ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source).Count == 0 || ((ObservableCollection<DiagnosisDataSource>)RightDiagnosisList.Source).Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false)
+                    {
                         MessageBox.Show("Не всё заполнено!");
                     }
                     else
+                    {
+                        test = true;
+
+                    }
+                    if (test)
                     {
 
                         Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, MinuteHour.Hour, MinuteHour.Minute, 0);
@@ -508,7 +627,7 @@ namespace WpfApp2.ViewModels
 
                         Operation.PatientId = CurrentPatient.Id;
                         Operation.AnestheticId = AnestethicTypesID[AnesteticSelected];
-                        Operation.OperationTypeId = OprTypesId[OprTypeSelected];
+                        Operation.OnWhatLegOp = SelectedLegId.ToString();
                         Data.Operation.Add(Operation);
                         Data.Complete();
                         foreach (var Doctor in DoctorsSelected)
@@ -532,29 +651,73 @@ namespace WpfApp2.ViewModels
 
                         }
 
-                        foreach (var diagnozL in (ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source)
+
+                        if (LeftOperationList.Source != null)
                         {
+                            foreach (var OpL in (ObservableCollection<OperationTypesDataSource>)LeftOperationList.Source)
+                            {
 
-                            Diagnosis buf = new Diagnosis();
-                            buf.id_диагноз = diagnozL.Data.Id;
-                            buf.id_операции = Operation.Id;
-                            buf.isLeft = true;
+                                OperationTypeOperations buf = new OperationTypeOperations();
+                                buf.id_типОперации = OpL.Data.Id;
+                                buf.id_операции = Operation.Id;
+                                buf.isLeft = true;
 
-                            Data.Diagnosis.Add(buf);
-                            Data.Complete();
+                                Data.OperationTypeOperations.Add(buf);
+                                Data.Complete();
+                            }
+                        }
+                        if (RightOperationList.Source != null)
+                        {
+                            foreach (var OpR in (ObservableCollection<OperationTypesDataSource>)RightOperationList.Source)
+                            {
+
+                                OperationTypeOperations buf = new OperationTypeOperations();
+                                buf.id_типОперации = OpR.Data.Id;
+                                buf.id_операции = Operation.Id;
+                                buf.isLeft = false;
+
+                                Data.OperationTypeOperations.Add(buf);
+                                Data.Complete();
+                            }
                         }
 
-                        foreach (var diagnozR in (ObservableCollection<DiagnosisDataSource>)RightDiagnosisList.Source)
+                        if (LeftDiagnosisList.Source != null)
+                        {
+                            foreach (var diagnozL in (ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source)
+                            {
+
+                                Diagnosis buf = new Diagnosis();
+                                buf.id_диагноз = diagnozL.Data.Id;
+                                buf.id_операции = Operation.Id;
+                                buf.isLeft = true;
+
+                                Data.Diagnosis.Add(buf);
+                                Data.Complete();
+                            }
+                        }
+
+
+
+
+
+
+
+
+                        if (RightDiagnosisList.Source != null)
                         {
 
-                            Diagnosis buf = new Diagnosis();
-                            buf.id_диагноз = diagnozR.Data.Id;
-                            buf.id_операции = Operation.Id;
-                            buf.isLeft = false;
+                            foreach (var diagnozR in (ObservableCollection<DiagnosisDataSource>)RightDiagnosisList.Source)
+                            {
 
-                            Data.Diagnosis.Add(buf);
-                            Data.Complete();
+                                Diagnosis buf = new Diagnosis();
+                                buf.id_диагноз = diagnozR.Data.Id;
+                                buf.id_операции = Operation.Id;
+                                buf.isLeft = false;
 
+                                Data.Diagnosis.Add(buf);
+                                Data.Complete();
+
+                            }
                         }
 
                         //       Data.Complete();
@@ -573,7 +736,22 @@ namespace WpfApp2.ViewModels
                     }
                 }
             );
-
+            IsLeftLegInOperation = Visibility.Visible;
+            IsRightLegInOperation = Visibility.Visible;
+            ToLeftOprCommand = new DelegateCommand(
+                () =>
+                {
+                    MessageBus.Default.Call("SetleftOrRightOpForOp", this, "Left");
+                    Controller.NavigateTo<ViewModelOperationListForOperation>();
+                }
+            );
+            ToRightOprCommand = new DelegateCommand(
+                () =>
+                {
+                    MessageBus.Default.Call("SetleftOrRightOpForOp", this, "Right");
+                    Controller.NavigateTo<ViewModelOperationListForOperation>();
+                }
+            );
             ToLeftDiagCommand = new DelegateCommand(
                 () =>
                 {
@@ -633,33 +811,30 @@ namespace WpfApp2.ViewModels
             SaveCommand = new DelegateCommand(() =>
             {
 
-
-                var newType = CurrentPanelViewModel.GetPanelType();
-                if (!string.IsNullOrWhiteSpace(newType.ShortName) || !string.IsNullOrWhiteSpace(newType.LongName))
+                if (SelectedLegId == 0)
                 {
-                    CurrentPanelViewModel.PanelOpened = false;
-                    Handled = false;
-                    Data.OperationType.Add((newType));
-                    Data.Complete();
-                    OprTypes = new ObservableCollection<string>();
-                    foreach (var OprType in Data.OperationType.GetAll)
-                    {
-                        if (!string.IsNullOrWhiteSpace(newType.ShortName))
-                            OprTypes.Add(OprType.ShortName);
-                        if (!string.IsNullOrWhiteSpace(newType.LongName))
-                            OprTypes.Add(OprType.LongName);
-                        OprTypesId.Add(OprType.Id);
-                    }
-                    OprTypeSelected = OprTypes.Count - 1;
+                    IsLeftLegInOperation = Visibility.Visible;
+                    IsRightLegInOperation = Visibility.Collapsed;
+                }
+                else if (SelectedLegId == 1)
+                {
+                    IsLeftLegInOperation = Visibility.Collapsed;
+                    IsRightLegInOperation = Visibility.Visible;
                 }
                 else
-                { MessageBox.Show("Не все поля заполнены"); }
+                {
+                    IsLeftLegInOperation = Visibility.Visible;
+                    IsRightLegInOperation = Visibility.Visible;
+
+                }
+                CurrentPanelViewModel.ClearPanel();
+                CurrentPanelViewModel.PanelOpened = false;
+
             });
 
             RevertCommand = new DelegateCommand(() =>
             {
-                CurrentPanelViewModel.PanelOpened = false;
-                Handled = false;
+                Controller.NavigateTo<ViewModelCurrentPatient>();
             });
         }
     }

@@ -24,6 +24,7 @@ namespace WpfApp2.Db.Models
 {
     public class UnitOfWork : IUnitOfWork
     {
+        public OperationTypeOperationsRepository OperationTypeOperations { get; }
         public OperationForAmbulatornCardRepository OperationForAmbulatornCard { get; }
         public OperationForAmbulatornCardPatientsRepository OperationForAmbulatornCardPatients { get; }
         public AlergicAnevrizmRepository AlergicAnevrizm { get; }
@@ -193,6 +194,7 @@ namespace WpfApp2.Db.Models
         public UnitOfWork(MySqlContext context)
         {
             _context = context;
+            OperationTypeOperations = new OperationTypeOperationsRepository(_context);
             OperationForAmbulatornCard = new OperationForAmbulatornCardRepository(_context);
             OperationForAmbulatornCardPatients = new OperationForAmbulatornCardPatientsRepository(_context);
             AlergicAnevrizmPatients = new AlergicAnevrizmPatientsRepository(_context);
