@@ -48,13 +48,13 @@
                 <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="49,7,0,0" TextWrapping="Wrap" Text="Отчество" VerticalAlignment="Top" FontSize="16" Grid.Row="2"/>
                 <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Margin="19,6,0,0" TextWrapping="Wrap" Text="Дата рождения" VerticalAlignment="Top" FontSize="16" Grid.Row="3" Width="144"/>
                 <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="61,5,0,0" TextWrapping="Wrap" Text="Пол" VerticalAlignment="Top" FontSize="16" Grid.Row="4"/>
-                <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="10,3,0,0" TextWrapping="Wrap" Text="Адрес проживания" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Width="166" Grid.RowSpan="3"/>
-                <TextBlock x:Name="textBlock_Copys4" HorizontalAlignment="Left" Margin="22,3,0,0" TextWrapping="Wrap" Text="Область" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Grid.Column="1" Width="68"/>
-                <TextBlock x:Name="textBlock_Copys34" HorizontalAlignment="Left" Margin="135,3,0,0" TextWrapping="Wrap" Text="Город" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Grid.Column="1" Width="56" RenderTransformOrigin="0.5,0.5"/>
-                <TextBlock x:Name="textBlock_Copаys34" HorizontalAlignment="Left" Margin="242,3,0,0" TextWrapping="Wrap" Text="Район" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Grid.Column="1" Width="52"/>
-                <TextBlock x:Name="textBlock_Copyаs34" HorizontalAlignment="Left" Margin="352,3,0,0" TextWrapping="Wrap" Text="Улица" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Grid.Column="1" Width="56"/>
-                <TextBlock x:Name="textBlock_Copyаs344" HorizontalAlignment="Left" Margin="33,3,0,0" TextWrapping="Wrap" Text="Дом" VerticalAlignment="Top" FontSize="16" Grid.Row="7" Grid.Column="1" Width="47"/>
-                <TextBlock x:Name="textBlock_Copyаs345" HorizontalAlignment="Left" Margin="126,3,0,0" TextWrapping="Wrap" Text="Квартира" VerticalAlignment="Top" FontSize="16" Grid.Row="7" Grid.Column="1" Width="79"/>
+                <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="10,0,0,0" TextWrapping="Wrap" Text="Адрес проживания" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Width="166" Grid.RowSpan="3"/>
+                <TextBlock x:Name="textBlock_Copys4" HorizontalAlignment="Left" Margin="70,22,0,0" TextWrapping="Wrap" Text="Область" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Grid.Column="0" Width="68"/>
+                <TextBlock x:Name="textBlock_Copys34" HorizontalAlignment="Left" Margin="80,22,0,0" TextWrapping="Wrap" Text="Город" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Grid.Column="1" Width="56" Grid.RowSpan="2" RenderTransformOrigin="0.5,0.5"/>
+                <TextBlock x:Name="textBlock_Copаys34" HorizontalAlignment="Left" Margin="262,22,0,0" TextWrapping="Wrap" Text="Район" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Grid.Column="1" Width="52"/>
+                <TextBlock x:Name="textBlock_Copyаs34" HorizontalAlignment="Left" Margin="77,3,0,0" TextWrapping="Wrap" Text="Улица" VerticalAlignment="Top" FontSize="16" Grid.Row="7" Grid.Column="0" Width="56"/>
+                <TextBlock x:Name="textBlock_Copyаs344" HorizontalAlignment="Left" Margin="48,3,0,0" TextWrapping="Wrap" Text="Дом" VerticalAlignment="Top" FontSize="16" Grid.Row="7" Grid.Column="1" Width="47"/>
+                <TextBlock x:Name="textBlock_Copyаs345" HorizontalAlignment="Left" Margin="134,3,0,0" TextWrapping="Wrap" Text="Квартира" VerticalAlignment="Top" FontSize="16" Grid.Row="7" Grid.Column="1" Width="79"/>
 
                 <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="49,3,0,0" TextWrapping="Wrap" Text="Телефон" VerticalAlignment="Top" FontSize="16" Grid.Row="9" Width="104"/>
                 <TextBlock x:Name="textBlock_Copy6" HorizontalAlignment="Left" Margin="61,10,0,0" TextWrapping="Wrap" Text="email" VerticalAlignment="Top"   FontSize="16" Grid.Row="10" Width="83"/>
@@ -81,8 +81,8 @@
                     <TextBlock>Ж</TextBlock>
                 </ComboBox>
                 <controls:AutoCompleteBox  Text="{Binding Path=Region, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                  MinimumPrefixLength ="0"   Width="100"  ItemsSource="{Binding Path=RegionList}"  MaxDropDownHeight="260"   IsDropDownOpen="True" 
-                    FilterMode="Contains"        BorderBrush="{Binding Path=TextBoxRegionB}" x:Name="textBox_Copy3" Grid.Column="1" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top"  Grid.Row="6"  Grid.RowSpan="2">
+                 MinimumPrefixLength ="0"   Width="180" Margin="10,10" ItemsSource="{Binding Path=RegionList}"  MaxDropDownHeight="260"   IsDropDownOpen="True" 
+                    FilterMode="Contains"        BorderBrush="{Binding Path=TextBoxRegionB}" x:Name="textBox_Copy3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top"  Grid.Row="6"  Grid.RowSpan="2">
                    
                     <controls:AutoCompleteBox.InputBindings>
                         <KeyBinding Command="{Binding Path=Changed}"/>
@@ -94,7 +94,7 @@
                     </i:Interaction.Triggers>
                 </controls:AutoCompleteBox>
                 <controls:AutoCompleteBox Text="{Binding Path=Town, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                MinimumPrefixLength ="0"    FilterMode="Contains"   IsDropDownOpen="True"     ItemsSource="{Binding Path=TownsList}"  MaxDropDownHeight="260"            BorderBrush="{Binding Path=TextBoxCityB}" x:Name="textBox_Copy31" Grid.Column="1" HorizontalAlignment="Left" Height="28"  VerticalAlignment="Top" Width="100" Grid.Row="6" Margin="105,0,0,0" Grid.RowSpan="2">
+                MinimumPrefixLength ="0"    FilterMode="Contains"   IsDropDownOpen="True"     ItemsSource="{Binding Path=TownsList}"  MaxDropDownHeight="260"            BorderBrush="{Binding Path=TextBoxCityB}" x:Name="textBox_Copy31" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="28"  VerticalAlignment="Top" Width="180" Grid.Row="6" Margin="195,10,0,0" Grid.RowSpan="2">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="PreviewMouseDown">
                             <i:InvokeCommandAction  Command="{Binding Path=ClickOnAutoComplete}" CommandParameter="{Binding ElementName=textBox_Copy31}"></i:InvokeCommandAction>
@@ -106,7 +106,7 @@
                     </controls:AutoCompleteBox.InputBindings>
                 </controls:AutoCompleteBox>
                 <controls:AutoCompleteBox Text="{Binding Path=District, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                 MinimumPrefixLength ="0"        IsDropDownOpen="True"       FilterMode="Contains"     ItemsSource="{Binding Path=  DistrictList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" BorderBrush="{Binding Path=TextBoxDistrictB}"  MaxDropDownHeight="260"              x:Name="textBox_Copy32" Grid.Column="1" HorizontalAlignment="Left" Height="28"  VerticalAlignment="Top" Width="100" Grid.Row="6" Margin="215,0,0,0" Grid.RowSpan="2">
+                 MinimumPrefixLength ="0"        IsDropDownOpen="True"       FilterMode="Contains"     ItemsSource="{Binding Path=  DistrictList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" BorderBrush="{Binding Path=TextBoxDistrictB}"  MaxDropDownHeight="260"              x:Name="textBox_Copy32" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="28"  VerticalAlignment="Top" Width="180" Grid.Row="6" Margin="380,10,0,0" Grid.RowSpan="2">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="PreviewMouseDown">
                             <i:InvokeCommandAction  Command="{Binding Path=ClickOnAutoComplete}" CommandParameter="{Binding ElementName=textBox_Copy32}"></i:InvokeCommandAction>
@@ -118,7 +118,7 @@
                     </controls:AutoCompleteBox.InputBindings>
                 </controls:AutoCompleteBox>
                 <controls:AutoCompleteBox  ItemsSource="{Binding Path=StreetList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"     MaxDropDownHeight="260"   
-                 MinimumPrefixLength ="0"    FilterMode="Contains"  IsDropDownOpen="True"    Text="{Binding Path=Street, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  BorderBrush="{Binding Path=TextBoxStreetB}" x:Name="textBox_Copy33" Grid.Column="1" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="100" Grid.Row="6" Margin="325,0,0,0" Grid.RowSpan="2">
+                 MinimumPrefixLength ="0"    FilterMode="Contains"  IsDropDownOpen="True"    Text="{Binding Path=Street, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  BorderBrush="{Binding Path=TextBoxStreetB}" x:Name="textBox_Copy33" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="180" Grid.Row="6" Margin="10,63,0,0" Grid.RowSpan="3">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="PreviewMouseDown">
                             <i:InvokeCommandAction  Command="{Binding Path=ClickOnAutoComplete}" CommandParameter="{Binding ElementName=textBox_Copy33}"></i:InvokeCommandAction>
@@ -129,13 +129,13 @@
                         <KeyBinding Command="{Binding Path=Changed}"/>
                     </controls:AutoCompleteBox.InputBindings>
                 </controls:AutoCompleteBox>
-                <TextBox Text="{Binding Path=House, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  BorderBrush="{Binding Path=TextBoxHouseB}"  x:Name="textBox_Copyв4" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Grid.Row="7" Margin="0,27,0,0" Grid.RowSpan="2">
+                <TextBox Text="{Binding Path=House, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  BorderBrush="{Binding Path=TextBoxHouseB}"  x:Name="textBox_Copyв4" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Grid.Row="7" Margin="13,25,0,0" Grid.RowSpan="2">
                     <TextBox.InputBindings>
 
                         <KeyBinding Command="{Binding Path=Changed}"/>
                     </TextBox.InputBindings>
                 </TextBox>
-                <TextBox Text="{Binding Path=CurrentPatientFlat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  BorderBrush="{Binding Path=TextBoxFlatB}"  x:Name="textBox_Copвy4" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Grid.Row="7" Margin="106,27,0,0" Grid.RowSpan="2">
+                <TextBox Text="{Binding Path=CurrentPatientFlat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  BorderBrush="{Binding Path=TextBoxFlatB}"  x:Name="textBox_Copвy4" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Grid.Row="7" Margin="118,25,0,0" Grid.RowSpan="2">
                     <TextBox.InputBindings>
 
                         <KeyBinding Command="{Binding Path=Changed}"/>

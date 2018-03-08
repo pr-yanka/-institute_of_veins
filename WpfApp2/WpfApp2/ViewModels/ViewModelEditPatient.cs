@@ -524,6 +524,8 @@ namespace WpfApp2.ViewModels
             
                 //Street = strtRep.Get(CurrentPatient.Street).Str;
             }
+            GetTowns();
+            GetStreetAnDistrict();
             House = CurrentPatient.House;
             Phone = CurrentPatient.Phone;
             email = CurrentPatient.Email;
