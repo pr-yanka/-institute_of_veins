@@ -103,19 +103,19 @@
                                     <DataTemplate >
                                         <controls:AutoCompleteBox Padding="4" Height="29"  Text="{Binding  Commentary,UpdateSourceTrigger=PropertyChanged}"
                  FilterMode="Contains"       IsDropDownOpen="True"        ItemsSource="{Binding Path=BloodExchangeCommentList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" BorderBrush="{Binding Path=TextBoxDistrictB}"  MaxDropDownHeight="260"              x:Name="textBox_Copy32">
-                                           
-                                           
+
+
                                         </controls:AutoCompleteBox>
-                                     
+
 
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            
-                        <DataGridTemplateColumn >
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate >
-                                    <Grid>
+
+                            <DataGridTemplateColumn >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <Grid>
                                             <Button BorderThickness="0" Command="{Binding Path=DeleteCommand}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="30" Height="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}" >
                                                 <Button.Template>
                                                     <ControlTemplate>
@@ -127,16 +127,16 @@
                                                     </ControlTemplate>
                                                 </Button.Template>
                                             </Button>
-                                    </Grid>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+                                        </Grid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button Command="{Binding OpenCommand}" Margin="0,5"  Height="27" FontSize="12" Width="425" Content="добавить переливание" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top"></Button>
 
                     <TextBox  Margin="0,0" x:Name="textBox_Copy1" Padding="4"  Text="{Binding Path=Sugar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="425" Grid.Row="3">
-                       
+
                     </TextBox>
                     <ListBox ItemsSource="{Binding Path=HirurgInteruptList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="137"  VerticalAlignment="Top" Width="425" Grid.Row="4" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
                         <ListBox.ItemTemplate>
@@ -208,7 +208,7 @@
 
                                     </Button>
                                 </StackPanel>
-                             
+
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
@@ -226,7 +226,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <StackPanel>
                                         <TextBox  TextWrapping="Wrap" Width="390"  HorizontalAlignment="Center" Height="auto" Text="{Binding  Data.Str,UpdateSourceTrigger=PropertyChanged}" />
-                                         <controls:AutoCompleteBox  Width="390" Text="{Binding  Commentary,UpdateSourceTrigger=PropertyChanged}"
+                                        <controls:AutoCompleteBox  Width="390" Text="{Binding  Commentary,UpdateSourceTrigger=PropertyChanged}"
               FilterMode="Contains"          Height="20"     ItemsSource="{Binding Path=PreparateHateCommentList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" BorderBrush="{Binding Path=TextBoxDistrictB}"  MaxDropDownHeight="260"              x:Name="textBox_Copy32">
 
 
@@ -243,9 +243,9 @@
                                             </ControlTemplate>
                                         </Button.Template>
                                     </Button>
-                                   
+
                                 </StackPanel>
-                                
+
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
@@ -289,19 +289,20 @@
                 </Border.RenderTransform>
 
                 <Grid>
-                    <Canvas Background="#FFC6E8E6" Margin="0,0,0,29">
-                        <TextBlock x:Name="textfBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="135" FontSize="18" Canvas.Top="10" Text="Переливание крови"/>
-                        <DatePicker x:Name="texвtBfox1" HorizontalAlignment="Left" Height="22" SelectedDate="{Binding ShortTime}" VerticalAlignment="Top" Width="150" Canvas.Left="270" Canvas.Top="37" />
-                        <TextBox x:Name="textBfox1" HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" Width="120" Canvas.Left="75" Canvas.Top="40" />
-                        <TextBox x:Name="textвBппfox1" HorizontalAlignment="Center" Height="42" TextWrapping="Wrap" Text="{Binding Path=LongText}" VerticalAlignment="Top" Width="400" Canvas.Left="26" Canvas.Top="90" />
+                    <Canvas Background="#FFC6E8E6" Margin="0,0,0,10">
+                        <TextBlock x:Name="textfBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="134" FontSize="18" Canvas.Top="10" Text="Переливание крови"/>
+                        <DatePicker x:Name="texвtBfox1" HorizontalAlignment="Left" Height="22" SelectedDate="{Binding ShortTime}" VerticalAlignment="Top" Width="150" Canvas.Left="289" Canvas.Top="48" />
+                        <TextBox x:Name="textBfox1" HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" Width="77" Canvas.Left="82" Canvas.Top="52" />
+                        <TextBox x:Name="textвBппfox1" HorizontalAlignment="Center" Height="42" TextWrapping="Wrap" Text="{Binding Path=LongText}" VerticalAlignment="Top" Width="430" Canvas.Left="10" Canvas.Top="110" />
 
-                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.RevertCommand}" Canvas.Left="0" Canvas.Top="150" />
-                        <TextBox x:Name="textBвіаfox1" HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" Width="120" Canvas.Left="75" Canvas.Top="40" />
+                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.RevertCommand}" Canvas.Left="10" Canvas.Top="163" />
+                        <TextBox x:Name="textBвіаfox1" HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" Width="77" Canvas.Left="82" Canvas.Top="52" />
 
-                        <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtonfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.SaveCommand}" Canvas.Left="250" Canvas.Top="150" />
-                        <TextBlock x:Name="texftBlock_Copy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="42" Canvas.Left="30" Text="Объём:"/>
-                        <TextBlock x:Name="texftBlock_Copвy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="42" Canvas.Left="238" Text="Дата:"/>
-                        <TextBlock x:Name="texftBlocуk_Copвy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="70" Canvas.Left="188" Text="Комментарий:"/>
+                        <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtonfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.SaveCommand}" Canvas.Left="239" Canvas.Top="163" />
+                        <TextBlock x:Name="texftBlock_Copy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="52" Canvas.Left="9" Text="Объём:" RenderTransformOrigin="0.433,0.881" FontSize="18"/>
+                        <TextBlock x:Name="texftBlock_Copвy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="50" Canvas.Left="239" Text="Дата:" RenderTransformOrigin="1.2,0.579" FontSize="18"/>
+                        <TextBlock x:Name="texftBlocуk_Copвy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="83" Canvas.Left="10" Text="Комментарий:" FontSize="18"/>
+                        <TextBlock x:Name="texftBlock_Copy" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="52" Canvas.Left="164" Text="мл" RenderTransformOrigin="0.433,0.881" FontSize="18"/>
                     </Canvas>
                 </Grid>
             </Border>

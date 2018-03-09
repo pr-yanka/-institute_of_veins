@@ -19,10 +19,11 @@
             <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="button" Visibility="Hidden" Content="Загрузить данные из регистратуры" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" />
 
             <StackPanel  Orientation="Horizontal" Margin="0,300,0,0"  >
-               <Button   x:Name="button_Coаpy3" Visibility="{Binding Path=VisibilityOfGoBAck}" Content="Вернуться" Command="{Binding Path=GoToDoctorListCommand}"   Style="{StaticResource MyNormalBUTTON}"/>
 
-                <Button  Margin="79,0"  x:Name="button_Copy3" Visibility="{Binding Path=Visibility}" Content="Сбросить" Command="{Binding Path=ToDashboardCommand}"   Style="{StaticResource MyNormalBUTTON}"/>
-            <Button Width="{Binding WidthOfBtn}" x:Name="button_Copy4" Content="{Binding Path=nameOfButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Command="{Binding Path=SaveAndGoDoctorListCommand}"   Style="{StaticResource MyConfirmBUTTON}" />
+                <Button   x:Name="button_Coаpy3" Visibility="{Binding VisibilityOfGoBAck}" Content="Вернуться" Command="{Binding GoToDoctorListCommand}"   Style="{StaticResource MyNormalBUTTON}" Margin="0,148"/>
+
+                <Button  Margin="79,0"  x:Name="button_Copy3" Visibility="{Binding Visibility}" Content="Сбросить" Command="{Binding ToDashboardCommand}"   Style="{StaticResource MyNormalBUTTON}"/>
+                <Button Width="{Binding WidthOfBtn}" x:Name="button_Copy4" Content="{Binding nameOfButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Command="{Binding SaveAndGoDoctorListCommand}"   Style="{StaticResource MyConfirmBUTTON}" />
             </StackPanel>
             <Grid HorizontalAlignment="Left" Height="313" Margin="24,102,0,0" VerticalAlignment="Top" Width="707">
                 <Grid.ColumnDefinitions>
@@ -31,8 +32,8 @@
 
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="25*"/>
-                    <RowDefinition Height="30*"/>
+                    <RowDefinition Height="28*"/>
+                    <RowDefinition Height="27*"/>
                     <RowDefinition Height="28*"/>
                     <RowDefinition Height="27*"/>
                     <RowDefinition Height="28*"/>
@@ -45,15 +46,15 @@
                     <RowDefinition Height="18*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="61,4,0,0" TextWrapping="Wrap" Text="Имя" VerticalAlignment="Top" FontSize="16"/>
-                <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="49,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Grid.Row="1" Text="Фамилия" Grid.RowSpan="2"/>
-                <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="49,7,0,0" TextWrapping="Wrap" Text="Отчество" VerticalAlignment="Top" FontSize="16" Grid.Row="2"/>
-                <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Margin="19,6,0,0" TextWrapping="Wrap" Text="Дополнительно" VerticalAlignment="Top" FontSize="16" Grid.Row="3" Width="144"/>
-                <TextBlock x:Name="textуBlock_аCopy2" HorizontalAlignment="Left" Margin="19,6,0,0" TextWrapping="Wrap" Text="Категория" VerticalAlignment="Top" FontSize="16" Grid.Row="4" Width="144"/>
+                <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="75,0,0,8" TextWrapping="Wrap" Text="Имя" FontSize="16" Grid.Row="1" Width="40"/>
+                <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="56,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Text="Фамилия" Height="19" Width="79"/>
+                <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="56,4,0,0" TextWrapping="Wrap" Text="Отчество" VerticalAlignment="Top" FontSize="16" Grid.Row="2" Height="19" Width="68"/>
+                <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Margin="32,5,0,0" TextWrapping="Wrap" Text="Дополнительно" VerticalAlignment="Top" FontSize="16" Grid.Row="3" Width="131" Height="19"/>
+                <TextBlock x:Name="textуBlock_аCopy2" HorizontalAlignment="Left" Margin="364,26,0,0" TextWrapping="Wrap" Text="Категория" VerticalAlignment="Top" FontSize="16" Grid.Row="4" Width="85" Height="19" Grid.Column="1" Grid.RowSpan="2"/>
 
                 <controls:AutoCompleteBox FilterMode="None" BorderBrush="{Binding Path=TextBoxCategoryB}"  Canvas.Left="199" Canvas.Top="113" MinimumPrefixLength ="0"  IsDropDownOpen="True"  Text="{Binding Path=СategoryTypeSelectedText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                           ItemsSource="{Binding Path=Category}"  MaxDropDownHeight="260"  SelectedItem="{Binding Path=СategoryTypeSelected,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                        x:Name="textBox_Copy3"  Height="28"  VerticalAlignment="Top" Grid.Row="4" Grid.Column="1"  HorizontalAlignment="Left" Width="100">
+                        x:Name="textBox_Copy3"  Height="31"  VerticalAlignment="Top" Grid.Row="5" Grid.Column="1"  HorizontalAlignment="Left" Width="200" Margin="303,25,0,0" Grid.RowSpan="2">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="PreviewMouseDown">
                             <i:InvokeCommandAction  Command="{Binding Path=ClickOnAutoComplete}" CommandParameter="{Binding ElementName=textBox_Copy3}"></i:InvokeCommandAction>
@@ -62,23 +63,19 @@
 
                 </controls:AutoCompleteBox>
 
-                <TextBlock x:Name="textуBlock_Copy2" HorizontalAlignment="Left" Margin="19,6,0,0" TextWrapping="Wrap" Text="Специальность" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Width="144"/>
-                <TextBlock x:Name="textуBlock_Copyd2" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="120,6,0,0" Text="Звание" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Grid.Column="2" Width="144"/>
+                <TextBlock x:Name="textуBlock_Copy2" HorizontalAlignment="Left" Margin="32,26,0,0" TextWrapping="Wrap" Text="Специальность" VerticalAlignment="Top" FontSize="16" Grid.Row="4" Width="144" Height="19" Grid.RowSpan="2"/>
+                <TextBlock x:Name="textуBlock_Copyd2" HorizontalAlignment="Left" TextWrapping="Wrap" Margin="97,0,0,0" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Grid.Column="1" Width="144" Height="19"><Run Text="Научное "/><Run Text="з"/><Run Text="вание"/></TextBlock>
 
-                <TextBox  BorderBrush="{Binding Path=TextBoxNameB}"  x:Name="textBox" Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Width="511">
-
-                </TextBox>
-                <TextBox BorderBrush="{Binding Path=TextBoxSurnameB}" x:Name="textBox_Copy" Text="{Binding Path=Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="511" Grid.Row="1">
+                <TextBox  BorderBrush="{Binding Path=TextBoxNameB}"  x:Name="textBox" Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Width="521" Grid.Row="1">
 
                 </TextBox>
-                <TextBox BorderBrush="{Binding Path=TextBoxPatronimicB}" x:Name="textBox_Copy1"  Text="{Binding Path=Patronimic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="28" Margin="0,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="511" Grid.Row="1" Grid.RowSpan="2">
-
-                </TextBox>
-                <TextBox x:Name="comboBox" Text="{Binding Path=Aditional, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="2" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" Width="511" Height="33" Margin="0,0,0,0"/>
-                <Grid Grid.Row="3" Margin="0,30,0,0" Grid.RowSpan="10" Height="100" Width="auto" >
+                <TextBox BorderBrush="{Binding Path=TextBoxSurnameB}" x:Name="textBox_Copy" Text="{Binding Path=Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="24" TextWrapping="Wrap" VerticalAlignment="Top" Width="521"/>
+                <TextBox BorderBrush="{Binding Path=TextBoxPatronimicB}" x:Name="textBox_Copy1"  Text="{Binding Path=Patronimic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="521" Grid.Row="2" Margin="0,4,0,0"/>
+                <TextBox x:Name="comboBox" Text="{Binding Path=Aditional, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" Width="521" Height="22" Margin="0,5,0,0"/>
+                <Grid Grid.Row="5" Margin="0,25,0,6" Grid.RowSpan="5" Width="auto" >
                     <DataGrid  ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" 
                           Foreground="Black"  AutoGenerateColumns="False" HeadersVisibility="None" 
-                     ItemsSource="{Binding Path=Controller.CurrentViewModel.Specializations}" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" >
+                     ItemsSource="{Binding Path=Controller.CurrentViewModel.Specializations}" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" Margin="0,0,0,-11" >
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="Спека">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -97,13 +94,17 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
-                <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="butвton" Command="{Binding Path=OpenAddSpecCommand}" Grid.Row="10" Visibility="Visible" Content="Добавить Специальность" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Height="auto"  FontSize="10"/>
-                <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="butвtoвn" Command="{Binding Path=OpenAddScintificsCommand}" Grid.Column="1" Margin="120,0" Grid.Row="10" Visibility="Visible" Content="Добавить Звание" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Height="auto" FontSize="10"/>
+                <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="butвton" Command="{Binding Path=OpenAddSpecCommand}" Grid.Row="10" Visibility="Visible" Content="Другая специальность" HorizontalAlignment="Left" VerticalAlignment="Top" Width="190" Height="26"  FontSize="10" Margin="-4,18,0,0" Grid.RowSpan="2"/>
+                <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="butвtoвn" Command="{Binding Path=OpenAddScintificsCommand}" Grid.Column="1" Margin="70,18,0,0" Grid.Row="10" Visibility="Visible" Content="Другое научное звание" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Height="26" FontSize="10" Grid.RowSpan="2"/>
 
-                <Grid Grid.Row="3" Grid.Column="2" Margin="120,30,0,0" Grid.RowSpan="10" Height="100" Width="auto" >
-                    <DataGrid ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" HorizontalAlignment="Left" Height="220"  VerticalAlignment="Top" Width="152" Grid.Column="2" 
-                          Foreground="Black"  AutoGenerateColumns="False" HeadersVisibility="None" Grid.Row="5" Grid.RowSpan="10"
-                     ItemsSource="{Binding Path=Controller.CurrentViewModel.Scintifics}" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" >
+                <Grid Grid.Row="5" Grid.Column="1" Margin="120,25,0,6" Grid.RowSpan="5" Width="auto" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="57*"/>
+                        <ColumnDefinition Width="344*"/>
+                    </Grid.ColumnDefinitions>
+                    <DataGrid ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" HorizontalAlignment="Left" Height="111"  VerticalAlignment="Top" Width="268" 
+                          Foreground="Black"  AutoGenerateColumns="False" HeadersVisibility="None"
+                     ItemsSource="{Binding Path=Controller.CurrentViewModel.Scintifics}" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" Margin="-102,0,0,-11" Grid.ColumnSpan="2" >
                         <DataGrid.Columns>
                             <DataGridTemplateColumn Header="Спека">
                                 <DataGridTemplateColumn.CellTemplate>
@@ -122,29 +123,9 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </Grid>
 
-
-
-            <Border Grid.RowSpan="20" Grid.ColumnSpan="20" Visibility="{Binding Path = CurrentSpecPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOv5erlay">
+            <Border Visibility="{Binding Path = CurrentSpecPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOv5erlay" Margin="0,-8,0,8">
                 <Border.Background>
                     <SolidColorBrush Color="Black" Opacity="0.78"/>
                 </Border.Background>
@@ -179,24 +160,24 @@
 
                 <Grid>
                     <Canvas Background="#FFC6E8E6" Margin="0,0,0,29">
-                        <TextBlock x:Name="textfBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="135" FontSize="18" Canvas.Top="10" Text="Добавить специализацию"/>
-                        <TextBox x:Name="textBfox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="61" />
-                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding ParentVM.RevertSpecCommand}" Canvas.Left="0" Canvas.Top="120" />
-                        <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtonfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding ParentVM.SaveSpecCommand}" Canvas.Left="250" Canvas.Top="120" />
-                        <TextBlock x:Name="texftBlock_Copy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="42" Canvas.Left="173" Text="Название:"/>
+                        <TextBlock x:Name="textfBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="112" FontSize="18" Canvas.Top="10" Text="Добавить специализацию"/>
+                        <TextBox x:Name="textBfox1" HorizontalAlignment="Left" Height="53" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="77" />
+                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding ParentVM.RevertSpecCommand}" Canvas.Left="10" Canvas.Top="144" />
+                        <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtonfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding ParentVM.SaveSpecCommand}" Canvas.Left="232" Canvas.Top="144" />
+                        <TextBlock x:Name="texftBlock_Copy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="50" Canvas.Left="10" Text="Название:" FontSize="18"/>
 
                     </Canvas>
                 </Grid>
             </Border>
 
 
-            <Border  Grid.RowSpan="20" Grid.ColumnSpan="20" Visibility="{Binding Path = CurrentScintificsPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOввv5erlay">
+            <Border Visibility="{Binding Path = CurrentScintificsPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOввv5erlay" Margin="0,-8,0,8">
                 <Border.Background>
                     <SolidColorBrush Color="Black" Opacity="0.78"/>
                 </Border.Background>
             </Border>
 
-            <Border x:Name="panel34Cфівфвoвrntrol"  Grid.RowSpan="20" Grid.ColumnSpan="20" Margin="0,0,-450,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="450" Height="225" DataContext="{Binding Path=CurrentScintificsPanelViewModel}" >
+            <Border x:Name="panel34Cфівфвoвrntrol" Margin="0,-46,-480,458" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="450" Height="225" DataContext="{Binding Path=CurrentScintificsPanelViewModel}" >
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
                         <Style.Triggers>
@@ -224,12 +205,12 @@
                 </Border.RenderTransform>
 
                 <Grid>
-                    <Canvas Background="#FFC6E8E6" Margin="0,0,0,29">
-                        <TextBlock x:Name="tвextfBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="135" FontSize="18" Canvas.Top="10" Text="Добавить научное звание"/>
-                        <TextBox x:Name="texвtBfox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="61" />
-                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttoвnfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.RevertScintificsCommand}" Canvas.Left="0" Canvas.Top="120"/>
-                        <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtoвnfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.SaveScintificsCommand}" Canvas.Left="250" Canvas.Top="120"/>
-                        <TextBlock x:Name="texfвtBlock_Copy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="42" Canvas.Left="173" Text="Название:"/>
+                    <Canvas Background="#FFC6E8E6" Margin="-28,253,28,-224">
+                        <TextBlock x:Name="tвextfBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="118" FontSize="18" Canvas.Top="10" Text="Добавить научное звание"/>
+                        <TextBox x:Name="texвtBfox1" HorizontalAlignment="Left" Height="44" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="80" />
+                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttoвnfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.RevertScintificsCommand}" Canvas.Left="10" Canvas.Top="144" Width="190"/>
+                        <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtoвnfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.SaveScintificsCommand}" Canvas.Left="250" Canvas.Top="144" Width="182"/>
+                        <TextBlock x:Name="texfвtBlock_Copy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="53" Canvas.Left="10" Text="Название:" FontSize="18"/>
 
                     </Canvas>
                 </Grid>
