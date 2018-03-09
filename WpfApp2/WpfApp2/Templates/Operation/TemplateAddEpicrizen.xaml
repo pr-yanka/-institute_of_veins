@@ -1,26 +1,32 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:WpfApp2.Templates">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/LegParts/Templates/RightPanelAnimation.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
     <DataTemplate x:Key="TemplateAddEpicrizen">
         <Grid Margin="0,80,0,0">
             <Label x:Name="label" Content="Составление выписки" HorizontalAlignment="Left" Margin="397,10,0,0" VerticalAlignment="Top" FontSize="22pt"/>
             <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="buttond_Copy1" Content="Составить выписку" Command="{Binding Path=ToCreateStatementCommand}" HorizontalAlignment="Left" Margin="689,541,0,0" VerticalAlignment="Top"  
                    />
-            
+            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="butвtond_Copy1" Height="30" Content="Новое склерозирование" Command="{Binding Path=OpenAddSclerozCommand}" HorizontalAlignment="Left" Width="240" Margin="400,249,0,0" VerticalAlignment="Top"  
+                   />
+            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="butв5tond_Copy1" Height="30" Content="Новый антикоагулянт" Command="{Binding Path=OpenAddAnticogulantsCommand}" HorizontalAlignment="Left" Width="240" Margin="400,149,0,0" VerticalAlignment="Top"  
+                   />
             <TextBlock Text=" Рекомендовано: дебанражирование и УЗ-контроль на" Width="auto" Height="23" Margin="0,0,153,420"></TextBlock>
             <TextBox Text="{Binding Path=days}" Width="40" Height="23" Margin="0,0,373,425">
             </TextBox>
             <TextBlock Margin="0,0,230,425" Width="100" Height="20" Text="сутки"></TextBlock>
             <TextBlock Text="Антикоагулянт : " Width="200" Height="23" Margin="0,0,820,320"></TextBlock>
-            <TextBox Text="{Binding Path=Антикоагулянты}"  Width="140" Height="20" Margin="0,0,703,330"></TextBox>
+            <ComboBox SelectedIndex="{Binding Path=AnticogulantIdSelected}" ItemsSource="{Binding Path=AnticogulantSelected}"  Width="240" Height="20" Margin="133,0,603,330"></ComboBox>
             <TextBlock Text="Врач " Width="200" Height="23" Margin="0,0,820,220"></TextBlock>
 
-            <ComboBox ItemsSource="{Binding Path=Doctors}" SelectedIndex="{Binding Path=SelectedDoctor}"  Width="100" Height="13" Margin="0,0,750,230"></ComboBox>
-            <Button Style="{StaticResource MyNormalBUTTON}" Width="215" x:Name="button_Copy" Command="{Binding Path=ToOperationOverviewCommand}" Content="Вернуться к операции" HorizontalAlignment="Left" Margin="69,541,0,0"              
+            <ComboBox ItemsSource="{Binding Path=Doctors}" SelectedIndex="{Binding Path=SelectedDoctor}"  Width="240" Height="13" Margin="79,0,550,230"></ComboBox>
+            <Button Style="{StaticResource MyNormalBUTTON}" Width="230" x:Name="button_Copy" Command="{Binding Path=ToOperationOverviewCommand}" Content="Вернуться к операции" HorizontalAlignment="Left" Margin="71,541,0,0"              
                     VerticalAlignment="Top" />
 
             <TextBlock Text="Пенное склерозирование : " Width="200" Height="23" Margin="0,0,850,120"></TextBlock>
-            <TextBox Text="{Binding Path=FullScrelizovanie}"  Width="140" Height="20" Margin="0,0,570,130"></TextBox>
+            <ComboBox SelectedIndex="{Binding Path=SclezingIdSelected}" ItemsSource="{Binding Path=SclerozSelected}" Width="240" Height="20" Margin="100,0,570,130"></ComboBox>
 
 
 
@@ -34,6 +40,101 @@
             <TextBox Text="{Binding Path=Svetoootvod}" Width="70" Height="23" Margin="0,0,503,25">
             </TextBox>
             <TextBlock Margin="0,0,303,25" Width="100" Height="20" Text="световод"></TextBlock>
+
+
+
+
+
+            <Border Grid.RowSpan="20" Grid.ColumnSpan="20" Visibility="{Binding Path = CurrentSclerozPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOv5erlay">
+                <Border.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.78"/>
+                </Border.Background>
+            </Border>
+
+            <Border x:Name="panel34Corntrol" Grid.RowSpan="20" Grid.ColumnSpan="20"  Margin="0,0,-450,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="442" Height="200" DataContext="{Binding Path=CurrentSclerozPanelViewModel}" >
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=PanelOpened}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <RemoveStoryboard BeginStoryboardName="AnimationCloseStoryboard"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Open}" x:Name="AnimationBeginStoryboard"/>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <RemoveStoryboard BeginStoryboardName="AnimationBeginStoryboard"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Close}" x:Name="AnimationCloseStoryboard"/>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Border.RenderTransform>
+
+                <Grid>
+                    <Canvas Background="#FFC6E8E6" Margin="0,0,0,29">
+                        <TextBlock x:Name="textfBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="120" FontSize="18" Canvas.Top="20" Text="Добавить склерозирование"/>
+                        <TextBox  x:Name="textBfox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" Width="331" Canvas.Left="100" Canvas.Top="61" />
+                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding ParentVM.RevertSclerozCommand}" Canvas.Left="10" Canvas.Top="120" />
+                        <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtonfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding ParentVM.SaveSclerozCommand}" Canvas.Left="233" Canvas.Top="120" />
+                        <TextBlock x:Name="texftBlock_Copy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top"  FontSize="18" Canvas.Top="58" Canvas.Left="10" Text="Название:"/>
+
+                    </Canvas>
+                </Grid>
+            </Border>
+
+
+            <Border  Grid.RowSpan="20" Grid.ColumnSpan="20" Visibility="{Binding Path = CurrentAnticogulantsPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOввv5erlay">
+                <Border.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.78"/>
+                </Border.Background>
+            </Border>
+
+            <Border x:Name="panel34Cфівфвoвrntrol"  Grid.RowSpan="20" Grid.ColumnSpan="20" Margin="0,0,-450,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="442" Height="200" DataContext="{Binding Path=CurrentAnticogulantsPanelViewModel}" >
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=PanelOpened}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <RemoveStoryboard BeginStoryboardName="AnimationCloseStoryboard"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Open}" x:Name="AnimationBeginStoryboard"/>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <RemoveStoryboard BeginStoryboardName="AnimationBeginStoryboard"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Close}" x:Name="AnimationCloseStoryboard"/>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Border.RenderTransform>
+
+                <Grid>
+                    <Canvas Background="#FFC6E8E6" Margin="0,0,0,29">
+                        <TextBlock x:Name="tвextfBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top"  Canvas.Left="135" FontSize="18" Canvas.Top="20"  Text="Добавить антикогулянт"/>
+                        <TextBox x:Name="texвtBfox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" Width="331" Canvas.Left="100" Canvas.Top="61"  />
+                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttoвnfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.RevertAnticogulantsCommand}" Canvas.Left="10" Canvas.Top="120"/>
+                        <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtoвnfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.SaveAnticogulantsCommand}" Canvas.Left="233" Canvas.Top="120"/>
+                        <TextBlock x:Name="texfвtBlock_Copy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18" Canvas.Top="58" Canvas.Left="10" Text="Название:"/>
+
+                    </Canvas>
+                </Grid>
+            </Border>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

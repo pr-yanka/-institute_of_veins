@@ -1,13 +1,18 @@
 ﻿using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Input;
 using WpfApp2.Db.Models;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
+using WpfApp2.ViewModels.Panels;
 using Xceed.Words.NET;
 
 namespace WpfApp2.ViewModels
@@ -25,8 +30,28 @@ namespace WpfApp2.ViewModels
     //        return doc.Sirname + initials;
     //    }
     //}
-    public class ViewModelAddEpicriz : ViewModelBase
+    public class ViewModelAddEpicriz : ViewModelBase, INotifyPropertyChanged
     {
+        public DelegateCommand RevertSclerozCommand { set; get; }
+        public DelegateCommand RevertAnticogulantsCommand { set; get; }
+        public DelegateCommand SaveSclerozCommand { set; get; }
+        public DelegateCommand SaveAnticogulantsCommand { set; get; }
+        public ICommand OpenAddSclerozCommand { protected set; get; }
+        public ICommand OpenAddAnticogulantsCommand { protected set; get; }
+        public SclerozPanelViewModel CurrentSclerozPanelViewModel { get; protected set; }
+        public AnticogulantPanelViewModel CurrentAnticogulantsPanelViewModel { get; protected set; }
+        public static bool Handled = false;
+        public UIElement UI;
+
+
+        #region Inotify realisation
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            //если PropertyChanged не нулевое - оно будет разбужено
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
 
         public float E1 { get; set; }
         public float E2 { get; set; }
@@ -47,10 +72,61 @@ namespace WpfApp2.ViewModels
         public string operationType { get; set; }
         public Patient CurrentPatient;
         private int operationId;
-        public List<DoctorDataSource> DoctorsSelected;
 
+
+        private int _sclezingIdSelected;
+
+        private int _anticogulantIdSelected;
+        public int SclezingIdSelected
+        {
+            get { return _sclezingIdSelected; }
+            set
+            {
+                _sclezingIdSelected = value;
+
+                OnPropertyChanged();
+            }
+        }
+        public int AnticogulantIdSelected
+        {
+            get { return _anticogulantIdSelected; }
+            set
+            {
+                _anticogulantIdSelected = value;
+
+                OnPropertyChanged();
+            }
+        }
+
+
+        private ObservableCollection<Anticogulants> _anticogulantSelected;
+        private ObservableCollection<Sclezing> _sclerozSelected;
+
+        public List<DoctorDataSource> DoctorsSelected;
+        public ObservableCollection<Anticogulants> AnticogulantSelected
+        {
+            get { return _anticogulantSelected; }
+            set
+            {
+                _anticogulantSelected = value;
+
+                OnPropertyChanged();
+            }
+        }
+        public ObservableCollection<Sclezing> SclerozSelected
+        {
+            get { return _sclerozSelected; }
+            set
+            {
+                _sclerozSelected = value;
+
+                OnPropertyChanged();
+            }
+        }
         private void GetOperationid(object sender, object data)
         {
+            //MessageBus.Default.Call("SetClearSclazingList", null, null);
+            //MessageBus.Default.Call("SetClearAnticogulanyList", null, null);
             days = 0.0f;
             Svetoootvod = "";
             Антикоагулянты = "";
@@ -83,13 +159,23 @@ namespace WpfApp2.ViewModels
                 }
             }
         }
+        //private void SetAnticogulantList(object sender, object data)
+        //{
+        //    AnticogulantSelected = (ObservableCollection<AnticogulanyListDataSource>)data;
 
+        //}
+        //private void SetSclezingList(object sender, object data)
+        //{
+        //    SclerozSelected = (ObservableCollection<SclerozListDataSource>)data;
+
+        //}
         public ViewModelAddEpicriz(NavigationController controller) : base(controller)
-        {
-
-
+        {//SetAnticogulantList
+            //MessageBus.Default.Subscribe("SetAnticogulantList", SetAnticogulantList);
+            //MessageBus.Default.Subscribe("SetSclazingListForEpicriz", SetSclezingList);
             MessageBus.Default.Subscribe("GetOperationIDForAddEpicriz", GetOperationid);
             HasNavigation = false;
+            SclerozSelected = new ObservableCollection<Sclezing>(Data.Sclezing.GetAll);
 
             ToCreateStatementCommand = new DelegateCommand(
                 () =>
@@ -108,7 +194,7 @@ namespace WpfApp2.ViewModels
 
 
                     int togle = 0;
-                   
+
                     string fileName = System.IO.Path.GetTempPath() + "Предоперационный_эпикриз.docx";
                     byte[] bte = new byte[1];
                     if (Operation.OnWhatLegOp == "0")
@@ -284,10 +370,16 @@ namespace WpfApp2.ViewModels
                         //    document.ReplaceText("«Операция2»", Data.OperationType.Get(Operation.OperationTypeId).LongName);
 
                         document.ReplaceText("«Анестетик»", Data.Anestethic.Get(Operation.AnestheticId).Str);
-                        document.ReplaceText("«Антикоагулянты»", Антикоагулянты);
+                        if (AnticogulantIdSelected != 0)
+                            document.ReplaceText("«Антикоагулянты»", AnticogulantSelected[AnticogulantIdSelected].Str);
+                        else
+                            document.ReplaceText("«Антикоагулянты»", "");
                         document.ReplaceText("«E1»", E1.ToString());
                         document.ReplaceText("«E2»", E2.ToString());
+                        document.ReplaceText("«E12»", E1.ToString());
+                        document.ReplaceText("«E22»", E2.ToString());
                         document.ReplaceText("«световод»", Svetoootvod);
+                        document.ReplaceText("«световод2»", Svetoootvod);
                         string brigade = "";
                         int ix = 0;
                         foreach (var brg in DoctorsSelected)
@@ -305,7 +397,18 @@ namespace WpfApp2.ViewModels
 
                         document.ReplaceText("«сутки»", days.ToString());
                         document.ReplaceText("«Врач»", Doctors[SelectedDoctor].ToString());
-                        document.ReplaceText("«PNS»", FullScrelizovanie);
+
+                        if (SclezingIdSelected != 0)
+                        {
+                            document.ReplaceText("«PNS»", SclerozSelected[SclezingIdSelected ].Str);
+
+                            document.ReplaceText("«PNS2»", SclerozSelected[SclezingIdSelected ].Str);
+                        }
+                        else
+                        {
+                            document.ReplaceText("«PNS»", "");
+                            document.ReplaceText("«PNS2»", "");
+                        }
                         int i1 = 0;
                         int i2 = 0;
                         string leftP = "";
@@ -381,9 +484,129 @@ namespace WpfApp2.ViewModels
                     Controller.NavigateTo<ViewModelOperationOverview>();
                 }
             );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            CurrentSclerozPanelViewModel = new SclerozPanelViewModel(this);
+            OpenAddSclerozCommand = new DelegateCommand(() =>
+            {
+                CurrentSclerozPanelViewModel.ClearPanel();
+                CurrentSclerozPanelViewModel.PanelOpened = true;
+            });
+
+            SaveSclerozCommand = new DelegateCommand(() =>
+            {
+                var newType = CurrentSclerozPanelViewModel.GetPanelType();
+                if (!string.IsNullOrWhiteSpace(newType.Str))
+                {
+                    CurrentSclerozPanelViewModel.PanelOpened = false;
+
+                    Handled = false;
+
+                    Data.Sclezing.Add((newType));
+
+                    Data.Complete();
+
+                    //var DataSourceListbuf = Sclerozializations;
+                    SclerozSelected = new ObservableCollection<Sclezing>();
+
+                    foreach (var Scleroz in Data.Sclezing.GetAll)
+                    {
+                        SclerozSelected.Add(Scleroz);
+                    }
+                    SclezingIdSelected = SclerozSelected.Count;
+                    //foreach (var Scleroz in DataSourceListbuf)
+                    //{
+                    //    if (Scleroz.IsChecked.Value)
+                    //    {
+                    //        Sclerozializations.Where(s => s.id == Scleroz.id).ToList()[0].IsChecked = true;
+                    //    }
+                    //}
+
+                    Controller.NavigateTo<ViewModelAddEpicriz>();
+                }
+                else
+                { MessageBox.Show("Не все поля заполнены"); }
+            });
+            RevertSclerozCommand = new DelegateCommand(() =>
+            {
+                CurrentSclerozPanelViewModel.PanelOpened = false;
+                Handled = false;
+            });
+
+
+            CurrentAnticogulantsPanelViewModel = new AnticogulantPanelViewModel(this);
+            OpenAddAnticogulantsCommand = new DelegateCommand(() =>
+            {
+                CurrentAnticogulantsPanelViewModel.ClearPanel();
+                CurrentAnticogulantsPanelViewModel.PanelOpened = true;
+            });
+
+            SaveAnticogulantsCommand = new DelegateCommand(() =>
+            {
+                var newType = CurrentAnticogulantsPanelViewModel.GetPanelType();
+                if (!string.IsNullOrWhiteSpace(newType.Str))
+                {
+                    CurrentAnticogulantsPanelViewModel.PanelOpened = false;
+
+                    Handled = false;
+
+                    Data.Anticogulants.Add((newType));
+
+                    Data.Complete();
+
+                    //var DataSourceListbuf = AnticogulantSelected;
+                    AnticogulantSelected = new ObservableCollection<Anticogulants>();
+
+                    foreach (var Scintific in Data.Anticogulants.GetAll)
+                    {
+                        AnticogulantSelected.Add(Scintific);
+                    }
+                    AnticogulantIdSelected = AnticogulantSelected.Count;
+                    //foreach (var Scintific in DataSourceListbuf)
+                    //{
+                    //    if (Scintific.IsChecked.Value)
+                    //    {
+                    //        AnticogulantSelected.Where(s => s.Data.Id == Scintific.Data.Id).ToList()[0].IsChecked = true;
+                    //    }
+                    //}
+
+                    Controller.NavigateTo<ViewModelAddEpicriz>();
+                }
+                else
+                { MessageBox.Show("Не все поля заполнены"); }
+            });
+            RevertAnticogulantsCommand = new DelegateCommand(() =>
+            {
+                CurrentAnticogulantsPanelViewModel.PanelOpened = false;
+                Handled = false;
+            });
+
+
         }
         public DelegateCommand ToOperationCommand { get; protected set; }
         public DelegateCommand ToCreateStatementCommand { get; protected set; }
         public DelegateCommand ToOperationOverviewCommand { get; protected set; }
+        public DelegateCommand ToSetSclezindCommand { get; private set; }
+        public DelegateCommand ToSetAugmentedRealytyCommand { get; }
     }
 }

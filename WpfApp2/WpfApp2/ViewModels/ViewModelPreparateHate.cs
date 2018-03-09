@@ -243,11 +243,12 @@ namespace WpfApp2.ViewModels
 
         public ViewModelPreparateHate(NavigationController controller) : base(controller)
         {
+            VisOfNothingFaund = Visibility.Collapsed;
             MessageBus.Default.Subscribe("SetClearPreparateHateList", SetClear);
             MessageBus.Default.Subscribe("SetPreparateHateListBecauseOFEdit", SetDRecomendationListBecauseOFEdit);
             TextOFNewType = "Новый препарат";
             HeaderText = "Непереносимость припаратов";
-            AddButtonText = "Добавить";
+            AddButtonText = "Добавить препарат";
 
             DataSourceList = new ObservableCollection<PreparateHateDataSource>();
             foreach (var RecomendationsType in Data.PreparateHate.GetAll)

@@ -18,7 +18,7 @@
             <DatePickerTextBox IsReadOnly="True" x:Name="label1_Copy" Text="{Binding Path=Date}" HorizontalAlignment="Left" Margin="447,70,0,0"  
                    VerticalAlignment="Top" RenderTransformOrigin="0.491,0.474" FontSize="22"/>
             <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy" Command="{Binding Path=ToOperationOverviewCommand}" Content="Вернуться к операции" HorizontalAlignment="Left" Margin="69,541,0,0"              
-                    VerticalAlignment="Top" />
+                 Width="230"   VerticalAlignment="Top" />
           
         </Grid>
     </DataTemplate>

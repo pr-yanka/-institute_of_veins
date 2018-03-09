@@ -213,6 +213,12 @@ namespace WpfApp2.Templates
             if (item.GetType() == typeof(ViewModelOperationListForOperation))
                 return TemplateCheckboxes;
             // 
+
+            //if (item.GetType() == typeof(ViewModelSclerozList))
+            //    return TemplateCheckboxesWithFilter;
+            //if (item.GetType() == typeof(ViewModelAnticogulanyList))
+            //    return TemplateCheckboxesWithFilter;
+           
             return null;
         }
     }

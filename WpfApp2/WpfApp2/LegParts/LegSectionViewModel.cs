@@ -82,7 +82,9 @@ namespace WpfApp2.LegParts
                     }
                     else
                     {
+
                         IsButtonsEnabled = true;
+
                         _selectedValue = value;
 
                         SelectedIndex = StructureSource.IndexOf(StructureSource.Where(s => s.Id == _selectedValue.Id).ToList()[0]);

@@ -13,7 +13,7 @@ using WpfApp2.ViewModels.Panels;
 
 namespace WpfApp2.ViewModels
 {
-    public class OperationForAmbullatorCardDataSource : INotifyPropertyChanged
+    public class SclerozListDataSource : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -21,12 +21,9 @@ namespace WpfApp2.ViewModels
             //если PropertyChanged не нулевое - оно будет разбужено
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public OperationForAmbulatornCard Data { get; set; }
+        public Sclezing Data { get; set; }
         public DelegateCommand DeleteCommand { set; get; }
-
         public bool IsVisibleTotal { get; set; }
-        public bool IsFilteredPt { get; set; }
-
         private bool? _isChecked;
         public bool? IsChecked
         {
@@ -36,17 +33,21 @@ namespace WpfApp2.ViewModels
                     return false;
                 else return _isChecked;
             }
-            set { _isChecked = value; OnPropertyChanged(); }
+            set
+            {
+                _isChecked = value;
+
+                OnPropertyChanged();
+            }
         }
-        public OperationForAmbullatorCardDataSource(OperationForAmbulatornCard Recomendations)
+        public SclerozListDataSource(Sclezing Recomendations)
         {
             IsVisibleTotal = true;
-            IsFilteredPt = false;
             this.Data = Recomendations;
             IsChecked = false;
         }
     }
-    public class ViewModelOperationForAmbullatorCardList : ViewModelBase
+    public class ViewModelSclerozList : ViewModelBase
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -66,7 +67,7 @@ namespace WpfApp2.ViewModels
 
         public ICommand OpenCommand { protected set; get; }
 
-        public OperationForAmbullatorCardPanelViewModel CurrentPanelViewModel { get; protected set; }
+        public AlergicAnevrizmPanelViewModel CurrentPanelViewModel { get; protected set; }
 
 
         public static bool Handled = false;
@@ -113,8 +114,8 @@ namespace WpfApp2.ViewModels
                     //    ChangeHistoryClass buf = new ChangeHistoryClass(x.Ch);
                     //    Changes.Add(buf);
                     //}
-                 
-                    DataSourceList = new ObservableCollection<OperationForAmbullatorCardDataSource>(FullCopy);
+
+                    DataSourceList = new ObservableCollection<SclerozListDataSource>(FullCopy);
                 }
                 lastLength = value.Length;
                 if (!string.IsNullOrWhiteSpace(FilterText))
@@ -126,22 +127,21 @@ namespace WpfApp2.ViewModels
 
                         if (DataSourceList[i].Data.Str.ToLower().Contains(FilterText.ToLower()))
                         {
-                            DataSourceList[i].IsFilteredPt = true;
+
                             DataSourceList[i].IsVisibleTotal = true;
-                            //Controller.NavigateTo<ViewModelOperationForAmbullatorCardList>();
+
                         }
                         else
                         {
-                            DataSourceList[i].IsFilteredPt = false;
+
                             DataSourceList[i].IsVisibleTotal = false;
-                            //Controller.NavigateTo<ViewModelOperationForAmbullatorCardList>();
                         }
-                       
+
 
 
 
                     }
-                
+
 
 
                     for (int i = 0; i < DataSourceList.Count; ++i)
@@ -161,111 +161,116 @@ namespace WpfApp2.ViewModels
                         VisOfNothingFaund = Visibility.Collapsed;
                     }
 
-                 // 
+                    // 
                 }
                 else
                 {
-                  
+
                     VisOfNothingFaund = Visibility.Collapsed;
                     foreach (var x in DataSourceList)
                     {
                         x.IsVisibleTotal = true;
-                        x.IsFilteredPt = false;
-                      
+
+
                     }
-                 
+
                     // SetChangesInDB(null, null);
                 }
 
-                Controller.NavigateTo<ViewModelOperationForAmbullatorCardList>();
+                Controller.NavigateTo<ViewModelSclerozList>();
 
 
 
             }
         }
 
-       
-        List<OperationForAmbullatorCardDataSource> FullCopy;
+
+        List<SclerozListDataSource> FullCopy;
+
         private void SetClear(object sender, object data)
         {
-            DataSourceList = new ObservableCollection<OperationForAmbullatorCardDataSource>();
+            DataSourceList = new ObservableCollection<SclerozListDataSource>();
+            FullCopy = new List<SclerozListDataSource>();
             using (var context = new MySqlContext())
             {
-                OperationForAmbulatornCardRepository sRep = new OperationForAmbulatornCardRepository(context);
+                SclezingRepository sRep = new SclezingRepository(context);
+
                 foreach (var HirurgInterupType in sRep.GetAll)
                 {
-                    DataSourceList.Add(new OperationForAmbullatorCardDataSource(HirurgInterupType));
+                    DataSourceList.Add(new SclerozListDataSource(HirurgInterupType));
+                    FullCopy.Add(new SclerozListDataSource(HirurgInterupType));
                 }
             }
         }
+
         private void SetDRecomendationListBecauseOFEdit(object sender, object data)
         {
-
             SetClear(null, null);
-            foreach (var dat in (ObservableCollection<OperationForAmbullatorCardDataSource>)data)
+            foreach (var dat in (List<SclerozListDataSource>)data)
             {
+           
                 foreach (var datC in DataSourceList)
                 {
                     if (dat.Data != null && dat.Data.Id == datC.Data.Id)
                     {
+                        
                         datC.IsChecked = true;
                     }
+                    
                 }
+                
             }
 
         }
+
         public DelegateCommand ToPhysicalCommand { get; protected set; }
         public DelegateCommand SaveChangesCommand { get; protected set; }
         public string TextOFNewType { get; private set; }
         public string HeaderText { get; set; }
         public string AddButtonText { get; set; }
         //Жалобы/диагноз/заключение
-        public ObservableCollection<OperationForAmbullatorCardDataSource> _dataSourceList;
-        public ObservableCollection<OperationForAmbullatorCardDataSource> DataSourceList { get { return _dataSourceList; } set { _dataSourceList = value; OnPropertyChanged(); } }
+        public ObservableCollection<SclerozListDataSource> _dataSourceList;
+        public ObservableCollection<SclerozListDataSource> DataSourceList { get { return _dataSourceList; } set { _dataSourceList = value; OnPropertyChanged(); } }
 
-        public ViewModelOperationForAmbullatorCardList(NavigationController controller) : base(controller)
+        public ViewModelSclerozList(NavigationController controller) : base(controller)
         {
-            VisOfNothingFaund = Visibility.Collapsed;
-            MessageBus.Default.Subscribe("SetClearOprerationForAmbCardList", SetClear);
-            MessageBus.Default.Subscribe("SetOprerationForAmbCardListBecauseOFEdit", SetDRecomendationListBecauseOFEdit);
-            TextOFNewType = "Новая операция";
-            HeaderText = "Операции";
-            AddButtonText = "Добавить операцию";
+            MessageBus.Default.Subscribe("SetClearSclazingList", SetClear);
+            //MessageBus.Default.Subscribe("SetAlergicAnevrizmListBecauseOFEdit", SetDRecomendationListBecauseOFEdit);
+            TextOFNewType = "Новое склезирование";
+            HeaderText = "Склезирование";
+            AddButtonText = "Добавить склезирование";
 
-            DataSourceList = new ObservableCollection<OperationForAmbullatorCardDataSource>();
-            FullCopy = new List<OperationForAmbullatorCardDataSource>();
-            foreach (var RecomendationsType in Data.OperationForAmbulatornCard.GetAll)
+            DataSourceList = new ObservableCollection<SclerozListDataSource>();
+            foreach (var RecomendationsType in Data.Sclezing.GetAll)
             {
-                FullCopy.Add(new OperationForAmbullatorCardDataSource(RecomendationsType));
-                DataSourceList.Add(new OperationForAmbullatorCardDataSource(RecomendationsType));
+                DataSourceList.Add(new SclerozListDataSource(RecomendationsType));
             }
 
             ToPhysicalCommand = new DelegateCommand(
                 () =>
                 {
-                    ObservableCollection<OperationForAmbullatorCardDataSource> DataSourceListBuffer = new ObservableCollection<OperationForAmbullatorCardDataSource>();
+                    ObservableCollection<SclerozListDataSource> DataSourceListBuffer = new ObservableCollection<SclerozListDataSource>();
                     foreach (var Data in DataSourceList)
                     {
                         if (Data.IsChecked == true)
                         {
                             DataSourceListBuffer.Add(Data);
-
                         }
                     }
-                    MessageBus.Default.Call("SetOprerationForAmbCardList", this, DataSourceListBuffer);
-                    Controller.NavigateTo<ViewModelAdditionalInfoPatient>();
+                    MessageBus.Default.Call("SetSclazingListForEpicriz", this, DataSourceListBuffer);
+                    Controller.NavigateTo<ViewModelAddEpicriz>();
                 }
             );
             SaveChangesCommand = new DelegateCommand(
                 () =>
                 {
-                    Controller.NavigateTo<ViewModelAdditionalInfoPatient>();
+                    Controller.NavigateTo<ViewModelAddEpicriz>();
                 }
             );
 
 
 
-            CurrentPanelViewModel = new OperationForAmbullatorCardPanelViewModel(this);
+            CurrentPanelViewModel = new AlergicAnevrizmPanelViewModel(this);
             OpenCommand = new DelegateCommand(() =>
             {
                 CurrentPanelViewModel.ClearPanel();
@@ -281,25 +286,22 @@ namespace WpfApp2.ViewModels
 
                     Handled = false;
 
-                    Data.OperationForAmbulatornCard.Add((newType));
+                    Data.AlergicAnevrizm.Add((newType));
 
                     Data.Complete();
                     var DataSourceListbuf = DataSourceList;
-                    DataSourceList = new ObservableCollection<OperationForAmbullatorCardDataSource>();
-                    FullCopy = new List<OperationForAmbullatorCardDataSource>();
+                    DataSourceList = new ObservableCollection<SclerozListDataSource>();
+                    FullCopy = new List<SclerozListDataSource>();
                     using (var context = new MySqlContext())
                     {
-                        OperationForAmbulatornCardRepository sRep = new OperationForAmbulatornCardRepository(context);
+                        SclezingRepository sRep = new SclezingRepository(context);
+
                         foreach (var HirurgInterupType in sRep.GetAll)
                         {
-                            FullCopy.Add(new OperationForAmbullatorCardDataSource(HirurgInterupType));
-                            DataSourceList.Add(new OperationForAmbullatorCardDataSource(HirurgInterupType));
+                            DataSourceList.Add(new SclerozListDataSource(HirurgInterupType));
+                            FullCopy.Add(new SclerozListDataSource(HirurgInterupType));
                         }
                     }
-                    //foreach (var RecomendationsType in Data.OperationForAmbulatornCard.GetAll)
-                    //{
-                    //    DataSourceList.Add(new OperationForAmbullatorCardDataSource(RecomendationsType));
-                    //}
 
                     foreach (var DiagnosisType in DataSourceListbuf)
                     {
@@ -309,7 +311,7 @@ namespace WpfApp2.ViewModels
                         }
                     }
 
-                    Controller.NavigateTo<ViewModelOperationForAmbullatorCardList>();
+                    Controller.NavigateTo<ViewModelAlergicAnevrizmList>();
                 }
                 else
                 { MessageBox.Show("Не все поля заполнены"); }

@@ -162,12 +162,12 @@ namespace WpfApp2.ViewModels
                 Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
 
 
-                if (Operation.Date > DateTime.Now)
+                if (Operation.итоги_операции == null)
                 {
                     OperationResults = "Операция еще не проведена";
-                    VisiBIlityOfAddResult = Visibility.Hidden;
+                    VisiBIlityOfAddResult = Visibility.Visible;
                     VisiBIlityOfAddCancle = Visibility.Visible;
-
+                    ResultButtonName = "Добавить итоги";
                 }
                 else
                 {

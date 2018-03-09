@@ -55,11 +55,7 @@ namespace WpfApp2.ViewModels
     }
     public class ViewModelAdditionalInfoPatient : ViewModelBase, INotifyPropertyChanged
     {
-        #region DelegateCommands
-        public DelegateCommand ToDashboardCommand { get; protected set; }
-        public DelegateCommand ToCurrentPatientCommand { get; protected set; }
-        public DelegateCommand Changed { get; protected set; }
-        #endregion
+       
 
 
         #region Inotify realisation
@@ -71,6 +67,11 @@ namespace WpfApp2.ViewModels
         }
         #endregion
         #region Bindings
+        #region DelegateCommands
+        public DelegateCommand ToDashboardCommand { get; protected set; }
+        public DelegateCommand ToCurrentPatientCommand { get; protected set; }
+        public DelegateCommand Changed { get; protected set; }
+        #endregion
         public DelegateCommand RevertCommand { set; get; }
 
 

@@ -224,11 +224,12 @@ namespace WpfApp2.ViewModels
 
         public ViewModelHirurgInterruptList(NavigationController controller) : base(controller)
         {
+            VisOfNothingFaund = Visibility.Collapsed;
             MessageBus.Default.Subscribe("SetClearHirurgInterruptList", SetClear);
             MessageBus.Default.Subscribe("SetHirurgInterruptListBecauseOFEdit", SetDRecomendationListBecauseOFEdit);
             TextOFNewType = "Новое вмешательство";
             HeaderText = "Хирургическое вмешательство";
-            AddButtonText = "Добавить";
+            AddButtonText = "Добавить хирургическое вмешательство";
 
             DataSourceList = new ObservableCollection<HirurgInterruptDataSource>();
             foreach (var RecomendationsType in Data.HirurgInterup.GetAll)

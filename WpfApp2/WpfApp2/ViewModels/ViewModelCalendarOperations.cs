@@ -748,15 +748,15 @@ namespace WpfApp2.ViewModels
                           {
                               Operations[i].IsFilteredPt = false;
                           }
-                          if (Operations[i].OpType.ToLower().Contains(FilterText.ToLower()))
-                          {
-                              Operations[i].IsFilteredOpType = true;
-                              Operations[i].IsVisibleTotal = true; ++count;
-                          }
-                          else
-                          {
-                              Operations[i].IsFilteredOpType = false;
-                          }
+                          //if (Operations[i].OpType.ToLower().Contains(FilterText.ToLower()))
+                          //{
+                          //    Operations[i].IsFilteredOpType = true;
+                          //    Operations[i].IsVisibleTotal = true; ++count;
+                          //}
+                          //else
+                          //{
+                          //    Operations[i].IsFilteredOpType = false;
+                          //}
                           if (Operations[i].Date.ToString().ToLower().Contains(FilterText.ToLower()))
                           {
                               Operations[i].IsFilteredDate = true;
@@ -775,7 +775,7 @@ namespace WpfApp2.ViewModels
                           {
                               Operations[i].IsFilteredAnestetic = false;
                           }
-                          if (!Operations[i].IsFilteredDate && !Operations[i].IsFilteredOpType && !Operations[i].IsFilteredPt && !Operations[i].IsFilteredAnestetic)
+                          if (!Operations[i].IsFilteredDate && !Operations[i].IsFilteredPt && !Operations[i].IsFilteredAnestetic)
                           {
                               Operations[i].IsVisibleTotal = false;
                           }

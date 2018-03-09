@@ -55,10 +55,10 @@
 
                     <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="Группа крови" VerticalAlignment="Top" FontSize="16"/>
                     <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Grid.Row="1" Text="Переливание крови" Grid.RowSpan="2"/>
-                    <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="0,7,0,0" TextWrapping="Wrap" Text="Сахарный диабет" VerticalAlignment="Top" FontSize="16" Grid.Row="3"/>
+                    <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap" Text="Сахарный диабет" VerticalAlignment="Top" FontSize="16" Grid.Row="3"/>
                     <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap" Grid.RowSpan="2" Text="Хирургические вмешательства" VerticalAlignment="Top" FontSize="16" Grid.Row="4" Width="144"/>
                     <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap"  Grid.RowSpan="2" Text="Аллергологический анамнез" VerticalAlignment="Top" FontSize="16" Grid.Row="6"/>
-                    <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap" Text="Операции" VerticalAlignment="Top" FontSize="16" Grid.Row="8" Width="166" Grid.RowSpan="3"/>
+                    <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap" Text="Перенесённые операции" VerticalAlignment="Top" FontSize="16" Grid.Row="8" Width="166" Grid.RowSpan="3"/>
 
                     <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="Непереносимость лекарственных препаратов" VerticalAlignment="Top" FontSize="16" Grid.Row="10" Width="auto"/>
 
@@ -226,6 +226,7 @@
                                 <StackPanel Orientation="Horizontal">
                                     <StackPanel>
                                         <TextBox  TextWrapping="Wrap" Width="390"  HorizontalAlignment="Center" Height="auto" Text="{Binding  Data.Str,UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBlock HorizontalAlignment="Left" Text="Комментарий"></TextBlock>
                                         <controls:AutoCompleteBox  Width="390" Text="{Binding  Commentary,UpdateSourceTrigger=PropertyChanged}"
               FilterMode="Contains"          Height="20"     ItemsSource="{Binding Path=PreparateHateCommentList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" BorderBrush="{Binding Path=TextBoxDistrictB}"  MaxDropDownHeight="260"              x:Name="textBox_Copy32">
 

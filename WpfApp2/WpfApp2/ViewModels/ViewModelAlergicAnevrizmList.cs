@@ -225,7 +225,7 @@ namespace WpfApp2.ViewModels
         }
         public DelegateCommand ToPhysicalCommand { get; protected set; }
         public DelegateCommand SaveChangesCommand { get; protected set; }
-        public string TextOFNewType { get; private set; }
+        public string TextOFNewType { get;  set; }
         public string HeaderText { get; set; }
         public string AddButtonText { get; set; }
         //Жалобы/диагноз/заключение
@@ -234,11 +234,12 @@ namespace WpfApp2.ViewModels
 
         public ViewModelAlergicAnevrizmList(NavigationController controller) : base(controller)
         {
+            VisOfNothingFaund = Visibility.Collapsed;
             MessageBus.Default.Subscribe("SetClearAlergicAnevrizmList", SetClear);
             MessageBus.Default.Subscribe("SetAlergicAnevrizmListBecauseOFEdit", SetDRecomendationListBecauseOFEdit);
             TextOFNewType = "Новый анамнез";
             HeaderText = "Аллергологический анамнез";
-            AddButtonText = "Добавить";
+            AddButtonText = "Добавить аллергологический анамнез";
 
             DataSourceList = new ObservableCollection<AlergicAnevrizmListDataSource>();
             foreach (var RecomendationsType in Data.AlergicAnevrizm.GetAll)

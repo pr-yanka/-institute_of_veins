@@ -1,16 +1,10 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
-using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("операциитип_операции")]
+    [Table("тип_операции_для_операции")]
     public class OperationTypeOperations
     {
         [Column(Order = 0), Key, ForeignKey("OperationType")]

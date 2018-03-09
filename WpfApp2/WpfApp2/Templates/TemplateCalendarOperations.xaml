@@ -116,10 +116,10 @@
             <DataGrid BorderBrush="Black" BorderThickness="1" FontSize="14" VerticalScrollBarVisibility="Visible" CanUserReorderColumns="False" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  RowStyle="{StaticResource MyDataGridRow}" IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="450" Margin="30,204,0,0" VerticalAlignment="Top" Width="709" >
                 <DataGrid.Columns  >
                     <DataGridTextColumn Width="auto"  CellStyle="{StaticResource MyDataGridCell2}" Binding="{Binding Path=Date,StringFormat=dd.MM.yyyy hh:mm}" ClipboardContentBinding="{x:Null}" Header="Дата" />
-                    <DataGridTextColumn Width="142"  CellStyle="{StaticResource MyDataGridCell}" Binding="{Binding Path=Patient}" ClipboardContentBinding="{x:Null}" Header="Пациент"  />
-                    <DataGridTextColumn  CellStyle="{StaticResource MyDataGridCell1}" Binding="{Binding Path=OpType}" ClipboardContentBinding="{x:Null}"  Width="auto" Header="Вид операции"/>
-                    <DataGridTextColumn Width="159"  CellStyle="{StaticResource MyDataGridCell3}" Binding="{Binding Path=Anestetic}" ClipboardContentBinding="{x:Null}" Header="Анестезик" />
-                    <DataGridTemplateColumn Header="к операции" >
+                    <DataGridTextColumn Width="172"  CellStyle="{StaticResource MyDataGridCell}" Binding="{Binding Path=Patient}" ClipboardContentBinding="{x:Null}" Header="Пациент"  />
+
+                    <DataGridTextColumn Width="179"  CellStyle="{StaticResource MyDataGridCell3}" Binding="{Binding Path=Anestetic}" ClipboardContentBinding="{x:Null}" Header="Анестезик" />
+                    <DataGridTemplateColumn Header="К операции" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <Grid >
@@ -130,7 +130,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="К итогам" Width="auto" >
+                    <DataGridTemplateColumn Header="К итогам" Width="137" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <Grid Visibility="{Binding IsOpResult,UpdateSourceTrigger=PropertyChanged}">

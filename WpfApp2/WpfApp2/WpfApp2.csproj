@@ -202,6 +202,8 @@
     <Compile Include="Controls\AddReport.xaml.cs">
       <DependentUpon>AddReport.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Db\Models\AnticogulantsRepository.cs" />
+    <Compile Include="Db\Models\SclezingRepository.cs" />
     <Compile Include="Db\Models\PreparateHateCommentRepository.cs" />
     <Compile Include="Db\Models\BloodExchangeCommentRepository.cs" />
     <Compile Include="Db\Models\OperationTypeOperationsRepository.cs" />
@@ -370,6 +372,8 @@
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="LegParts\VMs\MPVSectionViewModel.cs" />
     <Compile Include="LegParts\VMs\MPVViewModel.cs" />
+    <Compile Include="ViewModels\Panels\SclerozPanelViewModel.cs" />
+    <Compile Include="ViewModels\Panels\AnticogulantPanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\OperationForAmbullatorCardPanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\AlergicAnevrizmPanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\BloodExchangePanelViewModel.cs" />
@@ -389,6 +393,8 @@
     <Compile Include="Templates\MyTemplateSelector.cs" />
     <Compile Include="ViewModels\ViewModelAddAnalize.cs" />
     <Compile Include="ViewModels\ViewModelAddEpicriz.cs" />
+    <Compile Include="ViewModels\ViewModelAnticogulanyList.cs" />
+    <Compile Include="ViewModels\ViewModelSclerozList.cs" />
     <Compile Include="ViewModels\ViewModelCreateStatement.cs" />
     <Compile Include="ViewModels\ViewModelOperationListForOperation.cs" />
     <Compile Include="ViewModels\ViewModelEditUser.cs" />
