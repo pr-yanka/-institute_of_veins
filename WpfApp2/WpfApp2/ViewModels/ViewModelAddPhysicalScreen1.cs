@@ -94,7 +94,7 @@ namespace WpfApp2.ViewModels
         public Brush BGVL { get { return _bGVL; } set { _bGVL = value; OnPropertyChanged(); } }
 
 
-
+       
         public DelegateCommand RevertCommand { set; get; }
 
 
@@ -3198,8 +3198,8 @@ namespace WpfApp2.ViewModels
             ToLeftBPVHipCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("RebuildFirstBPV", this, this);
-                    Controller.LegViewModel = LeftBPVHip;
+                 
+                    Controller.LegViewModel = LeftBPVHip; MessageBus.Default.Call("RebuildFirstBPV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -3207,8 +3207,8 @@ namespace WpfApp2.ViewModels
             ToRightBPVHipCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("RebuildFirstBPV", this, this);
-                    Controller.LegViewModel = RightBPVHip;
+               
+                    Controller.LegViewModel = RightBPVHip; MessageBus.Default.Call("RebuildFirstBPV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -3224,8 +3224,8 @@ namespace WpfApp2.ViewModels
             ToLeftBPVTibiaCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("RebuildFirstBPV_Tibia", this, this);
-                    Controller.LegViewModel = LeftBPVTibia;
+                    
+                    Controller.LegViewModel = LeftBPVTibia; MessageBus.Default.Call("RebuildFirstBPV_Tibia", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -3233,8 +3233,8 @@ namespace WpfApp2.ViewModels
             ToRightBPVTibiaCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("RebuildFirstBPV_Tibia", this, this);
-                    Controller.LegViewModel = RightBPVTibia;
+                   
+                    Controller.LegViewModel = RightBPVTibia; MessageBus.Default.Call("RebuildFirstBPV_Tibia", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -3250,9 +3250,9 @@ namespace WpfApp2.ViewModels
             ToLeftPerforateCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("RebuildFirstPerforateHip", this, this);
+                   
                     Controller.LegViewModel = LeftPerforate;
-
+                    MessageBus.Default.Call("RebuildFirstPerforateHip", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -3260,8 +3260,8 @@ namespace WpfApp2.ViewModels
             ToRightPerforateCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("RebuildFirstPerforateHip", this, this);
-                    Controller.LegViewModel = RightPerforate;
+                   
+                    Controller.LegViewModel = RightPerforate; MessageBus.Default.Call("RebuildFirstPerforateHip", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -3276,8 +3276,8 @@ namespace WpfApp2.ViewModels
             ToLeftPPVCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("RebuildFirstPPV", this, this);
-                    Controller.LegViewModel = LeftPPV;
+                  
+                    Controller.LegViewModel = LeftPPV; MessageBus.Default.Call("RebuildFirstPPV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -3285,8 +3285,8 @@ namespace WpfApp2.ViewModels
             ToRightPPVCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("RebuildFirstPPV", this, this);
-                    Controller.LegViewModel = RightPPV;
+                    
+                    Controller.LegViewModel = RightPPV; MessageBus.Default.Call("RebuildFirstPPV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -3299,8 +3299,8 @@ namespace WpfApp2.ViewModels
             ToLeftGVCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("RebuildFirstGV", this, this);
-                    Controller.LegViewModel = LeftGV;
+                 
+                    Controller.LegViewModel = LeftGV; MessageBus.Default.Call("RebuildFirstGV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -3308,8 +3308,8 @@ namespace WpfApp2.ViewModels
             ToRightGVCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("RebuildFirstGV", this, this);
-                    Controller.LegViewModel = RightGV;
+                  
+                    Controller.LegViewModel = RightGV; MessageBus.Default.Call("RebuildFirstGV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -3322,8 +3322,8 @@ namespace WpfApp2.ViewModels
             ToLeftPDSVCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("RebuildFirstPDSV", this, this);
-                    Controller.LegViewModel = LeftPDSV;
+                    
+                    Controller.LegViewModel = LeftPDSV; MessageBus.Default.Call("RebuildFirstPDSV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -3331,8 +3331,8 @@ namespace WpfApp2.ViewModels
             ToRightPDSVCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("RebuildFirstPDSV", this, this);
-                    Controller.LegViewModel = RightPDSV;
+                   
+                    Controller.LegViewModel = RightPDSV; MessageBus.Default.Call("RebuildFirstPDSV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -3348,8 +3348,8 @@ namespace WpfApp2.ViewModels
             ToLeftSFSCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("RebuildFirstSFS", this, this);
-                    Controller.LegViewModel = LeftSFS;
+                  
+                    Controller.LegViewModel = LeftSFS; MessageBus.Default.Call("RebuildFirstSFS", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -3357,8 +3357,8 @@ namespace WpfApp2.ViewModels
             ToRightSFSCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("RebuildFirstSFS", this, this);
-                    Controller.LegViewModel = RightSFS;
+                    
+                    Controller.LegViewModel = RightSFS; MessageBus.Default.Call("RebuildFirstSFS", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -3379,8 +3379,8 @@ namespace WpfApp2.ViewModels
             ToLeftSPSCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("RebuildFirstSPS", this, this);
-                    Controller.LegViewModel = LeftSPS;
+                   
+                    Controller.LegViewModel = LeftSPS; MessageBus.Default.Call("RebuildFirstSPS", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -3388,8 +3388,8 @@ namespace WpfApp2.ViewModels
             ToRightSPSCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("RebuildFirstSPS", this, this);
-                    Controller.LegViewModel = RightSPS;
+                   
+                    Controller.LegViewModel = RightSPS; MessageBus.Default.Call("RebuildFirstSPS", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -3403,8 +3403,8 @@ namespace WpfApp2.ViewModels
             ToLeftTibiaPerforateCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("RebuildFirstPerforateTibia", this, this);
-                    Controller.LegViewModel = LeftTibiaPerforate;
+                   
+                    Controller.LegViewModel = LeftTibiaPerforate; MessageBus.Default.Call("RebuildFirstPerforateTibia", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -3412,8 +3412,8 @@ namespace WpfApp2.ViewModels
             ToRightTibiaPerforateCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("RebuildFirstPerforateTibia", this, this);
-                    Controller.LegViewModel = RightTibiaPerforate;
+                   
+                    Controller.LegViewModel = RightTibiaPerforate; MessageBus.Default.Call("RebuildFirstPerforateTibia", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -3429,8 +3429,8 @@ namespace WpfApp2.ViewModels
             ToLeftZDSVCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("RebuildFirstZDSV", this, this);
-                    Controller.LegViewModel = LeftZDSV;
+                  
+                    Controller.LegViewModel = LeftZDSV; MessageBus.Default.Call("RebuildFirstZDSV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -3438,8 +3438,8 @@ namespace WpfApp2.ViewModels
             ToRightZDSVCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("RebuildFirstZDSV", this, this);
-                    Controller.LegViewModel = RightZDSV;
+                   
+                    Controller.LegViewModel = RightZDSV; MessageBus.Default.Call("RebuildFirstZDSV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -3456,8 +3456,8 @@ namespace WpfApp2.ViewModels
             ToLeftMPVCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("RebuildFirstMPV", this, this);
-                    Controller.LegViewModel = LeftMPV;
+                  
+                    Controller.LegViewModel = LeftMPV; MessageBus.Default.Call("RebuildFirstMPV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -3465,8 +3465,8 @@ namespace WpfApp2.ViewModels
             ToRightMPVCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("RebuildFirstMPV", this, this);
-                    Controller.LegViewModel = RightMPV;
+                    
+                    Controller.LegViewModel = RightMPV; MessageBus.Default.Call("RebuildFirstMPV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -3483,8 +3483,9 @@ namespace WpfApp2.ViewModels
             ToLeftTEMPVCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("RebuildFirstTEMPV", this, this);
+                  
                     Controller.LegViewModel = LeftTEMPV;
+                    MessageBus.Default.Call("RebuildFirstTEMPV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -3492,8 +3493,9 @@ namespace WpfApp2.ViewModels
             ToRightTEMPVCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("RebuildFirstTEMPV", this, this);
+                   
                     Controller.LegViewModel = RightTEMPV;
+                    MessageBus.Default.Call("RebuildFirstTEMPV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
             );
@@ -4983,12 +4985,7 @@ namespace WpfApp2.ViewModels
         {
 
 
-            //object PartBuf = Part as PDSVViewModel;
-
-            //if (PartBuf != null)
-            //{
-
-            //}
+            
             if (mode != "EDIT" && !Part.IsEmpty)
             {
                 LegPartEntries LeftSFSEntryFullbuf = FullEntry;
@@ -5138,11 +5135,13 @@ namespace WpfApp2.ViewModels
                 return LeftSFSEntryFullbuf;
 
             }
-            else
+            else if(mode == "EDIT")
             {
 
                 Examination Exam = Data.Examination.Get(obsid);
                 ExaminationLeg LegExam = new ExaminationLeg();
+                if (Exam == null || LegExam == null)
+                    return FullEntry;
                 if (isLeft)
                 {
                     LegExam = Data.ExaminationLeg.Get(Exam.idLeftLegExamination.Value);
@@ -7814,17 +7813,17 @@ namespace WpfApp2.ViewModels
                     {
                         if (sender.LegSections[i].HasDoubleSize)
                         {
-                            bufBpvLeftStr.Add(sender.LegSections[i].SelectedValue.Text1 + " " + sender.LegSections[i].CurrentEntry.Size + "*" + sender.LegSections[i].CurrentEntry.Size2 + sender.LegSections[i].SelectedValue.Metrics + " " + sender.LegSections[i].SelectedValue.Text2 + " " + sender.LegSections[i].CurrentEntry.Comment);
+                            bufBpvLeftStr.Add(sender.LegSections[i].SelectedValue.Text1 + " " + sender.LegSections[i].CurrentEntry.Size + "*" + sender.LegSections[i].CurrentEntry.Size2 + sender.LegSections[i].SelectedValue.Metrics + " " + sender.LegSections[i].SelectedValue.Text2 + " \nКомментарий : \"" + sender.LegSections[i].CurrentEntry.Comment + "\"");
 
                         }
                         else
                         {
-                            bufBpvLeftStr.Add(sender.LegSections[i].SelectedValue.Text1 + " " + sender.LegSections[i].CurrentEntry.Size + sender.LegSections[i].SelectedValue.Metrics + " " + sender.LegSections[i].SelectedValue.Text2 + " " + sender.LegSections[i].CurrentEntry.Comment);
+                            bufBpvLeftStr.Add(sender.LegSections[i].SelectedValue.Text1 + " " + sender.LegSections[i].CurrentEntry.Size + sender.LegSections[i].SelectedValue.Metrics + " " + sender.LegSections[i].SelectedValue.Text2 + " \nКомментарий : \"" + sender.LegSections[i].CurrentEntry.Comment +"\"");
                         }
                     }
                     else
                     {
-                        bufBpvLeftStr.Add(sender.LegSections[i].SelectedValue.Text1 + " " + sender.LegSections[i].SelectedValue.Text2 + " " + sender.LegSections[i].CurrentEntry.Comment);
+                        bufBpvLeftStr.Add(sender.LegSections[i].SelectedValue.Text1 + " " + sender.LegSections[i].SelectedValue.Text2 + " \nКомментарий : \"" + sender.LegSections[i].CurrentEntry.Comment + "\"");
                     }
                     IsVisibleBPVleftbuf.Add(Visibility.Visible);
                 }

@@ -176,7 +176,7 @@ namespace WpfApp2.ViewModels
             MessageBus.Default.Subscribe("GetOperationIDForAddEpicriz", GetOperationid);
             HasNavigation = false;
             SclerozSelected = new ObservableCollection<Sclezing>(Data.Sclezing.GetAll);
-
+            AnticogulantSelected = new ObservableCollection<Anticogulants>(Data.Anticogulants.GetAll);
             ToCreateStatementCommand = new DelegateCommand(
                 () =>
                 {
@@ -400,9 +400,9 @@ namespace WpfApp2.ViewModels
 
                         if (SclezingIdSelected != 0)
                         {
-                            document.ReplaceText("«PNS»", SclerozSelected[SclezingIdSelected ].Str);
+                            document.ReplaceText("«PNS»", SclerozSelected[SclezingIdSelected].Str);
 
-                            document.ReplaceText("«PNS2»", SclerozSelected[SclezingIdSelected ].Str);
+                            document.ReplaceText("«PNS2»", SclerozSelected[SclezingIdSelected].Str);
                         }
                         else
                         {

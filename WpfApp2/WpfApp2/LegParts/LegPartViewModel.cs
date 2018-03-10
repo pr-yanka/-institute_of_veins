@@ -28,7 +28,8 @@ namespace WpfApp2.LegParts
     {
 
         public string mode = "Normal";
-        public string Comment { get; set; }
+        private string _comment;
+        public string Comment { get { return _comment; } set { _comment = value; OnPropertyChanged(); } }
 
         public da_Way SelectedWayType { get; set; }
         public da_Way SelectedWayTypeSave { get; set; }
@@ -292,31 +293,99 @@ namespace WpfApp2.LegParts
         LegPartDbStructure LegPrt;
 
 
+        public bool testOnUnique(LegPartDbStructure structure)
+        {
+            //if (structure.HasDoubleMetric == CurrentPanelViewModel.SavedLegPrt.HasDoubleMetric
+            //       && structure.HasSize == CurrentPanelViewModel.SavedLegPrt.HasSize
+            //       && structure.Metrics == CurrentPanelViewModel.SavedLegPrt.Metrics
+            //        && structure.NameContext == CurrentPanelViewModel.SavedLegPrt.NameContext
+            //          && structure.Size == CurrentPanelViewModel.SavedLegPrt.Size
+            //            && structure.Text1 == CurrentPanelViewModel.SavedLegPrt.Text1
+            //              && structure.Text2 == CurrentPanelViewModel.SavedLegPrt.Text2
+            //              && structure.ToNextPart == CurrentPanelViewModel.SavedLegPrt.ToNextPart
+            //              && structure.Custom == CurrentPanelViewModel.SavedLegPrt.Custom)
+            //{
+            //    return true;
+            //}
+
+
+            foreach (var x in LegSections[structure.Level - 1].StructureSource)
+            {
+                if (mode == "Edit")
+                {
+                    if (x.HasDoubleMetric == CurrentPanelViewModel.HasDoubleSize
+                        && x.HasSize == CurrentPanelViewModel.HasSize
+                        && (x.Metrics == CurrentPanelViewModel.SelectedMetricText || string.IsNullOrWhiteSpace(x.Metrics) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.SelectedMetricText))
+
+
+                             && x.Text1 == CurrentPanelViewModel.Text1
+                               && x.Text2 == CurrentPanelViewModel.Text2
+                               && x.Id != structure.Id)
+                    {
+
+
+                        MessageBox.Show("Такое описание уже существует!");
+
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (x.HasDoubleMetric == CurrentPanelViewModel.HasDoubleSize
+                           && x.HasSize == CurrentPanelViewModel.HasSize
+                           && (x.Metrics == CurrentPanelViewModel.SelectedMetricText || string.IsNullOrWhiteSpace(x.Metrics) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.SelectedMetricText))
+
+
+                                && x.Text1 == CurrentPanelViewModel.Text1
+                                  && x.Text2 == CurrentPanelViewModel.Text2
+                                  )
+                    {
+
+
+                        MessageBox.Show("Такое описание уже существует!");
+
+                        return false;
+                    }
+
+                }
+            }
+            return true;
+        }
         public bool IsStructEdited(LegPartDbStructure structure)
         {
+
+
             if (CurrentPanelViewModel.mode != "Edit")
             {
+
+
+
+
+
+
+
                 return true;
             }
 
             bool test = false;
-            if (  (CurrentPanelViewModel.Text1 != structure.Text1))
+            if ((CurrentPanelViewModel.Text1 != structure.Text1))
             {
                 if (structure.Text1 == null && CurrentPanelViewModel.Text1 == "" || structure.Text1 == "" && CurrentPanelViewModel.Text1 == null) { }
-                    else {
+                else
+                {
                     test = true;
                 }
             }
 
 
-            if ( (CurrentPanelViewModel.Text2 != structure.Text2) )
+            if ((CurrentPanelViewModel.Text2 != structure.Text2))
             {
                 if (structure.Text2 == null && CurrentPanelViewModel.Text2 == "" || structure.Text2 == "" && CurrentPanelViewModel.Text2 == null) { }
                 else
                 {
                     test = true;
                 }
-           
+
             }
 
             if (CurrentPanelViewModel.HasSize != structure.HasSize)
@@ -353,6 +422,7 @@ namespace WpfApp2.LegParts
 
                 LegPartDbStructure structure = currentPart.SelectedValue;
                 CurrentPanelViewModel.LegPrt = structure;
+                CurrentPanelViewModel.SavedLegPrt = structure;
                 CurrentPanelViewModel.mode = "Edit";
                 LegPrt = structure;
                 CurrentLegSide = CurrentLegSide;
@@ -801,19 +871,34 @@ namespace WpfApp2.LegParts
             RevertCommand = new DelegateCommand(
                 () =>
                 {
-                    FF_length = FF_lengthSave;
-                    SelectedWayType = SelectedWayTypeSave;
-                    for (int i = 0; i < LegSections.Count; i++)
+                    bool test = true;
+                    try
                     {
-                        LegSections[i].Comment = LegSectionsSaved[i].Comment;
-                        LegSections[i].Size = LegSectionsSaved[i].Size;
-                        LegSections[i].Size2 = LegSectionsSaved[i].Size2;
-                        LegSections[i].Text1 = LegSectionsSaved[i].Text1;
-                        LegSections[i].Text2 = LegSectionsSaved[i].Text2;
-                        LegSections[i].SelectedValue = LegSectionsSaved[i].SelectedValue;
-                        LegSections[i].CurrentEntry = LegSectionsSaved[i].CurrentEntry;
+                        FF_length = FF_lengthSave;
+                        SelectedWayType = SelectedWayTypeSave;
+                        if (LegSectionsSaved != null)
+                        {
+                            for (int i = 0; i < LegSections.Count; i++)
+                            {
+                                LegSections[i].Comment = LegSectionsSaved[i].Comment;
+                                LegSections[i].Size = LegSectionsSaved[i].Size;
+                                LegSections[i].Size2 = LegSectionsSaved[i].Size2;
+                                LegSections[i].Text1 = LegSectionsSaved[i].Text1;
+                                LegSections[i].Text2 = LegSectionsSaved[i].Text2;
+                                LegSections[i].SelectedValue = LegSectionsSaved[i].SelectedValue;
+                                LegSections[i].CurrentEntry = LegSectionsSaved[i].CurrentEntry;
+                                if (LegSections[i].SelectedValue != null)
+                                {
+                                    test = false;
+                                }
+                            }
+                        }
                     }
-                    // IsEmpty = false;
+                    catch { }
+                    if (!test)
+                        IsEmpty = false;
+                    else
+                        IsEmpty = true;
                     MessageBus.Default.Call("SetAllDefaultForCreateObsled", null, null);
                     Controller.NavigateTo<ViewModelAddPhysical>();
                 }

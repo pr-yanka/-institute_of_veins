@@ -20,7 +20,7 @@ namespace WpfApp2.LegParts.VMs
         private void RebuildFirst(object sender, object data)
         {
 
-            using (MySqlContext context = new MySqlContext())
+            if (((LegPartViewModel)Controller.CurrentViewModel.Controller.LegViewModel).CurrentLegSide != this.CurrentLegSide) return; using (MySqlContext context = new MySqlContext())
             {
                 SPSHipRepository SPS = new SPSHipRepository(context);
                 MetricsRepository Metrics = new MetricsRepository(context);
@@ -279,7 +279,7 @@ namespace WpfApp2.LegParts.VMs
                 {
 
                     CurrentLegSide = CurrentLegSide;
-                    if (IsStructEdited(CurrentPanelViewModel.LegPrt))
+                    if (IsStructEdited(CurrentPanelViewModel.LegPrt) && testOnUnique(CurrentPanelViewModel.LegPrt))
                     {
                         var newStruct = GetPanelStructure();
                         newStruct.Custom = false;
@@ -288,9 +288,14 @@ namespace WpfApp2.LegParts.VMs
 
                         _lastSender.StructureSource.Add(newStruct);
                         _lastSender.SelectedValue = newStruct;
+                        CurrentPanelViewModel.PanelOpened = false;
+                        handled = false;
                     }
-                    CurrentPanelViewModel.PanelOpened = false;
-                    handled = false;
+                    if (!IsStructEdited(CurrentPanelViewModel.LegPrt))
+                    {
+                        CurrentPanelViewModel.PanelOpened = false;
+                        handled = false;
+                    }
                 }
                 else
                 {

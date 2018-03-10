@@ -18,6 +18,7 @@ namespace WpfApp2.LegParts
     {
         public DelegateCommand<object> ClickOnAutoComplete { get; set; }
         public bool DoubleSizeAvailable;
+        public LegPartDbStructure SavedLegPrt;
         private LegPartDbStructure _legPrt;
         public LegPartDbStructure LegPrt
         {
@@ -83,7 +84,7 @@ namespace WpfApp2.LegParts
         private bool TrueTestDoubleSize;
         public SizePanelViewModel(ViewModelBase parentVM) : base(parentVM.Controller)
         {
-          //  SelectedMetricText = "";
+            //  SelectedMetricText = "";
 
             ClickOnAutoComplete = new DelegateCommand<object>(
              (sender) =>
@@ -98,9 +99,9 @@ namespace WpfApp2.LegParts
                              buf.IsDropDownOpen = true;
                      }
                  }
-                 catch(Exception ex)
+                 catch (Exception ex)
                  {
-                   
+
                  }
              }
          );
