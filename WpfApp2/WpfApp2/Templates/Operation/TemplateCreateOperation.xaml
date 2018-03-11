@@ -7,9 +7,9 @@
     </ResourceDictionary.MergedDictionaries>
     <DataTemplate x:Key="TemplateCreateOperation">
         <Grid Margin="0,62,0,0">
-            <TextBlock HorizontalAlignment="Right" FontSize="22pt" Height="38" VerticalAlignment="Top" Margin="70,0" Text="{Binding Path=CurrentPatient.Sirname}"/>
-            <TextBlock HorizontalAlignment="Right" FontSize="22pt" Height="38" VerticalAlignment="Top" Text="{Binding Path=initials}"></TextBlock>
-            <TextBlock HorizontalAlignment="Left" FontSize="22pt" Height="38" VerticalAlignment="Top"  Margin="397,0,0,0" Text="Назначение операций" />
+            <TextBlock HorizontalAlignment="Right" FontSize="22pt" Height="38" VerticalAlignment="Top" Margin="70,7" Text="{Binding Path=CurrentPatient.Sirname}"/>
+            <TextBlock HorizontalAlignment="Right" FontSize="22pt" Height="38" VerticalAlignment="Top"  Margin="0,7" Text="{Binding Path=initials}"></TextBlock>
+            <TextBlock HorizontalAlignment="Left" FontSize="22pt" Height="38" VerticalAlignment="Top"  Margin="397,7,0,0" Text="Назначение операций" />
             <Button Width="300" Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy1"  Command="{Binding Path=ToCurrentPatientCommand}" Content="Вернуться к пациенту" HorizontalAlignment="Left" Margin="207,629,0,0" VerticalAlignment="Top"  
                    />
             <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="24,48,0,0" TextWrapping="Wrap" Visibility="Collapsed" Text="Тип операции"  
@@ -57,7 +57,7 @@
                        VerticalAlignment="Top" FontSize="18"><Run Text="А"/><Run Text="нестетик"/></TextBlock>
             <ComboBox x:Name="comboBox_Copy2"   HorizontalAlignment="Left" ItemsSource="{Binding Path=AnestethicTypes}" SelectedIndex="{Binding Path=AnesteticSelected}" Margin="546,109,0,0" VerticalAlignment="Top" Width="468" Height="40"/>
             <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy2" Content="Добавить новый вид" Command="{Binding Path=OpenPanelAnesteticCommand}" HorizontalAlignment="Left" Margin="688,62,0,0"              
-                    VerticalAlignment="Top"  Width="300" />
+                    VerticalAlignment="Top"  Width="325" />
             <DataGrid HorizontalAlignment="Left" Height="200" Margin="141,321,0,0" VerticalAlignment="Top" Width="152"  
                           Foreground="Black" Background="White" AutoGenerateColumns="False" HeadersVisibility="None"
                      ItemsSource="{Binding Path=Controller.CurrentViewModel.Doctors}" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" >
@@ -162,7 +162,7 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="24,530,0,0" TextWrapping="Wrap"  
+            <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" FontSize="20" Margin="24,530,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="NB!"/>
             <TextBox Text="{Binding Path=Operation.NB}"  x:Name="richTextBox" HorizontalAlignment="Left" Height="86" Margin="57,530,0,0" VerticalAlignment="Top"  
                          Width="411">

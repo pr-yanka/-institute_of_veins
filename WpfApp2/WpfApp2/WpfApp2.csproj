@@ -372,6 +372,10 @@
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="LegParts\VMs\MPVSectionViewModel.cs" />
     <Compile Include="LegParts\VMs\MPVViewModel.cs" />
+    <Compile Include="ViewModels\Panels\TEMPVVayTypePanelViewModel.cs" />
+    <Compile Include="ViewModels\Panels\PDSVVayTypePanelViewModel.cs" />
+    <Compile Include="ViewModels\Panels\MPVVayTypePanelViewModel.cs" />
+    <Compile Include="ViewModels\Panels\BPVVayTypePanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\SclerozPanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\AnticogulantPanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\OperationForAmbullatorCardPanelViewModel.cs" />

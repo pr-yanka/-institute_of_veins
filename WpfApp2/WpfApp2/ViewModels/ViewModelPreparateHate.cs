@@ -60,7 +60,7 @@ namespace WpfApp2.ViewModels
             IsChecked = false;
         }
     }
-    public class ViewModelPreparateHate : ViewModelBase
+    public class ViewModelPreparateHate : ViewModelBase, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

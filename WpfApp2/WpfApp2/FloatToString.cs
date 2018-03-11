@@ -36,18 +36,17 @@ namespace WpfApp2
             this._scrollViewer = base.AssociatedObject;
             this._scrollViewer.ScrollChanged += new ScrollChangedEventHandler(_scrollViewer_LayoutUpdated);
         }
-        //public bool SetOneTime { get; set; }
+       public bool SetOneTime { get; set; }
         public void SetScroll(object sender, object data)
         {
-            //            this._scrollViewer.ScrollToVerticalOffset(this._height);
-
-            // SetOneTime = true;
+           
             MessageBus.Default.Call("SaveScrollSize", null, _height);
+
         }
         public void SetScrollOnly(object sender, object data)
         {
             //            this._scrollViewer.ScrollToVerticalOffset(this._height);
-
+            SetOneTime = (bool)data;
             _height = (double)sender;
 
 
@@ -57,7 +56,11 @@ namespace WpfApp2
             if (this._scrollViewer.VerticalOffset == 0)
             {
                 MessageBus.Default.Call("GetScrollSize", null, _height);
+
+                if(SetOneTime)
                 this._scrollViewer.ScrollToVerticalOffset(this._height);
+
+                SetOneTime = false;
             }
             else if (this._scrollViewer.VerticalOffset != 0)
             {
@@ -111,6 +114,7 @@ namespace WpfApp2
         }
         public void SetScrollOnly(object sender, object data)
         {
+            SetOneTime = (bool)data;
             _height = (double)sender;
 
 
@@ -119,8 +123,12 @@ namespace WpfApp2
         {
             if (this._scrollViewer.VerticalOffset == 0)
             {
+              
                 MessageBus.Default.Call("GetScrollSizeRight", null, _height);
-                this._scrollViewer.ScrollToVerticalOffset(this._height);
+                if (SetOneTime)
+                    this._scrollViewer.ScrollToVerticalOffset(this._height);
+
+                SetOneTime = false;
             }
             else if (this._scrollViewer.VerticalOffset != 0)
             {

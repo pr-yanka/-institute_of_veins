@@ -2,8 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:WpfApp2.LegParts.Templates">
     <DataTemplate x:Key="PDSVHipTemplate">
-        <StackPanel Orientation="Vertical">
-            <TextBlock x:Name="textBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Вид хода (не обязательно):" VerticalAlignment="Top" FontSize="16"/>
+        <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center">
+            <TextBlock x:Name="textBlock"   Margin="0,3,10,0" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Вид хода (не обязательно):" VerticalAlignment="Top" FontSize="16"/>
             <ComboBox x:Name="comboBox" SelectedItem="{Binding SelectedWayType}" SelectedIndex="{Binding SelectedPDSVWayTypeId}" ItemsSource="{Binding PDSVWayType}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="180">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -13,6 +13,8 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
+            <Button Margin="7,0" Command="{Binding OpenAddtWayCommand}"  FontSize="11" Content="Новый ход" Width="190" Style="{StaticResource MyConfirmBUTTON}" Height="26"></Button>
+
         </StackPanel>
     </DataTemplate>
 </ResourceDictionary>

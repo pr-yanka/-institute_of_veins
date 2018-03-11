@@ -6,20 +6,45 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using WpfApp2.Db.Models;
 using WpfApp2.Db.Models.LegParts;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 using WpfApp2.ViewModels;
+using WpfApp2.ViewModels.Panels;
 
 namespace WpfApp2.LegParts.VMs
 {
     public class PDSVViewModel : LegPartViewModel
     {
+        private ObservableCollection<PDSVHipWay> _bpvWayType;
+        public ObservableCollection<PDSVHipWay> PDSVWayType
+        {
+            get { return _bpvWayType; }
+            set { _bpvWayType = value; OnPropertyChanged(); }
+        }
+        private int? _selectedBpvWayTypeId;
+        public int? SelectedPDSVWayTypeId
+        {
+            get { return _selectedBpvWayTypeId; }
+            set { _selectedBpvWayTypeId = value; OnPropertyChanged(); }
+        }
+        private PDSVVayTypePanelViewModel _currentPanelViewModelWaySelect;
+        public override ViewModelBase CurrentPanelViewModelWaySelect
+        {
+            get { return _currentPanelViewModelWaySelect; }
+            set { _currentPanelViewModelWaySelect = value as PDSVVayTypePanelViewModel; OnPropertyChanged(); }
+        }
 
 
-        public List<PDSVHipWay> PDSVWayType { get; set; }
-        public int? SelectedPDSVWayTypeId { get; set; }
+        public string TextOFNewType { get; set; }
+
+        public DelegateCommand RevertWayCommand { set; get; }
+
+        public DelegateCommand SavetWayCommand { set; get; }
+
+        public ICommand OpenAddtWayCommand { protected set; get; }
 
 
         private void Rebuild(object sender, object data)
@@ -277,9 +302,49 @@ namespace WpfApp2.LegParts.VMs
 
         public void Initialize()
         {
+            TextOFNewType = "Новый ПДСВ ход";
             MessageBus.Default.Subscribe("RebuildFirstPDSV", RebuildFirst);
             MessageBus.Default.Subscribe("RebuildLegSectionViewModel", Rebuild);
+            CurrentPanelViewModelWaySelect = new PDSVVayTypePanelViewModel(this);
+            OpenAddtWayCommand = new DelegateCommand(() =>
+            {
+                ((PDSVVayTypePanelViewModel)CurrentPanelViewModelWaySelect).ClearPanel();
+                ((PDSVVayTypePanelViewModel)CurrentPanelViewModelWaySelect).PanelOpened = true;
+            });
 
+            SavetWayCommand = new DelegateCommand(() =>
+            {
+                var newType = ((PDSVVayTypePanelViewModel)CurrentPanelViewModelWaySelect).GetPanelType();
+                if (!string.IsNullOrWhiteSpace(newType.Name))
+                {
+                    ((PDSVVayTypePanelViewModel)CurrentPanelViewModelWaySelect).PanelOpened = false;
+
+                    //Handled = false;
+
+                    Data.PDSVHipWay.Add((newType));
+
+                    Data.Complete();
+                    PanelOpened = true;
+                    var DataSourceListbuf = PDSVWayType;
+                    PDSVWayType = new ObservableCollection<PDSVHipWay>();
+
+                    foreach (var Scintific in Data.PDSVHipWay.GetAll)
+                    {
+                        PDSVWayType.Add(Scintific);
+                    }
+                    SelectedPDSVWayTypeId = PDSVWayType.IndexOf(newType);
+                    // Controller.NavigateTo<BPVHipViewModel>();
+
+                    PanelOpened = false;
+                }
+                else
+                { MessageBox.Show("Не все поля заполнены"); }
+            });
+            RevertWayCommand = new DelegateCommand(() =>
+            {
+                ((PDSVVayTypePanelViewModel)CurrentPanelViewModelWaySelect).PanelOpened = false;
+                PanelOpened = false;
+            });
             SavePanelCommand = new DelegateCommand(() =>
             {
                 var panel = CurrentPanelViewModel;
@@ -389,7 +454,7 @@ namespace WpfApp2.LegParts.VMs
                   }
               }
           );
-            PDSVWayType = new List<PDSVHipWay>();
+            PDSVWayType = new ObservableCollection<PDSVHipWay>();
             foreach (var way in Data.PDSVHipWay.GetAll)
             {
                 PDSVWayType.Add(way);

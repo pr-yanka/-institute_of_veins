@@ -27,6 +27,8 @@ namespace WpfApp2.LegParts
     public class LegPartViewModel : ViewModelBase, INotifyPropertyChanged
     {
 
+
+
         public string mode = "Normal";
         private string _comment;
         public string Comment { get { return _comment; } set { _comment = value; OnPropertyChanged(); } }
@@ -41,7 +43,20 @@ namespace WpfApp2.LegParts
 
 
 
-       
+        public virtual ViewModelBase CurrentPanelViewModelWaySelect { get; set; }
+        private bool _panelOpened;
+        public bool PanelOpened
+        {
+            get
+            {
+                return _panelOpened;
+            }
+            set
+            {
+                _panelOpened = value;
+                OnPropertyChanged();
+            }
+        }
 
 
 
@@ -231,8 +246,8 @@ namespace WpfApp2.LegParts
             //{
             //    return true;
             //}
-            if (structure == null)
-                return false;
+            //if (structure == null)
+            //    return false;
 
             foreach (var x in LegSections[LevelSelected - 1].StructureSource)
             {
@@ -240,31 +255,53 @@ namespace WpfApp2.LegParts
                 {
                     if (x.HasDoubleMetric == CurrentPanelViewModel.HasDoubleSize
                         && x.HasSize == CurrentPanelViewModel.HasSize
-                        && (x.Metrics == CurrentPanelViewModel.SelectedMetricText || string.IsNullOrWhiteSpace(x.Metrics) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.SelectedMetricText))
-
-
-                             && x.Text1 == CurrentPanelViewModel.Text1
-                               && x.Text2 == CurrentPanelViewModel.Text2
-                               && x.Id != structure.Id)
+                         && (x.Text1 == CurrentPanelViewModel.Text1 || (string.IsNullOrWhiteSpace(x.Text1) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text1)))
+                           && (x.Text2 == CurrentPanelViewModel.Text2 || (string.IsNullOrWhiteSpace(x.Text2) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text2)))
+                        && x.Id != structure.Id)
                     {
+                        if (x.HasSize == true)
+                        {
+                            if ((x.Metrics == CurrentPanelViewModel.SelectedMetricText || string.IsNullOrWhiteSpace(x.Metrics) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.SelectedMetricText)))
+                            {
+                                MessageBox.Show("Такое описание уже существует!");
+
+                                return false;
+                            }
+                            else
+                            {
+                                return true;
+                            }
+                        }
 
 
                         MessageBox.Show("Такое описание уже существует!");
 
                         return false;
+
                     }
                 }
                 else
                 {
                     if (x.HasDoubleMetric == CurrentPanelViewModel.HasDoubleSize
                            && x.HasSize == CurrentPanelViewModel.HasSize
-                           && (x.Metrics == CurrentPanelViewModel.SelectedMetricText || string.IsNullOrWhiteSpace(x.Metrics) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.SelectedMetricText))
+                           && (x.Text1 == CurrentPanelViewModel.Text1 || (string.IsNullOrWhiteSpace(x.Text1) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text1)))
+                           && (x.Text2 == CurrentPanelViewModel.Text2 || (string.IsNullOrWhiteSpace(x.Text2) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text2))))
 
-
-                                && x.Text1 == CurrentPanelViewModel.Text1
-                                  && x.Text2 == CurrentPanelViewModel.Text2
-                                  )
                     {
+
+                        if (x.HasSize == true)
+                        {
+                            if ((x.Metrics == CurrentPanelViewModel.SelectedMetricText || string.IsNullOrWhiteSpace(x.Metrics) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.SelectedMetricText)))
+                            {
+                                MessageBox.Show("Такое описание уже существует!");
+
+                                return false;
+                            }
+                            else
+                            {
+                                return true;
+                            }
+                        }
 
 
                         MessageBox.Show("Такое описание уже существует!");
@@ -728,7 +765,7 @@ namespace WpfApp2.LegParts
 
         public void Initialization()
         {
-
+            PanelOpened = false;
             MessageBus.Default.Subscribe("OpenStructRedact", OpenStructRedact);
             MessageBus.Default.Subscribe("SetMode", SetModeHandler);
             CurrentPanelViewModel = new SizePanelViewModel(this);

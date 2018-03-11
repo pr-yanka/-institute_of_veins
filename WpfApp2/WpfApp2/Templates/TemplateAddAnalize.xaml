@@ -7,10 +7,10 @@
                 <RowDefinition Height="90"></RowDefinition>
                 <RowDefinition Height="35"></RowDefinition>
                 <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="45"></RowDefinition>
                 <RowDefinition Height="35"></RowDefinition>
                 <RowDefinition Height="35"></RowDefinition>
-                <RowDefinition Height="35"></RowDefinition>
-                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="353"></RowDefinition>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -18,7 +18,7 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Style="{StaticResource MyConfirmBUTTON}" Content="Загрузить анализ"  Grid.Column="0" Grid.Row="1" Width="200"  Grid.RowSpan="5" Command="{Binding Path=OpenAnalizePicture}"  ></Button>
+            <Button ToolTip="Прикрепить файл с анализами" Style="{StaticResource MyConfirmBUTTON}" Content="Загрузить анализ"  Grid.Column="0" Grid.Row="1" Width="200"  Grid.RowSpan="5" Command="{Binding Path=OpenAnalizePicture}"  ></Button>
             <TextBlock  Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3"   HorizontalAlignment="Right" FontFamily="/fonts/#Pescadero" FontSize="22pt"  VerticalAlignment="Top" >
                 <TextBlock.RenderTransform>
                     <TransformGroup>
@@ -28,13 +28,13 @@
                         <TranslateTransform Y="10"/>
                     </TransformGroup>
                 </TextBlock.RenderTransform>
-            <TextBlock Text="{Binding Path=CurrentPatient.Sirname}" /><Run Text=" " /><TextBlock Text="{Binding Path=CurrentPatient.Name}" /><Run Text=" " /><TextBlock Text="{Binding Path=CurrentPatient.Patronimic}" /></TextBlock>
-            <TextBlock Grid.Column="1" Grid.Row="3"  FontFamily="/fonts/#Pescadero" FontSize="18pt" Height="25" Text="Тип :"/>
-            <ComboBox Grid.Column="2" Grid.Row="3" ItemsSource="{Binding Path=AnalizeTypes}" SelectedIndex="{Binding Path=SelectedIndexOfAnalizeType}"  FontFamily="/fonts/#Pescadero" FontSize="14pt" Text="{Binding Path=AnalizeType.Str}" Margin="0,0,-115,0"/>
+            <TextBlock  Text="{Binding Path=CurrentPatient.Sirname}" /><Run Text=" " /><TextBlock Text="{Binding Path=CurrentPatient.Name}" /><Run Text=" " /><TextBlock Text="{Binding Path=CurrentPatient.Patronimic}" /></TextBlock>
+            <TextBlock  Grid.Column="1" Grid.Row="3"  FontFamily="/fonts/#Pescadero" FontSize="18pt" Height="25" Text="Тип :"/>
+            <ComboBox Height="35" Grid.Column="2" Grid.Row="3" ItemsSource="{Binding Path=AnalizeTypes}" SelectedIndex="{Binding Path=SelectedIndexOfAnalizeType}"  Width="277" FontFamily="/fonts/#Pescadero" FontSize="14pt" HorizontalAlignment="Left" Text="{Binding Path=AnalizeType.Str}" Margin="0,0,0,0"/>
             <TextBlock Grid.Column="1" Grid.Row="4"  FontFamily="/fonts/#Pescadero" FontSize="18pt" Height="25" Text="Дата :"/>
-            <DatePicker SelectedDate="{Binding Path=Analize.data}" Grid.Column="2" Grid.Row="4" Width="257" HorizontalAlignment="Left" Margin="0,0,-116,0"/>
-            <Button Style="{StaticResource MyNormalBUTTON}" Grid.Column="1" Grid.Row="6" x:Name="button_Copy143" Content="ВЕРНУТЬСЯ К ПАЦИЕНТУ" Command="{Binding Path=ToCurrentPatientRealy}" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="0,0,60,0"/>
-            <Button Grid.Column="2" Grid.Row="6" x:Name="button_Copy13" Content="{Binding Path=ButtonName}" Command="{Binding Path=ToCurrentPatient}" HorizontalAlignment="Left"  VerticalAlignment="Top"  Style="{StaticResource MyNormalBUTTON}" Margin="0,0,-58,-6" RenderTransformOrigin="0.5,0.484"/>
+            <DatePicker Height="35" FontSize="18" SelectedDate="{Binding Path=Analize.data}" Grid.Column="2" Grid.Row="4" Width="277" HorizontalAlignment="Left" Margin="0,0,-116,0"/>
+            <Button Style="{StaticResource MyNormalBUTTON}" Grid.Column="1" Grid.Row="6" x:Name="button_Copy143" Content="ВЕРНУТЬСЯ К ПАЦИЕНТУ" Command="{Binding Path=ToCurrentPatientRealy}" HorizontalAlignment="Left" Width="250"  VerticalAlignment="Top" Margin="0,0,0,0"/>
+            <Button Grid.Column="2" Grid.Row="6" Grid.RowSpan="2" x:Name="button_Copy13" Content="{Binding Path=ButtonName}" Command="{Binding Path=ToCurrentPatient}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="250" Style="{StaticResource MyNormalBUTTON}" Margin="30,0,0,0" RenderTransformOrigin="0.5,0.484"/>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

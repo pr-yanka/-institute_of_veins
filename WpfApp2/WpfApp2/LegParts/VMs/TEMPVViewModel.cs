@@ -3,20 +3,45 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using WpfApp2.Db.Models;
 using WpfApp2.Db.Models.LegParts;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 using WpfApp2.ViewModels;
+using WpfApp2.ViewModels.Panels;
 
 namespace WpfApp2.LegParts.VMs
 {
     public class TEMPVViewModel : LegPartViewModel
     {
 
+        private ObservableCollection<TEMPVWay> _bpvWayType;
+        public ObservableCollection<TEMPVWay> TEMPVWayType
+        {
+            get { return _bpvWayType; }
+            set { _bpvWayType = value; OnPropertyChanged(); }
+        }
+        private int _selectedBpvWayTypeId;
+        public int SelectedTEMPVWayTypeId
+        {
+            get { return _selectedBpvWayTypeId; }
+            set { _selectedBpvWayTypeId = value; OnPropertyChanged(); }
+        }
+        private TEMPVVayTypePanelViewModel _currentPanelViewModelWaySelect;
+        public override ViewModelBase CurrentPanelViewModelWaySelect
+        {
+            get { return _currentPanelViewModelWaySelect; }
+            set { _currentPanelViewModelWaySelect = value as TEMPVVayTypePanelViewModel; OnPropertyChanged(); }
+        }
 
-        public List<TEMPVWay> TEMPVWayType { get; set; }
-        public int SelectedTEMPVWayTypeId { get; set; }
+        public string TextOFNewType { get; set; }
+
+        public DelegateCommand RevertWayCommand { set; get; }
+
+        public DelegateCommand SavetWayCommand { set; get; }
+
+        public ICommand OpenAddtWayCommand { protected set; get; }
 
 
         private void Rebuild(object sender, object data)
@@ -271,8 +296,49 @@ namespace WpfApp2.LegParts.VMs
 
         public void Initialize()
         {
+            TextOFNewType = "Новый ТЕМПВ ход";
             MessageBus.Default.Subscribe("RebuildFirstTEMPV", RebuildFirst);
             MessageBus.Default.Subscribe("RebuildLegSectionViewModel", Rebuild);
+            CurrentPanelViewModelWaySelect = new TEMPVVayTypePanelViewModel(this);
+            OpenAddtWayCommand = new DelegateCommand(() =>
+            {
+                ((TEMPVVayTypePanelViewModel)CurrentPanelViewModelWaySelect).ClearPanel();
+                ((TEMPVVayTypePanelViewModel)CurrentPanelViewModelWaySelect).PanelOpened = true;
+            });
+
+            SavetWayCommand = new DelegateCommand(() =>
+            {
+                var newType = ((TEMPVVayTypePanelViewModel)CurrentPanelViewModelWaySelect).GetPanelType();
+                if (!string.IsNullOrWhiteSpace(newType.Name))
+                {
+                    ((TEMPVVayTypePanelViewModel)CurrentPanelViewModelWaySelect).PanelOpened = false;
+
+                    //Handled = false;
+
+                    Data.TEMPVWay.Add((newType));
+
+                    Data.Complete();
+                    PanelOpened = true;
+                    var DataSourceListbuf = TEMPVWayType;
+                    TEMPVWayType = new ObservableCollection<TEMPVWay>();
+
+                    foreach (var Scintific in Data.TEMPVWay.GetAll)
+                    {
+                        TEMPVWayType.Add(Scintific);
+                    }
+                    SelectedTEMPVWayTypeId = TEMPVWayType.Count - 1;
+                    // Controller.NavigateTo<BPVHipViewModel>();
+
+                    PanelOpened = false;
+                }
+                else
+                { MessageBox.Show("Не все поля заполнены"); }
+            });
+            RevertWayCommand = new DelegateCommand(() =>
+            {
+                ((TEMPVVayTypePanelViewModel)CurrentPanelViewModelWaySelect).PanelOpened = false;
+                PanelOpened = false;
+            });
 
             SavePanelCommand = new DelegateCommand(() =>
             {
@@ -388,7 +454,7 @@ namespace WpfApp2.LegParts.VMs
                   }
               }
           );
-            TEMPVWayType = new List<TEMPVWay>();
+            TEMPVWayType = new ObservableCollection<TEMPVWay>();
             foreach (var way in Data.TEMPVWay.GetAll)
             {
                 TEMPVWayType.Add(way);

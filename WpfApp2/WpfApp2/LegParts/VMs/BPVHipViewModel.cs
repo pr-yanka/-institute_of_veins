@@ -1,26 +1,45 @@
 ﻿using Microsoft.Practices.Prism.Commands;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Input;
 using WpfApp2.Db.Models;
 using WpfApp2.Db.Models.LegParts;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 using WpfApp2.ViewModels;
+using WpfApp2.ViewModels.Panels;
 
 namespace WpfApp2.LegParts.VMs
 {
     public class BPVHipViewModel : LegPartViewModel
     {
 
-        public List<BPVHipWay> BpvWayType { get; set; }
-        public int SelectedBpvWayTypeId { get; set; }
 
 
+
+
+        private ObservableCollection<BPVHipWay> _bpvWayType;
+        public ObservableCollection<BPVHipWay> BpvWayType
+        {
+            get { return _bpvWayType; }
+            set { _bpvWayType = value; OnPropertyChanged(); }
+        }
+        private int _selectedBpvWayTypeId;
+        public int SelectedBpvWayTypeId
+        {
+            get { return _selectedBpvWayTypeId; }
+            set { _selectedBpvWayTypeId = value; OnPropertyChanged(); }
+        }
+        private BPVVayTypePanelViewModel _currentPanelViewModelWaySelect;
+        public override ViewModelBase CurrentPanelViewModelWaySelect
+        {
+            get { return _currentPanelViewModelWaySelect; }
+            set { _currentPanelViewModelWaySelect = value as BPVVayTypePanelViewModel; OnPropertyChanged(); }
+        }
 
         private void Rebuild(object sender, object data)
         {
@@ -78,10 +97,10 @@ namespace WpfApp2.LegParts.VMs
 
                             if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
                             {
-                              
-                                
-                                    LegSections[section.ListNumber].StructureSource.Add(variant);
-                                
+
+
+                                LegSections[section.ListNumber].StructureSource.Add(variant);
+
                             }
                             else if (variant.Text1 == "" && variant.Text2 == "")
                             { LegSections[section.ListNumber].StructureSource.Add(variant); }
@@ -291,19 +310,26 @@ namespace WpfApp2.LegParts.VMs
         }
 
         private ObservableCollection<LegSectionViewModel> _sections;
+
         public override ObservableCollection<LegSectionViewModel> LegSections
         {
             get { return _sections; }
             set { _sections = value; }
         }
+        public string TextOFNewType { get; set; }
 
+        public DelegateCommand RevertWayCommand { set; get; }
 
+        public DelegateCommand SavetWayCommand { set; get; }
+
+        public ICommand OpenAddtWayCommand { protected set; get; }
 
         public void Initialize()
         {
+            TextOFNewType = "Новый БПВ ход";
             MessageBus.Default.Subscribe("RebuildFirstBPV", RebuildFirst);
             MessageBus.Default.Subscribe("RebuildLegSectionViewModel", Rebuild);
-            BpvWayType = new List<BPVHipWay>();
+            BpvWayType = new ObservableCollection<BPVHipWay>();
 
             SavePanelCommand = new DelegateCommand(() =>
             {
@@ -335,6 +361,48 @@ namespace WpfApp2.LegParts.VMs
 
                 //_lastSender.DeleteCustom();
             });
+
+            CurrentPanelViewModelWaySelect = new BPVVayTypePanelViewModel(this);
+            OpenAddtWayCommand = new DelegateCommand(() =>
+            {
+                ((BPVVayTypePanelViewModel)CurrentPanelViewModelWaySelect).ClearPanel();
+                ((BPVVayTypePanelViewModel)CurrentPanelViewModelWaySelect).PanelOpened = true;
+            });
+
+            SavetWayCommand = new DelegateCommand(() =>
+            {
+                var newType = ((BPVVayTypePanelViewModel)CurrentPanelViewModelWaySelect).GetPanelType();
+                if (!string.IsNullOrWhiteSpace(newType.Name))
+                {
+                    ((BPVVayTypePanelViewModel)CurrentPanelViewModelWaySelect).PanelOpened = false;
+
+                    //Handled = false;
+
+                    Data.BPVHipWay.Add((newType));
+
+                    Data.Complete();
+                    PanelOpened = true;
+                    var DataSourceListbuf = BpvWayType;
+                    BpvWayType = new ObservableCollection<BPVHipWay>();
+
+                    foreach (var Scintific in Data.BPVHipWay.GetAll)
+                    {
+                        BpvWayType.Add(Scintific);
+                    }
+                    SelectedBpvWayTypeId = BpvWayType.Count - 1;
+                    // Controller.NavigateTo<BPVHipViewModel>();
+
+                    PanelOpened = false;
+                }
+                else
+                { MessageBox.Show("Не все поля заполнены"); }
+            });
+            RevertWayCommand = new DelegateCommand(() =>
+            {
+                ((BPVVayTypePanelViewModel)CurrentPanelViewModelWaySelect).PanelOpened = false;
+                PanelOpened = false;
+            });
+
             SaveCommand = new DelegateCommand(
                () =>
                {

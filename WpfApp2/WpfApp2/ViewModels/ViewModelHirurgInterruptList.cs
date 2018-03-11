@@ -42,7 +42,7 @@ namespace WpfApp2.ViewModels
             IsChecked = false;
         }
     }
-    public class ViewModelHirurgInterruptList : ViewModelBase
+    public class ViewModelHirurgInterruptList : ViewModelBase, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
