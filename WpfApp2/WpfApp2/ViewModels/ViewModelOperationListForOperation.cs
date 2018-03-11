@@ -214,45 +214,7 @@ namespace WpfApp2.ViewModels
                 RightDiag.Add(new OperationTypesDataSource(DiagnosisType));
             }
         }
-        //private void SetDiagnosisListLeft(object sender, object data)
-        //{
-        //    // using
-        //    var DiagList = (List<DiagnosisObs>)data;
-        //    List<OperationTypesDataSource> DataSourceListBuffer = new List<OperationTypesDataSource>();
-        //    for (int i = 0; i < DiagList.Count; ++i)
-        //    {
-
-        //        DataSourceListBuffer.Add(new OperationTypesDataSource(DiagList[i].DiagnosisType));
-        //        DataSourceListBuffer[i].IsChecked = true;
-        //    }
-        //    //LeftDiag = new List<OperationTypesDataSource>();
-        //    //for (int i = 0; i < DiagList.Count; ++i)
-        //    //{
-        //    //    LeftDiag.Add(new OperationTypesDataSource(DiagList[i].DiagnosisType));
-        //    //    LeftDiag[i].IsChecked = true;
-        //    //}
-        //    MessageBus.Default.Call("SetLeftDiagnosisListForOperation", this, DataSourceListBuffer);
-        //    Controller.NavigateTo<ViewModelAddOperation>();
-        //}
-        //private void SetDiagnosisListRight(object sender, object data)
-        //{
-        //    var DiagList = (List<DiagnosisObs>)data;
-        //    List<OperationTypesDataSource> DataSourceListBuffer = new List<OperationTypesDataSource>();
-        //    for (int i = 0; i < DiagList.Count; ++i)
-        //    {
-
-        //        DataSourceListBuffer.Add(new OperationTypesDataSource(DiagList[i].DiagnosisType));
-        //        DataSourceListBuffer[i].IsChecked = true;
-        //    }
-        //    //RightDiag = new List<OperationTypesDataSource>();
-        //    //for (int i = 0; i < DiagList.Count; ++i)
-        //    //{
-        //    //    RightDiag.Add(new OperationTypesDataSource(DiagList[i].DiagnosisType));
-        //    //    RightDiag[i].IsChecked = true;
-        //    //}
-        //    MessageBus.Default.Call("SetRightDiagnosisListForOperation", this, DataSourceListBuffer);
-        //    Controller.NavigateTo<ViewModelAddOperation>();
-        //}
+       
 
 
         private void SetDiagnosisList(object sender, object data)

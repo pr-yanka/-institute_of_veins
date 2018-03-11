@@ -177,7 +177,7 @@ namespace WpfApp2.ViewModels
                     // SetChangesInDB(null, null);
                 }
 
-                Controller.NavigateTo<ViewModelPreparateHate>();
+                Controller.NavigateTo<ViewModelAlergicAnevrizmList>();
 
 
 
