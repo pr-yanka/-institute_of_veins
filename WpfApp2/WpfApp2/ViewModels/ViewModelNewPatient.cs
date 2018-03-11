@@ -493,23 +493,25 @@ namespace WpfApp2.ViewModels
                 nameOfButton = "Добавить";
                 Date = DateTime.Now;
 
-                RegionsRepository regRep = new RegionsRepository(context);
 
                 List<string> TownsListbuf = new List<string>();
                 List<string> RegionListbuf = new List<string>();
 
-                foreach (var Region in regRep.GetAll)
-                {
-                    RegionListbuf.Add(Region.Str);
-                }
 
 
 
 
-                RegionList = RegionListbuf;
+
+                RegionList = context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_область ORDER BY название").ToList(); ;
+
+
 
 
                 TownsList = TownsListbuf;
+                DistrictList = TownsListbuf;
+                StreetList = TownsListbuf;
+
+
             }
 
 
@@ -551,7 +553,7 @@ namespace WpfApp2.ViewModels
             CurrentPatient = new Patient();
 
             CurrentPatient.Birthday = DateTime.Now;
-         
+
 
 
             ToDashboardCommand = new DelegateCommand(

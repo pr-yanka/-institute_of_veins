@@ -41,93 +41,7 @@ namespace WpfApp2.LegParts
 
 
 
-        //private void RebuildFromFirstToLast()
-        //{
-        //    if (Controller.CurrentViewModel.Controller.LegViewModel == this && mode == "Normal")
-        //    {
-
-        //        //if (Controller.CurrentViewModel.Controller.LegViewModel is PDSVViewModel)
-        //        //{
-
-
-        //        //    MessageBus.Default.Call("RebuildFirstPDSV", null, null);
-
-
-        //        //}
-        //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is SFSViewModel)
-        //        //{
-
-        //        //    MessageBus.Default.Call("RebuildFirstSFS", this, LegSections[0]);
-
-
-
-        //        //}
-        //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is BPVHipViewModel)
-        //        //{
-
-        //        //    MessageBus.Default.Call("RebuildFirstBPV", this, LegSections[0]);
-
-
-        //        //}
-        //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is BPVTibiaViewModel)
-        //        //{
-
-        //        //    MessageBus.Default.Call("RebuildFirstBPV_Tibia", null, null);
-
-
-        //        //}
-        //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is HipPerforateViewModel)
-        //        //{
-        //        //    MessageBus.Default.Call("RebuildFirstPerforateHip", null, null);
-
-
-
-
-        //        //}
-        //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is ZDSVViewModel)
-        //        //{
-        //        //    MessageBus.Default.Call("RebuildFirstZDSV", null, null);
-
-        //        //}
-
-        //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is SPSViewModel)
-        //        //{
-        //        //    MessageBus.Default.Call("RebuildFirstSPS", null, null);
-        //        //}
-        //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is TibiaPerforateViewModel)
-        //        //{
-
-        //        //    MessageBus.Default.Call("RebuildFirstPerforateTibia", null, null);
-
-        //        //}
-        //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is MPVViewModel)
-        //        //{
-        //        //    MessageBus.Default.Call("RebuildFirstMPV", null, null);
-
-
-        //        //}
-        //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is TEMPVViewModel)
-        //        //{
-
-        //        //    MessageBus.Default.Call("RebuildFirstTEMPV", null, null);
-
-        //        //}
-        //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is PPVViewModel)
-        //        //{
-        //        //    MessageBus.Default.Call("RebuildFirstPPV", null, null);
-
-
-        //        //}
-        //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is GVViewModel)
-        //        //{
-        //        //    MessageBus.Default.Call("RebuildFirstGV", null, null);
-
-
-        //        //}
-
-        //    }
-
-        //}
+       
 
 
 
@@ -248,50 +162,60 @@ namespace WpfApp2.LegParts
 
         private void OpenHandler(object sender, object data)
         {
-            CurrentPanelViewModel.TextSaveBTN = "Добавить";
-            CurrentPanelViewModel.mode = "Add";
-            CurrentPanelViewModel.TextCancleOrResetBTN = "Вернуться";
-            ClosePanelCommand = new DelegateCommand(() =>
-         {
-             if (_lastSender.SelectedValue == null)
+            try
+            {
+                LevelSelected = ((LegSectionViewModel)sender).StructureSource[0].Level;
+                CurrentPanelViewModel.TextSaveBTN = "Добавить";
+                CurrentPanelViewModel.mode = "Add";
+                CurrentPanelViewModel.TextCancleOrResetBTN = "Вернуться";
+                ClosePanelCommand = new DelegateCommand(() =>
              {
-                 foreach (var structr in _lastSender.StructureSource)
+                 if (_lastSender.SelectedValue == null)
                  {
-                     if (structr.Text1 == "" && structr.Text2 == "")
+                     foreach (var structr in _lastSender.StructureSource)
                      {
-                         _lastSender.SelectedValue = structr;
+                         if (structr.Text1 == "" && structr.Text2 == "")
+                         {
+                             _lastSender.SelectedValue = structr;
+                         }
                      }
                  }
-             }
-             else
-             {
-                 LegSections[_lastSender.ListNumber - 1].SelectedValue = _lastSender.SelectedValue;
-             }
-             CurrentPanelViewModel.PanelOpened = false;
-             handled = false;
+                 else
+                 {
+                     LegSections[_lastSender.ListNumber - 1].SelectedValue = _lastSender.SelectedValue;
+                 }
+                 CurrentPanelViewModel.PanelOpened = false;
+                 handled = false;
 
-         });
-            if (!handled)
+             });
+                if (!handled)
+                {
+
+                    var curPanel = ((LegPartViewModel)Controller.LegViewModel).CurrentPanelViewModel;
+                    var currentPart = (LegSectionViewModel)sender;
+
+
+                    _lastSender = currentPart;
+
+
+
+
+                    _lastSenderType = (Type)data;
+                    handled = true;
+                    curPanel.PanelOpened = true;
+                }
+            }
+            catch
             {
-
-                var curPanel = ((LegPartViewModel)Controller.LegViewModel).CurrentPanelViewModel;
-                var currentPart = (LegSectionViewModel)sender;
-
-
-                _lastSender = currentPart;
-
-
-
-
-                _lastSenderType = (Type)data;
-                handled = true;
-                curPanel.PanelOpened = true;
+                CurrentPanelViewModel.PanelOpened = false;
+                handled = false;
             }
         }
 
 
         LegPartDbStructure LegPrt;
 
+        int LevelSelected;
 
         public bool testOnUnique(LegPartDbStructure structure)
         {
@@ -307,9 +231,10 @@ namespace WpfApp2.LegParts
             //{
             //    return true;
             //}
+            if (structure == null)
+                return false;
 
-
-            foreach (var x in LegSections[structure.Level - 1].StructureSource)
+            foreach (var x in LegSections[LevelSelected - 1].StructureSource)
             {
                 if (mode == "Edit")
                 {
@@ -421,6 +346,7 @@ namespace WpfApp2.LegParts
 
 
                 LegPartDbStructure structure = currentPart.SelectedValue;
+                LevelSelected = structure.Level;
                 CurrentPanelViewModel.LegPrt = structure;
                 CurrentPanelViewModel.SavedLegPrt = structure;
                 CurrentPanelViewModel.mode = "Edit";
@@ -918,8 +844,10 @@ namespace WpfApp2.LegParts
      {
 
          if (string.IsNullOrWhiteSpace(((TextBox)sender).Text))
+         {
              ((TextBox)sender).Text = "0";
-
+             FF_length = 0;
+         }
 
 
      }

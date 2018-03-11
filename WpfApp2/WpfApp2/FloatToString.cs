@@ -5,10 +5,203 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Interactivity;
+using WpfApp2.Messaging;
 
 namespace WpfApp2
 {
+
+    /// <summary>
+    ///     Intent: Behavior which means a scrollviewer will always scroll down to the bottom.
+    /// </summary>
+    /// 
+    public class AutoScrollBehavior : Behavior<ScrollViewer>
+    {
+        private double _height = 0.0d;
+        private ScrollViewer _scrollViewer = null;
+
+        public AutoScrollBehavior()
+        {
+            //SetOneTime = false;
+            MessageBus.Default.Subscribe("SetScrollForAddObsled", SetScroll);
+            MessageBus.Default.Subscribe("SetScrollOnlyForAddObsled", SetScrollOnly);
+        }
+
+        protected override void OnAttached()
+        {
+            base.OnAttached();
+
+            this._scrollViewer = base.AssociatedObject;
+            this._scrollViewer.ScrollChanged += new ScrollChangedEventHandler(_scrollViewer_LayoutUpdated);
+        }
+        //public bool SetOneTime { get; set; }
+        public void SetScroll(object sender, object data)
+        {
+            //            this._scrollViewer.ScrollToVerticalOffset(this._height);
+
+            // SetOneTime = true;
+            MessageBus.Default.Call("SaveScrollSize", null, _height);
+        }
+        public void SetScrollOnly(object sender, object data)
+        {
+            //            this._scrollViewer.ScrollToVerticalOffset(this._height);
+
+            _height = (double)sender;
+
+
+        }
+        private void _scrollViewer_LayoutUpdated(object sender, EventArgs e)
+        {
+            if (this._scrollViewer.VerticalOffset == 0)
+            {
+                MessageBus.Default.Call("GetScrollSize", null, _height);
+                this._scrollViewer.ScrollToVerticalOffset(this._height);
+            }
+            else if (this._scrollViewer.VerticalOffset != 0)
+            {
+                //if (this._scrollViewer.HorizontalOffset != 0)
+                //{
+
+                this._height = this._scrollViewer.VerticalOffset;
+                //}
+                //else
+                //{
+                //    
+                //}
+            }
+        }
+
+        protected override void OnDetaching()
+        {
+            base.OnDetaching();
+
+            if (this._scrollViewer != null)
+            {
+                this._scrollViewer.LayoutUpdated -= new EventHandler(_scrollViewer_LayoutUpdated);
+            }
+        }
+    }
+
+    public class AutoScrollBehaviorRight : Behavior<ScrollViewer>
+    {
+        private double _height = 0.0d;
+        private ScrollViewer _scrollViewer = null;
+
+        public AutoScrollBehaviorRight()
+        {
+            //SetOneTime = false;
+            MessageBus.Default.Subscribe("SetScrollForAddObsledRight", SetScroll);
+            MessageBus.Default.Subscribe("SetScrollOnlyForAddObsledRight", SetScrollOnly);
+        }
+
+        protected override void OnAttached()
+        {
+            base.OnAttached();
+
+            this._scrollViewer = base.AssociatedObject;
+            this._scrollViewer.ScrollChanged += new ScrollChangedEventHandler(_scrollViewer_LayoutUpdated);
+        }
+        public bool SetOneTime { get; set; }
+        public void SetScroll(object sender, object data)
+        {
+          
+            MessageBus.Default.Call("SaveScrollSizeRight", null, _height);
+        }
+        public void SetScrollOnly(object sender, object data)
+        {
+            _height = (double)sender;
+
+
+        }
+        private void _scrollViewer_LayoutUpdated(object sender, EventArgs e)
+        {
+            if (this._scrollViewer.VerticalOffset == 0)
+            {
+                MessageBus.Default.Call("GetScrollSizeRight", null, _height);
+                this._scrollViewer.ScrollToVerticalOffset(this._height);
+            }
+            else if (this._scrollViewer.VerticalOffset != 0)
+            {
+                //if (this._scrollViewer.HorizontalOffset != 0)
+                //{
+
+                this._height = this._scrollViewer.VerticalOffset;
+                //}
+                //else
+                //{
+                //    
+                //}
+            }
+        }
+
+        protected override void OnDetaching()
+        {
+            base.OnDetaching();
+
+            if (this._scrollViewer != null)
+            {
+                this._scrollViewer.LayoutUpdated -= new EventHandler(_scrollViewer_LayoutUpdated);
+            }
+        }
+    }
+    //public class AutoScrollBehavior : Behavior<ScrollViewer>
+    //{
+    //    private double _height = 0.0d;
+    //    private ScrollViewer _scrollViewer = null;
+
+    //    public AutoScrollBehavior()
+    //    {
+    //        SetOneTime = false;
+    //        MessageBus.Default.Subscribe("SetScrollForAddObsled", SetScroll);
+    //    }
+
+    //    protected override void OnAttached()
+    //    {
+    //        base.OnAttached();
+
+    //        this._scrollViewer = base.AssociatedObject;
+    //        this._scrollViewer.LayoutUpdated += new EventHandler(_scrollViewer_LayoutUpdated);
+    //    }
+    //   public  bool SetOneTime { get; set; }
+    //    public void SetScroll(object sender, object data)
+    //    {
+    //        //            this._scrollViewer.ScrollToVerticalOffset(this._height);
+
+    //        SetOneTime = true;
+    //    }
+    //    private void _scrollViewer_LayoutUpdated(object sender, EventArgs e)
+    //    {
+    //        if (SetOneTime && this._scrollViewer.VerticalOffset == 0)
+    //        {
+    //            this._scrollViewer.ScrollToVerticalOffset(this._height); }
+    //        else if(this._scrollViewer.VerticalOffset != 0)
+    //        {
+    //            //if (this._scrollViewer.HorizontalOffset != 0)
+    //            //{
+
+    //            this._height = this._scrollViewer.VerticalOffset;
+    //            //}
+    //            //else
+    //            //{
+    //            //    
+    //            //}
+    //        }
+    //    }
+
+    //    protected override void OnDetaching()
+    //    {
+    //        base.OnDetaching();
+
+    //        if (this._scrollViewer != null)
+    //        {
+    //            this._scrollViewer.LayoutUpdated -= new EventHandler(_scrollViewer_LayoutUpdated);
+    //        }
+    //    }
+    //}
+
+
     public class RegexUtilities
     {
         bool invalid = false;
@@ -93,27 +286,27 @@ namespace WpfApp2
         }
     }
 
-public class FloatToString : IValueConverter
-{
-
-
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public class FloatToString : IValueConverter
     {
-        return Math.Round((float)value).ToString();
-    }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        float buf = 0.0f;
-        if (float.TryParse(value as string, out buf))
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return buf;
-        }
-        else
-        {
-            return 0.0f;
+            return Math.Round((float)value).ToString();
         }
 
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            float buf = 0.0f;
+            if (float.TryParse(value as string, out buf))
+            {
+                return buf;
+            }
+            else
+            {
+                return 0.0f;
+            }
+
+        }
     }
-}
 }

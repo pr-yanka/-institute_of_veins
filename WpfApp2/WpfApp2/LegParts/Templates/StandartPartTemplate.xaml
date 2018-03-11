@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                     xmlns:local="WpfApp2.LegParts.LegPartMainTemplate.StandartPartTemplate">
     <DataTemplate x:Key="StandartPartTemplate">
         <Grid Margin="10,0,10,0" ShowGridLines="True">
@@ -8,8 +8,8 @@
                 <DockPanel Margin="0,5,0,5" Width="Auto" LastChildFill="True">
                     <Label x:Name="label" Content="{Binding Path=ListNumber}" HorizontalAlignment="Left" Margin="5,0,5,0" VerticalAlignment="Top" Height="30" Width="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" FontFamily="Georgia" Background="#FFD2E6F7" BorderThickness="1" BorderBrush="Black"/>
                     <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="5,0,5,0" TextWrapping="Wrap" Text="Выбор:" VerticalAlignment="Top" FontSize="18"/>
-                   
-                        <!--     <Border Margin="60,0,0,1" Canvas.ZIndex="2" Background="White" Width="100" Height="25">
+
+                    <!--     <Border Margin="60,0,0,1" Canvas.ZIndex="2" Background="White" Width="100" Height="25">
                         <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="PreviewMouseDown">
                                     <i:InvokeCommandAction  Command="{Binding Path=ClickOnBorder}" CommandParameter="{Binding ElementName=firstLevelBlock}" />
@@ -32,14 +32,14 @@
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    
+
                                     <TextBlock TextWrapping="Wrap" Text="{Binding NameContext,UpdateSourceTrigger=PropertyChanged}" Width="400" />
-                                    
+
                                 </StackPanel>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
 
-                        </ComboBox>
+                    </ComboBox>
                     <Button ToolTip="Редактировать" IsEnabled="{Binding IsButtonsEnabled}"  Margin="0,0,3,0"  Command="{Binding ToRedactStruct}" Background="{x:Null}"  FontSize="14" FontFamily="Franklin Gothic Medium"   HorizontalAlignment="Right"  MaxWidth="50" Height="30" Width="30" MaxHeight="50">
 
                         <Image Source="pack://application:,,,/Images/edit1.png"></Image>

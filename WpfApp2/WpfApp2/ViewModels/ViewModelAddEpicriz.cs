@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using WpfApp2.Db.Models;
 using WpfApp2.Messaging;
@@ -52,14 +53,44 @@ namespace WpfApp2.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+        private float _e1;
+        private float _e2;
+        private float _days;
+        public float E1
+        {
+            get { return _e1; }
+            set
+            {
+                _e1 = value;
 
-        public float E1 { get; set; }
-        public float E2 { get; set; }
+                OnPropertyChanged();
+            }
+        }
+        public float E2
+        {
+            get { return _e2; }
+            set
+            {
+                _e2 = value;
+
+                OnPropertyChanged();
+            }
+        }
+        public float Days
+        {
+            get { return _days; }
+            set
+            {
+                _days = value;
+
+                OnPropertyChanged();
+            }
+        }
         public string Антикоагулянты { get; set; }
 
         public string FullScrelizovanie { get; set; }
         public string Svetoootvod { get; set; }
-        public float days { get; set; }
+
 
         public List<Docs> Doctors { get; set; }
 
@@ -127,7 +158,7 @@ namespace WpfApp2.ViewModels
         {
             //MessageBus.Default.Call("SetClearSclazingList", null, null);
             //MessageBus.Default.Call("SetClearAnticogulanyList", null, null);
-            days = 0.0f;
+            Days = 0.0f;
             Svetoootvod = "";
             Антикоагулянты = "";
             FullScrelizovanie = "";
@@ -171,8 +202,56 @@ namespace WpfApp2.ViewModels
         //}
         public ViewModelAddEpicriz(NavigationController controller) : base(controller)
         {//SetAnticogulantList
-            //MessageBus.Default.Subscribe("SetAnticogulantList", SetAnticogulantList);
-            //MessageBus.Default.Subscribe("SetSclazingListForEpicriz", SetSclezingList);
+         //MessageBus.Default.Subscribe("SetAnticogulantList", SetAnticogulantList);
+         //MessageBus.Default.Subscribe("SetSclazingListForEpicriz", SetSclezingList);
+            LostFocusE1 = new DelegateCommand<object>(
+      (sender) =>
+      {
+
+          if (string.IsNullOrWhiteSpace(((TextBox)sender).Text))
+          {
+              ((TextBox)sender).Text = "0";
+              E1 = 0;
+          }
+
+
+      });
+            LostFocusE2 = new DelegateCommand<object>(
+   (sender) =>
+   {
+
+       if (string.IsNullOrWhiteSpace(((TextBox)sender).Text))
+       {
+           ((TextBox)sender).Text = "0";
+           E2 = 0;
+       }
+
+
+   });
+
+            LostFocus = new DelegateCommand<object>(
+         (sender) =>
+         {
+
+             if (string.IsNullOrWhiteSpace(((TextBox)sender).Text))
+             {
+                 ((TextBox)sender).Text = "0";
+                 Days = 0;
+             }
+
+
+         }
+     ); ClickOnWeight = new DelegateCommand<object>(
+        (sender) =>
+        {
+
+            if (((TextBox)sender).Text == "0")
+                ((TextBox)sender).Text = "";
+
+
+
+        }
+    );
             MessageBus.Default.Subscribe("GetOperationIDForAddEpicriz", GetOperationid);
             HasNavigation = false;
             SclerozSelected = new ObservableCollection<Sclezing>(Data.Sclezing.GetAll);
@@ -395,7 +474,7 @@ namespace WpfApp2.ViewModels
                         document.ReplaceText("«Бригада»", brigade);
 
 
-                        document.ReplaceText("«сутки»", days.ToString());
+                        document.ReplaceText("«сутки»", Days.ToString());
                         document.ReplaceText("«Врач»", Doctors[SelectedDoctor].ToString());
 
                         if (SclezingIdSelected != 0)
@@ -608,5 +687,9 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToOperationOverviewCommand { get; protected set; }
         public DelegateCommand ToSetSclezindCommand { get; private set; }
         public DelegateCommand ToSetAugmentedRealytyCommand { get; }
+        public DelegateCommand<object> LostFocus { get; private set; }
+        public DelegateCommand<object> LostFocusE1 { get; private set; }
+        public DelegateCommand<object> ClickOnWeight { get; private set; }
+        public DelegateCommand<object> LostFocusE2 { get; private set; }
     }
 }

@@ -168,6 +168,11 @@ namespace WpfApp2.ViewModels
                     VisiBIlityOfAddResult = Visibility.Visible;
                     VisiBIlityOfAddCancle = Visibility.Visible;
                     ResultButtonName = "Добавить итоги";
+                    ToAddOperationResultCommand = new DelegateCommand(() =>
+                    {
+                        MessageBus.Default.Call("GetOperationIDForAddOperationResult", this, Operation.Id);
+                        Controller.NavigateTo<ViewModelAddOperationResult>();
+                    });
                 }
                 else
                 {

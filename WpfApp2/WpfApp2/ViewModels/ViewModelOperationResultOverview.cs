@@ -101,7 +101,7 @@ namespace WpfApp2.ViewModels
                 oprresult = opResRep.Get(Operation.итоги_операции.Value);
             }
             HeaderName = "Итоги операции";
-            ResultOrOtmenaName = "Операция проведена :";
+            ResultOrOtmenaName = "Операция проведена";
             int i1 = 0;
             int i2 = 0;
             string leftP = "";
@@ -150,15 +150,15 @@ namespace WpfApp2.ViewModels
                 }
                 if (Operation.OnWhatLegOp == "0")
                 {
-                    PlanedOpr = "На левую ногу :" + leftP;
+                    PlanedOpr = "\nНа левую ногу : " + leftP;
                 }
                 if (Operation.OnWhatLegOp == "1")
                 {
-                    PlanedOpr = "На правую ногу :" + rightP;
+                    PlanedOpr = "\nНа правую ногу : " + rightP;
                 }
                 if (Operation.OnWhatLegOp == "2")
                 {
-                    PlanedOpr = "На левую ногу :" + leftP + " " + "На правую ногу :" + rightP; 
+                    PlanedOpr = "\nНа левую ногу : " + leftP + " " + "\nНа правую ногу : " + rightP; 
                 }
 
 

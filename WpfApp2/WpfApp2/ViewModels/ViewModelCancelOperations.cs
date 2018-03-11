@@ -65,7 +65,7 @@ namespace WpfApp2.ViewModels
             Date = DateTime.Now;
             //operationType = Data.OperationType.Get(Operation.OperationTypeId).LongName;
             TextResultCancle = "Отмена операции";
-            DateText = "Операция отменена :";
+            DateText = "Операция отменена";
             OtmenOrProv = "Отмененная ";
 
             foreach(var Reason in Data.ReasonsOfCancleOperation.GetAll)

@@ -46,7 +46,7 @@ namespace WpfApp2.ViewModels
             IsChecked = false;
         }
     }
-    public class ViewModelOperationForAmbullatorCardList : ViewModelBase
+    public class ViewModelOperationForAmbullatorCardList : ViewModelBase, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

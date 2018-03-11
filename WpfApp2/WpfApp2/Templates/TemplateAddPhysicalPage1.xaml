@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                    xmlns:implementation="clr-namespace:WpfApp2"
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/LegParts/Templates/RightPanelAnimation.xaml"/>
@@ -40,8 +41,11 @@
             <TextBlock x:Name="textBlock1_Copy3" HorizontalAlignment="Center" Margin="724,120,122,507" TextWrapping="Wrap" VerticalAlignment="Center" Width="170" FontSize="18"><Run Text="Правая "/><Run Text="нога"/></TextBlock>
 
 
-            <ScrollViewer Margin="3,190,524,320" RenderTransformOrigin="0.5,0.5" FontSize="14">
-                <StackPanel Orientation="Vertical">
+            <ScrollViewer    Margin="3,190,524,320" RenderTransformOrigin="0.5,0.5" FontSize="14">
+                <i:Interaction.Behaviors>
+                    <implementation:AutoScrollBehavior />
+                </i:Interaction.Behaviors>
+                <StackPanel  Orientation="Vertical">
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
@@ -49,14 +53,14 @@
                                 <Button x:Name="buttonSFS1" BorderBrush="{Binding bSFS}" Command="{Binding ToLeftSFSCommand}" Content="{Binding Path=LeftSFS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Visibility="{Binding IsVisibleSFSleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSLeftstr[0]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleSFSleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSLeftstr[1]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleSFSleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSLeftstr[2]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleSFSleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSLeftstr[3]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleSFSleft[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSLeftstr[4]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleSFSleft[5],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSLeftstr[5]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleSFSleft[6],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSLeftstr[6]}"></TextBlock>
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
+                            <TextBlock Visibility="{Binding IsVisibleSFSleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SFSLeftstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSFSleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SFSLeftstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSFSleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SFSLeftstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSFSleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SFSLeftstr[3]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSFSleft[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SFSLeftstr[4]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSFSleft[5],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SFSLeftstr[5]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSFSleft[6],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SFSLeftstr[6]}"></TextBlock>
                         </StackPanel>
                     </Expander>
                     <Separator/>
@@ -67,15 +71,15 @@
                                 <Button  BorderBrush="{Binding bBPV}" x:Name="buttonBPVHip1" Command="{Binding ToLeftBPVHipCommand}" Content="{Binding Path=LeftBPVHip.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
                             <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisibleBPVleft[0]}" Text="Ход: "> <TextBlock  Text="{Binding LeftBPVHip.SelectedWayType.Name}" FontSize="12"/></TextBlock>
 
-                            <TextBlock Visibility="{Binding IsVisibleBPVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvLeftstr[0]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleBPVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvLeftstr[1]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleBPVleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvLeftstr[2]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleBPVleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvLeftstr[3]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleBPVleft[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvLeftstr[4]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleBPVleft[5],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvLeftstr[5]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BpvLeftstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BpvLeftstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPVleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BpvLeftstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPVleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BpvLeftstr[3]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPVleft[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BpvLeftstr[4]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPVleft[5],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BpvLeftstr[5]}"></TextBlock>
 
                         </StackPanel>
                     </Expander>
@@ -88,12 +92,12 @@
                                 <Button  BorderBrush="{Binding BPDSV}" x:Name="buttonPDSV1" Command="{Binding ToLeftPDSVCommand}" Content="{Binding Path=LeftPDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisiblePDSVleft[0]}" Text="Ход: "> <TextBlock  Text="{Binding LeftPDSV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
+                        <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
+                            <TextBlock  HorizontalAlignment="Left" Visibility="{Binding IsVisiblePDSVleft[0]}" Text="Ход: "> <TextBlock  Text="{Binding LeftPDSV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
 
-                            <TextBlock Visibility="{Binding IsVisiblePDSVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PDSVLeftstr[0]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisiblePDSVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PDSVLeftstr[1]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisiblePDSVleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PDSVLeftstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePDSVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding PDSVLeftstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePDSVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding PDSVLeftstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePDSVleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding PDSVLeftstr[2]}"></TextBlock>
 
                         </StackPanel>
                     </Expander>
@@ -106,10 +110,10 @@
                                 <Button x:Name="buttonZDSV1"  BorderBrush="{Binding BZDSV}" Command="{Binding ToLeftZDSVCommand}" Content="{Binding Path=LeftZDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Visibility="{Binding IsVisibleZDSVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding ZDSVLeftstr[0]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleZDSVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding ZDSVLeftstr[1]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleZDSVleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding ZDSVLeftstr[2]}"></TextBlock>
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
+                            <TextBlock Visibility="{Binding IsVisibleZDSVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding ZDSVLeftstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleZDSVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding ZDSVLeftstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleZDSVleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding ZDSVLeftstr[2]}"></TextBlock>
 
                         </StackPanel>
                     </Expander>
@@ -122,12 +126,12 @@
                                 <Button x:Name="buttonPerforate1"  BorderBrush="{Binding BPerforate1}" Command="{Binding ToLeftPerforateCommand}" Content="{Binding Path=LeftPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipLeftstr[0]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipLeftstr[1]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipLeftstr[2]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipLeftstr[3]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPleft[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipLeftstr[4]}"></TextBlock>
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
+                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Perforate_hipLeftstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Perforate_hipLeftstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Perforate_hipLeftstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Perforate_hipLeftstr[3]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPleft[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Perforate_hipLeftstr[4]}"></TextBlock>
 
                         </StackPanel>
                     </Expander>
@@ -140,12 +144,12 @@
                                 <Button x:Name="buttonBPVTibia1"  BorderBrush="{Binding bBPVTibia}" Command="{Binding ToLeftBPVTibiaCommand}" Content="{Binding Path=LeftBPVTibia.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
 
-                            <TextBlock Visibility="{Binding IsVisibleBPV_Tibialeft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BPV_TibiaLeftstr[0]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleBPV_Tibialeft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BPV_TibiaLeftstr[1]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleBPV_Tibialeft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BPV_TibiaLeftstr[2]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleBPV_Tibialeft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BPV_TibiaLeftstr[3]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPV_Tibialeft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BPV_TibiaLeftstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPV_Tibialeft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BPV_TibiaLeftstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPV_Tibialeft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BPV_TibiaLeftstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPV_Tibialeft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BPV_TibiaLeftstr[3]}"></TextBlock>
 
                         </StackPanel>
                     </Expander>
@@ -159,12 +163,12 @@
                             </StackPanel>
                         </Expander.Header>
 
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_shinLeftstr[0]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_shinLeftstr[1]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_shinLeftstr[2]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_shinLeftstr[3]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinleft[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_shinLeftstr[4]}"></TextBlock>
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
+                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Perforate_shinLeftstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Perforate_shinLeftstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Perforate_shinLeftstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Perforate_shinLeftstr[3]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinleft[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Perforate_shinLeftstr[4]}"></TextBlock>
 
                         </StackPanel>
                     </Expander>
@@ -177,10 +181,10 @@
                                 <Button x:Name="buttonSPS1"  BorderBrush="{Binding bSPS}" Command="{Binding ToLeftSPSCommand}" Content="{Binding Path=LeftSPS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Visibility="{Binding IsVisibleSPSleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SPSLeftstr[0]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleSPSleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SPSLeftstr[1]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleSPSleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SPSLeftstr[2]}"></TextBlock>
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
+                            <TextBlock Visibility="{Binding IsVisibleSPSleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SPSLeftstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSPSleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SPSLeftstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSPSleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SPSLeftstr[2]}"></TextBlock>
 
                         </StackPanel>
                     </Expander>
@@ -192,13 +196,13 @@
                                 <Button x:Name="buttfonPDSV1"  BorderBrush="{Binding bMPV}" Command="{Binding ToLeftMPVCommand}" Content="{Binding Path=LeftMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
                             <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisibleMPVleft[0]}" Text="Ход: "> <TextBlock  Text="{Binding LeftMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
 
-                            <TextBlock Visibility="{Binding IsVisibleMPVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding MPVLeftstr[0]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleMPVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding MPVLeftstr[1]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleMPVleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding MPVLeftstr[2]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleMPVleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding MPVLeftstr[3]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleMPVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding MPVLeftstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleMPVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding MPVLeftstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleMPVleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding MPVLeftstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleMPVleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding MPVLeftstr[3]}"></TextBlock>
 
                         </StackPanel>
                     </Expander>
@@ -210,13 +214,13 @@
                                 <Button  BorderBrush="{Binding BTEMPV}" x:Name="buttfonвPDSV1" Command="{Binding ToLeftTEMPVCommand}" Content="{Binding Path=LeftTEMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
                             <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisibleTEMPVleft[0]}" Text="Ход: "> <TextBlock  Text="{Binding LeftTEMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
                             <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisibleTEMPVleft[0]}" Text="Протяженность: "> <TextBlock  Text="{Binding LeftTEMPV.FF_length}" FontSize="12"/></TextBlock>
 
-                            <TextBlock Visibility="{Binding IsVisibleTEMPVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding TEMPVLeftstr[0]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleTEMPVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding TEMPVLeftstr[1]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleTEMPVleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding TEMPVLeftstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleTEMPVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding TEMPVLeftstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleTEMPVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding TEMPVLeftstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleTEMPVleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding TEMPVLeftstr[2]}"></TextBlock>
 
 
                         </StackPanel>
@@ -229,10 +233,10 @@
                                 <Button x:Name="butаtffohnвPDSV1"  BorderBrush="{Binding BPPV}" Command="{Binding ToLeftPPVCommand}" Content="{Binding Path=LeftPPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
 
-                            <TextBlock Visibility="{Binding IsVisiblePPVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PPVLeftstr[0]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisiblePPVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PPVLeftstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePPVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding PPVLeftstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePPVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding PPVLeftstr[1]}"></TextBlock>
 
                         </StackPanel>
                     </Expander>
@@ -245,12 +249,12 @@
                                 <Button x:Name="butаtfohnвPDSV1"  BorderBrush="{Binding BCEAR}" Command="{Binding ToLeftCEARCommand}" Content="{Binding Path=LeftCEAR.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
 
-                            <TextBlock Visibility="{Binding IsVisibleCEAPleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding CEAPLeftstr[0]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleCEAPleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding CEAPLeftstr[1]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleCEAPleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding CEAPLeftstr[2]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleCEAPleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding CEAPLeftstr[3]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleCEAPleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CEAPLeftstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleCEAPleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CEAPLeftstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleCEAPleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CEAPLeftstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleCEAPleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CEAPLeftstr[3]}"></TextBlock>
 
                         </StackPanel>
                     </Expander>
@@ -261,8 +265,8 @@
                                 <TextBlock TextDecorations="Underline"    Text="XII. Примечание" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
-                            <TextBox Width="470"  Height="50"  HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding LeftAdditionalText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
+                            <TextBox Width="470"  Height="50"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding LeftAdditionalText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
                         </StackPanel>
                     </Expander>
                     <Separator/>
@@ -274,10 +278,10 @@
                                 <Button BorderBrush= "{Binding BGV}" x:Name="butаtffohnfвPDSV1" Command="{Binding ToLeftGVCommand}" Content="{Binding Path=LeftGV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
 
-                            <TextBlock Visibility="{Binding IsVisibleGVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding GVLeftstr[0]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleGVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding GVLeftstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleGVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding GVLeftstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleGVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding GVLeftstr[1]}"></TextBlock>
 
                         </StackPanel>
                     </Expander>
@@ -288,7 +292,10 @@
                 </StackPanel>
             </ScrollViewer>
             <ScrollViewer Margin="518,190,10,320" RenderTransformOrigin="0.5,0.5" FontSize="14">
-                <StackPanel Orientation="Vertical">
+                <i:Interaction.Behaviors>
+                    <implementation:AutoScrollBehaviorRight />
+                </i:Interaction.Behaviors>
+                <StackPanel  Orientation="Vertical">
                     <Expander>
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
@@ -296,14 +303,14 @@
                                 <Button BorderBrush= "{Binding BSFSL}" x:Name="buttonBPVHip2" Command="{Binding ToRightSFSCommand}" Content="{Binding Path=RightSFS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Visibility="{Binding IsVisibleSFSRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSRightstr[0]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleSFSRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSRightstr[1]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleSFSRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSRightstr[2]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleSFSRight[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSRightstr[3]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleSFSRight[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSRightstr[4]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleSFSRight[5],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSRightstr[5]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleSFSRight[6],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SFSRightstr[6]}"></TextBlock>
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
+                            <TextBlock Visibility="{Binding IsVisibleSFSRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SFSRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSFSRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SFSRightstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSFSRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SFSRightstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSFSRight[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SFSRightstr[3]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSFSRight[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SFSRightstr[4]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSFSRight[5],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SFSRightstr[5]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSFSRight[6],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SFSRightstr[6]}"></TextBlock>
 
                         </StackPanel>
                     </Expander>
@@ -317,15 +324,15 @@
 
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
                             <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisibleBPVRight[0]}" Text="Ход: "> <TextBlock  Text="{Binding RightBPVHip.SelectedWayType.Name}" FontSize="12"/></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleBPVRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPVRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BpvRightstr[0]}"></TextBlock>
 
-                            <TextBlock Visibility="{Binding IsVisibleBPVRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvRightstr[1]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleBPVRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvRightstr[2]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleBPVRight[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvRightstr[3]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleBPVRight[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvRightstr[4]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleBPVRight[5],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BpvRightstr[5]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPVRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BpvRightstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPVRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BpvRightstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPVRight[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BpvRightstr[3]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPVRight[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BpvRightstr[4]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPVRight[5],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BpvRightstr[5]}"></TextBlock>
                         </StackPanel>
                     </Expander>
 
@@ -338,12 +345,12 @@
                                 <Button BorderBrush= "{Binding BPDSVL}"  x:Name="buttonPDSV2" Command="{Binding ToRightPDSVCommand}" Content="{Binding Path=RightPDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
                             <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisiblePDSVright[0]}" Text="Ход: "> <TextBlock  Text="{Binding RightPDSV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
 
-                            <TextBlock Visibility="{Binding IsVisiblePDSVright[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PDSVRightstr[0]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisiblePDSVright[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PDSVRightstr[1]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisiblePDSVright[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PDSVRightstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePDSVright[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding PDSVRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePDSVright[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding PDSVRightstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePDSVright[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding PDSVRightstr[2]}"></TextBlock>
 
                         </StackPanel>
                     </Expander>
@@ -356,10 +363,10 @@
                                 <Button  BorderBrush= "{Binding BZDSVL}"  x:Name="buttonZDSV2" Command="{Binding ToRightZDSVCommand}" Content="{Binding Path=RightZDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
-                            <TextBlock Visibility="{Binding IsVisibleZDSVright[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding ZDSVRightstr[0]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleZDSVright[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding ZDSVRightstr[1]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleZDSVright[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding ZDSVRightstr[2]}"></TextBlock>
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
+                            <TextBlock Visibility="{Binding IsVisibleZDSVright[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding ZDSVRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleZDSVright[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding ZDSVRightstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleZDSVright[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding ZDSVRightstr[2]}"></TextBlock>
 
                         </StackPanel>
                     </Expander>
@@ -372,13 +379,13 @@
                                 <Button BorderBrush= "{Binding BPerforate1L}" x:Name="buttonPerforate2" Command="{Binding ToRightPerforateCommand}" Content="{Binding Path=RightPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
 
-                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPright[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipRightstr[0]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPright[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipRightstr[1]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPright[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipRightstr[2]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPright[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipRightstr[3]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPright[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_hipRightstr[4]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPright[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Perforate_hipRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPright[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Perforate_hipRightstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPright[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Perforate_hipRightstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPright[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Perforate_hipRightstr[3]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforateHIPright[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Perforate_hipRightstr[4]}"></TextBlock>
 
                         </StackPanel>
                     </Expander>
@@ -390,12 +397,12 @@
                                 <Button BorderBrush= "{Binding BBPVL}" x:Name="buttonPeвrforate2" Command="{Binding ToRightBPVTibiaCommand}" Content="{Binding Path=RightBPVTibia.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
 
-                            <TextBlock Visibility="{Binding IsVisibleBPV_Tibiaright[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BPV_TibiaRightstr[0]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleBPV_Tibiaright[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BPV_TibiaRightstr[1]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleBPV_Tibiaright[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BPV_TibiaRightstr[2]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleBPV_Tibiaright[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding BPV_TibiaRightstr[3]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPV_Tibiaright[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BPV_TibiaRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPV_Tibiaright[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BPV_TibiaRightstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPV_Tibiaright[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BPV_TibiaRightstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleBPV_Tibiaright[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BPV_TibiaRightstr[3]}"></TextBlock>
 
                         </StackPanel>
 
@@ -409,13 +416,13 @@
                                 <Button BorderBrush= "{Binding BPerforateGoleniL}" x:Name="buttondPeвrforate2" Command="{Binding ToRightTibiaPerforateCommand}" Content="{Binding Path=RightTibiaPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
 
-                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_shinRightstr[0]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_shinRightstr[1]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_shinRightstr[2]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinRight[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_shinRightstr[3]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinRight[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Perforate_shinRightstr[3]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Perforate_shinRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Perforate_shinRightstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Perforate_shinRightstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinRight[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Perforate_shinRightstr[3]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePerforate_shinRight[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Perforate_shinRightstr[3]}"></TextBlock>
 
                         </StackPanel>
 
@@ -428,11 +435,11 @@
                                 <Button BorderBrush= "{Binding ddddd}" x:Name="buttdondPeвrforate2" Command="{Binding ToRightSPSCommand}" Content="{Binding Path=RightSPS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
 
-                            <TextBlock Visibility="{Binding IsVisibleSPSRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SPSRightstr[0]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleSPSRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SPSRightstr[1]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleSPSRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding SPSRightstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSPSRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SPSRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSPSRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SPSRightstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSPSRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SPSRightstr[2]}"></TextBlock>
 
                         </StackPanel>
 
@@ -445,13 +452,13 @@
                                 <Button BorderBrush= "{Binding fffff}" x:Name="butаtfonPDSV1" Command="{Binding ToRightMPVCommand}" Content="{Binding Path=RightMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
                             <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisibleMPVRight[0]}" Text="Ход: "> <TextBlock  Text="{Binding RightMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
 
-                            <TextBlock Visibility="{Binding IsVisibleMPVRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding MPVRightstr[0]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleMPVRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding MPVRightstr[1]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleMPVRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding MPVRightstr[2]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleMPVRight[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding MPVRightstr[3]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleMPVRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding MPVRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleMPVRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding MPVRightstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleMPVRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding MPVRightstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleMPVRight[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding MPVRightstr[3]}"></TextBlock>
 
                         </StackPanel>
                     </Expander>
@@ -463,13 +470,13 @@
                                 <Button  BorderBrush= "{Binding BTEMPVL}"  x:Name="butаtfonвPDSV1" Command="{Binding ToRightTEMPVCommand}" Content="{Binding Path=RightTEMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
                             <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisibleTEMPVRight[0]}" Text="Ход: "> <TextBlock  Text="{Binding RightTEMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
                             <TextBlock  HorizontalAlignment="Center"  Visibility="{Binding IsVisibleTEMPVRight[0]}"  Text="Протяженность: "> <TextBlock  Text="{Binding RightTEMPV.FF_length}" FontSize="12"/></TextBlock>
 
-                            <TextBlock Visibility="{Binding IsVisibleTEMPVRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding TEMPVRightstr[0]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleTEMPVRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding TEMPVRightstr[1]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleTEMPVRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding TEMPVRightstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleTEMPVRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding TEMPVRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleTEMPVRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding TEMPVRightstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleTEMPVRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding TEMPVRightstr[2]}"></TextBlock>
 
 
                         </StackPanel>
@@ -483,10 +490,10 @@
                                 <Button   x:Name="butdsаtfohnвPfDSV1" BorderBrush= "{Binding BPPVL}" Command="{Binding ToRightPPVCommand}" Content="{Binding Path=RightPPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
 
-                            <TextBlock Visibility="{Binding IsVisiblePPVRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PPVRightstr[0]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisiblePPVRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PPVRightstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePPVRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding PPVRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePPVRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding PPVRightstr[1]}"></TextBlock>
 
                         </StackPanel>
                     </Expander>
@@ -500,12 +507,12 @@
                                 <Button BorderBrush= "{Binding BCEARL}"  x:Name="butаtfohnвPfDSV1" Command="{Binding ToRightCEARCommand}" Content="{Binding Path=RightCEAR.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
 
-                            <TextBlock Visibility="{Binding IsVisibleCEAPRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding CEAPRightstr[0]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleCEAPRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding CEAPRightstr[1]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleCEAPRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding CEAPRightstr[2]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleCEAPRight[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding CEAPRightstr[3]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleCEAPRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CEAPRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleCEAPRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CEAPRightstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleCEAPRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CEAPRightstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleCEAPRight[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CEAPRightstr[3]}"></TextBlock>
 
                         </StackPanel>
                     </Expander>
@@ -518,8 +525,8 @@
                                 <TextBlock TextDecorations="Underline" Text="XII. Примечание" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
-                            <TextBox  Height="50" Width="470"  HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding RightAdditionalText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
+                            <TextBox  Height="50" Width="470"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding RightAdditionalText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
                         </StackPanel>
                     </Expander>
                     <Separator/>
@@ -530,10 +537,10 @@
                                 <Button BorderBrush= "{Binding BGVL}" x:Name="butаtffohnffвPDSV1" Command="{Binding ToRightGVCommand}" Content="{Binding Path=RightGV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
-                        <StackPanel Orientation="Vertical">
+                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
 
-                            <TextBlock Visibility="{Binding IsVisibleGVRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding GVRightstr[0]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleGVRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding GVRightstr[1]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleGVRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding GVRightstr[0]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleGVRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding GVRightstr[1]}"></TextBlock>
 
                         </StackPanel>
                     </Expander>

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using WpfApp2.LegParts;
+using WpfApp2.Messaging;
 using WpfApp2.ViewModels;
 
 namespace WpfApp2.Templates
@@ -74,8 +75,11 @@ namespace WpfApp2.Templates
                 return TemplateTablePatients;
 
             if (item.GetType() == typeof(ViewModelAddPhysical))
+            {
+               
                 return TemplateAddPhysicalPage1;
-
+               
+            }
             if (item.GetType() == typeof(ViewModelEditPatient))
                 return TemplateEditPatient;
 
@@ -128,15 +132,15 @@ namespace WpfApp2.Templates
                 return LegPartMainTemplate;
 
             if (item.GetType() == typeof(ViewModelComplainsList))
-                return TemplateCheckboxes;
+                return TemplateCheckboxesWithFilter;
 
             if (item.GetType() == typeof(ViewModelDiagnosisList))
-                return TemplateCheckboxes;
+                return TemplateCheckboxesWithFilter;
 
             if (item.GetType() == typeof(ViewModelRecomendationsList))
-                return TemplateCheckboxes;
+                return TemplateCheckboxesWithFilter;
             if (item.GetType() == typeof(ViewModelDiagnosisListForOperation))
-                return TemplateCheckboxes;
+                return TemplateCheckboxesWithFilter;
 
             if (item.GetType() == typeof(ViewModelCancelOperations))
                 return TemplateCancleOperations;
@@ -211,7 +215,7 @@ namespace WpfApp2.Templates
                 return TemplateCheckboxesWithFilter;
 
             if (item.GetType() == typeof(ViewModelOperationListForOperation))
-                return TemplateCheckboxes;
+                return TemplateCheckboxesWithFilter;
             // 
 
             //if (item.GetType() == typeof(ViewModelSclerozList))

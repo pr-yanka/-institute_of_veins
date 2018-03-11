@@ -94,7 +94,7 @@ namespace WpfApp2.ViewModels
         public Brush BGVL { get { return _bGVL; } set { _bGVL = value; OnPropertyChanged(); } }
 
 
-       
+
         public DelegateCommand RevertCommand { set; get; }
 
 
@@ -2036,28 +2036,33 @@ namespace WpfApp2.ViewModels
                 {
                     if (letter.SelectedValue != null)
                     {
-                        p4.Append("«" + letter.SelectedValue.Leter + letter.SelectedValue.Text1 + "»").Font("Times new roman").FontSize(11.0);
+                        p4.Append("" + letter.SelectedValue.Leter + letter.SelectedValue.Text1 + "»").Font("Times new roman").FontSize(11.0);
 
                     }
                 }
-
+                int ia = 0;
                 p4.Append("\nРекомендовано : ").Font("Times new roman").FontSize(11.0).UnderlineStyle(UnderlineStyle.singleLine);
                 if (RecomendationsList != null)
+                {
                     foreach (var rec in RecomendationsList)
                     {
                         if (rec.IsChecked == true)
                         {
-                            p4.Append("«" + rec.Data.Str + "»").Font("Times new roman").FontSize(11.0);
-
+                            if (ia == 0)
+                                p4.Append("" + rec.Data.Str + "").Font("Times new roman").FontSize(11.0);
+                            else
+                            { p4.Append(", " + rec.Data.Str + "").Font("Times new roman").FontSize(11.0); }
+                            ia++;
                         }
                     }
-                //   p4.Append("Сафено-феморальное соустье").Font("Times new roman").FontSize(11.0).UnderlineStyle(UnderlineStyle.singleLine);
-                //foreach (var section in RightSFS.LegSections)
-                //{
-                //    if (section.SelectedValue != null)
-                //        p4.Append(" «" + section.SelectedValue.Text1 + "»").Font("Times new roman").FontSize(11.0);
-                //}
-
+                    p4.Append(".").Font("Times new roman").FontSize(11.0);
+                    //   p4.Append("Сафено-феморальное соустье").Font("Times new roman").FontSize(11.0).UnderlineStyle(UnderlineStyle.singleLine);
+                    //foreach (var section in RightSFS.LegSections)
+                    //{
+                    //    if (section.SelectedValue != null)
+                    //        p4.Append(" «" + section.SelectedValue.Text1 + "»").Font("Times new roman").FontSize(11.0);
+                    //}
+                }
                 // Save this document.
                 document.Save();
                 // Release this document from memory.
@@ -2514,9 +2519,9 @@ namespace WpfApp2.ViewModels
         {
             string p4 = "";
             if (LegPart.SelectedWayType != null && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name))
-                p4 += "Вид хода :" + LegPart.SelectedWayType.Name + " ";
+                p4 += "Вид хода: " + LegPart.SelectedWayType.Name + "\n";
             if (LegPart is TEMPVViewModel)
-                p4 += "Протяженность :" + ((TEMPVViewModel)LegPart).FF_length + " ";
+                p4 += "Протяженность: " + ((TEMPVViewModel)LegPart).FF_length + "\n";
 
 
             foreach (var section in LegPart.LegSections)
@@ -2524,23 +2529,23 @@ namespace WpfApp2.ViewModels
                 if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
                 {
                     if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
-                        p4 += " «" + section.SelectedValue.Text1;
+                        p4 += "" + section.SelectedValue.Text1;
 
 
                     if (section.SelectedValue.HasSize || section.HasDoubleSize)
                     {
                         if (section.HasDoubleSize)
                         {
-                            p4 += " " + section.CurrentEntry.Size + "*" + section.CurrentEntry.Size2 + " " + section.SelectedValue.Metrics + "»";
+                            p4 += " " + section.CurrentEntry.Size + "*" + section.CurrentEntry.Size2 + " " + section.SelectedValue.Metrics + "";
 
                         }
                         else
                         {
                             if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
-                                p4 += " " + section.CurrentEntry.Size + " " + section.SelectedValue.Metrics + "»";
+                                p4 += " " + section.CurrentEntry.Size + " " + section.SelectedValue.Metrics + " ";
                             else
                             {
-                                p4 += " " + section.CurrentEntry.Size + "»";
+                                p4 += " " + section.CurrentEntry.Size + "";
 
                             }
 
@@ -2548,14 +2553,14 @@ namespace WpfApp2.ViewModels
                     }
                     else
                     {
-                        p4 += "»";
+                        p4 += "";
                     }
 
                     if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
-                        p4 += " «" + section.SelectedValue.Text2 + "»";
+                        p4 += " " + section.SelectedValue.Text2 + "";
                     if (!string.IsNullOrWhiteSpace(section.CurrentEntry.Comment))
                     {
-                        p4 += " «" + section.CurrentEntry.Comment + "»";
+                        p4 += "\nКомментарий : " + section.CurrentEntry.Comment + "\n";
 
                     }
 
@@ -2569,6 +2574,7 @@ namespace WpfApp2.ViewModels
             return p4;
 
         }
+
 
 
         private void SetAllBordersDefault()
@@ -2654,8 +2660,32 @@ namespace WpfApp2.ViewModels
                 {
 
 
-                    document.ReplaceText("ФИО", CurrentPatient.Sirname + " " + CurrentPatient.Name + " " + CurrentPatient.Patronimic);
-                    document.ReplaceText("Возраст", CurrentPatient.Age.ToString());
+                    document.ReplaceText("«ФИО»", CurrentPatient.Sirname + " " + CurrentPatient.Name + " " + CurrentPatient.Patronimic);
+                    char[] chararr = CurrentPatient.Age.ToString().ToCharArray();
+                    try
+                    {
+                        string agelastNumb = chararr[chararr.Length - 1].ToString();
+                        float buff = 0f;
+                        if (float.TryParse(agelastNumb, out buff))
+                        {
+                            if (CurrentPatient.Age >= 10 && CurrentPatient.Age <= 19)
+                            {
+                                document.ReplaceText("«Возраст»", CurrentPatient.Age.ToString() + " лет");
+                            }
+                            else if (buff == 1)
+                            { document.ReplaceText("«Возраст»", CurrentPatient.Age.ToString() + " год"); }
+                            else if (buff >= 2 && buff <= 4)
+                            {
+                                document.ReplaceText("«Возраст»", CurrentPatient.Age.ToString() + " года");
+                            }
+                            else if (buff == 0 || (buff >= 5 && buff <= 9))
+                            {
+                                document.ReplaceText("«Возраст»", CurrentPatient.Age.ToString() + " лет");
+                            }
+                        }
+                    }
+                    catch { }
+
                     document.ReplaceText("«ИМТ»", ITM.ToString());
                     if (!string.IsNullOrWhiteSpace(TextTip))
                         document.ReplaceText("«NB_»", TextTip);
@@ -2672,14 +2702,33 @@ namespace WpfApp2.ViewModels
 
                     string complanes = "";
                     if (ComplainsList != null)
+                    {
+                        int xxx = 0;
                         foreach (var rec in ComplainsList)
                         {
                             if (rec.IsChecked == true)
                             {
-                                complanes += " «" + rec.Data.Str + "»";
+                                if (xxx == 0)
+                                {
+                                    complanes += rec.Data.Str;
+                                }
+                                else
+                                {
+                                    complanes += ", " + rec.Data.Str;
+                                }
+                                xxx++;
+
 
                             }
                         }
+                        char[] chararrbuF1 = complanes.ToCharArray();
+                        if (chararrbuF1[chararrbuF1.Length - 1] == '.')
+                        { }
+                        else
+                        {
+                            complanes += ".";
+                        }
+                    }
                     document.ReplaceText("«Жалобы»", complanes);
 
                     string lettersLeft = "";
@@ -2691,7 +2740,51 @@ namespace WpfApp2.ViewModels
                         ExaminationLegRepository LegExamRep = new ExaminationLegRepository(context);
                         LettersRepository LettersRep = new LettersRepository(context);
                         var ExamsOfCurrPatient = ExamRep.GetAll.ToList().Where(s => s.PatientId == CurrentPatient.Id).ToList();
+                        int xx = 0;
+                        foreach (var x in LeftDiagnosisList)
+                        {
+                            if (xx == 0)
+                            {
+                                lettersLeft += x.Data.Str;
+                            }
+                            else
+                            {
+                                lettersLeft += ", " + x.Data.Str;
+                            }
+                            xx++;
+                        }
+                        char[] chararrbuF = lettersLeft.ToCharArray();
+                        if (chararrbuF[chararrbuF.Length - 1] == '.')
+                        { }
+                        else
+                        {
+                            lettersLeft += ".";
+                        }
 
+
+                        xx = 0;
+                        foreach (var x in RightDiagnosisList)
+                        {
+                            if (xx == 0)
+                            {
+                                lettersRight += x.Data.Str;
+                            }
+                            else
+                            {
+                                lettersRight += ", " + x.Data.Str;
+                            }
+                            xx++;
+                        }
+                        chararrbuF = lettersRight.ToCharArray();
+                        if (chararrbuF[chararrbuF.Length - 1] == '.')
+                        { }
+                        else
+                        {
+                            lettersRight += ".";
+                        }
+
+                        lettersRight += " ";
+                        lettersLeft += " ";
                         if (ExamsOfCurrPatient.Count > 0)
                         {
                             DateTime MaxExam = ExamsOfCurrPatient.Max(s => s.Date);
@@ -2745,86 +2838,292 @@ namespace WpfApp2.ViewModels
 
                     }
 
+                    List<string> bff = new List<string>();
+
+                    bff.Add("СФСр");
+                    bff.Add("БПВр на бедре");
+                    bff.Add("ПДСВр");
+                    bff.Add("ЗДСВр");
+                    bff.Add("Перфоранты бедра и несафенные веныр");
+                    bff.Add("БПВ на голенир");
+                    bff.Add("Перфоранты голенир");
+                    bff.Add("СПСр");
+                    bff.Add("МПВр");
+                    bff.Add("ТЕ_МПВр");
+                    bff.Add("ППВр");
+                    bff.Add("Глубокие веныр");
 
 
                     document.ReplaceText("«Заключение_справа»", lettersRight);
                     document.ReplaceText("«Заключение_cлева»", lettersLeft);
+
+
+
                     //буквы_1
+
+
                     //буквы_2
+                    string RightLL = "";
+                    string LeftLL = "";
+                    Formatting d = new Formatting();
+                    Formatting dx = new Formatting();
+                    dx.Bold = true;
+                    dx.FontFamily = new Font("Times new roman");
+                    d.FontFamily = new Font("Times new roman");
+                    d.Bold = true;
+                    d.UnderlineStyle = UnderlineStyle.singleLine;
 
                     document.ReplaceText("«Врач»", Doctor);
 
+
                     //область
 
-                    document.ReplaceText("«CFCRight»", CreateStrForOverview(RightSFS));
+                    //  RightLL += " " + CreateStrForOverview(RightPDSV) + "\n";
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightPDSV)))
+                    {
+                        document.ReplaceText("СФСр", "ПДСВ: СФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСр", " " + CreateStrForOverview(RightPDSV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
-                    document.ReplaceText("«BPVRight»", CreateStrForOverview(RightBPVHip));
+                    }
 
-                    document.ReplaceText("«ПДСВRight»", CreateStrForOverview(RightPDSV));
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightZDSV)))
+                    {
+                        document.ReplaceText("СФСр", "ЗДСВ: СФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСр", " " + CreateStrForOverview(RightZDSV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
-                    document.ReplaceText("«ЗДСВRight»", CreateStrForOverview(RightZDSV));
-
-                    document.ReplaceText("«ПБНВRight»", CreateStrForOverview(RightPerforate));
-
-                    document.ReplaceText("«БПВ_на_голениRight»", CreateStrForOverview(RightBPVTibia));
-
-                    document.ReplaceText("«Перфоранты_голениRight»", CreateStrForOverview(RightTibiaPerforate));
-
-                    document.ReplaceText("«СПСRight»", CreateStrForOverview(RightSPS));
-                    document.ReplaceText("«МПВRight»", CreateStrForOverview(RightMPV));
-
-                    document.ReplaceText("«ТЕ_МПВRight»", CreateStrForOverview(RightTEMPV));
-
-                    document.ReplaceText("«ППВRight»", CreateStrForOverview(RightPPV));
-
-                    document.ReplaceText("«Глубокие_веныRight»", CreateStrForOverview(RightGV));
-
-                    document.ReplaceText("«Примечание_справа»", RightAdditionalText);
+                    }
+                    //RightLL += "ЗДСВ : " + CreateStrForOverview(RightZDSV) + "\n";
 
 
 
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightPerforate)))
+                    {
+                        document.ReplaceText("СФСр", "Перфоранты бедра и несафенные вены: СФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСр", " " + CreateStrForOverview(RightPerforate) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                    }
+                    //  RightLL += "Перфоранты бедра и несафенные вены : " + CreateStrForOverview(RightPerforate) + "\n";
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightTibiaPerforate)))
+                    {
+
+                        document.ReplaceText("СФСр", "Перфоранты голени: СФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСр", " " + CreateStrForOverview(RightTibiaPerforate) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+
+
+                        //  RightLL += "Перфоранты голени : " + CreateStrForOverview(RightTibiaPerforate) + "\n";
+
+                    }
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightTEMPV)))
+                    {
+                        document.ReplaceText("СФСр", "ТЕМПВ: СФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСр", " " + CreateStrForOverview(RightTEMPV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+
+                    }
+                    // RightLL += "ТЕМПВ : " + CreateStrForOverview(RightTEMPV) + "\n";
 
 
 
-                    document.ReplaceText("«CFCLeft»", CreateStrForOverview(LeftSFS));
 
-                    document.ReplaceText("«BPVLeft»", CreateStrForOverview(LeftBPVHip));
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightPPV)))
+                    {
+                        document.ReplaceText("СФСр", "ППВ: СФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСр", " " + CreateStrForOverview(RightPPV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
-                    document.ReplaceText("«ПДСВLeft»", CreateStrForOverview(LeftPDSV));
+                    }
+                    //RightLL += "ППВ : " + CreateStrForOverview(RightPPV) + "\n";
 
-                    document.ReplaceText("«ЗДСВLeft»", CreateStrForOverview(LeftZDSV));
 
-                    document.ReplaceText("«ПБНВLeft»", CreateStrForOverview(LeftPerforate));
 
-                    document.ReplaceText("«БПВ_на_голениLeft»", CreateStrForOverview(LeftBPVTibia));
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightGV)))
+                    {
+                        document.ReplaceText("СФСр", "Глубокие вены: СФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСр", " " + CreateStrForOverview(RightGV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
-                    document.ReplaceText("«Перфоранты_голениLeft»", CreateStrForOverview(LeftTibiaPerforate));
+                    }
+                    // RightLL += "Глубокие вены : " + CreateStrForOverview(RightGV) + "\nСФСр";
 
-                    document.ReplaceText("«СПСLeft»", CreateStrForOverview(LeftSPS));
 
-                    document.ReplaceText("«МПВLeft»", CreateStrForOverview(LeftMPV));
+                    // document.ReplaceText("СФСр", RightLL, false, System.Text.RegularExpressions.RegexOptions.None, d);
 
-                    document.ReplaceText("«ТЕ_МПВLeft»", CreateStrForOverview(LeftTEMPV));
 
-                    document.ReplaceText("«ППВLeft»", CreateStrForOverview(LeftPPV));
+                    RightLL = "";
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightSFS)))
+                        RightLL += "СФС : " + CreateStrForOverview(RightSFS) + "\n";
 
-                    document.ReplaceText("«Глубокие_веныLeft»", CreateStrForOverview(LeftGV));
+
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightBPVHip)))
+                        RightLL += "БПВ на бедре : " + CreateStrForOverview(RightBPVHip) + "\n";
+
+
+
+
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightBPVTibia)))
+
+                        RightLL += "БПВ на голени " + CreateStrForOverview(RightBPVTibia) + "\n";
+
+
+
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightSPS)))
+
+                        RightLL += "СПС : " + CreateStrForOverview(RightSPS) + "\n";
+
+
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightMPV)))
+
+                        RightLL += "МПВ : " + CreateStrForOverview(RightMPV) + "\n";
+
+
+
+
+
+
+                    document.ReplaceText("«Примечание_справа»", "Примечание: " + RightAdditionalText);
+                    d.Bold = false;
+                    d.UnderlineStyle = UnderlineStyle.none;
+                    document.ReplaceText("СФСр", RightLL, false, System.Text.RegularExpressions.RegexOptions.None, d);
+
+                    d.Bold = true;
+                    d.UnderlineStyle = UnderlineStyle.singleLine;
+
+
+
+
+
+                    //область
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftPDSV)))
+                    {
+                        document.ReplaceText("СФСл", "ПДСВ: СФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСл", " " + CreateStrForOverview(LeftPDSV) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftZDSV)))
+                    {
+                        document.ReplaceText("СФСл", "ЗДСВ: СФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСл", " " + CreateStrForOverview(LeftZDSV) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+
+                    }
+                    //LeftLL += "ЗДСВ : " + CreateStrForOverview(LeftZDSV) + "\n";
+
+
+
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftPerforate)))
+                    {
+                        document.ReplaceText("СФСл", "Перфоранты бедра и несафенные вены: СФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСл", " " + CreateStrForOverview(LeftPerforate) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                    }
+                    //  LeftLL += "Перфоранты бедра и несафенные вены : " + CreateStrForOverview(LeftPerforate) + "\n";
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftTibiaPerforate)))
+                    {
+
+                        document.ReplaceText("СФСл", "Перфоранты голени: СФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСл", " " + CreateStrForOverview(LeftTibiaPerforate) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+
+
+                        //  LeftLL += "Перфоранты голени : " + CreateStrForOverview(LeftTibiaPerforate) + "\n";
+
+                    }
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftTEMPV)))
+                    {
+                        document.ReplaceText("СФСл", "ТЕМПВ: СФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСл", " " + CreateStrForOverview(LeftTEMPV) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+
+                    }
+                    // LeftLL += "ТЕМПВ : " + CreateStrForOverview(LeftTEMPV) + "\n";
+
+
+
+
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftPPV)))
+                    {
+                        document.ReplaceText("СФСл", "ППВ: СФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСл", " " + CreateStrForOverview(LeftPPV) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+
+                    }
+                    //LeftLL += "ППВ : " + CreateStrForOverview(LeftPPV) + "\n";
+
+
+
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftGV)))
+                    {
+                        document.ReplaceText("СФСл", "Глубокие вены: СФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСл", " " + CreateStrForOverview(LeftGV) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+
+                    }
+                    // LeftLL += "Глубокие вены : " + CreateStrForOverview(LeftGV) + "\nСФСл";
+
+
+                    // document.ReplaceText("СФСл", LeftLL, false, System.Text.RegularExpressions.RegexOptions.None, d);
+
+
+                    LeftLL = "";
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftSFS)))
+                        LeftLL += "СФС : " + CreateStrForOverview(LeftSFS) + "\n";
+
+
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftBPVHip)))
+                        LeftLL += "БПВ на бедре : " + CreateStrForOverview(LeftBPVHip) + "\n";
+
+
+
+
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftBPVTibia)))
+
+                        LeftLL += "БПВ на голени " + CreateStrForOverview(LeftBPVTibia) + "\n";
+
+
+
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftSPS)))
+
+                        LeftLL += "СПС : " + CreateStrForOverview(LeftSPS) + "\n";
+
+
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftMPV)))
+
+                        LeftLL += "МПВ : " + CreateStrForOverview(LeftMPV) + "\n";
+
+
+
+
+
+
+                    document.ReplaceText("«Примечание_слева»", "Примечание: " + LeftAdditionalText);
+                    d.Bold = false;
+                    d.UnderlineStyle = UnderlineStyle.none;
+                    document.ReplaceText("СФСл", LeftLL, false, System.Text.RegularExpressions.RegexOptions.None, d);
+
+
 
                     document.ReplaceText("«Примечание_слева»", LeftAdditionalText);
 
-                    //
+                    int xx2 = 0;                   //
                     string recomendations = "";
                     if (RecomendationsList != null)
+                    {
                         foreach (var rec in RecomendationsList)
                         {
                             if (rec.IsChecked == true)
                             {
-                                recomendations += "«" + rec.Data.Str + "»";
+                                if (xx2 == 0)
+                                {
+                                    recomendations += rec.Data.Str;
+                                }
+                                else
+                                {
+                                    recomendations += ", " + rec.Data.Str;
+                                }
+                                xx2++;
+
 
                             }
                         }
-
-
+                    }
+                    char[] chararrbuF2 = recomendations.ToCharArray();
+                    if (chararrbuF2[chararrbuF2.Length - 1] == '.')
+                    { }
+                    else
+                    {
+                        recomendations += ".";
+                    }
                     document.ReplaceText("«Рекомендации»", recomendations);
 
                     document.Save();
@@ -3043,7 +3342,7 @@ namespace WpfApp2.ViewModels
 
 
             MessageBus.Default.Subscribe("SetAllDefaultForCreateObsled", SetAllDefault);
-            
+
             TextTip = "Текст пометки";
             Controller = controller;
             base.HasNavigation = false;
@@ -3174,6 +3473,11 @@ namespace WpfApp2.ViewModels
             );
             OpTypeFromDialog = 0;
             OpCommentFromDialog = "";
+            MessageBus.Default.Subscribe("SaveScrollSize", SaveScrollSize);
+            MessageBus.Default.Subscribe("GetScrollSize", GetScrollSize);
+            MessageBus.Default.Subscribe("GetScrollSizeRight", GetScrollSizeRight);
+            MessageBus.Default.Subscribe("SaveScrollSizeRight", SaveScrollSizeRight);
+            //GetScrollSize
             MessageBus.Default.Subscribe("GetOpTypeAndCommentaryFromDialog", GetOpTypeAndCommentaryFromDialog);
             ToLeftDiagCommand = new DelegateCommand(
              () =>
@@ -3198,7 +3502,7 @@ namespace WpfApp2.ViewModels
             ToLeftBPVHipCommand = new DelegateCommand(
                 () =>
                 {
-                 
+
                     Controller.LegViewModel = LeftBPVHip; MessageBus.Default.Call("RebuildFirstBPV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
@@ -3207,7 +3511,7 @@ namespace WpfApp2.ViewModels
             ToRightBPVHipCommand = new DelegateCommand(
                 () =>
                 {
-               
+
                     Controller.LegViewModel = RightBPVHip; MessageBus.Default.Call("RebuildFirstBPV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
@@ -3224,7 +3528,7 @@ namespace WpfApp2.ViewModels
             ToLeftBPVTibiaCommand = new DelegateCommand(
                 () =>
                 {
-                    
+
                     Controller.LegViewModel = LeftBPVTibia; MessageBus.Default.Call("RebuildFirstBPV_Tibia", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
@@ -3233,7 +3537,7 @@ namespace WpfApp2.ViewModels
             ToRightBPVTibiaCommand = new DelegateCommand(
                 () =>
                 {
-                   
+
                     Controller.LegViewModel = RightBPVTibia; MessageBus.Default.Call("RebuildFirstBPV_Tibia", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
@@ -3250,7 +3554,7 @@ namespace WpfApp2.ViewModels
             ToLeftPerforateCommand = new DelegateCommand(
                 () =>
                 {
-                   
+
                     Controller.LegViewModel = LeftPerforate;
                     MessageBus.Default.Call("RebuildFirstPerforateHip", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
@@ -3260,7 +3564,7 @@ namespace WpfApp2.ViewModels
             ToRightPerforateCommand = new DelegateCommand(
                 () =>
                 {
-                   
+
                     Controller.LegViewModel = RightPerforate; MessageBus.Default.Call("RebuildFirstPerforateHip", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
@@ -3276,7 +3580,7 @@ namespace WpfApp2.ViewModels
             ToLeftPPVCommand = new DelegateCommand(
                 () =>
                 {
-                  
+
                     Controller.LegViewModel = LeftPPV; MessageBus.Default.Call("RebuildFirstPPV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
@@ -3285,7 +3589,7 @@ namespace WpfApp2.ViewModels
             ToRightPPVCommand = new DelegateCommand(
                 () =>
                 {
-                    
+
                     Controller.LegViewModel = RightPPV; MessageBus.Default.Call("RebuildFirstPPV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
@@ -3299,7 +3603,7 @@ namespace WpfApp2.ViewModels
             ToLeftGVCommand = new DelegateCommand(
                 () =>
                 {
-                 
+
                     Controller.LegViewModel = LeftGV; MessageBus.Default.Call("RebuildFirstGV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
@@ -3308,7 +3612,7 @@ namespace WpfApp2.ViewModels
             ToRightGVCommand = new DelegateCommand(
                 () =>
                 {
-                  
+
                     Controller.LegViewModel = RightGV; MessageBus.Default.Call("RebuildFirstGV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
@@ -3322,7 +3626,7 @@ namespace WpfApp2.ViewModels
             ToLeftPDSVCommand = new DelegateCommand(
                 () =>
                 {
-                    
+
                     Controller.LegViewModel = LeftPDSV; MessageBus.Default.Call("RebuildFirstPDSV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
@@ -3331,7 +3635,7 @@ namespace WpfApp2.ViewModels
             ToRightPDSVCommand = new DelegateCommand(
                 () =>
                 {
-                   
+
                     Controller.LegViewModel = RightPDSV; MessageBus.Default.Call("RebuildFirstPDSV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
@@ -3348,7 +3652,7 @@ namespace WpfApp2.ViewModels
             ToLeftSFSCommand = new DelegateCommand(
                 () =>
                 {
-                  
+
                     Controller.LegViewModel = LeftSFS; MessageBus.Default.Call("RebuildFirstSFS", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
@@ -3357,7 +3661,7 @@ namespace WpfApp2.ViewModels
             ToRightSFSCommand = new DelegateCommand(
                 () =>
                 {
-                    
+
                     Controller.LegViewModel = RightSFS; MessageBus.Default.Call("RebuildFirstSFS", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
@@ -3379,7 +3683,7 @@ namespace WpfApp2.ViewModels
             ToLeftSPSCommand = new DelegateCommand(
                 () =>
                 {
-                   
+
                     Controller.LegViewModel = LeftSPS; MessageBus.Default.Call("RebuildFirstSPS", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
@@ -3388,7 +3692,7 @@ namespace WpfApp2.ViewModels
             ToRightSPSCommand = new DelegateCommand(
                 () =>
                 {
-                   
+
                     Controller.LegViewModel = RightSPS; MessageBus.Default.Call("RebuildFirstSPS", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
@@ -3403,7 +3707,7 @@ namespace WpfApp2.ViewModels
             ToLeftTibiaPerforateCommand = new DelegateCommand(
                 () =>
                 {
-                   
+
                     Controller.LegViewModel = LeftTibiaPerforate; MessageBus.Default.Call("RebuildFirstPerforateTibia", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
@@ -3412,7 +3716,7 @@ namespace WpfApp2.ViewModels
             ToRightTibiaPerforateCommand = new DelegateCommand(
                 () =>
                 {
-                   
+
                     Controller.LegViewModel = RightTibiaPerforate; MessageBus.Default.Call("RebuildFirstPerforateTibia", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
@@ -3429,7 +3733,7 @@ namespace WpfApp2.ViewModels
             ToLeftZDSVCommand = new DelegateCommand(
                 () =>
                 {
-                  
+
                     Controller.LegViewModel = LeftZDSV; MessageBus.Default.Call("RebuildFirstZDSV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
@@ -3438,7 +3742,7 @@ namespace WpfApp2.ViewModels
             ToRightZDSVCommand = new DelegateCommand(
                 () =>
                 {
-                   
+
                     Controller.LegViewModel = RightZDSV; MessageBus.Default.Call("RebuildFirstZDSV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
@@ -3456,7 +3760,7 @@ namespace WpfApp2.ViewModels
             ToLeftMPVCommand = new DelegateCommand(
                 () =>
                 {
-                  
+
                     Controller.LegViewModel = LeftMPV; MessageBus.Default.Call("RebuildFirstMPV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
@@ -3465,7 +3769,7 @@ namespace WpfApp2.ViewModels
             ToRightMPVCommand = new DelegateCommand(
                 () =>
                 {
-                    
+
                     Controller.LegViewModel = RightMPV; MessageBus.Default.Call("RebuildFirstMPV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
                 }
@@ -3483,7 +3787,7 @@ namespace WpfApp2.ViewModels
             ToLeftTEMPVCommand = new DelegateCommand(
                 () =>
                 {
-                  
+
                     Controller.LegViewModel = LeftTEMPV;
                     MessageBus.Default.Call("RebuildFirstTEMPV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
@@ -3493,7 +3797,7 @@ namespace WpfApp2.ViewModels
             ToRightTEMPVCommand = new DelegateCommand(
                 () =>
                 {
-                   
+
                     Controller.LegViewModel = RightTEMPV;
                     MessageBus.Default.Call("RebuildFirstTEMPV", this, this);
                     Controller.NavigateTo<LegPartViewModel>();
@@ -4985,7 +5289,7 @@ namespace WpfApp2.ViewModels
         {
 
 
-            
+
             if (mode != "EDIT" && !Part.IsEmpty)
             {
                 LegPartEntries LeftSFSEntryFullbuf = FullEntry;
@@ -5135,7 +5439,7 @@ namespace WpfApp2.ViewModels
                 return LeftSFSEntryFullbuf;
 
             }
-            else if(mode == "EDIT")
+            else if (mode == "EDIT")
             {
 
                 Examination Exam = Data.Examination.Get(obsid);
@@ -7813,17 +8117,36 @@ namespace WpfApp2.ViewModels
                     {
                         if (sender.LegSections[i].HasDoubleSize)
                         {
-                            bufBpvLeftStr.Add(sender.LegSections[i].SelectedValue.Text1 + " " + sender.LegSections[i].CurrentEntry.Size + "*" + sender.LegSections[i].CurrentEntry.Size2 + sender.LegSections[i].SelectedValue.Metrics + " " + sender.LegSections[i].SelectedValue.Text2 + " \nКомментарий : \"" + sender.LegSections[i].CurrentEntry.Comment + "\"");
+                            if (!string.IsNullOrWhiteSpace(sender.LegSections[i].CurrentEntry.Comment))
+                                bufBpvLeftStr.Add(sender.LegSections[i].SelectedValue.Text1 + " " + sender.LegSections[i].CurrentEntry.Size + "*" + sender.LegSections[i].CurrentEntry.Size2 + sender.LegSections[i].SelectedValue.Metrics + " " + sender.LegSections[i].SelectedValue.Text2 + " \nКомментарий : \"" + sender.LegSections[i].CurrentEntry.Comment + "\"");
+                            else
+                            {
+                                bufBpvLeftStr.Add(sender.LegSections[i].SelectedValue.Text1 + " " + sender.LegSections[i].CurrentEntry.Size + "*" + sender.LegSections[i].CurrentEntry.Size2 + sender.LegSections[i].SelectedValue.Metrics + " " + sender.LegSections[i].SelectedValue.Text2);
 
+                            }
                         }
                         else
                         {
-                            bufBpvLeftStr.Add(sender.LegSections[i].SelectedValue.Text1 + " " + sender.LegSections[i].CurrentEntry.Size + sender.LegSections[i].SelectedValue.Metrics + " " + sender.LegSections[i].SelectedValue.Text2 + " \nКомментарий : \"" + sender.LegSections[i].CurrentEntry.Comment +"\"");
+                            if (!string.IsNullOrWhiteSpace(sender.LegSections[i].CurrentEntry.Comment))
+                                bufBpvLeftStr.Add(sender.LegSections[i].SelectedValue.Text1 + " " + sender.LegSections[i].CurrentEntry.Size + sender.LegSections[i].SelectedValue.Metrics + " " + sender.LegSections[i].SelectedValue.Text2 + " \nКомментарий : \"" + sender.LegSections[i].CurrentEntry.Comment + "\"");
+                            else
+                            {
+                                bufBpvLeftStr.Add(sender.LegSections[i].SelectedValue.Text1 + " " + sender.LegSections[i].CurrentEntry.Size + sender.LegSections[i].SelectedValue.Metrics + " " + sender.LegSections[i].SelectedValue.Text2);
+
+
+                            }
                         }
                     }
                     else
                     {
-                        bufBpvLeftStr.Add(sender.LegSections[i].SelectedValue.Text1 + " " + sender.LegSections[i].SelectedValue.Text2 + " \nКомментарий : \"" + sender.LegSections[i].CurrentEntry.Comment + "\"");
+                        if (!string.IsNullOrWhiteSpace(sender.LegSections[i].CurrentEntry.Comment))
+                            bufBpvLeftStr.Add(sender.LegSections[i].SelectedValue.Text1 + " " + sender.LegSections[i].SelectedValue.Text2 + " \nКомментарий : \"" + sender.LegSections[i].CurrentEntry.Comment + "\"");
+                        else
+                        {
+                            bufBpvLeftStr.Add(sender.LegSections[i].SelectedValue.Text1 + " " + sender.LegSections[i].SelectedValue.Text2);
+
+                        }
+
                     }
                     IsVisibleBPVleftbuf.Add(Visibility.Visible);
                 }
@@ -8686,8 +9009,29 @@ namespace WpfApp2.ViewModels
         }
         //  public ObservableCollection<>
         //кто присылает и что присылает
+        double ScrollSize;
+        double ScrollSizeRight;
+        private void SaveScrollSize(object sender, object data)
+        {
+            ScrollSize = (double)data;
+        }
+        private void GetScrollSize(object sender, object data)
+        {
+            MessageBus.Default.Call("SetScrollOnlyForAddObsled", ScrollSize, null);
+        }
+
+        private void SaveScrollSizeRight(object sender, object data)
+        {
+            ScrollSizeRight = (double)data;
+        }
+        private void GetScrollSizeRight(object sender, object data)
+        {
+            MessageBus.Default.Call("SetScrollOnlyForAddObsledRight", ScrollSizeRight, null);
+        }
         private void Handler(object sender, object data)
         {
+            MessageBus.Default.Call("SetScrollForAddObsled", ScrollSize, null);
+            MessageBus.Default.Call("SetScrollForAddObsledRight", ScrollSize, null);
             Type senderType = sender.GetType();
             LegPartViewModel senderVM = (LegPartViewModel)sender;
             //  BPVHipEntryFull bpv = new BPVHipEntryFull();
@@ -9222,43 +9566,6 @@ namespace WpfApp2.ViewModels
                     }
                 }
 
-
-            /*
-
-
-         
-
-
-       
-
-
-
-
-
-      
-
-       
-
-
-
-
-
-        
-
-           
-
-           
-
-
-         */
-
-
-
-
-
-
-
-            // BrushesFill();
         }
     }
 }
