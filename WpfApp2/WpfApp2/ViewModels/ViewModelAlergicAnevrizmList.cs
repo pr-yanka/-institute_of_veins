@@ -203,29 +203,29 @@ namespace WpfApp2.ViewModels
             }
         }
 
-      
+
         private void SetDRecomendationListBecauseOFEdit(object sender, object data)
         {
             SetClear(null, null);
             foreach (var dat in (List<AlergicAnevrizmListDataSource>)data)
             {
-           
+
                 foreach (var datC in DataSourceList)
                 {
                     if (dat.Data != null && dat.Data.Id == datC.Data.Id)
                     {
-                        
+
                         datC.IsChecked = true;
                     }
-                    
+
                 }
-                
+
             }
 
         }
         public DelegateCommand ToPhysicalCommand { get; protected set; }
         public DelegateCommand SaveChangesCommand { get; protected set; }
-        public string TextOFNewType { get;  set; }
+        public string TextOFNewType { get; set; }
         public string HeaderText { get; set; }
         public string AddButtonText { get; set; }
         //Жалобы/диагноз/заключение
@@ -250,8 +250,9 @@ namespace WpfApp2.ViewModels
             ToPhysicalCommand = new DelegateCommand(
                 () =>
                 {
+                    FilterText = "";
                     ObservableCollection<AlergicAnevrizmListDataSource> DataSourceListBuffer = new ObservableCollection<AlergicAnevrizmListDataSource>();
-                    foreach (var Data in DataSourceList)
+                    foreach (var Data in FullCopy)
                     {
                         if (Data.IsChecked == true)
                         {
@@ -280,6 +281,7 @@ namespace WpfApp2.ViewModels
 
             SaveCommand = new DelegateCommand(() =>
             {
+                FilterText = "";
                 var newType = CurrentPanelViewModel.GetPanelType();
                 if (!string.IsNullOrWhiteSpace(newType.Str))
                 {

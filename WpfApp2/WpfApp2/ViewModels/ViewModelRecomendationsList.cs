@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -17,6 +18,8 @@ namespace WpfApp2.ViewModels
 {
     public class RecomendationsDataSource : INotifyPropertyChanged
     {
+        public bool IsVisibleTotal { get; set; }
+        public bool IsFilteredPt { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -37,11 +40,13 @@ namespace WpfApp2.ViewModels
         }
         public RecomendationsDataSource(RecomendationsType Recomendations)
         {
+            IsVisibleTotal = true;
+            IsFilteredPt = false;
             this.Data = Recomendations;
             IsChecked = false;
         }
     }
-    public class ViewModelRecomendationsList : ViewModelBase
+    public class ViewModelRecomendationsList : ViewModelBase, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -51,7 +56,108 @@ namespace WpfApp2.ViewModels
         }
         #region everyth connected with panel
 
+        private int lastLength = 0;
+        private Visibility _visOfNothingFaund;
+        public Visibility VisOfNothingFaund
+        {
+            get { return _visOfNothingFaund; }
+            set
+            { _visOfNothingFaund = value; OnPropertyChanged(); }
+        }
+        private string _filterText;
+        public string FilterText
+        {
+            get { return _filterText; }
+            set
+            {
+                _filterText = value; OnPropertyChanged();
+                for (int i = 0; i < DataSourceList.Count; ++i)
+                {
+                    if (DataSourceList[i].IsChecked != null && DataSourceList[i].IsChecked == true)
+                    {
+                        FullCopy[i].IsChecked = true;
+                    }
+                }
+                if (lastLength >= value.Length)
+                {
+                    //foreach(ChangeHistoryClass x in FullCopy)
+                    //{
+                    //    ChangeHistoryClass buf = new ChangeHistoryClass(x.Ch);
+                    //    Changes.Add(buf);
+                    //}
 
+                    DataSourceList = new ObservableCollection<RecomendationsDataSource>(FullCopy);
+                }
+                lastLength = value.Length;
+                if (!string.IsNullOrWhiteSpace(FilterText))
+                {
+                    for (int i = 0; i < DataSourceList.Count; ++i)
+                    {
+
+
+
+                        if (DataSourceList[i].Data.Str.ToLower().Contains(FilterText.ToLower()))
+                        {
+                            DataSourceList[i].IsFilteredPt = true;
+                            DataSourceList[i].IsVisibleTotal = true;
+                            //Controller.NavigateTo<ViewModelOperationForAmbullatorCardList>();
+                        }
+                        else
+                        {
+                            DataSourceList[i].IsFilteredPt = false;
+                            DataSourceList[i].IsVisibleTotal = false;
+                            //Controller.NavigateTo<ViewModelOperationForAmbullatorCardList>();
+                        }
+
+
+
+
+                    }
+
+
+
+                    for (int i = 0; i < DataSourceList.Count; ++i)
+                    {
+                        if (DataSourceList[i].IsVisibleTotal == false)
+                        {
+                            DataSourceList.Remove(DataSourceList[i]);
+                            --i;
+                        }
+                    }
+                    if (DataSourceList.Count == 0)
+                    {
+                        VisOfNothingFaund = Visibility.Visible;
+                    }
+                    else
+                    {
+                        VisOfNothingFaund = Visibility.Collapsed;
+                    }
+
+                    // 
+                }
+                else
+                {
+
+                    VisOfNothingFaund = Visibility.Collapsed;
+                    foreach (var x in DataSourceList)
+                    {
+                        x.IsVisibleTotal = true;
+                        x.IsFilteredPt = false;
+
+                    }
+
+                    // SetChangesInDB(null, null);
+                }
+
+                Controller.NavigateTo<ViewModelRecomendationsList>();
+
+
+
+            }
+        }
+
+
+        List<RecomendationsDataSource> FullCopy;
         public DelegateCommand RevertCommand { set; get; }
 
 
@@ -83,28 +189,29 @@ namespace WpfApp2.ViewModels
 
         private void SetClear(object sender, object data)
         {
-            DataSourceList = new List<RecomendationsDataSource>();
-
+            DataSourceList = new ObservableCollection<RecomendationsDataSource>();
+            FullCopy = new List<RecomendationsDataSource>();
             foreach (var RecomendationsType in Data.RecomendationsTypes.GetAll)
             {
+                FullCopy.Add(new RecomendationsDataSource(RecomendationsType));
                 DataSourceList.Add(new RecomendationsDataSource(RecomendationsType));
             }
         }
         private void SetDRecomendationListBecauseOFEdit(object sender, object data)
         {
-
-            foreach(var dat in (List<RecomendationsDataSource>)data)
+            FilterText = "";
+            foreach (var dat in (List<RecomendationsDataSource>)data)
             {
                 foreach (var datC in DataSourceList)
                 {
-                    if(dat.Data != null && dat.Data.Id == datC.Data.Id)
+                    if (dat.Data != null && dat.Data.Id == datC.Data.Id)
                     {
                         datC.IsChecked = true;
                     }
                 }
             }
-           
-          
+            FilterText = "";
+
 
         }
         public DelegateCommand ToPhysicalCommand { get; protected set; }
@@ -113,8 +220,8 @@ namespace WpfApp2.ViewModels
         public string HeaderText { get; set; }
         public string AddButtonText { get; set; }
         //Жалобы/диагноз/заключение
-        public List<RecomendationsDataSource> _dataSourceList;
-        public List<RecomendationsDataSource> DataSourceList { get { return _dataSourceList; } set { _dataSourceList = value; OnPropertyChanged(); } }
+        public ObservableCollection<RecomendationsDataSource> _dataSourceList;
+        public ObservableCollection<RecomendationsDataSource> DataSourceList { get { return _dataSourceList; } set { _dataSourceList = value; OnPropertyChanged(); } }
 
         public ViewModelRecomendationsList(NavigationController controller) : base(controller)
         {
@@ -123,20 +230,25 @@ namespace WpfApp2.ViewModels
             TextOFNewType = "Новый тип рекомендации";
             HeaderText = "Рекомендации";
             AddButtonText = "Добавить рекомендацию";
+            VisOfNothingFaund = Visibility.Collapsed;
+            DataSourceList = new ObservableCollection<RecomendationsDataSource>();
+            FullCopy = new List<RecomendationsDataSource>();
 
-            DataSourceList = new List<RecomendationsDataSource>();
+
             foreach (var RecomendationsType in Data.RecomendationsTypes.GetAll)
             {
+                FullCopy.Add(new RecomendationsDataSource(RecomendationsType));
                 DataSourceList.Add(new RecomendationsDataSource(RecomendationsType));
             }
 
             ToPhysicalCommand = new DelegateCommand(
                 () =>
                 {
+                    FilterText = "";
                     List<RecomendationsDataSource> DataSourceListBuffer = new List<RecomendationsDataSource>();
-                    foreach(var Data in DataSourceList)
+                    foreach (var Data in DataSourceList)
                     {
-                        if(Data.IsChecked == true)
+                        if (Data.IsChecked == true)
                         {
                             DataSourceListBuffer.Add(Data);
                         }
@@ -163,6 +275,7 @@ namespace WpfApp2.ViewModels
 
             SaveCommand = new DelegateCommand(() =>
             {
+                FilterText = "";
                 var newType = CurrentPanelViewModel.GetPanelType();
                 if (!string.IsNullOrWhiteSpace(newType.Str))
                 {
@@ -174,9 +287,11 @@ namespace WpfApp2.ViewModels
 
                     Data.Complete();
                     var DataSourceListbuf = DataSourceList;
-                    DataSourceList = new List<RecomendationsDataSource>();
+                    DataSourceList = new ObservableCollection<RecomendationsDataSource>();
+                    FullCopy = new List<RecomendationsDataSource>();
                     foreach (var RecomendationsType in Data.RecomendationsTypes.GetAll)
                     {
+                        FullCopy.Add(new RecomendationsDataSource(RecomendationsType));
                         DataSourceList.Add(new RecomendationsDataSource(RecomendationsType));
                     }
 
@@ -185,6 +300,7 @@ namespace WpfApp2.ViewModels
                         if (DiagnosisType.IsChecked.Value)
                         {
                             DataSourceList.Where(s => s.Data.Id == DiagnosisType.Data.Id).ToList()[0].IsChecked = true;
+                            FullCopy.Where(s => s.Data.Id == DiagnosisType.Data.Id).ToList()[0].IsChecked = true;
                         }
                     }
 

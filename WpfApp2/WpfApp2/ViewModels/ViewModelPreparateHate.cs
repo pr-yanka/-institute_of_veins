@@ -54,7 +54,7 @@ namespace WpfApp2.ViewModels
 
                 PreparateHateCommentList = buff2;
             }
-             
+
             IsVisibleTotal = true;
             this.Data = Recomendations;
             IsChecked = false;
@@ -259,8 +259,9 @@ namespace WpfApp2.ViewModels
             ToPhysicalCommand = new DelegateCommand(
                 () =>
                 {
+                    FilterText = "";
                     ObservableCollection<PreparateHateDataSource> DataSourceListBuffer = new ObservableCollection<PreparateHateDataSource>();
-                    foreach (var Data in DataSourceList)
+                    foreach (var Data in FullCopy)
                     {
                         if (Data.IsChecked == true)
                         {
@@ -289,6 +290,7 @@ namespace WpfApp2.ViewModels
 
             SaveCommand = new DelegateCommand(() =>
             {
+                FilterText = "";
                 var newType = CurrentPanelViewModel.GetPanelType();
                 if (!string.IsNullOrWhiteSpace(newType.Str))
                 {

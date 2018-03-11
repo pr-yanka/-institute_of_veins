@@ -25,7 +25,7 @@
             <TextBlock x:Name="textBlock1" TextAlignment="Center" HorizontalAlignment="Left" Margin="600,3,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="543" FontSize="18" Height="28" FontFamily="Segoe UI Semibold" FontWeight="Bold"><TextBlock Text="{Binding Path=CurrentPatient.Sirname}" /><TextBlock Text="{Binding Path=initials}" /><TextBlock Text="{Binding Path=CurrentPatient.Age}" /><TextBlock Text="{Binding Path=AgeText}" /></TextBlock>
             <Separator HorizontalAlignment="Left" Height="5" Margin="0,28,0,0" VerticalAlignment="Top" Width="1016" RenderTransformOrigin="0.51,0.49"/>
 
-            <ListBox x:Name="listBox1" ItemsSource="{Binding Path=ComplainsList}" HorizontalAlignment="Left" Height="97" Margin="505,62,0,0" VerticalAlignment="Top" Width="487" BorderThickness="1">
+            <ListBox x:Name="listBox1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=ComplainsList}" HorizontalAlignment="Left" Height="97" Margin="505,62,0,0" VerticalAlignment="Top" Width="487" BorderThickness="1">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
 
@@ -557,7 +557,7 @@
 
             <Separator HorizontalAlignment="Left" Height="6" Margin="0,574,0,0" VerticalAlignment="Top" Width="1024" RenderTransformOrigin="0.51,0.49" Background="Black"/>
             <TextBlock x:Name="textBlock1_Copy4" HorizontalAlignment="Center" Margin="10,578,942,256" TextWrapping="Wrap" VerticalAlignment="Center" Width="199" FontSize="18" Text="Рекомендации" TextAlignment="Center"/>
-            <ListBox x:Name="listBox1_Copy" ItemsSource="{Binding Path=RecomendationsList}" HorizontalAlignment="Left" Height="127" Margin="3,608,0,0" VerticalAlignment="Top" Width="688" FontSize="14" BorderThickness="1">
+            <ListBox x:Name="listBox1_Copy" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=RecomendationsList}" HorizontalAlignment="Left" Height="127" Margin="3,608,0,0" VerticalAlignment="Top" Width="688" FontSize="14" BorderThickness="1">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
 
@@ -615,7 +615,7 @@
                 
                 </TextBlock>
 
-            <ListBox x:Name="listBox1_Copy1" ItemsSource="{Binding Path=LeftDiagnosisList}" HorizontalAlignment="Left" Height="127" Margin="3,449,0,0" VerticalAlignment="Top" Width="487" BorderThickness="1">
+            <ListBox x:Name="listBox1_Copy1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=LeftDiagnosisList}" HorizontalAlignment="Left" Height="127" Margin="3,449,0,0" VerticalAlignment="Top" Width="487" BorderThickness="1">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
 
@@ -624,7 +624,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <ListBox x:Name="listBox1_Copy2" ItemsSource="{Binding Path=RightDiagnosisList}" HorizontalAlignment="Left" Height="127" Margin="518,449,0,0" VerticalAlignment="Top" Width="487" BorderThickness="1">
+            <ListBox x:Name="listBox1_Copy2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=RightDiagnosisList}" HorizontalAlignment="Left" Height="127" Margin="518,449,0,0" VerticalAlignment="Top" Width="487" BorderThickness="1">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
 

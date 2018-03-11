@@ -206,9 +206,10 @@ namespace WpfApp2.ViewModels
             DataSourceList = new ObservableCollection<OperationTypesDataSource>();
             LeftDiag = new List<OperationTypesDataSource>();
             RightDiag = new List<OperationTypesDataSource>();
-
+            FullCopy = new List<OperationTypesDataSource>();
             foreach (var DiagnosisType in Data.OperationType.GetAll)
             {
+                FullCopy.Add(new OperationTypesDataSource(DiagnosisType));
                 DataSourceList.Add(new OperationTypesDataSource(DiagnosisType));
                 LeftDiag.Add(new OperationTypesDataSource(DiagnosisType));
                 RightDiag.Add(new OperationTypesDataSource(DiagnosisType));
@@ -254,7 +255,7 @@ namespace WpfApp2.ViewModels
             //MessageBus.Default.Subscribe("SetDiagnosisListLeft", SetDiagnosisListLeft);
             SaveCommand = new DelegateCommand(() =>
             {
-
+                FilterText = "";
                 var newType = CurrentPanelViewModel.GetPanelType();
                 if (!string.IsNullOrWhiteSpace(newType.ToString()))
                 {
@@ -268,6 +269,7 @@ namespace WpfApp2.ViewModels
                     var DataSourceListbuf = DataSourceList;
                     var LeftDiagbuf = LeftDiag;
                     var RightDiagbuf = RightDiag;
+                    
                     DataSourceList = new ObservableCollection<OperationTypesDataSource>();
                     LeftDiag = new List<OperationTypesDataSource>();
                     RightDiag = new List<OperationTypesDataSource>();
@@ -284,6 +286,7 @@ namespace WpfApp2.ViewModels
                         if (DiagnosisType.IsChecked.Value)
                         {
                             DataSourceList.Where(s => s.Data.Id == DiagnosisType.Data.Id).ToList()[0].IsChecked = true;
+                            FullCopy.Where(s => s.Data.Id == DiagnosisType.Data.Id).ToList()[0].IsChecked = true;
                         }
                     }
                     foreach (var DiagnosisType in LeftDiagbuf)
@@ -334,6 +337,7 @@ namespace WpfApp2.ViewModels
             ToPhysicalCommand = new DelegateCommand(
                 () =>
                 {
+                    FilterText = "";
                     List<OperationTypesDataSource> DataSourceListBuffer = new List<OperationTypesDataSource>();
                     foreach (var Data in FullCopy)
                     {
@@ -362,8 +366,9 @@ namespace WpfApp2.ViewModels
             SaveChangesCommand = new DelegateCommand(
                 () =>
                 {
+                    FilterText = "";
                     List<OperationTypesDataSource> DataSourceListBuffer = new List<OperationTypesDataSource>();
-                    foreach (var Data in DataSourceList)
+                    foreach (var Data in FullCopy)
                     {
                         if (Data.IsChecked == true)
                         {

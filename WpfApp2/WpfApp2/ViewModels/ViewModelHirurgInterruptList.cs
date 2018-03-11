@@ -109,7 +109,7 @@ namespace WpfApp2.ViewModels
                     //    ChangeHistoryClass buf = new ChangeHistoryClass(x.Ch);
                     //    Changes.Add(buf);
                     //}    
-                   
+
                     DataSourceList = new ObservableCollection<HirurgInterruptDataSource>(FullCopy);
                 }
                 lastLength = value.Length;
@@ -195,7 +195,7 @@ namespace WpfApp2.ViewModels
                     FullCopy.Add(new HirurgInterruptDataSource(HirurgInterupType));
                 }
             }
-            
+
         }
         private void SetDRecomendationListBecauseOFEdit(object sender, object data)
         {
@@ -240,8 +240,9 @@ namespace WpfApp2.ViewModels
             ToPhysicalCommand = new DelegateCommand(
                 () =>
                 {
+                    FilterText = "";
                     ObservableCollection<HirurgInterruptDataSource> DataSourceListBuffer = new ObservableCollection<HirurgInterruptDataSource>();
-                    foreach (var Data in DataSourceList)
+                    foreach (var Data in FullCopy)
                     {
                         if (Data.IsChecked == true)
                         {
@@ -270,6 +271,7 @@ namespace WpfApp2.ViewModels
 
             SaveCommand = new DelegateCommand(() =>
             {
+                FilterText = "";
                 var newType = CurrentPanelViewModel.GetPanelType();
                 if (!string.IsNullOrWhiteSpace(newType.Str))
                 {

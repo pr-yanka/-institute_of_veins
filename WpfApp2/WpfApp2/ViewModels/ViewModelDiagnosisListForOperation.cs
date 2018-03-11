@@ -17,8 +17,124 @@ using WpfApp2.ViewModels.Panels;
 
 namespace WpfApp2.ViewModels
 {
-    public class ViewModelDiagnosisListForOperation : ViewModelBase
+    public class ViewModelDiagnosisListForOperation : ViewModelBase, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            //если PropertyChanged не нулевое - оно будет разбужено
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+
+
+
+
+        private int lastLength = 0;
+        private Visibility _visOfNothingFaund;
+        public Visibility VisOfNothingFaund
+        {
+            get { return _visOfNothingFaund; }
+            set
+            { _visOfNothingFaund = value; OnPropertyChanged(); }
+        }
+        private string _filterText;
+        public string FilterText
+        {
+            get { return _filterText; }
+            set
+            {
+                _filterText = value; OnPropertyChanged();
+                for (int i = 0; i < DataSourceList.Count; ++i)
+                {
+                    if (DataSourceList[i].IsChecked != null && DataSourceList[i].IsChecked == true)
+                    {
+                        FullCopy[i].IsChecked = true;
+                    }
+                }
+                if (lastLength >= value.Length)
+                {
+                    //foreach(ChangeHistoryClass x in FullCopy)
+                    //{
+                    //    ChangeHistoryClass buf = new ChangeHistoryClass(x.Ch);
+                    //    Changes.Add(buf);
+                    //}
+
+                    DataSourceList = new ObservableCollection<DiagnosisDataSource>(FullCopy);
+                }
+                lastLength = value.Length;
+                if (!string.IsNullOrWhiteSpace(FilterText))
+                {
+                    for (int i = 0; i < DataSourceList.Count; ++i)
+                    {
+
+
+
+                        if (DataSourceList[i].Data.Str.ToLower().Contains(FilterText.ToLower()))
+                        {
+                            DataSourceList[i].IsFilteredPt = true;
+                            DataSourceList[i].IsVisibleTotal = true;
+                            //Controller.NavigateTo<ViewModelOperationForAmbullatorCardList>();
+                        }
+                        else
+                        {
+                            DataSourceList[i].IsFilteredPt = false;
+                            DataSourceList[i].IsVisibleTotal = false;
+                            //Controller.NavigateTo<ViewModelOperationForAmbullatorCardList>();
+                        }
+
+
+
+
+                    }
+
+
+
+                    for (int i = 0; i < DataSourceList.Count; ++i)
+                    {
+                        if (DataSourceList[i].IsVisibleTotal == false)
+                        {
+                            DataSourceList.Remove(DataSourceList[i]);
+                            --i;
+                        }
+                    }
+                    if (DataSourceList.Count == 0)
+                    {
+                        VisOfNothingFaund = Visibility.Visible;
+                    }
+                    else
+                    {
+                        VisOfNothingFaund = Visibility.Collapsed;
+                    }
+
+                    // 
+                }
+                else
+                {
+
+                    VisOfNothingFaund = Visibility.Collapsed;
+                    foreach (var x in DataSourceList)
+                    {
+                        x.IsVisibleTotal = true;
+                        x.IsFilteredPt = false;
+
+                    }
+
+                    // SetChangesInDB(null, null);
+                }
+
+                Controller.NavigateTo<ViewModelDiagnosisListForOperation>();
+
+
+
+            }
+        }
+
+
+        List<DiagnosisDataSource> FullCopy;
+
+
+
         #region everyth connected with panel
 
 
@@ -59,7 +175,7 @@ namespace WpfApp2.ViewModels
 
         private void SetClear(object sender, object data)
         {
-            DataSourceList = new List<DiagnosisDataSource>();
+            DataSourceList = new ObservableCollection<DiagnosisDataSource>();
             LeftDiag = new List<DiagnosisDataSource>();
             RightDiag = new List<DiagnosisDataSource>();
 
@@ -116,19 +232,24 @@ namespace WpfApp2.ViewModels
             ld = (string)data;
             if (ld == "Left")
             {
-                DataSourceList = LeftDiag;
+                DataSourceList = new ObservableCollection<DiagnosisDataSource>(LeftDiag);
+                FullCopy = LeftDiag;
             }
             else
-            { DataSourceList = RightDiag; }
+            {
+                DataSourceList = new ObservableCollection<DiagnosisDataSource>(RightDiag);
+                FullCopy = RightDiag;
+            }
         }
         //Жалобы/диагноз/заключение
         public List<DiagnosisDataSource> LeftDiag { get; set; }
         public List<DiagnosisDataSource> RightDiag { get; set; }
-        public List<DiagnosisDataSource> DataSourceList { get; set; }
+        public ObservableCollection<DiagnosisDataSource> DataSourceList { get; set; }
         public string TextName { get; set; }
 
         public ViewModelDiagnosisListForOperation(NavigationController controller) : base(controller)
         {
+            VisOfNothingFaund = Visibility.Collapsed;
             CurrentPanelViewModel = new DiagTypePanelViewModel(this);
             OpenCommand = new DelegateCommand(() =>
             {
@@ -141,7 +262,7 @@ namespace WpfApp2.ViewModels
             MessageBus.Default.Subscribe("SetDiagnosisListLeft", SetDiagnosisListLeft);
             SaveCommand = new DelegateCommand(() =>
             {
-
+                FilterText = "";
                 var newType = CurrentPanelViewModel.GetPanelType();
                 if (!string.IsNullOrWhiteSpace(newType.Str))
                 {
@@ -155,11 +276,13 @@ namespace WpfApp2.ViewModels
                     var DataSourceListbuf = DataSourceList;
                     var LeftDiagbuf = LeftDiag;
                     var RightDiagbuf = RightDiag;
-                    DataSourceList = new List<DiagnosisDataSource>();
+                    DataSourceList = new ObservableCollection<DiagnosisDataSource>();
                     LeftDiag = new List<DiagnosisDataSource>();
                     RightDiag = new List<DiagnosisDataSource>();
+                    FullCopy = new List<DiagnosisDataSource>();
                     foreach (var DiagnosisType in Data.DiagnosisTypes.GetAll)
                     {
+                        FullCopy.Add(new DiagnosisDataSource(DiagnosisType));
                         DataSourceList.Add(new DiagnosisDataSource(DiagnosisType));
                         LeftDiag.Add(new DiagnosisDataSource(DiagnosisType));
                         RightDiag.Add(new DiagnosisDataSource(DiagnosisType));
@@ -169,6 +292,7 @@ namespace WpfApp2.ViewModels
                         if (DiagnosisType.IsChecked.Value)
                         {
                             DataSourceList.Where(s => s.Data.Id == DiagnosisType.Data.Id).ToList()[0].IsChecked = true;
+                            FullCopy.Where(s => s.Data.Id == DiagnosisType.Data.Id).ToList()[0].IsChecked = true;
                         }
                     }
                     foreach (var DiagnosisType in LeftDiagbuf)
@@ -199,12 +323,13 @@ namespace WpfApp2.ViewModels
             HeaderText = "Диагнозы";
             AddButtonText = "Добавить диагноз";
             MessageBus.Default.Subscribe("SetleftOrRight", SetDiagnosisList);
-            DataSourceList = new List<DiagnosisDataSource>();
+            DataSourceList = new ObservableCollection<DiagnosisDataSource>();
             LeftDiag = new List<DiagnosisDataSource>();
             RightDiag = new List<DiagnosisDataSource>();
-
+            FullCopy = new List<DiagnosisDataSource>();
             foreach (var DiagnosisType in Data.DiagnosisTypes.GetAll)
             {
+                FullCopy.Add(new DiagnosisDataSource(DiagnosisType));
                 DataSourceList.Add(new DiagnosisDataSource(DiagnosisType));
                 LeftDiag.Add(new DiagnosisDataSource(DiagnosisType));
                 RightDiag.Add(new DiagnosisDataSource(DiagnosisType));
@@ -214,8 +339,9 @@ namespace WpfApp2.ViewModels
             ToPhysicalCommand = new DelegateCommand(
                 () =>
                 {
+                    FilterText = "";
                     List<DiagnosisDataSource> DataSourceListBuffer = new List<DiagnosisDataSource>();
-                    foreach (var Data in DataSourceList)
+                    foreach (var Data in FullCopy)
                     {
                         if (Data.IsChecked == true)
                         {
@@ -225,12 +351,12 @@ namespace WpfApp2.ViewModels
                     if (ld == "Left")
                     {
                         MessageBus.Default.Call("SetLeftDiagnosisListForOperation", this, DataSourceListBuffer);
-                        LeftDiag = DataSourceList;
+                        LeftDiag = new List<DiagnosisDataSource>(DataSourceList);
                     }
                     else
                     {
                         MessageBus.Default.Call("SetRightDiagnosisListForOperation", this, DataSourceListBuffer);
-                        RightDiag = DataSourceList;
+                        RightDiag = new List<DiagnosisDataSource>(DataSourceList);
                     }
 
                     Controller.NavigateTo<ViewModelAddOperation>();
@@ -239,8 +365,9 @@ namespace WpfApp2.ViewModels
             SaveChangesCommand = new DelegateCommand(
                 () =>
                 {
+                    FilterText = "";
                     List<DiagnosisDataSource> DataSourceListBuffer = new List<DiagnosisDataSource>();
-                    foreach (var Data in DataSourceList)
+                    foreach (var Data in FullCopy)
                     {
                         if (Data.IsChecked == true)
                         {
@@ -250,12 +377,12 @@ namespace WpfApp2.ViewModels
                     if (ld == "Left")
                     {
                         MessageBus.Default.Call("SetLeftDiagnosisListForOperation", this, DataSourceListBuffer);
-                        LeftDiag = DataSourceList;
+                        LeftDiag = LeftDiag = new List<DiagnosisDataSource>(DataSourceList);
                     }
                     else
                     {
                         MessageBus.Default.Call("SetRightDiagnosisListForOperation", this, DataSourceListBuffer);
-                        RightDiag = DataSourceList;
+                        RightDiag = LeftDiag = new List<DiagnosisDataSource>(DataSourceList);
                     }
 
                     Controller.NavigateTo<ViewModelAddOperation>();
