@@ -296,7 +296,16 @@
                     <Canvas Background="#FFC6E8E6" Margin="0,0,0,10">
                         <TextBlock x:Name="textfBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="10" FontSize="18" Canvas.Top="10" Text="Переливание крови"/>
                         <DatePicker x:Name="texвtBfox1" HorizontalAlignment="Left" Height="22" SelectedDate="{Binding ShortTime}" VerticalAlignment="Top" Width="150" Canvas.Left="289" Canvas.Top="51" />
-                        <TextBox x:Name="textBfox1" HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" Width="77" Canvas.Left="82" Canvas.Top="52" />
+                        <TextBox x:Name="textBfox1" HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" Width="77" Canvas.Left="82" Canvas.Top="52" >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewMouseDown">
+                                    <i:InvokeCommandAction  Command="{Binding Path=ParentVM.ClickOnWeight}" CommandParameter="{Binding ElementName=size1Box}" />
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="LostFocus">
+                                    <i:InvokeCommandAction  Command="{Binding Path=ParentVM.LostFocus}" CommandParameter="{Binding ElementName=size1Box}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </TextBox>
                         <TextBox x:Name="textвBппfox1" HorizontalAlignment="Center" Height="42" TextWrapping="Wrap" Text="{Binding Path=LongText}" VerticalAlignment="Top" Width="430" Canvas.Left="10" Canvas.Top="110" />
 
                         <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.RevertCommand}" Canvas.Left="10" Canvas.Top="163" />

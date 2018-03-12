@@ -50,7 +50,10 @@ namespace WpfApp2.ViewModels.Panels
 
                 foreach (var doc in DoctorRep.GetAll)
                 {
-                    Doctors.Add(new Docs(doc));
+                    if (doc.isEnabled.Value)
+                    {
+                        Doctors.Add(new Docs(doc));
+                    }
                 }
             }
             ParentVM = parentVM;

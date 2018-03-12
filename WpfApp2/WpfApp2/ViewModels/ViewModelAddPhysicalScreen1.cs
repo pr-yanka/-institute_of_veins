@@ -8785,6 +8785,8 @@ namespace WpfApp2.ViewModels
 
             RightCEAR.LegSections = new List<LettersSectionViewModel>();
             LeftCEAR.LegSections = new List<LettersSectionViewModel>();
+            LeftCEAR.Comment = "";
+            RightCEAR.Comment = "";
             LeftCEAR.IsEmpty = true;
             RightCEAR.IsEmpty = true;
             for (int i = 0; i < RightCEAR.LevelCount; i++)
@@ -8870,7 +8872,7 @@ namespace WpfApp2.ViewModels
             }
 
 
-
+            LeftTEMPV.Comment = "";
 
 
             LeftTEMPV.FF_length = 0;
@@ -8895,9 +8897,9 @@ namespace WpfApp2.ViewModels
             }
 
 
+            RightTEMPV.Comment = "";
 
-
-
+            LeftMPV.Comment = "";
             LeftMPV.IsEmpty = true;
             LeftMPV.LegSections = new ObservableCollection<LegSectionViewModel>();
             for (int i = 0; i < LeftMPV.LevelCount; i++)
@@ -8907,7 +8909,7 @@ namespace WpfApp2.ViewModels
                 else
                     LeftMPV.LegSections.Add(new MPVSectionViewModel(Controller, null, i + 1));
             }
-
+            RightMPV.Comment = "";
             RightMPV.IsEmpty = true;
             RightMPV.LegSections = new ObservableCollection<LegSectionViewModel>();
             for (int i = 0; i < LeftMPV.LevelCount; i++)
@@ -8918,7 +8920,7 @@ namespace WpfApp2.ViewModels
                     RightMPV.LegSections.Add(new MPVSectionViewModel(Controller, null, i + 1));
             }
 
-
+            LeftZDSV.Comment = "";
             LeftZDSV.IsEmpty = true;
             LeftZDSV.LegSections = new ObservableCollection<LegSectionViewModel>();
             for (int i = 0; i < LeftZDSV.LevelCount; i++)
@@ -8928,7 +8930,7 @@ namespace WpfApp2.ViewModels
                 else
                     LeftZDSV.LegSections.Add(new ZDSVSectionViewModel(Controller, null, i + 1));
             }
-
+            RightZDSV.Comment = "";
             RightZDSV.IsEmpty = true;
             RightZDSV.LegSections = new ObservableCollection<LegSectionViewModel>();
             for (int i = 0; i < LeftZDSV.LevelCount; i++)
@@ -8940,7 +8942,7 @@ namespace WpfApp2.ViewModels
             }
 
 
-
+            LeftTibiaPerforate.Comment = "";
             LeftTibiaPerforate.IsEmpty = true;
             LeftTibiaPerforate.LegSections = new ObservableCollection<LegSectionViewModel>();
             for (int i = 0; i < LeftTibiaPerforate.LevelCount; i++)
@@ -8950,7 +8952,7 @@ namespace WpfApp2.ViewModels
                 else
                     LeftTibiaPerforate.LegSections.Add(new TibiaPerforateSectionViewModel(Controller, null, i + 1));
             }
-
+            RightTibiaPerforate.Comment = "";
             RightTibiaPerforate.IsEmpty = true;
             RightTibiaPerforate.LegSections = new ObservableCollection<LegSectionViewModel>();
             for (int i = 0; i < LeftTibiaPerforate.LevelCount; i++)
@@ -8963,7 +8965,7 @@ namespace WpfApp2.ViewModels
 
 
 
-
+            LeftSPS.Comment = "";
             LeftSPS.IsEmpty = true;
             LeftSPS.LegSections = new ObservableCollection<LegSectionViewModel>();
             for (int i = 0; i < LeftSPS.LevelCount; i++)
@@ -8973,7 +8975,7 @@ namespace WpfApp2.ViewModels
                 else
                     LeftSPS.LegSections.Add(new SPSSectionViewModel(Controller, null, i + 1));
             }
-
+            RightSPS.Comment = "";
             RightSPS.IsEmpty = true;
             RightSPS.LegSections = new ObservableCollection<LegSectionViewModel>();
             for (int i = 0; i < LeftSPS.LevelCount; i++)
@@ -8985,7 +8987,7 @@ namespace WpfApp2.ViewModels
             }
 
 
-
+            LeftSFS.Comment = "";
             LeftSFS.IsEmpty = true;
             LeftSFS.LegSections = new ObservableCollection<LegSectionViewModel>();
             for (int i = 0; i < LeftSFS.LevelCount; i++)
@@ -8995,7 +8997,7 @@ namespace WpfApp2.ViewModels
                 else
                     LeftSFS.LegSections.Add(new SFSSectionViewModel(Controller, null, i + 1));
             }
-
+            RightSFS.Comment = "";
             RightSFS.IsEmpty = true;
             RightSFS.LegSections = new ObservableCollection<LegSectionViewModel>();
             for (int i = 0; i < LeftSFS.LevelCount; i++)
@@ -9006,7 +9008,7 @@ namespace WpfApp2.ViewModels
                     RightSFS.LegSections.Add(new SFSSectionViewModel(Controller, null, i + 1));
             }
 
-
+            LeftPDSV.Comment = "";
 
             LeftPDSV.IsEmpty = true;
             LeftPDSV.LegSections = new ObservableCollection<LegSectionViewModel>();
@@ -9018,6 +9020,7 @@ namespace WpfApp2.ViewModels
                     LeftPDSV.LegSections.Add(new PDSVSectionViewModel(Controller, null, i + 1));
             }
 
+            RightPDSV.Comment = "";
             RightPDSV.IsEmpty = true;
             RightPDSV.LegSections = new ObservableCollection<LegSectionViewModel>();
             for (int i = 0; i < LeftPDSV.LevelCount; i++)
@@ -9029,7 +9032,7 @@ namespace WpfApp2.ViewModels
             }
 
 
-
+            LeftGV.Comment = "";
             LeftGV.IsEmpty = true;
             LeftGV.LegSections = new ObservableCollection<LegSectionViewModel>();
             for (int i = 0; i < LeftGV.LevelCount; i++)
@@ -9039,7 +9042,7 @@ namespace WpfApp2.ViewModels
                 else
                     LeftGV.LegSections.Add(new GVSectionViewModel(Controller, null, i + 1));
             }
-
+            RightGV.Comment = "";
             RightGV.IsEmpty = true;
             RightGV.LegSections = new ObservableCollection<LegSectionViewModel>();
             for (int i = 0; i < LeftGV.LevelCount; i++)
@@ -9051,7 +9054,7 @@ namespace WpfApp2.ViewModels
             }
 
 
-
+            LeftPPV.Comment = "";
 
 
             LeftPPV.IsEmpty = true;
@@ -9063,7 +9066,7 @@ namespace WpfApp2.ViewModels
                 else
                     LeftPPV.LegSections.Add(new PPVSectionViewModel(Controller, null, i + 1));
             }
-
+            RightPPV.Comment = "";
             RightPPV.IsEmpty = true;
             RightPPV.LegSections = new ObservableCollection<LegSectionViewModel>();
             for (int i = 0; i < LeftPPV.LevelCount; i++)
@@ -9076,7 +9079,7 @@ namespace WpfApp2.ViewModels
 
 
 
-
+            LeftPerforate.Comment = "";
             LeftPerforate.IsEmpty = true;
             LeftPerforate.LegSections = new ObservableCollection<LegSectionViewModel>();
             for (int i = 0; i < LeftPerforate.LevelCount; i++)
@@ -9086,7 +9089,7 @@ namespace WpfApp2.ViewModels
                 else
                     LeftPerforate.LegSections.Add(new HipPerforateSectionViewModel(Controller, null, i + 1));
             }
-
+            RightPerforate.Comment = "";
             RightPerforate.IsEmpty = true;
             RightPerforate.LegSections = new ObservableCollection<LegSectionViewModel>();
             for (int i = 0; i < LeftPerforate.LevelCount; i++)
@@ -9098,7 +9101,7 @@ namespace WpfApp2.ViewModels
             }
 
 
-
+            LeftBPVTibia.Comment = "";
 
             LeftBPVTibia.IsEmpty = true;
             LeftBPVTibia.LegSections = new ObservableCollection<LegSectionViewModel>();
@@ -9109,7 +9112,7 @@ namespace WpfApp2.ViewModels
                 else
                     LeftBPVTibia.LegSections.Add(new BPVTibiaSectionViewModel(Controller, null, i + 1));
             }
-
+            RightBPVTibia.Comment = "";
             RightBPVTibia.IsEmpty = true;
             RightBPVTibia.LegSections = new ObservableCollection<LegSectionViewModel>();
             for (int i = 0; i < LeftBPVTibia.LevelCount; i++)
@@ -9124,7 +9127,7 @@ namespace WpfApp2.ViewModels
 
 
 
-
+            LeftBPVHip.Comment = "";
             LeftBPVHip.IsEmpty = true;
             LeftBPVHip.LegSections = new ObservableCollection<LegSectionViewModel>();
             for (int i = 0; i < LeftBPVHip.LevelCount; i++)
@@ -9134,7 +9137,7 @@ namespace WpfApp2.ViewModels
                 else
                     LeftBPVHip.LegSections.Add(new BPVHipSectionViewModel(Controller, null, i + 1));
             }
-
+            RightBPVHip.Comment = "";
             RightBPVHip.IsEmpty = true;
             RightBPVHip.LegSections = new ObservableCollection<LegSectionViewModel>();
             for (int i = 0; i < LeftBPVHip.LevelCount; i++)

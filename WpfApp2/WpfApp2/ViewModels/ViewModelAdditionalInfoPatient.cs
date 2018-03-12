@@ -74,8 +74,8 @@ namespace WpfApp2.ViewModels
         public DelegateCommand Changed { get; protected set; }
         #endregion
         public DelegateCommand RevertCommand { set; get; }
-
-
+        public DelegateCommand<object> LostFocus { get; private set; }
+        public DelegateCommand<object> ClickOnWeight { get; private set; }
 
         public DelegateCommand SaveCommand { set; get; }
 
@@ -786,7 +786,29 @@ namespace WpfApp2.ViewModels
                 Handled = false;
             });
 
+            LostFocus = new DelegateCommand<object>(
+       (sender) =>
+       {
 
+           if (string.IsNullOrWhiteSpace(((TextBox)sender).Text))
+           {
+               ((TextBox)sender).Text = "0";
+               CurrentPanelViewModel.ShortText = 0;
+           }
+
+
+       }
+   ); ClickOnWeight = new DelegateCommand<object>(
+      (sender) =>
+      {
+
+          if (((TextBox)sender).Text == "0")
+              ((TextBox)sender).Text = "";
+
+
+
+      }
+  );
             CurrentPatient = new Patient();
 
             CurrentPatient.Birthday = DateTime.Now;

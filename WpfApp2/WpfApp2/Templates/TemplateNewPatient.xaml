@@ -82,7 +82,7 @@
                 </ComboBox>
                 <controls:AutoCompleteBox  Text="{Binding Path=Region, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                  MinimumPrefixLength ="0"   Width="180" Margin="10,10" ItemsSource="{Binding Path=RegionList}"  MaxDropDownHeight="260"   IsDropDownOpen="True" 
-                     FilterMode="Contains"        BorderBrush="{Binding Path=TextBoxRegionB}" x:Name="textBox_Copy3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top"  Grid.Row="6"  Grid.RowSpan="2">
+                     FilterMode="StartsWith"        BorderBrush="{Binding Path=TextBoxRegionB}" x:Name="textBox_Copy3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top"  Grid.Row="6"  Grid.RowSpan="2">
                    
                     <controls:AutoCompleteBox.InputBindings>
                         <KeyBinding Command="{Binding Path=Changed}"/>
@@ -94,7 +94,7 @@
                     </i:Interaction.Triggers>
                 </controls:AutoCompleteBox>
                 <controls:AutoCompleteBox Text="{Binding Path=Town, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                MinimumPrefixLength ="0"    FilterMode="Contains"   IsDropDownOpen="True"     ItemsSource="{Binding Path=TownsList}"  MaxDropDownHeight="260"            BorderBrush="{Binding Path=TextBoxCityB}" x:Name="textBox_Copy31" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="28"  VerticalAlignment="Top" Width="180" Grid.Row="6" Margin="195,10,0,0" Grid.RowSpan="2">
+                MinimumPrefixLength ="0"    FilterMode="StartsWith"   IsDropDownOpen="True"     ItemsSource="{Binding Path=TownsList}"  MaxDropDownHeight="260"            BorderBrush="{Binding Path=TextBoxCityB}" x:Name="textBox_Copy31" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="28"  VerticalAlignment="Top" Width="180" Grid.Row="6" Margin="195,10,0,0" Grid.RowSpan="2">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="PreviewMouseDown">
                             <i:InvokeCommandAction  Command="{Binding Path=ClickOnAutoComplete}" CommandParameter="{Binding ElementName=textBox_Copy31}"></i:InvokeCommandAction>
@@ -106,7 +106,7 @@
                     </controls:AutoCompleteBox.InputBindings>
                 </controls:AutoCompleteBox>
                 <controls:AutoCompleteBox Text="{Binding Path=District, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                 MinimumPrefixLength ="0"        IsDropDownOpen="True"       FilterMode="Contains"     ItemsSource="{Binding Path=  DistrictList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" BorderBrush="{Binding Path=TextBoxDistrictB}"  MaxDropDownHeight="260"              x:Name="textBox_Copy32" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="28"  VerticalAlignment="Top" Width="180" Grid.Row="6" Margin="380,10,0,0" Grid.RowSpan="2">
+                 MinimumPrefixLength ="0"        IsDropDownOpen="True"       FilterMode="StartsWith"     ItemsSource="{Binding Path=  DistrictList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" BorderBrush="{Binding Path=TextBoxDistrictB}"  MaxDropDownHeight="260"              x:Name="textBox_Copy32" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="28"  VerticalAlignment="Top" Width="180" Grid.Row="6" Margin="380,10,0,0" Grid.RowSpan="2">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="PreviewMouseDown">
                             <i:InvokeCommandAction  Command="{Binding Path=ClickOnAutoComplete}" CommandParameter="{Binding ElementName=textBox_Copy32}"></i:InvokeCommandAction>
@@ -118,7 +118,7 @@
                     </controls:AutoCompleteBox.InputBindings>
                 </controls:AutoCompleteBox>
                 <controls:AutoCompleteBox  ItemsSource="{Binding Path=StreetList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"     MaxDropDownHeight="260"   
-                 MinimumPrefixLength ="0"    FilterMode="Contains"  IsDropDownOpen="True"    Text="{Binding Path=Street, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  BorderBrush="{Binding Path=TextBoxStreetB}" x:Name="textBox_Copy33" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="250" Grid.Row="6" Margin="10,63,0,0" Grid.RowSpan="3">
+                 MinimumPrefixLength ="0"    FilterMode="StartsWith"  IsDropDownOpen="True"    Text="{Binding Path=Street, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  BorderBrush="{Binding Path=TextBoxStreetB}" x:Name="textBox_Copy33" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="250" Grid.Row="6" Margin="10,63,0,0" Grid.RowSpan="3">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="PreviewMouseDown">
                             <i:InvokeCommandAction  Command="{Binding Path=ClickOnAutoComplete}" CommandParameter="{Binding ElementName=textBox_Copy33}"></i:InvokeCommandAction>
