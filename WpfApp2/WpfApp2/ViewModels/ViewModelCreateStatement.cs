@@ -162,7 +162,7 @@ namespace WpfApp2.ViewModels
                     {
 
 
-                        document.ReplaceText("ФИО", CurrentPatient.Sirname + " " + CurrentPatient.Name + " " + CurrentPatient.Patronimic);
+                        document.ReplaceText("«ФИО»", CurrentPatient.Sirname + " " + CurrentPatient.Name + " " + CurrentPatient.Patronimic);
                         string day1 = "0";
                         string day2 = "0";
                         string mnth1 = "0";
@@ -227,7 +227,7 @@ namespace WpfApp2.ViewModels
 
                         string lettersLeft = "";
                         string lettersRight = "";
-                          string leftDiag = "", rightDiag = "";
+                        string leftDiag = "", rightDiag = "";
                         using (var context = new MySqlContext())
                         {
                             ExaminationRepository ExamRep = new ExaminationRepository(context);
@@ -245,12 +245,34 @@ namespace WpfApp2.ViewModels
 
 
                                 List<DiagnosisType> LeftDiagnosisList = new List<DiagnosisType>();
+                                int day12 = ExamsOfCurrPatientLatest[0].Date.Day;
+                                int mnth12 = ExamsOfCurrPatientLatest[0].Date.Month;
+                                string mnthStr1 = "";
+                                string dayStr1 = "";
+                                if (mnth12 < 10)
+                                {
+                                    mnthStr1 += "0" + mnth12.ToString();
+                                }
+                                else
+                                {
+                                    mnthStr1 = mnth12.ToString();
+                                }
 
-
+                                if (day12 < 10)
+                                {
+                                    dayStr1 += "0" + day12.ToString();
+                                }
+                                else
+                                {
+                                    dayStr1 = day12.ToString();
+                                }
+                                document.ReplaceText("«Дата»", dayStr1 + "." + mnthStr1 + "." + Operation.Date.Year.ToString());
+                               
                               
+
                                 foreach (var diag in Data.DiagnosisObs.GetAll.Where(s => s.isLeft == true && s.id_обследование_ноги == ExamsOfCurrPatientLatest[0].Id).ToList())
                                 {
-                                  
+
                                     LeftDiagnosisList.Add(Data.DiagnosisTypes.Get(diag.id_диагноз.Value));
                                 }
 
@@ -260,7 +282,7 @@ namespace WpfApp2.ViewModels
 
                                 foreach (var diag in Data.DiagnosisObs.GetAll.Where(s => s.isLeft == false && s.id_обследование_ноги == ExamsOfCurrPatientLatest[0].Id).ToList())
                                 {
-                                  
+
                                     RightDiagnosisList.Add(Data.DiagnosisTypes.Get(diag.id_диагноз.Value));
                                 }
 
@@ -275,19 +297,19 @@ namespace WpfApp2.ViewModels
                                     int xxx = 0;
                                     foreach (var rec in ComplainsList)
                                     {
-                                       
-                                            if (xxx == 0)
-                                            {
-                                                complanes += rec.Str;
-                                            }
-                                            else
-                                            {
-                                                complanes += ", " + rec.Str;
-                                            }
-                                            xxx++;
+
+                                        if (xxx == 0)
+                                        {
+                                            complanes += rec.Str;
+                                        }
+                                        else
+                                        {
+                                            complanes += ", " + rec.Str;
+                                        }
+                                        xxx++;
 
 
-                                       
+
                                     }
                                     char[] chararrbuF1 = complanes.ToCharArray();
                                     if (chararrbuF1[chararrbuF1.Length - 1] == '.')
@@ -301,7 +323,7 @@ namespace WpfApp2.ViewModels
 
 
 
-                              
+
 
                                 int xx = 0;
                                 foreach (var x in LeftDiagnosisList)
@@ -350,7 +372,7 @@ namespace WpfApp2.ViewModels
 
                                 document.ReplaceText("«Жалобы»", complanes);
 
-                               
+
 
 
 
@@ -403,9 +425,9 @@ namespace WpfApp2.ViewModels
 
                         }
 
-                       
 
-                     
+
+
 
                         if (SelectedLeg == 0)
                         {
@@ -426,8 +448,28 @@ namespace WpfApp2.ViewModels
                             document.ReplaceText("буквы_2", lettersRight);
 
                         }
+                        int day = Operation.Date.Day;
+                        int mnth = Operation.Date.Month;
+                        string mnthStr = "";
+                        string dayStr = "";
+                        if (mnth < 10)
+                        {
+                            mnthStr += "0" + mnth.ToString();
+                        }
+                        else
+                        {
+                            mnthStr = mnth.ToString();
+                        }
 
-                        document.ReplaceText("«Дата_операции»", Operation.Date.Day.ToString() + "." + Operation.Date.Month.ToString() + "." + Operation.Date.Year.ToString());
+                        if (day < 10)
+                        {
+                            dayStr += "0" + day.ToString();
+                        }
+                        else
+                        {
+                            dayStr = day.ToString();
+                        }
+                        document.ReplaceText("«Дата_операции»", dayStr + "." + mnthStr + "." + Operation.Date.Year.ToString());
 
                         string leftP = "", rightP = "", operationType = "";
                         int i1 = 0, i2 = 0;
@@ -479,11 +521,31 @@ namespace WpfApp2.ViewModels
                         //    document.ReplaceText("«Операция2»", Data.OperationType.Get(Operation.OperationTypeId).ShortName);
                         //else
                         //    document.ReplaceText("«Операция2»", Data.OperationType.Get(Operation.OperationTypeId).LongName);
-                        
 
+                         day = DateTime.Now.Day;
+                         mnth = DateTime.Now.Month;
+                         mnthStr = "";
+                         dayStr = "";
+                        if (mnth < 10)
+                        {
+                            mnthStr += "0" + mnth.ToString();
+                        }
+                        else
+                        {
+                            mnthStr = mnth.ToString();
+                        }
+
+                        if (day < 10)
+                        {
+                            dayStr += "0" + day.ToString();
+                        }
+                        else
+                        {
+                            dayStr = day.ToString();
+                        }
                         document.ReplaceText("«сутки»", Days.ToString());
                         document.ReplaceText("сутки", "суток");
-                        document.ReplaceText("сегодняшнеечисломесяц", DateTime.Now.Day.ToString() + "." + DateTime.Now.Month.ToString());
+                        document.ReplaceText("“сегодняшнеечисломесяц”  ", dayStr + "." + mnthStr);
                         document.ReplaceText("«год»", DateTime.Now.Year.ToString());
                         document.ReplaceText("«Врач»", Doctors[SelectedDoctor].ToString());
 

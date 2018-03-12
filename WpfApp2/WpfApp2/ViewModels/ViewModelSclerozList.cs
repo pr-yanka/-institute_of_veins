@@ -238,7 +238,7 @@ namespace WpfApp2.ViewModels
             //MessageBus.Default.Subscribe("SetAlergicAnevrizmListBecauseOFEdit", SetDRecomendationListBecauseOFEdit);
             TextOFNewType = "Новое склезирование";
             HeaderText = "Склезирование";
-            AddButtonText = "Добавить склезирование";
+            AddButtonText = "Другое склезирование";
 
             DataSourceList = new ObservableCollection<SclerozListDataSource>();
             foreach (var RecomendationsType in Data.Sclezing.GetAll)

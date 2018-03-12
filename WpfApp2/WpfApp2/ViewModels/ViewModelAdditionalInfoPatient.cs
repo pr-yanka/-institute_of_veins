@@ -21,6 +21,7 @@ namespace WpfApp2.ViewModels
         private IEnumerable<String> _districtList;
         public IEnumerable<String> BloodExchangeCommentList { get { return _districtList; } set { _districtList = value; OnPropertyChanged(); } }
 
+         //SugarDiabetComment
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -100,6 +101,8 @@ namespace WpfApp2.ViewModels
 
         private IEnumerable<String> _districtList;
         public IEnumerable<String> BloodExchangeCommentList { get { return _districtList; } set { _districtList = value; OnPropertyChanged(); } }
+        private IEnumerable<String> _districtList1;
+        public IEnumerable<String> SugarDiabetCommentList { get { return _districtList1; } set { _districtList1 = value; OnPropertyChanged(); } }
 
         private IEnumerable<String> _townsList;
         public IEnumerable<String> PreparateHateCommentList { get { return _townsList; } set { _townsList = value; OnPropertyChanged(); } }
@@ -370,6 +373,12 @@ namespace WpfApp2.ViewModels
                 buff2.Add(x.Str);
 
 
+
+            List<String> buff3 = new List<string>();
+            foreach (var x in Data.SugarDiabetComment.GetAll)
+                buff3.Add(x.Str);
+
+            SugarDiabetCommentList = buff3;
             PreparateHateCommentList = buff2;
             // BloodExchangeComment
             BloodExchangeCommentList = buff1; //PreparateHateComment
@@ -800,8 +809,30 @@ namespace WpfApp2.ViewModels
 
 
                     bool test = false;
+
+
                     CurrentPatient = Data.Patients.Get(CurrentPatient.Id);
+
+
                     CurrentPatient.Sugar = Sugar;
+                    bool xtestx = false;
+                    foreach (var x in SugarDiabetCommentList)
+                    {
+                        if (x == Sugar)
+                        {
+                            xtestx = true;
+                            break;
+                        }
+                    }
+                    if (!xtestx)
+                    {
+                        var bff = new SugarDiabetComment();
+                        bff.Str = Sugar;
+                        Data.SugarDiabetComment.Add(bff);
+                        Data.Complete();
+                    }
+
+
                     if (IsPositiveGroupTypeID == 0)
                     {
                         CurrentPatient.IsPositiveGroupType = true;

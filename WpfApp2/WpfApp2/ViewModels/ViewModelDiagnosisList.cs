@@ -269,7 +269,7 @@ namespace WpfApp2.ViewModels
             TextOFNewType = "Новый тип диагноза";
             TextName = "Вернуться к обследованию";
             HeaderText = "Диагнозы";
-            AddButtonText = "Добавить описание диагноза";
+            AddButtonText = "Другой диагноз";
             DataSourceList = new ObservableCollection<DiagnosisDataSource>();
             LeftDiag = new List<DiagnosisDataSource>();
             RightDiag = new List<DiagnosisDataSource>();

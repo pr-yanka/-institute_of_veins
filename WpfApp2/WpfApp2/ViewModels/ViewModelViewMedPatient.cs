@@ -54,7 +54,16 @@ namespace WpfApp2.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+        private string _nameOfTbl;
+        public string NameOfTbl
+        {
+            get
+            {
+                return _nameOfTbl;
 
+            }
+            set { _nameOfTbl = value; OnPropertyChanged(); }
+        }
         public string TooltipText { get; set; }
 
         public ObservableCollection<MedPatientDataSource> _historyDataSource;
@@ -120,6 +129,7 @@ namespace WpfApp2.ViewModels
 
         public ViewModelViewMedPatient(NavigationController controller) : base(controller)
         {
+            NameOfTbl = "Медперсонал";
             base.HasNavigation = true;
             HasNavigation = true;
             MessageBus.Default.Subscribe("OpenMeds", SetCurrentPatientID);

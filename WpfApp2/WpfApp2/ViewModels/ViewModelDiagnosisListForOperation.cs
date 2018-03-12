@@ -321,7 +321,7 @@ namespace WpfApp2.ViewModels
             });
             TextName = "Вернуться к обследованию";
             HeaderText = "Диагнозы";
-            AddButtonText = "Добавить диагноз";
+            AddButtonText = "Другой диагноз";
             MessageBus.Default.Subscribe("SetleftOrRight", SetDiagnosisList);
             DataSourceList = new ObservableCollection<DiagnosisDataSource>();
             LeftDiag = new List<DiagnosisDataSource>();

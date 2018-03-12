@@ -82,7 +82,7 @@
                 </ComboBox>
                 <controls:AutoCompleteBox  Text="{Binding Path=Region, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                  MinimumPrefixLength ="0"   Width="180" Margin="10,10" ItemsSource="{Binding Path=RegionList}"  MaxDropDownHeight="260"   IsDropDownOpen="True" 
-                    FilterMode="Custom" ItemFilter="{Binding Path=CustomeFilter}"        BorderBrush="{Binding Path=TextBoxRegionB}" x:Name="textBox_Copy3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top"  Grid.Row="6"  Grid.RowSpan="2">
+                     FilterMode="Contains"        BorderBrush="{Binding Path=TextBoxRegionB}" x:Name="textBox_Copy3" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top"  Grid.Row="6"  Grid.RowSpan="2">
                    
                     <controls:AutoCompleteBox.InputBindings>
                         <KeyBinding Command="{Binding Path=Changed}"/>

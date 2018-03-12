@@ -296,7 +296,7 @@ namespace WpfApp2.LegParts.VMs
                     LegSectionsSaved.Add(new BPVHipSectionViewModel(Controller, null, i + 1));
             }
 
-            for (int i = 0; i < LegSections.Count; i++)
+             commentSave = Comment; for (int i = 0; i < LegSections.Count; i++)
             {
 
                 LegSectionsSaved[i].Comment = LegSections[i].Comment;
@@ -437,7 +437,7 @@ namespace WpfApp2.LegParts.VMs
                            {
                                var newCombo = new BPVHipCombo();
 
-                               for (int i = 0; i < LegSections.Count; i++)
+                                commentSave = Comment; for (int i = 0; i < LegSections.Count; i++)
                                {
                                    var currentStructure = LegSections[i].SelectedValue;
                                    //ничего не было выбрано

@@ -229,7 +229,7 @@ namespace WpfApp2.ViewModels
             MessageBus.Default.Subscribe("SetDRecomendationListBecauseOFEdit", SetDRecomendationListBecauseOFEdit);
             TextOFNewType = "Новый тип рекомендации";
             HeaderText = "Рекомендации";
-            AddButtonText = "Добавить рекомендацию";
+            AddButtonText = "Другая рекомендацию";
             VisOfNothingFaund = Visibility.Collapsed;
             DataSourceList = new ObservableCollection<RecomendationsDataSource>();
             FullCopy = new List<RecomendationsDataSource>();

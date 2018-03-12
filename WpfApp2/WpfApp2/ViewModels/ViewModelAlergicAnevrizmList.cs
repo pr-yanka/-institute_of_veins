@@ -239,7 +239,7 @@ namespace WpfApp2.ViewModels
             MessageBus.Default.Subscribe("SetAlergicAnevrizmListBecauseOFEdit", SetDRecomendationListBecauseOFEdit);
             TextOFNewType = "Новый анамнез";
             HeaderText = "Аллергологический анамнез";
-            AddButtonText = "Добавить аллергологический анамнез";
+            AddButtonText = "Другой аллергологический анамнез";
 
             DataSourceList = new ObservableCollection<AlergicAnevrizmListDataSource>();
             foreach (var RecomendationsType in Data.AlergicAnevrizm.GetAll)

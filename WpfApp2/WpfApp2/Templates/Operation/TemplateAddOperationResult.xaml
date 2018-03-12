@@ -4,9 +4,9 @@
     <DataTemplate x:Key="TemplateAddOperationResult">
         <Grid Margin="0,80,0,0">
             <Label x:Name="label" Content="{Binding Path=TextResultCancle}" HorizontalAlignment="Left" Margin="397,10,0,0" VerticalAlignment="Top" FontSize="22pt"/>
-            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy1" Content="Сохранить" Command="{Binding Path=ToOperationCommand}" HorizontalAlignment="Left" Margin="380,541,0,0" VerticalAlignment="Top"  
+            <Button Width="230" Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy1" Content="Сохранить" Command="{Binding Path=ToOperationCommand}" HorizontalAlignment="Left" Margin="420,541,0,0" VerticalAlignment="Top"  
                    />
-            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="buttond_Copy1" Content="Составить выписку" Command="{Binding Path=ToCreateStatementCommand}" HorizontalAlignment="Left" Margin="786,541,0,0" VerticalAlignment="Top"  
+            <Button Width="230" Style="{StaticResource MyConfirmBUTTON}" x:Name="buttond_Copy1" Content="Составить выписку" Command="{Binding Path=ToCreateStatementCommand}" HorizontalAlignment="Left" Margin="786,541,0,0" VerticalAlignment="Top"  
                    />
             <Label  x:Name="label1" Content="{Binding Path=DateText}" HorizontalAlignment="Left"  
                    Margin="35,70,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.491,0.474" FontSize="22"/>

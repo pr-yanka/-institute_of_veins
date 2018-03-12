@@ -10,12 +10,13 @@
     </Style>
     <DataTemplate x:Key="TemplateViewPersonal">
         <Grid Name="RootGrid"  Margin="220,63,0,0" >
+            <TextBlock FontFamily="/fonts/#Pescadero" FontSize="22pt" VerticalAlignment="Center" Margin="300,-76,0,530" Height="38" Text="{Binding NameOfTbl}"/>
             <TextBlock x:Name="TextName" Text="{Binding Path=TooltipText}" Visibility="Hidden"/>
-            <Button x:Name="button" Content="{Binding Path=TextAddUserOrPersonalOrMed}" Command="{Binding Path=ToAddSomeoneCommand}" HorizontalAlignment="Left" Margin="24,450,0,0" VerticalAlignment="Top" Width="auto" Height="43" Background="#FFD6DAF7" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button" Content="{Binding Path=TextAddUserOrPersonalOrMed}" Command="{Binding Path=ToAddSomeoneCommand}" HorizontalAlignment="Left" Margin="24,450,0,0" VerticalAlignment="Top" Width="250"/>
             <Grid   Height="360" Width="auto"  HorizontalAlignment="Left"  VerticalAlignment="Top"  Margin="24,68,0,0">
-                <DataGrid  ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Foreground="Black"  ItemsSource="{Binding Path=DataSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserResizeRows="False">
+                <DataGrid HorizontalAlignment="Center" Width="650" Margin="60,0"  ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Foreground="Black"  ItemsSource="{Binding Path=DataSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserResizeRows="False">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="200">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Name}"/>
@@ -25,14 +26,14 @@
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                    <Button  ToolTip="{Binding ElementName = TextName, Path=Text}" Content="{Binding BtnName}" Command="{Binding Path=Archivate}" />
+                                    <Button Height="26"  Width="180" FontSize="12" Style="{StaticResource MyConfirmBUTTON}"  ToolTip="{Binding ElementName = TextName, Path=Text}" Content="{Binding BtnName}" Command="{Binding Path=Archivate}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button  Content="Редактировать" Command="{Binding Path=Redact}" />
+                                    <Button Height="26"  Width="180" FontSize="12" Style="{StaticResource MyConfirmBUTTON}"  Content="Редактировать" Command="{Binding Path=Redact}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

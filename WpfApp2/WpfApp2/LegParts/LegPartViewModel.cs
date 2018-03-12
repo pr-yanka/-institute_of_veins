@@ -30,7 +30,7 @@ namespace WpfApp2.LegParts
 
 
         public string mode = "Normal";
-        private string _comment;
+        private string _comment; public string commentSave;
         public string Comment { get { return _comment; } set { _comment = value; OnPropertyChanged(); } }
 
         public da_Way SelectedWayType { get; set; }
@@ -841,6 +841,7 @@ namespace WpfApp2.LegParts
                         SelectedWayType = SelectedWayTypeSave;
                         if (LegSectionsSaved != null)
                         {
+                            Comment = commentSave;
                             for (int i = 0; i < LegSections.Count; i++)
                             {
                                 LegSections[i].Comment = LegSectionsSaved[i].Comment;

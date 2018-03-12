@@ -231,7 +231,7 @@ namespace WpfApp2.ViewModels
             MessageBus.Default.Subscribe("SetClearComplanesListObsledovanie", SetClear);
             TextOFNewType = "Новый тип жалобы";
             HeaderText = "Жалобы";
-            AddButtonText = "Добавить жалобу";
+            AddButtonText = "Другая жалоба";
             DataSourceList = new ObservableCollection<ComplainsDataSource>();
             FullCopy = new List<ComplainsDataSource>();
             foreach (var ComplainsType in Data.ComplainsTypes.GetAll)

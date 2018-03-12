@@ -230,7 +230,7 @@ namespace WpfApp2.ViewModels
             MessageBus.Default.Subscribe("SetOprerationForAmbCardListBecauseOFEdit", SetDRecomendationListBecauseOFEdit);
             TextOFNewType = "Новая операция";
             HeaderText = "Операции";
-            AddButtonText = "Добавить операцию";
+            AddButtonText = "Другая операция";
 
             DataSourceList = new ObservableCollection<OperationForAmbullatorCardDataSource>();
             FullCopy = new List<OperationForAmbullatorCardDataSource>();

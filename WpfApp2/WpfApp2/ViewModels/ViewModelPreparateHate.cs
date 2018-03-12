@@ -248,7 +248,7 @@ namespace WpfApp2.ViewModels
             MessageBus.Default.Subscribe("SetPreparateHateListBecauseOFEdit", SetDRecomendationListBecauseOFEdit);
             TextOFNewType = "Новый препарат";
             HeaderText = "Непереносимость припаратов";
-            AddButtonText = "Добавить препарат";
+            AddButtonText = "Другой препарат";
 
             DataSourceList = new ObservableCollection<PreparateHateDataSource>();
             foreach (var RecomendationsType in Data.PreparateHate.GetAll)

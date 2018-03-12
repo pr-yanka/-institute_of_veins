@@ -101,8 +101,8 @@
                             <DataGridTemplateColumn   Header="Комментарий" MinWidth="221" MaxWidth="221">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate >
-                                        <controls:AutoCompleteBox Padding="4" Height="29"  Text="{Binding  Commentary,UpdateSourceTrigger=PropertyChanged}"
-                 FilterMode="Contains"       IsDropDownOpen="True"        ItemsSource="{Binding Path=BloodExchangeCommentList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" BorderBrush="{Binding Path=TextBoxDistrictB}"  MaxDropDownHeight="260"              x:Name="textBox_Copy32">
+                                        <controls:AutoCompleteBox BorderThickness="1" Padding="4" Height="29"  Text="{Binding  Commentary,UpdateSourceTrigger=PropertyChanged}"
+                 FilterMode="Contains"       IsDropDownOpen="True"        ItemsSource="{Binding Path=BloodExchangeCommentList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" MaxDropDownHeight="260"              x:Name="textBox_Copy32">
 
 
                                         </controls:AutoCompleteBox>
@@ -135,9 +135,12 @@
                     </DataGrid>
                     <Button Command="{Binding OpenCommand}" Margin="0,5"  Height="27" FontSize="12" Width="425" Content="добавить переливание" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top"></Button>
 
-                    <TextBox  Margin="0,0" x:Name="textBox_Copy1" Padding="4"  Text="{Binding Path=Sugar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="28" TextWrapping="Wrap" VerticalAlignment="Top" Width="425" Grid.Row="3">
+                
+                    <controls:AutoCompleteBox  Margin="0,0" Padding="4"  BorderThickness="1"  Height="29"  Text="{Binding  Sugar,UpdateSourceTrigger=PropertyChanged}"
+                 FilterMode="Contains" Grid.Column="1"   Grid.Row="3"    IsDropDownOpen="True"        ItemsSource="{Binding Path=SugarDiabetCommentList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  MaxDropDownHeight="260"      Width="425"   HorizontalAlignment="Left"     x:Name="textBoвx_Copy32">
 
-                    </TextBox>
+
+                    </controls:AutoCompleteBox>
                     <ListBox ItemsSource="{Binding Path=HirurgInteruptList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="137"  VerticalAlignment="Top" Width="425" Grid.Row="4" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
                         <ListBox.ItemTemplate>
                             <DataTemplate>

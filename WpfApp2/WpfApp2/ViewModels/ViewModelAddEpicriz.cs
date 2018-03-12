@@ -402,7 +402,7 @@ namespace WpfApp2.ViewModels
 
                         document.ReplaceText("«Заключение_справа»", lettersRight);
 
-                        document.ReplaceText("«Дата_операции»", Operation.Date.Day.ToString() + "." + Operation.Date.Month.ToString() + "." + Operation.Date.Year.ToString());
+                        document.ReplaceText("«Дата_операции»", Operation.Date.ToString());
 
                         if (CurrentPatient.Gender.ToLower() == "м")
                         {

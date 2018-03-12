@@ -232,7 +232,19 @@ namespace WpfApp2.LegParts
             }
         }
 
-        public string Comment { get; set; }
+        private string _сomment;
+        public string Comment
+        {
+            get
+            {
+                return _сomment;
+            }
+            set
+            {
+                _сomment = value;
+                OnPropertyChanged();
+            }
+        }
 
         private float _size2;
 

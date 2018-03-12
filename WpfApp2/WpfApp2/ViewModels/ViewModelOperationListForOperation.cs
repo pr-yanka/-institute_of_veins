@@ -315,7 +315,7 @@ namespace WpfApp2.ViewModels
             });
             TextName = "Вернуться к обследованию";
             HeaderText = "Типы операции";
-            AddButtonText = "Новый тип операции";
+            AddButtonText = "Другой тип операции";
             MessageBus.Default.Subscribe("SetleftOrRightOpForOp", SetDiagnosisList);
             DataSourceList = new ObservableCollection<OperationTypesDataSource>();
             LeftDiag = new List<OperationTypesDataSource>();

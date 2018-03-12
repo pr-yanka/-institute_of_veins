@@ -83,7 +83,8 @@ namespace WpfApp2.ViewModels.Panels
         {
 
             //newType.LongName = LongText;
-            
+            if (DoctorSelectedId == -1 || DoctorSelectedId > Doctors.Count - 1)
+                return "";
             return Doctors[DoctorSelectedId].ToString();
         }
 

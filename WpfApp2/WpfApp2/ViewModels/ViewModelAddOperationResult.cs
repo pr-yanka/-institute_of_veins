@@ -25,7 +25,17 @@ namespace WpfApp2.ViewModels
         }
         #endregion
         public string TextResultCancle { get; set; }
-        public string comment { get; set; }
+        private string _comment;//{ get; set; }
+        public string comment
+        {
+            get { return _comment; }
+            set
+            {
+                _comment = value;
+
+                OnPropertyChanged();
+            }
+        }
         private string _operationType;
         public string OperationType
         {
@@ -99,6 +109,14 @@ namespace WpfApp2.ViewModels
             TextResultCancle = "Итоги операции";
             DateText = "Операция проведена";
             OtmenOrProv = "Проведённая ";
+            if (Operation.итоги_операции != null)
+            {
+                using (var context = new MySqlContext())
+                {
+                    OperationResultRepository opResRep = new OperationResultRepository(context);
+                    comment = opResRep.Get(Operation.итоги_операции.Value).Str;
+                }
+            }
         }
 
         public ViewModelAddOperationResult(NavigationController controller) : base(controller)
@@ -110,37 +128,92 @@ namespace WpfApp2.ViewModels
                 () =>
                 {
 
-
-                    var result = MessageBox.Show("Назначить ещё одну операцию?", "", MessageBoxButton.YesNo);
-                    if (result == System.Windows.MessageBoxResult.Yes)
+                    if (Operation.итоги_операции != null)
                     {
+                        using (var context = new MySqlContext())
+                        {
+                            OperationResultRepository opResRep = new OperationResultRepository(context);
+                            var Res = opResRep.Get(Operation.итоги_операции.Value);
+                            if (Res.IdNextOperation == null)
+                            {
+                                var result1 = MessageBox.Show("Назначить ещё одну операцию?", "", MessageBoxButton.YesNo);
+                                if (result1 == System.Windows.MessageBoxResult.Yes)
+                                {
 
-                        // Closes the parent form.
-                        var buf = new OperationResult();
-                        buf.Str = comment;
-                        Data.OperationResult.Add(buf);
-                        Operation.итоги_операции = buf.Id;
-                        Data.Complete();
-                        MessageBus.Default.Call("SetCurrentACCOp", this, null);
-                        MessageBus.Default.Call("SetCurrentPatientForOperation", this, Operation.PatientId);
-                        MessageBus.Default.Call("SetOperationResult", this, buf);
-                        Controller.NavigateTo<ViewModelAddOperation>();
+                                    // Closes the parent form.
+                                    var buf = new OperationResult();
+                                    buf.Str = comment;
+
+                                    Data.OperationResult.Add(buf);
+                                    Operation.итоги_операции = buf.Id;
+                                    Data.Complete();
+                                    MessageBus.Default.Call("SetCurrentACCOp", this, null);
+                                    MessageBus.Default.Call("SetCurrentPatientForOperation", this, Operation.PatientId);
+                                    MessageBus.Default.Call("SetOperationResult", this, buf);
+                                    Controller.NavigateTo<ViewModelAddOperation>();
 
 
+                                }
+                                else
+                                {
+                                    var buf = new OperationResult();
+                                    buf.Str = comment;
+                                    Data.OperationResult.Add(buf);
+                                    Operation.итоги_операции = buf.Id;
+                                    Data.Complete();
+                                    MessageBus.Default.Call("SetCurrentACCOp", this, null);
+                                    MessageBus.Default.Call("GetOprForOprResultOverview", this, operationId);
+                                    Controller.NavigateTo<ViewModelOperationOverview>();
+
+                                }
+                            }
+                            else
+                            {
+                                var buf = new OperationResult();
+                                buf.Str = comment;
+                                Data.OperationResult.Add(buf);
+                                Operation.итоги_операции = buf.Id;
+                                Data.Complete();
+                                MessageBus.Default.Call("SetCurrentACCOp", this, null);
+                                MessageBus.Default.Call("GetOprForOprResultOverview", this, operationId);
+                                Controller.NavigateTo<ViewModelOperationOverview>();
+                            }
+
+                        }
                     }
                     else
                     {
-                        var buf = new OperationResult();
-                        buf.Str = comment;
-                        Data.OperationResult.Add(buf);
-                        Operation.итоги_операции = buf.Id;
-                        Data.Complete();
-                        MessageBus.Default.Call("SetCurrentACCOp", this, null);
-                        MessageBus.Default.Call("GetOprForOprResultOverview", this, operationId);
-                        Controller.NavigateTo<ViewModelOperationResultOverview>();
+                        var result = MessageBox.Show("Назначить ещё одну операцию?", "", MessageBoxButton.YesNo);
+                        if (result == System.Windows.MessageBoxResult.Yes)
+                        {
 
+                            // Closes the parent form.
+                            var buf = new OperationResult();
+                            buf.Str = comment;
+
+                            Data.OperationResult.Add(buf);
+                            Operation.итоги_операции = buf.Id;
+                            Data.Complete();
+                            MessageBus.Default.Call("SetCurrentACCOp", this, null);
+                            MessageBus.Default.Call("SetCurrentPatientForOperation", this, Operation.PatientId);
+                            MessageBus.Default.Call("SetOperationResult", this, buf);
+                            Controller.NavigateTo<ViewModelAddOperation>();
+
+
+                        }
+                        else
+                        {
+                            var buf = new OperationResult();
+                            buf.Str = comment;
+                            Data.OperationResult.Add(buf);
+                            Operation.итоги_операции = buf.Id;
+                            Data.Complete();
+                            MessageBus.Default.Call("SetCurrentACCOp", this, null);
+                            MessageBus.Default.Call("GetOprForOprResultOverview", this, operationId);
+                            Controller.NavigateTo<ViewModelOperationOverview>();
+
+                        }
                     }
-
 
                 }
             );

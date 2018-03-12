@@ -229,7 +229,7 @@ namespace WpfApp2.ViewModels
             MessageBus.Default.Subscribe("SetHirurgInterruptListBecauseOFEdit", SetDRecomendationListBecauseOFEdit);
             TextOFNewType = "Новое вмешательство";
             HeaderText = "Хирургическое вмешательство";
-            AddButtonText = "Добавить хирургическое вмешательство";
+            AddButtonText = "Другое хирургическое вмешательство";
 
             DataSourceList = new ObservableCollection<HirurgInterruptDataSource>();
             foreach (var RecomendationsType in Data.HirurgInterup.GetAll)
