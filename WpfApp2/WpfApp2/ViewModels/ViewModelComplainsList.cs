@@ -190,7 +190,7 @@ namespace WpfApp2.ViewModels
         {
 
             FilterText = "";
-            foreach (var dat in (List<ComplainsDataSource>)data)
+            foreach (var dat in (ObservableCollection<ComplainsDataSource>)data)
             {
                 foreach (var datC in DataSourceList)
                 {
