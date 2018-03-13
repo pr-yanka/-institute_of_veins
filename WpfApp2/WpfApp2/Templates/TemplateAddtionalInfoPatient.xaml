@@ -26,7 +26,7 @@
                     </TransformGroup>
                 </TextBlock.RenderTransform>
             </TextBlock>
-            <TextBlock FontFamily="/fonts/#Pescadero"  FontSize="22pt" HorizontalAlignment="Center" Width="422" VerticalAlignment="Top" Height="Auto" Margin="0,0" x:Name="ddsadsds" Text="{Binding Path=Initials}">
+            <TextBlock FontFamily="/fonts/#Pescadero"  FontSize="22pt" HorizontalAlignment="Right" Width="422" VerticalAlignment="Top" Height="Auto" Margin="0,0" x:Name="ddsadsds" Text="{Binding Path=Initials}">
 
                 <TextBlock.RenderTransform>
                     <TransformGroup>
@@ -34,7 +34,7 @@
                         <SkewTransform/>
                         <RotateTransform/>
                         <TranslateTransform Y="10"/>
-                        <TranslateTransform X="130"/>
+                        <TranslateTransform X="10"/>
                     </TransformGroup>
                 </TextBlock.RenderTransform>
             </TextBlock>
@@ -147,11 +147,11 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button Command="{Binding OpenCommand}" Margin="0,5"  Height="27" FontSize="12" Width="425" Content="добавить переливание" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top"></Button>
+                    <Button Command="{Binding OpenCommand}" Margin="0,6"  Height="27" FontSize="12" Width="425" Content="добавить переливание" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top"></Button>
 
-                
-                    <controls:AutoCompleteBox  Margin="0,0" Padding="4"  BorderThickness="1"  Height="29"  Text="{Binding  Sugar,UpdateSourceTrigger=PropertyChanged}"
-                 FilterMode="Contains" Grid.Column="1"   Grid.Row="3"    IsDropDownOpen="True"        ItemsSource="{Binding Path=SugarDiabetCommentList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  MaxDropDownHeight="260"      Width="425"   HorizontalAlignment="Left"     x:Name="textBoвx_Copy32">
+
+                    <controls:AutoCompleteBox  Margin="0,0" Padding="4"  BorderThickness="1"  Height="29"  Text="{Binding Path=Sugar,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                 FilterMode="Contains" Grid.Column="1"   Grid.Row="3"    IsDropDownOpen="True"        ItemsSource="{Binding Path=SugarDiabetCommentList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  MaxDropDownHeight="260"      Width="425"   HorizontalAlignment="Left"   VerticalAlignment="Top"   x:Name="textBoвx_Copy32">
 
 
                     </controls:AutoCompleteBox>
@@ -313,10 +313,10 @@
                         <TextBox x:Name="textBfox1" HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" Width="77" Canvas.Left="82" Canvas.Top="52" >
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="PreviewMouseDown">
-                                    <i:InvokeCommandAction  Command="{Binding Path=ParentVM.ClickOnWeight}" CommandParameter="{Binding ElementName=size1Box}" />
+                                    <i:InvokeCommandAction  Command="{Binding Path=ParentVM.ClickOnWeight}" CommandParameter="{Binding ElementName=textBfox1}" />
                                 </i:EventTrigger>
                                 <i:EventTrigger EventName="LostFocus">
-                                    <i:InvokeCommandAction  Command="{Binding Path=ParentVM.LostFocus}" CommandParameter="{Binding ElementName=size1Box}" />
+                                    <i:InvokeCommandAction  Command="{Binding Path=ParentVM.LostFocus}" CommandParameter="{Binding ElementName=textBfox1}" />
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </TextBox>

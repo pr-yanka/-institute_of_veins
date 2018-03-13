@@ -244,7 +244,7 @@ namespace WpfApp2.ViewModels
             ToPhysicalCommand = new DelegateCommand(
                 () =>
                 {
-                    FilterText = "";
+                    //FilterText = "";
                     List<RecomendationsDataSource> DataSourceListBuffer = new List<RecomendationsDataSource>();
                     foreach (var Data in FullCopy)
                     {
@@ -275,7 +275,7 @@ namespace WpfApp2.ViewModels
 
             SaveCommand = new DelegateCommand(() =>
             {
-                FilterText = "";
+               // FilterText = "";
                 var newType = CurrentPanelViewModel.GetPanelType();
                 if (!string.IsNullOrWhiteSpace(newType.Str))
                 {

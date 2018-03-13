@@ -242,7 +242,7 @@ namespace WpfApp2.ViewModels
             ToPhysicalCommand = new DelegateCommand(
                 () =>
                 {
-                    FilterText = "";
+                    //FilterText = "";
                     List<ComplainsDataSource> DataSourceListBuffer = new List<ComplainsDataSource>();
                     foreach (var Data in DataSourceList)
                     {
@@ -272,7 +272,7 @@ namespace WpfApp2.ViewModels
 
             SaveCommand = new DelegateCommand(() =>
             {
-                FilterText = "";
+                //FilterText = "";
                 var newType = CurrentPanelViewModel.GetPanelType();
                 if (!string.IsNullOrWhiteSpace(newType.Str))
                 {

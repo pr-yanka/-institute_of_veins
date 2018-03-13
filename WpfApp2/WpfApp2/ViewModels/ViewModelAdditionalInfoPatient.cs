@@ -438,7 +438,7 @@ namespace WpfApp2.ViewModels
                 try
                 {
                     CurrentPatient = PatientsRep.Get((int)data);
-                    Initials ="Пациент: "+ CurrentPatient.Patronimic + " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ". ";
+                    Initials ="Пациент: "+ CurrentPatient.Sirname + " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ". ";
 
                     if (CurrentPatient.IsPositiveGroupType != null && CurrentPatient.IsPositiveGroupType.Value == false)
                     {

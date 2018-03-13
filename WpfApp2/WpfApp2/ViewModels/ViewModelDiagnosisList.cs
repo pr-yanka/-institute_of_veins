@@ -289,7 +289,7 @@ namespace WpfApp2.ViewModels
                 () =>
                 {
                     List<DiagnosisDataSource> DataSourceListBuffer = new List<DiagnosisDataSource>();
-                    FilterText = "";
+                   // FilterText = "";
                     foreach (var Data in FullCopy)
                     {
                         if (Data.IsChecked == true)
@@ -328,7 +328,7 @@ namespace WpfApp2.ViewModels
 
             SaveCommand = new DelegateCommand(() =>
             {
-                FilterText = "";
+               // FilterText = "";
                 var newType = CurrentPanelViewModel.GetPanelType();
                 if (!string.IsNullOrWhiteSpace(newType.Str))
                 {
