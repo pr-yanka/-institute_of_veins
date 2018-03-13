@@ -561,7 +561,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
 
-                        <TextBlock Width="487" TextWrapping="Wrap" Padding="5,0,5,0" Text="{Binding  Data.Str}" />
+                        <TextBlock HorizontalAlignment="Left" Width="487" TextWrapping="Wrap" Padding="5,0,5,0" Text="{Binding  Data.Str}" />
 
                     </DataTemplate>
                 </ListBox.ItemTemplate>

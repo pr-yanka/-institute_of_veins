@@ -179,45 +179,48 @@ namespace WpfApp2.LegParts
         {
             try
             {
-                LevelSelected = ((LegSectionViewModel)sender).StructureSource[0].Level;
-                CurrentPanelViewModel.TextSaveBTN = "Добавить";
-                CurrentPanelViewModel.mode = "Add";
-                CurrentPanelViewModel.TextCancleOrResetBTN = "Вернуться";
-                ClosePanelCommand = new DelegateCommand(() =>
-             {
-                 if (_lastSender.SelectedValue == null)
+                if (Controller.CurrentViewModel.Controller.LegViewModel == this)
+                {
+                    LevelSelected = ((LegSectionViewModel)sender).StructureSource[0].Level;
+                    CurrentPanelViewModel.TextSaveBTN = "Добавить";
+                    CurrentPanelViewModel.mode = "Add";
+                    CurrentPanelViewModel.TextCancleOrResetBTN = "Вернуться";
+                    ClosePanelCommand = new DelegateCommand(() =>
                  {
-                     foreach (var structr in _lastSender.StructureSource)
+                     if (_lastSender.SelectedValue == null)
                      {
-                         if (structr.Text1 == "" && structr.Text2 == "")
+                         foreach (var structr in _lastSender.StructureSource)
                          {
-                             _lastSender.SelectedValue = structr;
+                             if (structr.Text1 == "" && structr.Text2 == "")
+                             {
+                                 _lastSender.SelectedValue = structr;
+                             }
                          }
                      }
-                 }
-                 else
-                 {
-                     LegSections[_lastSender.ListNumber - 1].SelectedValue = _lastSender.SelectedValue;
-                 }
-                 CurrentPanelViewModel.PanelOpened = false;
-                 handled = false;
+                     else
+                     {
+                         LegSections[_lastSender.ListNumber - 1].SelectedValue = _lastSender.SelectedValue;
+                     }
+                     CurrentPanelViewModel.PanelOpened = false;
+                     handled = false;
 
-             });
-                if (!handled)
-                {
+                 });
+                    if (!handled)
+                    {
 
-                    var curPanel = ((LegPartViewModel)Controller.LegViewModel).CurrentPanelViewModel;
-                    var currentPart = (LegSectionViewModel)sender;
+                        var curPanel = ((LegPartViewModel)Controller.LegViewModel).CurrentPanelViewModel;
+                        var currentPart = (LegSectionViewModel)sender;
 
 
-                    _lastSender = currentPart;
-
+                        _lastSender = currentPart;
 
 
 
-                    _lastSenderType = (Type)data;
-                    handled = true;
-                    curPanel.PanelOpened = true;
+
+                        _lastSenderType = (Type)data;
+                        handled = true;
+                        curPanel.PanelOpened = true;
+                    }
                 }
             }
             catch
@@ -248,67 +251,72 @@ namespace WpfApp2.LegParts
             //}
             //if (structure == null)
             //    return false;
-
-            foreach (var x in LegSections[LevelSelected - 1].StructureSource)
+            if (Controller.CurrentViewModel.Controller.LegViewModel == this)
             {
-                if (mode == "Edit")
+                if (LevelSelected != 0)
                 {
-                    if (x.HasDoubleMetric == CurrentPanelViewModel.HasDoubleSize
-                        && x.HasSize == CurrentPanelViewModel.HasSize
-                         && (x.Text1 == CurrentPanelViewModel.Text1 || (string.IsNullOrWhiteSpace(x.Text1) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text1)))
-                           && (x.Text2 == CurrentPanelViewModel.Text2 || (string.IsNullOrWhiteSpace(x.Text2) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text2)))
-                        && x.Id != structure.Id)
+                    foreach (var x in LegSections[LevelSelected - 1].StructureSource)
                     {
-                        if (x.HasSize == true)
+                        if (mode == "Edit")
                         {
-                            if ((x.Metrics == CurrentPanelViewModel.SelectedMetricText || string.IsNullOrWhiteSpace(x.Metrics) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.SelectedMetricText)))
+                            if (x.HasDoubleMetric == CurrentPanelViewModel.HasDoubleSize
+                                && x.HasSize == CurrentPanelViewModel.HasSize
+                                 && (x.Text1 == CurrentPanelViewModel.Text1 || (string.IsNullOrWhiteSpace(x.Text1) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text1)))
+                                   && (x.Text2 == CurrentPanelViewModel.Text2 || (string.IsNullOrWhiteSpace(x.Text2) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text2)))
+                                && x.Id != structure.Id)
                             {
+                                if (x.HasSize == true)
+                                {
+                                    if ((x.Metrics == CurrentPanelViewModel.SelectedMetricText || string.IsNullOrWhiteSpace(x.Metrics) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.SelectedMetricText)))
+                                    {
+                                        MessageBox.Show("Такое описание уже существует!");
+
+                                        return false;
+                                    }
+                                    else
+                                    {
+                                        return true;
+                                    }
+                                }
+
+
+                                MessageBox.Show("Такое описание уже существует!");
+
+                                return false;
+
+                            }
+                        }
+                        else
+                        {
+                            if (x.HasDoubleMetric == CurrentPanelViewModel.HasDoubleSize
+                                   && x.HasSize == CurrentPanelViewModel.HasSize
+                                   && (x.Text1 == CurrentPanelViewModel.Text1 || (string.IsNullOrWhiteSpace(x.Text1) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text1)))
+                                   && (x.Text2 == CurrentPanelViewModel.Text2 || (string.IsNullOrWhiteSpace(x.Text2) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text2))))
+
+                            {
+
+                                if (x.HasSize == true)
+                                {
+                                    if ((x.Metrics == CurrentPanelViewModel.SelectedMetricText || string.IsNullOrWhiteSpace(x.Metrics) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.SelectedMetricText)))
+                                    {
+                                        MessageBox.Show("Такое описание уже существует!");
+
+                                        return false;
+                                    }
+                                    else
+                                    {
+                                        return true;
+                                    }
+                                }
+
+
                                 MessageBox.Show("Такое описание уже существует!");
 
                                 return false;
                             }
-                            else
-                            {
-                                return true;
-                            }
+
                         }
-
-
-                        MessageBox.Show("Такое описание уже существует!");
-
-                        return false;
-
                     }
-                }
-                else
-                {
-                    if (x.HasDoubleMetric == CurrentPanelViewModel.HasDoubleSize
-                           && x.HasSize == CurrentPanelViewModel.HasSize
-                           && (x.Text1 == CurrentPanelViewModel.Text1 || (string.IsNullOrWhiteSpace(x.Text1) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text1)))
-                           && (x.Text2 == CurrentPanelViewModel.Text2 || (string.IsNullOrWhiteSpace(x.Text2) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text2))))
-
-                    {
-
-                        if (x.HasSize == true)
-                        {
-                            if ((x.Metrics == CurrentPanelViewModel.SelectedMetricText || string.IsNullOrWhiteSpace(x.Metrics) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.SelectedMetricText)))
-                            {
-                                MessageBox.Show("Такое описание уже существует!");
-
-                                return false;
-                            }
-                            else
-                            {
-                                return true;
-                            }
-                        }
-
-
-                        MessageBox.Show("Такое описание уже существует!");
-
-                        return false;
-                    }
-
                 }
             }
             return true;
@@ -668,7 +676,8 @@ namespace WpfApp2.LegParts
             newStr.HasSize = panel.HasSize;
             newStr.HasDoubleMetric = panel.HasDoubleSize;
 
-
+            if (panel.SelectedMetricText == null)
+            { panel.SelectedMetricText = ""; }
 
 
             if (panel.HasSize)

@@ -156,7 +156,17 @@ namespace WpfApp2.ViewModels
         private string _bloodGroup;
 
         private string _sugar;
-
+        private string _initials;
+        public string Initials
+        {
+            get { return _initials; }
+            set
+            {
+                _initials = value;
+              
+                OnPropertyChanged();
+            }
+        }
         private string _isPositiveGroupType;
         private string _nameOfButton;
 
@@ -364,6 +374,7 @@ namespace WpfApp2.ViewModels
         List<BloodExchangeListDataSource> BloodExchangeBuf;
         private void SetCurrentPatientID(object sender, object data)
         {
+           
             List<String> buff1 = new List<string>();
             foreach (var x in Data.BloodExchangeComment.GetAll)
                 buff1.Add(x.Str);
@@ -427,6 +438,7 @@ namespace WpfApp2.ViewModels
                 try
                 {
                     CurrentPatient = PatientsRep.Get((int)data);
+                    Initials ="Пациент: "+ CurrentPatient.Patronimic + " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ". ";
 
                     if (CurrentPatient.IsPositiveGroupType != null && CurrentPatient.IsPositiveGroupType.Value == false)
                     {
@@ -762,6 +774,10 @@ namespace WpfApp2.ViewModels
 
 
                     });
+                    if(newType.Data.Date == null)
+                    {
+                        newType.Data.Date = DateTime.Now;
+                    }
                     newType.DeleteCommand = DelThis;
                     BloodExchange.Add(newType);
                     BloodExchangeList.View.Refresh();

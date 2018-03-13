@@ -14,7 +14,7 @@
     </Style>
     <DataTemplate x:Key="TemplateAddtionalInfoPatient">
         <Grid Margin="227,57,0,0" >
-            <TextBlock FontFamily="/fonts/#Pescadero" Width="Auto" FontSize="22pt" HorizontalAlignment="Center" VerticalAlignment="Top" Height="Auto"  Text="Амбулаторная карта">
+            <TextBlock FontFamily="/fonts/#Pescadero" Width="Auto" FontSize="22pt" HorizontalAlignment="Left" VerticalAlignment="Top" Height="Auto"  Text="Амбулаторная карта">
 
                 <TextBlock.RenderTransform>
                     <TransformGroup>
@@ -22,9 +22,23 @@
                         <SkewTransform/>
                         <RotateTransform/>
                         <TranslateTransform Y="10"/>
+                        <TranslateTransform X="25"/>
                     </TransformGroup>
                 </TextBlock.RenderTransform>
             </TextBlock>
+            <TextBlock FontFamily="/fonts/#Pescadero"  FontSize="22pt" HorizontalAlignment="Center" Width="422" VerticalAlignment="Top" Height="Auto" Margin="0,0" x:Name="ddsadsds" Text="{Binding Path=Initials}">
+
+                <TextBlock.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="10"/>
+                        <TranslateTransform X="130"/>
+                    </TransformGroup>
+                </TextBlock.RenderTransform>
+            </TextBlock>
+
             <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button" Visibility="Hidden" Content="Загрузить данные из регистратуры" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top"/>
             <Button x:Name="button_Copy3" Visibility="{Binding Path=Visibility}" Content="Сбросить" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="49,630,0,0" VerticalAlignment="Top"
                  Style="{StaticResource MyNormalBUTTON}" Width="300"/>
@@ -187,7 +201,7 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
 
-                    <Button Command="{Binding ToSetAlergicAnevrizmCommand}" Margin="0,5" Height="27" FontSize="12" Width="425" Content="добавить анамнез" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="7" VerticalAlignment="Top"></Button>
+                    <Button Command="{Binding ToSetAlergicAnevrizmCommand}" Margin="0,5" Height="27" FontSize="12" Width="425" Content="добавить аллергологический анамнез" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="7" VerticalAlignment="Top"></Button>
 
 
 

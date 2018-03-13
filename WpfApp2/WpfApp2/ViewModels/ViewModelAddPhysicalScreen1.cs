@@ -1046,23 +1046,24 @@ namespace WpfApp2.ViewModels
         public Patient CurrentPatient { get; protected set; }
         public string initials { get; protected set; }
 
-        public List<ComplainsDataSource> ComplainsList { get; set; }
-        public List<RecomendationsDataSource> RecomendationsList { get; set; }
-        public List<DiagnosisDataSource> DiagnosisList { get; set; }
+        public ObservableCollection<ComplainsDataSource> ComplainsList { get; set; }
+        public ObservableCollection<RecomendationsDataSource> RecomendationsList { get; set; }
+        public ObservableCollection<DiagnosisDataSource> DiagnosisList { get; set; }
         public ObservableCollection<DiagnosisDataSource> LeftDiagnosisList { get; set; }
         public ObservableCollection<DiagnosisDataSource> RightDiagnosisList { get; set; }
 
         private void SetComplainsList(object sender, object data)
         {
-            ComplainsList = (List<ComplainsDataSource>)data;
+            ComplainsList = new ObservableCollection<ComplainsDataSource>((List<ComplainsDataSource>)data);
+            
         }
         private void SetRecomendationsList(object sender, object data)
         {
-            RecomendationsList = (List<RecomendationsDataSource>)data;
+            RecomendationsList = new ObservableCollection<RecomendationsDataSource>((List<RecomendationsDataSource>)data);
         }
         private void SetDiagnosisList(object sender, object data)
         {
-            DiagnosisList = (List<DiagnosisDataSource>)data;
+            DiagnosisList = new ObservableCollection<DiagnosisDataSource>((List<DiagnosisDataSource>)data);
         }
         private string _ageText;
         public string AgeText { get { return _ageText; } set { _ageText = value; OnPropertyChanged(); } }
@@ -1213,12 +1214,12 @@ namespace WpfApp2.ViewModels
                 MessageBox.Show("Диагнозы справа не заполнены");
 
             }
-            else if (!IsListIsFilled(ComplainsList))
+            else if (!IsObservCollectionIsFilled(ComplainsList))
             {
                 MessageBox.Show("Жалобы не заполнены");
 
             }
-            else if (!IsListIsFilled(RecomendationsList))
+            else if (!IsObservCollectionIsFilled(RecomendationsList))
             {
                 MessageBox.Show("Рекомендации не заполнены");
 
@@ -2750,7 +2751,7 @@ namespace WpfApp2.ViewModels
             if (LegPart is TEMPVViewModel)
                 p4 += "Протяженность: " + ((TEMPVViewModel)LegPart).FF_length + " см\n";
 
-            int x = 1;
+            int x = 0;
             foreach (var section in LegPart.LegSections)
             {
                 if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
@@ -8780,8 +8781,8 @@ namespace WpfApp2.ViewModels
 
             LeftDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
             RightDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
-            RecomendationsList = new List<RecomendationsDataSource>();
-            ComplainsList = new List<ComplainsDataSource>();
+            RecomendationsList = new ObservableCollection<RecomendationsDataSource>();
+            ComplainsList = new ObservableCollection<ComplainsDataSource>();
 
             RightCEAR.LegSections = new List<LettersSectionViewModel>();
             LeftCEAR.LegSections = new List<LettersSectionViewModel>();
@@ -9404,7 +9405,7 @@ namespace WpfApp2.ViewModels
 
                 MessageBus.Default.Call("SetDiagnosisListBecauseOFEdit", LeftDiagnosisList, RightDiagnosisList);
 
-                ComplainsList = new List<ComplainsDataSource>();
+                ComplainsList = new ObservableCollection<ComplainsDataSource>();
                 ComplainsDataSource compDSourceBuf;
                 foreach (var diag in Data.ComplanesObs.GetAll.Where(s => s.id_обследования == Exam.Id).ToList())
                 {
@@ -9412,7 +9413,7 @@ namespace WpfApp2.ViewModels
                     compDSourceBuf.IsChecked = true;
                     ComplainsList.Add(compDSourceBuf);
                 }
-                RecomendationsList = new List<RecomendationsDataSource>();
+                RecomendationsList = new ObservableCollection<RecomendationsDataSource>();
                 RecomendationsDataSource recDSourceBuf;
 
                 foreach (var diag in Data.RecomendationObs.GetAll.Where(s => s.id_обследования == Exam.Id).ToList())

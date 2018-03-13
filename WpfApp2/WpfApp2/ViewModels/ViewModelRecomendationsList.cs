@@ -200,7 +200,7 @@ namespace WpfApp2.ViewModels
         private void SetDRecomendationListBecauseOFEdit(object sender, object data)
         {
             FilterText = "";
-            foreach (var dat in (List<RecomendationsDataSource>)data)
+            foreach (var dat in (ObservableCollection<RecomendationsDataSource>)data)
             {
                 foreach (var datC in DataSourceList)
                 {
@@ -246,7 +246,7 @@ namespace WpfApp2.ViewModels
                 {
                     FilterText = "";
                     List<RecomendationsDataSource> DataSourceListBuffer = new List<RecomendationsDataSource>();
-                    foreach (var Data in DataSourceList)
+                    foreach (var Data in FullCopy)
                     {
                         if (Data.IsChecked == true)
                         {
