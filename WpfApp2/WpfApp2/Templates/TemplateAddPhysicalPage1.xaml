@@ -60,8 +60,7 @@
                             <TextBlock Visibility="{Binding IsVisibleSFSleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SFSLeftstr[3]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleSFSleft[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SFSLeftstr[4]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleSFSleft[5],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SFSLeftstr[5]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleSFSleft[6],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SFSLeftstr[6]}"></TextBlock>
-                        </StackPanel>
+                               </StackPanel>
                     </Expander>
                     <Separator/>
                     <Expander FontSize="14">
@@ -72,15 +71,14 @@
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
-                            <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisibleBPVleft[0]}" Text="Ход: "> <TextBlock  Text="{Binding LeftBPVHip.SelectedWayType.Name}" FontSize="12"/></TextBlock>
+                            <TextBlock HorizontalAlignment="Left" Visibility="{Binding IsVisibleBPVleft[0]}" Text="Ход: "> <TextBlock  Text="{Binding LeftBPVHip.SelectedWayType.Name}" FontSize="12"/></TextBlock>
 
                             <TextBlock Visibility="{Binding IsVisibleBPVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BpvLeftstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleBPVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BpvLeftstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleBPVleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BpvLeftstr[2]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleBPVleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BpvLeftstr[3]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleBPVleft[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BpvLeftstr[4]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleBPVleft[5],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BpvLeftstr[5]}"></TextBlock>
-
+                           
                         </StackPanel>
                     </Expander>
                     <Separator/>
@@ -197,7 +195,7 @@
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
-                            <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisibleMPVleft[0]}" Text="Ход: "> <TextBlock  Text="{Binding LeftMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
+                            <TextBlock  HorizontalAlignment="Left" Visibility="{Binding IsVisibleMPVleft[0]}" Text="Ход: "> <TextBlock  Text="{Binding LeftMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
 
                             <TextBlock Visibility="{Binding IsVisibleMPVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding MPVLeftstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleMPVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding MPVLeftstr[1]}"></TextBlock>
@@ -215,8 +213,8 @@
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
-                            <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisibleTEMPVleft[0]}" Text="Ход: "> <TextBlock  Text="{Binding LeftTEMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
-                            <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisibleTEMPVleft[0]}" Text="Протяженность: "> <TextBlock  Text="{Binding LeftTEMPV.FF_length}" FontSize="12"/> <TextBlock Text="см"/></TextBlock>
+                            <TextBlock  HorizontalAlignment="Left" Visibility="{Binding IsVisibleTEMPVleft[0]}" Text="Ход: "> <TextBlock  Text="{Binding LeftTEMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
+                            <TextBlock  HorizontalAlignment="Left" Visibility="{Binding IsVisibleTEMPVleft[0]}" Text="Протяженность: "> <TextBlock  Text="{Binding LeftTEMPV.FF_length}" FontSize="12"/> <TextBlock Text="см"/></TextBlock>
 
                             <TextBlock Visibility="{Binding IsVisibleTEMPVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding TEMPVLeftstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleTEMPVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding TEMPVLeftstr[1]}"></TextBlock>
@@ -310,8 +308,7 @@
                             <TextBlock Visibility="{Binding IsVisibleSFSRight[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SFSRightstr[3]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleSFSRight[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SFSRightstr[4]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleSFSRight[5],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SFSRightstr[5]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleSFSRight[6],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SFSRightstr[6]}"></TextBlock>
-
+                         
                         </StackPanel>
                     </Expander>
                     <Separator/>
@@ -325,15 +322,14 @@
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
-                            <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisibleBPVRight[0]}" Text="Ход: "> <TextBlock  Text="{Binding RightBPVHip.SelectedWayType.Name}" FontSize="12"/></TextBlock>
+                            <TextBlock HorizontalAlignment="Left" Visibility="{Binding IsVisibleBPVRight[0]}" Text="Ход: "> <TextBlock  Text="{Binding RightBPVHip.SelectedWayType.Name}" FontSize="12"/></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleBPVRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BpvRightstr[0]}"></TextBlock>
 
                             <TextBlock Visibility="{Binding IsVisibleBPVRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BpvRightstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleBPVRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BpvRightstr[2]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleBPVRight[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BpvRightstr[3]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleBPVRight[4],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BpvRightstr[4]}"></TextBlock>
-                            <TextBlock Visibility="{Binding IsVisibleBPVRight[5],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding BpvRightstr[5]}"></TextBlock>
-                        </StackPanel>
+                               </StackPanel>
                     </Expander>
 
                     <Separator/>
@@ -346,7 +342,7 @@
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
-                            <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisiblePDSVright[0]}" Text="Ход: "> <TextBlock  Text="{Binding RightPDSV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
+                            <TextBlock  HorizontalAlignment="Left" Visibility="{Binding IsVisiblePDSVright[0]}" Text="Ход: "> <TextBlock  Text="{Binding RightPDSV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
 
                             <TextBlock Visibility="{Binding IsVisiblePDSVright[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding PDSVRightstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisiblePDSVright[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding PDSVRightstr[1]}"></TextBlock>
@@ -453,7 +449,7 @@
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
-                            <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisibleMPVRight[0]}" Text="Ход: "> <TextBlock  Text="{Binding RightMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
+                            <TextBlock  HorizontalAlignment="Left" Visibility="{Binding IsVisibleMPVRight[0]}" Text="Ход: "> <TextBlock  Text="{Binding RightMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
 
                             <TextBlock Visibility="{Binding IsVisibleMPVRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding MPVRightstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleMPVRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding MPVRightstr[1]}"></TextBlock>
@@ -471,8 +467,8 @@
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
-                            <TextBlock  HorizontalAlignment="Center" Visibility="{Binding IsVisibleTEMPVRight[0]}" Text="Ход: "> <TextBlock  Text="{Binding RightTEMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
-                            <TextBlock  HorizontalAlignment="Center"  Visibility="{Binding IsVisibleTEMPVRight[0]}"  Text="Протяженность: "> <TextBlock  Text="{Binding RightTEMPV.FF_length}" FontSize="12"/><TextBlock Text="см"/></TextBlock>
+                            <TextBlock  HorizontalAlignment="Left" Visibility="{Binding IsVisibleTEMPVRight[0]}" Text="Ход: "> <TextBlock  Text="{Binding RightTEMPV.SelectedWayType.Name}" FontSize="12"/></TextBlock>
+                            <TextBlock  HorizontalAlignment="Left"  Visibility="{Binding IsVisibleTEMPVRight[0]}"  Text="Протяженность: "> <TextBlock  Text="{Binding RightTEMPV.FF_length}" FontSize="12"/><TextBlock Text="см"/></TextBlock>
 
                             <TextBlock Visibility="{Binding IsVisibleTEMPVRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding TEMPVRightstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleTEMPVRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding TEMPVRightstr[1]}"></TextBlock>

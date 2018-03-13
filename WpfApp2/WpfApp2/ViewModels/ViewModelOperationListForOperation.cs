@@ -255,7 +255,7 @@ namespace WpfApp2.ViewModels
             //MessageBus.Default.Subscribe("SetDiagnosisListLeft", SetDiagnosisListLeft);
             SaveCommand = new DelegateCommand(() =>
             {
-                FilterText = "";
+                //FilterText = "";
                 var newType = CurrentPanelViewModel.GetPanelType();
                 if (!string.IsNullOrWhiteSpace(newType.ToString()))
                 {
@@ -337,9 +337,9 @@ namespace WpfApp2.ViewModels
             ToPhysicalCommand = new DelegateCommand(
                 () =>
                 {
-                    FilterText = "";
+                    //FilterText = "";
                     List<OperationTypesDataSource> DataSourceListBuffer = new List<OperationTypesDataSource>();
-                    foreach (var Data in FullCopy)
+                    foreach (var Data in DataSourceList)
                     {
                         if (Data.IsChecked == true)
                         {
@@ -352,12 +352,12 @@ namespace WpfApp2.ViewModels
 
 
                         MessageBus.Default.Call("SetLeftOperationListForOperation", this, DataSourceListBuffer);
-                        LeftDiag = new List<OperationTypesDataSource>(FullCopy);
+                        LeftDiag = new List<OperationTypesDataSource>(DataSourceList);
                     }
                     else
                     {
                         MessageBus.Default.Call("SetRightOperationListForOperation", this, DataSourceListBuffer);
-                        RightDiag = new List<OperationTypesDataSource>(FullCopy);
+                        RightDiag = new List<OperationTypesDataSource>(DataSourceList);
                     }
 
                     Controller.NavigateTo<ViewModelAddOperation>();
@@ -366,9 +366,9 @@ namespace WpfApp2.ViewModels
             SaveChangesCommand = new DelegateCommand(
                 () =>
                 {
-                    FilterText = "";
+                   // FilterText = "";
                     List<OperationTypesDataSource> DataSourceListBuffer = new List<OperationTypesDataSource>();
-                    foreach (var Data in FullCopy)
+                    foreach (var Data in DataSourceList)
                     {
                         if (Data.IsChecked == true)
                         {

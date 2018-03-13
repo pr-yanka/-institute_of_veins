@@ -262,7 +262,7 @@ namespace WpfApp2.ViewModels
             MessageBus.Default.Subscribe("SetDiagnosisListLeft", SetDiagnosisListLeft);
             SaveCommand = new DelegateCommand(() =>
             {
-                FilterText = "";
+                //FilterText = "";
                 var newType = CurrentPanelViewModel.GetPanelType();
                 if (!string.IsNullOrWhiteSpace(newType.Str))
                 {
@@ -339,9 +339,9 @@ namespace WpfApp2.ViewModels
             ToPhysicalCommand = new DelegateCommand(
                 () =>
                 {
-                    FilterText = "";
+                    //FilterText = "";
                     List<DiagnosisDataSource> DataSourceListBuffer = new List<DiagnosisDataSource>();
-                    foreach (var Data in FullCopy)
+                    foreach (var Data in DataSourceList)
                     {
                         if (Data.IsChecked == true)
                         {
@@ -365,7 +365,7 @@ namespace WpfApp2.ViewModels
             SaveChangesCommand = new DelegateCommand(
                 () =>
                 {
-                    FilterText = "";
+                   // FilterText = "";
                     List<DiagnosisDataSource> DataSourceListBuffer = new List<DiagnosisDataSource>();
                     foreach (var Data in FullCopy)
                     {

@@ -593,16 +593,17 @@ namespace WpfApp2.ViewModels
 
                     if (TestRequiredFields())
                     {
-                        CurrentPatient.Name = Name;
-                        CurrentPatient.Sirname = Surname;
-                        CurrentPatient.Patronimic = Patronimic;
-                        CurrentPatient.Birthday = Date;
+                        CurrentPatient = new Patient();
+                        //CurrentPatient.Name = Name;
+                        //CurrentPatient.Sirname = Surname;
+                        //CurrentPatient.Patronimic = Patronimic;
+                        //CurrentPatient.Birthday = Date;
 
                         using (var context = new MySqlContext())
                         {
 
-                            CurrentPatient = Data.Patients.Get(CurrentPatient.Id);
-                            //CitiesRepository ctRep = new CitiesRepository(context);
+                            //CurrentPatient = Data.Patients.Get(CurrentPatient.Id);
+                            ////CitiesRepository ctRep = new CitiesRepository(context);
                             RegionsRepository regRep = new RegionsRepository(context);
                             //DistrictsRepository distRep = new DistrictsRepository(context);
                             //               StreetsRepository strtRep = new StreetsRepository(context);
