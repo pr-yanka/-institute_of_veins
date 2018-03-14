@@ -315,10 +315,10 @@ namespace WpfApp2.LegParts.VMs
             foreach (var Scintific in Data.BPVHipWay.GetAll)
             {
                 BpvWayType.Add(Scintific);
-                if (Scintific.Id == SelectedWayTypeSave.Id)
-                {
-                    SelectedBpvWayTypeId = BpvWayType.IndexOf(SelectedWayTypeSave as BPVHipWay);
-                }
+                //if (Scintific.Id == SelectedWayTypeSave.Id)
+                //{
+                //    SelectedBpvWayTypeId = BpvWayType.IndexOf(SelectedWayTypeSave as BPVHipWay);
+                //}
             }
 
             SelectedWayType = SelectedWayTypeSave;
