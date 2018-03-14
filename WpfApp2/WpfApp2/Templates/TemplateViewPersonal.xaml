@@ -12,11 +12,11 @@
         <Grid Name="RootGrid"  Margin="220,63,0,0" >
             <TextBlock FontFamily="/fonts/#Pescadero" FontSize="22pt" VerticalAlignment="Center" Margin="300,-76,0,530" Height="38" Text="{Binding NameOfTbl}"/>
             <TextBlock x:Name="TextName" Text="{Binding Path=TooltipText}" Visibility="Hidden"/>
-            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button" Content="{Binding Path=TextAddUserOrPersonalOrMed}" Command="{Binding Path=ToAddSomeoneCommand}" HorizontalAlignment="Left" Margin="24,450,0,0" VerticalAlignment="Top" Width="250"/>
-            <Grid   Height="360" Width="auto"  HorizontalAlignment="Left"  VerticalAlignment="Top"  Margin="24,68,0,0">
-                <DataGrid HorizontalAlignment="Center" Width="650" Margin="60,0"  ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Foreground="Black"  ItemsSource="{Binding Path=DataSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserResizeRows="False">
+            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button" Content="{Binding Path=TextAddUserOrPersonalOrMed}" Command="{Binding Path=ToAddSomeoneCommand}" HorizontalAlignment="Left" Margin="254,580,0,0" VerticalAlignment="Top" Width="250"/>
+            <Grid   Height="500" Width="auto"  HorizontalAlignment="Left"  VerticalAlignment="Top"  Margin="24,68,0,0">
+                <DataGrid  BorderBrush="Black"   BorderThickness="1"  HorizontalAlignment="Center" Width="696"  Margin="10,20,0,0"  ColumnHeaderStyle="{StaticResource MyDataGridHEADER}"  Foreground="Black"  ItemsSource="{Binding Path=DataSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" CanUserResizeRows="False">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Width="200">
+                    <DataGridTemplateColumn Width="329">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Name}"/>

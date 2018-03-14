@@ -246,7 +246,7 @@ namespace WpfApp2.ViewModels
                 {
                     //FilterText = "";
                     List<RecomendationsDataSource> DataSourceListBuffer = new List<RecomendationsDataSource>();
-                    foreach (var Data in FullCopy)
+                    foreach (var Data in DataSourceList)
                     {
                         if (Data.IsChecked == true)
                         {

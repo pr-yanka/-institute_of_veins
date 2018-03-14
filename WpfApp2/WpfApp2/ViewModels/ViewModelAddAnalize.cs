@@ -2,27 +2,63 @@
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using WpfApp2.Db.Models;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
+using WpfApp2.ViewModels.Panels;
 
 namespace WpfApp2.ViewModels
 {
-    public class ViewModelAddAnalize : ViewModelBase
+    public class ViewModelAddAnalize : ViewModelBase, INotifyPropertyChanged
     {
+
+        #region Inotify realisation
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            //если PropertyChanged не нулевое - оно будет разбужено
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+        public DelegateCommand RevertCommand { set; get; }
+
+
+
+        public DelegateCommand SaveCommand { set; get; }
+
+
+        public ICommand OpenCommand { protected set; get; }
+
+        public AnalizePanelViewModel CurrentPanelViewModel { get; protected set; }
+
+        public static bool Handled = false;
+        public UIElement UI;
+        private void OpenHandler(object sender, object data)
+        {
+            if (!Handled)
+            {
+                Handled = true;
+                CurrentPanelViewModel.PanelOpened = true;
+            }
+        }
         public Analize Analize { get; set; }
         public Patient CurrentPatient { get; set; }
-        public List<AnalizeType> AnalizeTypes { get; set; }
-     
-        public int SelectedIndexOfAnalizeType { get; set; }
+        private ObservableCollection<AnalizeType> _analizeTypes;
+        public ObservableCollection<AnalizeType> AnalizeTypes { get { return _analizeTypes; } set { _analizeTypes = value; OnPropertyChanged(); } }
+        private int _selectedIndexOfAnalizeType;
+        public int SelectedIndexOfAnalizeType { get { return _selectedIndexOfAnalizeType; } set { _selectedIndexOfAnalizeType = value; OnPropertyChanged(); } }
         public string ButtonName { get; set; }
 
         private void SetCurrentPatientID(object sender, object data)
@@ -31,22 +67,74 @@ namespace WpfApp2.ViewModels
             Analize.patientId = CurrentPatient.Id;
             Analize.data = DateTime.Now;
 
-            AnalizeTypes = new List<AnalizeType>();
+            AnalizeTypes = new ObservableCollection<AnalizeType>();
             foreach (var AnalizeType in Data.AnalizeType.GetAll)
             {
                 
                 AnalizeTypes.Add(AnalizeType);
             }
+
         }
+
+        public string TextOFNewType { get; private set; }
         public DelegateCommand ToCurrentPatient { get; protected set; }
         public DelegateCommand OpenAnalizePicture { get; protected set; }
         public DelegateCommand ToCurrentPatientRealy { get; protected set; }
 
         public ViewModelAddAnalize(NavigationController controller) : base(controller)
         {
-            Analize = new Analize();
+            CurrentPanelViewModel = new AnalizePanelViewModel(this);
+            OpenCommand = new DelegateCommand(() =>
+            {
+                CurrentPanelViewModel.ClearPanel();
+                CurrentPanelViewModel.PanelOpened = true;
+            });
 
-            AnalizeTypes = new List<AnalizeType>();
+            SaveCommand = new DelegateCommand(() =>
+            {
+              
+                var newType = CurrentPanelViewModel.GetPanelType();
+                if (!string.IsNullOrWhiteSpace(newType.Str))
+                {
+                    CurrentPanelViewModel.PanelOpened = false;
+                    Handled = false;
+
+
+                    Data.AnalizeType.Add((newType));
+
+                    Data.Complete();
+                    var DataSourceListbuf = AnalizeTypes;
+                    AnalizeTypes = new ObservableCollection<AnalizeType>();
+                 
+                    using (var context = new MySqlContext())
+                    {
+                        AnalizeTypeRepository sRep = new AnalizeTypeRepository(context);
+                        foreach (var HirurgInterupType in sRep.GetAll)
+                        {
+                            AnalizeTypes.Add(HirurgInterupType);
+                          
+                        }
+                    }
+                    SelectedIndexOfAnalizeType = AnalizeTypes.Count - 1;
+                    //foreach (var RecomendationsType in Data.OperationForAmbulatornCard.GetAll)
+                    //{
+                    //    DataSourceList.Add(new OperationForAmbullatorCardDataSource(RecomendationsType));
+                    //}
+
+
+                    Controller.NavigateTo<ViewModelAddAnalize>();
+                }
+                else
+                { MessageBox.Show("Не все поля заполнены"); }
+            });
+            RevertCommand = new DelegateCommand(() =>
+            {
+                CurrentPanelViewModel.PanelOpened = false;
+                Handled = false;
+            });
+            Analize = new Analize();
+            TextOFNewType = "Новый анализ";
+            AnalizeTypes = new ObservableCollection<AnalizeType>();
             foreach (var AnalizeType in Data.AnalizeType.GetAll)
             {
                 AnalizeTypes.Add(AnalizeType);

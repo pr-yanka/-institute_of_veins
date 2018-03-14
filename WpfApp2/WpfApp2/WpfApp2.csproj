@@ -373,6 +373,7 @@
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="LegParts\VMs\MPVSectionViewModel.cs" />
     <Compile Include="LegParts\VMs\MPVViewModel.cs" />
+    <Compile Include="ViewModels\Panels\AnalizePanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\TEMPVVayTypePanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\PDSVVayTypePanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\MPVVayTypePanelViewModel.cs" />

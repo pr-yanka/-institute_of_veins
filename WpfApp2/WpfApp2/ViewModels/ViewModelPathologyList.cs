@@ -68,7 +68,17 @@ namespace WpfApp2.ViewModels
 
         private ObservableCollection<PatologyDataSource> _patologyList;
         public ObservableCollection<PatologyDataSource> PatologyList { get { return _patologyList; } set { _patologyList = value; OnPropertyChanged(); } }
+        private string _initials;
+        public string Initials
+        {
+            get { return _initials; }
+            set
+            {
+                _initials = value;
 
+                OnPropertyChanged();
+            }
+        }
         public Patient CurrentPatient { get; set; }
         private string getmonthName(int number)
         {
@@ -104,6 +114,7 @@ namespace WpfApp2.ViewModels
         }
         private void GetPatientForPatology(object sender, object data)
         {
+            
             PatologyList = new ObservableCollection<PatologyDataSource>();
             using (var context = new MySqlContext())
             {
@@ -111,6 +122,8 @@ namespace WpfApp2.ViewModels
                 PatologyRepository ptRep = new PatologyRepository(context);
                 PatientsRepository ptentRep = new PatientsRepository(context);
                 CurrentPatient = ptentRep.Get((int)data);
+                Initials = "Пациент: " + CurrentPatient.Sirname + " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ". ";
+
                 foreach (var Patology in ptRep.GetAll)
                 {
                     //Patology sadasew

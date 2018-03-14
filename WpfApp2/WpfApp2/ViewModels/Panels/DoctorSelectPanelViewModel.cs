@@ -93,6 +93,19 @@ namespace WpfApp2.ViewModels.Panels
 
         internal void ClearPanel()
         {
+            using (var context = new MySqlContext())
+            {
+                DoctorRepository DoctorRep = new DoctorRepository(context);
+                Doctors = new ObservableCollection<Docs>();
+
+                foreach (var doc in DoctorRep.GetAll)
+                {
+                    if (doc.isEnabled.Value)
+                    {
+                        Doctors.Add(new Docs(doc));
+                    }
+                }
+            }
             //LongText = "";
             ShortText = "";
         }

@@ -39,10 +39,10 @@
                     VerticalAlignment="Top" />
             <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="24,281,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top"><Run Text="Выб"/><Run Text="ерите"/><Run Text=" время"/></TextBlock>
-            <DatePicker SelectedDate="{Binding Path=Operation.Date}" HorizontalAlignment="Left" Margin="5,344,0,0" VerticalAlignment="Top" Width="119" Height="auto"  
+            <DatePicker SelectedDate="{Binding Path=Operation.Date}" HorizontalAlignment="Left" Margin="23,344,0,0" VerticalAlignment="Top" Width="110" Height="auto"  
                       FontStretch="Expanded" FontSize="10">
             </DatePicker>
-            <xctk:TimePicker Value="{Binding Path=MinuteHour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Format="ShortTime"  HorizontalAlignment="Left" Margin="5,302,0,0" VerticalAlignment="Top" Width="120" Height="20" />
+            <xctk:TimePicker Value="{Binding Path=MinuteHour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Format="ShortTime"  HorizontalAlignment="Left" Margin="23,302,0,0" VerticalAlignment="Top" Width="110" Height="20" />
             <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Margin="138,299,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="Список всех врачей" FontSize="16" Width="155" TextAlignment="Center"/>
             <CheckBox Content="врачи" HorizontalAlignment="Left" Margin="141,145,0,250"  Width="100" Height="30" IsChecked="{Binding ShowDoctors}" >
@@ -164,7 +164,7 @@
             </DataGrid>
             <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" FontSize="20" Margin="24,530,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="NB!"/>
-            <TextBox Text="{Binding Path=Operation.NB}"  x:Name="richTextBox" HorizontalAlignment="Left" Height="86" Margin="57,530,0,0" VerticalAlignment="Top"  
+            <TextBox Text="{Binding Path=Operation.NB}"  x:Name="richTextBox" HorizontalAlignment="Left" Height="86" Margin="65,530,0,0" VerticalAlignment="Top"  
                          Width="411">
             </TextBox>
             <Button Width="300" Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy3" Content="{Binding Path=ButtonSaveText}" Command="{Binding Path=ToOperationOverviewCommand}" HorizontalAlignment="Left" Margin="554,629,0,0"              

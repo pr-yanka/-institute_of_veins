@@ -17,6 +17,18 @@
                 </TransformGroup>
             </TextBlock.RenderTransform>
             </TextBlock>
+            <TextBlock FontFamily="/fonts/#Pescadero"  FontSize="22pt" HorizontalAlignment="Right" Width="422" VerticalAlignment="Top" Height="Auto" Margin="0,0" x:Name="ddsadsds" Text="{Binding Path=Initials}">
+
+                <TextBlock.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="10"/>
+                        <TranslateTransform X="10"/>
+                    </TransformGroup>
+                </TextBlock.RenderTransform>
+            </TextBlock>
             <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy1" Content="{Binding TextAddOrSave}" Command="{Binding Path=ToPathologyListCommand}" HorizontalAlignment="Left" Margin="279,264,0,0" VerticalAlignment="Top"  
                     />
             <Button  Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy" Content="{Binding ReturnBtnName}"  Command="{Binding Path=ToPathologyListNoSaveCommands}" HorizontalAlignment="Left" Margin="59,264,0,0" VerticalAlignment="Top"  

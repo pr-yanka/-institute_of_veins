@@ -9,10 +9,11 @@ namespace WpfApp2.Db.Models
 {
     [Table("патологии")]
     public class Patology {
-
-        [Column(Order = 0), Key, ForeignKey("PatologyType")]
+        [Column("id"),Key]
+        public int id { set; get; }
+        [Column("id_патологии")]
         public int id_патологии { set; get; }
-        [Column(Order = 1), Key, ForeignKey("Patient")]
+        [Column("id_пациента")]
         public int id_пациента { set; get; }
         [Column("архивирована")]
         public bool isArchivatied { set; get; }
@@ -24,8 +25,7 @@ namespace WpfApp2.Db.Models
         public DateTime? YearDisappear { set; get; }
         [Column("год_появления")]
         public DateTime? YearAppear { set; get; }
-        public virtual Patient Patient { get; set; }
-        public virtual PatologyType PatologyType { get; set; }
+     
     }
     public class PatologyRepository : Repository<Patology>
     {

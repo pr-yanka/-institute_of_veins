@@ -206,7 +206,7 @@ namespace WpfApp2.ViewModels
 
                 if (Operation.отмена_операции != null)
                 {
-                    OperationResults = "Операция перенесена";
+                    OperationResults = "Операция отменена";
                     VisiBIlityOfAddResult = Visibility.Hidden;
                     VisiBIlityOfAddCancle = Visibility.Hidden;
                 }

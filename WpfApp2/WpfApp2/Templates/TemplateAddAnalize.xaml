@@ -1,6 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:WpfApp2.Templates">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/LegParts/Templates/RightPanelAnimation.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
     <DataTemplate x:Key="TemplateAddAnalize">
         <Grid>
             <Grid.RowDefinitions>
@@ -10,16 +13,17 @@
                 <RowDefinition Height="45"></RowDefinition>
                 <RowDefinition Height="35"></RowDefinition>
                 <RowDefinition Height="35"></RowDefinition>
-                <RowDefinition Height="353"></RowDefinition>
+                <RowDefinition Height="353*"></RowDefinition>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300"></ColumnDefinition>
+                <ColumnDefinition Width="260"></ColumnDefinition>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="300*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button ToolTip="Прикрепить файл с анализами" Style="{StaticResource MyConfirmBUTTON}" Content="Загрузить анализ"  Grid.Column="0" Grid.Row="1" Width="200"  Grid.RowSpan="5" Command="{Binding Path=OpenAnalizePicture}"  ></Button>
-            <TextBlock  Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3"   HorizontalAlignment="Right" FontFamily="/fonts/#Pescadero" FontSize="22pt"  VerticalAlignment="Top" >
+            <Button ToolTip="Прикрепить файл с анализами" Style="{StaticResource MyConfirmBUTTON}" Content="Загрузить анализ"  Grid.Column="0" Grid.Row="1" Width="250"  Grid.RowSpan="5" Command="{Binding Path=OpenAnalizePicture}"  ></Button>
+            <TextBlock  Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="3"   HorizontalAlignment="Left" FontFamily="/fonts/#Pescadero" FontSize="22pt"  VerticalAlignment="Top" >
                 <TextBlock.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -29,12 +33,62 @@
                     </TransformGroup>
                 </TextBlock.RenderTransform>
             <TextBlock  Text="{Binding Path=CurrentPatient.Sirname}" /><Run Text=" " /><TextBlock Text="{Binding Path=CurrentPatient.Name}" /><Run Text=" " /><TextBlock Text="{Binding Path=CurrentPatient.Patronimic}" /></TextBlock>
-            <TextBlock  Grid.Column="1" Grid.Row="3"  FontFamily="/fonts/#Pescadero" FontSize="18pt" Height="25" Text="Тип :"/>
-            <ComboBox Height="35" Grid.Column="2" Grid.Row="3" ItemsSource="{Binding Path=AnalizeTypes}" SelectedIndex="{Binding Path=SelectedIndexOfAnalizeType}"  Width="277" FontFamily="/fonts/#Pescadero" FontSize="14pt" HorizontalAlignment="Left" Text="{Binding Path=AnalizeType.Str}" Margin="0,0,0,0"/>
+            <TextBlock  Grid.Column="1" Grid.Row="3" FontFamily="/fonts/#Pescadero" FontSize="18pt" Height="25" Text="Тип :"/>
+            <ComboBox Height="35" Grid.Column="2" Grid.Row="3" ItemsSource="{Binding Path=AnalizeTypes}" SelectedIndex="{Binding Path=SelectedIndexOfAnalizeType}"  Width="207" FontFamily="/fonts/#Pescadero" FontSize="14pt" HorizontalAlignment="Left" Text="{Binding Path=AnalizeType.Str}" Margin="0,0,0,0"/>
             <TextBlock Grid.Column="1" Grid.Row="4"  FontFamily="/fonts/#Pescadero" FontSize="18pt" Height="25" Text="Дата :"/>
-            <DatePicker Height="35" FontSize="18" SelectedDate="{Binding Path=Analize.data}" Grid.Column="2" Grid.Row="4" Width="277" HorizontalAlignment="Left" Margin="0,0,-116,0"/>
+            <DatePicker Height="35" FontSize="18" SelectedDate="{Binding Path=Analize.data}" Grid.Column="2" Grid.Row="4" Width="207" HorizontalAlignment="Left" Margin="0,0,-116,0"/>
+            <Button Style="{StaticResource MyConfirmBUTTON}" Grid.Column="4" Grid.Row="3" x:Name="button_вCopy143" Content="Другой тип" Command="{Binding Path=OpenCommand}" HorizontalAlignment="Left" Width="200" Height="35" VerticalAlignment="Top" Margin="-70,5,0,0"/>
+
+
             <Button Style="{StaticResource MyNormalBUTTON}" Grid.Column="1" Grid.Row="6" x:Name="button_Copy143" Content="ВЕРНУТЬСЯ К ПАЦИЕНТУ" Command="{Binding Path=ToCurrentPatientRealy}" HorizontalAlignment="Left" Width="250"  VerticalAlignment="Top" Margin="0,0,0,0"/>
             <Button Grid.Column="2" Grid.Row="6" Grid.RowSpan="2" x:Name="button_Copy13" Content="{Binding Path=ButtonName}" Command="{Binding Path=ToCurrentPatient}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="250" Style="{StaticResource MyNormalBUTTON}" Margin="30,0,0,0" RenderTransformOrigin="0.5,0.484"/>
+
+
+            <Border Grid.RowSpan="243"  Grid.ColumnSpan="203" Visibility="{Binding Path = CurrentPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOv5erlay">
+                <Border.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.78"/>
+                </Border.Background>
+            </Border>
+
+            <Border x:Name="panel34Corntrol" Grid.RowSpan="24"  Grid.ColumnSpan="203" Margin="0,0,-450,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5"  Width="450" Height="195"  DataContext="{Binding Path=CurrentPanelViewModel}" >
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=PanelOpened}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <RemoveStoryboard BeginStoryboardName="AnimationCloseStoryboard"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Open}" x:Name="AnimationBeginStoryboard"/>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <RemoveStoryboard BeginStoryboardName="AnimationBeginStoryboard"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Close}" x:Name="AnimationCloseStoryboard"/>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Border.RenderTransform>
+
+                <Grid>
+                    <Canvas Background="#FFC6E8E6" Margin="0,0,0,29">
+                        <TextBlock x:Name="textfBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="10" FontSize="18" Canvas.Top="5" Text="{Binding ParentVM.TextOFNewType}"/>
+                        <TextBox x:Name="textBfox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" FontSize="18"  Width="430" Canvas.Left="10"  Canvas.Top="61" />
+                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18"  Command="{Binding ParentVM.RevertCommand}"  Canvas.Left="10" Canvas.Top="115" />
+                        <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtonfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Command="{Binding ParentVM.SaveCommand}" Canvas.Left="233" Canvas.Top="115" />
+                        <TextBlock x:Name="texftBlock_Copy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18" Canvas.Top="31" Canvas.Left="10" Text="Название:"/>
+
+                    </Canvas>
+                </Grid>
+            </Border>
+
         </Grid>
     </DataTemplate>
 </ResourceDictionary>
