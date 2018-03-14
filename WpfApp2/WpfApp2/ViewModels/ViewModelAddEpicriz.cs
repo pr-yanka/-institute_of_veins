@@ -92,7 +92,9 @@ namespace WpfApp2.ViewModels
         public string Svetoootvod { get; set; }
 
 
-        public List<Docs> Doctors { get; set; }
+        public ObservableCollection<Docs> _doctors;
+        public ObservableCollection<Docs> Doctors { get { return _doctors; } set { _doctors = value; OnPropertyChanged(); } }
+
 
         public int SelectedDoctor { get; set; }
 
@@ -165,7 +167,7 @@ namespace WpfApp2.ViewModels
             E1 = 0.0f;
             E2 = 0.0f;
             DoctorsSelected = (List<DoctorDataSource>)sender;
-            Doctors = new List<Docs>();
+            Doctors = new ObservableCollection<Docs>();
             Operation = Data.Operation.Get((int)data);
             operationId = (int)data;
             DateTime bufTime = DateTime.Parse(Operation.Time);

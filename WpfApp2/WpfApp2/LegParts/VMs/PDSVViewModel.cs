@@ -203,6 +203,12 @@ namespace WpfApp2.LegParts.VMs
 
             if (((LegPartViewModel)Controller.CurrentViewModel.Controller.LegViewModel).CurrentLegSide != this.CurrentLegSide) return; using (MySqlContext context = new MySqlContext())
             {
+                PDSVWayType = new ObservableCollection<PDSVHipWay>();
+
+                foreach (var Scintific in Data.PDSVHipWay.GetAll)
+                {
+                    PDSVWayType.Add(Scintific);
+                }
                 PDSVHipRepository PDSVHips = new PDSVHipRepository(context);
                 MetricsRepository Metrics = new MetricsRepository(context);
                 var bufSaveLegSection = new List<int?>();
