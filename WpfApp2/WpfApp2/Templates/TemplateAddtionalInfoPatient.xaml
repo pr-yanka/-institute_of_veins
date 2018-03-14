@@ -112,7 +112,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn   Header="Комментарий" MinWidth="369" MaxWidth="369">
+                            <DataGridTemplateColumn   Header="Комментарий" MinWidth="333" MaxWidth="333">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate >
                                         <controls:AutoCompleteBox BorderThickness="1" Padding="4" Height="29"  Text="{Binding  Commentary,UpdateSourceTrigger=PropertyChanged}"
@@ -321,7 +321,7 @@
                         <TextBox x:Name="textвBппfox1" HorizontalAlignment="Center" Height="42" TextWrapping="Wrap" Text="{Binding Path=LongText}" VerticalAlignment="Top" Width="430" Canvas.Left="10" Canvas.Top="110" />
 
                         <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.RevertCommand}" Canvas.Left="10" Canvas.Top="163" />
-                        <TextBox x:Name="textBвіаfox1" HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" Width="77" Canvas.Left="82" Canvas.Top="52" />
+                   
 
                         <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtonfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.SaveCommand}" Canvas.Left="239" Canvas.Top="163" />
                         <TextBlock x:Name="texftBlock_Copy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="52" Canvas.Left="9" Text="Объём:" RenderTransformOrigin="0.433,0.881" FontSize="18"/>

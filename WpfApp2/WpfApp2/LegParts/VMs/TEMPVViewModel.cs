@@ -199,12 +199,7 @@ namespace WpfApp2.LegParts.VMs
 
             if (((LegPartViewModel)Controller.CurrentViewModel.Controller.LegViewModel).CurrentLegSide != this.CurrentLegSide) return; using (MySqlContext context = new MySqlContext())
             {
-                TEMPVWayType = new ObservableCollection<TEMPVWay>();
-
-                foreach (var Scintific in Data.TEMPVWay.GetAll)
-                {
-                    TEMPVWayType.Add(Scintific);
-                }
+                
                 TEMPVRepository TEMPV = new TEMPVRepository(context);
                 MetricsRepository Metrics = new MetricsRepository(context);
                 var bufSaveLegSection = new List<int?>();
@@ -291,6 +286,13 @@ namespace WpfApp2.LegParts.VMs
                 LegSectionsSaved[i].SelectedValue = LegSections[i].SelectedValue;
                 LegSectionsSaved[i].CurrentEntry = LegSections[i].CurrentEntry;
             }
+            TEMPVWayType = new ObservableCollection<TEMPVWay>();
+
+            foreach (var Scintific in Data.TEMPVWay.GetAll)
+            {
+                TEMPVWayType.Add(Scintific);
+            }
+            SelectedWayType = SelectedWayTypeSave;
         }
 
         private ObservableCollection<LegSectionViewModel> _sections;

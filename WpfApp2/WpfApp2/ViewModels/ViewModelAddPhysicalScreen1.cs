@@ -2142,7 +2142,7 @@ namespace WpfApp2.ViewModels
             { LeftDiagnosisList.Add(diag); }
 
         }
-        int docsCreated = 0;
+         // int docsCreated = 0;
         private void CreateStatement(string docName)
         {
             using (DocX document = DocX.Create(docName))
@@ -2970,6 +2970,7 @@ namespace WpfApp2.ViewModels
 
             SaveCommand = new DelegateCommand(() =>
             {
+               
                 Doctor = CurrentPanelViewModel.GetPanelValue();
 
                 CurrentPanelViewModel.PanelOpened = false;
@@ -2997,7 +2998,7 @@ namespace WpfApp2.ViewModels
                     }
                 }
 
-
+                try {
                 using (DocX document = DocX.Load(fileName))
                 {
 
@@ -3084,7 +3085,7 @@ namespace WpfApp2.ViewModels
                             }
                         }
                         char[] chararrbuF1 = complanes.ToCharArray();
-                        if (chararrbuF1[chararrbuF1.Length - 1] == '.')
+                        if (chararrbuF1.Length  > 0 && chararrbuF1[chararrbuF1.Length - 1] == '.')
                         { }
                         else
                         {
@@ -3493,7 +3494,11 @@ namespace WpfApp2.ViewModels
                     Process.Start("WINWORD.EXE", fileName);
                 }
 
+                }
+                catch
+                {
 
+                }
 
 
             });
@@ -3743,40 +3748,44 @@ namespace WpfApp2.ViewModels
             ToPhysicalOverviewCommand = new DelegateCommand(
                 () =>
                 {
-                    if (TestAllFIelds())
+                    try
                     {
-                        string docName = "";
-                        //string docName = "Консультативное_заключение";
-                        if (togleforCreateStatement == 0)
-                            docName = System.IO.Path.GetTempPath() + "Консультативное_заключение" + ".docx";
-                        else
-                            docName = System.IO.Path.GetTempPath() + "Консультативное_заключение" + togleforCreateStatement + ".docx";
-
-                        for (; ; )
+                        if (TestAllFIelds())
                         {
-                            try
-                            {
-
-                                CreateStatement(docName);
-
-
-                                togleforCreateStatement += 1;
+                            string docName = "";
+                            //string docName = "Консультативное_заключение";
+                            if (togleforCreateStatement == 0)
+                                docName = System.IO.Path.GetTempPath() + "Консультативное_заключение" + ".docx";
+                            else
                                 docName = System.IO.Path.GetTempPath() + "Консультативное_заключение" + togleforCreateStatement + ".docx";
 
-
-                                break;
-                            }
-                            catch (Exception ex)
+                            for (; ; )
                             {
-                                togleforCreateStatement += 1;
-                                docName = System.IO.Path.GetTempPath() + "Консультативное_заключение" + togleforCreateStatement + ".docx";
+                                try
+                                {
+
+                                    CreateStatement(docName);
+
+
+                                    togleforCreateStatement += 1;
+                                    docName = System.IO.Path.GetTempPath() + "Консультативное_заключение" + togleforCreateStatement + ".docx";
+
+
+                                    break;
+                                }
+                                catch (Exception ex)
+                                {
+                                    togleforCreateStatement += 1;
+                                    docName = System.IO.Path.GetTempPath() + "Консультативное_заключение" + togleforCreateStatement + ".docx";
+                                }
                             }
+
+
+
+
                         }
-
-
-
-
                     }
+                    catch { }
                 }
             );
 
@@ -5818,7 +5827,7 @@ namespace WpfApp2.ViewModels
                 }
 
                 LegPartEntries LeftSFSEntryFullbuf = FullEntry;
-
+                
                 if (Part.SelectedWayType != null)
                 {
                     LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;

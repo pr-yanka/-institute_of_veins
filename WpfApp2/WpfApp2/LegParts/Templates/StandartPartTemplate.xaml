@@ -28,12 +28,12 @@
                             </Border.Style>
                         </Border>
                    -->
-                    <ComboBox Height="28" x:Name="firstLevelBlock" SelectedIndex="{Binding Path=SelectedIndex,UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding Path=SelectedValue,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Path=StructureSource,UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Width="830">
+                    <ComboBox Height="40" x:Name="firstLevelBlock" SelectedIndex="{Binding Path=SelectedIndex,UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding Path=SelectedValue,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Path=StructureSource,UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Width="830">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
 
-                                    <TextBlock TextWrapping="Wrap" Text="{Binding NameContext,UpdateSourceTrigger=PropertyChanged}" Width="400" />
+                                    <TextBlock  Text="{Binding NameContext,UpdateSourceTrigger=PropertyChanged}" Width="auto" />
 
                                 </StackPanel>
                             </DataTemplate>

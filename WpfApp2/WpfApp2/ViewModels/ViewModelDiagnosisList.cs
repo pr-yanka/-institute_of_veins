@@ -290,7 +290,7 @@ namespace WpfApp2.ViewModels
                 {
                     List<DiagnosisDataSource> DataSourceListBuffer = new List<DiagnosisDataSource>();
                    // FilterText = "";
-                    foreach (var Data in FullCopy)
+                    foreach (var Data in DataSourceList)
                     {
                         if (Data.IsChecked == true)
                         {

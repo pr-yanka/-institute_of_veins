@@ -150,7 +150,7 @@ namespace WpfApp2.ViewModels
                                     MessageBus.Default.Call("SetCurrentACCOp", this, null);
                                     MessageBus.Default.Call("SetCurrentPatientForOperation", this, Operation.PatientId);
                                     MessageBus.Default.Call("SetOperationResult", this, buf);
-                                    Controller.NavigateTo<ViewModelAddOperation>();
+                                    Controller.NavigateTo<ViewModelOperationOverview>();
 
 
                                 }
