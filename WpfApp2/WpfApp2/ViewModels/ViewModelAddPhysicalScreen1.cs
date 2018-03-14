@@ -169,7 +169,19 @@ namespace WpfApp2.ViewModels
                 }
             }
         }
-
+        private Visibility _isVisibleTextTTT;
+        public Visibility IsVisibleTextTTT
+        {
+            get
+            {
+                return _isVisibleTextTTT;
+            }
+            set
+            {
+                _isVisibleTextTTT = value;
+                OnPropertyChanged();
+            }
+        }
         #region GV binds
 
         private ObservableCollection<Visibility> _isVisibleGVleft;
@@ -975,7 +987,16 @@ namespace WpfApp2.ViewModels
                 if (float.TryParse(Weight, out buf) && float.TryParse(Growth, out buf) && buf >= 0) ITM = float.Parse(Weight) / ((float.Parse(Growth) / 100) * (float.Parse(Growth) / 100)); OnPropertyChanged();
             }
         }
+        private string _textOfPreOperation;
 
+        public string TextOfPreOperation
+        {
+            get { return _textOfPreOperation; }
+            set
+            {
+                _textOfPreOperation = value; OnPropertyChanged();
+            }
+        }
         private string _growth;
         public string Growth
         {
@@ -1055,7 +1076,7 @@ namespace WpfApp2.ViewModels
         private void SetComplainsList(object sender, object data)
         {
             ComplainsList = new ObservableCollection<ComplainsDataSource>((List<ComplainsDataSource>)data);
-            
+
         }
         private void SetRecomendationsList(object sender, object data)
         {
@@ -1073,6 +1094,7 @@ namespace WpfApp2.ViewModels
             MessageBus.Default.Call("SetClearRecomendationListObsledovanie", null, null);
             MessageBus.Default.Call("SetClearComplanesListObsledovanie", null, null);
             Clear(null, null);
+            IsVisibleTextTTT = Visibility.Hidden;
             Weight = "0";
             Growth = "0";
             TextTip = "Текст пометки";
@@ -2100,7 +2122,7 @@ namespace WpfApp2.ViewModels
                         {
                             p4.Append("\nКомментарий к " + name + " : " + LegPart.Comment).Font("Times new roman").FontSize(11.0);
                         }
-                      
+
                     }
                 }
                 p4.Append(" \n").FontSize(11.0);
@@ -8500,7 +8522,7 @@ namespace WpfApp2.ViewModels
                 {
 
 
-                     name = "ПДСВ";
+                    name = "ПДСВ";
 
 
                 }
@@ -8577,8 +8599,8 @@ namespace WpfApp2.ViewModels
                     name = "ГВ";
 
                 }
-                
-                bufBpvLeftStr[bufBpvLeftStr.Count - 1] += "\nКомментарий к " + name +" : "+ sender.Comment + "";
+
+                bufBpvLeftStr[bufBpvLeftStr.Count - 1] += "\nКомментарий к " + name + " : " + sender.Comment + "";
             }
             //bufBpvLeftStr += sender.Comment;
             SaveSet result = new SaveSet(bufBpvLeftStr, IsVisibleBPVleftbuf);
@@ -9162,6 +9184,7 @@ namespace WpfApp2.ViewModels
         private void GetObsForOverview(object sender, object data)
         {
             Clear(this, null);//?
+
             mode = "EDIT";
             MessageBus.Default.Call("SetMode", this, "EDIT");
             obsid = (int)data;
@@ -9177,8 +9200,16 @@ namespace WpfApp2.ViewModels
                 Examination Exam = ExamRep.Get(obsid);
                 ExaminationLeg leftLegExam = LegExamRep.Get(Exam.idLeftLegExamination.Value);
                 ExaminationLeg rightLegExam = LegExamRep.Get(Exam.idRightLegExamination.Value);
-
-
+                IsVisibleTextTTT = Visibility.Visible;
+                if (Exam.isNeedOperation)
+                {
+                    TextOfPreOperation = "Предварительно назначена" + Data.OperationType.Get(Exam.OperationType.Value);
+                    
+                }
+                else
+                {
+                    TextOfPreOperation = "Предварительная операция не была назначена";
+                }
 
 
                 Weight = Exam.weight.ToString();
