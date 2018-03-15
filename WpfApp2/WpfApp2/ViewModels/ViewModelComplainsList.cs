@@ -70,9 +70,14 @@ namespace WpfApp2.ViewModels
                 _filterText = value; OnPropertyChanged();
                 for (int i = 0; i < DataSourceList.Count; ++i)
                 {
-                    if (DataSourceList[i].IsChecked != null && DataSourceList[i].IsChecked == true)
+                    foreach(var x in FullCopy)
+                    if (DataSourceList[i].IsChecked != null && DataSourceList[i].IsChecked == true && x.Data.Id == DataSourceList[i].Data.Id)
                     {
-                        FullCopy[i].IsChecked = true;
+                      x.IsChecked = true;
+                    }
+                    else if (x.Data.Id == DataSourceList[i].Data.Id)
+                    {
+                       x.IsChecked = false;
                     }
                 }
                 if (lastLength >= value.Length)
@@ -242,9 +247,9 @@ namespace WpfApp2.ViewModels
             ToPhysicalCommand = new DelegateCommand(
                 () =>
                 {
-                    //FilterText = "";
-                    List<ComplainsDataSource> DataSourceListBuffer = new List<ComplainsDataSource>();
-                    foreach (var Data in DataSourceList)
+                    FilterText = "";
+                    ObservableCollection<ComplainsDataSource> DataSourceListBuffer = new ObservableCollection<ComplainsDataSource>();
+                    foreach (var Data in FullCopy)
                     {
                         if (Data.IsChecked == true)
                         {
@@ -272,7 +277,7 @@ namespace WpfApp2.ViewModels
 
             SaveCommand = new DelegateCommand(() =>
             {
-                //FilterText = "";
+                FilterText = "";
                 var newType = CurrentPanelViewModel.GetPanelType();
                 if (!string.IsNullOrWhiteSpace(newType.Str))
                 {

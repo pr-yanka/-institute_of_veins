@@ -97,10 +97,15 @@ namespace WpfApp2.ViewModels
                 _filterText = value; OnPropertyChanged();
                 for (int i = 0; i < DataSourceList.Count; ++i)
                 {
-                    if (DataSourceList[i].IsChecked != null && DataSourceList[i].IsChecked == true)
-                    {
-                        FullCopy[i].IsChecked = true;
-                    }
+                    foreach (var x in FullCopy)
+                        if (DataSourceList[i].IsChecked != null && DataSourceList[i].IsChecked == true && x.Data.Id == DataSourceList[i].Data.Id)
+                        {
+                            x.IsChecked = true;
+                        }
+                        else if (x.Data.Id == DataSourceList[i].Data.Id)
+                        {
+                            x.IsChecked = false;
+                        }
                 }
                 if (lastLength >= value.Length)
                 {

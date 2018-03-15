@@ -47,8 +47,14 @@ namespace WpfApp2.DialogPreOperation
 
         private void OnReturnClicked(object parameter)
         {
-            MessageBus.Default.Call("GetOpTypeAndCommentaryFromDialog", OpTypes[SelectedOpTypeID].Id, Commentary);
-
+            try
+            {
+                if (OpTypes.Count != 0)
+                {
+                    MessageBus.Default.Call("GetOpTypeAndCommentaryFromDialog", OpTypes[SelectedOpTypeID].Id, Commentary);
+                }
+            }
+            catch { }
             this.CloseDialogWithResult(parameter as Window, DialogResult.Yes);
         }
 
