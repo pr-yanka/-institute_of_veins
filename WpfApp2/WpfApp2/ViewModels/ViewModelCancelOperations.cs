@@ -103,6 +103,7 @@ namespace WpfApp2.ViewModels
                        
 
                     }
+                    buf.TransferDate = DateTime.Now;
                     Data.CancelOperation.Add(buf);
                     Operation.отмена_операции = buf.Id;
                     Data.Complete();

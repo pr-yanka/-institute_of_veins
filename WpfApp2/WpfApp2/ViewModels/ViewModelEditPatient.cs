@@ -507,7 +507,8 @@ namespace WpfApp2.ViewModels
                 //{
                 //    DistrictListbuf.Add(District.Str);
                 //}
-                DistrictList = DistrictListbuf;
+                DistrictList = context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_районы where Город = " + curOblID + " ORDER BY название").ToList();
+
 
                 RegionList = context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_область ORDER BY название").ToList(); ;
                 StreetList = StreetListbuf;
