@@ -67,7 +67,6 @@ namespace WpfApp2.Navigation
                 new ViewModelOperationResultOverview(this),
                 new ViewModelPhysicalOverview(this),
                 new ViewModelOperationOverview(this),
-                new ViewModelRegistration(this),
                 new ViewModelDashboard(this),
                 new ViewModelRedactPathology(this),
                 new ViewModelCurrentPatient(this),
@@ -76,7 +75,6 @@ namespace WpfApp2.Navigation
 
                 new ViewModelEditPatient(this),
                 new ViewModelViewHistory(this),
-                new ViewModelLegDescribe(this),
                 new ViewModelRecomendationsAdd(this),
                 new ViewModelSymptomsAdd(this),
                 new ViewModelPhysicalTable(this),

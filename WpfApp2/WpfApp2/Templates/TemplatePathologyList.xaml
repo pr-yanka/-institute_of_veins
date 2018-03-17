@@ -10,17 +10,14 @@
     </Style>
     <DataTemplate x:Key="TemplatePathologyList">
         <Grid Margin="220,80,0,0" >
-
-            <Label x:Name="label" Content="Патологии" HorizontalAlignment="Left" Margin="280,10,0,0" FontFamily="/fonts/#Pescadero" FontSize="22pt" VerticalAlignment="Top"/>
-            <DataGrid BorderBrush="Black" BorderThickness="1" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}" CanUserAddRows="False" CanUserResizeRows="false" CanUserResizeColumns="False" x:Name="dataGrid" HorizontalAlignment="Left" AutoGenerateColumns="False" Margin="30,81,0,0" VerticalAlignment="Top" Height="500" Width="709"  ItemsSource="{Binding Path=PatologyList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
+            <Label x:Name="label" Content="Патологии" HorizontalAlignment="Left" Margin="323,10,0,0" FontFamily="/fonts/#Pescadero" FontSize="22pt" VerticalAlignment="Top"/>
+            <DataGrid BorderBrush="Black" BorderThickness="1" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}" CanUserAddRows="False" CanUserResizeRows="false" CanUserResizeColumns="False" x:Name="dataGrid" HorizontalAlignment="Left" AutoGenerateColumns="False" Margin="30,81,0,0" VerticalAlignment="Top" Height="480" Width="709"  ItemsSource="{Binding Path=PatologyList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
                 <DataGrid.RowStyle>
-
                     <Style TargetType="DataGridRow"  BasedOn="{StaticResource {x:Type DataGridRow}}">
                         <Style.Triggers>
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter Property="Background" Value="SkyBlue" ></Setter>
                             </Trigger>
-
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Background" Value="LightSkyBlue" ></Setter>
                             </Trigger>
@@ -28,22 +25,14 @@
                                 <Setter Property="Background" Value="Gray" ></Setter>
                                 <Setter Property="Opacity" Value="1" ></Setter>
                             </DataTrigger>
-
                         </Style.Triggers>
                     </Style>
                 </DataGrid.RowStyle>
-
                 <DataGrid.Columns >
-
                     <DataGridTemplateColumn Width="196"  Header="Патология" >
-
                         <DataGridTemplateColumn.CellTemplate  >
-
                             <DataTemplate >
-
-
                                 <TextBlock HorizontalAlignment="Center"  Text="{Binding Name}" />
-
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -85,10 +74,10 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy1" Command="{Binding Path=ToAddPathologyCommand}" Content="Указать патологию" HorizontalAlignment="Left" Margin="61,590,0,0"  
+            <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy1" Command="{Binding Path=ToAddPathologyCommand}" Content="Указать патологию" HorizontalAlignment="Left" Margin="30,573,0,0"  
                     VerticalAlignment="Top" Width="300" />
-            <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy2" Command="{Binding Path=ToCurrentPatientCommand}" Content="Возврат" HorizontalAlignment="Left" Margin="401,590,0,0"  
-                    VerticalAlignment="Top" Width="300"/>
+            <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy2" Command="{Binding Path=ToCurrentPatientCommand}" Content="Возврат" HorizontalAlignment="Left" Margin="439,573,0,0"  
+                    VerticalAlignment="Top" Width="300" RenderTransformOrigin="0.51,0.5"/>
         </Grid>
     </DataTemplate>
 
