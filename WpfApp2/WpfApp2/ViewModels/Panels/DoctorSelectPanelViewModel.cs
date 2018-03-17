@@ -50,7 +50,10 @@ namespace WpfApp2.ViewModels.Panels
 
                 foreach (var doc in DoctorRep.GetAll)
                 {
-                    Doctors.Add(new Docs(doc));
+                    if (doc.isEnabled.Value)
+                    {
+                        Doctors.Add(new Docs(doc));
+                    }
                 }
             }
             ParentVM = parentVM;
@@ -83,12 +86,26 @@ namespace WpfApp2.ViewModels.Panels
         {
 
             //newType.LongName = LongText;
-            
+            if (DoctorSelectedId == -1 || DoctorSelectedId > Doctors.Count - 1)
+                return "";
             return Doctors[DoctorSelectedId].ToString();
         }
 
         internal void ClearPanel()
         {
+            using (var context = new MySqlContext())
+            {
+                DoctorRepository DoctorRep = new DoctorRepository(context);
+                Doctors = new ObservableCollection<Docs>();
+
+                foreach (var doc in DoctorRep.GetAll)
+                {
+                    if (doc.isEnabled.Value)
+                    {
+                        Doctors.Add(new Docs(doc));
+                    }
+                }
+            }
             //LongText = "";
             ShortText = "";
         }

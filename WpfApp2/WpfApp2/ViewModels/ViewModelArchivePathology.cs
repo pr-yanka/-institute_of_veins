@@ -569,7 +569,7 @@ namespace WpfApp2.ViewModels
 
                         foreach (var Patology in Data.Patology.GetAll)
                         {
-                            if (Patology.id_пациента == CurrentPatology.id_пациента && Patology.id_патологии == CurrentPatology.id_патологии)
+                            if (Patology.id == CurrentPatology.id)
                             {
                                 DateAppear = new DateTime(int.Parse(Year[YearSelectedId]), getmonthName(Month[MonthSelectedId]), 1);
 

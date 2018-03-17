@@ -18,35 +18,35 @@ namespace WpfApp2.ViewModels
 {
     public class StreetsForQuery
     {
-       
+
 
         public int id { set; get; }
 
         public string название { set; get; }
 
         public int Город { set; get; }
-   
+
     }
     public class CitiesForQuery
     {
 
-      
+
         public int id { set; get; }
-     
+
         public string название { set; get; }
-      
+
         public int Область { set; get; }
     }
     public class DistrictsForQuery
     {
-       
-     
+
+
         public int id { set; get; }
-     
+
         public string название { set; get; }
-       
+
         public int Город { set; get; }
-        
+
     }
     public class ViewModelEditPatient : ViewModelBase, INotifyPropertyChanged
     {
@@ -210,10 +210,9 @@ namespace WpfApp2.ViewModels
 
                 if (curOblID != 0)
                 {
-
-                    TownsList = context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_города where Область = " + curOblID).ToList();
+                    TownsList = context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_города where Область = " + curOblID + " ORDER BY название").ToList();
                     //  TownListID = context.Database.SqlQuery<int>("SELECT id FROM med_db.справочник_города where Область = " + curOblID).ToList();
-                    DistrictList = context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_районы where Город = " + curOblID).ToList();
+                    DistrictList = context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_районы where Город = " + curOblID + " ORDER BY название").ToList();
 
                 }
                 else
@@ -322,17 +321,18 @@ namespace WpfApp2.ViewModels
             using (var context = new MySqlContext())
             {
                 curTwnID = 0;
-           
 
-                curTwnID = context.Database.SqlQuery<int>("SELECT id FROM med_db.справочник_города where название = '" + Town + "' and Область = " + curOblID).ToList().FirstOrDefault();
+
+
+                curTwnID = context.Database.SqlQuery<int>("SELECT id FROM med_db.справочник_города where название = '" + Town + "' and Область = " + curOblID + " ORDER BY название").ToList().FirstOrDefault();
 
                 // context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_города where Область = ").ToList();
 
 
                 if (curTwnID != 0)
                 {
-                   
-                    StreetList = context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_улицы where Город = " + curTwnID).ToList();
+
+                    StreetList = context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_улицы where Город = " + curTwnID + " ORDER BY название").ToList();
 
                     // DistrictList = DistrictListbuf;
                 }
@@ -502,16 +502,15 @@ namespace WpfApp2.ViewModels
                 //{
                 //    StreetListbuf.Add(Street.Str);
                 //}
-                foreach (var Region in regRep.GetAll)
-                {
-                    RegionListbuf.Add(Region.Str);
-                }
+
                 //foreach (var District in distRep.GetAll)
                 //{
                 //    DistrictListbuf.Add(District.Str);
                 //}
-                DistrictList = DistrictListbuf;
-                RegionList = RegionListbuf;
+                DistrictList = context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_районы where Город = " + curOblID + " ORDER BY название").ToList();
+
+
+                RegionList = context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_область ORDER BY название").ToList(); ;
                 StreetList = StreetListbuf;
                 TownsList = TownsListbuf;
 
@@ -521,7 +520,7 @@ namespace WpfApp2.ViewModels
                 //{
                 //    District = distRep.Get(CurrentPatient.District.Value).Str;
                 //}
-            
+
                 //Street = strtRep.Get(CurrentPatient.Street).Str;
             }
             GetTowns();
@@ -646,7 +645,7 @@ namespace WpfApp2.ViewModels
                             //CitiesRepository ctRep = new CitiesRepository(context);
                             RegionsRepository regRep = new RegionsRepository(context);
                             //DistrictsRepository distRep = new DistrictsRepository(context);
-             //               StreetsRepository strtRep = new StreetsRepository(context);
+                            //               StreetsRepository strtRep = new StreetsRepository(context);
                             CurrentPatient.Name = Name;
                             CurrentPatient.Sirname = Surname;
                             CurrentPatient.Patronimic = Patronimic;
@@ -673,7 +672,7 @@ namespace WpfApp2.ViewModels
 
                             isExist = false;
 
-                            foreach (var Town1 in context.Database.SqlQuery<CitiesForQuery>("SELECT * FROM med_db.справочник_города where Область = " + curOblID).ToList())
+                            foreach (var Town1 in context.Database.SqlQuery<CitiesForQuery>("SELECT * FROM med_db.справочник_города where Область = " + curOblID + " ORDER BY название").ToList())
                             {
                                 if (Town1.название == Town && Town1.Область == curOblID)
                                 {
@@ -695,7 +694,7 @@ namespace WpfApp2.ViewModels
                             }
                             isExist = false;
                             //StreetsForQuery
-                            foreach (var Street1 in context.Database.SqlQuery<StreetsForQuery>("SELECT * FROM med_db.справочник_улицы where Город = " + curTwnID).ToList())
+                            foreach (var Street1 in context.Database.SqlQuery<StreetsForQuery>("SELECT * FROM med_db.справочник_улицы where Город = " + curTwnID + " ORDER BY название").ToList())
                             {
                                 if (Street1.название == Street && Street1.Город == curTwnID)
                                 {
@@ -715,7 +714,7 @@ namespace WpfApp2.ViewModels
                             }
                             //DistrictsForQuery
                             isExist = false;
-                            foreach (var District1 in context.Database.SqlQuery<DistrictsForQuery>("SELECT * FROM med_db.справочник_районы where Город = " + curOblID).ToList())
+                            foreach (var District1 in context.Database.SqlQuery<DistrictsForQuery>("SELECT * FROM med_db.справочник_районы where Город = " + curOblID + " ORDER BY название").ToList())
                             {
                                 if (District1.название == District && District1.Город == curOblID)
                                 {

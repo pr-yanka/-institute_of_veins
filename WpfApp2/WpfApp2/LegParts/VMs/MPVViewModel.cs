@@ -3,23 +3,45 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using WpfApp2.Db.Models;
 using WpfApp2.Db.Models.LegParts;
 using WpfApp2.Db.Models.LegParts.MPV;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 using WpfApp2.ViewModels;
+using WpfApp2.ViewModels.Panels;
 
 namespace WpfApp2.LegParts.VMs
 {
     public class MPVViewModel : LegPartViewModel
     {
 
+        private ObservableCollection<MPVWay> _mPVWayType;
+        public ObservableCollection<MPVWay> MPVWayType
+        {
+            get { return _mPVWayType; }
+            set { _mPVWayType = value; OnPropertyChanged(); }
+        }
+        private int? _selectedMPVWayTypeId;
+        public int? SelectedMPVWayTypeId
+        {
+            get { return _selectedMPVWayTypeId; }
+            set { _selectedMPVWayTypeId = value; OnPropertyChanged(); }
+        }
+        private MPVVayTypePanelViewModel _currentPanelViewModelWaySelect;
+        public override ViewModelBase CurrentPanelViewModelWaySelect
+        {
+            get { return _currentPanelViewModelWaySelect; }
+            set { _currentPanelViewModelWaySelect = value as MPVVayTypePanelViewModel; OnPropertyChanged(); }
+        }
+        public string TextOFNewType { get; set; }
 
-        public List<MPVWay> MPVWayType { get; set; }
-        public int? SelectedMPVWayTypeId { get; set; }
+        public DelegateCommand RevertWayCommand { set; get; }
 
+        public DelegateCommand SavetWayCommand { set; get; }
 
+        public ICommand OpenAddtWayCommand { protected set; get; }
         private void Rebuild(object sender, object data)
         {
             if (Controller.CurrentViewModel.Controller.LegViewModel == this && mode == "Normal")
@@ -189,6 +211,7 @@ namespace WpfApp2.LegParts.VMs
 
             if (((LegPartViewModel)Controller.CurrentViewModel.Controller.LegViewModel).CurrentLegSide != this.CurrentLegSide) return; using (MySqlContext context = new MySqlContext())
             {
+                
                 MPVRepository MPV = new MPVRepository(context);
                 MetricsRepository Metrics = new MetricsRepository(context);
                 var bufSaveLegSection = new List<int?>();
@@ -263,7 +286,7 @@ namespace WpfApp2.LegParts.VMs
                     LegSectionsSaved.Add(new MPVSectionViewModel(Controller, null, i + 1));
             }
 
-            for (int i = 0; i < LegSections.Count; i++)
+             commentSave = Comment; for (int i = 0; i < LegSections.Count; i++)
             {
 
                 LegSectionsSaved[i].Comment = LegSections[i].Comment;
@@ -274,7 +297,14 @@ namespace WpfApp2.LegParts.VMs
                 LegSectionsSaved[i].SelectedValue = LegSections[i].SelectedValue;
                 LegSectionsSaved[i].CurrentEntry = LegSections[i].CurrentEntry;
             }
+            MPVWayType = new ObservableCollection<MPVWay>();
 
+            foreach (var Scintific in Data.MPVWay.GetAll)
+            {
+                MPVWayType.Add(Scintific);
+            }
+
+            SelectedWayType = SelectedWayTypeSave;
         }
 
         private ObservableCollection<LegSectionViewModel> _sections;
@@ -286,9 +316,49 @@ namespace WpfApp2.LegParts.VMs
 
         public void Initialize()
         {
+            TextOFNewType = "Новый МПВ ход";
             MessageBus.Default.Subscribe("RebuildFirstMPV", RebuildFirst);
             MessageBus.Default.Subscribe("RebuildLegSectionViewModel", Rebuild);
+            CurrentPanelViewModelWaySelect = new MPVVayTypePanelViewModel(this);
+            OpenAddtWayCommand = new DelegateCommand(() =>
+            {
+                ((MPVVayTypePanelViewModel)CurrentPanelViewModelWaySelect).ClearPanel();
+                ((MPVVayTypePanelViewModel)CurrentPanelViewModelWaySelect).PanelOpened = true;
+            });
 
+            SavetWayCommand = new DelegateCommand(() =>
+            {
+                var newType = ((MPVVayTypePanelViewModel)CurrentPanelViewModelWaySelect).GetPanelType();
+                if (!string.IsNullOrWhiteSpace(newType.Name))
+                {
+                    ((MPVVayTypePanelViewModel)CurrentPanelViewModelWaySelect).PanelOpened = false;
+
+                    //Handled = false;
+
+                    Data.MPVWay.Add((newType));
+
+                    Data.Complete();
+                    PanelOpened = true;
+                    var DataSourceListbuf = MPVWayType;
+                    MPVWayType = new ObservableCollection<MPVWay>();
+
+                    foreach (var Scintific in Data.MPVWay.GetAll)
+                    {
+                        MPVWayType.Add(Scintific);
+                    }
+                    SelectedMPVWayTypeId = MPVWayType.Count - 1;
+                    // Controller.NavigateTo<BPVHipViewModel>();
+
+                    PanelOpened = false;
+                }
+                else
+                { MessageBox.Show("Не все поля заполнены"); }
+            });
+            RevertWayCommand = new DelegateCommand(() =>
+            {
+                ((MPVVayTypePanelViewModel)CurrentPanelViewModelWaySelect).PanelOpened = false;
+                PanelOpened = false;
+            });
             SavePanelCommand = new DelegateCommand(() =>
             {
                 var panel = CurrentPanelViewModel;
@@ -355,7 +425,7 @@ namespace WpfApp2.LegParts.VMs
                           {
                               var newCombo = new MPVCombo();
 
-                              for (int i = 0; i < LegSections.Count; i++)
+                               commentSave = Comment; for (int i = 0; i < LegSections.Count; i++)
                               {
                                   var currentStructure = LegSections[i].SelectedValue;
                                   //ничего не было выбрано
@@ -400,7 +470,7 @@ namespace WpfApp2.LegParts.VMs
                   }
               }
           );
-            MPVWayType = new List<MPVWay>();
+            MPVWayType = new ObservableCollection<MPVWay>();
             foreach (var way in Data.MPVWay.GetAll)
             {
                 MPVWayType.Add(way);

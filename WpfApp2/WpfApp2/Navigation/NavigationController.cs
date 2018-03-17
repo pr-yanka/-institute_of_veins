@@ -141,10 +141,10 @@ namespace WpfApp2.Navigation
 
         public void NavigateTo<T>()
         {
-            var target = _viewModels.FirstOrDefault(e => e.GetType() == typeof(T));
+           // var target = _viewModels.FirstOrDefault(e => e.GetType() == typeof(T));
 
-            if (target != null)
-                CurrentViewModel = target;
+            if (_viewModels.FirstOrDefault(e => e.GetType() == typeof(T)) != null)
+                CurrentViewModel = _viewModels.FirstOrDefault(e => e.GetType() == typeof(T));
         }
 
         public LegPartViewModel GetLegPart<T>(LegSide side)

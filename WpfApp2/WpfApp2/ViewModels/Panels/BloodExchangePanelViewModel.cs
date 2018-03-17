@@ -3,6 +3,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Controls;
 using WpfApp2.Db.Models;
 using WpfApp2.Navigation;
 
@@ -11,6 +12,8 @@ namespace WpfApp2.ViewModels.Panels
     public class BloodExchangePanelViewModel : ViewModelBase, INotifyPropertyChanged
     {
         public ViewModelBase ParentVM { get; protected set; }
+        public DelegateCommand<object> LostFocus { get; private set; }
+        public DelegateCommand<object> ClickOnWeight { get; private set; }
 
         private bool _panelOpened = false;
 
@@ -37,6 +40,29 @@ namespace WpfApp2.ViewModels.Panels
         {
             ParentVM = parentVM;
 
+  //          LostFocus = new DelegateCommand<object>(
+  //     (sender) =>
+  //     {
+
+  //         if (string.IsNullOrWhiteSpace(((TextBox)sender).Text))
+  //         {
+  //             ((TextBox)sender).Text = "0";
+  //              ShortText = 0;
+  //         }
+
+
+  //     }
+  // ); ClickOnWeight = new DelegateCommand<object>(
+  //    (sender) =>
+  //    {
+
+  //        if (((TextBox)sender).Text == "0")
+  //            ((TextBox)sender).Text = "";
+
+
+
+  //    }
+  //);
         }
 
         private float _shortText;

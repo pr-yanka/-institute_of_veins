@@ -67,32 +67,32 @@ namespace WpfApp2.ViewModels
 
 
             // TEST
-            if (Ch.BlobNew != null)
+            if (Ch.SomeBlobFileNew != null)
             {
                 NewValue = "Новое фото анализа";
             }
-            if (Ch.BlobOld != null)
+            if (Ch.SomeBlobFileOld != null)
             {
                 OldValue = "Старое фото анализа";
             }
             else
             {
-                OldValue = Ch.OldValue;
-                NewValue = Ch.NewValue;
+                OldValue = Ch.старое_значение;
+                NewValue = Ch.новое_значение;
             }
-            TableChanged = Ch.TblName;
-            PropertyChanged = Ch.TblCollumnName;
+            TableChanged = Ch.название_таблицы;
+            PropertyChanged = Ch.название_столбца;
 
 
 
 
             // Date = Op.Date.Day.ToString() + "." + Op.Date.Month.ToString() + "." + Op.Date.Year.ToString();
             // Time = buf1.Hour.ToString() + ":" + buf1.Minute.ToString();
-            Date = Ch.DataChanged;
+            Date = Ch.дата_изменения;
           
                 AccauntRepository acRep = new AccauntRepository(context);
                 ChangesInDBTypeRepository chindbRep = new ChangesInDBTypeRepository(context);
-                Accaunt CurAcc = acRep.Get(Ch.AccID);
+                Accaunt CurAcc = acRep.Get(Ch.id_аккаунта);
 
                 AccName = CurAcc.Name;
 
@@ -110,7 +110,7 @@ namespace WpfApp2.ViewModels
                     AccPost = "Медперсонал";
                 }
 
-                ChangeType = chindbRep.Get(Ch.ChangeType).Str;
+                ChangeType = chindbRep.Get(Ch.тип_изменения).Str;
                 //var CurrentPatient = PtRep.Get(Ex.PatientId.Value);
                 //Patient = CurrentPatient.Sirname + " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
 
@@ -122,6 +122,15 @@ namespace WpfApp2.ViewModels
     }
     public class ViewModelChangesHistoy : ViewModelBase, INotifyPropertyChanged
     {
+        private int _sortId;
+        public int SortId
+        {
+            get { return _sortId; }
+            set
+            { _sortId = value;
+                SetChangesInDB(null, null);
+                OnPropertyChanged(); }
+        }
         #region Inotify realisation
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -356,18 +365,10 @@ namespace WpfApp2.ViewModels
         List<ChangeHistoryClass> FullCopy;
         private void SetChangesInDB(object sender, object data)
         {
-
             using (MySqlContext context = new MySqlContext())
             {
                 try
                 {
-
-                    //DocsAndMedsList = new List<docsAndMeds>();
-
-
-
-
-
 
 
                     ChangeHistoryRepository ChangeRp = new ChangeHistoryRepository(context);
@@ -378,24 +379,73 @@ namespace WpfApp2.ViewModels
                     //  Changes = new ObservableCollection<ChangeHistoryClass>();
                     //  ViewSource = new CollectionViewSource();
                     test = true;
-                    foreach (ChangeHistory Ch in ChangeRp.GetAll)
+                    string query = "SELECT * FROM med_db.история_изменений ORDER BY id DESC";
+                    int limit = 0;
+                    if(SortId == 0)
+                    {
+                        limit = 5;
+                        query += " LIMIT " + limit.ToString();
+                    }
+                    else if (SortId == 1)
+                    {
+                        limit = 10;
+                        query +=  " LIMIT " + limit.ToString();
+                    }
+                    else if (SortId == 2)
+                    {
+                        limit = 20;
+                        query +=  " LIMIT " + limit.ToString();
+                    }
+                    else if (SortId == 3)
+                    {
+                        limit = 30;
+                        query +=  " LIMIT " + limit.ToString();
+                    }
+                    else if (SortId == 4)
+                    {
+                        limit = 40;
+                        query +=  " LIMIT " + limit.ToString();
+                    }
+                    else if (SortId == 5)
+                    {
+                        limit = 50;
+                        query +=  " LIMIT " + limit.ToString();
+                    }
+                    else if (SortId == 6)
+                    {
+                        limit = 100;
+                        query +=  " LIMIT " + limit.ToString();
+                    }
+                    else if (SortId == 7)
+                    {
+                        limit = 200;
+                        query +=  " LIMIT " + limit.ToString();
+                    }
+                    else if (SortId == 8)
+                    {
+                       
+                    }
+                  
+                    Changes = new ObservableCollection<ChangeHistoryClass>();
+                    FullCopy = new List<ChangeHistoryClass>();
+                    foreach (ChangeHistory Ch in context.Database.SqlQuery<ChangeHistory>(query).ToList())
                     {
 
 
-                        test = true;
-                        for (int i = 0; i < Changes.Count; ++i)
-                        {
+                        //test = true;
+                        //for (int i = 0; i < Changes.Count; ++i)
+                        //{
                           
-                            if (Changes[i].Ch.Id == Ch.Id)
-                            { test = false;break; }
+                        //    if (Changes[i].Ch.id == Ch.id)
+                        //    { test = false;break; }
                           
-                        }
-                        if (test)
-                        {
+                        //}
+                        //if (test)
+                        //{
                             ChangeHistoryClass buf = new ChangeHistoryClass(Ch, context);
                             FullCopy.Add(buf);
                             Changes.Add(buf);
-                        }
+                        //}
 
 
                     }
@@ -447,6 +497,7 @@ namespace WpfApp2.ViewModels
         public DelegateCommand FilterTextCommand { get; protected set; }
         public ViewModelChangesHistoy(NavigationController controller) : base(controller)
         {
+            SortId = 0;
             ViewSource = new CollectionViewSource();
             MessageBus.Default.Subscribe("SetChangesForChangesTable", SetChangesInDB);
             base.HasNavigation = true;

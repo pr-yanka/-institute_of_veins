@@ -19,8 +19,8 @@ namespace WpfApp2.Db.Models
 {
     public class MySqlContext : DbContext
     {
-
-
+        
+        public DbSet<SugarDiabetComment> SugarDiabetComment { get; set; }
         public DbSet<Sclezing> Sclezing { get; set; }
         public DbSet<Anticogulants> Anticogulants { get; set; }
 
@@ -200,11 +200,11 @@ namespace WpfApp2.Db.Models
             }
         }
 
-        int CurrAccId;
+        int Currid_аккаунта;
 
-        private void SetCurrentACCIDForContext(object sender, object data)
+        private void SetCurrentid_аккаунтаForContext(object sender, object data)
         {
-            CurrAccId = (int)data;
+            Currid_аккаунта = (int)data;
         }
         private string GetEntytyType(DbEntityEntry ent)
         {
@@ -314,7 +314,7 @@ namespace WpfApp2.Db.Models
         public override int SaveChanges()
         {
 
-            if (CurrAccId == 0)
+            if (Currid_аккаунта == 0)
             {
                 MessageBus.Default.Call("SetCurrAccIdBack", null, null);
             }
@@ -362,18 +362,18 @@ namespace WpfApp2.Db.Models
                                     logh = new Models.ChangeHistory()
                                     {
 
-                                        TblName = tableName,
-                                        AccID = CurrAccId,
+                                        название_таблицы = tableName,
+                                        id_аккаунта = Currid_аккаунта,
 
-                                        RowId = primaryKey.ToString(),
+                                        id_записи = primaryKey.ToString(),
 
-                                        TblCollumnName = GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this),
-                                        BlobNew = null,
-                                        BlobOld = originalValueBlob,
-                                        OldValue = string.Empty,
-                                        NewValue = string.Empty,
-                                        DataChanged = now,
-                                        ChangeType = 3
+                                        название_столбца = GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this),
+                                        SomeBlobFileNew = null,
+                                        SomeBlobFileOld = originalValueBlob,
+                                        старое_значение = string.Empty,
+                                        новое_значение = string.Empty,
+                                        дата_изменения = now,
+                                        тип_изменения = 3
 
                                     };
 
@@ -391,16 +391,16 @@ namespace WpfApp2.Db.Models
 
                                     logh = new Models.ChangeHistory()
                                     {
-                                        TblName = tableName,
-                                        AccID = CurrAccId,
-                                        RowId = primaryKey.ToString(),
-                                        TblCollumnName = GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this),
-                                        OldValue = originalValue,
-                                        BlobNew = null,
-                                        BlobOld = null,
-                                        NewValue = string.Empty,
-                                        DataChanged = now,
-                                        ChangeType = 3
+                                        название_таблицы = tableName,
+                                        id_аккаунта = Currid_аккаунта,
+                                        id_записи = primaryKey.ToString(),
+                                        название_столбца = GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this),
+                                        старое_значение = originalValue,
+                                        SomeBlobFileNew = null,
+                                        SomeBlobFileOld = null,
+                                        новое_значение = string.Empty,
+                                        дата_изменения = now,
+                                        тип_изменения = 3
 
                                     };
 
@@ -445,18 +445,18 @@ namespace WpfApp2.Db.Models
                                     logh = new Models.ChangeHistory()
                                     {
 
-                                        TblName = tableName,
-                                        AccID = CurrAccId,
+                                        название_таблицы = tableName,
+                                        id_аккаунта = Currid_аккаунта,
 
-                                        RowId = primaryKey.ToString(),
+                                        id_записи = primaryKey.ToString(),
 
-                                        TblCollumnName = GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this),
-                                        BlobNew = currentValueBlob,
-                                        BlobOld = null,
-                                        OldValue = string.Empty,
-                                        NewValue = string.Empty,
-                                        DataChanged = now,
-                                        ChangeType = 2
+                                        название_столбца = GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this),
+                                        SomeBlobFileNew = currentValueBlob,
+                                        SomeBlobFileOld = null,
+                                        старое_значение = string.Empty,
+                                        новое_значение = string.Empty,
+                                        дата_изменения = now,
+                                        тип_изменения = 2
 
                                     };
 
@@ -474,16 +474,16 @@ namespace WpfApp2.Db.Models
 
                                     logh = new Models.ChangeHistory()
                                     {
-                                        TblName = tableName,
-                                        AccID = CurrAccId,
-                                        RowId = primaryKey.ToString(),
-                                        TblCollumnName = GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this),
-                                        OldValue = string.Empty,
-                                        BlobNew = null,
-                                        BlobOld = null,
-                                        NewValue = currentValue,
-                                        DataChanged = now,
-                                        ChangeType = 2
+                                        название_таблицы = tableName,
+                                        id_аккаунта = Currid_аккаунта,
+                                        id_записи = primaryKey.ToString(),
+                                        название_столбца = GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this),
+                                        старое_значение = string.Empty,
+                                        SomeBlobFileNew = null,
+                                        SomeBlobFileOld = null,
+                                        новое_значение = currentValue,
+                                        дата_изменения = now,
+                                        тип_изменения = 2
 
                                     };
 
@@ -524,16 +524,16 @@ namespace WpfApp2.Db.Models
 
                                     logh = new Models.ChangeHistory()
                                     {
-                                        TblName = tableName,
-                                        AccID = CurrAccId,
-                                        RowId = primaryKey.ToString(),
-                                        TblCollumnName = GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this),
-                                        BlobNew = currentValueBlob,
-                                        BlobOld = originalValueBlob,
-                                        OldValue = string.Empty,
-                                        NewValue = string.Empty,
-                                        DataChanged = now,
-                                        ChangeType = 1
+                                        название_таблицы = tableName,
+                                        id_аккаунта = Currid_аккаунта,
+                                        id_записи = primaryKey.ToString(),
+                                        название_столбца = GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this),
+                                        SomeBlobFileNew = currentValueBlob,
+                                        SomeBlobFileOld = originalValueBlob,
+                                        старое_значение = string.Empty,
+                                        новое_значение = string.Empty,
+                                        дата_изменения = now,
+                                        тип_изменения = 1
 
                                     };
 
@@ -556,16 +556,16 @@ namespace WpfApp2.Db.Models
 
                                     logh = new Models.ChangeHistory()
                                     {
-                                        TblName = tableName,
-                                        AccID = CurrAccId,
-                                        RowId = primaryKey.ToString(),
-                                        TblCollumnName = GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this),
-                                        OldValue = originalValue,
-                                        BlobNew = null,
-                                        BlobOld = null,
-                                        NewValue = currentValue,
-                                        DataChanged = now,
-                                        ChangeType = 1
+                                        название_таблицы = tableName,
+                                        id_аккаунта = Currid_аккаунта,
+                                        id_записи = primaryKey.ToString(),
+                                        название_столбца = GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this),
+                                        старое_значение = originalValue,
+                                        SomeBlobFileNew = null,
+                                        SomeBlobFileOld = null,
+                                        новое_значение = currentValue,
+                                        дата_изменения = now,
+                                        тип_изменения = 1
 
                                     };
 
@@ -603,9 +603,9 @@ namespace WpfApp2.Db.Models
                                     var currentValueBlob = (byte[])change.CurrentValues[prop];
                                     foreach (var x in logsList)
                                     {
-                                        if (x.TblName == tableName && x.AccID == CurrAccId && x.TblCollumnName == GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this) && x.ChangeType == 2 && x.BlobNew == currentValueBlob)
+                                        if (x.название_таблицы == tableName && x.id_аккаунта == Currid_аккаунта && x.название_столбца == GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this) && x.тип_изменения == 2 && x.SomeBlobFileNew == currentValueBlob)
                                         {
-                                            x.RowId = primaryKey.ToString();
+                                            x.id_записи = primaryKey.ToString();
                                         }
                                     }
 
@@ -618,10 +618,10 @@ namespace WpfApp2.Db.Models
                                     var currentValue = change.CurrentValues[prop].ToString();
                                     foreach (var x in logsList)
                                     {
-                                        if (x.TblName == tableName && x.AccID == CurrAccId && x.TblCollumnName == GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this) && x.ChangeType == 2 && x.NewValue == currentValue)
+                                        if (x.название_таблицы == tableName && x.id_аккаунта == Currid_аккаунта && x.название_столбца == GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this) && x.тип_изменения == 2 && x.новое_значение == currentValue)
                                         {
 
-                                            x.RowId = primaryKey.ToString();
+                                            x.id_записи = primaryKey.ToString();
                                         }
                                     }
 
@@ -657,9 +657,9 @@ namespace WpfApp2.Db.Models
                                     var currentValueBlob = (byte[])change.CurrentValues[prop];
                                     foreach (var x in logsList)
                                     {
-                                        if (x.TblName == tableName && x.AccID == CurrAccId && x.TblCollumnName == GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this) && x.ChangeType == 1 && x.RowId == primaryKey.ToString())
+                                        if (x.название_таблицы == tableName && x.id_аккаунта == Currid_аккаунта && x.название_столбца == GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this) && x.тип_изменения == 1 && x.id_записи == primaryKey.ToString())
                                         {
-                                            x.BlobNew = currentValueBlob;
+                                            x.SomeBlobFileNew = currentValueBlob;
                                         }
                                     }
 
@@ -669,9 +669,9 @@ namespace WpfApp2.Db.Models
                                     var currentValue = change.CurrentValues[prop].ToString();
                                     foreach (var x in logsList)
                                     {
-                                        if (x.TblName == tableName && x.AccID == CurrAccId && x.TblCollumnName == GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this) && x.ChangeType == 1 && x.RowId == primaryKey.ToString())
+                                        if (x.название_таблицы == tableName && x.id_аккаунта == Currid_аккаунта && x.название_столбца == GetColumnName(ObjectContext.GetObjectType(change.Entity.GetType()), prop, this) && x.тип_изменения == 1 && x.id_записи == primaryKey.ToString())
                                         {
-                                            x.NewValue = currentValue;
+                                            x.новое_значение = currentValue;
                                         }
                                     }
 
@@ -701,8 +701,8 @@ namespace WpfApp2.Db.Models
 
         public MySqlContext() : base("server=localhost;user=root;database=med_db;password=22222;")
         {
-            CurrAccId = 0;
-            MessageBus.Default.Subscribe("SetCurrentACCIDForContext", SetCurrentACCIDForContext);
+            Currid_аккаунта = 0;
+            MessageBus.Default.Subscribe("SetCurrentACCIDForContext", SetCurrentid_аккаунтаForContext);
         }
 
 
@@ -1119,8 +1119,8 @@ namespace WpfApp2.Db.Models
             public string EntityName { get; set; }
             public string PropertyName { get; set; }
             public string PrimaryKeyValue { get; set; }
-            public string OldValue { get; set; }
-            public string NewValue { get; set; }
+            public string старое_значение { get; set; }
+            public string новое_значение { get; set; }
             public DateTime DateChanged { get; set; }
         }
     }

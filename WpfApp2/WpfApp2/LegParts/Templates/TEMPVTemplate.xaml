@@ -3,7 +3,7 @@
                     xmlns:local="clr-namespace:WpfApp2.LegParts.Templates">
     <DataTemplate x:Key="TEMPVTemplate">
         <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center">
-            <TextBlock x:Name="textBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Вид хода:" VerticalAlignment="Top" Margin="0,0,10,0" FontSize="16"/>
+            <TextBlock x:Name="textBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Вид хода:" VerticalAlignment="Top" Margin="0,3,10,0" FontSize="16"/>
             <ComboBox x:Name="comboBox" SelectedItem="{Binding SelectedWayType}" SelectedIndex="{Binding SelectedTEMPVWayTypeId}" Margin="0,0,20,0"  ItemsSource="{Binding TEMPVWayType}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="180">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
@@ -13,9 +13,9 @@
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            <TextBlock x:Name="te3xtBlock"  TextWrapping="Wrap" Text="Протяженность:"   FontSize="16"/>
-
-            <TextBox x:Name="size2Box33"  Width="50" Text="{Binding Path=FF_length,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+            <Button Margin="7,0" Command="{Binding OpenAddtWayCommand}"  FontSize="11" Content="Новый ход" Width="190" Style="{StaticResource MyConfirmBUTTON}" Height="26"></Button>
+            <TextBlock x:Name="te3xtBlock"  TextWrapping="Wrap" Text="Протяженность:"  Margin="0,3,10,0"  FontSize="16"/>
+            <TextBox Padding="3" x:Name="size2Box33"  Width="50" Text="{Binding Path=FF_length,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseDown">
                         <i:InvokeCommandAction  Command="{Binding Path=ClickOnProtiagnosy}" CommandParameter="{Binding ElementName=size2Box33}" />

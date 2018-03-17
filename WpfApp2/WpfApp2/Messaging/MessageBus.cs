@@ -27,19 +27,19 @@ namespace WpfApp2.Messaging
 
         #endregion
 
-        private readonly Dictionary<string, List<Action<object, object>>> _hadlersMap 
+        private readonly Dictionary<string, List<Action<object, object>>> _hadlersMap
             = new Dictionary<string, List<Action<object, object>>>();
 
         public void Call(string name, object sender, object data)
         {
             List<Action<object, object>> handlers;
 
-            if(!_hadlersMap.TryGetValue(name.ToUpper(), out handlers))
+            if (!_hadlersMap.TryGetValue(name.ToUpper(), out handlers))
                 return;
 
             foreach (var handler in handlers)
             {
-                 handler?.Invoke(sender,data);
+                handler?.Invoke(sender, data);
             }
         }
 
@@ -51,7 +51,7 @@ namespace WpfApp2.Messaging
 
             if (!_hadlersMap.TryGetValue(name, out handlers))
             {
-                handlers = new List<Action<object, object>>{ handler }; 
+                handlers = new List<Action<object, object>> { handler };
                 _hadlersMap.Add(name, handlers);
             }
             else

@@ -3,6 +3,9 @@
                     xmlns:local="clr-namespace:WpfApp2"
                     xmlns:dialogYesNo="clr-namespace:WpfApp2.DialogYesNo"
                     xmlns:dialogPreOperation="clr-namespace:WpfApp2.DialogPreOperation">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/LegParts/Templates/RightPanelAnimation.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
     <DataTemplate DataType="{x:Type dialogYesNo:DialogYesNoViewModel}">
         <dialogYesNo:DialogYesNoView></dialogYesNo:DialogYesNoView>
     </DataTemplate>

@@ -5,13 +5,13 @@ using System.Data.Entity;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("коментарий_к_переливанию")]
-    public class BloodExchangeComment
+    [Table("сахарный_диабет_комментарий")]
+    public class SugarDiabetComment
     {
         [Key]
         [Column("id")]
         public int Id { set; get; }
-        [Column("коментарий")]
+        [Column("название")]
         public string Str { set; get; }
 
         public override string ToString()
@@ -20,11 +20,11 @@ namespace WpfApp2.Db.Models
         }
     }
 
-    public class BloodExchangeCommentRepository : Repository<BloodExchangeComment>
+    public class SugarDiabetCommentRepository : Repository<SugarDiabetComment>
     {
-        public BloodExchangeCommentRepository(DbContext context) : base(context)
+        public SugarDiabetCommentRepository(DbContext context) : base(context)
         {
-            
+           
         }
     }
 }

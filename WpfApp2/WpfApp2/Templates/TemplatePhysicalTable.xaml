@@ -77,6 +77,8 @@
 
     <DataTemplate x:Key="TemplatePhysicalTable">
         <Grid Margin="220,75,0,0" >
+    
+
             <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Height="32" Text="Обследования" FontFamily="/fonts/#Pescadero" FontSize="22pt" RenderTransformOrigin="0.591,0.516">
                 <TextBlock.RenderTransform>
                     <TransformGroup>
@@ -88,15 +90,15 @@
                 </TextBlock.RenderTransform>
             </TextBlock>
             <TextBlock HorizontalAlignment="Left" Margin="30,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="164" FontSize="20" Text="Поиск по слову:" RenderTransformOrigin="-0.027,0.471"/>
-            <TextBox Padding="4" Height="26" Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"  Margin="188,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="550" RenderTransformOrigin="0.632,0.9">
-
+            <TextBox Padding="4" Height="26" Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"  Margin="188,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="537" RenderTransformOrigin="0.632,0.9">
+              
             </TextBox>
             <CheckBox  IsChecked="{Binding IsSortByData}"  Content="сортировать по дате&#xD;&#xA;" HorizontalAlignment="Left" Margin="30,59,0,0" VerticalAlignment="Top" FontSize="16" Height="20" Width="297"/>
 
 
             <TextBlock Canvas.ZIndex="2" Visibility="{Binding VisOfNothingFaund}" TextWrapping="Wrap" Height="28" Text="Ничего не найдено" FontFamily="/fonts/#Pescadero" FontSize="14pt" Margin="304,280,0,230" RenderTransformOrigin="0.591,0.516"/>
 
-            <DataGrid BorderBrush="Black" BorderThickness="1" VerticalScrollBarVisibility="Visible" CanUserReorderColumns="False" FontSize="14" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  Canvas.ZIndex="1"  RowStyle="{StaticResource MyDataGridRow}"  IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="460" Margin="30,160,0,0" VerticalAlignment="Top" Width="709" >
+            <DataGrid BorderBrush="Black" BorderThickness="1" VerticalScrollBarVisibility="Auto" CanUserReorderColumns="False" FontSize="14" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  Canvas.ZIndex="1"  RowStyle="{StaticResource MyDataGridRow}"  IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="500" Margin="30,160,0,0" VerticalAlignment="Top" Width="696" >
 
                 <DataGrid.Columns  >
 
@@ -132,9 +134,10 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
-            </DataGrid>
+                </DataGrid>
+        
         </Grid>
-
+       
     </DataTemplate>
 
 </ResourceDictionary>

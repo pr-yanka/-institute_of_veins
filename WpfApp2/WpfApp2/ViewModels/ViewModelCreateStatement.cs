@@ -1,10 +1,13 @@
 ﻿using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
 using WpfApp2.Db.Models;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
@@ -25,11 +28,28 @@ namespace WpfApp2.ViewModels
             return doc.Sirname + initials;
         }
     }
-    public class ViewModelCreateStatement : ViewModelBase
+    public class ViewModelCreateStatement : ViewModelBase, INotifyPropertyChanged
     {
-
+        #region Inotify realisation
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            //если PropertyChanged не нулевое - оно будет разбужено
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
         public List<string> LeftOrRight { get; set; }
-        public float days { get; set; }
+        private float _days;
+        public float Days
+        {
+            get { return _days; }
+            set
+            {
+                _days = value;
+
+                OnPropertyChanged();
+            }
+        }
 
         public List<Docs> Doctors { get; set; }
 
@@ -80,7 +100,32 @@ namespace WpfApp2.ViewModels
 
             MessageBus.Default.Subscribe("GetOperationResultForCreateStatement", GetOperationid);
             HasNavigation = false;
-            
+
+            LostFocus = new DelegateCommand<object>(
+       (sender) =>
+       {
+
+           if (string.IsNullOrWhiteSpace(((TextBox)sender).Text))
+           {
+               ((TextBox)sender).Text = "0";
+               Days = 0;
+           }
+
+
+       }
+   ); ClickOnWeight = new DelegateCommand<object>(
+      (sender) =>
+      {
+
+          if (((TextBox)sender).Text == "0")
+              ((TextBox)sender).Text = "";
+
+
+
+      }
+  );
+
+
             ToCreateStatementCommand = new DelegateCommand(
                 () =>
                 {
@@ -117,7 +162,7 @@ namespace WpfApp2.ViewModels
                     {
 
 
-                        document.ReplaceText("ФИО", CurrentPatient.Sirname + " " + CurrentPatient.Name + " " + CurrentPatient.Patronimic);
+                        document.ReplaceText("«ФИО»", CurrentPatient.Sirname + " " + CurrentPatient.Name + " " + CurrentPatient.Patronimic);
                         string day1 = "0";
                         string day2 = "0";
                         string mnth1 = "0";
@@ -182,7 +227,7 @@ namespace WpfApp2.ViewModels
 
                         string lettersLeft = "";
                         string lettersRight = "";
-
+                        string leftDiag = "", rightDiag = "";
                         using (var context = new MySqlContext())
                         {
                             ExaminationRepository ExamRep = new ExaminationRepository(context);
@@ -196,6 +241,143 @@ namespace WpfApp2.ViewModels
                                 var ExamsOfCurrPatientLatest = ExamsOfCurrPatient.Where(s => s.Date == MaxExam).ToList();
                                 ExaminationLeg leftLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idLeftLegExamination.Value);
                                 ExaminationLeg rightLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idRightLegExamination.Value);
+                                List<ComplainsType> ComplainsList = new List<ComplainsType>();
+
+
+                                List<DiagnosisType> LeftDiagnosisList = new List<DiagnosisType>();
+                                int day12 = ExamsOfCurrPatientLatest[0].Date.Day;
+                                int mnth12 = ExamsOfCurrPatientLatest[0].Date.Month;
+                                string mnthStr1 = "";
+                                string dayStr1 = "";
+                                if (mnth12 < 10)
+                                {
+                                    mnthStr1 += "0" + mnth12.ToString();
+                                }
+                                else
+                                {
+                                    mnthStr1 = mnth12.ToString();
+                                }
+
+                                if (day12 < 10)
+                                {
+                                    dayStr1 += "0" + day12.ToString();
+                                }
+                                else
+                                {
+                                    dayStr1 = day12.ToString();
+                                }
+                                document.ReplaceText("«Дата»", dayStr1 + "." + mnthStr1 + "." + Operation.Date.Year.ToString());
+                               
+                              
+
+                                foreach (var diag in Data.DiagnosisObs.GetAll.Where(s => s.isLeft == true && s.id_обследование_ноги == ExamsOfCurrPatientLatest[0].Id).ToList())
+                                {
+
+                                    LeftDiagnosisList.Add(Data.DiagnosisTypes.Get(diag.id_диагноз.Value));
+                                }
+
+                                List<DiagnosisType> RightDiagnosisList = new List<DiagnosisType>();
+
+
+
+                                foreach (var diag in Data.DiagnosisObs.GetAll.Where(s => s.isLeft == false && s.id_обследование_ноги == ExamsOfCurrPatientLatest[0].Id).ToList())
+                                {
+
+                                    RightDiagnosisList.Add(Data.DiagnosisTypes.Get(diag.id_диагноз.Value));
+                                }
+
+
+                                foreach (var diag in Data.ComplanesObs.GetAll.Where(s => s.id_обследования == ExamsOfCurrPatientLatest[0].Id).ToList())
+                                {
+                                    ComplainsList.Add(Data.ComplainsTypes.Get(diag.id_жалобы));
+                                }
+                                string complanes = "";
+                                if (ComplainsList != null)
+                                {
+                                    int xxx = 0;
+                                    foreach (var rec in ComplainsList)
+                                    {
+
+                                        if (xxx == 0)
+                                        {
+                                            complanes += rec.Str;
+                                        }
+                                        else
+                                        {
+                                            complanes += ", " + rec.Str;
+                                        }
+                                        xxx++;
+
+
+
+                                    }
+                                    char[] chararrbuF1 = complanes.ToCharArray();
+                                    if (chararrbuF1[chararrbuF1.Length - 1] == '.')
+                                    { }
+                                    else
+                                    {
+                                        complanes += ".";
+                                    }
+                                }
+                                document.ReplaceText("«Жалобы»", complanes);
+
+
+
+
+
+                                int xx = 0;
+                                foreach (var x in LeftDiagnosisList)
+                                {
+                                    if (xx == 0)
+                                    {
+                                        leftDiag += x.Str;
+                                    }
+                                    else
+                                    {
+                                        leftDiag += ", " + x.Str;
+                                    }
+                                    xx++;
+                                }
+                                char[] chararrbuF = leftDiag.ToCharArray();
+                                if (chararrbuF[chararrbuF.Length - 1] == '.')
+                                { }
+                                else
+                                {
+                                    leftDiag += ".";
+                                }
+
+
+                                xx = 0;
+                                foreach (var x in RightDiagnosisList)
+                                {
+                                    if (xx == 0)
+                                    {
+                                        rightDiag += x.Str;
+                                    }
+                                    else
+                                    {
+                                        rightDiag += ", " + x.Str;
+                                    }
+                                    xx++;
+                                }
+                                chararrbuF = rightDiag.ToCharArray();
+                                if (chararrbuF[chararrbuF.Length - 1] == '.')
+                                { }
+                                else
+                                {
+                                    rightDiag += ".";
+                                }
+
+
+
+                                document.ReplaceText("«Жалобы»", complanes);
+
+
+
+
+
+
+
                                 Letters bufLetter = new Letters();
                                 if (leftLegExam.C != null)
                                 {
@@ -244,11 +426,14 @@ namespace WpfApp2.ViewModels
                         }
 
 
+
+
+
                         if (SelectedLeg == 0)
                         {
-                            document.ReplaceText("«Заключение_1»", "«Заключение_справа»");
+                            document.ReplaceText("«Заключение_1»", rightDiag + "\n");
 
-                            document.ReplaceText("«Заключение_2»", "«Заключение_слева»");
+                            document.ReplaceText("«Заключение_2»", leftDiag + "\n");
 
                             document.ReplaceText("буквы_1", lettersRight);
                             document.ReplaceText("буквы_2", lettersLeft);
@@ -257,23 +442,110 @@ namespace WpfApp2.ViewModels
                         }
                         else
                         {
-                            document.ReplaceText("«Заключение_1»", "«Заключение_слева»");
-                            document.ReplaceText("«Заключение_2»", "«Заключение_справа»");
+                            document.ReplaceText("«Заключение_1»", leftDiag);
+                            document.ReplaceText("«Заключение_2»", rightDiag);
                             document.ReplaceText("буквы_1", lettersLeft);
                             document.ReplaceText("буквы_2", lettersRight);
 
                         }
+                        int day = Operation.Date.Day;
+                        int mnth = Operation.Date.Month;
+                        string mnthStr = "";
+                        string dayStr = "";
+                        if (mnth < 10)
+                        {
+                            mnthStr += "0" + mnth.ToString();
+                        }
+                        else
+                        {
+                            mnthStr = mnth.ToString();
+                        }
 
-                        document.ReplaceText("«Дата_операции»", Operation.Date.Day.ToString() + "." + Operation.Date.Month.ToString() + "." + Operation.Date.Year.ToString());
+                        if (day < 10)
+                        {
+                            dayStr += "0" + day.ToString();
+                        }
+                        else
+                        {
+                            dayStr = day.ToString();
+                        }
+                        document.ReplaceText("«Дата_операции»", dayStr + "." + mnthStr + "." + Operation.Date.Year.ToString());
 
+                        string leftP = "", rightP = "", operationType = "";
+                        int i1 = 0, i2 = 0;
+
+                        foreach (var Diagnosis in Data.OperationTypeOperations.GetAll)
+                        {
+                            if (Diagnosis.id_операции == Operation.Id)
+                            {
+                                if (Diagnosis.isLeft == true)
+                                {
+                                    if (i1 != 0)
+                                        leftP += ", " + Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                                    else
+                                    {
+                                        leftP += Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                                    }
+                                    i1++;
+                                }
+                                else
+                                {
+                                    if (i2 != 0)
+                                        rightP += ", " + Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                                    else
+                                    {
+                                        rightP += Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                                    }
+                                    i2++;
+                                }
+                            }
+                        }
+                        if (Operation.OnWhatLegOp == "0")
+                        {
+                            operationType = "На левую ногу :" + leftP;
+                            document.ReplaceText("«IsLeft»", "ЛЕВАЯ");
+
+                        }
+                        if (Operation.OnWhatLegOp == "1")
+                        {
+                            operationType = "На правую ногу :" + rightP;
+                            document.ReplaceText("«IsLeft»", "ПРАВАЯ");
+                        }
+                        if (Operation.OnWhatLegOp == "2")
+                        {
+                            operationType = "На левую ногу :" + leftP + " " + "На правую ногу :" + rightP;
+                        }
+
+                        document.ReplaceText("«Операция2»", operationType);
                         //if (!string.IsNullOrWhiteSpace(Data.OperationType.Get(Operation.OperationTypeId).ShortName))
                         //    document.ReplaceText("«Операция2»", Data.OperationType.Get(Operation.OperationTypeId).ShortName);
                         //else
                         //    document.ReplaceText("«Операция2»", Data.OperationType.Get(Operation.OperationTypeId).LongName);
 
+                         day = DateTime.Now.Day;
+                         mnth = DateTime.Now.Month;
+                         mnthStr = "";
+                         dayStr = "";
+                        if (mnth < 10)
+                        {
+                            mnthStr += "0" + mnth.ToString();
+                        }
+                        else
+                        {
+                            mnthStr = mnth.ToString();
+                        }
 
-                        document.ReplaceText("«сутки»", days.ToString());
-                        document.ReplaceText("сегодняшнеечисломесяц", DateTime.Now.Day.ToString() + "." + DateTime.Now.Month.ToString());
+                        if (day < 10)
+                        {
+                            dayStr += "0" + day.ToString();
+                        }
+                        else
+                        {
+                            dayStr = day.ToString();
+                        }
+                        document.ReplaceText("«сутки»", Days.ToString());
+                        document.ReplaceText("сутки", "суток");
+                        document.ReplaceText("“сегодняшнеечисломесяц”  ", dayStr + "." + mnthStr);
                         document.ReplaceText("«год»", DateTime.Now.Year.ToString());
                         document.ReplaceText("«Врач»", Doctors[SelectedDoctor].ToString());
 
@@ -281,7 +553,7 @@ namespace WpfApp2.ViewModels
 
                         document.Save();
                         //Release this document from memory.
-                        Process.Start("WINWORD.EXE",  fileName);
+                        Process.Start("WINWORD.EXE", fileName);
                     }
 
                     //MessageBus.Default.Call("GetOperationResultForCreateStatement", this, operationId);
@@ -300,5 +572,7 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToOperationCommand { get; protected set; }
         public DelegateCommand ToCreateStatementCommand { get; protected set; }
         public DelegateCommand ToOperationOverviewCommand { get; protected set; }
+        public DelegateCommand<object> LostFocus { get; private set; }
+        public DelegateCommand<object> ClickOnWeight { get; private set; }
     }
 }

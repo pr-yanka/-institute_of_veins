@@ -554,7 +554,7 @@ namespace WpfApp2.ViewModels
 
                         foreach (var Patology in Data.Patology.GetAll)
                         {
-                            if (Patology.id_пациента == CurrentPatology.id_пациента && Patology.id_патологии == CurrentPatology.id_патологии)
+                            if (Patology.id == CurrentPatology.id)
                             {
                                 DateAppear = new DateTime(int.Parse(Year[YearSelectedId]), getmonthName(Month[MonthSelectedId]), 1);
                                 Patology.MonthAppear = DateAppear;
@@ -562,7 +562,7 @@ namespace WpfApp2.ViewModels
                                 if (Monthd[MonthDissapearSelectedId] != "-" && Yeard[YearDissapearSelectedId] != "-")
                                 {
 
-
+                                    Patology.isArchivatied = true;
                                     DateDisappear = new DateTime(int.Parse(Yeard[YearDissapearSelectedId]), getmonthName(Monthd[MonthDissapearSelectedId]), 1);
                                     Patology.MonthDisappear = DateDisappear;
                                     Patology.YearDisappear = DateDisappear;

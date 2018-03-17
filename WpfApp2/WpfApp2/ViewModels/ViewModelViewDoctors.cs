@@ -54,7 +54,16 @@ namespace WpfApp2.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+        private string _nameOfTbl;
+        public string NameOfTbl
+        {
+            get
+            {
+                return _nameOfTbl;
 
+            }
+            set { _nameOfTbl = value; OnPropertyChanged(); }
+        }
         public string TooltipText { get; set; }
 
         public ObservableCollection<DoctorsDataSource> _historyDataSource;
@@ -71,7 +80,8 @@ namespace WpfApp2.ViewModels
 
         private void SetCurrentPatientID(object sender, object data)
         {
-            TextAddUserOrPersonalOrMed = "Добавить врача";
+        
+               TextAddUserOrPersonalOrMed = "Добавить врача";
             TooltipText = "Архивация позволяет отключить врача от системы";
             DataSource = new ObservableCollection<DoctorsDataSource>();
 
@@ -119,6 +129,7 @@ namespace WpfApp2.ViewModels
 
         public ViewModelViewDoctors(NavigationController controller) : base(controller)
         {
+            NameOfTbl = "Врачи";
             base.HasNavigation = true;
             HasNavigation = true;
             MessageBus.Default.Subscribe("OpenDoctors", SetCurrentPatientID);

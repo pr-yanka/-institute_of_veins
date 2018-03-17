@@ -493,23 +493,25 @@ namespace WpfApp2.ViewModels
                 nameOfButton = "Добавить";
                 Date = DateTime.Now;
 
-                RegionsRepository regRep = new RegionsRepository(context);
 
                 List<string> TownsListbuf = new List<string>();
                 List<string> RegionListbuf = new List<string>();
 
-                foreach (var Region in regRep.GetAll)
-                {
-                    RegionListbuf.Add(Region.Str);
-                }
 
 
 
 
-                RegionList = RegionListbuf;
+
+                RegionList = context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_область ORDER BY название").ToList(); ;
+
+
 
 
                 TownsList = TownsListbuf;
+                DistrictList = TownsListbuf;
+                StreetList = TownsListbuf;
+
+
             }
 
 
@@ -551,7 +553,7 @@ namespace WpfApp2.ViewModels
             CurrentPatient = new Patient();
 
             CurrentPatient.Birthday = DateTime.Now;
-         
+
 
 
             ToDashboardCommand = new DelegateCommand(
@@ -591,16 +593,17 @@ namespace WpfApp2.ViewModels
 
                     if (TestRequiredFields())
                     {
-                        CurrentPatient.Name = Name;
-                        CurrentPatient.Sirname = Surname;
-                        CurrentPatient.Patronimic = Patronimic;
-                        CurrentPatient.Birthday = Date;
+                        CurrentPatient = new Patient();
+                        //CurrentPatient.Name = Name;
+                        //CurrentPatient.Sirname = Surname;
+                        //CurrentPatient.Patronimic = Patronimic;
+                        //CurrentPatient.Birthday = Date;
 
                         using (var context = new MySqlContext())
                         {
 
-                            CurrentPatient = Data.Patients.Get(CurrentPatient.Id);
-                            //CitiesRepository ctRep = new CitiesRepository(context);
+                            //CurrentPatient = Data.Patients.Get(CurrentPatient.Id);
+                            ////CitiesRepository ctRep = new CitiesRepository(context);
                             RegionsRepository regRep = new RegionsRepository(context);
                             //DistrictsRepository distRep = new DistrictsRepository(context);
                             //               StreetsRepository strtRep = new StreetsRepository(context);

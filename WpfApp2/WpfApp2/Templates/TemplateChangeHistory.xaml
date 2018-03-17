@@ -162,7 +162,7 @@
 
     <DataTemplate x:Key="TemplateChangeHistory">
         <Grid Margin="0,75,0,0">
-            <TextBlock  TextWrapping="Wrap" Margin="460,0,0,589" Text="История изменений" FontFamily="/fonts/#Pescadero" FontSize="22pt" RenderTransformOrigin="0.591,0.516">
+            <TextBlock  TextWrapping="Wrap"  Height="32" Margin="460,0,0,610" Text="История изменений" FontFamily="/fonts/#Pescadero" FontSize="22pt" RenderTransformOrigin="0.591,0.516">
                 <TextBlock.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -173,13 +173,26 @@
                 </TextBlock.RenderTransform>
             </TextBlock>
             <TextBlock HorizontalAlignment="Left" Margin="250,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="164" FontSize="20" Text="Поиск по слову:" RenderTransformOrigin="-0.027,0.471"/>
-            <TextBox  Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="26" Margin="409,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="552" RenderTransformOrigin="0.632,0.9"
+            <TextBox FontSize="16" Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="26" Margin="409,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="537" RenderTransformOrigin="0.632,0.9"
           />
             <CheckBox  IsChecked="{Binding IsSortByData}"  Content="сортировать по дате&#xD;&#xA;" HorizontalAlignment="Left" Margin="250,59,0,0" VerticalAlignment="Top" FontSize="16" Height="20" Width="297"/>
 
+            <TextBlock  Text="выводить последние" HorizontalAlignment="Left" Height="26" FontSize="18" Margin="506,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="552" RenderTransformOrigin="0.632,0.9"
+          />
+            <ComboBox SelectedIndex="{Binding SortId}" HorizontalAlignment="Left" Margin="706,59,0,0" VerticalAlignment="Top" Width="240" FontSize="18">
+                <ComboBoxItem Content="5"/>
+                <ComboBoxItem Content="10"/>
+                <ComboBoxItem Content="20"/>
+                <ComboBoxItem Content="30"/>
+                <ComboBoxItem Content="40"/>
+                <ComboBoxItem Content="50"/>
+                <ComboBoxItem Content="100"/>
+                <ComboBoxItem Content="200"/>
+                <ComboBoxItem Content="все"/>
+            </ComboBox>
             <TextBlock Canvas.ZIndex="2" Visibility="{Binding VisOfNothingFaund}" TextWrapping="Wrap" Height="28" Text="Ничего не найдено" FontFamily="/fonts/#Pescadero" FontSize="14pt" Margin="510,280,0,230" RenderTransformOrigin="0.591,0.516"/>
 
-            <DataGrid BorderBrush="Black" BorderThickness="1"  Visibility="Visible" FontSize="14" Width="709" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  RowStyle="{StaticResource MyDataGridRow}"  IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="460" Margin="251,160,0,0" VerticalAlignment="Top"  >
+            <DataGrid BorderBrush="Black" BorderThickness="1"  Visibility="Visible" FontSize="14" Width="696" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  RowStyle="{StaticResource MyDataGridRow}"  IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="500" Margin="251,160,0,0" VerticalAlignment="Top"  >
 
                 <DataGrid.Columns  >
 

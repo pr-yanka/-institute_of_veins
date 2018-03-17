@@ -92,7 +92,7 @@
     <DataTemplate x:Key="TemplateCalendarOperations">
         <Grid Margin="220,80,0,0">
             <TextBlock HorizontalAlignment="Left" Margin="30,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="164" FontSize="20" Text="Поиск по слову:" RenderTransformOrigin="-0.027,0.471"/>
-            <TextBox Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Height="26" Margin="185,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="554" RenderTransformOrigin="0.632,0.9">
+            <TextBox Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Height="26" Margin="185,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="541" RenderTransformOrigin="0.632,0.9">
                 <TextBox.InputBindings>
                     <KeyBinding Command="{Binding Path=FilterTextCommand}"/>
                 </TextBox.InputBindings>
@@ -113,7 +113,7 @@
             <CheckBox Content="отображать проведённые&#xD;&#xA;" IsChecked="{Binding IsCompletedOp}" HorizontalAlignment="Left" Margin="30,93,0,0" VerticalAlignment="Top"  FontSize="16"  Height="20" Width="243"/>
             <TextBlock Canvas.ZIndex="2" Visibility="{Binding VisOfNothingFaund}" TextWrapping="Wrap" Height="28" Text="Ничего не найдено" FontFamily="/fonts/#Pescadero"  FontSize="16"  Margin="300,409,324,188" RenderTransformOrigin="0.591,0.516"/>
 
-            <DataGrid BorderBrush="Black" BorderThickness="1" FontSize="14" VerticalScrollBarVisibility="Visible" CanUserReorderColumns="False" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  RowStyle="{StaticResource MyDataGridRow}" IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="411" Margin="30,204,0,0" VerticalAlignment="Top" Width="709" >
+            <DataGrid BorderBrush="Black" BorderThickness="1" FontSize="14" VerticalScrollBarVisibility="Auto" CanUserReorderColumns="False" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  RowStyle="{StaticResource MyDataGridRow}" IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="450" Margin="30,204,0,0" VerticalAlignment="Top" Width="696" >
                 <DataGrid.Columns  >
                     <DataGridTextColumn Width="auto"  CellStyle="{StaticResource MyDataGridCell2}" Binding="{Binding Path=Date,StringFormat=dd.MM.yyyy hh:mm}" ClipboardContentBinding="{x:Null}" Header="Дата" />
                     <DataGridTextColumn Width="172"  CellStyle="{StaticResource MyDataGridCell}" Binding="{Binding Path=Patient}" ClipboardContentBinding="{x:Null}" Header="Пациент"  />
@@ -130,7 +130,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="К итогам" Width="137" >
+                    <DataGridTemplateColumn Header="К итогам" Width="138" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >
                                 <Grid Visibility="{Binding IsOpResult,UpdateSourceTrigger=PropertyChanged}">
@@ -143,10 +143,10 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <ComboBox SelectedItem="{Binding SelectedDocOrMed}" SelectedIndex="{Binding SelectedIdDocMed}" ItemsSource="{Binding DocsAndMedsList}" HorizontalAlignment="Left" Margin="473,60,0,0" VerticalAlignment="Top" Width="266" FontSize="18" Height="21"/>
-            <TextBlock HorizontalAlignment="Left" Margin="358,60,0,0" TextWrapping="Wrap" Text="с участием:" VerticalAlignment="Top" FontSize="18" Width="110"/>
-            <TextBlock HorizontalAlignment="Left" Margin="358,97,0,0" TextWrapping="Wrap" Text="показать операции:" VerticalAlignment="Top" FontSize="18" Width="110"/>
-            <ComboBox SelectedIndex="{Binding SortId}" HorizontalAlignment="Left" Margin="473,104,0,0" VerticalAlignment="Top" Width="266" FontSize="18">
+            <ComboBox SelectedItem="{Binding SelectedDocOrMed}" SelectedIndex="{Binding SelectedIdDocMed}" ItemsSource="{Binding DocsAndMedsList}" HorizontalAlignment="Left" Margin="473,60,0,0" VerticalAlignment="Top" Width="255" FontSize="18" Height="21"/>
+            <TextBlock HorizontalAlignment="Left" Margin="358,60,0,0" TextWrapping="Wrap" Text="С участием:" VerticalAlignment="Top" FontSize="18" Width="110"/>
+            <TextBlock HorizontalAlignment="Left" Margin="358,85,0,0" TextWrapping="Wrap" Text="Показать операции:" VerticalAlignment="Top" FontSize="18" Width="110"/>
+            <ComboBox SelectedIndex="{Binding SortId}" HorizontalAlignment="Left" Margin="473,104,0,0" VerticalAlignment="Top" Width="255" FontSize="18">
                 <ComboBoxItem Content="на сегодня"/>
                 <ComboBoxItem Content="на ближайшие три дня"/>
                 <ComboBoxItem Content="на ближайшую неделю"/>

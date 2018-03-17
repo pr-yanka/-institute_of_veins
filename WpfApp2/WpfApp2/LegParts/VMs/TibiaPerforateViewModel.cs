@@ -342,7 +342,7 @@ namespace WpfApp2.LegParts.VMs
                          {
                              var newCombo = new Perforate_shinCombo();
 
-                             for (int i = 0; i < LegSections.Count; i++)
+                              commentSave = Comment; for (int i = 0; i < LegSections.Count; i++)
                              {
                                  var currentStructure = LegSections[i].SelectedValue;
                                  //ничего не было выбрано

@@ -7,15 +7,15 @@
         <Grid Margin="0,80,0,0">
           
             <Label x:Name="label" Content="{Binding Path=TextResultCancle}" HorizontalAlignment="Left" Margin="397,10,0,0" VerticalAlignment="Top" FontSize="22pt"/>
-            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy1" Content="Сохранить" Command="{Binding Path=ToOperationCommand}" HorizontalAlignment="Left" Margin="589,541,0,0" VerticalAlignment="Top"  
+            <Button  Width="300"  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy1" Content="Сохранить" Command="{Binding Path=ToOperationCommand}" HorizontalAlignment="Left" Margin="683,541,0,0" VerticalAlignment="Top"  
                    />
             <Label x:Name="label1" Content="{Binding Path=DateText}" HorizontalAlignment="Left"  
-                   Margin="209,70,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.491,0.474" FontSize="22"/>
+                   Margin="35,70,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.491,0.474" FontSize="22"/>
             <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="39,136,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top" Foreground="#FF234A72" FontSize="24" Width="603"><TextBlock Text="{Binding Path=OtmenOrProv}"/><Run Text="операция:"/><Run Text=" "/>
-                <TextBlock Text="{Binding Path=operationType}"/></TextBlock>
-            <TextBlock Width="200" Height="200" Foreground="#FF234A72" FontSize="24" Margin="15,0,760,60" Text="Причина : "></TextBlock>
-            <ComboBox SelectedIndex="{Binding Path=ReasonSelected}" Visibility="{Binding Path=VisibilityOfReasons}"  ItemsSource="{Binding Path=CancelsReasons}" Margin="39,230,0,0"  x:Name="richTextBox" HorizontalAlignment="Left" Height="auto"  VerticalAlignment="Top"  
+                       VerticalAlignment="Top" Foreground="#FF234A72" FontSize="24" Width="603"><Run Text=" "/>
+              </TextBlock>
+            <TextBlock Width="200" Height="200" Foreground="#FF234A72" FontSize="24" Margin="15,0,760,221" Text="Причина : "></TextBlock>
+            <ComboBox SelectedIndex="{Binding Path=ReasonSelected}" Visibility="{Binding Path=VisibilityOfReasons}"  ItemsSource="{Binding Path=CancelsReasons}" Margin="39,169,0,0"  x:Name="richTextBox" HorizontalAlignment="Left" Height="auto"  VerticalAlignment="Top"  
                          Width="700" FontSize="22">
             </ComboBox>
 
@@ -47,11 +47,11 @@
                 </TextBox.Style>
 
             </TextBox>
-            <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy33" Command="{Binding Path=OtherReasonCommand}" Content="Другая причина" HorizontalAlignment="Left" Margin="39,271,0,0"              
+            <Button Width="300" Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy33" Command="{Binding Path=OtherReasonCommand}" Content="Другая причина" HorizontalAlignment="Left" Margin="39,224,0,0"              
                     VerticalAlignment="Top" />
-            <DatePickerTextBox IsReadOnly="True" x:Name="label1_Copy" Text="{Binding Path=Date}" HorizontalAlignment="Left" Margin="447,70,0,0"  
+            <DatePickerTextBox IsReadOnly="True" x:Name="label1_Copy" Text="{Binding Path=Date, StringFormat=dd.MM.yyyy hh:mm}" HorizontalAlignment="Left" Margin="816,70,0,0"  
                    VerticalAlignment="Top" RenderTransformOrigin="0.491,0.474" FontSize="22"/>
-            <Button Width="300" Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy" Command="{Binding Path=ToOperationOverviewCommand}" Content="Вернуться к операции" HorizontalAlignment="Left" Margin="119,541,0,0"              
+            <Button Width="300" Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy" Command="{Binding Path=ToOperationOverviewCommand}" Content="Вернуться к операции" HorizontalAlignment="Left" Margin="39,541,0,0"              
                     VerticalAlignment="Top" />
         </Grid>
     </DataTemplate>

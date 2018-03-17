@@ -25,6 +25,8 @@ namespace WpfApp2.ViewModels
             //если PropertyChanged не нулевое - оно будет разбужено
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        public bool IsVisibleTotal { get; set; }
+        public bool IsFilteredPt { get; set; }
         private bool? _isChecked;
         public bool? IsChecked
         {
@@ -40,12 +42,132 @@ namespace WpfApp2.ViewModels
 
         public OperationTypesDataSource(OperationType Diagnosis)
         {
+            IsVisibleTotal = true;
+            IsFilteredPt = false;
             this.Data = Diagnosis;
             IsChecked = false;
         }
     }
-    public class ViewModelOperationListForOperation : ViewModelBase
+    public class ViewModelOperationListForOperation : ViewModelBase, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            //если PropertyChanged не нулевое - оно будет разбужено
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+
+
+        private int lastLength = 0;
+        private Visibility _visOfNothingFaund;
+        public Visibility VisOfNothingFaund
+        {
+            get { return _visOfNothingFaund; }
+            set
+            { _visOfNothingFaund = value; OnPropertyChanged(); }
+        }
+        private string _filterText;
+        public string FilterText
+        {
+            get { return _filterText; }
+            set
+            {
+                _filterText = value; OnPropertyChanged();
+                for (int i = 0; i < DataSourceList.Count; ++i)
+                {
+                    foreach (var x in FullCopy)
+                        if (DataSourceList[i].IsChecked != null && DataSourceList[i].IsChecked == true && x.Data.Id == DataSourceList[i].Data.Id)
+                        {
+                            x.IsChecked = true;
+                        }
+                        else if (x.Data.Id == DataSourceList[i].Data.Id)
+                        {
+                            x.IsChecked = false;
+                        }
+                }
+                if (lastLength >= value.Length)
+                {
+                    //foreach(ChangeHistoryClass x in FullCopy)
+                    //{
+                    //    ChangeHistoryClass buf = new ChangeHistoryClass(x.Ch);
+                    //    Changes.Add(buf);
+                    //}
+
+                    DataSourceList = new ObservableCollection<OperationTypesDataSource>(FullCopy);
+                }
+                lastLength = value.Length;
+                if (!string.IsNullOrWhiteSpace(FilterText))
+                {
+                    for (int i = 0; i < DataSourceList.Count; ++i)
+                    {
+
+
+
+                        if (DataSourceList[i].Data.Str.ToLower().Contains(FilterText.ToLower()))
+                        {
+                            DataSourceList[i].IsFilteredPt = true;
+                            DataSourceList[i].IsVisibleTotal = true;
+                            //Controller.NavigateTo<ViewModelOperationForAmbullatorCardList>();
+                        }
+                        else
+                        {
+                            DataSourceList[i].IsFilteredPt = false;
+                            DataSourceList[i].IsVisibleTotal = false;
+                            //Controller.NavigateTo<ViewModelOperationForAmbullatorCardList>();
+                        }
+
+
+
+
+                    }
+
+
+
+                    for (int i = 0; i < DataSourceList.Count; ++i)
+                    {
+                        if (DataSourceList[i].IsVisibleTotal == false)
+                        {
+                            DataSourceList.Remove(DataSourceList[i]);
+                            --i;
+                        }
+                    }
+                    if (DataSourceList.Count == 0)
+                    {
+                        VisOfNothingFaund = Visibility.Visible;
+                    }
+                    else
+                    {
+                        VisOfNothingFaund = Visibility.Collapsed;
+                    }
+
+                    // 
+                }
+                else
+                {
+
+                    VisOfNothingFaund = Visibility.Collapsed;
+                    foreach (var x in DataSourceList)
+                    {
+                        x.IsVisibleTotal = true;
+                        x.IsFilteredPt = false;
+
+                    }
+
+                    // SetChangesInDB(null, null);
+                }
+
+                Controller.NavigateTo<ViewModelOperationListForOperation>();
+
+
+
+            }
+        }
+
+
+        List<OperationTypesDataSource> FullCopy;
+
+
         #region everyth connected with panel
 
 
@@ -86,76 +208,46 @@ namespace WpfApp2.ViewModels
 
         private void SetClear(object sender, object data)
         {
-            DataSourceList = new List<OperationTypesDataSource>();
+            DataSourceList = new ObservableCollection<OperationTypesDataSource>();
             LeftDiag = new List<OperationTypesDataSource>();
             RightDiag = new List<OperationTypesDataSource>();
-
+            FullCopy = new List<OperationTypesDataSource>();
             foreach (var DiagnosisType in Data.OperationType.GetAll)
             {
+                FullCopy.Add(new OperationTypesDataSource(DiagnosisType));
                 DataSourceList.Add(new OperationTypesDataSource(DiagnosisType));
                 LeftDiag.Add(new OperationTypesDataSource(DiagnosisType));
                 RightDiag.Add(new OperationTypesDataSource(DiagnosisType));
             }
         }
-        //private void SetDiagnosisListLeft(object sender, object data)
-        //{
-        //    // using
-        //    var DiagList = (List<DiagnosisObs>)data;
-        //    List<OperationTypesDataSource> DataSourceListBuffer = new List<OperationTypesDataSource>();
-        //    for (int i = 0; i < DiagList.Count; ++i)
-        //    {
-
-        //        DataSourceListBuffer.Add(new OperationTypesDataSource(DiagList[i].DiagnosisType));
-        //        DataSourceListBuffer[i].IsChecked = true;
-        //    }
-        //    //LeftDiag = new List<OperationTypesDataSource>();
-        //    //for (int i = 0; i < DiagList.Count; ++i)
-        //    //{
-        //    //    LeftDiag.Add(new OperationTypesDataSource(DiagList[i].DiagnosisType));
-        //    //    LeftDiag[i].IsChecked = true;
-        //    //}
-        //    MessageBus.Default.Call("SetLeftDiagnosisListForOperation", this, DataSourceListBuffer);
-        //    Controller.NavigateTo<ViewModelAddOperation>();
-        //}
-        //private void SetDiagnosisListRight(object sender, object data)
-        //{
-        //    var DiagList = (List<DiagnosisObs>)data;
-        //    List<OperationTypesDataSource> DataSourceListBuffer = new List<OperationTypesDataSource>();
-        //    for (int i = 0; i < DiagList.Count; ++i)
-        //    {
-
-        //        DataSourceListBuffer.Add(new OperationTypesDataSource(DiagList[i].DiagnosisType));
-        //        DataSourceListBuffer[i].IsChecked = true;
-        //    }
-        //    //RightDiag = new List<OperationTypesDataSource>();
-        //    //for (int i = 0; i < DiagList.Count; ++i)
-        //    //{
-        //    //    RightDiag.Add(new OperationTypesDataSource(DiagList[i].DiagnosisType));
-        //    //    RightDiag[i].IsChecked = true;
-        //    //}
-        //    MessageBus.Default.Call("SetRightDiagnosisListForOperation", this, DataSourceListBuffer);
-        //    Controller.NavigateTo<ViewModelAddOperation>();
-        //}
+       
 
 
         private void SetDiagnosisList(object sender, object data)
         {
+            FilterText = "";
             ld = (string)data;
             if (ld == "Left")
             {
-                DataSourceList = LeftDiag;
+                DataSourceList = new ObservableCollection<OperationTypesDataSource>(LeftDiag);
+                FullCopy = LeftDiag;
             }
             else
-            { DataSourceList = RightDiag; }
+            {
+                DataSourceList = new ObservableCollection<OperationTypesDataSource>(RightDiag);
+                FullCopy = RightDiag;
+            }
         }
         //Жалобы/диагноз/заключение
         public List<OperationTypesDataSource> LeftDiag { get; set; }
         public List<OperationTypesDataSource> RightDiag { get; set; }
-        public List<OperationTypesDataSource> DataSourceList { get; set; }
+        public ObservableCollection<OperationTypesDataSource> DataSourceList { get; set; }
         public string TextName { get; set; }
 
         public ViewModelOperationListForOperation(NavigationController controller) : base(controller)
         {
+            TextOFNewType = "Новый тип операции";
+            VisOfNothingFaund = Visibility.Collapsed;
             CurrentPanelViewModel = new OperationTypePanelViewModel(this);
             OpenCommand = new DelegateCommand(() =>
             {
@@ -168,7 +260,7 @@ namespace WpfApp2.ViewModels
             //MessageBus.Default.Subscribe("SetDiagnosisListLeft", SetDiagnosisListLeft);
             SaveCommand = new DelegateCommand(() =>
             {
-
+                FilterText = "";
                 var newType = CurrentPanelViewModel.GetPanelType();
                 if (!string.IsNullOrWhiteSpace(newType.ToString()))
                 {
@@ -182,11 +274,14 @@ namespace WpfApp2.ViewModels
                     var DataSourceListbuf = DataSourceList;
                     var LeftDiagbuf = LeftDiag;
                     var RightDiagbuf = RightDiag;
-                    DataSourceList = new List<OperationTypesDataSource>();
+                    
+                    DataSourceList = new ObservableCollection<OperationTypesDataSource>();
                     LeftDiag = new List<OperationTypesDataSource>();
                     RightDiag = new List<OperationTypesDataSource>();
+                    FullCopy = new List<OperationTypesDataSource>();
                     foreach (var DiagnosisType in Data.OperationType.GetAll)
                     {
+                        FullCopy.Add(new OperationTypesDataSource(DiagnosisType));
                         DataSourceList.Add(new OperationTypesDataSource(DiagnosisType));
                         LeftDiag.Add(new OperationTypesDataSource(DiagnosisType));
                         RightDiag.Add(new OperationTypesDataSource(DiagnosisType));
@@ -196,6 +291,7 @@ namespace WpfApp2.ViewModels
                         if (DiagnosisType.IsChecked.Value)
                         {
                             DataSourceList.Where(s => s.Data.Id == DiagnosisType.Data.Id).ToList()[0].IsChecked = true;
+                            FullCopy.Where(s => s.Data.Id == DiagnosisType.Data.Id).ToList()[0].IsChecked = true;
                         }
                     }
                     foreach (var DiagnosisType in LeftDiagbuf)
@@ -212,7 +308,7 @@ namespace WpfApp2.ViewModels
                             RightDiag.Where(s => s.Data.Id == DiagnosisType.Data.Id).ToList()[0].IsChecked = true;
                         }
                     }
-                    Controller.NavigateTo<ViewModelDiagnosisListForOperation>();
+                    Controller.NavigateTo<ViewModelOperationListForOperation>();
                 }
                 else
                 { MessageBox.Show("Не все поля заполнены"); }
@@ -224,14 +320,19 @@ namespace WpfApp2.ViewModels
             });
             TextName = "Вернуться к обследованию";
             HeaderText = "Типы операции";
-            AddButtonText = "Новый тип операции";
+            AddButtonText = "Другой тип операции";
             MessageBus.Default.Subscribe("SetleftOrRightOpForOp", SetDiagnosisList);
-            DataSourceList = new List<OperationTypesDataSource>();
+            DataSourceList = new ObservableCollection<OperationTypesDataSource>();
             LeftDiag = new List<OperationTypesDataSource>();
             RightDiag = new List<OperationTypesDataSource>();
 
+
+            // DataSourceList = new ObservableCollection<OperationForAmbullatorCardDataSource>();
+            FullCopy = new List<OperationTypesDataSource>();
+
             foreach (var DiagnosisType in Data.OperationType.GetAll)
             {
+                FullCopy.Add(new OperationTypesDataSource(DiagnosisType));
                 DataSourceList.Add(new OperationTypesDataSource(DiagnosisType));
                 LeftDiag.Add(new OperationTypesDataSource(DiagnosisType));
                 RightDiag.Add(new OperationTypesDataSource(DiagnosisType));
@@ -241,8 +342,9 @@ namespace WpfApp2.ViewModels
             ToPhysicalCommand = new DelegateCommand(
                 () =>
                 {
+                    FilterText = "";
                     List<OperationTypesDataSource> DataSourceListBuffer = new List<OperationTypesDataSource>();
-                    foreach (var Data in DataSourceList)
+                    foreach (var Data in FullCopy)
                     {
                         if (Data.IsChecked == true)
                         {
@@ -252,15 +354,15 @@ namespace WpfApp2.ViewModels
                     if (ld == "Left")
                     {
 
-                    
+
 
                         MessageBus.Default.Call("SetLeftOperationListForOperation", this, DataSourceListBuffer);
-                        LeftDiag = DataSourceList;
+                        LeftDiag = new List<OperationTypesDataSource>(DataSourceList);
                     }
                     else
                     {
                         MessageBus.Default.Call("SetRightOperationListForOperation", this, DataSourceListBuffer);
-                        RightDiag = DataSourceList;
+                        RightDiag = new List<OperationTypesDataSource>(DataSourceList);
                     }
 
                     Controller.NavigateTo<ViewModelAddOperation>();
@@ -269,6 +371,7 @@ namespace WpfApp2.ViewModels
             SaveChangesCommand = new DelegateCommand(
                 () =>
                 {
+                   // FilterText = "";
                     List<OperationTypesDataSource> DataSourceListBuffer = new List<OperationTypesDataSource>();
                     foreach (var Data in DataSourceList)
                     {
@@ -280,12 +383,12 @@ namespace WpfApp2.ViewModels
                     if (ld == "Left")
                     {
                         MessageBus.Default.Call("SetLeftDiagnosisListForOperation", this, DataSourceListBuffer);
-                        LeftDiag = DataSourceList;
+                        LeftDiag = new List<OperationTypesDataSource>(DataSourceList);
                     }
                     else
                     {
                         MessageBus.Default.Call("SetRightDiagnosisListForOperation", this, DataSourceListBuffer);
-                        RightDiag = DataSourceList;
+                        RightDiag = new List<OperationTypesDataSource>(DataSourceList);
                     }
 
                     Controller.NavigateTo<ViewModelAddOperation>();

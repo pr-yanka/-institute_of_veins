@@ -168,6 +168,11 @@ namespace WpfApp2.ViewModels
                     VisiBIlityOfAddResult = Visibility.Visible;
                     VisiBIlityOfAddCancle = Visibility.Visible;
                     ResultButtonName = "Добавить итоги";
+                    ToAddOperationResultCommand = new DelegateCommand(() =>
+                    {
+                        MessageBus.Default.Call("GetOperationIDForAddOperationResult", this, Operation.Id);
+                        Controller.NavigateTo<ViewModelAddOperationResult>();
+                    });
                 }
                 else
                 {
@@ -191,15 +196,17 @@ namespace WpfApp2.ViewModels
                     ResultButtonName = "Посмотреть итоги";
                     ToAddOperationResultCommand = new DelegateCommand(() =>
                     {
-                        MessageBus.Default.Call("GetOprForOprResultOverview", this, Operation.Id);
-                        Controller.NavigateTo<ViewModelOperationResultOverview>();
+                        //MessageBus.Default.Call("GetOprForOprResultOverview", this, Operation.Id);
+                        //Controller.NavigateTo<ViewModelOperationResultOverview>();
+                        MessageBus.Default.Call("GetOperationIDForAddOperationResult", this, Operation.Id);
+                        Controller.NavigateTo<ViewModelAddOperationResult>();
 
                     });
                 }
 
                 if (Operation.отмена_операции != null)
                 {
-                    OperationResults = "Операция перенесена";
+                    OperationResults = "Операция отменена";
                     VisiBIlityOfAddResult = Visibility.Hidden;
                     VisiBIlityOfAddCancle = Visibility.Hidden;
                 }

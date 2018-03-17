@@ -42,20 +42,20 @@
 
                     </TextBox>
                 </StackPanel>
-                
-                <DataGrid HeadersVisibility="None" MinHeight="500"  Margin="0,0" AutoGenerateColumns="False" ItemsSource="{Binding Path=Controller.CurrentViewModel.DataSourceList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+
+                <DataGrid  HeadersVisibility="None" MinHeight="500"  Margin="10,0" AutoGenerateColumns="False" ItemsSource="{Binding Controller.CurrentViewModel.DataSourceList, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn >
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <CheckBox IsChecked="{Binding Path=IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                    <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTemplateColumn  >
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock  TextAlignment="Left" Width="Auto" Text="{Binding Path=Data.Str}" />
+                                    <TextBlock  TextAlignment="Left" Width="Auto" Text="{Binding Data.Str}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
@@ -79,7 +79,7 @@
                 </Border.Background>
             </Border>
 
-            <Border x:Name="panel34Corntrol" Grid.RowSpan="4" Margin="0,0,-450,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5"  Width="442" Height="200"  DataContext="{Binding Path=CurrentPanelViewModel}" >
+            <Border x:Name="panel34Corntrol" Grid.RowSpan="4" Margin="0,0,-450,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5"  Width="450" Height="195"  DataContext="{Binding Path=CurrentPanelViewModel}" >
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
                         <Style.Triggers>
@@ -108,11 +108,11 @@
 
                 <Grid>
                     <Canvas Background="#FFC6E8E6" Margin="0,0,0,29">
-                        <TextBlock x:Name="textfBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="150" FontSize="18" Canvas.Top="20" Text="{Binding ParentVM.TextOFNewType}"/>
-                        <TextBox x:Name="textBfox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top"  Width="331" Canvas.Left="100"  Canvas.Top="61" />
-                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.RevertCommand}"  Canvas.Left="10" Canvas.Top="120" />
-                        <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtonfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.SaveCommand}" Canvas.Left="233" Canvas.Top="120" />
-                        <TextBlock x:Name="texftBlock_Copy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18" Canvas.Top="58" Canvas.Left="10" Text="Название:"/>
+                        <TextBlock x:Name="textfBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="10" FontSize="18" Canvas.Top="5" Text="{Binding ParentVM.TextOFNewType}"/>
+                        <TextBox x:Name="textBfox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" FontSize="18"  Width="430" Canvas.Left="10"  Canvas.Top="61" />
+                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18"  Command="{Binding ParentVM.RevertCommand}"  Canvas.Left="10" Canvas.Top="115" />
+                        <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtonfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Command="{Binding ParentVM.SaveCommand}" Canvas.Left="233" Canvas.Top="115" />
+                        <TextBlock x:Name="texftBlock_Copy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18" Canvas.Top="31" Canvas.Left="10" Text="Название:"/>
 
                     </Canvas>
                 </Grid>

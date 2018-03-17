@@ -21,6 +21,7 @@ namespace WpfApp2.ViewModels
         private IEnumerable<String> _districtList;
         public IEnumerable<String> BloodExchangeCommentList { get { return _districtList; } set { _districtList = value; OnPropertyChanged(); } }
 
+         //SugarDiabetComment
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -73,8 +74,8 @@ namespace WpfApp2.ViewModels
         public DelegateCommand Changed { get; protected set; }
         #endregion
         public DelegateCommand RevertCommand { set; get; }
-
-
+        public DelegateCommand<object> LostFocus { get; private set; }
+        public DelegateCommand<object> ClickOnWeight { get; private set; }
 
         public DelegateCommand SaveCommand { set; get; }
 
@@ -100,6 +101,8 @@ namespace WpfApp2.ViewModels
 
         private IEnumerable<String> _districtList;
         public IEnumerable<String> BloodExchangeCommentList { get { return _districtList; } set { _districtList = value; OnPropertyChanged(); } }
+        private IEnumerable<String> _districtList1;
+        public IEnumerable<String> SugarDiabetCommentList { get { return _districtList1; } set { _districtList1 = value; OnPropertyChanged(); } }
 
         private IEnumerable<String> _townsList;
         public IEnumerable<String> PreparateHateCommentList { get { return _townsList; } set { _townsList = value; OnPropertyChanged(); } }
@@ -153,7 +156,17 @@ namespace WpfApp2.ViewModels
         private string _bloodGroup;
 
         private string _sugar;
-
+        private string _initials;
+        public string Initials
+        {
+            get { return _initials; }
+            set
+            {
+                _initials = value;
+              
+                OnPropertyChanged();
+            }
+        }
         private string _isPositiveGroupType;
         private string _nameOfButton;
 
@@ -361,6 +374,7 @@ namespace WpfApp2.ViewModels
         List<BloodExchangeListDataSource> BloodExchangeBuf;
         private void SetCurrentPatientID(object sender, object data)
         {
+           
             List<String> buff1 = new List<string>();
             foreach (var x in Data.BloodExchangeComment.GetAll)
                 buff1.Add(x.Str);
@@ -370,6 +384,12 @@ namespace WpfApp2.ViewModels
                 buff2.Add(x.Str);
 
 
+
+            List<String> buff3 = new List<string>();
+            foreach (var x in Data.SugarDiabetComment.GetAll)
+                buff3.Add(x.Str);
+
+            SugarDiabetCommentList = buff3;
             PreparateHateCommentList = buff2;
             // BloodExchangeComment
             BloodExchangeCommentList = buff1; //PreparateHateComment
@@ -418,6 +438,7 @@ namespace WpfApp2.ViewModels
                 try
                 {
                     CurrentPatient = PatientsRep.Get((int)data);
+                    Initials ="Пациент: "+ CurrentPatient.Sirname + " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ". ";
 
                     if (CurrentPatient.IsPositiveGroupType != null && CurrentPatient.IsPositiveGroupType.Value == false)
                     {
@@ -753,6 +774,10 @@ namespace WpfApp2.ViewModels
 
 
                     });
+                    if(newType.Data.Date == null)
+                    {
+                        newType.Data.Date = DateTime.Now;
+                    }
                     newType.DeleteCommand = DelThis;
                     BloodExchange.Add(newType);
                     BloodExchangeList.View.Refresh();
@@ -777,7 +802,29 @@ namespace WpfApp2.ViewModels
                 Handled = false;
             });
 
+            LostFocus = new DelegateCommand<object>(
+       (sender) =>
+       {
 
+           if (string.IsNullOrWhiteSpace(((TextBox)sender).Text))
+           {
+               ((TextBox)sender).Text = "0";
+               CurrentPanelViewModel.ShortText = 0;
+           }
+
+
+       }
+   ); ClickOnWeight = new DelegateCommand<object>(
+      (sender) =>
+      {
+
+          if (((TextBox)sender).Text == "0")
+              ((TextBox)sender).Text = "";
+
+
+
+      }
+  );
             CurrentPatient = new Patient();
 
             CurrentPatient.Birthday = DateTime.Now;
@@ -800,8 +847,30 @@ namespace WpfApp2.ViewModels
 
 
                     bool test = false;
+
+
                     CurrentPatient = Data.Patients.Get(CurrentPatient.Id);
+
+
                     CurrentPatient.Sugar = Sugar;
+                    bool xtestx = false;
+                    foreach (var x in SugarDiabetCommentList)
+                    {
+                        if (x == Sugar)
+                        {
+                            xtestx = true;
+                            break;
+                        }
+                    }
+                    if (!xtestx)
+                    {
+                        var bff = new SugarDiabetComment();
+                        bff.Str = Sugar;
+                        Data.SugarDiabetComment.Add(bff);
+                        Data.Complete();
+                    }
+
+
                     if (IsPositiveGroupTypeID == 0)
                     {
                         CurrentPatient.IsPositiveGroupType = true;

@@ -15,30 +15,30 @@ namespace WpfApp2.Db.Models
     {
         [Key]
         [Column("id")]
-        public int Id { set; get; }
+        public int id { set; get; }
         [Column("id_аккаунта")]
-        public int AccID { set; get; }
+        public int id_аккаунта { set; get; }
         [Column("id_записи")]
-        public string RowId { set; get; }
+        public string id_записи { set; get; }
 
         [Column("тип_изменения")]
-        public int ChangeType { set; get; }
+        public int тип_изменения { set; get; }
 
         
         [Column("дата_изменения")]
-        public DateTime DataChanged { set; get; }
+        public DateTime дата_изменения { set; get; }
         [Column("название_таблицы")]
-        public string TblName { set; get; }
+        public string название_таблицы { set; get; }
         [Column("название_столбца")]
-        public string TblCollumnName { set; get; }
+        public string название_столбца { set; get; }
         [Column("старое_значение")]
-        public string OldValue { set; get; }
+        public string старое_значение { set; get; }
         [Column("новое_значение")]
-        public string NewValue { set; get; }
+        public string новое_значение { set; get; }
         [Column("SomeBlobFileNew")]
-        public byte[] BlobNew { set; get; }
+        public byte[] SomeBlobFileNew { set; get; }
         [Column("SomeBlobFileOld")]
-        public byte[] BlobOld { set; get; }
+        public byte[] SomeBlobFileOld { set; get; }
         
     }
     public class ChangeHistoryRepository : Repository<ChangeHistory>

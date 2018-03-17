@@ -46,7 +46,7 @@ namespace WpfApp2.ViewModels
             IsChecked = false;
         }
     }
-    public class ViewModelOperationForAmbullatorCardList : ViewModelBase
+    public class ViewModelOperationForAmbullatorCardList : ViewModelBase, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -101,10 +101,15 @@ namespace WpfApp2.ViewModels
                 _filterText = value; OnPropertyChanged();
                 for (int i = 0; i < DataSourceList.Count; ++i)
                 {
-                    if (DataSourceList[i].IsChecked != null && DataSourceList[i].IsChecked == true)
-                    {
-                        FullCopy[i].IsChecked = true;
-                    }
+                    foreach (var x in FullCopy)
+                        if (DataSourceList[i].IsChecked != null && DataSourceList[i].IsChecked == true && x.Data.Id == DataSourceList[i].Data.Id)
+                        {
+                            x.IsChecked = true;
+                        }
+                        else if (x.Data.Id == DataSourceList[i].Data.Id)
+                        {
+                            x.IsChecked = false;
+                        }
                 }
                 if (lastLength >= value.Length)
                 {
@@ -113,7 +118,7 @@ namespace WpfApp2.ViewModels
                     //    ChangeHistoryClass buf = new ChangeHistoryClass(x.Ch);
                     //    Changes.Add(buf);
                     //}
-                 
+
                     DataSourceList = new ObservableCollection<OperationForAmbullatorCardDataSource>(FullCopy);
                 }
                 lastLength = value.Length;
@@ -136,12 +141,12 @@ namespace WpfApp2.ViewModels
                             DataSourceList[i].IsVisibleTotal = false;
                             //Controller.NavigateTo<ViewModelOperationForAmbullatorCardList>();
                         }
-                       
+
 
 
 
                     }
-                
+
 
 
                     for (int i = 0; i < DataSourceList.Count; ++i)
@@ -161,19 +166,19 @@ namespace WpfApp2.ViewModels
                         VisOfNothingFaund = Visibility.Collapsed;
                     }
 
-                 // 
+                    // 
                 }
                 else
                 {
-                  
+
                     VisOfNothingFaund = Visibility.Collapsed;
                     foreach (var x in DataSourceList)
                     {
                         x.IsVisibleTotal = true;
                         x.IsFilteredPt = false;
-                      
+
                     }
-                 
+
                     // SetChangesInDB(null, null);
                 }
 
@@ -184,7 +189,7 @@ namespace WpfApp2.ViewModels
             }
         }
 
-       
+
         List<OperationForAmbullatorCardDataSource> FullCopy;
         private void SetClear(object sender, object data)
         {
@@ -230,7 +235,7 @@ namespace WpfApp2.ViewModels
             MessageBus.Default.Subscribe("SetOprerationForAmbCardListBecauseOFEdit", SetDRecomendationListBecauseOFEdit);
             TextOFNewType = "Новая операция";
             HeaderText = "Операции";
-            AddButtonText = "Добавить операцию";
+            AddButtonText = "Другая операция";
 
             DataSourceList = new ObservableCollection<OperationForAmbullatorCardDataSource>();
             FullCopy = new List<OperationForAmbullatorCardDataSource>();
@@ -243,8 +248,9 @@ namespace WpfApp2.ViewModels
             ToPhysicalCommand = new DelegateCommand(
                 () =>
                 {
+                    FilterText = "";
                     ObservableCollection<OperationForAmbullatorCardDataSource> DataSourceListBuffer = new ObservableCollection<OperationForAmbullatorCardDataSource>();
-                    foreach (var Data in DataSourceList)
+                    foreach (var Data in FullCopy)
                     {
                         if (Data.IsChecked == true)
                         {
@@ -274,6 +280,7 @@ namespace WpfApp2.ViewModels
 
             SaveCommand = new DelegateCommand(() =>
             {
+                FilterText = "";
                 var newType = CurrentPanelViewModel.GetPanelType();
                 if (!string.IsNullOrWhiteSpace(newType.Str))
                 {

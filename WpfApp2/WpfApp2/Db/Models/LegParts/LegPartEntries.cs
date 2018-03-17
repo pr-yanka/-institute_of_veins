@@ -29,8 +29,9 @@ namespace WpfApp2.Db.Models.LegParts
 
 
 
-      
 
+        //[Column("комментарий")]
+        //public virtual string Commentary { get; set; }
 
 
     }

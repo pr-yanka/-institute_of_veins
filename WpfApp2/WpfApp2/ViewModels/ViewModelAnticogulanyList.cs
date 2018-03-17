@@ -238,7 +238,7 @@ namespace WpfApp2.ViewModels
             MessageBus.Default.Subscribe("SetAlergicAnticogulanyBecauseOFEdit", SetDRecomendationListBecauseOFEdit);
             TextOFNewType = "Новый антикогулянт";
             HeaderText = "Антикогулянт";
-            AddButtonText = "Добавить антикогулянт";
+            AddButtonText = "Другой антикогулянт";
 
             DataSourceList = new ObservableCollection<AnticogulanyListDataSource>();
             foreach (var RecomendationsType in Data.Anticogulants.GetAll)

@@ -280,8 +280,8 @@ namespace WpfApp2.ViewModels
                                 bufer2 = new DelegateCommand(
                            () =>
                            {
-                               MessageBus.Default.Call("GetOprForOprResultOverview", this, Operation.Id);
-                               Controller.NavigateTo<ViewModelOperationResultOverview>();
+                               MessageBus.Default.Call("GetOperationIDForAddOperationResult", this, Operation.Id);
+                               Controller.NavigateTo<ViewModelAddOperationResult>();
                            });
                             }
 

@@ -85,7 +85,17 @@ namespace WpfApp2.ViewModels
         public string MonthAppear { get { return _monthAppear; } set { _monthAppear = value; } }
         public string MonthDisappear { get { return _monthDisappear; } set { _monthDisappear = value; } }
         public string YearDisappear { get { return _yearDisappear; } set { _yearDisappear = value; } }
+        private string _initials;
+        public string Initials
+        {
+            get { return _initials; }
+            set
+            {
+                _initials = value;
 
+                OnPropertyChanged();
+            }
+        }
         public DateTime DateAppear { get; set; }
 
         public DateTime DateDisappear { get; set; }
@@ -97,7 +107,8 @@ namespace WpfApp2.ViewModels
         private void SetCurrentPatientID(object sender, object data)
         {
             YearSelectedId = Year.Count - 1;
-           
+            //Initials = "Пациент: " + CurrentPatient.Sirname + " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ". ";
+
             setCurrMonth(DateTime.Now.Month);
             YearDissapearSelectedId = Yeard.Count - 1;
             MonthDissapearSelectedId = Monthd.Count - 1;
@@ -112,14 +123,14 @@ namespace WpfApp2.ViewModels
             {
                 PatologyTypesId = new ObservableCollection<int>();
                 PatologyTypes = new ObservableCollection<string>();
-                ObservableCollection<PatologyType> PatologyTypesbuf = new ObservableCollection<PatologyType>();
+                ObservableCollection<Patology> PatologyTypesbuf = new ObservableCollection<Patology>();
 
 
                 PatologyRepository ptRep = new PatologyRepository(context);
                 PatientsRepository ptentRep = new PatientsRepository(context);
                 PatologyTypeRepository PatType = new PatologyTypeRepository(context);
 
-                foreach (var Patology in ptRep.GetAll)
+                foreach (Patology Patology in ptRep.GetAll)
                 {
                     //Patology sadasew
                     if (Patology.id_пациента == CurrentPatient.Id)
@@ -128,20 +139,20 @@ namespace WpfApp2.ViewModels
                         {
                             if (PatoType.Id == Patology.id_патологии)
                             {
-                                PatologyTypesbuf.Add(PatoType);
+                                PatologyTypesbuf.Add(Patology);
                             }
                         }
 
                     }
                 }
                 bool result = true;
-                foreach (var PatoType in PatType.GetAll)
+                foreach (PatologyType PatoType in PatType.GetAll)
                 {
                     result = true;
 
                     foreach (var PatoTypeBuff in PatologyTypesbuf)
                     {
-                        if (PatoType.Id == PatoTypeBuff.Id)
+                        if (PatoType.Id == PatoTypeBuff.id_патологии && PatoTypeBuff.isArchivatied != true)
                             result = false;
                     }
                     if (result == true)
@@ -211,7 +222,7 @@ namespace WpfApp2.ViewModels
 
         private int _yearDissapearSelectedId;
 
-        public int YearDissapearSelectedId { get { return _yearDissapearSelectedId; } set { _yearDissapearSelectedId = value;  OnPropertyChanged(); } }
+        public int YearDissapearSelectedId { get { return _yearDissapearSelectedId; } set { _yearDissapearSelectedId = value; OnPropertyChanged(); } }
 
         private int _monthDissapearSelectedId;
 
@@ -345,67 +356,67 @@ namespace WpfApp2.ViewModels
                     setCurrMonth(i);
                     break;
                 }
-               
+
                 if (DateTime.Now.Month == 2 && i == DateTime.Now.Year)
                 {
                     setCurrMonth(i);
                     break;
                 }
-             
+
                 if (DateTime.Now.Month == 3 && i == DateTime.Now.Year)
                 {
                     setCurrMonth(i);
                     break;
                 }
-               
+
                 if (DateTime.Now.Month == 4 && i == DateTime.Now.Year)
                 {
                     setCurrMonth(i);
                     break;
                 }
-             
+
                 if (DateTime.Now.Month == 5 && i == DateTime.Now.Year)
                 {
                     setCurrMonth(i);
                     break;
                 }
-             
+
                 if (DateTime.Now.Month == 6 && i == DateTime.Now.Year)
                 {
                     setCurrMonth(i);
                     break;
                 }
-               
+
                 if (DateTime.Now.Month == 7 && i == DateTime.Now.Year)
                 {
                     setCurrMonth(i);
                     break;
                 }
-           
+
                 if (DateTime.Now.Month == 8 && i == DateTime.Now.Year)
                 {
                     setCurrMonth(i);
                     break;
                 }
-            
+
                 if (DateTime.Now.Month == 9 && i == DateTime.Now.Year)
                 {
                     setCurrMonth(i);
                     break;
                 }
-               
+
                 if (DateTime.Now.Month == 10 && i == DateTime.Now.Year)
                 {
                     setCurrMonth(i);
                     break;
                 }
-               
+
                 if (DateTime.Now.Month == 11 && i == DateTime.Now.Year)
                 {
                     setCurrMonth(i);
                     break;
                 }
-              
+
                 if (DateTime.Now.Month == 12 && i == DateTime.Now.Year)
                 {
                     setCurrMonth(i);
@@ -413,7 +424,7 @@ namespace WpfApp2.ViewModels
                 }
 
             }
-        
+
             Yeard = new ObservableCollection<string>(Year);
             Yeard.Add("-");
             Monthd.Add("-");
@@ -447,7 +458,7 @@ namespace WpfApp2.ViewModels
                         {
                             Patology buff = new Patology();
 
-                           // string[] curDate = MonthAndYear[MonthAndYearSelectedId].Split(' ');
+                            // string[] curDate = MonthAndYear[MonthAndYearSelectedId].Split(' ');
 
                             DateAppear = new DateTime(int.Parse(Year[YearSelectedId]), getmonthName(Month[MonthSelectedId]), 1);
                             buff.MonthAppear = DateAppear;
@@ -456,8 +467,8 @@ namespace WpfApp2.ViewModels
 
                             if (Monthd[MonthDissapearSelectedId] != "-" && Yeard[YearDissapearSelectedId] != "-")
                             {
-                           
 
+                                buff.isArchivatied = true;
                                 DateDisappear = new DateTime(int.Parse(Yeard[YearDissapearSelectedId]), getmonthName(Monthd[MonthDissapearSelectedId]), 1);
                                 buff.MonthDisappear = DateDisappear;
                                 buff.YearDisappear = DateDisappear;
@@ -478,7 +489,7 @@ namespace WpfApp2.ViewModels
                             MessageBus.Default.Call("GetPatientForPatology", this, CurrentPatient.Id);
                             Controller.NavigateTo<ViewModelPathologyList>();
                         }
-                        catch
+                        catch (Exception ex)
                         {
                             MessageBox.Show("Добавьте патологию");
                         }

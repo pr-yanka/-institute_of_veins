@@ -203,6 +203,7 @@
       <DependentUpon>AddReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="Db\Models\AnticogulantsRepository.cs" />
+    <Compile Include="Db\Models\SugarDiabetCommentRepository.cs" />
     <Compile Include="Db\Models\SclezingRepository.cs" />
     <Compile Include="Db\Models\PreparateHateCommentRepository.cs" />
     <Compile Include="Db\Models\BloodExchangeCommentRepository.cs" />
@@ -372,6 +373,11 @@
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="LegParts\VMs\MPVSectionViewModel.cs" />
     <Compile Include="LegParts\VMs\MPVViewModel.cs" />
+    <Compile Include="ViewModels\Panels\AnalizePanelViewModel.cs" />
+    <Compile Include="ViewModels\Panels\TEMPVVayTypePanelViewModel.cs" />
+    <Compile Include="ViewModels\Panels\PDSVVayTypePanelViewModel.cs" />
+    <Compile Include="ViewModels\Panels\MPVVayTypePanelViewModel.cs" />
+    <Compile Include="ViewModels\Panels\BPVVayTypePanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\SclerozPanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\AnticogulantPanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\OperationForAmbullatorCardPanelViewModel.cs" />

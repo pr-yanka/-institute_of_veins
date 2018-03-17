@@ -54,13 +54,13 @@ namespace WpfApp2.ViewModels
 
                 PreparateHateCommentList = buff2;
             }
-             
+
             IsVisibleTotal = true;
             this.Data = Recomendations;
             IsChecked = false;
         }
     }
-    public class ViewModelPreparateHate : ViewModelBase
+    public class ViewModelPreparateHate : ViewModelBase, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -116,10 +116,15 @@ namespace WpfApp2.ViewModels
                 _filterText = value; OnPropertyChanged();
                 for (int i = 0; i < DataSourceList.Count; ++i)
                 {
-                    if (DataSourceList[i].IsChecked != null && DataSourceList[i].IsChecked == true)
-                    {
-                        FullCopy[i].IsChecked = true;
-                    }
+                    foreach (var x in FullCopy)
+                        if (DataSourceList[i].IsChecked != null && DataSourceList[i].IsChecked == true && x.Data.Id == DataSourceList[i].Data.Id)
+                        {
+                            x.IsChecked = true;
+                        }
+                        else if (x.Data.Id == DataSourceList[i].Data.Id)
+                        {
+                            x.IsChecked = false;
+                        }
                 }
                 if (lastLength >= value.Length)
                 {
@@ -248,7 +253,7 @@ namespace WpfApp2.ViewModels
             MessageBus.Default.Subscribe("SetPreparateHateListBecauseOFEdit", SetDRecomendationListBecauseOFEdit);
             TextOFNewType = "Новый препарат";
             HeaderText = "Непереносимость припаратов";
-            AddButtonText = "Добавить препарат";
+            AddButtonText = "Другой препарат";
 
             DataSourceList = new ObservableCollection<PreparateHateDataSource>();
             foreach (var RecomendationsType in Data.PreparateHate.GetAll)
@@ -259,8 +264,9 @@ namespace WpfApp2.ViewModels
             ToPhysicalCommand = new DelegateCommand(
                 () =>
                 {
+                    FilterText = "";
                     ObservableCollection<PreparateHateDataSource> DataSourceListBuffer = new ObservableCollection<PreparateHateDataSource>();
-                    foreach (var Data in DataSourceList)
+                    foreach (var Data in FullCopy)
                     {
                         if (Data.IsChecked == true)
                         {
@@ -289,6 +295,7 @@ namespace WpfApp2.ViewModels
 
             SaveCommand = new DelegateCommand(() =>
             {
+                FilterText = "";
                 var newType = CurrentPanelViewModel.GetPanelType();
                 if (!string.IsNullOrWhiteSpace(newType.Str))
                 {

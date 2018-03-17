@@ -54,7 +54,16 @@ namespace WpfApp2.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+        private string _nameOfTbl;
+        public string NameOfTbl
+        {
+            get
+            {
+                return _nameOfTbl;
 
+            }
+            set { _nameOfTbl = value; OnPropertyChanged(); }
+        }
         public ObservableCollection<UsersDataSource> _historyDataSource;
         public ObservableCollection<UsersDataSource> DataSource { get { return _historyDataSource; } set { _historyDataSource = value; OnPropertyChanged(); } }
 
@@ -120,6 +129,7 @@ namespace WpfApp2.ViewModels
 
         public ViewModelViewUsers(NavigationController controller) : base(controller)
         {
+            NameOfTbl = "Пользователи";
             base.HasNavigation = true;
             HasNavigation = true;
 

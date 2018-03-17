@@ -120,8 +120,8 @@ namespace WpfApp2.LegParts.VMs
                 else
                     LegSectionsSaved.Add(new ZDSVSectionViewModel(Controller, null, i + 1));
             }
-            
-            for (int i = 0; i < LegSections.Count; i++)
+          
+             commentSave = Comment; for (int i = 0; i < LegSections.Count; i++)
             {
 
                 LegSectionsSaved[i].Comment = LegSections[i].Comment;
@@ -377,7 +377,7 @@ namespace WpfApp2.LegParts.VMs
                           {
                               var newCombo = new ZDSVCombo();
 
-                              for (int i = 0; i < LegSections.Count; i++)
+                               commentSave = Comment; for (int i = 0; i < LegSections.Count; i++)
                               {
                                   var currentStructure = LegSections[i].SelectedValue;
                               //ничего не было выбрано

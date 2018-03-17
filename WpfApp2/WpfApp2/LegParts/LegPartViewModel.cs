@@ -27,8 +27,10 @@ namespace WpfApp2.LegParts
     public class LegPartViewModel : ViewModelBase, INotifyPropertyChanged
     {
 
+
+
         public string mode = "Normal";
-        private string _comment;
+        private string _comment; public string commentSave;
         public string Comment { get { return _comment; } set { _comment = value; OnPropertyChanged(); } }
 
         public da_Way SelectedWayType { get; set; }
@@ -41,93 +43,20 @@ namespace WpfApp2.LegParts
 
 
 
-        //private void RebuildFromFirstToLast()
-        //{
-        //    if (Controller.CurrentViewModel.Controller.LegViewModel == this && mode == "Normal")
-        //    {
-
-        //        //if (Controller.CurrentViewModel.Controller.LegViewModel is PDSVViewModel)
-        //        //{
-
-
-        //        //    MessageBus.Default.Call("RebuildFirstPDSV", null, null);
-
-
-        //        //}
-        //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is SFSViewModel)
-        //        //{
-
-        //        //    MessageBus.Default.Call("RebuildFirstSFS", this, LegSections[0]);
-
-
-
-        //        //}
-        //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is BPVHipViewModel)
-        //        //{
-
-        //        //    MessageBus.Default.Call("RebuildFirstBPV", this, LegSections[0]);
-
-
-        //        //}
-        //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is BPVTibiaViewModel)
-        //        //{
-
-        //        //    MessageBus.Default.Call("RebuildFirstBPV_Tibia", null, null);
-
-
-        //        //}
-        //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is HipPerforateViewModel)
-        //        //{
-        //        //    MessageBus.Default.Call("RebuildFirstPerforateHip", null, null);
-
-
-
-
-        //        //}
-        //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is ZDSVViewModel)
-        //        //{
-        //        //    MessageBus.Default.Call("RebuildFirstZDSV", null, null);
-
-        //        //}
-
-        //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is SPSViewModel)
-        //        //{
-        //        //    MessageBus.Default.Call("RebuildFirstSPS", null, null);
-        //        //}
-        //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is TibiaPerforateViewModel)
-        //        //{
-
-        //        //    MessageBus.Default.Call("RebuildFirstPerforateTibia", null, null);
-
-        //        //}
-        //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is MPVViewModel)
-        //        //{
-        //        //    MessageBus.Default.Call("RebuildFirstMPV", null, null);
-
-
-        //        //}
-        //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is TEMPVViewModel)
-        //        //{
-
-        //        //    MessageBus.Default.Call("RebuildFirstTEMPV", null, null);
-
-        //        //}
-        //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is PPVViewModel)
-        //        //{
-        //        //    MessageBus.Default.Call("RebuildFirstPPV", null, null);
-
-
-        //        //}
-        //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is GVViewModel)
-        //        //{
-        //        //    MessageBus.Default.Call("RebuildFirstGV", null, null);
-
-
-        //        //}
-
-        //    }
-
-        //}
+        public virtual ViewModelBase CurrentPanelViewModelWaySelect { get; set; }
+        private bool _panelOpened;
+        public bool PanelOpened
+        {
+            get
+            {
+                return _panelOpened;
+            }
+            set
+            {
+                _panelOpened = value;
+                OnPropertyChanged();
+            }
+        }
 
 
 
@@ -248,50 +177,63 @@ namespace WpfApp2.LegParts
 
         private void OpenHandler(object sender, object data)
         {
-            CurrentPanelViewModel.TextSaveBTN = "Добавить";
-            CurrentPanelViewModel.mode = "Add";
-            CurrentPanelViewModel.TextCancleOrResetBTN = "Вернуться";
-            ClosePanelCommand = new DelegateCommand(() =>
-         {
-             if (_lastSender.SelectedValue == null)
-             {
-                 foreach (var structr in _lastSender.StructureSource)
-                 {
-                     if (structr.Text1 == "" && structr.Text2 == "")
-                     {
-                         _lastSender.SelectedValue = structr;
-                     }
-                 }
-             }
-             else
-             {
-                 LegSections[_lastSender.ListNumber - 1].SelectedValue = _lastSender.SelectedValue;
-             }
-             CurrentPanelViewModel.PanelOpened = false;
-             handled = false;
-
-         });
-            if (!handled)
+            try
             {
+                if (Controller.CurrentViewModel.Controller.LegViewModel == this)
+                {
+                    LevelSelected = ((LegSectionViewModel)sender).StructureSource[0].Level;
+                    CurrentPanelViewModel.TextSaveBTN = "Добавить";
+                    CurrentPanelViewModel.mode = "Add";
+                    CurrentPanelViewModel.TextCancleOrResetBTN = "Вернуться";
+                    ClosePanelCommand = new DelegateCommand(() =>
+                 {
+                     if (_lastSender.SelectedValue == null)
+                     {
+                         foreach (var structr in _lastSender.StructureSource)
+                         {
+                             if (structr.Text1 == "" && structr.Text2 == "")
+                             {
+                                 _lastSender.SelectedValue = structr;
+                             }
+                         }
+                     }
+                     else
+                     {
+                         LegSections[_lastSender.ListNumber - 1].SelectedValue = _lastSender.SelectedValue;
+                     }
+                     CurrentPanelViewModel.PanelOpened = false;
+                     handled = false;
 
-                var curPanel = ((LegPartViewModel)Controller.LegViewModel).CurrentPanelViewModel;
-                var currentPart = (LegSectionViewModel)sender;
+                 });
+                    if (!handled)
+                    {
+
+                        var curPanel = ((LegPartViewModel)Controller.LegViewModel).CurrentPanelViewModel;
+                        var currentPart = (LegSectionViewModel)sender;
 
 
-                _lastSender = currentPart;
+                        _lastSender = currentPart;
 
 
 
 
-                _lastSenderType = (Type)data;
-                handled = true;
-                curPanel.PanelOpened = true;
+                        _lastSenderType = (Type)data;
+                        handled = true;
+                        curPanel.PanelOpened = true;
+                    }
+                }
+            }
+            catch
+            {
+                CurrentPanelViewModel.PanelOpened = false;
+                handled = false;
             }
         }
 
 
         LegPartDbStructure LegPrt;
 
+        int LevelSelected;
 
         public bool testOnUnique(LegPartDbStructure structure)
         {
@@ -307,46 +249,74 @@ namespace WpfApp2.LegParts
             //{
             //    return true;
             //}
-
-
-            foreach (var x in LegSections[structure.Level - 1].StructureSource)
+            //if (structure == null)
+            //    return false;
+            if (Controller.CurrentViewModel.Controller.LegViewModel == this)
             {
-                if (mode == "Edit")
+                if (LevelSelected != 0)
                 {
-                    if (x.HasDoubleMetric == CurrentPanelViewModel.HasDoubleSize
-                        && x.HasSize == CurrentPanelViewModel.HasSize
-                        && (x.Metrics == CurrentPanelViewModel.SelectedMetricText || string.IsNullOrWhiteSpace(x.Metrics) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.SelectedMetricText))
-
-
-                             && x.Text1 == CurrentPanelViewModel.Text1
-                               && x.Text2 == CurrentPanelViewModel.Text2
-                               && x.Id != structure.Id)
+                    foreach (var x in LegSections[LevelSelected - 1].StructureSource)
                     {
+                        if (mode == "Edit")
+                        {
+                            if (x.HasDoubleMetric == CurrentPanelViewModel.HasDoubleSize
+                                && x.HasSize == CurrentPanelViewModel.HasSize
+                                 && (x.Text1 == CurrentPanelViewModel.Text1 || (string.IsNullOrWhiteSpace(x.Text1) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text1)))
+                                   && (x.Text2 == CurrentPanelViewModel.Text2 || (string.IsNullOrWhiteSpace(x.Text2) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text2)))
+                                && x.Id != structure.Id)
+                            {
+                                if (x.HasSize == true)
+                                {
+                                    if ((x.Metrics == CurrentPanelViewModel.SelectedMetricText || string.IsNullOrWhiteSpace(x.Metrics) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.SelectedMetricText)))
+                                    {
+                                        MessageBox.Show("Такое описание уже существует!");
+
+                                        return false;
+                                    }
+                                    else
+                                    {
+                                        return true;
+                                    }
+                                }
 
 
-                        MessageBox.Show("Такое описание уже существует!");
+                                MessageBox.Show("Такое описание уже существует!");
 
-                        return false;
+                                return false;
+
+                            }
+                        }
+                        else
+                        {
+                            if (x.HasDoubleMetric == CurrentPanelViewModel.HasDoubleSize
+                                   && x.HasSize == CurrentPanelViewModel.HasSize
+                                   && (x.Text1 == CurrentPanelViewModel.Text1 || (string.IsNullOrWhiteSpace(x.Text1) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text1)))
+                                   && (x.Text2 == CurrentPanelViewModel.Text2 || (string.IsNullOrWhiteSpace(x.Text2) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text2))))
+
+                            {
+
+                                if (x.HasSize == true)
+                                {
+                                    if ((x.Metrics == CurrentPanelViewModel.SelectedMetricText || string.IsNullOrWhiteSpace(x.Metrics) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.SelectedMetricText)))
+                                    {
+                                        MessageBox.Show("Такое описание уже существует!");
+
+                                        return false;
+                                    }
+                                    else
+                                    {
+                                        return true;
+                                    }
+                                }
+
+
+                                MessageBox.Show("Такое описание уже существует!");
+
+                                return false;
+                            }
+
+                        }
                     }
-                }
-                else
-                {
-                    if (x.HasDoubleMetric == CurrentPanelViewModel.HasDoubleSize
-                           && x.HasSize == CurrentPanelViewModel.HasSize
-                           && (x.Metrics == CurrentPanelViewModel.SelectedMetricText || string.IsNullOrWhiteSpace(x.Metrics) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.SelectedMetricText))
-
-
-                                && x.Text1 == CurrentPanelViewModel.Text1
-                                  && x.Text2 == CurrentPanelViewModel.Text2
-                                  )
-                    {
-
-
-                        MessageBox.Show("Такое описание уже существует!");
-
-                        return false;
-                    }
-
                 }
             }
             return true;
@@ -421,6 +391,7 @@ namespace WpfApp2.LegParts
 
 
                 LegPartDbStructure structure = currentPart.SelectedValue;
+                LevelSelected = structure.Level;
                 CurrentPanelViewModel.LegPrt = structure;
                 CurrentPanelViewModel.SavedLegPrt = structure;
                 CurrentPanelViewModel.mode = "Edit";
@@ -705,7 +676,8 @@ namespace WpfApp2.LegParts
             newStr.HasSize = panel.HasSize;
             newStr.HasDoubleMetric = panel.HasDoubleSize;
 
-
+            if (panel.SelectedMetricText == null)
+            { panel.SelectedMetricText = ""; }
 
 
             if (panel.HasSize)
@@ -802,7 +774,7 @@ namespace WpfApp2.LegParts
 
         public void Initialization()
         {
-
+            PanelOpened = false;
             MessageBus.Default.Subscribe("OpenStructRedact", OpenStructRedact);
             MessageBus.Default.Subscribe("SetMode", SetModeHandler);
             CurrentPanelViewModel = new SizePanelViewModel(this);
@@ -878,6 +850,7 @@ namespace WpfApp2.LegParts
                         SelectedWayType = SelectedWayTypeSave;
                         if (LegSectionsSaved != null)
                         {
+                            Comment = commentSave;
                             for (int i = 0; i < LegSections.Count; i++)
                             {
                                 LegSections[i].Comment = LegSectionsSaved[i].Comment;
@@ -918,8 +891,10 @@ namespace WpfApp2.LegParts
      {
 
          if (string.IsNullOrWhiteSpace(((TextBox)sender).Text))
+         {
              ((TextBox)sender).Text = "0";
-
+             FF_length = 0;
+         }
 
 
      }

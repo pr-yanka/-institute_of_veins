@@ -47,7 +47,7 @@ namespace WpfApp2.ViewModels
             IsChecked = false;
         }
     }
-    public class ViewModelAlergicAnevrizmList : ViewModelBase
+    public class ViewModelAlergicAnevrizmList : ViewModelBase, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -102,10 +102,15 @@ namespace WpfApp2.ViewModels
                 _filterText = value; OnPropertyChanged();
                 for (int i = 0; i < DataSourceList.Count; ++i)
                 {
-                    if (DataSourceList[i].IsChecked != null && DataSourceList[i].IsChecked == true)
-                    {
-                        FullCopy[i].IsChecked = true;
-                    }
+                    foreach (var x in FullCopy)
+                        if (DataSourceList[i].IsChecked != null && DataSourceList[i].IsChecked == true && x.Data.Id == DataSourceList[i].Data.Id)
+                        {
+                            x.IsChecked = true;
+                        }
+                        else if (x.Data.Id == DataSourceList[i].Data.Id)
+                        {
+                            x.IsChecked = false;
+                        }
                 }
                 if (lastLength >= value.Length)
                 {
@@ -177,7 +182,7 @@ namespace WpfApp2.ViewModels
                     // SetChangesInDB(null, null);
                 }
 
-                Controller.NavigateTo<ViewModelPreparateHate>();
+                Controller.NavigateTo<ViewModelAlergicAnevrizmList>();
 
 
 
@@ -203,29 +208,29 @@ namespace WpfApp2.ViewModels
             }
         }
 
-      
+
         private void SetDRecomendationListBecauseOFEdit(object sender, object data)
         {
             SetClear(null, null);
             foreach (var dat in (List<AlergicAnevrizmListDataSource>)data)
             {
-           
+
                 foreach (var datC in DataSourceList)
                 {
                     if (dat.Data != null && dat.Data.Id == datC.Data.Id)
                     {
-                        
+
                         datC.IsChecked = true;
                     }
-                    
+
                 }
-                
+
             }
 
         }
         public DelegateCommand ToPhysicalCommand { get; protected set; }
         public DelegateCommand SaveChangesCommand { get; protected set; }
-        public string TextOFNewType { get;  set; }
+        public string TextOFNewType { get; set; }
         public string HeaderText { get; set; }
         public string AddButtonText { get; set; }
         //Жалобы/диагноз/заключение
@@ -239,7 +244,7 @@ namespace WpfApp2.ViewModels
             MessageBus.Default.Subscribe("SetAlergicAnevrizmListBecauseOFEdit", SetDRecomendationListBecauseOFEdit);
             TextOFNewType = "Новый анамнез";
             HeaderText = "Аллергологический анамнез";
-            AddButtonText = "Добавить аллергологический анамнез";
+            AddButtonText = "Другой аллергологический анамнез";
 
             DataSourceList = new ObservableCollection<AlergicAnevrizmListDataSource>();
             foreach (var RecomendationsType in Data.AlergicAnevrizm.GetAll)
@@ -250,8 +255,9 @@ namespace WpfApp2.ViewModels
             ToPhysicalCommand = new DelegateCommand(
                 () =>
                 {
+                    FilterText = "";
                     ObservableCollection<AlergicAnevrizmListDataSource> DataSourceListBuffer = new ObservableCollection<AlergicAnevrizmListDataSource>();
-                    foreach (var Data in DataSourceList)
+                    foreach (var Data in FullCopy)
                     {
                         if (Data.IsChecked == true)
                         {
@@ -280,6 +286,7 @@ namespace WpfApp2.ViewModels
 
             SaveCommand = new DelegateCommand(() =>
             {
+                FilterText = "";
                 var newType = CurrentPanelViewModel.GetPanelType();
                 if (!string.IsNullOrWhiteSpace(newType.Str))
                 {
