@@ -22,8 +22,6 @@ namespace WpfApp2.ViewModels
 
         int CurrAccId;
 
-        public DelegateCommand ToRegistrationCommand { get; protected set; }
-
         public DelegateCommand<object> ToDashboardCommand { get; protected set; }
 
         public BPVHipRepository rep;
@@ -39,31 +37,11 @@ namespace WpfApp2.ViewModels
         {
             HasNavigation = false;
             MessageBus.Default.Subscribe("SetCurrAccIdBack", SetCurrAccIdBack);
-            ToRegistrationCommand = new DelegateCommand(
-                () =>
-                {
-
-                    Controller.NavigateTo<ViewModelDashboard>();
-                    //Controller.NavigateTo<ViewModelRegistration>();
-                }
-            );
-
-
-
 
 
             ToDashboardCommand = new DelegateCommand<object>(
         (sender) =>
         {
-
-
-
-
-
-
-
-
-
             string CheckSum = CalculateMD5Hash(((PasswordBox)sender).Password);
             sender = null;
             bool isUeserNameCorrect = false;

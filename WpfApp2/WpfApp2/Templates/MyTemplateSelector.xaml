@@ -5,7 +5,6 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="TemplateAddAnalize.xaml"/>
         <ResourceDictionary Source="TemplateLogin.xaml"/>
-        <ResourceDictionary Source="TemplateRegistration.xaml"/>
         <ResourceDictionary Source="TemplateDashboard.xaml"/>
         <ResourceDictionary Source="TemplateCurrentPatient.xaml"/>
         <ResourceDictionary Source="TemplateNewPatient.xaml"/>
@@ -13,10 +12,7 @@
         <ResourceDictionary Source="TemplateEditPatient.xaml"/>
         <ResourceDictionary Source="TemplateViewHistory.xaml"/>
         <ResourceDictionary Source="TemplateAddPhysicalPage1.xaml"/>
-        <ResourceDictionary Source="TemplateLegDescribe.xaml"/>
         <ResourceDictionary Source="TemplateAddPhysicalPage1.xaml"/>
-        <ResourceDictionary Source="TemplateLegDescribe.xaml"/>
-        <ResourceDictionary Source="TemplateRecomendationAdd.xaml"/>
         <ResourceDictionary Source="TemplatePhysicalTable.xaml"/>
         <ResourceDictionary Source="Operation/TemplateOperationOverview.xaml"/>
         <ResourceDictionary Source="TemplateCalendarOperations.xaml"/>
@@ -57,7 +53,6 @@
                               TemplateCancleOperations="{StaticResource TemplateCancleOperations}"
                               TemplateAddAnalize="{StaticResource TemplateAddAnalize}"
                               TemplateLogin="{StaticResource TemplateLogin}"
-                              TemplateRegistration="{StaticResource TemplateRegistration}"
                               TemplateDashboard="{StaticResource TemplateDashboard}"
                               TemplateCurrentPatient="{StaticResource TemplateCurrentPatient}"
                               TemplateNewPatient="{StaticResource TemplateNewPatient}"
@@ -65,8 +60,6 @@
                               TemplateEditPatient="{StaticResource TemplateNewPatient}"
                               TemplateViewHistory="{StaticResource TemplateViewHistory}"
                               TemplateAddPhysicalPage1="{StaticResource TemplateAddPhysicalPage1}"
-                              TemplateLegDescribe="{StaticResource TemplateLegDescribe}"
-                              TemplateRecomendationsAdd="{StaticResource TemplateRecomendationAdd}"
                               TemplateCalendarOperations="{StaticResource TemplateCalendarOperations}"
                               TemplateOperationOverview="{StaticResource TemplateOperationOverview}"
                               TemplatePhysicalTable="{StaticResource TemplatePhysicalTable}"

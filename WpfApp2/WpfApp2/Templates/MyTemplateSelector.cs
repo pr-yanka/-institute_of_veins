@@ -15,7 +15,6 @@ namespace WpfApp2.Templates
     {
         public DataTemplate TemplateAddAnalize { get; set; }
         public DataTemplate TemplateLogin { get; set; }
-        public DataTemplate TemplateRegistration { get; set; }
         public DataTemplate TemplateDashboard { get; set; }
         public DataTemplate TemplateCurrentPatient { get; set; }
         public DataTemplate TemplateNewPatient { get; set; }
@@ -23,7 +22,6 @@ namespace WpfApp2.Templates
         public DataTemplate TemplateAddPhysicalPage1 { get; set; }
         public DataTemplate TemplateEditPatient { get; set; }
         public DataTemplate TemplateViewHistory { get; set; }
-        public DataTemplate TemplateLegDescribe { get; set; }
         public DataTemplate TemplateRecomendationsAdd { get; set; }
         public DataTemplate TemplatePhysicalTable { get; set; }
         public DataTemplate TemplateOperationOverview { get; set; }
@@ -62,9 +60,6 @@ namespace WpfApp2.Templates
             if (item.GetType() == typeof(ViewModelLogin))
                 return TemplateLogin;
 
-            if (item.GetType() == typeof(ViewModelRegistration))
-                return TemplateRegistration;
-
             if (item.GetType() == typeof(ViewModelCurrentPatient))
                 return TemplateCurrentPatient;
 
@@ -85,9 +80,6 @@ namespace WpfApp2.Templates
 
             if (item.GetType() == typeof(ViewModelViewHistory))
                 return TemplateViewHistory;
-
-            if (item.GetType() == typeof(ViewModelLegDescribe))
-                return TemplateLegDescribe;
 
             if (item.GetType() == typeof(ViewModelRecomendationsAdd))
                 return TemplateRecomendationsAdd;
