@@ -14,7 +14,7 @@
                    />
             <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="24,48,0,0" TextWrapping="Wrap" Visibility="Collapsed" Text="Тип операции"  
                        VerticalAlignment="Top" FontSize="18"/>
-            <ListBox Visibility="{Binding IsLeftLegInOperation}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Left" Height="170" Margin="24,89,0,0" VerticalAlignment="Top" Width="209"  
+            <ListBox Visibility="{Binding IsLeftLegInOperation}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Left" Height="170" Margin="244,89,0,0" VerticalAlignment="Top" Width="209"  
                        ItemsSource="{Binding Path=LeftOperationList.View}"   Foreground="Black" Background="White">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -23,7 +23,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Left" Height="170" Margin="244,89,0,0" VerticalAlignment="Top" Width="209"  
+            <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Left" Height="170" Margin="24,89,0,0"  VerticalAlignment="Top" Width="209"  
                    Visibility="{Binding IsRightLegInOperation}"    ItemsSource="{Binding Path=RightOperationList.View}"   Foreground="Black" Background="White">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -33,9 +33,9 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <Button Width="209"  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy"  FontSize="13" Content="выбрать операции слева" HorizontalAlignment="Left" Margin="24,40,0,0" Visibility="{Binding IsLeftLegInOperation}" Command="{Binding Path=ToLeftOprCommand}"            
+            <Button Width="209"  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy"  FontSize="13" Content="выбрать операции слева" HorizontalAlignment="Left" Margin="244,40,0,0" Visibility="{Binding IsLeftLegInOperation}" Command="{Binding Path=ToLeftOprCommand}"            
                     VerticalAlignment="Top" />
-            <Button Width="209"  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_вCopy" FontSize="13" Content="выбрать операции справа" HorizontalAlignment="Left" Margin="244,40,0,0" Visibility="{Binding IsRightLegInOperation}" Command="{Binding Path=ToRightOprCommand}"            
+            <Button Width="209"  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_вCopy" FontSize="13" Content="выбрать операции справа" HorizontalAlignment="Left" Margin="24,40,0,0"   Visibility="{Binding IsRightLegInOperation}" Command="{Binding Path=ToRightOprCommand}"            
                     VerticalAlignment="Top" />
             <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="24,281,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top"><Run Text="Выб"/><Run Text="ерите"/><Run Text=" время"/></TextBlock>
@@ -169,7 +169,7 @@
             </TextBox>
             <Button Width="300" Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy3" Content="{Binding Path=ButtonSaveText}" Command="{Binding Path=ToOperationOverviewCommand}" HorizontalAlignment="Left" Margin="554,629,0,0"              
                     VerticalAlignment="Top"  RenderTransformOrigin="0.502,0.471"/>
-            <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Left" Height="284" Margin="485,215,0,0" VerticalAlignment="Top" Width="259"  
+            <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Left" Height="284" Margin="755,215,0,0" VerticalAlignment="Top" Width="259"  
                     ItemsSource="{Binding Path=LeftDiagnosisList.View}"   Foreground="Black" Background="White">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -178,7 +178,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <ListBox  ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=RightDiagnosisList.View}" HorizontalAlignment="Left" Height="284" Margin="755,215,0,0" VerticalAlignment="Top" Width="259"  
+            <ListBox  ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=RightDiagnosisList.View}" HorizontalAlignment="Left" Height="284" Margin="485,215,0,0"  VerticalAlignment="Top" Width="259"  
                           Foreground="Black" Background="White">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -186,11 +186,11 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy4" Content="Выбрать диагноз слева"  Command="{Binding Path=ToLeftDiagCommand}" HorizontalAlignment="Left" Margin="485,170,0,0"              
+            <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy4" Content="Выбрать диагноз слева"  Command="{Binding Path=ToLeftDiagCommand}" HorizontalAlignment="Left" Margin="755,170,0,0"                  
                     VerticalAlignment="Top" Width="260" />
             <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy5"  FontSize="12" Command="{Binding GetLeftFromLastObs}" Content="Взять из последнего обследования" HorizontalAlignment="Left"  
                     Margin="485,503,0,0"             VerticalAlignment="Top" Width="260"/>
-            <Button  Style="{StaticResource MyConfirmBUTTON}" Width="260" x:Name="button_Copy6" Content="Выбрать диагноз справа" Command="{Binding Path=ToRightDiagCommand}" HorizontalAlignment="Left" Margin="755,170,0,0"              
+            <Button  Style="{StaticResource MyConfirmBUTTON}" Width="260" x:Name="button_Copy6" Content="Выбрать диагноз справа" Command="{Binding Path=ToRightDiagCommand}" HorizontalAlignment="Left" Margin="485,170,0,0"  
                     VerticalAlignment="Top"  RenderTransformOrigin="0.484,0.472"/>
             <Button Style="{StaticResource MyConfirmBUTTON}"  x:Name="button_Copy7" Command="{Binding GetRightFromLastObs}"   Content="Взять из последнего обследования" HorizontalAlignment="Left"  
             Margin="755,503,0,0"             VerticalAlignment="Top" Width="260" FontSize="12"/>

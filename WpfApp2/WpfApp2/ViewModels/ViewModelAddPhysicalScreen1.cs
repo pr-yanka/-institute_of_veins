@@ -129,8 +129,17 @@ namespace WpfApp2.ViewModels
                 CurrentPanelViewModel.PanelOpened = true;
             }
         }
+        private string _textOfEndBtn;
 
-        //
+        public string TextOfEndBtn
+        {
+            get { return _textOfEndBtn; }
+            set
+            {
+                _textOfEndBtn = value; OnPropertyChanged();
+            }
+        }
+        //Завершить обследование
         private string _leftAdditionalText;
         private string _rightAdditionalText;
 
@@ -8626,7 +8635,7 @@ namespace WpfApp2.ViewModels
         public string mode;
         private void Clear(object sender, object data)
         {
-
+            TextOfEndBtn = "Завершить обследование";
             //   Controller.ClearLegPartVM();
             mode = "Normal";
             TextTip = "";
@@ -9201,6 +9210,7 @@ namespace WpfApp2.ViewModels
             Clear(this, null);//?
 
             mode = "EDIT";
+            TextOfEndBtn = "Вернуться";
             MessageBus.Default.Call("SetMode", this, "EDIT");
             obsid = (int)data;
 

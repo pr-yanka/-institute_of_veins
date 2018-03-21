@@ -8,7 +8,10 @@
     </Style>
     <DataTemplate x:Key="TemplateViewHistory">
         <Grid Name="RootGrid"  Margin="220,65,0,0" >
-            <TextBlock DockPanel.Dock="Top" FontFamily="/fonts/#Pescadero" FontSize="22pt" VerticalAlignment="Center" Margin="254,10,-24,586" Height="38" Text="{Binding Path=CurrentPatient.Sirname}"><TextBlock Text="{Binding Path=initials}"/></TextBlock>
+
+            <TextBlock Canvas.ZIndex="2" HorizontalAlignment="Center" Visibility="{Binding VisOfNothingFaund}" TextWrapping="Wrap" Height="28" Text="У пациента нет анализов, операций и обследований" FontFamily="/fonts/#Pescadero"  FontSize="16"  Margin="0,0,0,188" Width="399" RenderTransformOrigin="0.591,0.516"/>
+
+            <TextBlock HorizontalAlignment="Center" DockPanel.Dock="Top" FontFamily="/fonts/#Pescadero" FontSize="22pt"  VerticalAlignment="Top" Margin="0,10,0,0" Height="38" Text="{Binding Path=initials}"></TextBlock>
             <CheckBox x:Name="button2" Content="показывать отменённые операции" IsChecked="{Binding Path=isCanceledOprVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Margin="26,60,0,0" VerticalAlignment="Top" Width="auto"  Height="44" FontFamily="Franklin Gothic Medium" FontSize="20"/>
             <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button" Content="начать обследование" Command="{Binding Path=ToAddPhysicalCommand}" HorizontalAlignment="Left" Margin="0,460,0,0" VerticalAlignment="Top" Width="240"/>
             <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy3" Content="ВЕРНУТЬСЯ К ПАЦИЕНТУ" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="259,517,0,0" VerticalAlignment="Top" Width="240" />

@@ -45,54 +45,56 @@
             <Button x:Name="button_Copy4" Content="{Binding Path=NameOfButton}"  Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="400,630,0,0" VerticalAlignment="Top"
                  Style="{StaticResource MyConfirmBUTTON}" Width="300"/>
             <ScrollViewer  MaxHeight="570" Margin="24,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" >
-                <Grid  Height="1000"   Width="993">
+                <Grid  Height="953"   Width="993">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="186*"/>
                         <ColumnDefinition Width="1021*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="12*"/>
                         <RowDefinition Height="16*"/>
                         <RowDefinition Height="70*"/>
                         <RowDefinition Height="19*"/>
                         <RowDefinition Height="19*"/>
                         <RowDefinition Height="70*"/>
                         <RowDefinition Height="19*"/>
-                        <RowDefinition Height="70*"/>
                         <RowDefinition Height="19*"/>
                         <RowDefinition Height="70*"/>
                         <RowDefinition Height="19*"/>
                         <RowDefinition Height="70*"/>
-                        <RowDefinition Height="27*"/>
+                        <RowDefinition Height="19*"/>
+
                         <RowDefinition Height="19*"/>
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
+                    <TextBlock x:Name="tesxtBlock" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="группа" VerticalAlignment="Top"  Grid.Row="0" Grid.Column="1"  FontSize="16"/>
+                    <TextBlock x:Name="tesxtBlocklyy" HorizontalAlignment="Left" TextWrapping="Wrap" Text="резус" VerticalAlignment="Top"  Grid.Row="0" Grid.Column="2" Margin="298,0,0,0" FontSize="16"/>
+                    <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="Группа крови" VerticalAlignment="Top"  Grid.Row="1"  FontSize="16"/>
+                    <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Grid.Row="2" Text="Переливание крови" Grid.RowSpan="2"/>
+                    <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap" Text="Сахарный диабет" VerticalAlignment="Top" FontSize="16" Grid.Row="4"/>
+                    <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap" Grid.RowSpan="2" Text="Хирургические вмешательства" VerticalAlignment="Top" FontSize="16" Grid.Row="5" Width="144"/>
+                    <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap"  Grid.RowSpan="2" Text="Аллергологический анамнез" VerticalAlignment="Top" FontSize="16" Grid.Row="7"/>
 
-                    <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="Группа крови" VerticalAlignment="Top" FontSize="16"/>
-                    <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Grid.Row="1" Text="Переливание крови" Grid.RowSpan="2"/>
-                    <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap" Text="Сахарный диабет" VerticalAlignment="Top" FontSize="16" Grid.Row="3"/>
-                    <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap" Grid.RowSpan="2" Text="Хирургические вмешательства" VerticalAlignment="Top" FontSize="16" Grid.Row="4" Width="144"/>
-                    <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap"  Grid.RowSpan="2" Text="Аллергологический анамнез" VerticalAlignment="Top" FontSize="16" Grid.Row="6"/>
-                    <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap" Text="Перенесённые операции" VerticalAlignment="Top" FontSize="16" Grid.Row="8" Width="166" Grid.RowSpan="3"/>
 
                     <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="Непереносимость лекарственных препаратов" VerticalAlignment="Top" FontSize="16" Grid.Row="10" Width="auto"/>
 
 
-                    <ComboBox SelectedIndex="{Binding BloodGroupID}" SelectedValue="{Binding BloodGroup}"  x:Name="comboBoвx_Copy2" Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="275" Height="24"   >
-                        <TextBlock>1</TextBlock>
-                        <TextBlock>2</TextBlock>
-                        <TextBlock>3</TextBlock>
-                        <TextBlock>4</TextBlock>
+                    <ComboBox SelectedIndex="{Binding BloodGroupID}" SelectedValue="{Binding BloodGroup}" Grid.Row="1"  x:Name="comboBoвx_Copy2" Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="275" Height="24"   >
+                        <TextBlock>O(I)</TextBlock>
+                        <TextBlock>A(II)</TextBlock>
+                        <TextBlock>B(III)</TextBlock>
+                        <TextBlock>AB(IV)</TextBlock>
                     </ComboBox>
 
-                    <ComboBox SelectedIndex="{Binding Path=IsPositiveGroupTypeID}" SelectedValue="{Binding IsPositiveGroupType}" x:Name="comboBox_Copy2" Grid.Column="2" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="275" Height="24" Margin="298,0,0,0"   >
-                        <TextBlock>положительная</TextBlock>
-                        <TextBlock>отрицательная</TextBlock>
+                    <ComboBox SelectedIndex="{Binding Path=IsPositiveGroupTypeID}" SelectedValue="{Binding IsPositiveGroupType}" x:Name="comboBox_Copy2" Grid.Column="2"  Grid.Row="1" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="275" Height="24" Margin="298,0,0,0"   >
+                        <TextBlock>Rh−</TextBlock>
+                        <TextBlock>Rh+</TextBlock>
                     </ComboBox>
 
 
-                    <DataGrid ColumnHeaderStyle="{StaticResource DGCHeaderStyle}" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False" AutoGenerateColumns="False"  ItemsSource="{Binding Path=BloodExchangeList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="137"  VerticalAlignment="Top" Width="572" Grid.Row="1" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" BorderBrush="Black" BorderThickness="1">
+                    <DataGrid ColumnHeaderStyle="{StaticResource DGCHeaderStyle}" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False" AutoGenerateColumns="False"  ItemsSource="{Binding Path=BloodExchangeList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="148"  VerticalAlignment="Top" Width="572" Grid.Row="2" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" BorderBrush="Black" BorderThickness="1">
 
-                        <DataGrid.Columns  >
+                        <DataGrid.Columns>
 
                             <DataGridTemplateColumn  Header="Дата" Width="109" >
                                 <DataGridTemplateColumn.CellTemplate>
@@ -147,15 +149,15 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button Command="{Binding OpenCommand}" Margin="0,6"  Height="27" FontSize="12" Width="572" Content="добавить переливание" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Top"></Button>
+                    <Button Command="{Binding OpenCommand}" Margin="0,6"  Height="27" FontSize="12" Width="572" Content="добавить переливание" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top"></Button>
 
 
                     <controls:AutoCompleteBox  Margin="0,0" Padding="4"  BorderThickness="1"  Height="29"  Text="{Binding Path=Sugar,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                 FilterMode="StartsWith" Grid.Column="1"   Grid.Row="3"    IsDropDownOpen="True"        ItemsSource="{Binding Path=SugarDiabetCommentList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  MaxDropDownHeight="260"      Width="572"   HorizontalAlignment="Left"   VerticalAlignment="Top"   x:Name="textBoвx_Copy32">
+                 FilterMode="StartsWith" Grid.Column="1"   Grid.Row="4"    IsDropDownOpen="True"        ItemsSource="{Binding Path=SugarDiabetCommentList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  MaxDropDownHeight="260"      Width="572"   HorizontalAlignment="Left"   VerticalAlignment="Top"   x:Name="textBoвx_Copy32">
 
 
                     </controls:AutoCompleteBox>
-                    <ListBox ItemsSource="{Binding Path=HirurgInteruptList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="137"  VerticalAlignment="Top" Width="572" Grid.Row="4" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
+                    <!--<ListBox ItemsSource="{Binding Path=HirurgInteruptList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="148"  VerticalAlignment="Top" Width="572" Grid.Row="5" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -174,11 +176,64 @@
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
-                    </ListBox>
+                    </ListBox>-->
 
-                    <Button  Margin="0,5" Command="{Binding ToSetHirurgInterruptCommand}" Height="27" FontSize="12" Width="572" Content="добавить хирургическое вмешательство" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top"></Button>
+                    <DataGrid ColumnHeaderStyle="{StaticResource DGCHeaderStyle}" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False"
+                              AutoGenerateColumns="False"  ItemsSource="{Binding Path=HirurgInteruptList.View}"
+                              Grid.Column="1" HorizontalAlignment="Left" Height="148"  VerticalAlignment="Top" Width="572" Grid.Row="5" 
+                              Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" BorderBrush="Black" BorderThickness="1">
 
-                    <ListBox ItemsSource="{Binding Path=AlergicAnevrizmList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="137"  VerticalAlignment="Top" Width="572" Grid.Row="6" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn   Header="Название" MinWidth="429" MaxWidth="429">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <TextBox BorderThickness="1" Padding="4" Height="29"  Text="{Binding  Path=Data.Str,UpdateSourceTrigger=PropertyChanged}"
+                              x:Name="textBox_Copy32">
+
+
+                                        </TextBox>
+
+
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn  Header="Дата" Width="109" >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate >
+
+                                        <DatePicker Height="29"  SelectedDate="{Binding Data.Date,UpdateSourceTrigger=PropertyChanged}"  ></DatePicker>
+
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+
+                            <DataGridTemplateColumn >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <Grid>
+                                            <Button BorderThickness="0" Command="{Binding Path=DeleteCommand}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="30" Height="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}" >
+                                                <Button.Template>
+                                                    <ControlTemplate>
+                                                        <Border HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                                            <Image Source="pack://application:,,,/Images/delete.png"
+                               Width="27" 
+                               Height="27"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                            </Button>
+                                        </Grid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <Button  Margin="0,5" Command="{Binding ToSetHirurgInterruptCommand}" Height="27" FontSize="12" Width="572" Content="добавить хирургическое вмешательство" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="6" VerticalAlignment="Top"></Button>
+                    <CheckBox IsChecked="{Binding IsAlergiActive}" FontSize="16" BorderThickness="1"  Height="29" Grid.Column="1" Grid.Row="7" Content="Пациент отрицает наличие аллергий" ></CheckBox>
+                    <ListBox Visibility="{Binding IsAlergiVisible}" ItemsSource="{Binding Path=AlergicAnevrizmList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="148"  VerticalAlignment="Top" Width="572" Grid.Row="8" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -199,12 +254,12 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
 
-                    <Button Command="{Binding ToSetAlergicAnevrizmCommand}" Margin="0,5" Height="27" FontSize="12" Width="572" Content="добавить аллергологический анамнез" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="7" VerticalAlignment="Top"></Button>
+                    <Button  Visibility="{Binding IsAlergiVisible}" Command="{Binding ToSetAlergicAnevrizmCommand}" Margin="0,5" Height="27" FontSize="12" Width="572" Content="добавить аллергологический анамнез" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="9" VerticalAlignment="Top"></Button>
 
 
 
 
-                    <ListBox ItemsSource="{Binding Path=OperationForAmbCard.View,UpdateSourceTrigger=PropertyChanged}"  Grid.Column="1" HorizontalAlignment="Left" Height="137"  VerticalAlignment="Top" Width="572" Grid.Row="8" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
+                    <!--<ListBox ItemsSource="{Binding Path=OperationForAmbCard.View,UpdateSourceTrigger=PropertyChanged}"  Grid.Column="1" HorizontalAlignment="Left" Height="148"  VerticalAlignment="Top" Width="572" Grid.Row="9" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -226,16 +281,16 @@
 
                             </DataTemplate>
                         </ListBox.ItemTemplate>
-                    </ListBox>
+                    </ListBox>-->
 
-                    <Button Command="{Binding ToSetOprerationForAmbCardListCommand}"  Margin="0,5" Height="27" FontSize="12" Width="572" Content="добавить операцию" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="9" VerticalAlignment="Top"></Button>
-
-
+                    <!--<Button Command="{Binding ToSetOprerationForAmbCardListCommand}"  Margin="0,5" Height="27" FontSize="12" Width="572" Content="добавить операцию" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="10" VerticalAlignment="Top"></Button>-->
 
 
 
 
-                    <ListBox ItemsSource="{Binding Path=PreparateHateList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="137"  VerticalAlignment="Top" Width="572" Grid.Row="10"  Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
+
+
+                    <ListBox ItemsSource="{Binding Path=PreparateHateList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="148"  VerticalAlignment="Top" Width="572" Grid.Row="10"  Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -321,7 +376,7 @@
                         <TextBox x:Name="textвBппfox1" HorizontalAlignment="Center" Height="42" TextWrapping="Wrap" Text="{Binding Path=LongText}" VerticalAlignment="Top" Width="430" Canvas.Left="10" Canvas.Top="110" />
 
                         <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.RevertCommand}" Canvas.Left="10" Canvas.Top="163" />
-                   
+
 
                         <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtonfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.SaveCommand}" Canvas.Left="239" Canvas.Top="163" />
                         <TextBlock x:Name="texftBlock_Copy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="52" Canvas.Left="9" Text="Объём:" RenderTransformOrigin="0.433,0.881" FontSize="18"/>

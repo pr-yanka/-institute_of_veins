@@ -11,9 +11,9 @@
                   Width="300" />
             <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copfy1"  Command="{Binding Path=ToCreateEpicrizCommand}" Visibility="{Binding Path=VisiBIlityOfAddCancle}" Content="Предоперационный эпикриз" HorizontalAlignment="Left" Margin="693,608,0,0" VerticalAlignment="Top"  
                   Width="300"/>
-            <TextBlock Visibility="{Binding IsLeftLegInOperation}" x:Name="textBlock" HorizontalAlignment="Left" Margin="1,167,0,0" TextWrapping="Wrap"  
+            <TextBlock Visibility="{Binding IsLeftLegInOperation}" x:Name="textBlock" HorizontalAlignment="Left" Margin="184,167,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top"  FontSize="16" Height="44" Width="357"><Run  FontSize="16"  Text="Операции слева"/><Run Text=":"/> <TextBlock Text="{Binding Path=OprTypeSelected}"></TextBlock></TextBlock>
-            <TextBlock x:Name="tвextBlock" HorizontalAlignment="Left" Margin="184,167,0,0" TextWrapping="Wrap"  
+            <TextBlock x:Name="tвextBlock" HorizontalAlignment="Left" Margin="1,167,0,0"  TextWrapping="Wrap"  
                   Visibility="{Binding IsRightLegInOperation}"      VerticalAlignment="Top"  FontSize="16" Height="44" Width="357"><Run  FontSize="16" Text="Операции справа"/><Run Text=":"/> <TextBlock Text="{Binding Path=OprTypeSelected}"></TextBlock></TextBlock>
 
             <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="1,130,0,0" TextWrapping="Wrap"  
@@ -21,7 +21,7 @@
             <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="369,130,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" FontSize="16"><Run Text="Б"/><Run Text="ригада"/></TextBlock>
 
-            <ListBox Visibility="{Binding IsLeftLegInOperation}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Left" Height="170" Margin="0,190,0,0" VerticalAlignment="Top" Width="169"  
+            <ListBox Visibility="{Binding IsLeftLegInOperation}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Left" Height="170" Margin="184,190,0,0"  VerticalAlignment="Top" Width="169"  
                        ItemsSource="{Binding Path=LeftOperationList}"   Foreground="Black" Background="White">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -30,7 +30,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Left" Height="170" Margin="184,190,0,0" VerticalAlignment="Top" Width="169"  
+            <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Left" Height="170" Margin="0,190,0,0" VerticalAlignment="Top" Width="169"  
                    Visibility="{Binding IsRightLegInOperation}"    ItemsSource="{Binding Path=RightOperationList}"   Foreground="Black" Background="White">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -70,14 +70,14 @@
                
             </TextBlock>
             </Border>
-            <TextBlock x:Name="textBlock_Copy6" HorizontalAlignment="Left" Margin="468,132,0,0" TextWrapping="Wrap"  
+            <TextBlock x:Name="textBlock_Copy6" HorizontalAlignment="Left"  Margin="750,130,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="Диагноз слева" FontSize="16"/>
-            <TextBlock x:Name="textBlock_Copy7" HorizontalAlignment="Left" Margin="750,130,0,0" TextWrapping="Wrap"  
+            <TextBlock x:Name="textBlock_Copy7" HorizontalAlignment="Left" Margin="468,132,0,0" TextWrapping="Wrap"  
                       VerticalAlignment="Top" Text="Диагноз справа" RenderTransformOrigin="2.097,10.521" FontSize="16"/>
             <Button  Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy3"  Visibility="{Binding Path=VisiBIlityOfAddCancle}" Content="Отменить операцию" HorizontalAlignment="Left" Width="300" Margin="63,558,0,0"              
                     VerticalAlignment="Top"  Command="{Binding Path=ToCancleOperationCommand}" RenderTransformOrigin="0.502,0.471"/>
 
-            <ListBox  ScrollViewer.HorizontalScrollBarVisibility="Disabled"  HorizontalAlignment="Left" Height="375" Margin="468,161,0,0" VerticalAlignment="Top" Width="259"   
+            <ListBox  ScrollViewer.HorizontalScrollBarVisibility="Disabled"  HorizontalAlignment="Left" Height="375" Margin="750,161,0,0"  VerticalAlignment="Top" Width="259"   
                           Foreground="Black" 
                        ItemsSource="{Binding Path=Controller.CurrentViewModel.LeftDiagnosisList}">
                 <ListBox.ItemTemplate>
@@ -86,7 +86,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <ListBox  ScrollViewer.HorizontalScrollBarVisibility="Disabled"  HorizontalAlignment="Left" Height="375" Margin="750,161,0,0" VerticalAlignment="Top" Width="259"  
+            <ListBox  ScrollViewer.HorizontalScrollBarVisibility="Disabled"  HorizontalAlignment="Left" Height="375" Margin="468,161,0,0" VerticalAlignment="Top" Width="259"  
                           Foreground="Black"
                        ItemsSource="{Binding Path=Controller.CurrentViewModel.RightDiagnosisList}"   >
            

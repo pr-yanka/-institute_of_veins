@@ -3,6 +3,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using WpfApp2.Db.Models;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
@@ -44,10 +45,18 @@ namespace WpfApp2.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+
+        private Visibility _visOfNothingFaund;
+        public Visibility VisOfNothingFaund
+        {
+            get { return _visOfNothingFaund; }
+            set
+            { _visOfNothingFaund = value; OnPropertyChanged(); }
+        }
         public Patient CurrentPatient { get; set; }
         public string initials { get; set; }
         public ObservableCollection<HistoryDataSource> _historyDataSource;
-        public ObservableCollection<HistoryDataSource> HistoryDataSource { get { return _historyDataSource; } set { _historyDataSource = value; OnPropertyChanged();  } }
+        public ObservableCollection<HistoryDataSource> HistoryDataSource { get { return _historyDataSource; } set { _historyDataSource = value; OnPropertyChanged(); } }
 
         public DelegateCommand ToCurrentPatientCommand { get; protected set; }
         public DelegateCommand ToAddPhysicalCommand { get; protected set; }
@@ -61,13 +70,13 @@ namespace WpfApp2.ViewModels
 
         protected int CurrentPatientID;
         private bool _isCanceledOprVisible;
-        public bool isCanceledOprVisible { get { return _isCanceledOprVisible; } set { _isCanceledOprVisible = value;  OnPropertyChanged(); MessageBus.Default.Call("OpenHistoryOfPatient", this, CurrentPatient.Id); } }
+        public bool isCanceledOprVisible { get { return _isCanceledOprVisible; } set { _isCanceledOprVisible = value; OnPropertyChanged(); MessageBus.Default.Call("OpenHistoryOfPatient", this, CurrentPatient.Id); } }
 
 
         private void SetCurrentPatientID(object sender, object data)
         {
             CurrentPatient = Data.Patients.Get((int)data);
-            initials = " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
+            initials = CurrentPatient.Sirname + " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
             HistoryDataSource = new ObservableCollection<HistoryDataSource>();
 
             foreach (var Operation in Data.Operation.GetAll)
@@ -139,7 +148,14 @@ namespace WpfApp2.ViewModels
                     }
                 }
             }
-
+            if(HistoryDataSource.Count == 0)
+            {
+                VisOfNothingFaund = Visibility.Visible;
+            }
+            else
+            {
+                VisOfNothingFaund = Visibility.Collapsed;
+            }
         }
 
         public ViewModelViewHistory(NavigationController controller) : base(controller)

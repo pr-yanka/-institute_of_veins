@@ -21,8 +21,15 @@ namespace WpfApp2.Db.Models
 
         [Column("Название")]
         public string Str { set { _str = value; MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null); } get { return _str; } }
+
+        [Column("Дата")]
+        public DateTime? Date { set { _date = value; MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null); } get { return _date; } }
+
         [NotMapped]
         private string _str;
+
+        [NotMapped]
+        private DateTime? _date;
 
         public override string ToString()
         {
@@ -38,5 +45,5 @@ namespace WpfApp2.Db.Models
 
         }
     }
-  
+
 }

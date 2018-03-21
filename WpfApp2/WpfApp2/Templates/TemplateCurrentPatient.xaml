@@ -8,7 +8,7 @@
                 <ColumnDefinition Width="51*"/>
                 <ColumnDefinition Width="621*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock HorizontalAlignment="Center" FontFamily="/fonts/#Pescadero" FontSize="22pt" Height="38" VerticalAlignment="Top" Grid.Column="2" Width="555" Margin="0,0,0,0" >
+            <TextBlock FontFamily="/fonts/#Pescadero" FontSize="22pt" Grid.Column="0"  Grid.ColumnSpan="3" Width="auto" HorizontalAlignment="Center" >
 
                 <TextBlock.RenderTransform>
                     <TransformGroup>
