@@ -24,14 +24,18 @@ namespace WpfApp2.Db.Models
 {
     public interface IUnitOfWork : IDisposable
     {
+        StatementOperationRepository StatementOperation { get; }
+        StatementObsRepository StatementObs { get; }
+        HirurgOverviewRepository HirurgOverview { get; }
         SugarDiabetCommentRepository SugarDiabetComment { get; }
         SclezingRepository Sclezing { get; }
         AnticogulantsRepository Anticogulants { get; }
         PreparateHateCommentRepository PreparateHateComment { get; }
-        BloodExchangeCommentRepository   BloodExchangeComment { get; }
+        BloodExchangeCommentRepository BloodExchangeComment { get; }
         OperationTypeOperationsRepository OperationTypeOperations { get; }
         OperationForAmbulatornCardRepository OperationForAmbulatornCard { get; }
-        OperationForAmbulatornCardPatientsRepository OperationForAmbulatornCardPatients { get; }   AlergicAnevrizmRepository AlergicAnevrizm { get; }
+        OperationForAmbulatornCardPatientsRepository OperationForAmbulatornCardPatients { get; }
+        AlergicAnevrizmRepository AlergicAnevrizm { get; }
         BloodExchangeRepository BloodExchange { get; }
         HirurgInteruptRepository HirurgInterup { get; }
         PreparateHateRepository PreparateHate { get; }

@@ -11,6 +11,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WpfApp2.Db.Models;
+using WpfApp2.Db.Models.LegParts;
+using WpfApp2.Db.Models.LegParts.BPVHip;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 using WpfApp2.ViewModels.Panels;
@@ -342,11 +344,14 @@ namespace WpfApp2.ViewModels
 
                         string lettersLeft = "";
                         string lettersRight = "";
-
+                        string BPVRight = "";
+                        string BPVLeft = "";
                         using (var context = new MySqlContext())
                         {
                             ExaminationRepository ExamRep = new ExaminationRepository(context);
                             ExaminationLegRepository LegExamRep = new ExaminationLegRepository(context);
+                            //BPV
+
                             LettersRepository LettersRep = new LettersRepository(context);
                             var ExamsOfCurrPatient = ExamRep.GetAll.ToList().Where(s => s.PatientId == CurrentPatient.Id).ToList();
 
@@ -356,7 +361,36 @@ namespace WpfApp2.ViewModels
                                 var ExamsOfCurrPatientLatest = ExamsOfCurrPatient.Where(s => s.Date == MaxExam).ToList();
                                 ExaminationLeg leftLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idLeftLegExamination.Value);
                                 ExaminationLeg rightLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idRightLegExamination.Value);
+                                BPVHipEntryFullRepository BPVRep = new BPVHipEntryFullRepository(context);
+                                BPVHipWayRepository BPVWayRep = new BPVHipWayRepository(context);
                                 Letters bufLetter = new Letters();
+
+                                if (leftLegExam.BPVHip != null)
+                                {
+                                    var bpvLeft = BPVRep.Get(leftLegExam.BPVHip.Value);
+                                    if (bpvLeft.WayID != null)
+                                    {
+                                        document.ReplaceText("«Гибрид2»", BPVWayRep.Get(bpvLeft.WayID.Value).Name);
+                                    }
+                                }
+                                else
+                                {
+                                    document.ReplaceText("«Гибрид2»", "");
+
+                                }
+                                if (rightLegExam.BPVHip != null)
+                                {
+                                    var bpvRight = BPVRep.Get(rightLegExam.BPVHip.Value);
+                                    if (bpvRight.WayID != null)
+                                    {
+                                        document.ReplaceText("«Гибрид»", BPVWayRep.Get(bpvRight.WayID.Value).Name);
+                                    }
+                                }
+                                else
+                                {
+                                    document.ReplaceText("«Гибрид»", "");
+                                }
+
                                 if (leftLegExam.C != null)
                                 {
                                     bufLetter = LettersRep.Get(leftLegExam.C.Value);

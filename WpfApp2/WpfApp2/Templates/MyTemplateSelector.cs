@@ -45,8 +45,8 @@ namespace WpfApp2.Templates
         public DataTemplate TemplateChangeHistory { get; set; }
         public DataTemplate TemplateAddtionalInfoPatient { get; set; }
         public DataTemplate TemplateCheckboxesWithFilter { get; set; }
-
-
+        public DataTemplate TemplateHirurgOverview { get; set; }
+        public DataTemplate TemplateStatementForObsled { get; set; }
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             if (item == null)
@@ -71,9 +71,9 @@ namespace WpfApp2.Templates
 
             if (item.GetType() == typeof(ViewModelAddPhysical))
             {
-               
+
                 return TemplateAddPhysicalPage1;
-               
+
             }
             if (item.GetType() == typeof(ViewModelEditPatient))
                 return TemplateEditPatient;
@@ -209,12 +209,15 @@ namespace WpfApp2.Templates
             if (item.GetType() == typeof(ViewModelOperationListForOperation))
                 return TemplateCheckboxesWithFilter;
             // 
-
-            //if (item.GetType() == typeof(ViewModelSclerozList))
+            if (item.GetType() == typeof(ViewModelHirurgOverview))
+                return TemplateHirurgOverview;
+            if (item.GetType() == typeof(ViewModelStatementForObsled))
+                return TemplateStatementForObsled;
+            //if (item.GetType() == typeof(ViewModelSclerozList))   ViewModelStatementForObsled TemplateStatementForObsled
             //    return TemplateCheckboxesWithFilter;
             //if (item.GetType() == typeof(ViewModelAnticogulanyList))
             //    return TemplateCheckboxesWithFilter;
-           
+
             return null;
         }
     }

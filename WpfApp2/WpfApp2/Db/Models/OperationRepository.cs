@@ -32,6 +32,9 @@ namespace WpfApp2.Db.Models
         public int? отмена_операции { set; get; }
         [Column(Order = 1), ForeignKey("OpResult")]
         public int? итоги_операции { set; get; }
+        [Column("id_выписки")]
+        public int? StatementId { set; get; }
+        //StatementId
         public virtual OperationResult OpResult { get; set; }
         public virtual CancelOperation OpCancle { get; set; }
 

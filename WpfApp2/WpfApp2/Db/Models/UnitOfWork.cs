@@ -24,6 +24,9 @@ namespace WpfApp2.Db.Models
 {
     public class UnitOfWork : IUnitOfWork
     {
+        public StatementOperationRepository StatementOperation { get; }
+        public StatementObsRepository StatementObs { get; }
+        public HirurgOverviewRepository HirurgOverview { get; }
         public SugarDiabetCommentRepository SugarDiabetComment { get; }
         public SclezingRepository Sclezing { get; }
         public AnticogulantsRepository Anticogulants { get; }
@@ -202,6 +205,9 @@ namespace WpfApp2.Db.Models
         public UnitOfWork(MySqlContext context)
         {
             _context = context;
+            StatementOperation = new StatementOperationRepository(_context);
+            StatementObs = new StatementObsRepository(_context);
+            HirurgOverview = new HirurgOverviewRepository(_context);
             SugarDiabetComment = new SugarDiabetCommentRepository(_context);
             Sclezing = new SclezingRepository(_context);
             Anticogulants = new AnticogulantsRepository(_context);

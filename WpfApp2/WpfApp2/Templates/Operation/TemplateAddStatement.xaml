@@ -3,8 +3,68 @@
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplateAddStatement">
-        <Grid Margin="0,80,0,0">
-            <Label x:Name="label" Content="Составление выписки" HorizontalAlignment="Left" Margin="397,10,0,0" VerticalAlignment="Top" FontSize="22pt"/>
+        <Grid Margin="0,0,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="120"></RowDefinition>
+                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="53"></RowDefinition>
+                <RowDefinition Height="55"></RowDefinition>
+
+                <RowDefinition Height="35"></RowDefinition>
+                <RowDefinition Height="77"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="290"></ColumnDefinition>
+                <ColumnDefinition Width="530"></ColumnDefinition>
+                <ColumnDefinition Width="300"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Style="{StaticResource MyNormalBUTTON}"  Width="290" FontSize="13" Content="Сформировать документ"  Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Command="{Binding Path=ToCreateStatementCommand}" ></Button>
+            <Button Style="{StaticResource MyConfirmBUTTON}" Width="290" Content="Загрузить существующий документ" Margin="0,0"  Grid.Column="0" Grid.Row="1" Grid.RowSpan="4" FontSize="13" Command="{Binding Path=OpenFile}" ></Button>
+            <Button Style="{StaticResource MyConfirmBUTTON}" Width="290" Visibility="{Binding IsDocAdded}"  Content="Открыть документ"     Margin="0,0"  Grid.Column="0" Grid.Row="3" Grid.RowSpan="3" FontSize="13" Command="{Binding Path=OpenWordDocument}" ></Button>
+            <Button Style="{StaticResource MyConfirmBUTTON}" Width="290" Visibility="{Binding IsDocAdded}"  Content="Сохранить документ"   Grid.Column="0" Grid.Row="5" Grid.RowSpan="1" FontSize="13" Margin="0,-10" Command="{Binding Path=SaveWordDocument}" ></Button>
+
+            <!--загрузить другой анализ-->
+            <TextBlock  FontSize="18pt" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="10"  HorizontalAlignment="Left" FontFamily="/fonts/#Pescadero"  Height="38" VerticalAlignment="Top" Margin="40,0">
+                <TextBlock.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="10"/>
+                    </TransformGroup>
+                </TextBlock.RenderTransform>
+            
+            <TextBlock  FontSize="18pt" Margin="0,0" Text="{Binding Path=CurrentPatient.Sirname}" /><Run Text=" " /><TextBlock Text="{Binding Path=CurrentPatient.Name}"  FontSize="18pt"/><Run Text=" " /><TextBlock Text="{Binding Path=CurrentPatient.Patronimic}" /></TextBlock>
+
+            <TextBlock  Grid.Column="1" Grid.Row="0"   FontFamily="/fonts/#Pescadero" FontSize="18pt" Text="Выписка" Margin="40,80,0,0" Grid.ColumnSpan="2"/>
+
+            <TextBlock  Grid.Column="1" Grid.Row="2"   FontFamily="/fonts/#Pescadero" FontSize="18pt" Text="Первая нога" Margin="40,4,188,0" Grid.ColumnSpan="2"/>
+
+            <TextBlock Grid.Column="1" Grid.Row="3"   FontFamily="/fonts/#Pescadero" FontSize="18pt" TextWrapping="Wrap"  Text="Рекомендовано: дебанражирование и      УЗ-контроль на" Margin="40,0,0,0"/>
+            <TextBox  Grid.Column="1" Grid.Row="2" Grid.RowSpan="3" Padding="1"  Name="size1Box" Grid.ColumnSpan="1" Text="{Binding Path=Days}" Width="40" Height="23" Margin="-60,15,0,0">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="PreviewMouseDown">
+                        <i:InvokeCommandAction  Command="{Binding Path=ClickOnWeight}" CommandParameter="{Binding ElementName=size1Box}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="LostFocus">
+                        <i:InvokeCommandAction  Command="{Binding Path=LostFocus}" CommandParameter="{Binding ElementName=size1Box}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </TextBox>
+            <TextBlock Grid.Column="1" FontFamily="/fonts/#Pescadero" FontSize="18pt" Grid.Row="4" Text="Врач :" Height="auto" Margin="40,10,0,0"></TextBlock>
+            <TextBlock Grid.Column="1" Grid.Row="5"  FontFamily="/fonts/#Pescadero" FontSize="18pt" Text="{Binding TextForDoWhat}" Margin="40,2,178,1" Grid.ColumnSpan="2"/>
+
+            <ComboBox SelectedIndex="{Binding Path=SelectedLeg}"   Width="257" FontSize="18" ItemsSource="{Binding LeftOrRight}" Grid.Column="1" Grid.Row="2" Height="25" HorizontalAlignment="Left" Margin="192,3,0,1" />
+
+            <!--<Button Style="{StaticResource MyNormalBUTTON}" Grid.Column="1" Grid.Row="6" x:Name="button_Copy13" Width="250"  Content="Вернуться в пациенту" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="380,0" VerticalAlignment="Top"/>-->
+
+            <Button Style="{StaticResource MyNormalBUTTON}" Grid.Column="1" Grid.Row="7" x:Name="b3utton_Copy13" Width="265"  Content="Вернуться к операции" Command="{Binding Path=ToOperationOverviewCommand}" HorizontalAlignment="Left"  Margin="40,0" VerticalAlignment="Top"/>
+
+            <ComboBox  Width="257" FontSize="18" ItemsSource="{Binding Doctors}" Grid.Column="1" Grid.Row="4" Height="25" HorizontalAlignment="Left" Margin="112,0,0,1" SelectedIndex="{Binding Path=SelectedDoctor}"/>
+
+            <!--<Label x:Name="label" Content="Составление выписки" HorizontalAlignment="Left" Margin="397,10,0,0" VerticalAlignment="Top" FontSize="22pt"/>
             <Button Width="300" Style="{StaticResource MyConfirmBUTTON}" x:Name="buttond_Copy1" Content="Составить выписку" Command="{Binding Path=ToCreateStatementCommand}" HorizontalAlignment="Left" Margin="689,541,0,0" VerticalAlignment="Top"  
                     />
 
@@ -26,8 +86,8 @@
 
             <ComboBox ItemsSource="{Binding Path=Doctors}" SelectedIndex="{Binding Path=SelectedDoctor}"  Width="140" Height="13" Margin="109,0,703,230"></ComboBox>
             <Button Style="{StaticResource MyNormalBUTTON}" Width="300" x:Name="button_Copy" Command="{Binding Path=ToOperationOverviewCommand}" Content="Вернуться к операции" HorizontalAlignment="Left" Margin="69,541,0,0"              
-                    VerticalAlignment="Top" />
-          
+                    VerticalAlignment="Top" />-->
+
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

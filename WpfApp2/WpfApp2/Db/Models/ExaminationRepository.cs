@@ -32,7 +32,11 @@ namespace WpfApp2.Db.Models
         public int? DoctorID { set; get; }
         [Column("NB!")]
         public string NB { set; get; }
-        
+        //statementOverviewId
+        [Column("id_заключения")]
+        public int? statementOverviewId { set; get; }
+        [Column("id_осмотра")]
+        public int? hirurgOverviewId { set; get; }
         [Column("нужна_операция")]
         public bool isNeedOperation { set; get; }
         [Column("вид_операции")]

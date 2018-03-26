@@ -113,6 +113,8 @@ namespace WpfApp2.Navigation
                  new ViewModelPreparateHate(this),
                 new  ViewModelAlergicAnevrizmList(this),
                    new  ViewModelOperationForAmbullatorCardList(this), new   ViewModelOperationListForOperation(this),
+                   new   ViewModelHirurgOverview(this),
+                   new  ViewModelStatementForObsled(this),
                 new LegPartViewModel(this)
 
 

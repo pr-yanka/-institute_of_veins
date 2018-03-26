@@ -12,17 +12,39 @@ using WpfApp2.Db.Models;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 using Microsoft.Win32;
+using System.Windows;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace WpfApp2.ViewModels
 {
-    public class ViewModelAnalizeOverview : ViewModelBase
+    public class ViewModelAnalizeOverview : ViewModelBase, INotifyPropertyChanged
     {
+
+        #region Inotify realisation
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            //если PropertyChanged не нулевое - оно будет разбужено
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+    
         public string ButtonName { get; set; }
     
 
         public AnalizeType AnalizeType { get; set; }
 
 
+        private Visibility _isAnalizeLoadedVisibility;
+        public Visibility IsAnalizeLoadedVisibility
+        {
+            get
+            {
+                return _isAnalizeLoadedVisibility;
+            }
+            set { _isAnalizeLoadedVisibility = value; OnPropertyChanged(); }
+        }
 
         public Analize Analize { get; set; }
 
@@ -34,10 +56,12 @@ namespace WpfApp2.ViewModels
 
         private void SetCurrentPatientID(object sender, object data)
         {
+            IsAnalizeLoadedVisibility = Visibility.Hidden;
             CurrentPatient = Data.Patients.Get((int)data);
         }
         private void SetCurrentAnalizeID(object sender, object data)
         {
+            IsAnalizeLoadedVisibility = Visibility.Hidden;
             Analize = Data.Analize.Get((int)data);
 
             AnalizeType = Data.AnalizeType.Get(Analize.analyzeType);
@@ -57,7 +81,7 @@ namespace WpfApp2.ViewModels
         }
         public ViewModelAnalizeOverview(NavigationController controller) : base(controller)
         {
-           
+            IsAnalizeLoadedVisibility = Visibility.Hidden;
             ButtonName = "К Пациенту";
             MessageBus.Default.Subscribe("GetPatientForAnalizeOverview", SetCurrentPatientID);
             MessageBus.Default.Subscribe("GetAnalizeForAnalizeOverview", SetCurrentAnalizeID);
@@ -74,6 +98,7 @@ namespace WpfApp2.ViewModels
                 if (op.ShowDialog() == true)
                 {
                     Analize.ImageByte = ImageToByte(new BitmapImage(new Uri(op.FileName)));
+                    IsAnalizeLoadedVisibility = Visibility.Visible;
                     Data.Complete();
                 }
             }

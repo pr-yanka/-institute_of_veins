@@ -189,11 +189,11 @@
             <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy4" Content="Выбрать диагноз слева"  Command="{Binding Path=ToLeftDiagCommand}" HorizontalAlignment="Left" Margin="755,170,0,0"                  
                     VerticalAlignment="Top" Width="260" />
             <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy5"  FontSize="12" Command="{Binding GetLeftFromLastObs}" Content="Взять из последнего обследования" HorizontalAlignment="Left"  
-                    Margin="485,503,0,0"             VerticalAlignment="Top" Width="260"/>
+                   Margin="755,503,0,0"        VerticalAlignment="Top" Width="260"/>
             <Button  Style="{StaticResource MyConfirmBUTTON}" Width="260" x:Name="button_Copy6" Content="Выбрать диагноз справа" Command="{Binding Path=ToRightDiagCommand}" HorizontalAlignment="Left" Margin="485,170,0,0"  
                     VerticalAlignment="Top"  RenderTransformOrigin="0.484,0.472"/>
             <Button Style="{StaticResource MyConfirmBUTTON}"  x:Name="button_Copy7" Command="{Binding GetRightFromLastObs}"   Content="Взять из последнего обследования" HorizontalAlignment="Left"  
-            Margin="755,503,0,0"             VerticalAlignment="Top" Width="260" FontSize="12"/>
+                                 Margin="485,503,0,0"           VerticalAlignment="Top" Width="260" FontSize="12"/>
             <Border Grid.RowSpan="4" Visibility="{Binding Path = CurrentPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOverlay">
                 <Border.Background>
                     <SolidColorBrush Color="Black" Opacity="0.78"/>

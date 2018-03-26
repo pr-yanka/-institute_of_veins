@@ -37,7 +37,7 @@
             <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy2" Content="Записать жалобы" Command="{Binding Path=ToSymptomsAddCommand}" Height="25" HorizontalAlignment="Left" Margin="505,32,0,0" VerticalAlignment="Top" Width="487" FontSize="12"/>
             <Separator HorizontalAlignment="Left" Height="16" Margin="0,154,0,0" VerticalAlignment="Top" Width="1016" RenderTransformOrigin="0.51,0.49"/>
             <TextBlock x:Name="textBlock1_Copy2" HorizontalAlignment="Center" Margin="173,120,725,507" TextWrapping="Wrap" VerticalAlignment="Center" Width="118" FontSize="18" Text="Правая нога" TextAlignment="Center"/>
-            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy443" Command="{Binding Path=ToRightDiagCommand}" Content="Поставить диагноз" Height="25" HorizontalAlignment="Left" Margin="518,419,0,0" VerticalAlignment="Top" Width="487" FontSize="12"/>
+            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy443" Command="{Binding Path=ToRightDiagCommand}" Content="Поставить диагноз" Height="25" HorizontalAlignment="Left"  Margin="3,419,0,0"  VerticalAlignment="Top" Width="487" FontSize="12"/>
             <TextBlock x:Name="textBlock1_Copy3" HorizontalAlignment="Center" Margin="724,120,122,507" TextWrapping="Wrap" VerticalAlignment="Center" Width="170" FontSize="18"><Run Text="Левая "/><Run Text="нога"/></TextBlock>
 
 
@@ -611,7 +611,7 @@
                 
                 </TextBlock>
 
-            <ListBox x:Name="listBox1_Copy1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=LeftDiagnosisList}" HorizontalAlignment="Left" Height="127" Margin="3,449,0,0" VerticalAlignment="Top" Width="487" BorderThickness="1">
+            <ListBox x:Name="listBox1_Copy1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=LeftDiagnosisList}" HorizontalAlignment="Left" Height="127" Margin="518,449,0,0"  VerticalAlignment="Top" Width="487" BorderThickness="1">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
 
@@ -620,7 +620,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <ListBox x:Name="listBox1_Copy2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=RightDiagnosisList}" HorizontalAlignment="Left" Height="127" Margin="518,449,0,0" VerticalAlignment="Top" Width="487" BorderThickness="1">
+            <ListBox x:Name="listBox1_Copy2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=RightDiagnosisList}" HorizontalAlignment="Left" Height="127" Margin="3,449,0,0" VerticalAlignment="Top" Width="487" BorderThickness="1">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
 
@@ -638,7 +638,7 @@
 
                 <Button Style="{StaticResource MyConfirmBUTTON}"   x:Name="button_Copy9" Margin="0,0,0,5" Height="30" Content="{Binding TextOfEndBtn}"  Command="{Binding OpenDialogCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="12"/>
             </StackPanel>
-            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy" Command="{Binding Path=ToLeftDiagCommand}" Content="Поставить диагноз"   Height="25" HorizontalAlignment="Left" Margin="3,419,0,0" VerticalAlignment="Top" Width="487" FontSize="12" />
+            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy" Command="{Binding Path=ToLeftDiagCommand}" Content="Поставить диагноз"   Height="25" HorizontalAlignment="Left" Margin="518,419,0,0" VerticalAlignment="Top" Width="487" FontSize="12" />
 
 
 

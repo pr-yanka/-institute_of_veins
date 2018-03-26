@@ -63,6 +63,7 @@ namespace WpfApp2.ViewModels
 
         private void SetCurrentPatientID(object sender, object data)
         {
+            IsAnalizeLoadedVisibility = Visibility.Hidden;
             CurrentPatient = Data.Patients.Get((int)data);
             Analize.patientId = CurrentPatient.Id;
             Analize.data = DateTime.Now;
@@ -70,12 +71,23 @@ namespace WpfApp2.ViewModels
             AnalizeTypes = new ObservableCollection<AnalizeType>();
             foreach (var AnalizeType in Data.AnalizeType.GetAll)
             {
-                
+
                 AnalizeTypes.Add(AnalizeType);
             }
 
         }
+        //IsAnalizeLoadedVisibility
 
+
+        private Visibility _isAnalizeLoadedVisibility;
+        public Visibility IsAnalizeLoadedVisibility
+        {
+            get
+            {
+                return _isAnalizeLoadedVisibility;
+            }
+            set { _isAnalizeLoadedVisibility = value; OnPropertyChanged(); }
+        }
         public string TextOFNewType { get; private set; }
         public DelegateCommand ToCurrentPatient { get; protected set; }
         public DelegateCommand OpenAnalizePicture { get; protected set; }
@@ -83,6 +95,7 @@ namespace WpfApp2.ViewModels
 
         public ViewModelAddAnalize(NavigationController controller) : base(controller)
         {
+            IsAnalizeLoadedVisibility = Visibility.Hidden;
             CurrentPanelViewModel = new AnalizePanelViewModel(this);
             OpenCommand = new DelegateCommand(() =>
             {
@@ -92,7 +105,7 @@ namespace WpfApp2.ViewModels
 
             SaveCommand = new DelegateCommand(() =>
             {
-              
+
                 var newType = CurrentPanelViewModel.GetPanelType();
                 if (!string.IsNullOrWhiteSpace(newType.Str))
                 {
@@ -105,14 +118,14 @@ namespace WpfApp2.ViewModels
                     Data.Complete();
                     var DataSourceListbuf = AnalizeTypes;
                     AnalizeTypes = new ObservableCollection<AnalizeType>();
-                 
+
                     using (var context = new MySqlContext())
                     {
                         AnalizeTypeRepository sRep = new AnalizeTypeRepository(context);
                         foreach (var HirurgInterupType in sRep.GetAll)
                         {
                             AnalizeTypes.Add(HirurgInterupType);
-                          
+
                         }
                     }
                     SelectedIndexOfAnalizeType = AnalizeTypes.Count - 1;
@@ -145,22 +158,28 @@ namespace WpfApp2.ViewModels
             MessageBus.Default.Subscribe("GetPatientForAnalize", SetCurrentPatientID);
             ToCurrentPatient = new DelegateCommand(
              () =>
-             {
-                 Analize.analyzeType = AnalizeTypes[SelectedIndexOfAnalizeType].Id;
-                 if (Analize.ImageByte == null)
+             {if (AnalizeTypes.Count != 0)
                  {
+                     Analize.analyzeType = AnalizeTypes[SelectedIndexOfAnalizeType].Id;
+                     if (Analize.ImageByte == null)
+                     {
 
 
-                     MessageBox.Show("Загрузите фото анализа");
+                         MessageBox.Show("Загрузите фото анализа");
+                     }
+                     else
+                     {
+                         Data.Analize.Add(Analize);
+                         Data.Complete();
+                         MessageBus.Default.Call("GetPatientForAnalizeOverview", this, CurrentPatient.Id);
+                         MessageBus.Default.Call("GetAnalizeForAnalizeOverview", this, Analize.Id);
+                         Controller.NavigateTo<ViewModelAnalizeOverview>();
+                         Analize = new Analize();
+                     }
                  }
                  else
                  {
-                     Data.Analize.Add(Analize);
-                     Data.Complete();
-                     MessageBus.Default.Call("GetPatientForAnalizeOverview", this, CurrentPatient.Id);
-                     MessageBus.Default.Call("GetAnalizeForAnalizeOverview", this, Analize.Id);
-                     Controller.NavigateTo<ViewModelAnalizeOverview>();
-                     Analize = new Analize();
+                     MessageBox.Show("Добавьте тип анализа");
                  }
              }
          );
@@ -182,7 +201,7 @@ namespace WpfApp2.ViewModels
                  if (op.ShowDialog() == true)
                  {
                      Analize.ImageByte = ImageToByte(new BitmapImage(new Uri(op.FileName)));
-
+                     IsAnalizeLoadedVisibility = Visibility.Visible;
                  }
 
              }

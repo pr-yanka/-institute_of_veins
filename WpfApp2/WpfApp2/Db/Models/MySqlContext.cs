@@ -19,7 +19,9 @@ namespace WpfApp2.Db.Models
 {
     public class MySqlContext : DbContext
     {
-        
+        public DbSet<StatementOperation> StatementOperation { get; set; }
+        public DbSet<StatementObs> StatementObs { get; set; }
+        public DbSet<HirurgOverview> HirurgOverview { get; set; }
         public DbSet<SugarDiabetComment> SugarDiabetComment { get; set; }
         public DbSet<Sclezing> Sclezing { get; set; }
         public DbSet<Anticogulants> Anticogulants { get; set; }

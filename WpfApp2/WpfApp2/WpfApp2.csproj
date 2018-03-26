@@ -203,6 +203,9 @@
       <DependentUpon>AddReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="Db\Models\AnticogulantsRepository.cs" />
+    <Compile Include="Db\Models\StatementOperationRepository.cs" />
+    <Compile Include="Db\Models\StatementObsRepository.cs" />
+    <Compile Include="Db\Models\HirurgOverviewRepository.cs" />
     <Compile Include="Db\Models\SugarDiabetCommentRepository.cs" />
     <Compile Include="Db\Models\SclezingRepository.cs" />
     <Compile Include="Db\Models\PreparateHateCommentRepository.cs" />
@@ -399,6 +402,8 @@
     <Compile Include="Templates\MyTemplateSelector.cs" />
     <Compile Include="ViewModels\ViewModelAddAnalize.cs" />
     <Compile Include="ViewModels\ViewModelAddEpicriz.cs" />
+    <Compile Include="ViewModels\ViewModelStatementForObsled.cs" />
+    <Compile Include="ViewModels\ViewModelHirurgOverview.cs" />
     <Compile Include="ViewModels\ViewModelAnticogulanyList.cs" />
     <Compile Include="ViewModels\ViewModelSclerozList.cs" />
     <Compile Include="ViewModels\ViewModelCreateStatement.cs" />
@@ -568,6 +573,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Templates\TemplateAddUser.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Templates\TemplateStatementForObsled.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Templates\TemplateHirurgOverview.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
