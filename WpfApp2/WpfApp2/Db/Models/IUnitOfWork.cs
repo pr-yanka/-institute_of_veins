@@ -24,6 +24,7 @@ namespace WpfApp2.Db.Models
 {
     public interface IUnitOfWork : IDisposable
     {
+         EpicrizOperationRepository EpicrizOperation { get; }
         StatementOperationRepository StatementOperation { get; }
         StatementObsRepository StatementObs { get; }
         HirurgOverviewRepository HirurgOverview { get; }

@@ -34,6 +34,8 @@ namespace WpfApp2.Db.Models
         public int? итоги_операции { set; get; }
         [Column("id_выписки")]
         public int? StatementId { set; get; }
+        [Column("id_епикриза")]
+        public int? EpicrizId { set; get; }
         //StatementId
         public virtual OperationResult OpResult { get; set; }
         public virtual CancelOperation OpCancle { get; set; }

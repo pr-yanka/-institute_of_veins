@@ -19,6 +19,7 @@ namespace WpfApp2.Db.Models
 {
     public class MySqlContext : DbContext
     {
+        public DbSet<EpicrizOperation> EpicrizOperation { get; set; }
         public DbSet<StatementOperation> StatementOperation { get; set; }
         public DbSet<StatementObs> StatementObs { get; set; }
         public DbSet<HirurgOverview> HirurgOverview { get; set; }

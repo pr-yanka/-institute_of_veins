@@ -1,4 +1,5 @@
 ﻿using Microsoft.Practices.Prism.Commands;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -46,7 +47,17 @@ namespace WpfApp2.ViewModels
         public static bool Handled = false;
         public UIElement UI;
 
+        private string _fileName;
 
+        public string FileName
+        {
+            get { return _fileName; }
+            set
+            {
+                _fileName = value;
+                OnPropertyChanged();
+            }
+        }
         #region Inotify realisation
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -57,7 +68,7 @@ namespace WpfApp2.ViewModels
         #endregion
         private float _e1;
         private float _e2;
-        private float _days;
+        private int _days;
         public float E1
         {
             get { return _e1; }
@@ -78,7 +89,7 @@ namespace WpfApp2.ViewModels
                 OnPropertyChanged();
             }
         }
-        public float Days
+        public int Days
         {
             get { return _days; }
             set
@@ -98,7 +109,17 @@ namespace WpfApp2.ViewModels
         public ObservableCollection<Docs> Doctors { get { return _doctors; } set { _doctors = value; OnPropertyChanged(); } }
 
 
-        public int SelectedDoctor { get; set; }
+        private int _doctorSelectedId;
+
+        public int SelectedDoctor
+        {
+            get { return _doctorSelectedId; }
+            set
+            {
+                _doctorSelectedId = value;
+                OnPropertyChanged();
+            }
+        }
 
 
 
@@ -158,55 +179,175 @@ namespace WpfApp2.ViewModels
                 OnPropertyChanged();
             }
         }
+        private Visibility _isDocAdded;
+
+
+        public Visibility IsDocAdded
+        {
+            get { return _isDocAdded; }
+            set
+            {
+                _isDocAdded = value;
+                OnPropertyChanged();
+            }
+        }
+        private EpicrizOperation _currentDocument;
+
+        public EpicrizOperation CurrentDocument
+        {
+            get { return _currentDocument; }
+            set
+            {
+                _currentDocument = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _textForDoWhat;
+
+        public string TextForDoWhat
+        {
+            get { return _textForDoWhat; }
+            set
+            {
+                _textForDoWhat = value;
+                OnPropertyChanged();
+            }
+        }
+        private string _fileNameOnly;
         private void GetOperationid(object sender, object data)
         {
             //MessageBus.Default.Call("SetClearSclazingList", null, null);
             //MessageBus.Default.Call("SetClearAnticogulanyList", null, null);
-            Days = 0.0f;
+            Days = 0;
             Svetoootvod = "";
             Антикоагулянты = "";
             FullScrelizovanie = "";
             E1 = 0.0f;
             E2 = 0.0f;
             DoctorsSelected = (List<DoctorDataSource>)sender;
+            if (DoctorsSelected == null)
+            { DoctorsSelected = new List<DoctorDataSource>(); }
             Doctors = new ObservableCollection<Docs>();
-            Operation = Data.Operation.Get((int)data);
-            operationId = (int)data;
-            DateTime bufTime = DateTime.Parse(Operation.Time);
-
-            Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
-            Date = Operation.Date;
-            //operationType = Data.OperationType.Get(Operation.OperationTypeId).LongName;
-            //TextResultCancle = "Итоги операции"; 
+            //
             using (var context = new MySqlContext())
             {
+                OperationRepository Oprep = new OperationRepository(context);
+                Operation = Oprep.Get((int)data);
+                operationId = (int)data;
+                DateTime bufTime = DateTime.Parse(Operation.Time);
+
+                Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
+                Date = Operation.Date;
+                AnticogulantSelected = new ObservableCollection<Anticogulants>();
+                SclerozSelected = new ObservableCollection<Sclezing>();
                 PatientsRepository PatientsRep = new PatientsRepository(context);
                 CurrentPatient = PatientsRep.Get(Operation.PatientId);
-            }
-            using (var context = new MySqlContext())
-            {
+                SclezingRepository SclezingRep = new SclezingRepository(context);
+                AnticogulantsRepository AntcgRep = new AnticogulantsRepository(context);
                 DoctorRepository DoctorRep = new DoctorRepository(context);
-
-
                 foreach (var doc in DoctorRep.GetAll)
                 {
-                    if (doc.isEnabled.Value)
+                    Doctors.Add(new Docs(doc));
+                }
+                foreach (var doc in AntcgRep.GetAll)
+                {
+                    AnticogulantSelected.Add(doc);
+
+                }
+                foreach (var doc in SclezingRep.GetAll)
+                {
+                    SclerozSelected.Add(doc);
+
+                }
+                if (Operation.EpicrizId != null && Operation.EpicrizId != 0)
+                {
+                    IsDocAdded = Visibility.Visible;
+                    TextForDoWhat = "";
+                    EpicrizOperationRepository StatementRep = new EpicrizOperationRepository(context);
+
+                    CurrentDocument = StatementRep.Get(Operation.EpicrizId.Value);
+                    Days = CurrentDocument.CountDays;
+                    Svetoootvod = CurrentDocument.Light;
+                    E1 = CurrentDocument.VT;
+                    E2 = CurrentDocument.DJSM;
+                    // SelectedLeg = CurrentDocument.FirstIsRightIfNull;
+
+                    if (CurrentDocument.SclezingId != null && CurrentDocument.SclezingId != 0)
                     {
-                        Doctors.Add(new Docs(doc));
+                        var doc = SclezingRep.Get(CurrentDocument.SclezingId.Value);
+                        foreach (var docs in SclerozSelected)
+                        {
+                            if (docs.Id == doc.Id)
+                            {
+                                SclezingIdSelected = SclerozSelected.IndexOf(docs);
+                            }
+                        }
+                    }
+
+                    if (CurrentDocument.AnticogulantId != null && CurrentDocument.AnticogulantId != 0)
+                    {
+                        var doc = AntcgRep.Get(CurrentDocument.AnticogulantId.Value);
+                        foreach (var docs in AnticogulantSelected)
+                        {
+                            if (docs.Id == doc.Id)
+                            {
+                                AnticogulantIdSelected = AnticogulantSelected.IndexOf(docs);
+                            }
+                        }
+                    }
+
+                    if (CurrentDocument.DoctorId != 0)
+                    {
+                        var doc = DoctorRep.Get(CurrentDocument.DoctorId);
+                        foreach (var docs in Doctors)
+                        {
+                            if (docs.doc.Id == doc.Id)
+                            {
+                                SelectedDoctor = Doctors.IndexOf(docs);
+                            }
+                        }
                     }
                 }
+                else
+                {
+                    SelectedDoctor = 0;
+                    IsDocAdded = Visibility.Hidden;
+                    TextForDoWhat = "Сформируйте или загрузите документ";
+                }
+
+
+
+
             }
+            ////
+            //Operation = Data.Operation.Get((int)data);
+            //operationId = (int)data;
+            //DateTime bufTime = DateTime.Parse(Operation.Time);
+
+            //Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
+            //Date = Operation.Date;
+            //operationType = Data.OperationType.Get(Operation.OperationTypeId).LongName;
+            //TextResultCancle = "Итоги операции"; 
+            //using (var context = new MySqlContext())
+            //{
+            //    PatientsRepository PatientsRep = new PatientsRepository(context);
+            //    CurrentPatient = PatientsRep.Get(Operation.PatientId);
+            //}
+            //using (var context = new MySqlContext())
+            //{
+            //    DoctorRepository DoctorRep = new DoctorRepository(context);
+
+
+            //    foreach (var doc in DoctorRep.GetAll)
+            //    {
+            //        if (doc.isEnabled.Value)
+            //        {
+            //            Doctors.Add(new Docs(doc));
+            //        }
+            //    }
+            //}
         }
-        //private void SetAnticogulantList(object sender, object data)
-        //{
-        //    AnticogulantSelected = (ObservableCollection<AnticogulanyListDataSource>)data;
 
-        //}
-        //private void SetSclezingList(object sender, object data)
-        //{
-        //    SclerozSelected = (ObservableCollection<SclerozListDataSource>)data;
-
-        //}
         public ViewModelAddEpicriz(NavigationController controller) : base(controller)
         {//SetAnticogulantList
          //MessageBus.Default.Subscribe("SetAnticogulantList", SetAnticogulantList);
@@ -280,7 +421,9 @@ namespace WpfApp2.ViewModels
 
 
                     int togle = 0;
-
+                    _fileNameOnly = "";
+                    // string fileName = System.IO.Path.GetTeWmpPath() + Guid.NewGuid().ToString() + ".docx";
+                    _fileNameOnly = "Предоперационный_эпикриз.docx";
                     string fileName = System.IO.Path.GetTempPath() + "Предоперационный_эпикриз.docx";
                     byte[] bte = new byte[1];
                     if (Operation.OnWhatLegOp == "0")
@@ -302,16 +445,22 @@ namespace WpfApp2.ViewModels
                         try
                         {
                             if (togle == 0)
+                            {
                                 File.WriteAllBytes(System.IO.Path.GetTempPath() + "Предоперационный_эпикриз.docx", bte);
+                                _fileNameOnly = "Предоперационный_эпикриз.docx";
+                            }
                             else
+                            {
                                 File.WriteAllBytes(System.IO.Path.GetTempPath() + "Предоперационный_эпикриз" + togle + ".docx", bte);
-
+                                _fileNameOnly = "Предоперационный_эпикриз" + togle + ".docx";
+                            }
                             break;
                         }
                         catch
                         {
                             togle += 1;
                             fileName = System.IO.Path.GetTempPath() + "Предоперационный_эпикриз" + togle + ".docx";
+                            _fileNameOnly = "Предоперационный_эпикриз" + togle + ".docx";
                         }
                     }
 
@@ -586,8 +735,50 @@ namespace WpfApp2.ViewModels
                         //область
 
                         document.Save();
+                        byte[] bteToBD = File.ReadAllBytes(fileName);
                         //Release this document from memory.
+                        using (var context = new MySqlContext())
+                        {
+                            EpicrizOperationRepository HirurgOverviewRep = new EpicrizOperationRepository(context);
+                            EpicrizOperation Hv = new EpicrizOperation();
+                            if (Operation.EpicrizId != null && Operation.EpicrizId != 0)
+                            {
+                                Hv = Data.EpicrizOperation.Get(Operation.EpicrizId.Value);
+                                Hv.CountDays = Days;
+                                Hv.VT = E1;
+                                Hv.DJSM = E2;
+                                Hv.Light = Svetoootvod;
+                                Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
+                                Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
+                                Hv.DocTemplate = bteToBD;
+                                Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
+                                Data.Complete();
+                            }
+                            else
+                            {
+
+                                Hv.DocTemplate = bteToBD;
+                                Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
+                                Hv.CountDays = Days;
+                                Hv.VT = E1;
+                                Hv.DJSM = E2;
+                                Hv.Light = Svetoootvod;
+                                Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
+                                Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
+                                Data.EpicrizOperation.Add(Hv);
+
+                                Data.Complete();
+                                Operation = Data.Operation.Get(Operation.Id);
+                                Operation.EpicrizId = Hv.Id;
+                                Data.Complete();
+                            }
+                        }
+                        //Release this document from memory.
+                        IsDocAdded = Visibility.Visible;
+
                         Process.Start("WINWORD.EXE", fileName);
+                        GetOperationid(DoctorsSelected, Operation.Id);
+                        TextForDoWhat = "Вы создали новый документ " + _fileNameOnly;
                     }
 
                     //MessageBus.Default.Call("GetOperationResultForCreateStatement", this, operationId);
@@ -602,9 +793,180 @@ namespace WpfApp2.ViewModels
                     Controller.NavigateTo<ViewModelOperationOverview>();
                 }
             );
+            SaveWordDocument = new DelegateCommand(
+                () =>
+                {
+                    try
+                    {
+                        if (FileName != null)
+                        {
+                            byte[] bteToBD = File.ReadAllBytes(FileName);
+                            using (var context = new MySqlContext())
+                            {
+                                EpicrizOperationRepository HirurgOverviewRep = new EpicrizOperationRepository(context);
+                                EpicrizOperation Hv = new EpicrizOperation();
+
+                                if (CurrentDocument.Id != 0)
+                                {
+                                    Hv = Data.EpicrizOperation.Get(Operation.EpicrizId.Value);
+                                    Hv.CountDays = Days;
+                                    Hv.VT = E1;
+                                    Hv.DJSM = E2;
+                                    Hv.Light = Svetoootvod;
+                                    Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
+                                    Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
+                                    Hv.DocTemplate = bteToBD;
+                                    Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
+                                    Data.Complete();
+                                    CurrentDocument.DocTemplate = Hv.DocTemplate;
+                                    CurrentDocument.Id = Hv.Id;
+                                }
+                                else
+                                {
+
+                                    Hv.DocTemplate = bteToBD;
+                                    Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
+                                    Hv.CountDays = Days;
+                                    Hv.VT = E1;
+                                    Hv.DJSM = E2;
+                                    Hv.Light = Svetoootvod;
+                                    Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
+                                    Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
+                                    Data.EpicrizOperation.Add(Hv);
+
+                                    Data.Complete();
+                                    CurrentDocument.Id = Hv.Id;
+                                    CurrentDocument.DocTemplate = Hv.DocTemplate;
+                                    Operation = Data.Operation.Get(Operation.Id);
+                                    Operation.EpicrizId = Hv.Id;
+                                    Data.Complete();
+                                }
+
+                            }
+
+                            TextForDoWhat = "Изменения в " + _fileNameOnly + " были сохранены";
+                        }
+
+                    }
+                    catch
+                    {
+
+                        MessageBox.Show("Закройте документ");
+                    }
+                }
+            );
+            OpenFile = new DelegateCommand(
+     () =>
+     {
+         OpenFileDialog openFileDialog = new OpenFileDialog();
+         openFileDialog.Filter = "Word Documents (.docx)|*.docx|Word Template (.dotx)|*.dotx|All Files (*.*)|*.*";
+         openFileDialog.ValidateNames = true;
+         openFileDialog.FilterIndex = 1;
+         if (openFileDialog.ShowDialog() == true)
+         {
+             _fileNameOnly = openFileDialog.SafeFileName;
+             FileName = openFileDialog.FileName;
+             byte[] bteToBD = File.ReadAllBytes(FileName);
+             using (var context = new MySqlContext())
+             {
+                 EpicrizOperationRepository HirurgOverviewRep = new EpicrizOperationRepository(context);
+                 EpicrizOperation Hv = new EpicrizOperation();
+
+                 if (CurrentDocument.Id != 0)
+                 {
+                     Hv = Data.EpicrizOperation.Get(Operation.EpicrizId.Value);
+                     Hv.CountDays = Days;
+                     Hv.VT = E1;
+                     Hv.DJSM = E2;
+                     Hv.Light = Svetoootvod;
+                     Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
+                     Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
+                     Hv.DocTemplate = bteToBD;
+                     Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
+                     Data.Complete();
+                     CurrentDocument.Id = Hv.Id;
+                 }
+                 else
+                 {
+
+                     Hv.DocTemplate = bteToBD;
+                     Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
+                     Hv.CountDays = Days;
+                     Hv.VT = E1;
+                     Hv.DJSM = E2;
+                     Hv.Light = Svetoootvod;
+                     Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
+                     Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
+                     Data.EpicrizOperation.Add(Hv);
+
+                     Data.Complete();
+                     CurrentDocument.Id = Hv.Id;
+                     Operation = Data.Operation.Get(Operation.Id);
+                     Operation.EpicrizId = Hv.Id;
+                     Data.Complete();
+                 }
+                 //    Hv = Data.EpicrizOperation.Get(CurrentDocument.Id);
+
+                 //    Hv.DocTemplate = bteToBD;
+                 //    Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
+                 //    Hv.FirstIsRightIfNull = SelectedLeg;
+                 //    Hv.CountDays = Days;
+                 //    Data.Complete();
+                 //    CurrentDocument.Id = Hv.Id;
+                 //}
+                 //else
+                 //{
+                 //    Hv.DocTemplate = bteToBD;
+                 //    Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
+                 //    Hv.FirstIsRightIfNull = SelectedLeg;
+                 //    Hv.CountDays = Days;
+                 //    Data.StatementOperation.Add(Hv);
+
+                 //    Data.Complete();
+                 //    CurrentDocument.Id = Hv.Id;
+                 //    Operation = Data.Operation.Get(Operation.Id);
+                 //    Operation.StatementId = Hv.Id;
+                 //    Data.Complete();
+                 //}
+                 GetOperationid(DoctorsSelected, Operation.Id);
+             }
+
+             TextForDoWhat = "Был загружен документ " + _fileNameOnly;
+         }
 
 
+     }
+ );
+            OpenWordDocument = new DelegateCommand(
+        () =>
+        {
+            int togle = 0;
 
+            FileName = System.IO.Path.GetTempPath() + "Предоперационный_эпикриз.docx";
+
+            _fileNameOnly = "Предоперационный_эпикриз.docx";
+
+            byte[] bte = CurrentDocument.DocTemplate;
+
+            for (; ; )
+            {
+                try
+                {
+
+                    File.WriteAllBytes(FileName, bte);
+
+                    break;
+                }
+                catch
+                {
+                    togle += 1;
+                    FileName = System.IO.Path.GetTempPath() + "Предоперационный_эпикриз" + togle + ".docx";
+                    _fileNameOnly = "Предоперационный_эпикриз" + togle + ".docx";
+                }
+            }
+            Process.Start("WINWORD.EXE", FileName);
+        }
+    );
 
 
 
@@ -724,6 +1086,9 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToOperationCommand { get; protected set; }
         public DelegateCommand ToCreateStatementCommand { get; protected set; }
         public DelegateCommand ToOperationOverviewCommand { get; protected set; }
+        public DelegateCommand SaveWordDocument { get; private set; }
+        public DelegateCommand OpenFile { get; private set; }
+        public DelegateCommand OpenWordDocument { get; private set; }
         public DelegateCommand ToSetSclezindCommand { get; private set; }
         public DelegateCommand ToSetAugmentedRealytyCommand { get; }
         public DelegateCommand<object> LostFocus { get; private set; }

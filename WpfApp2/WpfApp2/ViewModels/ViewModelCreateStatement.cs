@@ -94,8 +94,19 @@ namespace WpfApp2.ViewModels
         public Operation Operation { get; set; }
         public DateTime Date { get; set; }
         public string OperationType { get; set; }
-        public Patient CurrentPatient;
+       // public Patient CurrentPatient;
         private int operationId;
+        private Patient _currentPatient;
+
+        public Patient CurrentPatient
+        {
+            get { return _currentPatient; }
+            set
+            {
+                _currentPatient = value;
+                OnPropertyChanged();
+            }
+        }
         private string _textForDoWhat;
 
         public string TextForDoWhat
@@ -107,8 +118,9 @@ namespace WpfApp2.ViewModels
                 OnPropertyChanged();
             }
         }
-        private Visibility _isDocAdded;
         private string _fileNameOnly;
+        private Visibility _isDocAdded;
+      
 
         public Visibility IsDocAdded
         {
@@ -302,18 +314,10 @@ namespace WpfApp2.ViewModels
                       GetOperationid(null, Operation.Id);
                   }
 
-               //   MessageBus.Default.Call("GetHirurgOverviewForHirurgOverview", null, CurrentDocument.Id);
                   TextForDoWhat = "Был загружен документ " + _fileNameOnly;
               }
 
-                //var img = ByteToImage(Analize.ImageByte);
-                //int width = Convert.ToInt32(img.Width);
-                //int height = Convert.ToInt32(img.Height);
-                //Bitmap TestBitmap = new Bitmap(width, height);
-                //TestBitmap.Save("TempImage.Bmp");
-                //TestBitmap.Dispose();
-                //File.WriteAllBytes("TempImage.Bmp", Analize.ImageByte);
-                //Process.Start("TempImage.Bmp");
+              
             }
       );
             OpenWordDocument = new DelegateCommand(

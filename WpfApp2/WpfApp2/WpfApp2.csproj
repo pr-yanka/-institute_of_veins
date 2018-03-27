@@ -203,6 +203,7 @@
       <DependentUpon>AddReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="Db\Models\AnticogulantsRepository.cs" />
+    <Compile Include="Db\Models\EpicrizOperationRepository.cs" />
     <Compile Include="Db\Models\StatementOperationRepository.cs" />
     <Compile Include="Db\Models\StatementObsRepository.cs" />
     <Compile Include="Db\Models\HirurgOverviewRepository.cs" />
