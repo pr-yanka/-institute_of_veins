@@ -1167,7 +1167,7 @@ namespace WpfApp2.ViewModels
                     {
                         SclerozSelected.Add(Scleroz);
                     }
-                    SclezingIdSelected = SclerozSelected.Count;
+                    SclezingIdSelected = SclerozSelected.Count-1;
                     //foreach (var Scleroz in DataSourceListbuf)
                     //{
                     //    if (Scleroz.IsChecked.Value)
@@ -1215,7 +1215,7 @@ namespace WpfApp2.ViewModels
                     {
                         AnticogulantSelected.Add(Scintific);
                     }
-                    AnticogulantIdSelected = AnticogulantSelected.Count;
+                    AnticogulantIdSelected = AnticogulantSelected.Count - 1; ;
                     //foreach (var Scintific in DataSourceListbuf)
                     //{
                     //    if (Scintific.IsChecked.Value)

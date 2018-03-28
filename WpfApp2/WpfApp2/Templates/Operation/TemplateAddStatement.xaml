@@ -58,7 +58,7 @@
             <TextBlock Grid.Column="1" FontFamily="/fonts/#Pescadero" FontSize="18pt" Grid.Row="4" Text="Врач :" Height="auto" Margin="10,10,0,0"></TextBlock>
             <TextBlock Grid.Column="1" Grid.Row="5"  FontFamily="/fonts/#Pescadero" FontSize="18pt" Text="{Binding TextForDoWhat}" Margin="10,2,178,1" Grid.ColumnSpan="2"/>
 
-            <ComboBox SelectedIndex="{Binding Path=SelectedLeg}" Grid.ColumnSpan="2"  Width="256" FontSize="18" ItemsSource="{Binding LeftOrRight}" Grid.Column="1" Grid.Row="2" Height="25" HorizontalAlignment="Left" Margin="322,3,0,1" />
+            <ComboBox SelectedIndex="{Binding Path=SelectedLeg}" Grid.ColumnSpan="2"  Width="266" FontSize="18" ItemsSource="{Binding LeftOrRight}" Grid.Column="1" Grid.Row="2" Height="25" HorizontalAlignment="Left" Margin="322,3,0,1" />
 
             <!--<Button Style="{StaticResource MyNormalBUTTON}" Grid.Column="1" Grid.Row="6" x:Name="button_Copy13" Width="250"  Content="Вернуться в пациенту" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="380,0" VerticalAlignment="Top"/>-->
 
