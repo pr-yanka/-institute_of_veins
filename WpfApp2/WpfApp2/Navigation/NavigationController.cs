@@ -115,6 +115,7 @@ namespace WpfApp2.Navigation
                    new  ViewModelOperationForAmbullatorCardList(this), new   ViewModelOperationListForOperation(this),
                    new   ViewModelHirurgOverview(this),
                    new  ViewModelStatementForObsled(this),
+                 new   ViewModelCreateAdditionalInfoDocuments(this),
                 new LegPartViewModel(this)
 
 
@@ -143,7 +144,7 @@ namespace WpfApp2.Navigation
 
         public void NavigateTo<T>()
         {
-           // var target = _viewModels.FirstOrDefault(e => e.GetType() == typeof(T));
+            // var target = _viewModels.FirstOrDefault(e => e.GetType() == typeof(T));
 
             if (_viewModels.FirstOrDefault(e => e.GetType() == typeof(T)) != null)
                 CurrentViewModel = _viewModels.FirstOrDefault(e => e.GetType() == typeof(T));

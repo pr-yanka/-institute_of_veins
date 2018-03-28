@@ -43,7 +43,9 @@
             <TextBlock  Grid.Column="1" Grid.Row="2"   FontFamily="/fonts/#Pescadero" FontSize="18pt" Text="Первая нога" Margin="10,4,188,0" Grid.ColumnSpan="2"/>
 
             <TextBlock Grid.Column="1" Grid.Row="3"   FontFamily="/fonts/#Pescadero" FontSize="18pt" TextWrapping="Wrap"  Text="Рекомендовано: дебанражирование и         УЗ-контроль на" Margin="10,0,0,0"/>
-            <TextBox  Grid.Column="1" Grid.Row="2" Grid.RowSpan="3" Padding="1"  Name="size1Box" Grid.ColumnSpan="1" Text="{Binding Path=Days}" Width="40" Height="23" Margin="-60,15,0,0">
+            <TextBlock Grid.Column="1" Grid.Row="3"   FontFamily="/fonts/#Pescadero" FontSize="18pt" TextWrapping="Wrap"  Text="дней" Margin="240,28,0,0"/>
+
+            <TextBox  Grid.Column="1" Grid.Row="2" Grid.RowSpan="3" Padding="1"  Name="size1Box" Grid.ColumnSpan="1" Text="{Binding Path=Days}" Width="40" Height="23" Margin="-106,15,0,0">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseDown">
                         <i:InvokeCommandAction  Command="{Binding Path=ClickOnWeight}" CommandParameter="{Binding ElementName=size1Box}" />
@@ -56,13 +58,13 @@
             <TextBlock Grid.Column="1" FontFamily="/fonts/#Pescadero" FontSize="18pt" Grid.Row="4" Text="Врач :" Height="auto" Margin="10,10,0,0"></TextBlock>
             <TextBlock Grid.Column="1" Grid.Row="5"  FontFamily="/fonts/#Pescadero" FontSize="18pt" Text="{Binding TextForDoWhat}" Margin="10,2,178,1" Grid.ColumnSpan="2"/>
 
-            <ComboBox SelectedIndex="{Binding Path=SelectedLeg}"   Width="257" FontSize="18" ItemsSource="{Binding LeftOrRight}" Grid.Column="1" Grid.Row="2" Height="25" HorizontalAlignment="Left" Margin="192,3,0,1" />
+            <ComboBox SelectedIndex="{Binding Path=SelectedLeg}"   Width="193" FontSize="18" ItemsSource="{Binding LeftOrRight}" Grid.Column="1" Grid.Row="2" Height="25" HorizontalAlignment="Left" Margin="192,3,0,1" />
 
             <!--<Button Style="{StaticResource MyNormalBUTTON}" Grid.Column="1" Grid.Row="6" x:Name="button_Copy13" Width="250"  Content="Вернуться в пациенту" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="380,0" VerticalAlignment="Top"/>-->
 
             <Button Style="{StaticResource MyNormalBUTTON}" Grid.Column="1" Grid.Row="7" x:Name="b3utton_Copy13" Width="265"  Content="Вернуться к операции" Command="{Binding Path=ToOperationOverviewCommand}" HorizontalAlignment="Left"  Margin="10,0" VerticalAlignment="Top"/>
 
-            <ComboBox  Width="257" FontSize="18" ItemsSource="{Binding Doctors}" Grid.Column="1" Grid.Row="4" Height="25" HorizontalAlignment="Left" Margin="112,0,0,1" SelectedIndex="{Binding Path=SelectedDoctor}"/>
+            <ComboBox  Width="193" FontSize="18" ItemsSource="{Binding Doctors}" Grid.Column="1" Grid.Row="4" Height="25" HorizontalAlignment="Left" Margin="192,0,0,1" SelectedIndex="{Binding Path=SelectedDoctor}"/>
 
             <!--<Label x:Name="label" Content="Составление выписки" HorizontalAlignment="Left" Margin="397,10,0,0" VerticalAlignment="Top" FontSize="22pt"/>
             <Button Width="300" Style="{StaticResource MyConfirmBUTTON}" x:Name="buttond_Copy1" Content="Составить выписку" Command="{Binding Path=ToCreateStatementCommand}" HorizontalAlignment="Left" Margin="689,541,0,0" VerticalAlignment="Top"  

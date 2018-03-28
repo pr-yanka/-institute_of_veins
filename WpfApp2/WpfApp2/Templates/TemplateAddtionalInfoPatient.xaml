@@ -40,10 +40,13 @@
             </TextBlock>
 
             <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button" Visibility="Hidden" Content="Загрузить данные из регистратуры" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top"/>
-            <Button x:Name="button_Copy3" Visibility="{Binding Path=Visibility}" Content="Сбросить" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="49,630,0,0" VerticalAlignment="Top"
-                 Style="{StaticResource MyNormalBUTTON}" Width="300"/>
-            <Button x:Name="button_Copy4" Content="{Binding Path=NameOfButton}"  Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="400,630,0,0" VerticalAlignment="Top"
-                 Style="{StaticResource MyConfirmBUTTON}" Width="300"/>
+            <Button x:Name="button_Copy3" Visibility="{Binding Path=Visibility}" Content="Сбросить" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="-6,630,0,0" VerticalAlignment="Top"
+                 Style="{StaticResource MyNormalBUTTON}" Width="200"/>
+            <Button x:Name="button_Copy4" Content="{Binding Path=NameOfButton}"  Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="550,630,0,0" VerticalAlignment="Top"
+                 Style="{StaticResource MyConfirmBUTTON}" Width="200"/>
+            <Button x:Name="button_Cdopy3" Visibility="{Binding Path=Visibility}" Content="Документ" Command="{Binding Path=CreateWordDocumentCommand}" HorizontalAlignment="Left" Margin="280,630,0,0" VerticalAlignment="Top"
+                 Style="{StaticResource MyNormalBUTTON}" Width="200"/>
+            <!--//CreateWordDocumentCommand-->
             <ScrollViewer  MaxHeight="570" Margin="24,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" >
                 <Grid  Height="953"   Width="993">
                     <Grid.ColumnDefinitions>
@@ -117,7 +120,7 @@
                             <DataGridTemplateColumn   Header="Комментарий" MinWidth="333" MaxWidth="333">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate >
-                                        <controls:AutoCompleteBox BorderThickness="1" Padding="4" Height="29"  Text="{Binding  Commentary,UpdateSourceTrigger=PropertyChanged}"
+                                        <controls:AutoCompleteBox BorderThickness="1" Padding="4" Height="29"  Text="{Binding  Commentary,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                  FilterMode="Contains"       IsDropDownOpen="True"        ItemsSource="{Binding Path=BloodExchangeCommentList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" MaxDropDownHeight="260"              x:Name="textBox_Copy32">
 
 
@@ -187,7 +190,7 @@
                             <DataGridTemplateColumn   Header="Название" MinWidth="429" MaxWidth="429">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate >
-                                        <TextBox BorderThickness="1" Padding="4" Height="29"  Text="{Binding  Path=Data.Str,UpdateSourceTrigger=PropertyChanged}"
+                                        <TextBox BorderThickness="1" Padding="4" Height="29"  Text="{Binding  Path=Data.Str,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                               x:Name="textBox_Copy32">
 
 
@@ -202,7 +205,7 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate >
 
-                                        <DatePicker Height="29"  SelectedDate="{Binding Data.Date,UpdateSourceTrigger=PropertyChanged}"  ></DatePicker>
+                                        <DatePicker Height="29"  SelectedDate="{Binding Data.Date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  ></DatePicker>
 
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -237,7 +240,7 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBox Padding="4"  TextWrapping="Wrap"  HorizontalAlignment="Center" Width="537"  Height="29"  Text="{Binding  Data.Str,UpdateSourceTrigger=PropertyChanged}" />
+                                    <TextBox Padding="4"  TextWrapping="Wrap"  HorizontalAlignment="Center" Width="537"  Height="29"  Text="{Binding  Data.Str,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                     <Button BorderThickness="0" Command="{Binding Path=DeleteCommand}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="30" Height="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}"  >
                                         <Button.Template>
                                             <ControlTemplate>
@@ -295,9 +298,9 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
                                     <StackPanel>
-                                        <TextBox  TextWrapping="Wrap" Width="537"  HorizontalAlignment="Center" Height="auto" Text="{Binding  Data.Str,UpdateSourceTrigger=PropertyChanged}" />
+                                        <TextBox  TextWrapping="Wrap" Width="537"  HorizontalAlignment="Center" Height="auto" Text="{Binding  Data.Str,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                         <TextBlock HorizontalAlignment="Left" Text="Комментарий"></TextBlock>
-                                        <controls:AutoCompleteBox  Width="537" Text="{Binding  Commentary,UpdateSourceTrigger=PropertyChanged}"
+                                        <controls:AutoCompleteBox  Width="537" Text="{Binding  Commentary,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
               FilterMode="StartsWith"          Height="20"     ItemsSource="{Binding Path=PreparateHateCommentList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" BorderBrush="{Binding Path=TextBoxDistrictB}"  MaxDropDownHeight="260"              x:Name="textBox_Copy32">
 
 

@@ -17,8 +17,8 @@ using Xceed.Words.NET;
 
 namespace WpfApp2.ViewModels
 {
-   
-   
+
+
     public struct Docs
     {
         public Doctor doc;
@@ -76,8 +76,8 @@ namespace WpfApp2.ViewModels
         }
         public ObservableCollection<Docs> _doctors;
         public ObservableCollection<Docs> Doctors { get { return _doctors; } set { _doctors = value; OnPropertyChanged(); } }
-       
-     //   public int SelectedDoctor { get; set; }
+
+        //   public int SelectedDoctor { get; set; }
         private int _doctorSelectedId;
 
         public int SelectedDoctor
@@ -94,7 +94,7 @@ namespace WpfApp2.ViewModels
         public Operation Operation { get; set; }
         public DateTime Date { get; set; }
         public string OperationType { get; set; }
-       // public Patient CurrentPatient;
+        // public Patient CurrentPatient;
         private int operationId;
         private Patient _currentPatient;
 
@@ -120,7 +120,7 @@ namespace WpfApp2.ViewModels
         }
         private string _fileNameOnly;
         private Visibility _isDocAdded;
-      
+
 
         public Visibility IsDocAdded
         {
@@ -138,7 +138,7 @@ namespace WpfApp2.ViewModels
 
             SelectedLeg = 0;
             Doctors = new ObservableCollection<Docs>();
-              //OperationType = Data.OperationType.Get(Operation.OperationTypeId).LongName;
+            //OperationType = Data.OperationType.Get(Operation.OperationTypeId).LongName;
             //TextResultCancle = "Итоги операции"; 
             CurrentDocument = new StatementOperation();
 
@@ -165,7 +165,7 @@ namespace WpfApp2.ViewModels
                     IsDocAdded = Visibility.Visible;
                     TextForDoWhat = "";
                     StatementOperationRepository StatementRep = new StatementOperationRepository(context);
-                 
+
                     CurrentDocument = StatementRep.Get(Operation.StatementId.Value);
                     Days = CurrentDocument.CountDays;
                     SelectedLeg = CurrentDocument.FirstIsRightIfNull;
@@ -225,9 +225,9 @@ namespace WpfApp2.ViewModels
                                {
                                    StatementOperationRepository HirurgOverviewRep = new StatementOperationRepository(context);
                                    StatementOperation Hv = new StatementOperation();
-                            //bool tester = true;
+                                   //bool tester = true;
 
-                            if (CurrentDocument.Id != 0)
+                                   if (CurrentDocument.Id != 0)
                                    {
                                        Hv = Data.StatementOperation.Get(CurrentDocument.Id);
                                        CurrentDocument.DocTemplate = bteToBD;
@@ -250,7 +250,7 @@ namespace WpfApp2.ViewModels
                                        Data.Complete();
                                        Operation = Data.Operation.Get(Operation.Id);
                                        Operation.StatementId = Hv.Id;
-                                   //    Operation.StatementId = Hv.Id;
+                                       //    Operation.StatementId = Hv.Id;
                                        CurrentDocument.Id = Hv.Id;
                                        Data.Complete();
                                        //   MessageBus.Default.Call("SetIdOfOverview", null, CurrentDocument.Id);
@@ -317,8 +317,8 @@ namespace WpfApp2.ViewModels
                   TextForDoWhat = "Был загружен документ " + _fileNameOnly;
               }
 
-              
-            }
+
+          }
       );
             OpenWordDocument = new DelegateCommand(
           () =>
@@ -978,7 +978,7 @@ namespace WpfApp2.ViewModels
                         }
                         //Release this document from memory.
                         IsDocAdded = Visibility.Visible;
-                 
+
                         Process.Start("WINWORD.EXE", fileName);
                         GetOperationid(null, Operation.Id);
                         TextForDoWhat = "Вы создали новый документ " + _fileNameOnly;

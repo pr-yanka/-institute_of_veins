@@ -204,6 +204,7 @@
     </Compile>
     <Compile Include="Db\Models\AnticogulantsRepository.cs" />
     <Compile Include="Db\Models\EpicrizOperationRepository.cs" />
+    <Compile Include="Db\Models\AdditionalInfoDocumentRepository.cs" />
     <Compile Include="Db\Models\StatementOperationRepository.cs" />
     <Compile Include="Db\Models\StatementObsRepository.cs" />
     <Compile Include="Db\Models\HirurgOverviewRepository.cs" />
@@ -403,6 +404,7 @@
     <Compile Include="Templates\MyTemplateSelector.cs" />
     <Compile Include="ViewModels\ViewModelAddAnalize.cs" />
     <Compile Include="ViewModels\ViewModelAddEpicriz.cs" />
+    <Compile Include="ViewModels\ViewModelCreateAdditionalInfoDocuments.cs" />
     <Compile Include="ViewModels\ViewModelStatementForObsled.cs" />
     <Compile Include="ViewModels\ViewModelHirurgOverview.cs" />
     <Compile Include="ViewModels\ViewModelAnticogulanyList.cs" />
@@ -574,6 +576,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Templates\TemplateAddUser.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Templates\TemplateAdditionalInfoDocument.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

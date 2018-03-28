@@ -24,8 +24,9 @@ namespace WpfApp2.Db.Models
         [Column("ПоложительнаяЛиГруппа")]
         public bool? IsPositiveGroupType { set; get; }
 
-    
-        
+        [Column("Амбулаторная_карта_документ_id")]
+        public int? Амбулаторная_карта_документ_id { set; get; }
+
 
         [Required]
         [Column("имя")]

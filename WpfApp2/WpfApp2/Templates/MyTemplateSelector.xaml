@@ -37,10 +37,13 @@
         <ResourceDictionary Source="TemplateHirurgOverview.xaml"/>
         <ResourceDictionary Source="TemplateStatementForObsled.xaml"/>
         <ResourceDictionary Source="TemplateAddtionalInfoPatient.xaml"/>
+        <ResourceDictionary Source="TemplateAdditionalInfoDocument.xaml"/>
+
 
     </ResourceDictionary.MergedDictionaries>
 
     <local:MyTemplateSelector x:Key="MyTemplateSelector" 
+                              TemplateAdditionalInfoDocument="{StaticResource TemplateAdditionalInfoDocument}"
                               TemplateStatementForObsled="{StaticResource TemplateStatementForObsled}"
                               TemplateHirurgOverview="{StaticResource TemplateHirurgOverview}"
                               TemplateCheckboxesWithFilter="{StaticResource TemplateCheckboxesWithFilter}"

@@ -22,7 +22,20 @@ namespace WpfApp2.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         public bool IsVisibleTotal { get; set; }
-        public HirurgInterupt Data { get; set; }
+
+
+        private HirurgInterupt _data;
+        public HirurgInterupt Data
+        {
+            get
+            {
+
+                return _data;
+
+            }
+            set { _data = value; OnPropertyChanged(); }
+        }
+        //  public HirurgInterupt Data { get; set; }
         public DelegateCommand DeleteCommand { get; set; }
         private bool? _isChecked;
         public bool? IsChecked
