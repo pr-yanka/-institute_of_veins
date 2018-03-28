@@ -233,9 +233,9 @@
                     <Canvas Background="#FFC6E8E6" Margin="0,0,0,0">
                         <TextBlock x:Name="textBlock7" HorizontalAlignment="Left" TextWrapping="Wrap"   Canvas.Left="135" FontSize="18" Canvas.Top="0" Text=" "/>
                         <ComboBox SelectedIndex="{Binding ParentVM.SelectedLegId}" x:Name="textBox1" HorizontalAlignment="Left" Height="29"   VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="55" >
-                            <TextBlock>Левую ногу</TextBlock>
-                            <TextBlock>Правую ногу</TextBlock>
-                            <TextBlock>Обе ноги</TextBlock>
+                            <TextBlock>Левую нижнюю конечность</TextBlock>
+                            <TextBlock>Правую нижнюю конечность</TextBlock>
+                            <TextBlock>Обе конечности</TextBlock>
                         </ComboBox>
                         <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttonCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.RevertCommand}" Canvas.Left="10" Canvas.Top="111" />
                         <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtonAdd" Content="Выбрать" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding ParentVM.SaveCommand}" Canvas.Left="232" Canvas.Top="111" />

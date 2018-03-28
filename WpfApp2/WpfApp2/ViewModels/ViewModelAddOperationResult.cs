@@ -96,15 +96,15 @@ namespace WpfApp2.ViewModels
             OperationType += "Проведённая операция:";
             if (Operation.OnWhatLegOp == "0")
             {
-                OperationType += "\nНа левую ногу : " + leftP;
+                OperationType += "\nНа левую нижнюю конечность : " + leftP;
             }
             if (Operation.OnWhatLegOp == "1")
             {
-                OperationType += "\nНа правую ногу : " + rightP;
+                OperationType += "\nНа правую нижнюю конечность : " + rightP;
             }
             if (Operation.OnWhatLegOp == "2")
             {
-                OperationType += "\nНа левую ногу : " + leftP + " " + "\nНа правую ногу : " + rightP;
+                OperationType += "\nНа левую нижнюю конечность : " + leftP + " " + "\nНа правую нижнюю конечность : " + rightP;
             }
             TextResultCancle = "Итоги операции";
             DateText = "Операция проведена";

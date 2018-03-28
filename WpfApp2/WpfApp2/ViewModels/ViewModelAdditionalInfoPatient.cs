@@ -115,7 +115,7 @@ namespace WpfApp2.ViewModels
         public DelegateCommand<object> ClickOnWeight { get; private set; }
 
         public DelegateCommand SaveCommand { set; get; }
-
+        public DelegateCommand ToPathologyListCommand { get; private set; }
 
         public ICommand OpenCommand { protected set; get; }
 
@@ -738,7 +738,7 @@ namespace WpfApp2.ViewModels
 
                {
 
-                   MessageBus.Default.Call("SetCurrentPatientIDRealyThisTimeForAdditionalInfo", null,CurrentPatient.Id);
+                   MessageBus.Default.Call("SetCurrentPatientIDRealyThisTimeForAdditionalInfo", null, CurrentPatient.Id);
                    MessageBus.Default.Call("GetAdditionalInfoDocForHirurgOverview", _fileNameOnly, hirurgOverviewId);
                    Controller.NavigateTo<ViewModelCreateAdditionalInfoDocuments>();
                }
@@ -854,6 +854,14 @@ namespace WpfApp2.ViewModels
                 else
                 { MessageBox.Show("Не все поля заполнены"); }
             });
+            ToPathologyListCommand = new DelegateCommand(
+               () =>
+               {
+                   MessageBus.Default.Call("GetPatientForPatology", this, CurrentPatient.Id);
+
+                   Controller.NavigateTo<ViewModelPathologyList>();
+               }
+           );
             RevertCommand = new DelegateCommand(() =>
             {
                 CurrentPanelViewModel.PanelOpened = false;
@@ -943,10 +951,13 @@ namespace WpfApp2.ViewModels
             }
             if (!xtestx)
             {
-                var bff = new SugarDiabetComment();
-                bff.Str = Sugar;
-                Data.SugarDiabetComment.Add(bff);
-                Data.Complete();
+                if (!string.IsNullOrWhiteSpace(Sugar))
+                {
+                    var bff = new SugarDiabetComment();
+                    bff.Str = Sugar;
+                    Data.SugarDiabetComment.Add(bff);
+                    Data.Complete();
+                }
             }
 
 
@@ -1027,10 +1038,13 @@ namespace WpfApp2.ViewModels
                                     }
                                     if (!xtest)
                                     {
-                                        var bff = new BloodExchangeComment();
-                                        bff.Str = rec.Commentary;
-                                        Data.BloodExchangeComment.Add(bff);
-                                        Data.Complete();
+                                        if (!string.IsNullOrWhiteSpace(rec.Commentary))
+                                        {
+                                            var bff = new BloodExchangeComment();
+                                            bff.Str = rec.Commentary;
+                                            Data.BloodExchangeComment.Add(bff);
+                                            Data.Complete();
+                                        }
                                     }
 
                                     Data.BloodExchangePatients.Add(newRec);
@@ -1049,10 +1063,13 @@ namespace WpfApp2.ViewModels
                                     }
                                     if (!xtest)
                                     {
-                                        var bff = new BloodExchangeComment();
-                                        bff.Str = rec.Commentary;
-                                        Data.BloodExchangeComment.Add(bff);
-                                        Data.Complete();
+                                        if (!string.IsNullOrWhiteSpace(rec.Commentary))
+                                        {
+                                            var bff = new BloodExchangeComment();
+                                            bff.Str = rec.Commentary;
+                                            Data.BloodExchangeComment.Add(bff);
+                                            Data.Complete();
+                                        }
                                     }
                                     rcOp.Комментарий = rec.Commentary;
                                 }
@@ -1260,10 +1277,13 @@ namespace WpfApp2.ViewModels
                                     }
                                     if (!xtest)
                                     {
-                                        var bff = new PreparateHateComment();
-                                        bff.Str = rec.Commentary;
-                                        Data.PreparateHateComment.Add(bff);
-                                        Data.Complete();
+                                        if (!string.IsNullOrWhiteSpace(rec.Commentary))
+                                        {
+                                            var bff = new PreparateHateComment();
+                                            bff.Str = rec.Commentary;
+                                            Data.PreparateHateComment.Add(bff);
+                                            Data.Complete();
+                                        }
                                     }
                                 }
                                 else
@@ -1281,10 +1301,13 @@ namespace WpfApp2.ViewModels
                                     }
                                     if (!xtest)
                                     {
-                                        var bff = new PreparateHateComment();
-                                        bff.Str = rec.Commentary;
-                                        Data.PreparateHateComment.Add(bff);
-                                        Data.Complete();
+                                        if (!string.IsNullOrWhiteSpace(rec.Commentary))
+                                        {
+                                            var bff = new PreparateHateComment();
+                                            bff.Str = rec.Commentary;
+                                            Data.PreparateHateComment.Add(bff);
+                                            Data.Complete();
+                                        }
                                     }
                                 }
 
@@ -1656,8 +1679,8 @@ namespace WpfApp2.ViewModels
                     {
                         foreach (var exchange in (ObservableCollection<BloodExchangeListDataSource>)BloodExchangeList.Source)
                         {
-
-                            Н += exchange.Data.Date.ToShortDateString() + ", " + exchange.Data.Volume + " мл.; ";
+                            string tesr = (!string.IsNullOrWhiteSpace(exchange.Commentary)) ? " комментарий : " + exchange.Commentary + "; " : "; ";
+                            Н += exchange.Data.Date.ToShortDateString() + ", " + exchange.Data.Volume + " мл. " + tesr;
 
                         }
                     }
@@ -1805,7 +1828,7 @@ namespace WpfApp2.ViewModels
                         }
                         if (chararrbuF.Length != 0 && chararrbuF[chararrbuF.Length - 1] == '.')
                         { }
-                        else
+                        else if (chararrbuF.Length != 0)
                         {
                             hintrpt += ".";
                         }
@@ -1837,7 +1860,7 @@ namespace WpfApp2.ViewModels
                         }
                         if (chararrbuF.Length != 0 && chararrbuF[chararrbuF.Length - 1] == '.')
                         { }
-                        else
+                        else if (chararrbuF.Length != 0)
                         {
                             alergi += ".";
                         }
@@ -1871,7 +1894,7 @@ namespace WpfApp2.ViewModels
                         }
                         if (chararrbuF.Length != 0 && chararrbuF[chararrbuF.Length - 1] == '.')
                         { }
-                        else
+                        else if (chararrbuF.Length != 0)
                         {
                             alergi += ".";
                         }
@@ -1879,7 +1902,7 @@ namespace WpfApp2.ViewModels
 
                     }
                     document.ReplaceText("“Neperenosimost”", alergi);
-                
+
 
                     if (sender != null)
                     {
@@ -1890,11 +1913,66 @@ namespace WpfApp2.ViewModels
                         document.ReplaceText("«Врач»", "");
                     }
 
-                    document.Save();
-                    Process.Start("WINWORD.EXE", fileName);
-                    byte[] bteToBD = File.ReadAllBytes(fileName);
                     using (var context = new MySqlContext())
                     {
+                        PatologyTypeRepository ptTRep = new PatologyTypeRepository(context);
+                        PatologyRepository ptRep = new PatologyRepository(context);
+                        // PatientsRepository ptentRep = new PatientsRepository(context);
+                        //CurrentPatient = ptentRep.Get((int)data);
+                        //Initials = "Пациент: " + CurrentPatient.Sirname + " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ". ";
+                        string ptlogy = ""; xx = 0;
+                        foreach (var Patology in ptRep.GetAll)
+                        {
+                            //Patology sadasew
+
+                            if (Patology.id_пациента == CurrentPatient.Id)
+                            {
+                                foreach (var PatoType in ptTRep.GetAll)
+                                {
+                                    if (PatoType.Id == Patology.id_патологии)
+                                    {
+                                        //  float OpacityBuf = 0.0f;
+                                        if (Patology.isArchivatied != true)
+                                        {
+                                            // OpacityBuf = 0.38f;
+
+
+                                            string DateAppear = getmonthName(Patology.MonthAppear.Value.Month) + " " + Patology.YearAppear.Value.Year.ToString() + " года";
+                                            //string DateDisappear = "";
+                                            //try
+                                            //{
+                                            //    DateDisappear = getmonthName(Patology.MonthDisappear.Value.Month) + " " + Patology.YearDisappear.Value.Year.ToString() + " года";
+                                            //}
+                                            //catch { }
+
+                                            if (xx == 0) { ptlogy += PatoType.Str + " " + DateAppear; } else { ptlogy += ", " + PatoType.Str + " " + DateAppear; }
+                                            xx++;
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+
+                        char[] chararrbuF = ptlogy.ToCharArray();
+                        if (chararrbuF.Length != 0 && chararrbuF[0] == ' ')
+                        {
+                            ptlogy = ptlogy.Remove(0, 1);
+
+                        }
+                        if (chararrbuF.Length != 0 && chararrbuF[chararrbuF.Length - 1] == '.')
+                        { }
+                        else if (chararrbuF.Length != 0)
+                        {
+                            ptlogy += ".";
+                        }
+
+
+                        document.ReplaceText("“PTS”", " : " + ptlogy);
+                        document.Save();
+                        Process.Start("WINWORD.EXE", fileName);
+                        byte[] bteToBD = File.ReadAllBytes(fileName);
+
                         AdditionalInfoDocumentRepository HirurgOverviewRep = new AdditionalInfoDocumentRepository(context);
                         AdditionalInfoDocument Hv = new AdditionalInfoDocument();
                         if (hirurgOverviewId != null && hirurgOverviewId != 0)
@@ -1943,6 +2021,38 @@ namespace WpfApp2.ViewModels
         private void SetIdOfOverview(object sender, object data)
         {
             hirurgOverviewId = int.Parse(data.ToString());
+        }
+        private string getmonthName(int number)
+        {
+            switch (number)
+            {
+                case 1:
+                    return "Январь";
+                case 2:
+                    return "Февраль";
+                case 3:
+                    return "Март";
+                case 4:
+                    return "Апрель";
+                case 5:
+                    return "Май";
+                case 6:
+                    return "Июнь";
+                case 7:
+                    return "Июль";
+                case 8:
+                    return "Август";
+                case 9:
+                    return "Сентябрь";
+                case 10:
+                    return "Октябрь";
+                case 11:
+                    return "Ноябрь";
+                case 12:
+                    return "Декабрь";
+            }
+            return "";
+
         }
         #endregion
     }

@@ -44,6 +44,8 @@ namespace WpfApp2.Db.Models
 
         [Column("Световод")]
         public string Light { set; get; }
+        [Column("Комментарий")]
+        public string Commentary { set; get; }
     }
 
     public class EpicrizOperationRepository : Repository<EpicrizOperation>

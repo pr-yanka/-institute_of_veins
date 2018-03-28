@@ -307,7 +307,7 @@ namespace WpfApp2.ViewModels
             () =>
             {
                 OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Word Documents (.docx)|*.docx|Word Template (.dotx)|*.dotx|All Files (*.*)|*.*";
+                openFileDialog.Filter = "Word Documents (.docx)|*.docx|All Files (*.*)|*.*";
                 openFileDialog.ValidateNames = true;
                 openFileDialog.FilterIndex = 1;
                 if (openFileDialog.ShowDialog() == true)

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("склезирование")]
+    [Table("склерозирование")]
     public class Sclezing
     {
         [Key]
@@ -14,10 +14,18 @@ namespace WpfApp2.Db.Models
         public int Id { set; get; }
         [Column("название")]
         public string Str { set; get; }
+        [Column("мл")]
+        public float? Ml { set; get; }
+    
+        [Column("проценты")]
+        public float? Prcent { set; get; }
+
+        [Column("вещества")]
+        public string Veshestvo { set; get; }
 
         public override string ToString()
         {
-            return Str;
+            return Str + " " + Ml+ " мл " + Prcent +" % " + "Вещество : " + Veshestvo;
         }
     }
     public class SclezingRepository : Repository<Sclezing>

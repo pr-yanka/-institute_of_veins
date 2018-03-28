@@ -73,7 +73,7 @@
                 <TextBox BorderBrush="{Binding Path=TextBoxPatronimicB}" x:Name="textBox_Copy1"  Text="{Binding Path=Patronimic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="521" Grid.Row="2" Margin="0,4,0,0"/>
                 <TextBox x:Name="comboBox" Text="{Binding Path=Aditional, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Top" Width="521" Height="22" Margin="0,5,0,0"/>
                 <Grid Grid.Row="5" Margin="0,25,0,6" Grid.RowSpan="5" Width="auto" >
-                    <DataGrid  ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" 
+                    <DataGrid  BorderThickness="1" BorderBrush="Black" ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" 
                           Foreground="Black"  AutoGenerateColumns="False" HeadersVisibility="None" 
                      ItemsSource="{Binding Path=Controller.CurrentViewModel.Specializations}" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" Margin="0,0,0,-11" >
                         <DataGrid.Columns>
@@ -102,7 +102,7 @@
                         <ColumnDefinition Width="57*"/>
                         <ColumnDefinition Width="344*"/>
                     </Grid.ColumnDefinitions>
-                    <DataGrid ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" HorizontalAlignment="Left" Height="111"  VerticalAlignment="Top" Width="268" 
+                    <DataGrid ColumnHeaderStyle="{StaticResource MyDataGridHEADER}"  BorderThickness="1" BorderBrush="Black" HorizontalAlignment="Left" Height="111"  VerticalAlignment="Top" Width="268" 
                           Foreground="Black"  AutoGenerateColumns="False" HeadersVisibility="None"
                      ItemsSource="{Binding Path=Controller.CurrentViewModel.Scintifics}" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" Margin="-102,0,0,-11" Grid.ColumnSpan="2" >
                         <DataGrid.Columns>

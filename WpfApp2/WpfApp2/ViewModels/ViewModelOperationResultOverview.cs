@@ -150,15 +150,15 @@ namespace WpfApp2.ViewModels
                 }
                 if (Operation.OnWhatLegOp == "0")
                 {
-                    PlanedOpr = "\nНа левую ногу : " + leftP;
+                    PlanedOpr = "\nНа левую нижнюю конечность : " + leftP;
                 }
                 if (Operation.OnWhatLegOp == "1")
                 {
-                    PlanedOpr = "\nНа правую ногу : " + rightP;
+                    PlanedOpr = "\nНа правую нижнюю конечность : " + rightP;
                 }
                 if (Operation.OnWhatLegOp == "2")
                 {
-                    PlanedOpr = "\nНа левую ногу : " + leftP + " " + "\nНа правую ногу : " + rightP; 
+                    PlanedOpr = "\nНа левую нижнюю конечность : " + leftP + " " + "\nНа правую нижнюю конечность : " + rightP; 
                 }
 
 
@@ -204,15 +204,15 @@ namespace WpfApp2.ViewModels
             }
             if (Operation.OnWhatLegOp == "0")
             {
-                operationType = "На левую ногу :" + leftP;
+                operationType = "На левую нижнюю конечность :" + leftP;
             }
             if (Operation.OnWhatLegOp == "1")
             {
-                operationType = "На правую ногу :" + rightP;
+                operationType = "На правую нижнюю конечность :" + rightP;
             }
             if (Operation.OnWhatLegOp == "2")
             {
-                operationType = "На левую ногу :" + leftP + " " + "На правую ногу :" + rightP;
+                operationType = "На левую нижнюю конечность :" + leftP + " " + "На правую нижнюю конечность :" + rightP;
             }
             Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
             Date = Operation.Date;

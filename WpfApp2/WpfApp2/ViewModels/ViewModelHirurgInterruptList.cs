@@ -245,7 +245,7 @@ namespace WpfApp2.ViewModels
             VisOfNothingFaund = Visibility.Collapsed;
             MessageBus.Default.Subscribe("SetClearHirurgInterruptList", SetClear);
             MessageBus.Default.Subscribe("SetHirurgInterruptListBecauseOFEdit", SetDRecomendationListBecauseOFEdit);
-            TextOFNewType = "Новое вмешательство";
+            TextOFNewType = "Новое хирургическое вмешательство";
             HeaderText = "Хирургическое вмешательство";
             AddButtonText = "Другое хирургическое вмешательство";
 

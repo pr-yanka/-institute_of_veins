@@ -186,7 +186,19 @@ namespace WpfApp2.ViewModels
 
                 result = false;
             }
-
+            using (MySqlContext context = new MySqlContext())
+            {
+                AccauntRepository acRep = new AccauntRepository(context);
+                foreach (var ac in acRep.GetAll)
+                {
+                    if (Name == ac.Name)
+                    {
+                        result = false;
+                        MessageBox.Show("Такое имя занято");
+                        break;
+                    }
+                }
+            }
 
             return result;
         }

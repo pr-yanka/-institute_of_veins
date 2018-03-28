@@ -29,9 +29,9 @@ namespace WpfApp2.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
-    
+
         public string ButtonName { get; set; }
-    
+
 
         public AnalizeType AnalizeType { get; set; }
 
@@ -62,9 +62,16 @@ namespace WpfApp2.ViewModels
         private void SetCurrentAnalizeID(object sender, object data)
         {
             IsAnalizeLoadedVisibility = Visibility.Hidden;
-            Analize = Data.Analize.Get((int)data);
+            using (MySqlContext context = new MySqlContext())
+            {
+                AnalizeRepository AnRep = new AnalizeRepository(context);
+                AnalizeTypeRepository AnTpRep = new AnalizeTypeRepository(context);
+                Analize = AnRep.Get((int)data);
+                AnalizeType = AnTpRep.Get(Analize.analyzeType);
+            }
 
-            AnalizeType = Data.AnalizeType.Get(Analize.analyzeType);
+
+
         }
         public Byte[] ImageToByte(BitmapImage imageSource)
         {
@@ -91,13 +98,24 @@ namespace WpfApp2.ViewModels
             () =>
             {
                 OpenFileDialog op = new OpenFileDialog();
-                op.Title = "Выберите фотографию анализа";
-                op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+                op.Title = "Выберите файл анализа";
+                op.Filter = "Image,Word|*.jpg;*.jpeg;*.png;*.docx|" +
                   "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
-                  "Portable Network Graphic (*.png)|*.png";
+                  "Portable Network Graphic (*.png)|*.png|Word Documents (.docx)|*.docx|All Files (*.*)|*.*";
+                Analize = Data.Analize.Get(Analize.Id);
                 if (op.ShowDialog() == true)
                 {
-                    Analize.ImageByte = ImageToByte(new BitmapImage(new Uri(op.FileName)));
+                    if (op.SafeFileName.Contains(".docx"))
+                    {
+                        byte[] bteToBD = File.ReadAllBytes(op.FileName);
+                        Analize.ImageByte = bteToBD;
+                    }
+                    else if (op.SafeFileName.Contains(".jpg") || op.SafeFileName.Contains(".jpeg")
+                    || op.SafeFileName.Contains(".png") || op.SafeFileName.Contains(".JPG") || op.SafeFileName.Contains(".JPEG")
+                    || op.SafeFileName.Contains(".PNG"))
+                    {
+                        Analize.ImageByte = ImageToByte(new BitmapImage(new Uri(op.FileName)));
+                    }
                     IsAnalizeLoadedVisibility = Visibility.Visible;
                     Data.Complete();
                 }
@@ -106,14 +124,43 @@ namespace WpfApp2.ViewModels
             OpenAnalizePicture = new DelegateCommand(
             () =>
             {
-                var img = ByteToImage(Analize.ImageByte);
-                int width = Convert.ToInt32(img.Width);
-                int height = Convert.ToInt32(img.Height);
-                Bitmap TestBitmap = new Bitmap(width, height);
-                TestBitmap.Save("TempImage.Bmp");
-                TestBitmap.Dispose();
-                File.WriteAllBytes("TempImage.Bmp", Analize.ImageByte);
-                Process.Start("TempImage.Bmp");
+                try
+                {
+                    var img = ByteToImage(Analize.ImageByte);
+                    int width = Convert.ToInt32(img.Width);
+                    int height = Convert.ToInt32(img.Height);
+                    Bitmap TestBitmap = new Bitmap(width, height);
+                    TestBitmap.Save("TempImage.Bmp");
+                    TestBitmap.Dispose();
+                    File.WriteAllBytes("TempImage.Bmp", Analize.ImageByte);
+                    Process.Start("TempImage.Bmp");
+                }
+                catch
+                {
+                    int togle = 0;
+
+                    string FileName = System.IO.Path.GetTempPath() + "Анализ.docx";
+                    string _fileNameOnly = "Анализ.docx";
+                    byte[] bte = Analize.ImageByte;
+
+                    for (; ; )
+                    {
+                        try
+                        {
+
+                            File.WriteAllBytes(FileName, bte);
+
+                            break;
+                        }
+                        catch
+                        {
+                            togle += 1;
+                            FileName = System.IO.Path.GetTempPath() + "Анализ" + togle + ".docx";
+                            _fileNameOnly = "Анализ" + togle + ".docx";
+                        }
+                    }
+                    Process.Start("WINWORD.EXE", FileName);
+                }
             }
         );
 

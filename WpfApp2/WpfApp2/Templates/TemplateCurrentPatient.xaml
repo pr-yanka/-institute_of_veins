@@ -50,12 +50,12 @@
                     </TextBlock></TextBlock>
                 </StackPanel>
             </StackPanel>
-            <Button Style="{StaticResource MyNormalBUTTON}"  x:Name="button_Cdopy" Content="Амбулаторная карта" Command="{Binding Path=ToAdditionalInfoCommand}" HorizontalAlignment="Left" Margin="334,512,0,0" VerticalAlignment="Top" Width="240" Grid.Column="3"/>
+            <Button Style="{StaticResource MyNormalBUTTON}"  x:Name="button_Cdopy" Content="Амбулаторная карта" Command="{Binding Path=ToAdditionalInfoCommand}" Margin="76,61,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240" Grid.Column="2" />
             <Button Style="{StaticResource MyNormalBUTTON}"  x:Name="button_Copy" Content="Остальные пациенты" Command="{Binding Path=ToTablePatientsCommand}" HorizontalAlignment="Left" Margin="76,512,0,0" VerticalAlignment="Top" Width="240" Grid.Column="2"/>
             <Button Style="{StaticResource MyConfirmBUTTON}" Width="240" x:Name="button_Copy1" Content="Назначить операцию"  Command="{Binding Path=ToNewOperationCommand}" HorizontalAlignment="Left" Margin="334,455,0,0" VerticalAlignment="Top" Grid.Column="2" />
             <Button Style="{StaticResource MyConfirmBUTTON}"  Width="240" x:Name="button_Copy2" Content="Начать обследование" Command="{Binding Path=ToNewPhysicalCommand}" HorizontalAlignment="Left" Margin="10,455,0,0" VerticalAlignment="Top" Grid.ColumnSpan="3" />
             <Button Style="{StaticResource MyConfirmBUTTON}"  x:Name="button_Copy5" Content="Добавить анализы" Command="{Binding Path=ToAddAnalizeCommand}" HorizontalAlignment="Left" Margin="76,455,0,0" VerticalAlignment="Top" Width="240" Grid.Column="2" />
-            <Button Style="{StaticResource MyNormalBUTTON}"  x:Name="button_Copy51" Content="Патологии" Command="{Binding Path=ToPathologyListCommand}" HorizontalAlignment="Left" Margin="76,61,0,0" VerticalAlignment="Top" Width="240" Grid.Column="2"/>
+            <!--<Button Style="{StaticResource MyNormalBUTTON}"  x:Name="button_Copy51" Content="Патологии" Command="{Binding Path=ToPathologyListCommand}" HorizontalAlignment="Left" Margin="76,61,0,0" VerticalAlignment="Top" Width="240" Grid.Column="2"/>-->
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

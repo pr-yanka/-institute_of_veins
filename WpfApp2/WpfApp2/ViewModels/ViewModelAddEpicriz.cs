@@ -102,8 +102,19 @@ namespace WpfApp2.ViewModels
         public string Антикоагулянты { get; set; }
 
         public string FullScrelizovanie { get; set; }
-        public string Svetoootvod { get; set; }
 
+        private string _svetoootvod;
+
+        public string Svetoootvod
+        {
+            get { return _svetoootvod; }
+            set
+            {
+                _svetoootvod = value;
+
+                OnPropertyChanged();
+            }
+        }
 
         public ObservableCollection<Docs> _doctors;
         public ObservableCollection<Docs> Doctors { get { return _doctors; } set { _doctors = value; OnPropertyChanged(); } }
@@ -126,7 +137,7 @@ namespace WpfApp2.ViewModels
         public Operation Operation { get; set; }
         public DateTime Date { get; set; }
         public string operationType { get; set; }
-        public Patient CurrentPatient;
+        public Patient CurrentPatient { get; set; }
         private int operationId;
 
 
@@ -181,6 +192,9 @@ namespace WpfApp2.ViewModels
         }
         private Visibility _isDocAdded;
 
+        private IEnumerable<String> _svetofvodDiabetCommentList;
+        public IEnumerable<String> SvetofvodCommentList { get { return _svetofvodDiabetCommentList; } set { _svetofvodDiabetCommentList = value; OnPropertyChanged(); } }
+
 
         public Visibility IsDocAdded
         {
@@ -199,6 +213,18 @@ namespace WpfApp2.ViewModels
             set
             {
                 _currentDocument = value;
+                OnPropertyChanged();
+            }
+        }
+        //CommentaryForDock   
+        private string _commentaryForDock;
+
+        public string CommentaryForDock
+        {
+            get { return _commentaryForDock; }
+            set
+            {
+                _commentaryForDock = value;
                 OnPropertyChanged();
             }
         }
@@ -231,6 +257,12 @@ namespace WpfApp2.ViewModels
             //
             using (var context = new MySqlContext())
             {
+
+                List<String> buff3 = new List<string>();
+                foreach (var x in Data.Svetovod.GetAll)
+                    buff3.Add(x.Str);
+                SvetofvodCommentList = buff3;
+
                 OperationRepository Oprep = new OperationRepository(context);
                 Operation = Oprep.Get((int)data);
                 operationId = (int)data;
@@ -266,6 +298,14 @@ namespace WpfApp2.ViewModels
                     EpicrizOperationRepository StatementRep = new EpicrizOperationRepository(context);
 
                     CurrentDocument = StatementRep.Get(Operation.EpicrizId.Value);
+                    if (CurrentDocument.Commentary != null)
+                    {
+                        CommentaryForDock = CurrentDocument.Commentary;
+                    }
+                    else
+                    {
+                        CommentaryForDock = "";
+                    }
                     Days = CurrentDocument.CountDays;
                     Svetoootvod = CurrentDocument.Light;
                     E1 = CurrentDocument.VT;
@@ -637,10 +677,14 @@ namespace WpfApp2.ViewModels
                         //    document.ReplaceText("«Операция2»", Data.OperationType.Get(Operation.OperationTypeId).LongName);
 
                         document.ReplaceText("«Анестетик»", Data.Anestethic.Get(Operation.AnestheticId).Str);
-                        if (AnticogulantIdSelected != 0)
+                        try
+                        {
                             document.ReplaceText("«Антикоагулянты»", AnticogulantSelected[AnticogulantIdSelected].Str);
-                        else
+                        }
+                        catch
+                        {
                             document.ReplaceText("«Антикоагулянты»", "");
+                        }
                         document.ReplaceText("«E1»", E1.ToString());
                         document.ReplaceText("«E2»", E2.ToString());
                         document.ReplaceText("«E12»", E1.ToString());
@@ -664,14 +708,14 @@ namespace WpfApp2.ViewModels
 
                         document.ReplaceText("«сутки»", Days.ToString());
                         document.ReplaceText("«Врач»", Doctors[SelectedDoctor].ToString());
-
-                        if (SclezingIdSelected != 0)
+                        try
                         {
-                            document.ReplaceText("«PNS»", SclerozSelected[SclezingIdSelected].Str);
+                            string tesr = (!string.IsNullOrWhiteSpace(CommentaryForDock)) ? " Комментарий : " + CommentaryForDock : "";
+                            document.ReplaceText("«PNS»", SclerozSelected[SclezingIdSelected].ToString() + tesr);
 
-                            document.ReplaceText("«PNS2»", SclerozSelected[SclezingIdSelected].Str);
+                            document.ReplaceText("«PNS2»", SclerozSelected[SclezingIdSelected].ToString() + tesr);
                         }
-                        else
+                        catch
                         {
                             document.ReplaceText("«PNS»", "");
                             document.ReplaceText("«PNS2»", "");
@@ -708,18 +752,18 @@ namespace WpfApp2.ViewModels
                         }
                         if (Operation.OnWhatLegOp == "0")
                         {
-                            operationType = "На левую ногу :" + leftP;
+                            operationType = "На левую нижнюю конечность :" + leftP;
                             document.ReplaceText("«IsLeft»", "ЛЕВАЯ");
 
                         }
                         if (Operation.OnWhatLegOp == "1")
                         {
-                            operationType = "На правую ногу :" + rightP;
+                            operationType = "На правую нижнюю конечность :" + rightP;
                             document.ReplaceText("«IsLeft»", "ПРАВАЯ");
                         }
                         if (Operation.OnWhatLegOp == "2")
                         {
-                            operationType = "На левую ногу :" + leftP + " " + "На правую ногу :" + rightP;
+                            operationType = "На левую нижнюю конечность :" + leftP + " " + "На правую нижнюю конечность :" + rightP;
                         }
 
                         document.ReplaceText("«Операция2»", operationType);
@@ -741,6 +785,28 @@ namespace WpfApp2.ViewModels
                         {
                             EpicrizOperationRepository HirurgOverviewRep = new EpicrizOperationRepository(context);
                             EpicrizOperation Hv = new EpicrizOperation();
+
+                            bool xtestx = false;
+                            foreach (var x in SvetofvodCommentList)
+                            {
+                                if (x == Svetoootvod)
+                                {
+                                    xtestx = true;
+                                    break;
+                                }
+                            }
+                            if (!xtestx)
+                            {
+                                if (!string.IsNullOrWhiteSpace(Svetoootvod))
+                                {
+                                    var bff = new Svetovod();
+                                    bff.Str = Svetoootvod;
+                                    Data.Svetovod.Add(bff);
+                                    Data.Complete();
+                                }
+                            }
+
+
                             if (Operation.EpicrizId != null && Operation.EpicrizId != 0)
                             {
                                 Hv = Data.EpicrizOperation.Get(Operation.EpicrizId.Value);
@@ -748,23 +814,32 @@ namespace WpfApp2.ViewModels
                                 Hv.VT = E1;
                                 Hv.DJSM = E2;
                                 Hv.Light = Svetoootvod;
-                                Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
-                                Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
+                                Hv.Commentary = CommentaryForDock;
+                                try
+                                {
+                                    Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
+                                    Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
+                                }
+                                catch { }
                                 Hv.DocTemplate = bteToBD;
                                 Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
                                 Data.Complete();
                             }
                             else
                             {
-
+                                Hv.Commentary = CommentaryForDock;
                                 Hv.DocTemplate = bteToBD;
                                 Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
                                 Hv.CountDays = Days;
                                 Hv.VT = E1;
                                 Hv.DJSM = E2;
                                 Hv.Light = Svetoootvod;
-                                Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
-                                Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
+                                try
+                                {
+                                    Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
+                                    Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
+                                }
+                                catch { }
                                 Data.EpicrizOperation.Add(Hv);
 
                                 Data.Complete();
@@ -793,6 +868,26 @@ namespace WpfApp2.ViewModels
                     Controller.NavigateTo<ViewModelOperationOverview>();
                 }
             );
+            ClickOnAutoComplete = new DelegateCommand<object>(
+               (sender) =>
+               {
+                   try
+                   {
+
+                       if (sender != null)
+                       {
+                           var buf = (AutoCompleteBox)sender;
+                           if (!buf.IsDropDownOpen)
+                               buf.IsDropDownOpen = true;
+                       }
+                   }
+                   catch
+                   {
+
+                   }
+
+               }
+           );
             SaveWordDocument = new DelegateCommand(
                 () =>
                 {
@@ -806,6 +901,26 @@ namespace WpfApp2.ViewModels
                                 EpicrizOperationRepository HirurgOverviewRep = new EpicrizOperationRepository(context);
                                 EpicrizOperation Hv = new EpicrizOperation();
 
+                                bool xtestx = false;
+                                foreach (var x in SvetofvodCommentList)
+                                {
+                                    if (x == Svetoootvod)
+                                    {
+                                        xtestx = true;
+                                        break;
+                                    }
+                                }
+                                if (!xtestx)
+                                {
+                                    if (!string.IsNullOrWhiteSpace(Svetoootvod))
+                                    {
+                                        var bff = new Svetovod();
+                                        bff.Str = Svetoootvod;
+                                        Data.Svetovod.Add(bff);
+                                        Data.Complete();
+                                    }
+                                }
+
                                 if (CurrentDocument.Id != 0)
                                 {
                                     Hv = Data.EpicrizOperation.Get(Operation.EpicrizId.Value);
@@ -813,8 +928,13 @@ namespace WpfApp2.ViewModels
                                     Hv.VT = E1;
                                     Hv.DJSM = E2;
                                     Hv.Light = Svetoootvod;
-                                    Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
-                                    Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
+                                    Hv.Commentary = CommentaryForDock;
+                                    try
+                                    {
+                                        Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
+                                        Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
+                                    }
+                                    catch { }
                                     Hv.DocTemplate = bteToBD;
                                     Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
                                     Data.Complete();
@@ -828,10 +948,15 @@ namespace WpfApp2.ViewModels
                                     Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
                                     Hv.CountDays = Days;
                                     Hv.VT = E1;
+                                    Hv.Commentary = CommentaryForDock;
                                     Hv.DJSM = E2;
                                     Hv.Light = Svetoootvod;
-                                    Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
-                                    Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
+                                    try
+                                    {
+                                        Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
+                                        Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
+                                    }
+                                    catch { }
                                     Data.EpicrizOperation.Add(Hv);
 
                                     Data.Complete();
@@ -871,16 +996,40 @@ namespace WpfApp2.ViewModels
              {
                  EpicrizOperationRepository HirurgOverviewRep = new EpicrizOperationRepository(context);
                  EpicrizOperation Hv = new EpicrizOperation();
-
+                 //CurrentPatient.Sugar = Sugar;
+                 bool xtestx = false;
+                 foreach (var x in SvetofvodCommentList)
+                 {
+                     if (x == Svetoootvod)
+                     {
+                         xtestx = true;
+                         break;
+                     }
+                 }
+                 if (!xtestx)
+                 {
+                     if (!string.IsNullOrWhiteSpace(Svetoootvod))
+                     {
+                         var bff = new Svetovod();
+                         bff.Str = Svetoootvod;
+                         Data.Svetovod.Add(bff);
+                         Data.Complete();
+                     }
+                 }
                  if (CurrentDocument.Id != 0)
                  {
                      Hv = Data.EpicrizOperation.Get(Operation.EpicrizId.Value);
                      Hv.CountDays = Days;
                      Hv.VT = E1;
                      Hv.DJSM = E2;
+                     Hv.Commentary = CommentaryForDock;
                      Hv.Light = Svetoootvod;
-                     Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
-                     Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
+                     try
+                     {
+                         Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
+                         Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
+                     }
+                     catch { }
                      Hv.DocTemplate = bteToBD;
                      Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
                      Data.Complete();
@@ -894,9 +1043,14 @@ namespace WpfApp2.ViewModels
                      Hv.CountDays = Days;
                      Hv.VT = E1;
                      Hv.DJSM = E2;
+                     Hv.Commentary = CommentaryForDock;
                      Hv.Light = Svetoootvod;
-                     Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
-                     Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
+                     try
+                     {
+                         Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
+                         Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
+                     }
+                     catch { }
                      Data.EpicrizOperation.Add(Hv);
 
                      Data.Complete();
@@ -1086,6 +1240,7 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToOperationCommand { get; protected set; }
         public DelegateCommand ToCreateStatementCommand { get; protected set; }
         public DelegateCommand ToOperationOverviewCommand { get; protected set; }
+        public DelegateCommand<object> ClickOnAutoComplete { get; set; }
         public DelegateCommand SaveWordDocument { get; private set; }
         public DelegateCommand OpenFile { get; private set; }
         public DelegateCommand OpenWordDocument { get; private set; }

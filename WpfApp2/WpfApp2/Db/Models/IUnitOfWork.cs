@@ -24,6 +24,8 @@ namespace WpfApp2.Db.Models
 {
     public interface IUnitOfWork : IDisposable
     {
+         VeshestvoRepository Veshestvo { get; }
+        SvetovodRepository Svetovod { get; }
         AdditionalInfoDocumentRepository AdditionalInfoDocument { get; }
         EpicrizOperationRepository EpicrizOperation { get; }
         StatementOperationRepository StatementOperation { get; }

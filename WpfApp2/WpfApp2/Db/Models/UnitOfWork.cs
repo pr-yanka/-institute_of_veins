@@ -24,6 +24,7 @@ namespace WpfApp2.Db.Models
 {
     public class UnitOfWork : IUnitOfWork
     {
+        public SvetovodRepository Svetovod { get; }
         public AdditionalInfoDocumentRepository AdditionalInfoDocument { get; }
         public EpicrizOperationRepository EpicrizOperation { get; }
         public StatementOperationRepository StatementOperation { get; }
@@ -199,7 +200,7 @@ namespace WpfApp2.Db.Models
         public RecomendationsTypeRepository RecomendationsTypes { get; }
         public DiagnosisTypeRepository DiagnosisTypes { get; }
 
-
+        public VeshestvoRepository Veshestvo { get; }
 
         public PreparateHateCommentRepository PreparateHateComment { get; }
         public BloodExchangeCommentRepository BloodExchangeComment { get; }
@@ -207,6 +208,8 @@ namespace WpfApp2.Db.Models
         public UnitOfWork(MySqlContext context)
         {
             _context = context;
+            Veshestvo = new VeshestvoRepository(_context);
+            Svetovod = new SvetovodRepository(_context);
             AdditionalInfoDocument = new AdditionalInfoDocumentRepository(_context);
             EpicrizOperation = new EpicrizOperationRepository(_context);
             StatementOperation = new StatementOperationRepository(_context);

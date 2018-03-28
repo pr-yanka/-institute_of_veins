@@ -158,7 +158,8 @@ namespace WpfApp2.ViewModels
             MessageBus.Default.Subscribe("GetPatientForAnalize", SetCurrentPatientID);
             ToCurrentPatient = new DelegateCommand(
              () =>
-             {if (AnalizeTypes.Count != 0)
+             {
+                 if (AnalizeTypes.Count != 0)
                  {
                      Analize.analyzeType = AnalizeTypes[SelectedIndexOfAnalizeType].Id;
                      if (Analize.ImageByte == null)
@@ -194,13 +195,21 @@ namespace WpfApp2.ViewModels
              () =>
              {
                  OpenFileDialog op = new OpenFileDialog();
-                 op.Title = "Выберите фотографию анализа";
-                 op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+                 op.Title = "Выберите файл анализа";
+                 op.Filter = "Image,Word|*.jpg;*.jpeg;*.png;*.docx|" +
                    "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
-                   "Portable Network Graphic (*.png)|*.png";
+                   "Portable Network Graphic (*.png)|*.png|Word Documents (.docx)|*.docx|All Files (*.*)|*.*";
                  if (op.ShowDialog() == true)
                  {
-                     Analize.ImageByte = ImageToByte(new BitmapImage(new Uri(op.FileName)));
+                     if (op.SafeFileName.Contains(".docx"))
+                     { byte[] bteToBD = File.ReadAllBytes(op.FileName);
+                         Analize.ImageByte = bteToBD;
+                     }
+                     else if (op.SafeFileName.Contains(".jpg") || op.SafeFileName.Contains(".jpeg")
+                     || op.SafeFileName.Contains(".png"))
+                     {
+                         Analize.ImageByte = ImageToByte(new BitmapImage(new Uri(op.FileName)));
+                     }
                      IsAnalizeLoadedVisibility = Visibility.Visible;
                  }
 

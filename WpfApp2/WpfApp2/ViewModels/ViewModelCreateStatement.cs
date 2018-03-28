@@ -208,8 +208,8 @@ namespace WpfApp2.ViewModels
         public ViewModelCreateStatement(NavigationController controller) : base(controller)
         {
             LeftOrRight = new List<string>();
-            LeftOrRight.Add("Правая нога");
-            LeftOrRight.Add("Левая нога");
+            LeftOrRight.Add("Правая нижняя конечность");
+            LeftOrRight.Add("Левая нижняя конечность");
 
             MessageBus.Default.Subscribe("GetOperationResultForCreateStatement", GetOperationid);
             HasNavigation = false;
@@ -550,12 +550,12 @@ namespace WpfApp2.ViewModels
                             diabet += CurrentPatient.Sugar;
                             if (!string.IsNullOrWhiteSpace(diabet))
                             {
-                                document.ReplaceText(" Диабет", "Сахарный диабет: " + diabet + "\n");
+                                document.ReplaceText("Диабет", "Сахарный диабет: " + diabet + "\n");
                             }
                             else
                             {
 
-                                document.ReplaceText(" Диабет", "");
+                                document.ReplaceText("Диабет", "");
                             }
                             var ExamsOfCurrPatient = ExamRep.GetAll.ToList().Where(s => s.PatientId == CurrentPatient.Id).ToList();
 
@@ -567,32 +567,6 @@ namespace WpfApp2.ViewModels
                                 ExaminationLeg leftLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idLeftLegExamination.Value);
                                 ExaminationLeg rightLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idRightLegExamination.Value);
                                 List<ComplainsType> ComplainsList = new List<ComplainsType>();
-
-
-                                //int day12 = ExamsOfCurrPatientLatest[0].Date.Day;
-                                //int mnth12 = ExamsOfCurrPatientLatest[0].Date.Month;
-                                //string mnthStr1 = "";
-                                //string dayStr1 = "";
-                                //if (mnth12 < 10)
-                                //{
-                                //    mnthStr1 += "0" + mnth12.ToString();
-                                //}
-                                //else
-                                //{
-                                //    mnthStr1 = mnth12.ToString();
-                                //}
-
-                                //if (day12 < 10)
-                                //{
-                                //    dayStr1 += "0" + day12.ToString();
-                                //}
-                                //else
-                                //{
-                                //    dayStr1 = day12.ToString();
-                                //}
-                                //document.ReplaceText("«Дата»", dayStr1 + "." + mnthStr1 + "." + ExamsOfCurrPatientLatest[0].Date.Year.ToString());
-
-
 
                                 foreach (var diag in Data.ComplanesObs.GetAll.Where(s => s.id_обследования == ExamsOfCurrPatientLatest[0].Id).ToList())
                                 {
@@ -777,25 +751,7 @@ namespace WpfApp2.ViewModels
                             rightDiag += ".";
                         }
 
-                        if (SelectedLeg == 0)
-                        {
-                            document.ReplaceText("«Заключение_1»", rightDiag + "\n");
 
-                            document.ReplaceText("«Заключение_2»", leftDiag + "\n");
-
-                            //document.ReplaceText("буквы_1", lettersRight);
-                            //document.ReplaceText("буквы_2", lettersLeft);
-                            //буквы_1
-                            //буквы_2
-                        }
-                        else
-                        {
-                            document.ReplaceText("«Заключение_1»", leftDiag);
-                            document.ReplaceText("«Заключение_2»", rightDiag);
-                            //document.ReplaceText("буквы_1", lettersLeft);
-                            //document.ReplaceText("буквы_2", lettersRight);
-
-                        }
 
 
 
@@ -854,61 +810,123 @@ namespace WpfApp2.ViewModels
                             }
                         }
 
+                        //if (Operation.OnWhatLegOp == "0")
+                        //{
+                        // document.ReplaceText("буквы_2Ж", lettersLeft);
+                        //  document.ReplaceText("буквы_1Ж", "");
+                        document.ReplaceText("«Заключение_11»", rightDiag + "\n");
+                        document.ReplaceText("«Заключение_22»", leftDiag + "\n");
+                        //document.ReplaceText("«Заключение_1»", rightDiag + "\n");
+
+                        //document.ReplaceText("«Заключение_2»", "");
+
+                        document.ReplaceText(" буквы_1", lettersRight);
+                        document.ReplaceText(" буквы_2", lettersLeft);
+
+                        //}
+                        //if (Operation.OnWhatLegOp == "1")
+                        //{
+                        //  //  document.ReplaceText("буквы_1Ж", lettersRight);
+                        ////    document.ReplaceText("буквы_2Ж", "");
+                        //    document.ReplaceText("«Заключение_11Ж»", rightDiag + "\n");
+
+                        //    document.ReplaceText("«Заключение_22Ж»", "");
+                        //    document.ReplaceText("«Заключение_2»", leftDiag + "\n");
+                        //    document.ReplaceText("«Заключение_1»", "");
+
+                        //    document.ReplaceText(" буквы_1", "");
+
+                        //    document.ReplaceText(" буквы_2", lettersLeft);
+                        //}
+                        //if (Operation.OnWhatLegOp == "2")
+                        //{
+                        //    document.ReplaceText("«Заключение_11Ж»", rightDiag + "\n");
+                        //   // document.ReplaceText("буквы_1Ж", lettersRight);
+                        //    document.ReplaceText("«Заключение_22Ж»", leftDiag + "\n");
+                        //   // document.ReplaceText("буквы_2Ж", lettersLeft);
+                        //    document.ReplaceText("«Заключение_1»", "");
+                        //    document.ReplaceText("«Заключение_2»", "");
+                        //    document.ReplaceText(" буквы_1", "");
+                        //    document.ReplaceText(" буквы_2", "");
+                        //}
+                        if (SelectedLeg == 0)
+                        {
+
+                            if (Operation.OnWhatLegOp == "0")
+                            {
+                                document.ReplaceText("«Заключение_11Ж»", "");
+                                document.ReplaceText("«Заключение_22Ж»", leftDiag + "\n");
+                                document.ReplaceText("«Заключение_1»", rightDiag + "\n");
+                                document.ReplaceText("«Заключение_2»", "");
+                            }
+                            if (Operation.OnWhatLegOp == "1")
+                            {
+                                document.ReplaceText("«Заключение_11Ж»", rightDiag + "\n");
+
+                                document.ReplaceText("«Заключение_22Ж»", "");
+                                document.ReplaceText("«Заключение_2»", leftDiag + "\n");
+                                document.ReplaceText("«Заключение_1»", "");
+
+                            }
+                            if (Operation.OnWhatLegOp == "2")
+                            {
+                                document.ReplaceText("«Заключение_11Ж»", rightDiag + "\n");
+                                // document.ReplaceText("буквы_1Ж", lettersRight);
+                                document.ReplaceText("«Заключение_22Ж»", leftDiag + "\n");
+                                // document.ReplaceText("буквы_2Ж", lettersLeft);
+                                document.ReplaceText("«Заключение_1»", "");
+                                document.ReplaceText("«Заключение_2»", "");
+                            }
+
+                        }
+                        else
+                        {
+                            if (Operation.OnWhatLegOp == "0")
+                            {
+                                document.ReplaceText("«Заключение_11Ж»", leftDiag + "\n");
+                                document.ReplaceText("«Заключение_22Ж»", "");
+                                document.ReplaceText("«Заключение_1»", "");
+                                document.ReplaceText("«Заключение_2»", rightDiag + "\n");
+                            }
+                            if (Operation.OnWhatLegOp == "1")
+                            {
+                                document.ReplaceText("«Заключение_11Ж»", "");
+
+                                document.ReplaceText("«Заключение_22Ж»", rightDiag + "\n");
+                                document.ReplaceText("«Заключение_2»", "");
+                                document.ReplaceText("«Заключение_1»", leftDiag + "\n");
+
+                            }
+                            if (Operation.OnWhatLegOp == "2")
+                            {
+                                document.ReplaceText("«Заключение_11Ж»", leftDiag + "\n");
+                                // document.ReplaceText("буквы_1Ж", lettersRight);
+                                document.ReplaceText("«Заключение_22Ж»", rightDiag + "\n");
+                                // document.ReplaceText("буквы_2Ж", lettersLeft);
+                                document.ReplaceText("«Заключение_1»", "");
+                                document.ReplaceText("«Заключение_2»", "");
+                            }
+                            //document.ReplaceText("«Заключение_1»", leftDiag);
+                            //document.ReplaceText("«Заключение_2»", rightDiag);
+                            //document.ReplaceText("буквы_1", lettersLeft);
+                            //document.ReplaceText("буквы_2", lettersRight);
+
+                        }
+
                         if (Operation.OnWhatLegOp == "0")
                         {
-                            document.ReplaceText("буквы_2Ж", lettersLeft);
-                            document.ReplaceText("буквы_1Ж", "");
-                            document.ReplaceText("«Заключение_11Ж»", "");
-                            document.ReplaceText("«Заключение_22Ж»", leftDiag + "\n");
-                            document.ReplaceText("«Заключение_11»", rightDiag + "\n");
-
-                            document.ReplaceText("«Заключение_22»", "");
-
-                            document.ReplaceText(" буквы_1", lettersRight);
-                            document.ReplaceText(" буквы_2", "");
-
-                        }
-                        if (Operation.OnWhatLegOp == "1")
-                        {
-                            document.ReplaceText("буквы_1Ж", lettersRight);
-                            document.ReplaceText("буквы_2Ж", "");
-                            document.ReplaceText("«Заключение_11Ж»", rightDiag + "\n");
-
-                            document.ReplaceText("«Заключение_22Ж»", "");
-                            document.ReplaceText("«Заключение_22»", leftDiag + "\n");
-                            document.ReplaceText("«Заключение_11»", "");
-
-                            document.ReplaceText(" буквы_1", "");
-
-                            document.ReplaceText(" буквы_2", lettersLeft);
-                        }
-                        if (Operation.OnWhatLegOp == "2")
-                        {
-                            document.ReplaceText("«Заключение_11Ж»", rightDiag + "\n");
-                            document.ReplaceText("буквы_1Ж", lettersRight);
-                            document.ReplaceText("«Заключение_22Ж»", leftDiag + "\n");
-                            document.ReplaceText("буквы_2Ж", lettersLeft);
-                            document.ReplaceText("«Заключение_11»", "");
-                            document.ReplaceText("«Заключение_22»", "");
-                            document.ReplaceText(" буквы_1", "");
-                            document.ReplaceText(" буквы_2", "");
-                        }
-
-
-                        if (Operation.OnWhatLegOp == "0")
-                        {
-                            operationType = "На левую ногу :" + leftP;
+                            operationType = "На левую нижнюю конечность :" + leftP;
                             document.ReplaceText("«IsLeft»", "ЛЕВАЯ");
 
                         }
                         if (Operation.OnWhatLegOp == "1")
                         {
-                            operationType = "На правую ногу :" + rightP;
+                            operationType = "На правую нижнюю конечность :" + rightP;
                             document.ReplaceText("«IsLeft»", "ПРАВАЯ");
                         }
                         if (Operation.OnWhatLegOp == "2")
                         {
-                            operationType = "На левую ногу :" + leftP + " " + "На правую ногу :" + rightP;
+                            operationType = "На левую нижнюю конечность :" + leftP + " " + "На правую нижнюю конечность :" + rightP;
                         }
 
                         document.ReplaceText("«Операция2»", operationType);
