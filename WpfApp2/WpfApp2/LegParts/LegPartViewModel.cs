@@ -436,189 +436,7 @@ namespace WpfApp2.LegParts
                 CurrentPanelViewModel.TextSaveBTN = "Вернуться";
                 CurrentPanelViewModel.TextCancleOrResetBTN = "Сбросить";
 
-                // CurrentPanelViewModel.Text1 = section.Se
-                //SavePanelCommand = new DelegateCommand(() =>
-                //{
-                //    var panel = CurrentPanelViewModel;
-                //    if (!string.IsNullOrWhiteSpace(panel.Text1) || !string.IsNullOrWhiteSpace(panel.Text2))
-                //    {
-                //        //CurrentLegSide = CurrentLegSide;
-                //        CurrentPanelViewModel.PanelOpened = false;
-                //        handled = false;
-                //        LegPartDbStructure newStruct = GetPanelStructureForEdit();
-                //        newStruct.Custom = false;
-                //        //   LegPartDbStructure.legPrt. = newStruct;\
-
-                //        //if (Controller.CurrentViewModel.Controller.LegViewModel is PDSVViewModel)
-                //        //{
-                //        //    foreach (var x in Data.PDSVHips.GetAll)
-                //        //    {
-                //        //        if (x.Id == LegPrt.Id)
-                //        //        {
-                //        //            LegPrt = x;
-                //        //            break;
-                //        //        }
-                //        //    }
-
-                //        //}
-                //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is SFSViewModel)
-                //        //{
-
-                //        //    foreach (var x in Data.SFSHips.GetAll)
-                //        //    {
-                //        //        if (x.Id == LegPrt.Id)
-                //        //        {
-                //        //            LegPrt = x;
-                //        //            break;
-                //        //        }
-                //        //    }
-                //        //}
-                //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is BPVHipViewModel)
-                //        //{
-                //        //    foreach (var x in Data.BPVHips.GetAll)
-                //        //    {
-                //        //        if (x.Id == LegPrt.Id)
-                //        //        {
-                //        //            LegPrt = x;
-                //        //            break;
-                //        //        }
-                //        //    }
-                //        //}
-                //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is BPVTibiaViewModel)
-                //        //{
-                //        //    foreach (var x in Data.BPV_Tibia.GetAll)
-                //        //    {
-                //        //        if (x.Id == LegPrt.Id)
-                //        //        {
-                //        //            LegPrt = x;
-                //        //            break;
-                //        //        }
-                //        //    }
-                //        //}
-                //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is HipPerforateViewModel)
-                //        //{
-
-                //        //    foreach (var x in Data.Perforate_hip.GetAll)
-                //        //    {
-                //        //        if (x.Id == LegPrt.Id)
-                //        //        {
-                //        //            LegPrt = x;
-                //        //            break;
-                //        //        }
-                //        //    }
-                //        //}
-                //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is ZDSVViewModel)
-                //        //{
-                //        //    foreach (var x in Data.ZDSV.GetAll)
-                //        //    {
-                //        //        if (x.Id == LegPrt.Id)
-                //        //        {
-                //        //            LegPrt = x;
-                //        //            break;
-                //        //        }
-                //        //    }
-                //        //}
-
-                //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is SPSViewModel)
-                //        //{
-                //        //    foreach (var x in Data.SPS.GetAll)
-                //        //    {
-                //        //        if (x.Id == LegPrt.Id)
-                //        //        {
-                //        //            LegPrt = x;
-                //        //            break;
-                //        //        }
-                //        //    }
-                //        //}
-                //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is TibiaPerforateViewModel)
-                //        //{
-                //        //    foreach (var x in Data.Perforate_shin.GetAll)
-                //        //    {
-                //        //        if (x.Id == LegPrt.Id)
-                //        //        {
-                //        //            LegPrt = x;
-                //        //            break;
-                //        //        }
-                //        //    }
-                //        //}
-                //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is MPVViewModel)
-                //        //{
-                //        //    foreach (var x in Data.MPV.GetAll)
-                //        //    {
-                //        //        if (x.Id == LegPrt.Id)
-                //        //        {
-                //        //            LegPrt = x;
-                //        //            break;
-                //        //        }
-                //        //    }
-                //        //}
-                //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is TEMPVViewModel)
-                //        //{
-                //        //    foreach (var x in Data.TEMPV.GetAll)
-                //        //    {
-                //        //        if (x.Id == LegPrt.Id)
-                //        //        {
-                //        //            LegPrt = x;
-                //        //            break;
-                //        //        }
-                //        //    }
-                //        //}
-                //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is PPVViewModel)
-                //        //{
-                //        //    foreach (var x in Data.PPV.GetAll)
-                //        //    {
-                //        //        if (x.Id == LegPrt.Id)
-                //        //        {
-                //        //            LegPrt = x;
-                //        //            break;
-                //        //        }
-                //        //    }
-                //        //}
-                //        //else if (Controller.CurrentViewModel.Controller.LegViewModel is GVViewModel)
-                //        //{
-                //        //    foreach (var x in Data.GV.GetAll)
-                //        //    {
-                //        //        if (x.Id == LegPrt.Id)
-                //        //        {
-                //        //            LegPrt = x;
-                //        //            break;
-                //        //        }
-                //        //    }
-                //        //}
-
-
-                //        //LegPrt.HasDoubleMetric = newStruct.HasDoubleMetric;
-                //        //LegPrt.HasSize = newStruct.HasSize;
-                //        //LegPrt.Level = newStruct.Level;
-                //        //LegPrt.Metrics = newStruct.Metrics;
-                //        //LegPrt.NameContext = newStruct.NameContext;
-                //        //LegPrt.Size = newStruct.Size;
-                //        //LegPrt.Text1 = newStruct.Text1;
-                //        //LegPrt.Text2 = newStruct.Text2;
-                //        //LegPrt.ToNextPart = newStruct.ToNextPart;
-
-
-                //        //SavePanelCommand
-
-
-                //        //Data.MPV.Add((MPVStructure)newStruct);
-
-                //        Data.Complete();
-                //        //         MessageBus.Default.Call("RebuildFirstPDSV", null, null);
-                //        RebuildFromFirstToLast();
-
-                //        //MessageBus.Default.Call("RebuildLegSectionViewModel", this, CurrentPanelViewModel.legPrt);
-                //        //  _lastSender.StructureSource.Add(newStruct);
-                //        // _lastSender.SelectedValue = newStruct;
-                //        CurrentPanelViewModel.PanelOpened = false;
-                //        handled = false;
-                //        SavePanelCommand = buff;
-                //    }
-                //    else
-                //    {
-                //        MessageBox.Show("Не все поля заполнены");
-                //    }
-                //});
+              
 
 
 
@@ -713,51 +531,7 @@ namespace WpfApp2.LegParts
 
         }
 
-        //public LegPartDbStructure GetPanelStructureForEdit()
-        //{
-        //    var newStr = (LegPartDbStructure)Activator.CreateInstance(LegSections[0].StructureSource[0].GetType());
-        //    var panel = CurrentPanelViewModel;
-
-        //    newStr.Text1 = panel.Text1;
-        //    newStr.Text2 = panel.Text2;
-        //    newStr.HasSize = panel.HasSize;
-        //    newStr.HasDoubleMetric = panel.HasDoubleSize;
-
-
-
-
-        //    if (panel.HasSize)
-        //    {
-        //        bool test = true;
-        //        foreach (var metric in Data.Metrics.GetAll)
-        //        {
-        //            if (metric.Str == panel.SelectedMetricText)
-        //            {
-        //                test = false;
-        //                newStr.Size = metric.Id;
-        //                newStr.Metrics = metric.Str;
-        //                break;
-        //            }
-        //        }
-        //        if (test)
-        //        {
-        //            Metrics newMetric = new Metrics();
-        //            newMetric.Str = panel.SelectedMetricText;
-        //            Data.Metrics.Add(newMetric);
-        //            Data.Complete();
-        //            newStr.Size = newMetric.Id;
-        //            newStr.Metrics = newMetric.Str;
-        //        }
-
-        //    }
-        //    else newStr.Size = null;
-        //    newStr.Level = CurrentPanelViewModel.LegPrt.Level;
-        //    newStr.Custom = true;
-
-        //    return newStr;
-
-
-        //}
+     
 
         private void SetModeHandler(object sender, object data)
         {
@@ -860,6 +634,16 @@ namespace WpfApp2.LegParts
                                 LegSections[i].Text2 = LegSectionsSaved[i].Text2;
                                 LegSections[i].SelectedValue = LegSectionsSaved[i].SelectedValue;
                                 LegSections[i].CurrentEntry = LegSectionsSaved[i].CurrentEntry;
+                                if (LegSections[i].SelectedValue != null)
+                                {
+                                    test = false;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 0; i < LegSections.Count; i++)
+                            {
                                 if (LegSections[i].SelectedValue != null)
                                 {
                                     test = false;

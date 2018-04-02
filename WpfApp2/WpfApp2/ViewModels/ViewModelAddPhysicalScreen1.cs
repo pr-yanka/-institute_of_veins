@@ -1931,10 +1931,10 @@ namespace WpfApp2.ViewModels
             if (!LegPart.IsEmpty)
             {
                 if (!isNormal)
-                    p4.Append(LegPart.Title + ": ").Font("Times new roman").FontSize(11.0).UnderlineStyle(UnderlineStyle.singleLine).Bold();
+                    p4.Append(LegPart.Title).Font("Times new roman").FontSize(11.0).UnderlineStyle(UnderlineStyle.singleLine).Append(": ").Font("Times new roman").FontSize(11.0);
                 else
                 {
-                    p4.Append(LegPart.Title + ": ").Font("Times new roman").FontSize(11.0);
+                    p4.Append(LegPart.Title).Font("Times new roman").FontSize(11.0).Append(": ").Font("Times new roman").FontSize(11.0); ;
 
                 }
                 if (!LegPart.IsEmpty)
@@ -1943,7 +1943,7 @@ namespace WpfApp2.ViewModels
                     if (LegPart.SelectedWayType != null && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name))
                     {
                         if (!isNormal)
-                            p4.Append("Вид хода: " + LegPart.SelectedWayType.Name + "\n").Font("Times new roman").FontSize(11.0).Bold();
+                            p4.Append("Вид хода: " + LegPart.SelectedWayType.Name + "\n").Font("Times new roman").FontSize(11.0);
                         else
                         {
                             p4.Append("Вид хода: " + LegPart.SelectedWayType.Name + "\n").Font("Times new roman").FontSize(11.0);
@@ -1952,26 +1952,34 @@ namespace WpfApp2.ViewModels
                     if (LegPart is TEMPVViewModel)
                     {
                         if (!isNormal)
-                            p4.Append("Протяженность: " + ((TEMPVViewModel)LegPart).FF_length + " см\n").Font("Times new roman").FontSize(11.0).Bold();
+                            p4.Append("Протяженность: " + ((TEMPVViewModel)LegPart).FF_length + " см\n").Font("Times new roman").FontSize(11.0);
                         else
                         {
                             p4.Append("Протяженность: " + ((TEMPVViewModel)LegPart).FF_length + " см\n").Font("Times new roman").FontSize(11.0);
                         }
                     }
 
-
+                    int x = 0;
                     foreach (var section in LegPart.LegSections)
                     {
                         if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
                         {
                             if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
                             {
-                                if (!isNormal)
-                                    p4.Append("" + section.SelectedValue.Text1).Font("Times new roman").FontSize(11.0).Bold();
-                                else
-                                {
-                                    p4.Append("" + section.SelectedValue.Text1).Font("Times new roman").FontSize(11.0);
-                                }
+
+                               
+                                    if (x == 0)
+                                    {
+                                        p4.Append(section.SelectedValue.Text1).Font("Times new roman").FontSize(11.0);
+                                    }
+                                    else
+                                    {
+                                        p4.Append(", " + section.SelectedValue.Text1).Font("Times new roman").FontSize(11.0);
+
+                                    }
+                                
+                          
+                                x++;
                             }
 
 
@@ -1980,7 +1988,7 @@ namespace WpfApp2.ViewModels
                                 if (section.HasDoubleSize)
                                 {
                                     if (!isNormal)
-                                        p4.Append(" " + section.CurrentEntry.Size + "*" + section.CurrentEntry.Size2 + " " + section.SelectedValue.Metrics + "").Font("Times new roman").FontSize(11.0).Bold();
+                                        p4.Append(" " + section.CurrentEntry.Size + "*" + section.CurrentEntry.Size2 + " " + section.SelectedValue.Metrics + "").Font("Times new roman").FontSize(11.0);
                                     else
                                     {
                                         p4.Append(" " + section.CurrentEntry.Size + "*" + section.CurrentEntry.Size2 + " " + section.SelectedValue.Metrics + "").Font("Times new roman").FontSize(11.0);
@@ -1993,7 +2001,7 @@ namespace WpfApp2.ViewModels
                                     if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
                                     {
                                         if (!isNormal)
-                                            p4.Append(" " + section.CurrentEntry.Size + " " + section.SelectedValue.Metrics + "").Font("Times new roman").FontSize(11.0).Bold();
+                                            p4.Append(" " + section.CurrentEntry.Size + " " + section.SelectedValue.Metrics + "").Font("Times new roman").FontSize(11.0);
                                         else
                                         {
                                             p4.Append(" " + section.CurrentEntry.Size + " " + section.SelectedValue.Metrics + "").Font("Times new roman").FontSize(11.0);
@@ -2004,10 +2012,10 @@ namespace WpfApp2.ViewModels
                                     else
                                     {
                                         if (!isNormal)
-                                            p4.Append(" " + section.CurrentEntry.Size + " ").Font("Times new roman").FontSize(11.0).Bold();
+                                            p4.Append(" " + section.CurrentEntry.Size + "").Font("Times new roman").FontSize(11.0);
                                         else
                                         {
-                                            p4.Append(" " + section.CurrentEntry.Size + " ").Font("Times new roman").FontSize(11.0);
+                                            p4.Append(" " + section.CurrentEntry.Size + "").Font("Times new roman").FontSize(11.0);
                                         }
 
                                     }
@@ -2015,39 +2023,44 @@ namespace WpfApp2.ViewModels
                             }
                             else
                             {
-                                if (!isNormal)
-                                    p4.Append(" ").Font("Times new roman").FontSize(11.0).Bold();
-                                else
-                                {
-                                    p4.Append(" ").Font("Times new roman").FontSize(11.0);
-                                }
+                                //if (!isNormal)
+                                //    p4.Append("").Font("Times new roman").FontSize(11.0);
+                                //else
+                                //{
+                                //    p4.Append("").Font("Times new roman").FontSize(11.0);
+                                //}
 
                             }
 
                             if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
                             {
                                 if (!isNormal)
-                                    p4.Append(" " + section.SelectedValue.Text2 + " ").Font("Times new roman").FontSize(11.0).Bold();
+                                    p4.Append(" " + section.SelectedValue.Text2 + "").Font("Times new roman").FontSize(11.0);
                                 else
                                 {
-                                    p4.Append(" " + section.SelectedValue.Text2 + " ").Font("Times new roman").FontSize(11.0);
+                                    p4.Append(" " + section.SelectedValue.Text2 + "").Font("Times new roman").FontSize(11.0);
                                 }
 
                             }
                             if (!string.IsNullOrWhiteSpace(section.CurrentEntry.Comment))
                             {
                                 if (!isNormal)
-                                    p4.Append("\nКомментарий: " + section.CurrentEntry.Comment + " ").Font("Times new roman").FontSize(11.0).Bold();
+                                    p4.Append("\nКомментарий: " + section.CurrentEntry.Comment + "").Font("Times new roman").FontSize(11.0);
                                 else
                                 {
-                                    p4.Append("\nКомментарий: " + section.CurrentEntry.Comment + " ").Font("Times new roman").FontSize(11.0);
+                                    p4.Append("\nКомментарий: " + section.CurrentEntry.Comment + "").Font("Times new roman").FontSize(11.0);
                                 }
 
                             }
 
                         }
                     }
-
+                    
+                    string buf = p4.Text[p4.Text.Length - 1].ToString();
+                    if (buf != ".")
+                    {
+                        p4.Append(".").Font("Times new roman").FontSize(11.0);
+                    }
                     string name = "";
                     if (!string.IsNullOrWhiteSpace(LegPart.Comment))
                     {
@@ -2133,7 +2146,7 @@ namespace WpfApp2.ViewModels
 
                         }
                         if (!isNormal)
-                            p4.Append("\nКомментарий к " + name + " : " + LegPart.Comment).Font("Times new roman").FontSize(11.0).Bold();
+                            p4.Append("\nКомментарий к " + name + " : " + LegPart.Comment).Font("Times new roman").FontSize(11.0);
                         else
                         {
                             p4.Append("\nКомментарий к " + name + " : " + LegPart.Comment).Font("Times new roman").FontSize(11.0);
@@ -2197,9 +2210,9 @@ namespace WpfApp2.ViewModels
                         dayStr1 = day12.ToString();
                     }
                     p.Append("Консультативное заключение\n").Font("Times new roman").Bold().FontSize(14.0).Alignment = Alignment.center;
-                    p1.Append("" + CurrentPatient.Sirname + " " + CurrentPatient.Name + " " + CurrentPatient.Patronimic + "," + dayStr1 + "." + mnthStr1 + "." + CurrentPatient.Birthday.Year + "                            Дата: " + DateTime.Now + "\n").Font("Times new roman").FontSize(12.0);
-                    p2.Append("Допплерография вен нижних конечностей:\n").Font("Times new roman").Bold().FontSize(14.0);
-                    p3.Append("Правая нижняя конечность:\n").Font("Times new roman").Bold().FontSize(11.0);
+                    p1.Append("" + CurrentPatient.Sirname + " " + CurrentPatient.Name + " " + CurrentPatient.Patronimic + ", " + dayStr1 + "." + mnthStr1 + "." + CurrentPatient.Birthday.Year + "                            Дата: " + DateTime.Now.ToShortDateString() + "\n").Font("Times new roman").FontSize(12.0);
+                    p2.Append("Допплерография вен нижних конечностей:\n").Font("Times new roman").Bold().FontSize(13.0);
+                    p3.Append("Правая нижняя конечность:").Font("Times new roman").Bold().FontSize(11.0);
                     //if(!RightSFS.)
                     BuildStr(ref p4, RightSFS, false);
 
@@ -2216,9 +2229,19 @@ namespace WpfApp2.ViewModels
                     BuildStr(ref p4, RightGV, false);
 
                     if (!string.IsNullOrWhiteSpace(RightAdditionalText))
-                        p4.Append("Примечание: " + RightAdditionalText + "\n").Font("Times new roman").FontSize(11.0);
-
-                    p4.Append("Левая нижняя конечность:\n").Font("Times new roman").Bold().FontSize(11.0);
+                    {
+                        
+                        string buf = RightAdditionalText[RightAdditionalText.Length - 1].ToString();
+                        if (buf != ".")
+                        {
+                            p4.Append("Примечание: " + RightAdditionalText + ".\n").Font("Times new roman").FontSize(11.0);
+                        }
+                        else
+                        {
+                            p4.Append("Примечание: " + RightAdditionalText + "\n").Font("Times new roman").FontSize(11.0);
+                        }
+                    }
+                    p4.Append("\n\nЛевая нижняя конечность:\n").Font("Times new roman").Bold().FontSize(11.0);
                     BuildStr(ref p4, LeftSFS, false);
                     BuildStr(ref p4, LeftBPVHip, true);
                     BuildStr(ref p4, LeftPDSV, true);
@@ -2233,9 +2256,18 @@ namespace WpfApp2.ViewModels
                     BuildStr(ref p4, LeftGV, false);
 
                     if (!string.IsNullOrWhiteSpace(LeftAdditionalText))
-                        p4.Append("Примечание: " + LeftAdditionalText + "\n").Font("Times new roman").FontSize(11.0);
-
-                    p4.Append("Заключение:\n").Font("Times new roman").Bold().FontSize(11.0);
+                    {
+                        string buf1 = LeftAdditionalText[LeftAdditionalText.Length - 1].ToString();
+                        if (buf1 != ".")
+                        {
+                            p4.Append("Примечание: " + LeftAdditionalText + ".\n").Font("Times new roman").FontSize(11.0);
+                        }
+                        else
+                        {
+                            p4.Append("Примечание: " + LeftAdditionalText + "\n").Font("Times new roman").FontSize(11.0);
+                        }
+                    }
+                    p4.Append("\n\nЗаключение:\n").Font("Times new roman").Bold().FontSize(11.0);
 
                     p4.Append("Заключение справа: ").Font("Times new roman").FontSize(11.0);
                     int x = 0;
@@ -2309,7 +2341,7 @@ namespace WpfApp2.ViewModels
                         }
                     }
                     int ia = 0;
-                    p4.Append("\nРекомендовано: ").Font("Times new roman").FontSize(11.0).UnderlineStyle(UnderlineStyle.singleLine);
+                    p4.Append("\n\nРекомендовано").Font("Times new roman").FontSize(11.0).Bold().UnderlineStyle(UnderlineStyle.singleLine).Append(": ").Font("Times new roman").FontSize(11.0);
                     if (RecomendationsList != null)
                     {
                         foreach (var rec in RecomendationsList)

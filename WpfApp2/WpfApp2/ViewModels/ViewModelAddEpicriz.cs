@@ -602,7 +602,7 @@ namespace WpfApp2.ViewModels
                                 {
                                     if (xx == 0)
                                     {
-                                        lettersLeft += GetStrFixedForDocumemnt(x.Str);
+                                        lettersLeft += FirstCharToUpper(GetStrFixedForDocumemnt(x.Str));
                                     }
                                     else
                                     {
@@ -620,7 +620,7 @@ namespace WpfApp2.ViewModels
                                 { }
                                 else
                                 {
-                                    lettersLeft += ".";
+                                  //  lettersLeft += ".";
                                 }
 
                                 lettersLeft += " ";
@@ -647,11 +647,13 @@ namespace WpfApp2.ViewModels
                                 { }
                                 else
                                 {
-                                    lettersRight += ".";
+                                  //  lettersRight += ".";
                                 }
 
                                 lettersRight += " ";
+                                lettersLeft += "левой нижней конечности ";
 
+                                lettersRight += "правой нижней конечности ";
                                 if (leftLegExam.C != null)
                                 {
                                     bufLetter = LettersRep.Get(leftLegExam.C.Value);
@@ -698,9 +700,9 @@ namespace WpfApp2.ViewModels
 
                         }
 
-                        document.ReplaceText("«Заключение_слева»", lettersLeft);
+                        document.ReplaceText("«Заключение_слева»", lettersLeft + "\n");
 
-                        document.ReplaceText("«Заключение_справа»", lettersRight);
+                        document.ReplaceText("«Заключение_справа»", lettersRight + "\n");
 
                         document.ReplaceText("«Дата_операции»", Operation.Date.ToString());
 
@@ -1394,5 +1396,15 @@ namespace WpfApp2.ViewModels
         public DelegateCommand<object> ClickOnWeight { get; private set; }
         public DelegateCommand<object> LostFocusE2 { get; private set; }
         public object MessageBoxButtons { get; }
+
+        public static string FirstCharToUpper(string input)
+        {
+            switch (input)
+            {
+                case null: throw new ArgumentNullException(nameof(input));
+                case "": throw new ArgumentException($"{nameof(input)} cannot be empty", nameof(input));
+                default: return input.First().ToString().ToUpper() + input.Substring(1);
+            }
+        }
     }
 }
