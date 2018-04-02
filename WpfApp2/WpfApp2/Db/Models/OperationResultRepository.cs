@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
@@ -14,6 +15,8 @@ namespace WpfApp2.Db.Models
         public int Id { set; get; }
         [Column("описание")]
         public string Str { set; get; }
+        [Column("дата")]
+        public DateTime? Date { set; get; }
         [Column("id_следущей_операции")]
         public int? IdNextOperation { set; get; }
     }

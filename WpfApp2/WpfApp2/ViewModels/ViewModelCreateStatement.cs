@@ -10,9 +10,11 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using WpfApp2.Db.Models;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
+using WpfApp2.ViewModels.Panels;
 using Xceed.Words.NET;
 
 namespace WpfApp2.ViewModels
@@ -54,6 +56,12 @@ namespace WpfApp2.ViewModels
                 OnPropertyChanged();
             }
         }
+
+
+        public SclerozPanelViewModel CurrentSavePanelViewModel { get; protected set; }
+        public ICommand OpenAddSaveCommand { protected set; get; }
+        public DelegateCommand RevertSaveCommand { set; get; }
+
         private StatementOperation _currentDocument;
 
         public StatementOperation CurrentDocument
@@ -130,6 +138,21 @@ namespace WpfApp2.ViewModels
                 _isDocAdded = value;
                 OnPropertyChanged();
             }
+        }
+        string GetStrFixedForDocumemnt(string str)
+        {
+            List<char> chararr = str.ToLower().ToCharArray().ToList();
+            if (chararr[chararr.Count - 1] == '.')
+            {
+                chararr.RemoveAt(chararr.Count - 1);
+
+            }
+            string result = "";
+            foreach (var x in chararr)
+            {
+                result += x;
+            }
+            return result;
         }
         private void GetOperationid(object sender, object data)
         {
@@ -218,7 +241,7 @@ namespace WpfApp2.ViewModels
                    {
                        try
                        {
-                           if (FileName != null)
+                           if (!string.IsNullOrWhiteSpace(FileName))
                            {
                                byte[] bteToBD = File.ReadAllBytes(FileName);
                                using (var context = new MySqlContext())
@@ -259,6 +282,7 @@ namespace WpfApp2.ViewModels
                                }
 
                                TextForDoWhat = "Изменения в " + _fileNameOnly + " были сохранены";
+                               CurrentSavePanelViewModel.PanelOpened = false;
                            }
 
                        }
@@ -347,6 +371,8 @@ namespace WpfApp2.ViewModels
                       _fileNameOnly = "Выписка_заготовка" + togle + ".docx";
                   }
               }
+              TextForDoWhat = "Был открыт доккумент " + _fileNameOnly + ". Для сохранения изменений в документе сохраните данные в Word, закройте документ и нажмите кнопку \"Сохранить изменения\".";
+
               Process.Start("WINWORD.EXE", FileName);
           }
       );
@@ -414,6 +440,7 @@ namespace WpfApp2.ViewModels
 
                     using (DocX document = DocX.Load(fileName))
                     {
+                        FileName = fileName;
                         document.ReplaceText("«ФИО»", CurrentPatient.Sirname + " " + CurrentPatient.Name + " " + CurrentPatient.Patronimic);
                         string day1 = "0";
                         string day2 = "0";
@@ -516,9 +543,9 @@ namespace WpfApp2.ViewModels
                             {
                                 //zz++;
                                 if (zz != PatologysOfCurrPatient.Count - 1)
-                                    patologis += PtTypeRep.Get(x.id_патологии).Str + ", ";
+                                    patologis += GetStrFixedForDocumemnt(PtTypeRep.Get(x.id_патологии).Str) + ", ";
                                 else
-                                    patologis += PtTypeRep.Get(x.id_патологии).Str;
+                                    patologis += GetStrFixedForDocumemnt(PtTypeRep.Get(x.id_патологии).Str);
                                 zz++;
                             }
 
@@ -581,11 +608,11 @@ namespace WpfApp2.ViewModels
 
                                         if (xxx == 0)
                                         {
-                                            complanes += rec.Str;
+                                            complanes += GetStrFixedForDocumemnt(rec.Str);
                                         }
                                         else
                                         {
-                                            complanes += ", " + rec.Str;
+                                            complanes += ", " + GetStrFixedForDocumemnt(rec.Str);
                                         }
                                         xxx++;
 
@@ -703,11 +730,11 @@ namespace WpfApp2.ViewModels
                         {
                             if (xx == 0)
                             {
-                                leftDiag += x.Str;
+                                leftDiag += GetStrFixedForDocumemnt(x.Str);
                             }
                             else
                             {
-                                leftDiag += ", " + x.Str;
+                                leftDiag += ", " + GetStrFixedForDocumemnt(x.Str);
                             }
                             xx++;
                         }
@@ -730,11 +757,11 @@ namespace WpfApp2.ViewModels
                         {
                             if (xx == 0)
                             {
-                                rightDiag += x.Str;
+                                rightDiag += GetStrFixedForDocumemnt(x.Str);
                             }
                             else
                             {
-                                rightDiag += ", " + x.Str;
+                                rightDiag += ", " + GetStrFixedForDocumemnt(x.Str);
                             }
                             xx++;
                         }
@@ -1009,11 +1036,47 @@ namespace WpfApp2.ViewModels
             ToOperationOverviewCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("GetOperationForOverwiev", this, operationId);
-                    //GetObsForOverview
-                    Controller.NavigateTo<ViewModelOperationOverview>();
+                    if (!string.IsNullOrWhiteSpace(FileName))
+                    {
+                        MessageBoxResult dialogResult = MessageBox.Show("Сохранили ли вы все изменения", "", MessageBoxButton.YesNo);
+                        if (dialogResult == MessageBoxResult.Yes)
+                        {
+                            MessageBus.Default.Call("GetOperationForOverwiev", this, operationId);
+                            //GetObsForOverview
+                            Controller.NavigateTo<ViewModelOperationOverview>();
+                            FileName = "";
+                        }
+                    }
+                    else
+                    {
+                        MessageBus.Default.Call("GetOperationForOverwiev", this, operationId);
+                        //GetObsForOverview
+                        Controller.NavigateTo<ViewModelOperationOverview>();
+                        FileName = "";
+                    }
                 }
             );
+            CurrentSavePanelViewModel = new SclerozPanelViewModel(this);
+
+            OpenAddSaveCommand = new DelegateCommand(() =>
+            {
+
+                if (!string.IsNullOrWhiteSpace(FileName))
+                {
+                    CurrentSavePanelViewModel.ClearPanel();
+                    CurrentSavePanelViewModel.PanelOpened = true;
+                }
+                else
+                {
+                    MessageBox.Show("Сначала откройте документ");
+                }
+            });
+
+            RevertSaveCommand = new DelegateCommand(() =>
+            {
+                CurrentSavePanelViewModel.PanelOpened = false;
+                // Handled = false;
+            });
         }
         public DelegateCommand ToOperationCommand { get; protected set; }
         public DelegateCommand ToCreateStatementCommand { get; protected set; }

@@ -2382,6 +2382,7 @@ namespace WpfApp2.ViewModels
                         //}
 
                     }
+                    MessageBus.Default.Call("GetStatementForStatementFILENAME", docName, null);
                     MessageBus.Default.Call("GetStatementForStatement", _fileNameOnly, statementOverviewId);
                 }
 
@@ -3424,7 +3425,7 @@ namespace WpfApp2.ViewModels
                     {
                         MessageBus.Default.Call("SetCurrentPatientIDRealyThisTimeStatement", null, CurrentPatient.Id);
                         MessageBus.Default.Call("GetStatementForStatement", null, statementOverviewId);
-                        Controller.NavigateTo<ViewModelStatementForObsled>(); 
+                        Controller.NavigateTo<ViewModelStatementForObsled>();
 
 
                     }
@@ -4679,6 +4680,8 @@ namespace WpfApp2.ViewModels
                         //}
 
                     }
+                    MessageBus.Default.Call("GetHirurgOverviewtForHirurgOverviewFILENAME", fileName, null);
+
                     MessageBus.Default.Call("GetHirurgOverviewForHirurgOverview", _fileNameOnly, hirurgOverviewId);
                     //Release this document from memory.
 

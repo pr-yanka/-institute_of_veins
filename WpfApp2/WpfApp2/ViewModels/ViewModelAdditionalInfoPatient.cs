@@ -2010,6 +2010,9 @@ namespace WpfApp2.ViewModels
                             hirurgOverviewId = Hv.Id;
                         }
                     }
+                    MessageBus.Default.Call("GeAdditionalInfoDocFILENAME", fileName, null);
+
+                    //
                     MessageBus.Default.Call("GetAdditionalInfoDocForHirurgOverview", _fileNameOnly, hirurgOverviewId);
                 }
             }

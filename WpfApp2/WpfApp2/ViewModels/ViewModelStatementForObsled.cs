@@ -13,6 +13,8 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using WpfApp2.DialogService;
+using WpfApp2.ViewModels.Panels;
+using System.Windows.Input;
 
 namespace WpfApp2.ViewModels
 {
@@ -55,6 +57,12 @@ namespace WpfApp2.ViewModels
         public DelegateCommand OpenAnalizePicture { get; protected set; }
 
         public DelegateCommand ToCurrentPatientCommand { get; protected set; }
+
+
+
+        public SclerozPanelViewModel CurrentSavePanelViewModel { get; protected set; }
+        public ICommand OpenAddSaveCommand { protected set; get; }
+        public DelegateCommand RevertSaveCommand { set; get; }
 
         //public ObservableCollection<Docs> _doctors;
         //public ObservableCollection<Docs> Doctors { get { return _doctors; } set { _doctors = value; OnPropertyChanged(); } }
@@ -124,6 +132,10 @@ namespace WpfApp2.ViewModels
                 CurrentPatient = PtRep.Get((int)data);
             }
         }
+        private void GetStatementForStatementFILENAME(object sender, object data)
+        {
+            FileName = (string)sender;
+        }
         private void SetCurrentPatientID(object sender, object data)
         {
             if (sender != null)
@@ -133,11 +145,12 @@ namespace WpfApp2.ViewModels
             CurrentDocument = new StatementObs();
             try
             {
+
                 using (var context = new MySqlContext())
                 {
                     StatementObsRepository HVRep = new StatementObsRepository(context);
-                  
-                  //  DoctorRepository DoctorRep = new DoctorRepository(context);
+
+                    //  DoctorRepository DoctorRep = new DoctorRepository(context);
                     PatientsRepository PtRep = new PatientsRepository(context);
 
                     // CurrentPatient = PtRep.Get((int)data);CurrentDocument
@@ -226,6 +239,8 @@ namespace WpfApp2.ViewModels
         {
             IsAnalizeLoadedVisibility = Visibility.Hidden;
             ButtonName = "К Пациенту";//SetCurrentPatientIDRealyThisTime
+
+            MessageBus.Default.Subscribe("GetStatementForStatementFILENAME", GetStatementForStatementFILENAME);
             MessageBus.Default.Subscribe("GetStatementForStatement", SetCurrentPatientID);
             MessageBus.Default.Subscribe("SetCurrentPatientIDRealyThisTimeStatement", SetCurrentPatientIDRealyThisTime);
             // MessageBus.Default.Subscribe("GetAnalizeForAnalizeOverview", SetCurrentAnalizeID);
@@ -234,7 +249,20 @@ namespace WpfApp2.ViewModels
             ToCurrentObsledCommand = new DelegateCommand(
             () =>
             {
-                Controller.NavigateTo<ViewModelAddPhysical>();
+                if (!string.IsNullOrWhiteSpace(FileName))
+                {
+                    MessageBoxResult dialogResult = MessageBox.Show("Сохранили ли вы все изменения", "", MessageBoxButton.YesNo);
+                    if (dialogResult == MessageBoxResult.Yes)
+                    {
+                        Controller.NavigateTo<ViewModelAddPhysical>();
+                        FileName = "";
+                    }
+                }
+                else
+                {
+                    Controller.NavigateTo<ViewModelAddPhysical>();
+                    FileName = "";
+                }
             }
         );
 
@@ -263,6 +291,7 @@ namespace WpfApp2.ViewModels
                         _fileNameOnly = "Консультативное_заключение" + togle + ".docx";
                     }
                 }
+                TextForDoWhat = "Был открыт доккумент " + _fileNameOnly + ". Для сохранения изменений в документе сохраните данные в Word, закройте документ и нажмите кнопку \"Сохранить изменения\".";
                 Process.Start("WINWORD.EXE", FileName);
             }
         );
@@ -273,14 +302,16 @@ namespace WpfApp2.ViewModels
                 //{
                 //    if (DoctorSelectedId == -1)
                 //    {
-                        MessageBus.Default.Call("CreateStatement", "", null);
 
-                    //}
-                    //else
-                    //{
-                    //    MessageBus.Default.Call("CreateStatement", Doctors[DoctorSelectedId].ToString(), Doctors[DoctorSelectedId].doc.Id);
-                    ////}
-                    TextForDoWhat = "Вы создали новый документ " + _fileNameOnly;
+
+                MessageBus.Default.Call("CreateStatement", "", null);
+
+                //}
+                //else
+                //{
+                //    MessageBus.Default.Call("CreateStatement", Doctors[DoctorSelectedId].ToString(), Doctors[DoctorSelectedId].doc.Id);
+                ////}
+                TextForDoWhat = "Вы создали новый документ " + _fileNameOnly;
 
                 //}
 
@@ -302,7 +333,7 @@ namespace WpfApp2.ViewModels
             {
                 try
                 {
-                    if (FileName != null)
+                    if (!string.IsNullOrWhiteSpace(FileName))
                     {
                         byte[] bteToBD = File.ReadAllBytes(FileName);
                         using (var context = new MySqlContext())
@@ -325,7 +356,7 @@ namespace WpfApp2.ViewModels
                             {
 
                                 Hv.DocTemplate = bteToBD;
-                              //  Hv.DoctorId = DoctorSelectedId;
+                                //  Hv.DoctorId = DoctorSelectedId;
                                 CurrentDocument.DocTemplate = bteToBD;
                                 Data.StatementObs.Add(Hv);
 
@@ -363,9 +394,10 @@ namespace WpfApp2.ViewModels
                         //MessageBus.Default.Call("GetHirurgOverviewForHirurgOverview", null, null);
                         //if (DoctorSelectedId <= 0)
                         //    DoctorSelectedId = bff;
+                        CurrentSavePanelViewModel.PanelOpened = false;
                         TextForDoWhat = "Изменения в " + _fileNameOnly + " были сохранены";
                     }
-                  
+
                 }
                 catch
                 {
@@ -374,6 +406,28 @@ namespace WpfApp2.ViewModels
                 }
             }
         );
+
+            CurrentSavePanelViewModel = new SclerozPanelViewModel(this);
+
+            OpenAddSaveCommand = new DelegateCommand(() =>
+            {
+
+                if (!string.IsNullOrWhiteSpace(FileName))
+                {
+                    CurrentSavePanelViewModel.ClearPanel();
+                    CurrentSavePanelViewModel.PanelOpened = true;
+                }
+                else
+                {
+                    MessageBox.Show("Сначала откройте документ");
+                }
+            });
+
+            RevertSaveCommand = new DelegateCommand(() =>
+            {
+                CurrentSavePanelViewModel.PanelOpened = false;
+
+            });
             OpenFile = new DelegateCommand(
             () =>
             {

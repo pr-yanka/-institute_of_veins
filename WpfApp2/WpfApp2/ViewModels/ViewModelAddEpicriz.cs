@@ -14,6 +14,7 @@ using System.Windows.Input;
 using WpfApp2.Db.Models;
 using WpfApp2.Db.Models.LegParts;
 using WpfApp2.Db.Models.LegParts.BPVHip;
+using WpfApp2.DialogService;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 using WpfApp2.ViewModels.Panels;
@@ -44,6 +45,12 @@ namespace WpfApp2.ViewModels
         public ICommand OpenAddAnticogulantsCommand { protected set; get; }
         public SclerozPanelViewModel CurrentSclerozPanelViewModel { get; protected set; }
         public AnticogulantPanelViewModel CurrentAnticogulantsPanelViewModel { get; protected set; }
+
+        public SclerozPanelViewModel CurrentSavePanelViewModel { get; protected set; }
+        public ICommand OpenAddSaveCommand { protected set; get; }
+        public DelegateCommand RevertSaveCommand { set; get; }
+        //    public DelegateCommand SaveChangesInDockCommand { set; get; }
+
         public static bool Handled = false;
         public UIElement UI;
 
@@ -453,13 +460,6 @@ namespace WpfApp2.ViewModels
                     //Data.doc_template.Add(docTemp);
                     //Data.Complete();
 
-
-
-
-
-
-
-
                     int togle = 0;
                     _fileNameOnly = "";
                     // string fileName = System.IO.Path.GetTeWmpPath() + Guid.NewGuid().ToString() + ".docx";
@@ -508,7 +508,7 @@ namespace WpfApp2.ViewModels
                     using (DocX document = DocX.Load(fileName))
                     {
 
-
+                        FileName = fileName;
                         document.ReplaceText("«ФИО»", CurrentPatient.Sirname + " " + CurrentPatient.Name + " " + CurrentPatient.Patronimic);
                         document.ReplaceText("«Возраст»", CurrentPatient.Age.ToString());
 
@@ -579,6 +579,78 @@ namespace WpfApp2.ViewModels
                                 {
                                     document.ReplaceText("«Гибрид»", "");
                                 }
+                                List<DiagnosisType> LeftDiagnosisList = new List<DiagnosisType>();
+
+                                foreach (var diag in Data.Diagnosis.GetAll.Where(s => s.isLeft == true && s.id_операции == Operation.Id).ToList())
+                                {
+
+                                    LeftDiagnosisList.Add(Data.DiagnosisTypes.Get(diag.id_диагноз.Value));
+                                }
+
+                                List<DiagnosisType> RightDiagnosisList = new List<DiagnosisType>();
+
+
+
+                                foreach (var diag in Data.Diagnosis.GetAll.Where(s => s.isLeft == false && s.id_операции == Operation.Id).ToList())
+                                {
+
+                                    RightDiagnosisList.Add(Data.DiagnosisTypes.Get(diag.id_диагноз.Value));
+                                }
+
+                                int xx = 0;
+                                foreach (var x in LeftDiagnosisList)
+                                {
+                                    if (xx == 0)
+                                    {
+                                        lettersLeft += GetStrFixedForDocumemnt(x.Str);
+                                    }
+                                    else
+                                    {
+                                        lettersLeft += ", " + GetStrFixedForDocumemnt(x.Str);
+                                    }
+                                    xx++;
+                                }
+                                char[] chararrbuF = lettersLeft.ToCharArray();
+                                if (chararrbuF.Length != 0 && chararrbuF[0] == ' ')
+                                {
+                                    lettersLeft = lettersLeft.Remove(0, 1);
+
+                                }
+                                if (chararrbuF.Length != 0 && chararrbuF[chararrbuF.Length - 1] == '.')
+                                { }
+                                else
+                                {
+                                    lettersLeft += ".";
+                                }
+
+                                lettersLeft += " ";
+                                xx = 0;
+                                foreach (var x in RightDiagnosisList)
+                                {
+                                    if (xx == 0)
+                                    {
+                                        lettersRight += GetStrFixedForDocumemnt(x.Str);
+                                    }
+                                    else
+                                    {
+                                        lettersRight += ", " + GetStrFixedForDocumemnt(x.Str);
+                                    }
+                                    xx++;
+                                }
+                                chararrbuF = lettersRight.ToCharArray();
+                                if (chararrbuF.Length != 0 && chararrbuF[0] == ' ')
+                                {
+                                    lettersRight = lettersRight.Remove(0, 1);
+
+                                }
+                                if (chararrbuF.Length != 0 && chararrbuF[chararrbuF.Length - 1] == '.')
+                                { }
+                                else
+                                {
+                                    lettersRight += ".";
+                                }
+
+                                lettersRight += " ";
 
                                 if (leftLegExam.C != null)
                                 {
@@ -731,39 +803,44 @@ namespace WpfApp2.ViewModels
                                 if (Diagnosis.isLeft == true)
                                 {
                                     if (i1 != 0)
-                                        leftP += ", " + Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                                        leftP += ", " + GetStrFixedForDocumemnt(Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str);
                                     else
                                     {
-                                        leftP += Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                                        leftP += GetStrFixedForDocumemnt(Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str);
                                     }
                                     i1++;
                                 }
                                 else
                                 {
                                     if (i2 != 0)
-                                        rightP += ", " + Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                                        rightP += ", " + GetStrFixedForDocumemnt(Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str);
                                     else
                                     {
-                                        rightP += Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                                        rightP += GetStrFixedForDocumemnt(Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str);
                                     }
                                     i2++;
                                 }
                             }
                         }
+
+
+
+
+
                         if (Operation.OnWhatLegOp == "0")
                         {
-                            operationType = "На левую нижнюю конечность :" + leftP;
+                            operationType = "\n" + leftP + " левой нижней конечности\n";
                             document.ReplaceText("«IsLeft»", "ЛЕВАЯ");
 
                         }
                         if (Operation.OnWhatLegOp == "1")
                         {
-                            operationType = "На правую нижнюю конечность :" + rightP;
+                            operationType = "\n" + rightP + " правой нижней конечности\n";
                             document.ReplaceText("«IsLeft»", "ПРАВАЯ");
                         }
                         if (Operation.OnWhatLegOp == "2")
                         {
-                            operationType = "На левую нижнюю конечность :" + leftP + " " + "На правую нижнюю конечность :" + rightP;
+                            operationType = "\n" + rightP + " правой нижней конечности\n" + "" + leftP + " левой нижней конечности\n";
                         }
 
                         document.ReplaceText("«Операция2»", operationType);
@@ -863,9 +940,25 @@ namespace WpfApp2.ViewModels
             ToOperationOverviewCommand = new DelegateCommand(
                 () =>
                 {
-                    MessageBus.Default.Call("GetOperationForOverwiev", this, operationId);
-                    //GetObsForOverview
-                    Controller.NavigateTo<ViewModelOperationOverview>();
+                    if (!string.IsNullOrWhiteSpace(FileName))
+                    {
+                        MessageBoxResult dialogResult = MessageBox.Show("Сохранили ли вы все изменения", "", MessageBoxButton.YesNo);
+                        if (dialogResult == MessageBoxResult.Yes)
+                        {
+                            MessageBus.Default.Call("GetOperationForOverwiev", this, operationId);
+                            //GetObsForOverview
+                            Controller.NavigateTo<ViewModelOperationOverview>();
+                            FileName = "";
+                        }
+                    }
+                    else
+                    {
+
+                        MessageBus.Default.Call("GetOperationForOverwiev", this, operationId);
+                        //GetObsForOverview
+                        Controller.NavigateTo<ViewModelOperationOverview>();
+                        FileName = "";
+                    }
                 }
             );
             ClickOnAutoComplete = new DelegateCommand<object>(
@@ -893,7 +986,8 @@ namespace WpfApp2.ViewModels
                 {
                     try
                     {
-                        if (FileName != null)
+
+                        if (!string.IsNullOrWhiteSpace(FileName))
                         {
                             byte[] bteToBD = File.ReadAllBytes(FileName);
                             using (var context = new MySqlContext())
@@ -971,7 +1065,12 @@ namespace WpfApp2.ViewModels
 
                             TextForDoWhat = "Изменения в " + _fileNameOnly + " были сохранены";
                         }
+                        else
+                        {
 
+
+                        }
+                        CurrentSavePanelViewModel.PanelOpened = false;
                     }
                     catch
                     {
@@ -1119,6 +1218,7 @@ namespace WpfApp2.ViewModels
                 }
             }
             Process.Start("WINWORD.EXE", FileName);
+            TextForDoWhat = "Был открыт доккумент " + _fileNameOnly + ". Для сохранения изменений в документе сохраните данные в Word, закройте документ и нажмите кнопку \"Сохранить изменения\".";
         }
     );
 
@@ -1167,7 +1267,7 @@ namespace WpfApp2.ViewModels
                     {
                         SclerozSelected.Add(Scleroz);
                     }
-                    SclezingIdSelected = SclerozSelected.Count-1;
+                    SclezingIdSelected = SclerozSelected.Count - 1;
                     //foreach (var Scleroz in DataSourceListbuf)
                     //{
                     //    if (Scleroz.IsChecked.Value)
@@ -1189,12 +1289,40 @@ namespace WpfApp2.ViewModels
 
 
             CurrentAnticogulantsPanelViewModel = new AnticogulantPanelViewModel(this);
+            CurrentSavePanelViewModel = new SclerozPanelViewModel(this);
+
+            OpenAddSaveCommand = new DelegateCommand(() =>
+            {
+
+                if (!string.IsNullOrWhiteSpace(FileName))
+                {
+                    CurrentSavePanelViewModel.ClearPanel();
+                    CurrentSavePanelViewModel.PanelOpened = true;
+                }
+                else
+                {
+                    MessageBox.Show("Сначала откройте документ");
+                }
+            });
+
+            RevertSaveCommand = new DelegateCommand(() =>
+            {
+                CurrentSavePanelViewModel.PanelOpened = false;
+                Handled = false;
+            });
+
             OpenAddAnticogulantsCommand = new DelegateCommand(() =>
             {
                 CurrentAnticogulantsPanelViewModel.ClearPanel();
                 CurrentAnticogulantsPanelViewModel.PanelOpened = true;
             });
 
+            //
+            //SaveChangesInDockCommand = new DelegateCommand(() =>
+            //{
+            //    SaveWordDocument.Execute();
+            //});
+            //
             SaveAnticogulantsCommand = new DelegateCommand(() =>
             {
                 var newType = CurrentAnticogulantsPanelViewModel.GetPanelType();
@@ -1237,6 +1365,21 @@ namespace WpfApp2.ViewModels
 
 
         }
+        string GetStrFixedForDocumemnt(string str)
+        {
+            List<char> chararr = str.ToLower().ToCharArray().ToList();
+            if (chararr[chararr.Count - 1] == '.')
+            {
+                chararr.RemoveAt(chararr.Count - 1);
+
+            }
+            string result = "";
+            foreach (var x in chararr)
+            {
+                result += x;
+            }
+            return result;
+        }
         public DelegateCommand ToOperationCommand { get; protected set; }
         public DelegateCommand ToCreateStatementCommand { get; protected set; }
         public DelegateCommand ToOperationOverviewCommand { get; protected set; }
@@ -1250,5 +1393,6 @@ namespace WpfApp2.ViewModels
         public DelegateCommand<object> LostFocusE1 { get; private set; }
         public DelegateCommand<object> ClickOnWeight { get; private set; }
         public DelegateCommand<object> LostFocusE2 { get; private set; }
+        public object MessageBoxButtons { get; }
     }
 }

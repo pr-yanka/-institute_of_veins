@@ -13,6 +13,8 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using WpfApp2.DialogService;
+using WpfApp2.ViewModels.Panels;
+using System.Windows.Input;
 
 namespace WpfApp2.ViewModels
 {
@@ -59,7 +61,7 @@ namespace WpfApp2.ViewModels
         public ObservableCollection<Docs> _doctors;
         public ObservableCollection<Docs> Doctors { get { return _doctors; } set { _doctors = value; OnPropertyChanged(); } }
         private int _doctorSelectedId;
-    
+
         public int DoctorSelectedId
         {
             get { return _doctorSelectedId; }
@@ -82,7 +84,7 @@ namespace WpfApp2.ViewModels
         }
         public string _fileNameOnly;
         private string _fileName;
-     
+
         public string FileName
         {
             get { return _fileName; }
@@ -176,7 +178,7 @@ namespace WpfApp2.ViewModels
                         TextForDoWhat = "Сформируйте или загрузите документ";
 
                     }
-                   
+
                 }
             }
             catch
@@ -189,8 +191,14 @@ namespace WpfApp2.ViewModels
             //TODO: LOAD FROM FILE
 
         }
-      
+        private void GetStatementForStatementFILENAME(object sender, object data)
+        {
+            FileName = (string)sender;
+        }
 
+        public SclerozPanelViewModel CurrentSavePanelViewModel { get; protected set; }
+        public ICommand OpenAddSaveCommand { protected set; get; }
+        public DelegateCommand RevertSaveCommand { set; get; }
         public ViewModelHirurgOverview(NavigationController controller) : base(controller)
         {
             IsAnalizeLoadedVisibility = Visibility.Hidden;
@@ -203,9 +211,44 @@ namespace WpfApp2.ViewModels
             ToCurrentObsledCommand = new DelegateCommand(
             () =>
             {
-                Controller.NavigateTo<ViewModelAddPhysical>();
+                if (!string.IsNullOrWhiteSpace(FileName))
+                {
+                    MessageBoxResult dialogResult = MessageBox.Show("Сохранили ли вы все изменения", "", MessageBoxButton.YesNo);
+                    if (dialogResult == MessageBoxResult.Yes)
+                    {
+                        Controller.NavigateTo<ViewModelAddPhysical>();
+                        FileName = "";
+                    }
+                }
+                else
+                {
+                    Controller.NavigateTo<ViewModelAddPhysical>();
+                    FileName = "";
+                }
             }
         );
+            CurrentSavePanelViewModel = new SclerozPanelViewModel(this);
+
+            OpenAddSaveCommand = new DelegateCommand(() =>
+            {
+
+                if (!string.IsNullOrWhiteSpace(FileName))
+                {
+                    CurrentSavePanelViewModel.ClearPanel();
+                    CurrentSavePanelViewModel.PanelOpened = true;
+                }
+                else
+                {
+                    MessageBox.Show("Сначала откройте документ");
+                }
+            });
+
+            RevertSaveCommand = new DelegateCommand(() =>
+            {
+                CurrentSavePanelViewModel.PanelOpened = false;
+
+            });
+
 
             OpenWordDocument = new DelegateCommand(
             () =>
@@ -232,9 +275,12 @@ namespace WpfApp2.ViewModels
                         _fileNameOnly = "Осмотр_хирурга" + togle + ".docx";
                     }
                 }
+                TextForDoWhat = "Был открыт доккумент " + _fileNameOnly + ". Для сохранения изменений в документе сохраните данные в Word, закройте документ и нажмите кнопку \"Сохранить изменения\".";
+
                 Process.Start("WINWORD.EXE", FileName);
             }
         );
+            MessageBus.Default.Subscribe("GetHirurgOverviewtForHirurgOverviewFILENAME", GetStatementForStatementFILENAME);
             SetNewOverview = new DelegateCommand(
             () =>
             {
@@ -260,7 +306,7 @@ namespace WpfApp2.ViewModels
             {
                 try
                 {
-                    if (FileName != null)
+                    if (!string.IsNullOrWhiteSpace(FileName))
                     {
                         byte[] bteToBD = File.ReadAllBytes(FileName);
                         using (var context = new MySqlContext())
@@ -291,10 +337,11 @@ namespace WpfApp2.ViewModels
                             }
 
                         }
-                  
+
+                        CurrentSavePanelViewModel.PanelOpened = false;
                         TextForDoWhat = "Изменения в " + _fileNameOnly + " были сохранены";
                     }
-                  
+
                 }
                 catch
                 {
@@ -339,7 +386,7 @@ namespace WpfApp2.ViewModels
                             CurrentDocument.Id = Hv.Id;
                             MessageBus.Default.Call("SetIdOfOverview", null, CurrentDocument.Id);
                         }
-                    
+
                     }
 
                     MessageBus.Default.Call("GetHirurgOverviewForHirurgOverview", null, CurrentDocument.Id);

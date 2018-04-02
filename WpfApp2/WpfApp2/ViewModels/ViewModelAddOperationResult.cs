@@ -47,14 +47,26 @@ namespace WpfApp2.ViewModels
                 OnPropertyChanged();
             }
         }
+        private DateTime _date;
         public string OtmenOrProv { get; set; }
         public Operation Operation { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime Date
+        {
+            get { return _date; }
+            set
+            {
+                _date = value;
+
+                OnPropertyChanged();
+            }
+        }
         public string DateText { get; set; }
         private int operationId;
 
         private void GetOperationid(object sender, object data)
         {
+            comment = "";
+            
             Operation = Data.Operation.Get((int)data);
             operationId = (int)data;
             DateTime bufTime = DateTime.Parse(Operation.Time);
@@ -115,6 +127,8 @@ namespace WpfApp2.ViewModels
                 {
                     OperationResultRepository opResRep = new OperationResultRepository(context);
                     comment = opResRep.Get(Operation.итоги_операции.Value).Str;
+                    if(opResRep.Get(Operation.итоги_операции.Value).Date != null)
+                    Date = opResRep.Get(Operation.итоги_операции.Value).Date.Value;
                 }
             }
         }
@@ -133,6 +147,7 @@ namespace WpfApp2.ViewModels
                         using (var context = new MySqlContext())
                         {
                             OperationResultRepository opResRep = new OperationResultRepository(context);
+
                             var Res = opResRep.Get(Operation.итоги_операции.Value);
                             if (Res.IdNextOperation == null)
                             {
@@ -141,41 +156,42 @@ namespace WpfApp2.ViewModels
                                 {
 
                                     // Closes the parent form.
-                                    var buf = new OperationResult();
+                                    var buf = Data.OperationResult.Get(Res.Id);
                                     buf.Str = comment;
-
-                                    Data.OperationResult.Add(buf);
-                                    Operation.итоги_операции = buf.Id;
+                                    buf.Date = Date;
+                                    //Operation.итоги_операции = buf.Id;
                                     Data.Complete();
                                     MessageBus.Default.Call("SetCurrentACCOp", this, null);
                                     MessageBus.Default.Call("SetCurrentPatientForOperation", this, Operation.PatientId);
                                     MessageBus.Default.Call("SetOperationResult", this, buf);
-                                    Controller.NavigateTo<ViewModelOperationOverview>();
+                                    Controller.NavigateTo<ViewModelAddOperation>();
 
 
                                 }
                                 else
                                 {
-                                    var buf = new OperationResult();
+                                    var buf = Data.OperationResult.Get(Res.Id);
                                     buf.Str = comment;
-                                    Data.OperationResult.Add(buf);
-                                    Operation.итоги_операции = buf.Id;
+                                    buf.Date = Date;
+                                    // Data.OperationResult.Add(buf);
+                                    //   Operation.итоги_операции = buf.Id;
                                     Data.Complete();
                                     MessageBus.Default.Call("SetCurrentACCOp", this, null);
                                     MessageBus.Default.Call("GetOprForOprResultOverview", this, operationId);
+                                    MessageBus.Default.Call("GetOperationForOverwiev", null, operationId);
                                     Controller.NavigateTo<ViewModelOperationOverview>();
 
                                 }
                             }
                             else
                             {
-                                var buf = new OperationResult();
+                                var buf = Data.OperationResult.Get(Res.Id);
                                 buf.Str = comment;
-                                Data.OperationResult.Add(buf);
-                                Operation.итоги_операции = buf.Id;
+                                buf.Date = Date;
                                 Data.Complete();
                                 MessageBus.Default.Call("SetCurrentACCOp", this, null);
                                 MessageBus.Default.Call("GetOprForOprResultOverview", this, operationId);
+                                //       MessageBus.Default.Call("GetOperationForOverwiev", null, operationId);
                                 Controller.NavigateTo<ViewModelOperationOverview>();
                             }
 
@@ -190,7 +206,7 @@ namespace WpfApp2.ViewModels
                             // Closes the parent form.
                             var buf = new OperationResult();
                             buf.Str = comment;
-
+                            buf.Date = Date;
                             Data.OperationResult.Add(buf);
                             Operation.итоги_операции = buf.Id;
                             Data.Complete();
@@ -205,11 +221,13 @@ namespace WpfApp2.ViewModels
                         {
                             var buf = new OperationResult();
                             buf.Str = comment;
+                            buf.Date = Date;
                             Data.OperationResult.Add(buf);
                             Operation.итоги_операции = buf.Id;
                             Data.Complete();
                             MessageBus.Default.Call("SetCurrentACCOp", this, null);
                             MessageBus.Default.Call("GetOprForOprResultOverview", this, operationId);
+                            MessageBus.Default.Call("GetOperationForOverwiev", null, operationId);
                             Controller.NavigateTo<ViewModelOperationOverview>();
 
                         }

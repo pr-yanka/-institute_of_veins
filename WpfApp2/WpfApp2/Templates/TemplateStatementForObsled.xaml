@@ -1,27 +1,30 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:WpfApp2.Templates">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/LegParts/Templates/RightPanelAnimation.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
     <DataTemplate x:Key="TemplateStatementForObsled">
         <Grid >
             <Grid.RowDefinitions>
                 <RowDefinition Height="120"></RowDefinition>
                 <RowDefinition Height="35"></RowDefinition>
                 <RowDefinition Height="35"></RowDefinition>
-                <RowDefinition Height="45"></RowDefinition>
+                <RowDefinition Height="110"></RowDefinition>
                 <RowDefinition Height="35"></RowDefinition>
                 <RowDefinition Height="35"></RowDefinition>
-                <RowDefinition Height="77"></RowDefinition>
+                <RowDefinition Height="77*"></RowDefinition>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="290"></ColumnDefinition>
-                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="700"></ColumnDefinition>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Button Style="{StaticResource MyNormalBUTTON}"  Width="290" FontSize="13" Content="Сформировать документ"  Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Command="{Binding Path=SetNewOverview}" ></Button>
-            <Button Style="{StaticResource MyConfirmBUTTON}" Width="290" Content="Загрузить существующий документ" Margin="0,0"  Grid.Column="0" Grid.Row="1" Grid.RowSpan="5" FontSize="13" Command="{Binding Path=OpenFile}" ></Button>
-            <Button Style="{StaticResource MyConfirmBUTTON}" Width="290" Visibility="{Binding IsDocAdded}"  Content="Открыть документ"     Margin="0,0"  Grid.Column="0" Grid.Row="4" Grid.RowSpan="2" FontSize="13" Command="{Binding Path=OpenWordDocument}" ></Button>
-            <Button Style="{StaticResource MyConfirmBUTTON}" Width="290" Visibility="{Binding IsDocAdded}"  Content="Сохранить документ"   Grid.Column="0" Grid.Row="5" Grid.RowSpan="2" FontSize="13" Margin="0,0" Command="{Binding Path=SaveWordDocument}" ></Button>
+            <Button Style="{StaticResource MyConfirmBUTTON}" Width="290" Content="Загрузить существующий документ" Margin="0,0,0,40"  Grid.Column="0" Grid.Row="1" Grid.RowSpan="4" FontSize="13" Command="{Binding Path=OpenFile}" ></Button>
+            <Button Style="{StaticResource MyConfirmBUTTON}" Width="290" Visibility="{Binding IsDocAdded}"  Content="Открыть документ"     Margin="0,0,0,0"  Grid.Column="0" Grid.Row="3" Grid.RowSpan="2" FontSize="13" Command="{Binding Path=OpenWordDocument}" ></Button>
+            <Button Style="{StaticResource MyConfirmBUTTON}" Width="290" Visibility="{Binding IsDocAdded}"  Content="Сохранить изменения"   Grid.Column="0" Grid.Row="3" Grid.RowSpan="3" FontSize="13" Margin="0,79,0,0" Command="{Binding Path=OpenAddSaveCommand}" ></Button>
 
             <!--загрузить другой анализ-->
             <TextBlock  FontSize="18pt" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="10"  HorizontalAlignment="Left" FontFamily="/fonts/#Pescadero"  Height="38" VerticalAlignment="Top" Margin="40,0">
@@ -44,14 +47,57 @@
             
             <TextBlock Grid.Column="2" Grid.Row="3"  FontFamily="/fonts/#Pescadero" FontSize="18pt" Height="auto" Text="{Binding Path=AnalizeType.Str}" Margin="122,3,0,0"/>
 
-            <TextBlock Grid.Column="1" Grid.Row="4"  FontFamily="/fonts/#Pescadero" FontSize="18pt" Text="{Binding TextForDoWhat}" TextWrapping="Wrap" Width="700" Grid.RowSpan="2" Margin="40,2,178,1" Grid.ColumnSpan="2"/>
+            <TextBlock Grid.Column="1" Grid.Row="3"  FontFamily="/fonts/#Pescadero" FontSize="18pt"  Text="{Binding TextForDoWhat}" TextWrapping="Wrap" Width="600" Grid.RowSpan="2" Margin="-18,0,0,0" Grid.ColumnSpan="1"/>
 
             <!--<ComboBox  Width="257" FontSize="18" ItemsSource="{Binding Doctors}" Grid.Column="1" Grid.Row="3" Height="25" HorizontalAlignment="Left" Margin="112,-7,0,1" SelectedIndex="{Binding DoctorSelectedId}"/>-->
             
             <!--<Button Style="{StaticResource MyNormalBUTTON}" Grid.Column="1" Grid.Row="6" x:Name="button_Copy13" Width="250"  Content="Вернуться в пациенту" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="380,0" VerticalAlignment="Top"/>-->
 
-            <Button Style="{StaticResource MyNormalBUTTON}" Grid.Column="1" Grid.Row="6" x:Name="b3utton_Copy13" Width="265"  Content="Вернуться к обследованию" Command="{Binding Path=ToCurrentObsledCommand}" HorizontalAlignment="Left"  Margin="40,0" VerticalAlignment="Top"/>
+            <Button Style="{StaticResource MyNormalBUTTON}" Grid.Column="1" Grid.Row="7" x:Name="b3utton_Copy13" Width="265"  Content="Вернуться к обследованию" Command="{Binding Path=ToCurrentObsledCommand}" HorizontalAlignment="Left"  Margin="40,6" VerticalAlignment="Top"/>
+            <Border  Grid.RowSpan="20" Grid.ColumnSpan="20" Visibility="{Binding Path = CurrentSavePanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOввv5edrlay">
+                <Border.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.78"/>
+                </Border.Background>
+            </Border>
 
+            <Border x:Name="panel34Cфівфвoвdrntrol"  Grid.RowSpan="20" Grid.ColumnSpan="20" Margin="0,0,-350,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="450" Height="145"  DataContext="{Binding Path=CurrentSavePanelViewModel}" >
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=PanelOpened}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <RemoveStoryboard BeginStoryboardName="AnimationCloseStoryboard"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Open}" x:Name="AnimationBeginStoryboard"/>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <RemoveStoryboard BeginStoryboardName="AnimationBeginStoryboard"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Close}" x:Name="AnimationCloseStoryboard"/>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Border.RenderTransform>
+
+                <Grid>
+                    <Canvas Background="#FFC6E8E6" Margin="0,0,0,29">
+                        <TextBlock x:Name="tвextfBlockd7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="10" FontSize="18" Canvas.Top="20"  Text="Сохраните изменения в Word, и закройте документ."/>
+                        <!--<TextBox x:Name="texвdtBfox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" Width="430" Canvas.Left="10"  Canvas.Top="61"  />-->
+                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="bduttoвnfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.RevertSaveCommand}" Canvas.Left="10" Canvas.Top="65" />
+                        <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="BudttoвnfAdd" Content="Я сохранил данные" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.SaveWordDocument}" Canvas.Left="233" Canvas.Top="65"/>
+                        <!--<TextBlock x:Name="texfвtBlock_sCopy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18" Canvas.Top="31" Canvas.Left="10"  Text="Название:"/>-->
+
+                    </Canvas>
+                </Grid>
+            </Border>
         </Grid>
     </DataTemplate>
 </ResourceDictionary>

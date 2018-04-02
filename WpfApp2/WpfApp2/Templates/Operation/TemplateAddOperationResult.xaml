@@ -15,7 +15,7 @@
             <TextBox Text="{Binding Path=comment}"  x:Name="richTextBox" HorizontalAlignment="Left" Height="125" Margin="39,216,0,0" VerticalAlignment="Top"  
                          Width="946" FontSize="22">
             </TextBox>
-            <DatePickerTextBox IsReadOnly="True" x:Name="label1_Copy" Text="{Binding Path=Date, StringFormat=dd.MM.yyyy hh:mm}" HorizontalAlignment="Left" Margin="816,70,0,0"  
+            <DatePicker    x:Name="label1_Copy" SelectedDate="{Binding Path=Date,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, StringFormat=dd.MM.yyyy hh:mm}" HorizontalAlignment="Left" Margin="785,70,0,0"  
                    VerticalAlignment="Top" RenderTransformOrigin="0.491,0.474" FontSize="22"/>
             <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy" Command="{Binding Path=ToOperationOverviewCommand}" Content="Вернуться к операции" HorizontalAlignment="Left" Margin="35,541,0,0"              
                  Width="230"   VerticalAlignment="Top" />
