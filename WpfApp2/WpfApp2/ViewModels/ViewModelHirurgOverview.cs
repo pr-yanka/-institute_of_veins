@@ -213,7 +213,7 @@ namespace WpfApp2.ViewModels
             {
                 if (!string.IsNullOrWhiteSpace(FileName))
                 {
-                    MessageBoxResult dialogResult = MessageBox.Show("Сохранили ли вы все изменения", "", MessageBoxButton.YesNo);
+                    MessageBoxResult dialogResult = MessageBox.Show("Вы сохранили изменения в документе?", "", MessageBoxButton.YesNo);
                     if (dialogResult == MessageBoxResult.Yes)
                     {
                         Controller.NavigateTo<ViewModelAddPhysical>();

@@ -1930,6 +1930,7 @@ namespace WpfApp2.ViewModels
         {
             if (!LegPart.IsEmpty)
             {
+                int x = 0;
                 if (!isNormal)
                     p4.Append(LegPart.Title).Font("Times new roman").FontSize(11.0).UnderlineStyle(UnderlineStyle.singleLine).Append(": ").Font("Times new roman").FontSize(11.0);
                 else
@@ -1942,24 +1943,39 @@ namespace WpfApp2.ViewModels
 
                     if (LegPart.SelectedWayType != null && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name))
                     {
+                        x++;
+
                         if (!isNormal)
-                            p4.Append("Вид хода: " + LegPart.SelectedWayType.Name + "\n").Font("Times new roman").FontSize(11.0);
+                            p4.Append("вид хода: " + LegPart.SelectedWayType.Name).Font("Times new roman").FontSize(11.0);
                         else
                         {
-                            p4.Append("Вид хода: " + LegPart.SelectedWayType.Name + "\n").Font("Times new roman").FontSize(11.0);
+                            p4.Append("вид хода: " + LegPart.SelectedWayType.Name).Font("Times new roman").FontSize(11.0);
                         }
                     }
                     if (LegPart is TEMPVViewModel)
                     {
-                        if (!isNormal)
-                            p4.Append("Протяженность: " + ((TEMPVViewModel)LegPart).FF_length + " см\n").Font("Times new roman").FontSize(11.0);
+                        if (x == 0)
+                        {
+                            if (!isNormal)
+                                p4.Append("протяженность: " + ((TEMPVViewModel)LegPart).FF_length + " см").Font("Times new roman").FontSize(11.0);
+                            else
+                            {
+                                p4.Append("протяженность: " + ((TEMPVViewModel)LegPart).FF_length + " см").Font("Times new roman").FontSize(11.0);
+                            }
+                        }
                         else
                         {
-                            p4.Append("Протяженность: " + ((TEMPVViewModel)LegPart).FF_length + " см\n").Font("Times new roman").FontSize(11.0);
+                            if (!isNormal)
+                                p4.Append(", протяженность: " + ((TEMPVViewModel)LegPart).FF_length + " см").Font("Times new roman").FontSize(11.0);
+                            else
+                            {
+                                p4.Append(", протяженность: " + ((TEMPVViewModel)LegPart).FF_length + " см").Font("Times new roman").FontSize(11.0);
+                            }
                         }
+                        x++;
                     }
 
-                    int x = 0;
+
                     foreach (var section in LegPart.LegSections)
                     {
                         if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
@@ -1967,18 +1983,18 @@ namespace WpfApp2.ViewModels
                             if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
                             {
 
-                               
-                                    if (x == 0)
-                                    {
-                                        p4.Append(section.SelectedValue.Text1).Font("Times new roman").FontSize(11.0);
-                                    }
-                                    else
-                                    {
-                                        p4.Append(", " + section.SelectedValue.Text1).Font("Times new roman").FontSize(11.0);
 
-                                    }
-                                
-                          
+                                if (x == 0)
+                                {
+                                    p4.Append(GetStrFixedForDocumemnt(section.SelectedValue.Text1)).Font("Times new roman").FontSize(11.0);
+                                }
+                                else
+                                {
+                                    p4.Append(", " + GetStrFixedForDocumemnt(section.SelectedValue.Text1)).Font("Times new roman").FontSize(11.0);
+
+                                }
+
+
                                 x++;
                             }
 
@@ -2055,7 +2071,7 @@ namespace WpfApp2.ViewModels
 
                         }
                     }
-                    
+
                     string buf = p4.Text[p4.Text.Length - 1].ToString();
                     if (buf != ".")
                     {
@@ -2157,7 +2173,27 @@ namespace WpfApp2.ViewModels
                 p4.Append(" \n").FontSize(11.0);
             }
         }
+        string GetStrFixedForDocumemnt(string str)
+        {
+            List<char> chararr = str.ToCharArray().ToList();
+            if (chararr[chararr.Count - 1] == '.')
+            {
+                chararr.RemoveAt(chararr.Count - 1);
+            }
+            if (char.IsUpper(chararr[0]) && char.IsLower(chararr[1]))
+            {
+                chararr[0] = char.ToLower(chararr[0]);
+            }
+            string result = "";
+            foreach (var x in chararr)
+            {
+                result += x;
+            }
 
+
+
+            return result;
+        }
         private void SetRightDiagnosisList(object sender, object data)
         {
             RightDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
@@ -2230,7 +2266,7 @@ namespace WpfApp2.ViewModels
 
                     if (!string.IsNullOrWhiteSpace(RightAdditionalText))
                     {
-                        
+
                         string buf = RightAdditionalText[RightAdditionalText.Length - 1].ToString();
                         if (buf != ".")
                         {
