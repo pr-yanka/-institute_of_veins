@@ -2904,6 +2904,7 @@ namespace WpfApp2.ViewModels
         //}
         public string CreateStrForOverview(LegPartViewModel LegPart)
         {
+
             string p4 = "";
             if (LegPart.SelectedWayType != null && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name))
                 p4 += "Вид хода: " + LegPart.SelectedWayType.Name + "\n";
@@ -2916,23 +2917,44 @@ namespace WpfApp2.ViewModels
                 if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
                 {
                     if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
-                        p4 += "" + section.SelectedValue.Text1 + " ";
+                    {
+                        if (x == 0)
+                        {
+                            p4 += "" + section.SelectedValue.Text1 + "";
 
+                        }
+                        else
+                        {
+                            if (!string.IsNullOrWhiteSpace(p4))
+                            {
+                                string buf = p4[p4.Length - 1].ToString();
+                                string byf2 = (p4.Length >= 2) ? p4[p4.Length - 2].ToString() : "";
+                                if (buf != "." && byf2 != ".")
+                                {
+                                    p4 += ", " + section.SelectedValue.Text1 + "";
+                                }
+                                else{
+                                    p4 += " " + section.SelectedValue.Text1 + "";
+                                }
+                            }
+                            
+                        }
+                    }
 
                     if (section.SelectedValue.HasSize || section.HasDoubleSize)
                     {
                         if (section.HasDoubleSize)
                         {
-                            p4 += " " + section.CurrentEntry.Size + "*" + section.CurrentEntry.Size2 + " " + section.SelectedValue.Metrics + " ";
+                            p4 += " " + section.CurrentEntry.Size + "*" + section.CurrentEntry.Size2 + " " + section.SelectedValue.Metrics + "";
 
                         }
                         else
                         {
                             if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
-                                p4 += " " + section.CurrentEntry.Size + " " + section.SelectedValue.Metrics + " ";
+                                p4 += " " + section.CurrentEntry.Size + "" + section.SelectedValue.Metrics + "";
                             else
                             {
-                                p4 += " " + section.CurrentEntry.Size + " ";
+                                p4 += " " + section.CurrentEntry.Size + "";
 
                             }
 
@@ -2955,14 +2977,45 @@ namespace WpfApp2.ViewModels
                         }
 
                     }
-
+                
 
                     //
 
                     //
 
                 }
+                else
+                {
+                    break;
+                }
                 x++;
+            }
+            if (!string.IsNullOrWhiteSpace(p4))
+            {
+                string buff = p4[p4.Length - 1].ToString();
+                if (buff == " ")
+                {
+                    List<char> chararr = p4.ToCharArray().ToList();
+                    if (chararr[chararr.Count - 1] == ' ')
+                    {
+                        chararr.RemoveAt(chararr.Count - 1);
+
+                    }
+                    string result = "";
+                    foreach (var z in chararr)
+                    {
+                        result += z;
+                    }
+                    p4 = result;
+                    //buff = (p4.Length >= 2) ? p4[p4.Length - 2].ToString() : "";
+                }
+                buff = p4[p4.Length - 1].ToString();
+                string byf22 = (p4.Length >= 2) ? p4[p4.Length - 2].ToString() : "";
+
+                if (buff != "." && byf22 != ".")
+                {
+                    p4 += ".";
+                }
             }
             string name = "";
             if (!string.IsNullOrWhiteSpace(LegPart.Comment))
@@ -3050,6 +3103,7 @@ namespace WpfApp2.ViewModels
                 }
                 p4 += "\nКомментарий к " + name + " : " + LegPart.Comment;
             }
+
             return p4;
 
         }
@@ -4454,15 +4508,15 @@ namespace WpfApp2.ViewModels
                     //  RightLL += " " + CreateStrForOverview(RightPDSV) + "\n";
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightPDSV)))
                     {
-                        document.ReplaceText("СФСр", "ПДСВ: СФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСр", " " + CreateStrForOverview(RightPDSV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                        document.ReplaceText("СФСр", "ПДСВСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightPDSV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
                     }
 
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightZDSV)))
                     {
-                        document.ReplaceText("СФСр", "ЗДСВ: СФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСр", " " + CreateStrForOverview(RightZDSV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                        document.ReplaceText("СФСр", "ЗДСВСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightZDSV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
                     }
                     //RightLL += "ЗДСВ : " + CreateStrForOverview(RightZDSV) + "\n";
@@ -4471,15 +4525,15 @@ namespace WpfApp2.ViewModels
 
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightPerforate)))
                     {
-                        document.ReplaceText("СФСр", "Перфоранты бедра и несафенные вены: СФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСр", " " + CreateStrForOverview(RightPerforate) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                        document.ReplaceText("СФСр", "Перфоранты бедра и несафенные веныСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightPerforate) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
                     }
                     //  RightLL += "Перфоранты бедра и несафенные вены : " + CreateStrForOverview(RightPerforate) + "\n";
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightTibiaPerforate)))
                     {
 
-                        document.ReplaceText("СФСр", "Перфоранты голени: СФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСр", " " + CreateStrForOverview(RightTibiaPerforate) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                        document.ReplaceText("СФСр", "Перфоранты голениСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightTibiaPerforate) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
 
                         //  RightLL += "Перфоранты голени : " + CreateStrForOverview(RightTibiaPerforate) + "\n";
@@ -4487,8 +4541,8 @@ namespace WpfApp2.ViewModels
                     }
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightTEMPV)))
                     {
-                        document.ReplaceText("СФСр", "ТЕМПВ: СФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСр", " " + CreateStrForOverview(RightTEMPV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                        document.ReplaceText("СФСр", "ТЕМПВСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightTEMPV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
                     }
                     // RightLL += "ТЕМПВ : " + CreateStrForOverview(RightTEMPV) + "\n";
@@ -4498,8 +4552,8 @@ namespace WpfApp2.ViewModels
 
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightPPV)))
                     {
-                        document.ReplaceText("СФСр", "ППВ: СФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСр", " " + CreateStrForOverview(RightPPV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                        document.ReplaceText("СФСр", "ППВСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightPPV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
                     }
                     //RightLL += "ППВ : " + CreateStrForOverview(RightPPV) + "\n";
 
@@ -4507,8 +4561,8 @@ namespace WpfApp2.ViewModels
 
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightGV)))
                     {
-                        document.ReplaceText("СФСр", "Глубокие вены: СФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСр", " " + CreateStrForOverview(RightGV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                        document.ReplaceText("СФСр", "Глубокие веныСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightGV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
                     }
                     // RightLL += "Глубокие вены : " + CreateStrForOverview(RightGV) + "\nСФСр";
@@ -4563,15 +4617,15 @@ namespace WpfApp2.ViewModels
                     //область
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftPDSV)))
                     {
-                        document.ReplaceText("СФСл", "ПДСВ: СФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСл", " " + CreateStrForOverview(LeftPDSV) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                        document.ReplaceText("СФСл", "ПДСВСФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСл", ": " + CreateStrForOverview(LeftPDSV) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
                     }
 
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftZDSV)))
                     {
-                        document.ReplaceText("СФСл", "ЗДСВ: СФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСл", " " + CreateStrForOverview(LeftZDSV) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                        document.ReplaceText("СФСл", "ЗДСВСФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСл", ": " + CreateStrForOverview(LeftZDSV) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
                     }
                     //LeftLL += "ЗДСВ : " + CreateStrForOverview(LeftZDSV) + "\n";
@@ -4580,15 +4634,15 @@ namespace WpfApp2.ViewModels
 
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftPerforate)))
                     {
-                        document.ReplaceText("СФСл", "Перфоранты бедра и несафенные вены: СФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСл", " " + CreateStrForOverview(LeftPerforate) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                        document.ReplaceText("СФСл", "Перфоранты бедра и несафенные веныСФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСл", ": " + CreateStrForOverview(LeftPerforate) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
                     }
                     //  LeftLL += "Перфоранты бедра и несафенные вены : " + CreateStrForOverview(LeftPerforate) + "\n";
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftTibiaPerforate)))
                     {
 
-                        document.ReplaceText("СФСл", "Перфоранты голени: СФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСл", " " + CreateStrForOverview(LeftTibiaPerforate) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                        document.ReplaceText("СФСл", "Перфоранты голениСФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСл", ": " + CreateStrForOverview(LeftTibiaPerforate) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
 
                         //  LeftLL += "Перфоранты голени : " + CreateStrForOverview(LeftTibiaPerforate) + "\n";
@@ -4596,8 +4650,8 @@ namespace WpfApp2.ViewModels
                     }
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftTEMPV)))
                     {
-                        document.ReplaceText("СФСл", "ТЕМПВ: СФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСл", " " + CreateStrForOverview(LeftTEMPV) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                        document.ReplaceText("СФСл", "ТЕМПВСФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСл", ": " + CreateStrForOverview(LeftTEMPV) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
                     }
                     // LeftLL += "ТЕМПВ : " + CreateStrForOverview(LeftTEMPV) + "\n";
@@ -4607,8 +4661,8 @@ namespace WpfApp2.ViewModels
 
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftPPV)))
                     {
-                        document.ReplaceText("СФСл", "ППВ: СФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСл", " " + CreateStrForOverview(LeftPPV) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                        document.ReplaceText("СФСл", "ППВСФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСл", ": " + CreateStrForOverview(LeftPPV) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
                     }
                     //LeftLL += "ППВ : " + CreateStrForOverview(LeftPPV) + "\n";
@@ -4617,8 +4671,8 @@ namespace WpfApp2.ViewModels
 
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftGV)))
                     {
-                        document.ReplaceText("СФСл", "Глубокие вены: СФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСл", " " + CreateStrForOverview(LeftGV) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                        document.ReplaceText("СФСл", "Глубокие веныСФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСл", ": " + CreateStrForOverview(LeftGV) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
                     }
                     // LeftLL += "Глубокие вены : " + CreateStrForOverview(LeftGV) + "\nСФСл";
@@ -4757,7 +4811,7 @@ namespace WpfApp2.ViewModels
                 }
 
             }
-            catch
+            catch (Exception ex)
             {
 
             }
