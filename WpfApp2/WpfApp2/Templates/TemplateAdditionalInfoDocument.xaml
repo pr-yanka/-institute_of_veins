@@ -17,7 +17,7 @@
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="290"></ColumnDefinition>
+                <ColumnDefinition Width="310"></ColumnDefinition>
                 <ColumnDefinition Width="630"></ColumnDefinition>
                 <ColumnDefinition Width="300"></ColumnDefinition>
             </Grid.ColumnDefinitions>
@@ -26,7 +26,7 @@
             <Button Style="{StaticResource MyConfirmBUTTON}" Width="290" Visibility="{Binding IsDocAdded}"  Content="Открыть документ"     Margin="0,0,0,20"  Grid.Column="0" Grid.Row="3" Grid.RowSpan="2" FontSize="13" Command="{Binding Path=OpenWordDocument}" ></Button>
             <Button Style="{StaticResource MyConfirmBUTTON}" Width="290" Visibility="{Binding IsDocAdded}"  Content="Сохранить изменения"   Grid.Column="0" Grid.Row="4" Grid.RowSpan="2" FontSize="13" Margin="0,0,0,0" Command="{Binding Path=OpenAddSaveCommand}" ></Button>
             <!--загрузить другой анализ-->
-            <TextBlock  FontSize="18pt" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="10"  HorizontalAlignment="Left" FontFamily="/fonts/#Pescadero"  Height="38" VerticalAlignment="Top" Margin="40,0">
+            <TextBlock  FontSize="18pt" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2"  HorizontalAlignment="Left" FontFamily="/fonts/#Pescadero"  Height="38" VerticalAlignment="Top" Margin="40,0">
                 <TextBlock.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -44,11 +44,11 @@
 
 
 
-            <TextBlock Grid.Column="1" Grid.Row="4"  FontFamily="/fonts/#Pescadero" FontSize="18pt" TextWrapping="Wrap" Text="{Binding TextForDoWhat}" Margin="40,2,0,1" Grid.ColumnSpan="1"/>
+            <TextBlock Grid.Column="1" Grid.Row="2" Grid.RowSpan ="3"  FontFamily="/fonts/#Pescadero" FontSize="18pt" TextWrapping="Wrap" Text="{Binding TextForDoWhat}" Margin="40,20,0,0" Grid.ColumnSpan="1"/>
 
              <!--<Button Style="{StaticResource MyNormalBUTTON}" Grid.Column="1" Grid.Row="6" x:Name="button_Copy13" Width="250"  Content="Вернуться в пациенту" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="380,0" VerticalAlignment="Top"/>-->
 
-            <Button Style="{StaticResource MyNormalBUTTON}" Grid.Column="1" Grid.Row="6" x:Name="b3utton_Copy13" Width="265"  Content="Вернуться" Command="{Binding Path=ToCurrentObsledCommand}" HorizontalAlignment="Left"  Margin="40,5" VerticalAlignment="Top"/>
+            <Button Style="{StaticResource MyNormalBUTTON}" Grid.Column="1" Grid.Row="4" x:Name="b3utton_Copy13" Width="265"  Content="Вернуться" Command="{Binding Path=ToCurrentObsledCommand}" HorizontalAlignment="Left"  Margin="40,56,0,0" VerticalAlignment="Top"/>
             <Border  Grid.RowSpan="20" Grid.ColumnSpan="20" Visibility="{Binding Path = CurrentSavePanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOввv5edrlay">
                 <Border.Background>
                     <SolidColorBrush Color="Black" Opacity="0.78"/>
@@ -102,7 +102,7 @@
                 </Border.Background>
             </Border>
 
-            <Border x:Name="panel34Cфівф1вoвdrntrol"  Grid.RowSpan="20" Grid.ColumnSpan="20" Margin="0,0,-380,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="480" Height="145"  DataContext="{Binding Path=CurrentSelectDoctorPanelViewModel}" >
+            <Border x:Name="panel34Cфівф1вoвdrntrol"  Grid.RowSpan="20" Grid.ColumnSpan="20" Margin="0,0,-265,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="480" Height="145"  DataContext="{Binding Path=CurrentSelectDoctorPanelViewModel}" >
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
                         <Style.Triggers>

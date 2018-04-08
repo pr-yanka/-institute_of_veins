@@ -600,6 +600,7 @@ namespace WpfApp2.ViewModels
 
                                 document.ReplaceText("Диабет", "");
                             }
+
                             var ExamsOfCurrPatient = ExamRep.GetAll.ToList().Where(s => s.PatientId == CurrentPatient.Id).ToList();
 
                             if (ExamsOfCurrPatient.Count > 0)
@@ -897,25 +898,25 @@ namespace WpfApp2.ViewModels
 
                             if (Operation.OnWhatLegOp == "0")
                             {
-                                document.ReplaceText("«Заключение_11Ж»", "");
-                                document.ReplaceText("«Заключение_22Ж»", leftDiag + "\n");
+                                document.ReplaceText(" «Заключение_11Ж»", "");
+                                document.ReplaceText(" «Заключение_22Ж»", leftDiag + "\n");
                                 document.ReplaceText("«Заключение_1»", rightDiag + "\n");
                                 document.ReplaceText("«Заключение_2»", "");
                             }
                             if (Operation.OnWhatLegOp == "1")
                             {
-                                document.ReplaceText("«Заключение_11Ж»", rightDiag + "\n");
+                                document.ReplaceText(" «Заключение_11Ж»", rightDiag + "\n");
 
-                                document.ReplaceText("«Заключение_22Ж»", "");
+                                document.ReplaceText(" «Заключение_22Ж»", "");
                                 document.ReplaceText("«Заключение_2»", leftDiag + "\n");
                                 document.ReplaceText("«Заключение_1»", "");
 
                             }
                             if (Operation.OnWhatLegOp == "2")
                             {
-                                document.ReplaceText("«Заключение_11Ж»", rightDiag + "\n");
+                                document.ReplaceText(" «Заключение_11Ж»", rightDiag + "\n");
                                 // document.ReplaceText("буквы_1Ж", lettersRight);
-                                document.ReplaceText("«Заключение_22Ж»", leftDiag + "\n");
+                                document.ReplaceText(" «Заключение_22Ж»", leftDiag + "\n");
                                 // document.ReplaceText("буквы_2Ж", lettersLeft);
                                 document.ReplaceText("«Заключение_1»", "");
                                 document.ReplaceText("«Заключение_2»", "");
@@ -926,25 +927,25 @@ namespace WpfApp2.ViewModels
                         {
                             if (Operation.OnWhatLegOp == "0")
                             {
-                                document.ReplaceText("«Заключение_11Ж»", leftDiag + "\n");
-                                document.ReplaceText("«Заключение_22Ж»", "");
+                                document.ReplaceText(" «Заключение_11Ж»", leftDiag + "\n");
+                                document.ReplaceText(" «Заключение_22Ж»", "");
                                 document.ReplaceText("«Заключение_1»", "");
                                 document.ReplaceText("«Заключение_2»", rightDiag + "\n");
                             }
                             if (Operation.OnWhatLegOp == "1")
                             {
-                                document.ReplaceText("«Заключение_11Ж»", "");
+                                document.ReplaceText(" «Заключение_11Ж»", "");
 
-                                document.ReplaceText("«Заключение_22Ж»", rightDiag + "\n");
+                                document.ReplaceText(" «Заключение_22Ж»", rightDiag + "\n");
                                 document.ReplaceText("«Заключение_2»", "");
                                 document.ReplaceText("«Заключение_1»", leftDiag + "\n");
 
                             }
                             if (Operation.OnWhatLegOp == "2")
                             {
-                                document.ReplaceText("«Заключение_11Ж»", leftDiag + "\n");
+                                document.ReplaceText(" «Заключение_11Ж»", leftDiag + "\n");
                                 // document.ReplaceText("буквы_1Ж", lettersRight);
-                                document.ReplaceText("«Заключение_22Ж»", rightDiag + "\n");
+                                document.ReplaceText(" «Заключение_22Ж»", rightDiag + "\n");
                                 // document.ReplaceText("буквы_2Ж", lettersLeft);
                                 document.ReplaceText("«Заключение_1»", "");
                                 document.ReplaceText("«Заключение_2»", "");
