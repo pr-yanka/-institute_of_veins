@@ -12,9 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WpfApp2.Db.Models;
-using WpfApp2.Db.Models.LegParts;
 using WpfApp2.Db.Models.LegParts.BPVHip;
-using WpfApp2.DialogService;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 using WpfApp2.ViewModels.Panels;
@@ -394,11 +392,27 @@ namespace WpfApp2.ViewModels
             //    }
             //}
         }
+        public SclerozPanelViewModel CurrentSelectDoctorPanelViewModel { get; protected set; }
+        public ICommand OpenSelectDoctorCommand { protected set; get; }
+        public DelegateCommand RevertSelectDoctorCommand { set; get; }
 
         public ViewModelAddEpicriz(NavigationController controller) : base(controller)
         {//SetAnticogulantList
-         //MessageBus.Default.Subscribe("SetAnticogulantList", SetAnticogulantList);
-         //MessageBus.Default.Subscribe("SetSclazingListForEpicriz", SetSclezingList);
+
+
+            CurrentSelectDoctorPanelViewModel = new SclerozPanelViewModel(this);
+
+            RevertSelectDoctorCommand = new DelegateCommand(() =>
+            {
+                CurrentSelectDoctorPanelViewModel.PanelOpened = false;
+            });
+            OpenSelectDoctorCommand = new DelegateCommand(() =>
+            {
+                CurrentSelectDoctorPanelViewModel.ClearPanel();
+                CurrentSelectDoctorPanelViewModel.PanelOpened = true;
+            });
+            //MessageBus.Default.Subscribe("SetAnticogulantList", SetAnticogulantList);
+            //MessageBus.Default.Subscribe("SetSclazingListForEpicriz", SetSclezingList);
             LostFocusE1 = new DelegateCommand<object>(
       (sender) =>
       {
@@ -620,7 +634,7 @@ namespace WpfApp2.ViewModels
                                 { }
                                 else
                                 {
-                                  //  lettersLeft += ".";
+                                    //  lettersLeft += ".";
                                 }
 
                                 lettersLeft += " ";
@@ -647,7 +661,7 @@ namespace WpfApp2.ViewModels
                                 { }
                                 else
                                 {
-                                  //  lettersRight += ".";
+                                    //  lettersRight += ".";
                                 }
 
                                 lettersRight += " ";
@@ -934,7 +948,7 @@ namespace WpfApp2.ViewModels
                         GetOperationid(DoctorsSelected, Operation.Id);
                         TextForDoWhat = "Вы создали новый документ " + _fileNameOnly;
                     }
-
+                    CurrentSelectDoctorPanelViewModel.PanelOpened = false;
                     //MessageBus.Default.Call("GetOperationResultForCreateStatement", this, operationId);
                     // Controller.NavigateTo<ViewModelCreateStatement>();
                 }
@@ -1220,7 +1234,7 @@ namespace WpfApp2.ViewModels
                 }
             }
             Process.Start("WINWORD.EXE", FileName);
-            TextForDoWhat = "Был открыт доккумент " + _fileNameOnly + ". Для сохранения изменений в документе сохраните данные в Word, закройте документ и нажмите кнопку \"Сохранить изменения\".";
+            TextForDoWhat = "Был открыт документ " + _fileNameOnly + ". Для сохранения изменений в документе сохраните данные в Word, закройте документ и нажмите кнопку \"Сохранить изменения\".";
         }
     );
 

@@ -199,6 +199,11 @@ namespace WpfApp2.ViewModels
         public SclerozPanelViewModel CurrentSavePanelViewModel { get; protected set; }
         public ICommand OpenAddSaveCommand { protected set; get; }
         public DelegateCommand RevertSaveCommand { set; get; }
+
+        public SclerozPanelViewModel CurrentSelectDoctorPanelViewModel { get; protected set; }
+        public ICommand OpenSelectDoctorCommand { protected set; get; }
+        public DelegateCommand RevertSelectDoctorCommand { set; get; }
+
         public ViewModelHirurgOverview(NavigationController controller) : base(controller)
         {
             IsAnalizeLoadedVisibility = Visibility.Hidden;
@@ -228,7 +233,6 @@ namespace WpfApp2.ViewModels
             }
         );
             CurrentSavePanelViewModel = new SclerozPanelViewModel(this);
-
             OpenAddSaveCommand = new DelegateCommand(() =>
             {
 
@@ -242,13 +246,24 @@ namespace WpfApp2.ViewModels
                     MessageBox.Show("Сначала откройте документ");
                 }
             });
+            CurrentSelectDoctorPanelViewModel = new SclerozPanelViewModel(this);
+
+            RevertSelectDoctorCommand = new DelegateCommand(() =>
+            {
+                CurrentSelectDoctorPanelViewModel.PanelOpened = false;
+            });
+            OpenSelectDoctorCommand = new DelegateCommand(() =>
+            {
+                CurrentSelectDoctorPanelViewModel.ClearPanel();
+                CurrentSelectDoctorPanelViewModel.PanelOpened = true;
+            });
+      
 
             RevertSaveCommand = new DelegateCommand(() =>
             {
                 CurrentSavePanelViewModel.PanelOpened = false;
 
             });
-
 
             OpenWordDocument = new DelegateCommand(
             () =>
@@ -275,7 +290,7 @@ namespace WpfApp2.ViewModels
                         _fileNameOnly = "Осмотр_хирурга" + togle + ".docx";
                     }
                 }
-                TextForDoWhat = "Был открыт доккумент " + _fileNameOnly + ". Для сохранения изменений в документе сохраните данные в Word, закройте документ и нажмите кнопку \"Сохранить изменения\".";
+                TextForDoWhat = "Был открыт документ " + _fileNameOnly + ". Для сохранения изменений в документе сохраните данные в Word, закройте документ и нажмите кнопку \"Сохранить изменения\".";
 
                 Process.Start("WINWORD.EXE", FileName);
             }
@@ -296,7 +311,7 @@ namespace WpfApp2.ViewModels
                         MessageBus.Default.Call("CreateHirurgOverview", Doctors[DoctorSelectedId].ToString(), Doctors[DoctorSelectedId].doc.Id);
                     }
                     TextForDoWhat = "Вы создали новый документ " + _fileNameOnly;
-
+                    CurrentSelectDoctorPanelViewModel.PanelOpened = false;
                 }
 
             }

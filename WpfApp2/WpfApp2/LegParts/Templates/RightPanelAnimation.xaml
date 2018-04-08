@@ -18,4 +18,20 @@
         </Storyboard>
     </Storyboard>
 
+
+    <Storyboard x:Key="OpenBigWindow">
+        <Storyboard SpeedRatio="12" TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+            <DoubleAnimation
+                                                Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                                Duration="0:0:005" From="0" To="-900" />
+        </Storyboard>
+    </Storyboard>
+    <Storyboard x:Key="CloseBigWindow">
+        <Storyboard SpeedRatio="12" TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)">
+            <DoubleAnimation
+                                                Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"
+                                                Duration="0:0:005" From="-900" To="0" />
+        </Storyboard>
+    </Storyboard>
+
 </ResourceDictionary>

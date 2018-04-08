@@ -1,22 +1,16 @@
 ﻿using Microsoft.Practices.Prism.Commands;
 using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WpfApp2.Db.Models;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 using WpfApp2.ViewModels.Panels;
-using Xceed.Words.NET;
 
 namespace WpfApp2.ViewModels
 {
@@ -183,8 +177,24 @@ namespace WpfApp2.ViewModels
         public SclerozPanelViewModel CurrentSavePanelViewModel { get; protected set; }
         public ICommand OpenAddSaveCommand { protected set; get; }
         public DelegateCommand RevertSaveCommand { set; get; }
+
+        public SclerozPanelViewModel CurrentSelectDoctorPanelViewModel { get; protected set; }
+        public ICommand OpenSelectDoctorCommand { protected set; get; }
+        public DelegateCommand RevertSelectDoctorCommand { set; get; }
+
         public ViewModelCreateAdditionalInfoDocuments(NavigationController controller) : base(controller)
         {
+            CurrentSelectDoctorPanelViewModel = new SclerozPanelViewModel(this);
+
+            RevertSelectDoctorCommand = new DelegateCommand(() =>
+            {
+                CurrentSelectDoctorPanelViewModel.PanelOpened = false;
+            });
+            OpenSelectDoctorCommand = new DelegateCommand(() =>
+            {
+                CurrentSelectDoctorPanelViewModel.ClearPanel();
+                CurrentSelectDoctorPanelViewModel.PanelOpened = true;
+            });
             MessageBus.Default.Subscribe("GetAdditionalInfoDocForHirurgOverview", SetCurrentPatientID);
             MessageBus.Default.Subscribe("SetCurrentPatientIDRealyThisTimeForAdditionalInfo", SetCurrentPatientIDRealyThisTime);
             // MessageBus.Default.Subscribe("GetAnalizeForAnalizeOverview", SetCurrentAnalizeID);
@@ -240,7 +250,7 @@ namespace WpfApp2.ViewModels
                         _fileNameOnly = "Амбулаторная_карта" + togle + ".docx";
                     }
                 }
-                TextForDoWhat = "Был открыт доккумент " + _fileNameOnly + ". Для сохранения изменений в документе сохраните данные в Word, закройте документ и нажмите кнопку \"Сохранить изменения\".";
+                TextForDoWhat = "Был открыт документ " + _fileNameOnly + ". Для сохранения изменений в документе сохраните данные в Word, закройте документ и нажмите кнопку \"Сохранить изменения\".";
 
                 Process.Start("WINWORD.EXE", FileName);
             }
@@ -282,7 +292,7 @@ namespace WpfApp2.ViewModels
                         MessageBus.Default.Call("CreateDocumentAdditionalInfo", Doctors[DoctorSelectedId].ToString(), Doctors[DoctorSelectedId].doc.Id);
                     }
                     TextForDoWhat = "Вы создали новый документ " + _fileNameOnly;
-
+                    CurrentSavePanelViewModel.PanelOpened = false;
                 }
 
             }

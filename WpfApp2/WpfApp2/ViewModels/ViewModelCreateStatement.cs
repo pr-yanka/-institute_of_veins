@@ -105,7 +105,9 @@ namespace WpfApp2.ViewModels
         // public Patient CurrentPatient;
         private int operationId;
         private Patient _currentPatient;
-
+        public SclerozPanelViewModel CurrentSelectDoctorPanelViewModel { get; protected set; }
+        public ICommand OpenSelectDoctorCommand { protected set; get; }
+        public DelegateCommand RevertSelectDoctorCommand { set; get; }
         public Patient CurrentPatient
         {
             get { return _currentPatient; }
@@ -293,6 +295,20 @@ namespace WpfApp2.ViewModels
                        }
                    }
                );
+
+
+
+
+            CurrentSelectDoctorPanelViewModel = new SclerozPanelViewModel(this);
+            RevertSelectDoctorCommand = new DelegateCommand(() =>
+            {
+                CurrentSelectDoctorPanelViewModel.PanelOpened = false;
+            });
+            OpenSelectDoctorCommand = new DelegateCommand(() =>
+            {
+                CurrentSelectDoctorPanelViewModel.ClearPanel();
+                CurrentSelectDoctorPanelViewModel.PanelOpened = true;
+            });
             OpenFile = new DelegateCommand(
           () =>
           {
@@ -371,7 +387,7 @@ namespace WpfApp2.ViewModels
                       _fileNameOnly = "Выписка_заготовка" + togle + ".docx";
                   }
               }
-              TextForDoWhat = "Был открыт доккумент " + _fileNameOnly + ". Для сохранения изменений в документе сохраните данные в Word, закройте документ и нажмите кнопку \"Сохранить изменения\".";
+              TextForDoWhat = "Был открыт документ " + _fileNameOnly + ". Для сохранения изменений в документе сохраните данные в Word, закройте документ и нажмите кнопку \"Сохранить изменения\".";
 
               Process.Start("WINWORD.EXE", FileName);
           }
@@ -1028,7 +1044,7 @@ namespace WpfApp2.ViewModels
                         GetOperationid(null, Operation.Id);
                         TextForDoWhat = "Вы создали новый документ " + _fileNameOnly;
                     }
-
+                    CurrentSelectDoctorPanelViewModel.PanelOpened = false;
                     //MessageBus.Default.Call("GetOperationResultForCreateStatement", this, operationId);
                     // Controller.NavigateTo<ViewModelCreateStatement>();
                 }

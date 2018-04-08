@@ -1926,6 +1926,15 @@ namespace WpfApp2.ViewModels
             }
         }
 
+        public static string FirstCharToLower(string input)
+        {
+            switch (input)
+            {
+                case null: throw new ArgumentNullException(nameof(input));
+                case "": throw new ArgumentException($"{nameof(input)} cannot be empty", nameof(input));
+                default: return input.First().ToString().ToLower() + input.Substring(1);
+            }
+        }
         void BuildStr(ref Paragraph p4, LegPartViewModel LegPart, bool isNormal)
         {
             if (!LegPart.IsEmpty)
@@ -2933,11 +2942,12 @@ namespace WpfApp2.ViewModels
                                 {
                                     p4 += ", " + section.SelectedValue.Text1 + "";
                                 }
-                                else{
+                                else
+                                {
                                     p4 += " " + section.SelectedValue.Text1 + "";
                                 }
                             }
-                            
+
                         }
                     }
 
@@ -2977,7 +2987,7 @@ namespace WpfApp2.ViewModels
                         }
 
                     }
-                
+
 
                     //
 
@@ -4372,11 +4382,11 @@ namespace WpfApp2.ViewModels
                         {
                             if (xx == 0)
                             {
-                                lettersLeft += x.Data.Str;
+                                lettersLeft += FirstCharToLower(GetStrFixedForDocumemnt(x.Data.Str));
                             }
                             else
                             {
-                                lettersLeft += ", " + x.Data.Str;
+                                lettersLeft += ", " + FirstCharToLower(GetStrFixedForDocumemnt(x.Data.Str));
                             }
                             xx++;
                         }
@@ -4394,11 +4404,11 @@ namespace WpfApp2.ViewModels
                         {
                             if (xx == 0)
                             {
-                                lettersRight += x.Data.Str;
+                                lettersRight += FirstCharToLower(GetStrFixedForDocumemnt(x.Data.Str));
                             }
                             else
                             {
-                                lettersRight += ", " + x.Data.Str;
+                                lettersRight += ", " + FirstCharToLower(GetStrFixedForDocumemnt(x.Data.Str));
                             }
                             xx++;
                         }

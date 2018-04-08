@@ -22,7 +22,7 @@
                 <ColumnDefinition Width="530"></ColumnDefinition>
                 <ColumnDefinition Width="300"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Style="{StaticResource MyNormalBUTTON}"  Width="290" FontSize="13" Content="Сформировать документ"  Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Command="{Binding Path=SetNewOverview}" ></Button>
+            <Button Style="{StaticResource MyNormalBUTTON}"  Width="290" FontSize="13" Content="Сформировать документ"  Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Command="{Binding Path=OpenSelectDoctorCommand}" ></Button>
             <Button Style="{StaticResource MyConfirmBUTTON}" Width="290" Content="Загрузить существующий документ" Margin="0,0,0,50"  Grid.Column="0" Grid.Row="1" Grid.RowSpan="4" FontSize="13" Command="{Binding Path=OpenFile}" ></Button>
             <Button Style="{StaticResource MyConfirmBUTTON}" Width="290" Visibility="{Binding IsDocAdded}"  Content="Открыть документ"     Margin="0,0,0,10"  Grid.Column="0" Grid.Row="3" Grid.RowSpan="2" FontSize="13" Command="{Binding Path=OpenWordDocument}" ></Button>
             <Button Style="{StaticResource MyConfirmBUTTON}" Width="290" Visibility="{Binding IsDocAdded}"  Content="Сохранить изменения"   Grid.Column="0" Grid.Row="3" Grid.RowSpan="3" FontSize="13" Margin="0,69,0,0" Command="{Binding Path=OpenAddSaveCommand}" ></Button>
@@ -39,19 +39,15 @@
                 </TextBlock.RenderTransform>
             
             <TextBlock  FontSize="18pt" Margin="0,0" Text="{Binding Path=CurrentPatient.Sirname}" /><Run Text=" " /><TextBlock Text="{Binding Path=CurrentPatient.Name}"  FontSize="18pt"/><Run Text=" " /><TextBlock Text="{Binding Path=CurrentPatient.Patronimic}" /></TextBlock>
-            
+
             <TextBlock  FontSize="16" Margin="69,0" Text="Анализ загружен" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Grid.RowSpan="5" Width="auto"  Visibility="{Binding IsAnalizeLoadedVisibility}"  ></TextBlock>
 
             <TextBlock  Grid.Column="1" Grid.Row="0"   FontFamily="/fonts/#Pescadero" FontSize="18pt" Text="Осмотр пациента" Margin="40,80,0,0" Grid.ColumnSpan="2"/>
 
-            <TextBlock  Grid.Column="1" Grid.Row="3"   FontFamily="/fonts/#Pescadero" FontSize="18pt" Text="Врач :" Margin="40,4,188,0" Grid.ColumnSpan="2"/>
-            
-            <TextBlock Grid.Column="2" Grid.Row="3"  FontFamily="/fonts/#Pescadero" FontSize="18pt" Height="auto" Text="{Binding Path=AnalizeType.Str}" Margin="122,3,0,0"/>
 
-            <TextBlock Grid.Column="1" Grid.Row="4"  FontFamily="/fonts/#Pescadero" FontSize="18pt" TextWrapping="Wrap" Text="{Binding TextForDoWhat}" Margin="40,2,178,1" Grid.ColumnSpan="2"/>
+          
+            <TextBlock Grid.Column="1" Grid.Row="3" Grid.RowSpan="3" FontFamily="/fonts/#Pescadero" FontSize="18pt" TextWrapping="Wrap" Text="{Binding TextForDoWhat}" Margin="40,2,178,1" Grid.ColumnSpan="2"/>
 
-            <ComboBox  Width="193" FontSize="18" ItemsSource="{Binding Doctors}" Grid.Column="1" Grid.Row="3" Height="25" HorizontalAlignment="Left" Margin="112,-7,0,1" SelectedIndex="{Binding DoctorSelectedId}"/>
-            
             <!--<Button Style="{StaticResource MyNormalBUTTON}" Grid.Column="1" Grid.Row="6" x:Name="button_Copy13" Width="250"  Content="Вернуться в пациенту" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="380,0" VerticalAlignment="Top"/>-->
 
             <Button Style="{StaticResource MyNormalBUTTON}" Grid.Column="1" Grid.Row="6" x:Name="b3utton_Copy13" Width="265"  Content="Вернуться к обследованию" Command="{Binding Path=ToCurrentObsledCommand}" HorizontalAlignment="Left"  Margin="40,0" VerticalAlignment="Top"/>
@@ -99,6 +95,58 @@
                     </Canvas>
                 </Grid>
             </Border>
+
+
+            <Border  Grid.RowSpan="20" Grid.ColumnSpan="20" Visibility="{Binding Path = CurrentSelectDoctorPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOв3вv5edrlay">
+                <Border.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.78"/>
+                </Border.Background>
+            </Border>
+
+            <Border x:Name="panel34Cфівф1вoвdrntrol"  Grid.RowSpan="20" Grid.ColumnSpan="20" Margin="0,0,-380,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="480" Height="145"  DataContext="{Binding Path=CurrentSelectDoctorPanelViewModel}" >
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=PanelOpened}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <RemoveStoryboard BeginStoryboardName="AnimationCloseStoryboard"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Open}" x:Name="AnimationBeginStoryboard"/>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <RemoveStoryboard BeginStoryboardName="AnimationBeginStoryboard"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Close}" x:Name="AnimationCloseStoryboard"/>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Border.RenderTransform>
+
+                <Grid>
+                    <Canvas Background="#FFC6E8E6" Margin="0,0,0,29">
+                        <TextBlock x:Name="tвextfBlockd73" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="10" FontSize="18" Canvas.Top="0"  Text="Выберите врача"/>
+                        <TextBlock      FontFamily="/fonts/#Pescadero" FontSize="18" Text="Врач :" Canvas.Left="10" Canvas.Top="32"/>
+
+                        <ComboBox  Width="193" FontSize="18" ItemsSource="{Binding ParentVM.Doctors}" Canvas.Left="75" Canvas.Top="30"  Height="25" HorizontalAlignment="Left"   SelectedIndex="{Binding ParentVM.DoctorSelectedId}"/>
+
+                        <!--<TextBox x:Name="texвdtBfox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" Width="430" Canvas.Left="10"  Canvas.Top="61"  />-->
+                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="bduttoвnfCa2ncel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.RevertSelectDoctorCommand}" Canvas.Left="10" Canvas.Top="65" />
+                        <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="Budttoвn2fAdd" Content="Сформировать документ" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240"  Command="{Binding ParentVM.SetNewOverview}" Canvas.Left="233" Canvas.Top="65"/>
+                        <!--<TextBlock x:Name="texfвtBlock_sCopy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18" Canvas.Top="31" Canvas.Left="10"  Text="Название:"/>-->
+
+                    </Canvas>
+                </Grid>
+            </Border>
+
+
         </Grid>
     </DataTemplate>
 </ResourceDictionary>
