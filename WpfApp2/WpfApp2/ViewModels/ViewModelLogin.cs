@@ -48,8 +48,8 @@ namespace WpfApp2.ViewModels
 
             foreach (var acc in Data.Accaunt.GetAll)
             {
-                Name = "Admin";
-                CheckSum = CalculateMD5Hash("123");
+                //Name = "Admin";
+                //CheckSum = CalculateMD5Hash("123");
                 if (Name == acc.Name && acc.isEnabled == true)
                 {
                     isUeserNameCorrect = true;
