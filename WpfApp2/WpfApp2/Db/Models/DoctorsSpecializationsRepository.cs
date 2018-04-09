@@ -6,14 +6,15 @@ using System.Linq;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("врачи_специализации")]
+   // [Table("врачи_специализации")]
+    [Table("doctors_specialization")]
     public class DoctorsSpecializations
     {
        
         [Column(Order = 0),Key,ForeignKey("Doctor")]
-        public int id_врача { set; get; }
+        public int id_doctor { set; get; }
         [Column(Order = 1), Key, ForeignKey("SpecializationType")]
-        public int id_специлизации { set; get; }
+        public int id_specialization { set; get; }
         public virtual Doctor Doctor { get; set; }
         public virtual SpecializationType SpecializationType { get; set; }
 

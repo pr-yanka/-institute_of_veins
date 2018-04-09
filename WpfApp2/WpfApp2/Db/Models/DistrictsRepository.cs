@@ -6,15 +6,16 @@ using System.Linq;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("справочник_районы")]
+    //[Table("справочник_районы")]
+    [Table("district_dictionary")]
     public class Districts
     {
         [Key]
         [Column("id")]
         public int Id { set; get; }
-        [Column("название")]
+        [Column("name")]
         public string Str { set; get; }
-        [Column("Город")]
+        [Column("city")]
         public int IdCity { set; get; }
         public override string ToString()
         {

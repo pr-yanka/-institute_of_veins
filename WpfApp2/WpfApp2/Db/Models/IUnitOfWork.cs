@@ -24,7 +24,7 @@ namespace WpfApp2.Db.Models
 {
     public interface IUnitOfWork : IDisposable
     {
-         VeshestvoRepository Veshestvo { get; }
+        VeshestvoRepository Veshestvo { get; }
         SvetovodRepository Svetovod { get; }
         AdditionalInfoDocumentRepository AdditionalInfoDocument { get; }
         EpicrizOperationRepository EpicrizOperation { get; }
@@ -37,8 +37,8 @@ namespace WpfApp2.Db.Models
         PreparateHateCommentRepository PreparateHateComment { get; }
         BloodExchangeCommentRepository BloodExchangeComment { get; }
         OperationTypeOperationsRepository OperationTypeOperations { get; }
-        OperationForAmbulatornCardRepository OperationForAmbulatornCard { get; }
-        OperationForAmbulatornCardPatientsRepository OperationForAmbulatornCardPatients { get; }
+        //OperationForAmbulatornCardRepository OperationForAmbulatornCard { get; }
+        //OperationForAmbulatornCardPatientsRepository OperationForAmbulatornCardPatients { get; }
         AlergicAnevrizmRepository AlergicAnevrizm { get; }
         BloodExchangeRepository BloodExchange { get; }
         HirurgInteruptRepository HirurgInterup { get; }

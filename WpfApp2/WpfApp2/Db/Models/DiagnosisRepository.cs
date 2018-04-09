@@ -9,14 +9,17 @@ using System.Text;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("диагноз")]
+    //  [Table("диагноз")]
+    //  diagnosis
+
+    [Table("diagnosis")]
     public class Diagnosis
     {
      
         [Column(Order = 0), Key, ForeignKey("DiagnosisType")]
-        public int? id_диагноз { set; get; }
+        public int? id_diagnosis { set; get; }
         [Column(Order = 1), Key, ForeignKey("Operation")]
-        public int? id_операции { set; get; }
+        public int? id_operation { set; get; }
         [Column(Order = 2), Key]
         public bool isLeft { set; get; }
      

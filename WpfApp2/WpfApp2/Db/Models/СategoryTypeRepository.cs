@@ -6,13 +6,14 @@ using System.Linq;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("виды_категории")]
+
+    [Table("category_types_dictionary")]
     public class СategoryType
     {
         [Key]
         [Column("id")]
         public int Id { set; get; }
-        [Column("название")]
+        [Column("name")]
         public string Str { set; get; }
         public override string ToString()
         {

@@ -10,13 +10,14 @@ using System.Text;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("жалобы")]
+  //  [Table("жалобы")] 
+    [Table("complains")]
     public class ComplanesObs
     {
         [Column(Order = 0), Key, ForeignKey("Examination")]
-        public int id_обследования { set; get; }
+        public int id_Examination { set; get; }
         [Column(Order = 1), Key, ForeignKey("CompType")]
-        public int id_жалобы { set; get; }
+        public int id_Complains { set; get; }
       
 
         public virtual Examination Examination { get; set; }

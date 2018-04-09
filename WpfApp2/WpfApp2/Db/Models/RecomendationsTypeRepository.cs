@@ -3,14 +3,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 
 namespace WpfApp2.Db.Models
-{
-    [Table("виды_рекомендаций")]
+{//changes_types_dictionary
+ // [Table("виды_рекомендаций")] 
+    [Table("recommendations_types_dictionary")]
     public class RecomendationsType
     {
         [Key]
         [Column("id")]
         public int Id { set; get; }
-        [Column("описание")]
+        [Column("description")]
         public string Str { set; get; }
 
         public override string ToString()

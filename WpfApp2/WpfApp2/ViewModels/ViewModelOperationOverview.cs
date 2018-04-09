@@ -162,7 +162,7 @@ namespace WpfApp2.ViewModels
                 Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
 
 
-                if (Operation.итоги_операции == null)
+                if (Operation.operation_result == null)
                 {
                     OperationResults = "Операция еще не проведена";
                     VisiBIlityOfAddResult = Visibility.Visible;
@@ -187,7 +187,7 @@ namespace WpfApp2.ViewModels
                     });
                 }
 
-                if (Operation.итоги_операции != null)
+                if (Operation.operation_result != null)
                 {
 
                     OperationResults = "Итоги добавлены";
@@ -204,7 +204,7 @@ namespace WpfApp2.ViewModels
                     });
                 }
 
-                if (Operation.отмена_операции != null)
+                if (Operation.cancel_operations != null)
                 {
                     OperationResults = "Операция отменена";
                     VisiBIlityOfAddResult = Visibility.Hidden;
@@ -229,18 +229,18 @@ namespace WpfApp2.ViewModels
 
                 foreach (var Brigade in BrigadeRep.GetAll)
                 {
-                    if (Brigade.id_операции == Operation.Id)
+                    if (Brigade.id_operation == Operation.Id)
                     {
-                        var buf = new DoctorDataSource(DoctorRep.Get(Brigade.id_врача.Value).Name, DoctorRep.Get(Brigade.id_врача.Value).Sirname, DoctorRep.Get(Brigade.id_врача.Value).Patronimic, true, DoctorRep.Get(Brigade.id_врача.Value).Id);
+                        var buf = new DoctorDataSource(DoctorRep.Get(Brigade.id_doctor.Value).Name, DoctorRep.Get(Brigade.id_doctor.Value).Sirname, DoctorRep.Get(Brigade.id_doctor.Value).Patronimic, true, DoctorRep.Get(Brigade.id_doctor.Value).Id);
                         buf.IsChecked = true;
                         DoctorsSelected.Add(buf);
                     }
                 }
                 foreach (var Brigade in BrigadeMedRep.GetAll)
                 {
-                    if (Brigade.id_операции == Operation.Id)
+                    if (Brigade.id_operation == Operation.Id)
                     {
-                        var buf = new DoctorDataSource(MedPersonalRep.Get(Brigade.id_медперсонал.Value).Name, MedPersonalRep.Get(Brigade.id_медперсонал.Value).Surname, MedPersonalRep.Get(Brigade.id_медперсонал.Value).Patronimic, false, MedPersonalRep.Get(Brigade.id_медперсонал.Value).Id);
+                        var buf = new DoctorDataSource(MedPersonalRep.Get(Brigade.id_med_staff.Value).Name, MedPersonalRep.Get(Brigade.id_med_staff.Value).Surname, MedPersonalRep.Get(Brigade.id_med_staff.Value).Patronimic, false, MedPersonalRep.Get(Brigade.id_med_staff.Value).Id);
                         buf.IsChecked = true;
                         DoctorsSelected.Add(buf);
                     }
@@ -250,17 +250,17 @@ namespace WpfApp2.ViewModels
 
                 foreach (var Diagnosis in DiagnosisRep.GetAll)
                 {
-                    if (Diagnosis.id_операции == Operation.Id)
+                    if (Diagnosis.id_operation == Operation.Id)
                     {
                         if (Diagnosis.isLeft == true)
                         {
-                            var buf1 = new DiagnosisDataSource(DiagnosisTypeRep.Get(Diagnosis.id_диагноз.Value));
+                            var buf1 = new DiagnosisDataSource(DiagnosisTypeRep.Get(Diagnosis.id_diagnosis.Value));
                             buf1.IsChecked = true;
                             LeftDiagnosisList.Add(buf1);
                         }
                         else
                         {
-                            var buf2 = new DiagnosisDataSource(DiagnosisTypeRep.Get(Diagnosis.id_диагноз.Value));
+                            var buf2 = new DiagnosisDataSource(DiagnosisTypeRep.Get(Diagnosis.id_diagnosis.Value));
                             buf2.IsChecked = true;
                             RightDiagnosisList.Add(buf2);
                         }
@@ -272,17 +272,17 @@ namespace WpfApp2.ViewModels
 
                 foreach (var Diagnosis in OperationOpRep.GetAll)
                 {
-                    if (Diagnosis.id_операции == Operation.Id)
+                    if (Diagnosis.id_operation == Operation.Id)
                     {
                         if (Diagnosis.isLeft == true)
                         {
-                            var buf1 = new OperationTypesDataSource(OperationTypeRep.Get(Diagnosis.id_типОперации.Value));
+                            var buf1 = new OperationTypesDataSource(OperationTypeRep.Get(Diagnosis.id_operation_type.Value));
                             buf1.IsChecked = true;
                             LeftOperationList.Add(buf1);
                         }
                         else
                         {
-                            var buf2 = new OperationTypesDataSource(OperationTypeRep.Get(Diagnosis.id_типОперации.Value));
+                            var buf2 = new OperationTypesDataSource(OperationTypeRep.Get(Diagnosis.id_operation_type.Value));
                             buf2.IsChecked = true;
                             RightOperationList.Add(buf2);
                         }

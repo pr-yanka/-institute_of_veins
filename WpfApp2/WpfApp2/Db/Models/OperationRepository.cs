@@ -10,31 +10,34 @@ using System.Text;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("операции")]
+    [Table("operations")]
+    //[Table("операции")]
     public class Operation
     {
         [Key]
         [Column("id")]
         public int Id { set; get; }
-        [Column("id_пациента")]
+        [Column("id_patient")]
         public int PatientId { set; get; }
-        [Column("дата_операции")]
+        //[Column("дата_операции")]
+        [Column("operation_date")]
         public DateTime Date { set; get; }
-        [Column("время_операции")]
+        //  [Column("время_операции")]
+        [Column("operation_time")]
         public string Time { set; get; }
-        [Column("на_какую_ногу_операция")]
+        [Column("on_which_leg_operation")]
         public string OnWhatLegOp { set; get; }
-        [Column("id_вида_анестетика")]
+        [Column("id_type_anesthetic")]
         public int AnestheticId { set; get; }
         [Column("NB!")]
         public string NB { set; get; }
         [Column(Order = 0), ForeignKey("OpCancle")]
-        public int? отмена_операции { set; get; }
+        public int? cancel_operations { set; get; }
         [Column(Order = 1), ForeignKey("OpResult")]
-        public int? итоги_операции { set; get; }
-        [Column("id_выписки")]
+        public int? operation_result { set; get; }
+        [Column("id_statement")]
         public int? StatementId { set; get; }
-        [Column("id_епикриза")]
+        [Column("id_epicrisis")]
         public int? EpicrizId { set; get; }
         //StatementId
         public virtual OperationResult OpResult { get; set; }
@@ -48,5 +51,5 @@ namespace WpfApp2.Db.Models
 
         }
     }
-  
+
 }

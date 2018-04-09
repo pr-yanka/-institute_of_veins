@@ -50,13 +50,13 @@ namespace WpfApp2.Db.Models
         private string _text1;
         [NotMapped]
         private int? _size;
-        [Column("название1")]
+        [Column("name1")]
         public string Text1
         {
             get { return _text1; }
             set { _text1 = value; OnPropertyChanged(); OnPropertyChanged("NameContext"); }
         }
-        [Column("название2")]
+        [Column("name2")]
         public string Text2
         {
             get { return _text2; }
@@ -64,14 +64,16 @@ namespace WpfApp2.Db.Models
         }
 
         [Required]
-        [Column("есть_метрика")]
+        [Column("is_metrics")]
+        //[Column("есть_метрика")]
         public bool HasSize
         {
             get;
             set;
         }
 
-        [Column("id_метрики")]
+        //[Column("id_метрики")]
+        [Column("id_metrics")]
         public int? Size
         {
             get { return _size; }
@@ -79,7 +81,9 @@ namespace WpfApp2.Db.Models
         }
 
         [Required]
-        [Column("уровень_вложенности")]
+
+        [Column("level_id")]
+        // [Column("уровень_вложенности")]
         public int Level { get; set; }
 
         [NotMapped]
@@ -95,7 +99,7 @@ namespace WpfApp2.Db.Models
         [NotMapped]
         public bool ToNextPart { get; internal set; }
 
-        [Column("двойная_метрика")]
+        [Column("double_metric")]
         public virtual bool HasDoubleMetric { get; set; }
 
 
@@ -116,7 +120,7 @@ namespace WpfApp2.Db.Models
         public LegPartDbStructure()
         {
             //IsButtonsVisible = Visibility.Visible;
-          
+
             //NameContext = Text1 + " " + Metrics + " " + Text2;
             ToNextPart = false;
             Custom = false;

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("пациент")]
+    [Table("patient")]
     public class Patient
     {
         [Key]
@@ -17,56 +17,60 @@ namespace WpfApp2.Db.Models
         public int Id { set; get; }
 
      
-        [Column("группа_крови")]
+        [Column("blood_group")]
         public string BloodGroup { set; get; }
-        [Column("Сахарний диабет")]
+        [Column("diabetes")]
         public string Sugar { set; get; }
-        [Column("ПоложительнаяЛиГруппа")]
+        [Column("is_positive_blood_group")]
         public bool? IsPositiveGroupType { set; get; }
 
-        [Column("Амбулаторная_карта_документ_id")]
+        [Column("outpatient_card_document_id")]
         public int? Амбулаторная_карта_документ_id { set; get; }
 
 
         [Required]
-        [Column("имя")]
+        [Column("name")]
         public string Name { set; get; }
 
         [Required]
-        [Column("фамилия")]
+        [Column("surname")]
         public string Sirname { set; get; }
 
         [Required]
-        [Column("отчество")]
+        [Column("patronimic")]
         public string Patronimic { set; get; }
 
         [Required]
-        [Column("пол")]
+        [Column("gender")]
         public string Gender { set; get; }
 
         [Required]
-        [Column("дата_рождения")]
+        [Column("birthday")]
         public DateTime Birthday { set; get; }
 
         [Required]
-        [Column("область_проживания")]
+        //[Column("область_проживания")]
+        [Column("region")]
         public int Region { set; get; }
 
 
-  
-        [Column("место_работы")]
+        //  [Column("место_работы")]
+        [Column("work")]
         public string Work { set; get; }
 
 
-        [Column("район_проживания")]
+        //[Column("район_проживания")]
+        [Column("district")]
         public int? District { set; get; }
 
         [Required]
-        [Column("город_проживания")]
+        //[Column("город_проживания")]
+        [Column("city")]
         public int City { set; get; }
 
         [Required]
-        [Column("улица_проживания")]
+        //[Column("улица_проживания")]
+        [Column("street")]
         public int Street
         {
             set;
@@ -74,18 +78,19 @@ namespace WpfApp2.Db.Models
         }
 
         [Required]
-        [Column("номер_дома")]
+       // [Column("номер_дома")]
+        [Column("house_number")]
         public string House { set; get; }
 
      
-        [Column("номер_квартиры")]
+        [Column("flat_number")]
         public int? Flat { set; get; }
 
         [Required]
-        [Column("телефон")]
+        [Column("phone")]
         public string Phone { set; get; }
 
-        [Column("электронная_почта")]
+        [Column("email")]
         public string Email { set; get; }
 
         [NotMapped]

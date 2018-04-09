@@ -10,19 +10,20 @@ using System.Text;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("осмотр_хирурга")]
+    [Table("hirurg_overview")]
+    //    [Table("осмотр_хирурга")]
     public class HirurgOverview
     {
         [Key]
         [Column("id")]
         public int Id { set; get; }
 
-        [Column("Документ")]
+        [Column("document")]
         public Byte[] DocTemplate { set; get; }
 
       
 
-        [Column("id_врача")]
+        [Column("id_doctor")]
         public int DoctorId { set; get; }
 
     }

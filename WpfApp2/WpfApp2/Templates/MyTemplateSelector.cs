@@ -204,8 +204,8 @@ namespace WpfApp2.Templates
             if (item.GetType() == typeof(ViewModelAlergicAnevrizmList))
                 return TemplateCheckboxesWithFilter;
 
-            if (item.GetType() == typeof(ViewModelOperationForAmbullatorCardList))
-                return TemplateCheckboxesWithFilter;
+            //if (item.GetType() == typeof(ViewModelOperationForAmbullatorCardList))
+            //    return TemplateCheckboxesWithFilter;
 
             if (item.GetType() == typeof(ViewModelOperationListForOperation))
                 return TemplateCheckboxesWithFilter;

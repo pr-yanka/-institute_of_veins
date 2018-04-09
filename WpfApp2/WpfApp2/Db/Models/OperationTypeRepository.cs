@@ -10,15 +10,18 @@ using System.Text;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("виды_операции")]
+    [Table("operation_types_dictionary")]
+    //[Table("виды_операции")]
     public class OperationType
     {
         [Key]
         [Column("id")]
         public int Id { set; get; }
-        [Column("короткое_название")]
+       // [Column("короткое_название")]
+        [Column("short_name")]
         public string ShortName { set; get; }
-        [Column("длинное_название")]
+        // [Column("длинное_название")]
+        [Column("long_name")]
         public string LongName { set; get; }
        
         [NotMapped]

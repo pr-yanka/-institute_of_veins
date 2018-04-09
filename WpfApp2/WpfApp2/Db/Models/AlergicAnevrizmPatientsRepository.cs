@@ -10,13 +10,14 @@ using System.Text;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("алергологичный_анамнез_пациенты")]
+    //  [Table("алергологичный_анамнез_пациенты")]
+    [Table("alergological_amnestic_patients")]
     public class AlergicAnevrizmPatients
     {
         [Column(Order = 0), Key]
-        public int id_анамнеза { set; get; }
+        public int id_amnestic { set; get; }
         [Column(Order = 1), Key]
-        public int id_пациента { set; get; }
+        public int id_patient { set; get; }
      
 
       

@@ -10,13 +10,14 @@ using System.Text;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("виды_анестезика")]
+   // [Table("виды_анестезика")]
+    [Table("anesthesia_dictionary")]
     public class Anestethic
     {
         [Key]
         [Column("id")]
         public int Id { set; get; }
-        [Column("название")]
+        [Column("name")]
         public string Str { set; get; }
 
         public override string ToString()

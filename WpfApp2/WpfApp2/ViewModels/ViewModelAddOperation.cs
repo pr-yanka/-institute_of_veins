@@ -520,7 +520,7 @@ namespace WpfApp2.ViewModels
                         {
                             DateTime MaxExam = ExamsOfCurrPatient.Max(s => s.Date);
                             var ExamsOfCurrPatientLatest = ExamsOfCurrPatient.Where(s => s.Date == MaxExam).ToList();
-                            List<DiagnosisObs> DiagOfCurrPatienLt = DiagObsRep.GetAll.ToList().Where(s => s.id_обследование_ноги == ExamsOfCurrPatientLatest[0].Id && s.isLeft == true).ToList();
+                            List<DiagnosisObs> DiagOfCurrPatienLt = DiagObsRep.GetAll.ToList().Where(s => s.id_leg_examination == ExamsOfCurrPatientLatest[0].Id && s.isLeft == true).ToList();
                             //  List<DiagnosisObs> DiagOfCurrPatientRt = DiagObsRep.GetAll.ToList().Where(s => s.id_обследование_ноги == ExamsOfCurrPatientLatest[0].Id && s.isLeft == false).ToList();
 
                             //   MessageBus.Default.Call("SetDiagnosisListRight", null, DiagOfCurrPatientRt);
@@ -556,7 +556,7 @@ namespace WpfApp2.ViewModels
                             DateTime MaxExam = ExamsOfCurrPatient.Max(s => s.Date);
                             var ExamsOfCurrPatientLatest = ExamsOfCurrPatient.Where(s => s.Date == MaxExam).ToList();
                             //  List<DiagnosisObs> DiagOfCurrPatienLt = DiagObsRep.GetAll.ToList().Where(s => s.id_обследование_ноги == ExamsOfCurrPatientLatest[0].Id && s.isLeft == true).ToList();
-                            List<DiagnosisObs> DiagOfCurrPatientRt = DiagObsRep.GetAll.ToList().Where(s => s.id_обследование_ноги == ExamsOfCurrPatientLatest[0].Id && s.isLeft == false).ToList();
+                            List<DiagnosisObs> DiagOfCurrPatientRt = DiagObsRep.GetAll.ToList().Where(s => s.id_leg_examination == ExamsOfCurrPatientLatest[0].Id && s.isLeft == false).ToList();
 
                             MessageBus.Default.Call("SetDiagnosisListRight", null, DiagOfCurrPatientRt);
                             // MessageBus.Default.Call("SetDiagnosisListLeft", null, DiagOfCurrPatienLt);
@@ -635,16 +635,16 @@ namespace WpfApp2.ViewModels
                             if (Doctor.isDoctor)
                             {
                                 Brigade buf = new Brigade();
-                                buf.id_врача = Doctor.id;
-                                buf.id_операции = Operation.Id;
+                                buf.id_doctor = Doctor.id;
+                                buf.id_operation = Operation.Id;
                                 Data.Brigade.Add(buf);
                                 Data.Complete();
                             }
                             else
                             {
                                 BrigadeMedPersonal buf = new BrigadeMedPersonal();
-                                buf.id_медперсонал = Doctor.id;
-                                buf.id_операции = Operation.Id;
+                                buf.id_med_staff = Doctor.id;
+                                buf.id_operation = Operation.Id;
                                 Data.BrigadeMedPersonal.Add(buf);
                                 Data.Complete();
                             }
@@ -658,8 +658,8 @@ namespace WpfApp2.ViewModels
                             {
 
                                 OperationTypeOperations buf = new OperationTypeOperations();
-                                buf.id_типОперации = OpL.Data.Id;
-                                buf.id_операции = Operation.Id;
+                                buf.id_operation_type = OpL.Data.Id;
+                                buf.id_operation = Operation.Id;
                                 buf.isLeft = true;
 
                                 Data.OperationTypeOperations.Add(buf);
@@ -672,8 +672,8 @@ namespace WpfApp2.ViewModels
                             {
 
                                 OperationTypeOperations buf = new OperationTypeOperations();
-                                buf.id_типОперации = OpR.Data.Id;
-                                buf.id_операции = Operation.Id;
+                                buf.id_operation_type = OpR.Data.Id;
+                                buf.id_operation = Operation.Id;
                                 buf.isLeft = false;
 
                                 Data.OperationTypeOperations.Add(buf);
@@ -687,8 +687,8 @@ namespace WpfApp2.ViewModels
                             {
 
                                 Diagnosis buf = new Diagnosis();
-                                buf.id_диагноз = diagnozL.Data.Id;
-                                buf.id_операции = Operation.Id;
+                                buf.id_diagnosis = diagnozL.Data.Id;
+                                buf.id_operation = Operation.Id;
                                 buf.isLeft = true;
 
                                 Data.Diagnosis.Add(buf);
@@ -710,8 +710,8 @@ namespace WpfApp2.ViewModels
                             {
 
                                 Diagnosis buf = new Diagnosis();
-                                buf.id_диагноз = diagnozR.Data.Id;
-                                buf.id_операции = Operation.Id;
+                                buf.id_diagnosis = diagnozR.Data.Id;
+                                buf.id_operation = Operation.Id;
                                 buf.isLeft = false;
 
                                 Data.Diagnosis.Add(buf);

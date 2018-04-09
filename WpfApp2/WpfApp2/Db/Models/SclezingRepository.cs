@@ -6,26 +6,29 @@ using System.Linq;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("склерозирование")]
+    //  [Table("склерозирование")]
+    [Table("hardening")]
+    //
     public class Sclezing
     {
         [Key]
         [Column("id")]
         public int Id { set; get; }
-        [Column("название")]
+        [Column("name")]
         public string Str { set; get; }
-        [Column("мл")]
+        [Column("ml")]
         public float? Ml { set; get; }
-    
-        [Column("проценты")]
+        [Column("percentages")]
+        // [Column("проценты")]
         public float? Prcent { set; get; }
 
-        [Column("вещества")]
+        //    [Column("вещества")]
+        [Column("substance")]
         public string Veshestvo { set; get; }
 
         public override string ToString()
         {
-            return Str + " " + Ml+ " мл " + Prcent +" % " + "Вещество : " + Veshestvo;
+            return Str + " " + Ml + " мл " + Prcent + " % " + "Вещество : " + Veshestvo;
         }
     }
     public class SclezingRepository : Repository<Sclezing>

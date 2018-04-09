@@ -13,8 +13,8 @@ namespace WpfApp2.Db.Models
     {
 
     }
-
-    [Table("те_мпв_структура")]
+    [Table("te_mpv_structure")]
+    //[Table("те_мпв_structure")]
     public partial class TEMPVStructure : LegPartDbStructure, ILegPart
     {
         [NotMapped]
@@ -23,10 +23,10 @@ namespace WpfApp2.Db.Models
         public virtual ICollection<TEMPVCombo> TEMPVs1 { get; set; } = new HashSet<TEMPVCombo>();
         public virtual ICollection<TEMPVCombo> TEMPVs2 { get; set; } = new HashSet<TEMPVCombo>();
         public virtual ICollection<TEMPVCombo> TEMPVs3 { get; set; } = new HashSet<TEMPVCombo>();
-         public virtual ICollection<TEMPVEntry> Entries { get; set; } = new HashSet<TEMPVEntry>();
+        public virtual ICollection<TEMPVEntry> Entries { get; set; } = new HashSet<TEMPVEntry>();
     }
-
-    [Table("те_мпв_комбо")]
+    [Table("te_mpv_combo")]
+    // [Table("те_мпв_комбо")]
     public partial class TEMPVCombo : LegPartCombo, ILegPart
     {
         [Key]
@@ -34,21 +34,21 @@ namespace WpfApp2.Db.Models
         public int Id { get; set; }
 
         [Required]
-        [Column("структура1")]
+        [Column("structure1")]
         public int IdStr1 { get; set; }
 
         public virtual TEMPVStructure Str1 { get; set; }
 
-        [Column("структура2")]
+        [Column("structure2")]
         public int? IdStr2 { get; set; }
 
         public virtual TEMPVStructure Str2 { get; set; }
 
-        [Column("структура3")]
+        [Column("structure3")]
         public int? IdStr3 { get; set; }
         public virtual TEMPVStructure Str3 { get; set; }
 
-      
+
 
         public override string ToString()
         {
@@ -102,11 +102,12 @@ namespace WpfApp2.Db.Models
             return null;
         }
     }*/
-    [Table("те_мпв_подзапись")]
+    [Table("te_mpv_sub_entry")]
+    //[Table("те_мпв_подзапись")]
     public class TEMPVEntry : LegPartEntry, ILegPart
     {
 
-        [Column("метрика")]
+        [Column("metrics")]
         public override float Size { get; set; }
         [NotMapped]
         public override float Size2 { get; set; }
@@ -116,10 +117,12 @@ namespace WpfApp2.Db.Models
         public virtual ICollection<TEMPVEntryFull> EntriesFull1 { get; set; } = new HashSet<TEMPVEntryFull>();
         public virtual ICollection<TEMPVEntryFull> EntriesFull2 { get; set; } = new HashSet<TEMPVEntryFull>();
         public virtual ICollection<TEMPVEntryFull> EntriesFull3 { get; set; } = new HashSet<TEMPVEntryFull>();
-      
+
     }
 
-    [Table("ход_в_фасциальном_футляре")]
+    [Table("falsetto_case_way")]
+    //[Table("ход_в_фасциальном_футляре")]
+
     public class TEMPVWay : da_Way
     {
 
@@ -127,7 +130,9 @@ namespace WpfApp2.Db.Models
 
     }
 
-    [Table("бедренное_продолжение_малой_подкожной_вены")]
+    [Table("femoral_extension_of_small_saphenous_vein")]
+    //[Table("бедренное_продолжение_малой_подкожной_вены")]
+
     public class TEMPVEntryFull : LegPartEntries
     {
         public virtual TEMPVWay TEMPVWay { get; set; }
@@ -135,17 +140,17 @@ namespace WpfApp2.Db.Models
         public virtual TEMPVEntry TEMPVEntry2 { get; set; }
         public virtual TEMPVEntry TEMPVEntry3 { get; set; }
 
-        [Column("id_хода_ФФ")]
+        [Column("id_way_FF")]
         public override int? WayID { get; set; }
 
 
-        [Column("протяженность_ФФ")]
+        [Column("length_FF")]
         public float FF_Length { get; set; }
 
         public override int EntryId1 { get; set; }
         public override int? EntryId2 { get; set; }
         public override int? EntryId3 { get; set; }
-     
+
         [NotMapped]
         public override int? EntryId4 { get; set; }
 

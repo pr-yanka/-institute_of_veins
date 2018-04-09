@@ -5,11 +5,7 @@ using System.Data.Entity.Core.Mapping;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Data.Entity.Core.Objects;
 using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Validation;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WpfApp2.Db.Models;
 using WpfApp2.Db.Models.GV;
 using WpfApp2.Db.Models.PPV;
 using WpfApp2.Db.Models.SPS;
@@ -36,8 +32,8 @@ namespace WpfApp2.Db.Models
 
 
         public DbSet<OperationTypeOperations> OperationTypeOperations { get; set; }
-        public DbSet<OperationForAmbulatornCard> OperationForAmbulatornCard { get; set; }
-        public DbSet<OperationForAmbulatornCardPatients> OperationForAmbulatornCardPatients { get; set; }
+        //public DbSet<OperationForAmbulatornCard> OperationForAmbulatornCard { get; set; }
+        //public DbSet<OperationForAmbulatornCardPatients> OperationForAmbulatornCardPatients { get; set; }
 
         public DbSet<AlergicAnevrizm> AlergicAnevrizm { get; set; }
         public DbSet<BloodExchange> BloodExchange { get; set; }

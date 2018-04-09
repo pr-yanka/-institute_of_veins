@@ -228,8 +228,8 @@ namespace WpfApp2.ViewModels
                            if (spec.IsChecked == true)
                            {
                                DoctorsSpecializations DoctorSpec = new DoctorsSpecializations();
-                               DoctorSpec.id_врача = currentDoctor.Id;
-                               DoctorSpec.id_специлизации = spec.id;
+                               DoctorSpec.id_doctor = currentDoctor.Id;
+                               DoctorSpec.id_specialization = spec.id;
                                Data.DoctorsSpecializations.Add(DoctorSpec);
                                Data.Complete();
 
@@ -242,8 +242,8 @@ namespace WpfApp2.ViewModels
                            if (Tytle.IsChecked == true)
                            {
                                ScientificTitles DoctorTitle = new ScientificTitles();
-                               DoctorTitle.id_врача = currentDoctor.Id;
-                               DoctorTitle.id_звания = Tytle.id;
+                               DoctorTitle.id_doctor = currentDoctor.Id;
+                               DoctorTitle.id_title = Tytle.id;
                                Data.ScientificTitles.Add(DoctorTitle);
 
                            }
@@ -348,8 +348,8 @@ namespace WpfApp2.ViewModels
                            if (spec.IsChecked == true)
                            {
                                DoctorsSpecializations DoctorSpec = new DoctorsSpecializations();
-                               DoctorSpec.id_врача = currentDoctor.Id;
-                               DoctorSpec.id_специлизации = spec.id;
+                               DoctorSpec.id_doctor = currentDoctor.Id;
+                               DoctorSpec.id_specialization = spec.id;
                                Data.DoctorsSpecializations.Add(DoctorSpec);
                                Data.Complete();
 
@@ -362,8 +362,8 @@ namespace WpfApp2.ViewModels
                            if (Tytle.IsChecked == true)
                            {
                                ScientificTitles DoctorTitle = new ScientificTitles();
-                               DoctorTitle.id_врача = currentDoctor.Id;
-                               DoctorTitle.id_звания = Tytle.id;
+                               DoctorTitle.id_doctor = currentDoctor.Id;
+                               DoctorTitle.id_title = Tytle.id;
                                Data.ScientificTitles.Add(DoctorTitle);
 
                            }
@@ -468,8 +468,8 @@ namespace WpfApp2.ViewModels
                          if (spec.IsChecked == true)
                          {
                              DoctorsSpecializations DoctorSpec = new DoctorsSpecializations();
-                             DoctorSpec.id_врача = currentDoctor.Id;
-                             DoctorSpec.id_специлизации = spec.id;
+                             DoctorSpec.id_doctor = currentDoctor.Id;
+                             DoctorSpec.id_specialization = spec.id;
                              Data.DoctorsSpecializations.Add(DoctorSpec);
                              Data.Complete();
 
@@ -482,8 +482,8 @@ namespace WpfApp2.ViewModels
                          if (Tytle.IsChecked == true)
                          {
                              ScientificTitles DoctorTitle = new ScientificTitles();
-                             DoctorTitle.id_врача = currentDoctor.Id;
-                             DoctorTitle.id_звания = Tytle.id;
+                             DoctorTitle.id_doctor = currentDoctor.Id;
+                             DoctorTitle.id_title = Tytle.id;
                              Data.ScientificTitles.Add(DoctorTitle);
 
                          }
@@ -744,8 +744,8 @@ namespace WpfApp2.ViewModels
                             if (spec.IsChecked == true)
                             {
                                 DoctorsSpecializations DoctorSpec = new DoctorsSpecializations();
-                                DoctorSpec.id_врача = currentDoctor.Id;
-                                DoctorSpec.id_специлизации = spec.id;
+                                DoctorSpec.id_doctor = currentDoctor.Id;
+                                DoctorSpec.id_specialization = spec.id;
                                 Data.DoctorsSpecializations.Add(DoctorSpec);
                                 Data.Complete();
 
@@ -758,8 +758,8 @@ namespace WpfApp2.ViewModels
                             if (Tytle.IsChecked == true)
                             {
                                 ScientificTitles DoctorTitle = new ScientificTitles();
-                                DoctorTitle.id_врача = currentDoctor.Id;
-                                DoctorTitle.id_звания = Tytle.id;
+                                DoctorTitle.id_doctor = currentDoctor.Id;
+                                DoctorTitle.id_title = Tytle.id;
                                 Data.ScientificTitles.Add(DoctorTitle);
 
                             }

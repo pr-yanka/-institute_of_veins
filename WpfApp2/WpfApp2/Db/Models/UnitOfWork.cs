@@ -34,8 +34,8 @@ namespace WpfApp2.Db.Models
         public SclezingRepository Sclezing { get; }
         public AnticogulantsRepository Anticogulants { get; }
         public OperationTypeOperationsRepository OperationTypeOperations { get; }
-        public OperationForAmbulatornCardRepository OperationForAmbulatornCard { get; }
-        public OperationForAmbulatornCardPatientsRepository OperationForAmbulatornCardPatients { get; }
+        //public OperationForAmbulatornCardRepository OperationForAmbulatornCard { get; }
+        //public OperationForAmbulatornCardPatientsRepository OperationForAmbulatornCardPatients { get; }
         public AlergicAnevrizmRepository AlergicAnevrizm { get; }
         public BloodExchangeRepository BloodExchange { get; }
         public HirurgInteruptRepository HirurgInterup { get; }
@@ -221,8 +221,8 @@ namespace WpfApp2.Db.Models
             PreparateHateComment = new PreparateHateCommentRepository(_context);
             BloodExchangeComment = new BloodExchangeCommentRepository(_context);
             OperationTypeOperations = new OperationTypeOperationsRepository(_context);
-            OperationForAmbulatornCard = new OperationForAmbulatornCardRepository(_context);
-            OperationForAmbulatornCardPatients = new OperationForAmbulatornCardPatientsRepository(_context);
+            //OperationForAmbulatornCard = new OperationForAmbulatornCardRepository(_context);
+            //OperationForAmbulatornCardPatients = new OperationForAmbulatornCardPatientsRepository(_context);
             AlergicAnevrizmPatients = new AlergicAnevrizmPatientsRepository(_context);
             BloodExchangePatients = new BloodExchangePatientsRepository(_context);
             HirurgInterupPatients = new HirurgInteruptPatientsRepository(_context);

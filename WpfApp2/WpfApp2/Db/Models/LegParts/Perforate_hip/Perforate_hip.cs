@@ -13,8 +13,8 @@ namespace WpfApp2.Db.Models
     {
         
     }
-
-    [Table("перфорант_бедро_структура")]
+    [Table("perforate_hip_structure")]
+  //  [Table("перфорант_бедро_structure")]
     public partial class Perforate_hipStructure :LegPartDbStructure, ILegPart
     {
         [NotMapped]
@@ -28,8 +28,8 @@ namespace WpfApp2.Db.Models
 
         public virtual ICollection<Perforate_hipEntry> Entries { get; set; } = new HashSet<Perforate_hipEntry>();
     }
-
-    [Table("перфорант_бедро_комбо")]
+    [Table("perforate_hip_combo")]
+  //  [Table("перфорант_бедро_комбо")]
     public partial class Perforate_hipCombo : LegPartCombo, ILegPart
     {
         [Key]
@@ -37,25 +37,25 @@ namespace WpfApp2.Db.Models
         public int Id { get; set; }
 
         [Required]
-        [Column("структура1")]
+        [Column("structure1")]
         public int IdStr1 { get; set; }
 
         public virtual Perforate_hipStructure Str1 { get; set; }
 
-        [Column("структура2")]
+        [Column("structure2")]
         public int? IdStr2 { get; set; }
 
         public virtual Perforate_hipStructure Str2 { get; set; }
 
-        [Column("структура3")]
+        [Column("structure3")]
         public int? IdStr3 { get; set; }
         public virtual Perforate_hipStructure Str3 { get; set; }
 
-        [Column("структура4")]
+        [Column("structure4")]
         public int? IdStr4 { get; set; }
         public virtual Perforate_hipStructure Str4 { get; set; }
 
-        [Column("структура5")]
+        [Column("structure5")]
         public int? IdStr5 { get; set; }
         public virtual Perforate_hipStructure Str5 { get; set; }
 
@@ -111,11 +111,12 @@ namespace WpfApp2.Db.Models
             return null;
         }
     }*/
-    [Table("перфорант_бедро_подзапись")]
+    [Table("perforate_hip_sub_entry")]
+  //  [Table("перфорант_бедро_подзапись")]
     public class Perforate_hipEntry : LegPartEntry, ILegPart
     {
 
-        [Column("метрика")]
+        [Column("metrics")]
         public override float Size { get; set; }
         [NotMapped]
         public override float Size2 { get; set; }
@@ -131,8 +132,8 @@ namespace WpfApp2.Db.Models
     }
 
 
-
-    [Table("перфорант_бедра_и_несафенные_вены")]
+    [Table("perforate_hip_and_non_sentinel_veins")]
+    //[Table("перфорант_бедра_и_несафенные_вены")]
     public class Perforate_hipEntryFull : LegPartEntries
     {
 

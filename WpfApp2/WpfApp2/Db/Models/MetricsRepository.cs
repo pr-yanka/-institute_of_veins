@@ -7,13 +7,14 @@ using System.Linq;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("метрика")]
+    //[Table("метрика")]
+    [Table("metrics")]
     public class Metrics
     {
         [Key]
         [Column("id")]
         public int Id { set; get; }
-        [Column("название")]
+        [Column("name")]
         public string Str { set; get; }
 
         public override string ToString()

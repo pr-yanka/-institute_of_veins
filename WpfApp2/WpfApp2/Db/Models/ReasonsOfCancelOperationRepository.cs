@@ -6,13 +6,14 @@ using System.Linq;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("причины_переноса")]
+    //[Table("причины_переноса")]
+    [Table("delay_reasons_dictionary")]
     public class ReasonsOfCancelOperation
     {
         [Key]
         [Column("id")]
         public int Id { set; get; }
-        [Column("причина")]
+        [Column("reason")]
         public string Str { set; get; }
 
         public override string ToString()

@@ -6,15 +6,17 @@ using System.Linq;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("справочник_города")]
+   // [Table("справочник_города")]
+    [Table("city_dictionary")]
     public class Cities
     {
         [Key]
         [Column("id")]
         public int Id { set; get; }
-        [Column("название")]
+        [Column("name")]
         public string Str { set; get; }
-        [Column("Область")]
+        //Region  [Column("Область")]
+        [Column("region")]
         public int OblId { set; get; }
 
 

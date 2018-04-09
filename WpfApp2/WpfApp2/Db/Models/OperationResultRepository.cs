@@ -7,17 +7,18 @@ using System.Linq;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("итоги_операции")]
+    //[Table("итоги_операции")]
+    [Table("operation_result")]
     public class OperationResult
     {
         [Key]
         [Column("id")]
         public int Id { set; get; }
-        [Column("описание")]
+        [Column("description")]
         public string Str { set; get; }
-        [Column("дата")]
+        [Column("date")]
         public DateTime? Date { set; get; }
-        [Column("id_следущей_операции")]
+        [Column("id_next_operation")]
         public int? IdNextOperation { set; get; }
     }
     public class OperationResultRepository : Repository<OperationResult>

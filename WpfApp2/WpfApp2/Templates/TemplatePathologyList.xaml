@@ -10,7 +10,7 @@
     </Style>
     <DataTemplate x:Key="TemplatePathologyList">
         <Grid Margin="220,80,0,0" >
-            <TextBlock FontFamily="/fonts/#Pescadero"  FontSize="22pt" HorizontalAlignment="Right" Width="430" VerticalAlignment="Top" Height="Auto" Margin="0,0" x:Name="ddsadsds" Text="{Binding Path=Initials}">
+            <TextBlock FontFamily="/fonts/#Pescadero"  FontSize="22pt" HorizontalAlignment="Right" Width="430" VerticalAlignment="Top" Height="Auto" Margin="0,5" x:Name="ddsadsds" Text="{Binding Path=Initials}">
 
                 <TextBlock.RenderTransform>
                     <TransformGroup>

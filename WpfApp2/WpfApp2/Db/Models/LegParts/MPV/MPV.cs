@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WpfApp2.Db.Models.LegParts;
 
 namespace WpfApp2.Db.Models
@@ -13,8 +9,8 @@ namespace WpfApp2.Db.Models
     {
 
     }
-
-    [Table("мпв_структура")]
+    [Table("mpv_structure")]
+    //[Table("мпв_structure")]
     public partial class MPVStructure : LegPartDbStructure, ILegPart
     {
         [NotMapped]
@@ -26,8 +22,8 @@ namespace WpfApp2.Db.Models
         public virtual ICollection<MPVCombo> MPVs4 { get; set; } = new HashSet<MPVCombo>();
         public virtual ICollection<MPVEntry> Entries { get; set; } = new HashSet<MPVEntry>();
     }
-
-    [Table("мпв_комбо")]
+    [Table("mpv_combo")]
+    //[Table("мпв_комбо")]
     public partial class MPVCombo : LegPartCombo, ILegPart
     {
         [Key]
@@ -35,21 +31,21 @@ namespace WpfApp2.Db.Models
         public int Id { get; set; }
 
         [Required]
-        [Column("структура1")]
+        [Column("structure1")]
         public int IdStr1 { get; set; }
 
         public virtual MPVStructure Str1 { get; set; }
 
-        [Column("структура2")]
+        [Column("structure2")]
         public int? IdStr2 { get; set; }
 
         public virtual MPVStructure Str2 { get; set; }
 
-        [Column("структура3")]
+        [Column("structure3")]
         public int? IdStr3 { get; set; }
         public virtual MPVStructure Str3 { get; set; }
 
-        [Column("структура4")]
+        [Column("structure4")]
         public int? IdStr4 { get; set; }
         public virtual MPVStructure Str4 { get; set; }
 
@@ -106,11 +102,12 @@ namespace WpfApp2.Db.Models
             return null;
         }
     }*/
-    [Table("мпв_подзапись")]
+    [Table("mpv_sub_entry")]
+    //   [Table("мпв_подзапись")]
     public class MPVEntry : LegPartEntry, ILegPart
     {
 
-        [Column("метрика")]
+        [Column("metrics")]
         public override float Size { get; set; }
         [NotMapped]
         public override float Size2 { get; set; }
@@ -123,16 +120,16 @@ namespace WpfApp2.Db.Models
         public virtual ICollection<MPVEntryFull> EntriesFull4 { get; set; } = new HashSet<MPVEntryFull>();
 
     }
-
-    [Table("вид_мпв_хода")]
+    [Table("mpv_way")]
+    //[Table("вид_мпв_хода")]
     public class MPVWay : da_Way
     {
 
         public virtual ICollection<MPVEntryFull> EntriesFull { get; set; } = new HashSet<MPVEntryFull>();
 
     }
-
-    [Table("малая_подкожная_вена")]
+    [Table("small_saphenous_vein")]
+    //[Table("малая_подкожная_вена")]
     public class MPVEntryFull : LegPartEntries
     {
         public virtual MPVWay MPVWay { get; set; }
@@ -141,14 +138,14 @@ namespace WpfApp2.Db.Models
         public virtual MPVEntry MPVEntry3 { get; set; }
         public virtual MPVEntry MPVEntry4 { get; set; }
 
-      
+
 
         public override int EntryId1 { get; set; }
         public override int? EntryId2 { get; set; }
         public override int? EntryId3 { get; set; }
         public override int? EntryId4 { get; set; }
 
-       
+
 
         [NotMapped]
         public override int? EntryId5 { get; set; }

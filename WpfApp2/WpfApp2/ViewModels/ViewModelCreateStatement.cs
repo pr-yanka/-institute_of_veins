@@ -527,20 +527,20 @@ namespace WpfApp2.ViewModels
 
                         List<DiagnosisType> LeftDiagnosisList = new List<DiagnosisType>();
 
-                        foreach (var diag in Data.Diagnosis.GetAll.Where(s => s.isLeft == true && s.id_операции == Operation.Id).ToList())
+                        foreach (var diag in Data.Diagnosis.GetAll.Where(s => s.isLeft == true && s.id_operation == Operation.Id).ToList())
                         {
 
-                            LeftDiagnosisList.Add(Data.DiagnosisTypes.Get(diag.id_диагноз.Value));
+                            LeftDiagnosisList.Add(Data.DiagnosisTypes.Get(diag.id_diagnosis.Value));
                         }
 
                         List<DiagnosisType> RightDiagnosisList = new List<DiagnosisType>();
 
 
 
-                        foreach (var diag in Data.Diagnosis.GetAll.Where(s => s.isLeft == false && s.id_операции == Operation.Id).ToList())
+                        foreach (var diag in Data.Diagnosis.GetAll.Where(s => s.isLeft == false && s.id_operation == Operation.Id).ToList())
                         {
 
-                            RightDiagnosisList.Add(Data.DiagnosisTypes.Get(diag.id_диагноз.Value));
+                            RightDiagnosisList.Add(Data.DiagnosisTypes.Get(diag.id_diagnosis.Value));
                         }
 
 
@@ -612,9 +612,9 @@ namespace WpfApp2.ViewModels
                                 ExaminationLeg rightLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idRightLegExamination.Value);
                                 List<ComplainsType> ComplainsList = new List<ComplainsType>();
 
-                                foreach (var diag in Data.ComplanesObs.GetAll.Where(s => s.id_обследования == ExamsOfCurrPatientLatest[0].Id).ToList())
+                                foreach (var diag in Data.ComplanesObs.GetAll.Where(s => s.id_Examination == ExamsOfCurrPatientLatest[0].Id).ToList())
                                 {
-                                    ComplainsList.Add(Data.ComplainsTypes.Get(diag.id_жалобы));
+                                    ComplainsList.Add(Data.ComplainsTypes.Get(diag.id_Complains));
                                 }
                                 string complanes = "";
                                 if (ComplainsList != null)
@@ -829,25 +829,25 @@ namespace WpfApp2.ViewModels
 
                         foreach (var Diagnosis in Data.OperationTypeOperations.GetAll)
                         {
-                            if (Diagnosis.id_операции == Operation.Id)
+                            if (Diagnosis.id_operation == Operation.Id)
                             {
                                 if (Diagnosis.isLeft == true)
                                 {
                                     if (i1 != 0)
-                                        leftP += ", " + Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                                        leftP += ", " + Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str;
                                     else
                                     {
-                                        leftP += Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                                        leftP += Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str;
                                     }
                                     i1++;
                                 }
                                 else
                                 {
                                     if (i2 != 0)
-                                        rightP += ", " + Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                                        rightP += ", " + Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str;
                                     else
                                     {
-                                        rightP += Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                                        rightP += Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str;
                                     }
                                     i2++;
                                 }

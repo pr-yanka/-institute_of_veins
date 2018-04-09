@@ -98,7 +98,7 @@ namespace WpfApp2.ViewModels
                 Operation = opRep.Get((int)data);
                 OperationResultRepository opResRep = new OperationResultRepository(context);
               
-                oprresult = opResRep.Get(Operation.итоги_операции.Value);
+                oprresult = opResRep.Get(Operation.operation_result.Value);
             }
             HeaderName = "Итоги операции";
             ResultOrOtmenaName = "Операция проведена";
@@ -117,15 +117,15 @@ namespace WpfApp2.ViewModels
                 rightP = "";
                 foreach (var Diagnosis in Data.OperationTypeOperations.GetAll)
                 {
-                    if (Diagnosis.id_операции == Data.Operation.Get(oprresult.IdNextOperation.Value).Id)
+                    if (Diagnosis.id_operation == Data.Operation.Get(oprresult.IdNextOperation.Value).Id)
                     {
                         if (Diagnosis.isLeft == true)
                         {
                             if (i1 != 0)
-                                leftP += ", " + Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                                leftP += ", " + Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str;
                             else
                             {
-                                leftP += Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                                leftP += Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str;
                             }
                             i1++;
                             //     var buf1 = new OperationTypesDataSource(Data.OperationType.Get(Diagnosis.id_типОперации.Value));
@@ -135,10 +135,10 @@ namespace WpfApp2.ViewModels
                         else
                         {
                             if (i2 != 0)
-                                rightP += ", " + Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                                rightP += ", " + Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str;
                             else
                             {
-                                rightP += Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                                rightP += Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str;
                             }
                             i2++;
                             //var buf2 = new OperationTypesDataSource(Data.OperationType.Get(Diagnosis.id_типОперации.Value));
@@ -178,25 +178,25 @@ namespace WpfApp2.ViewModels
             rightP = "";
             foreach (var Diagnosis in Data.OperationTypeOperations.GetAll)
             {
-                if (Diagnosis.id_операции == Operation.Id)
+                if (Diagnosis.id_operation == Operation.Id)
                 {
                     if (Diagnosis.isLeft == true)
                     {
                         if (i1 != 0)
-                            leftP += ", " + Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                            leftP += ", " + Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str;
                         else
                         {
-                            leftP += Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                            leftP += Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str;
                         }
                         i1++;
                     }
                     else
                     {
                         if (i2 != 0)
-                            rightP += ", " + Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                            rightP += ", " + Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str;
                         else
                         {
-                            rightP += Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                            rightP += Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str;
                         }
                         i2++;
                     }

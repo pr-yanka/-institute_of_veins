@@ -10,7 +10,9 @@ using System.Text;
 using WpfApp2.Messaging;
 namespace WpfApp2.Db.Models
 {
-    [Table("переливание_крови")]
+    
+    //[Table("переливание_крови")]
+    [Table("blood_transfer")]
     public class BloodExchange
     {//SetnameOfButtonForAmbCard
 
@@ -18,11 +20,12 @@ namespace WpfApp2.Db.Models
         [Column("id")]
         public int Id { set; get; }
 
-        [Column("Дата")]
+        [Column("date")]
         public DateTime Date { set { _date = value; MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null); } get { return _date; } }
         [NotMapped]
         private DateTime _date;
-        [Column("Объём")]
+        //     [Column("Объём")]
+        [Column("amount")]
         public float Volume { set { _volume = value; MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null); } get { return _volume; } }
         [NotMapped]
         private float _volume;

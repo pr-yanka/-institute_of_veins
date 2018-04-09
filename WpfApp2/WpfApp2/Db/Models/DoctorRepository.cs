@@ -10,28 +10,29 @@ using System.Text;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("врачи")]
+    //[Table("врачи")]
+    [Table("doctors")]
     public class Doctor
     {
         [Key]
         [Column("id")]
         public int Id { set; get; }
                 
-        [Column("имя")]
+        [Column("name")]
         public string Name { set; get; }
               
-        [Column("фамилия")]
+        [Column("surname")]
         public string Sirname { set; get; }
 
-        [Column("отчество")]
+        [Column("patronimic")]
         public string Patronimic { set; get; }
 
-        [Column("дополнительная_информация")]
+        [Column("additional_Information")]
         public string Aditional { set; get; }
         [Column("enabled/disabled")]
         public bool? isEnabled { set; get; }
 
-        [Column("категория")]
+        [Column("category")]
         public int? категория { set; get; }
 
 

@@ -9,16 +9,16 @@ using System.Linq;
 using System.Text;
 
 namespace WpfApp2.Db.Models
-{
-    [Table("переливание_крови_пациенты")]
+{//blood transfusion patients 
+     [Table("blood_transfer_patient")]
     public class BloodExchangePatients
     {
         [Column(Order = 0), Key]
-        public int id_переливания { set; get; }
+        public int id_transfer { set; get; }
         [Column(Order = 1), Key]
-        public int id_пациента { set; get; }
+        public int id_patient { set; get; }
         [Column(Order = 2)]
-        public string Комментарий { set; get; }
+        public string comment { set; get; }
 
       
 

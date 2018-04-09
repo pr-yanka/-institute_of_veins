@@ -4,13 +4,13 @@ using System.Data.Entity;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("виды_патологий")]
+    [Table("pathology_types_dictionary")]
     public class PatologyType
     {
         [Key]
         [Column("id")]
         public int Id { set; get; }
-        [Column("описание")]
+        [Column("description")]
         public string Str { set; get; }
     }
 

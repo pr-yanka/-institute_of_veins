@@ -13,8 +13,8 @@ namespace WpfApp2.Db.Models
     {
 
     }
-
-    [Table("пдсв_структура")]
+    [Table("pdsv_structure")]
+  //  [Table("пдсв_structure")]
     public partial class PDSVHipStructure : LegPartDbStructure, ILegPart
     {
         [NotMapped]
@@ -26,8 +26,8 @@ namespace WpfApp2.Db.Models
 
         public virtual ICollection<PDSVHipEntry> Entries { get; set; } = new HashSet<PDSVHipEntry>();
     }
-
-    [Table("пдсв_комбо")]
+    [Table("pdsv_combo")]
+  //  [Table("пдсв_комбо")]
     public partial class PDSVHipCombo : LegPartCombo, ILegPart
     {
         [Key]
@@ -35,17 +35,17 @@ namespace WpfApp2.Db.Models
         public int Id { get; set; }
 
         [Required]
-        [Column("структура1")]
+        [Column("structure1")]
         public int IdStr1 { get; set; }
 
         public virtual PDSVHipStructure Str1 { get; set; }
 
-        [Column("структура2")]
+        [Column("structure2")]
         public int? IdStr2 { get; set; }
 
         public virtual PDSVHipStructure Str2 { get; set; }
 
-        [Column("структура3")]
+        [Column("structure3")]
         public int? IdStr3 { get; set; }
         public virtual PDSVHipStructure Str3 { get; set; }
 
@@ -102,11 +102,12 @@ namespace WpfApp2.Db.Models
             return null;
         }
     }*/
-    [Table("пдсв_подзапись")]
+    [Table("pdsv_sub_entry")]
+   // [Table("пдсв_подзапись")]
     public class PDSVHipEntry : LegPartEntry, ILegPart
     {
 
-        [Column("метрика")]
+        [Column("metrics")]
         public override float Size { get; set; }
         [NotMapped]
         public override float Size2 { get; set; }
@@ -118,16 +119,16 @@ namespace WpfApp2.Db.Models
         public virtual ICollection<PDSVHipEntryFull> EntriesFull3 { get; set; } = new HashSet<PDSVHipEntryFull>();
 
     }
-
-    [Table("вид_пдсв_хода")]
+     [Table("pdsv_way")]
+    //[Table("вид_пдсв_хода")]
     public class PDSVHipWay : da_Way
     {
 
         public virtual ICollection<PDSVHipEntryFull> EntriesFull { get; set; } = new HashSet<PDSVHipEntryFull>();
 
     }
-
-    [Table("передняя_добавочная_сафенная_вена")]
+    [Table("anterior_surplus_vein")]
+    //[Table("передняя_добавочная_сафенная_вена")]
     public class PDSVHipEntryFull : LegPartEntries
     {
         public virtual PDSVHipWay PDSVHipWay { get; set; }

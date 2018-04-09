@@ -9,7 +9,8 @@ using WpfApp2.Db.Models.LegParts;
 
 namespace WpfApp2.Db.Models.GV
 {
-    [Table("гв_структура")]
+    [Table("gv_structure")]
+    //[Table("гв_structure")]
     public partial class GVStructure : LegPartDbStructure, ILegPart
     {
         [NotMapped]
@@ -20,8 +21,8 @@ namespace WpfApp2.Db.Models.GV
        
         public virtual ICollection<GVEntry> Entries { get; set; } = new HashSet<GVEntry>();
     }
-
-    [Table("гв_комбо")]
+    [Table("gv_combo")]
+   // [Table("гв_комбо")]
     public partial class GVCombo : LegPartCombo, ILegPart
     {
         [Key]
@@ -29,12 +30,12 @@ namespace WpfApp2.Db.Models.GV
         public int Id { get; set; }
 
         [Required]
-        [Column("структура1")]
+        [Column("structure1")]
         public int IdStr1 { get; set; }
 
         public virtual GVStructure Str1 { get; set; }
 
-        [Column("структура2")]
+        [Column("structure2")]
         public int? IdStr2 { get; set; }
 
         public virtual GVStructure Str2 { get; set; }
@@ -47,8 +48,8 @@ namespace WpfApp2.Db.Models.GV
             return Str1.ToString();
         }
     }
-
-    [Table("гв_подзапись")]
+    [Table("gv_sub_entry")]
+   // [Table("гв_подзапись")]
     public class GVEntry : LegPartEntry, ILegPart
     {
         public virtual GVStructure Structure { get; set; }
@@ -62,8 +63,8 @@ namespace WpfApp2.Db.Models.GV
         public virtual ICollection<GVEntryFull> EntriesFull2 { get; set; } = new HashSet<GVEntryFull>();
        
     }
-
-    [Table("глубокие_вены")]
+    [Table("deep_veins")]
+    //[Table("глубокие_вены")]
     public class GVEntryFull : LegPartEntries
     {
         [NotMapped]

@@ -5,13 +5,15 @@ using System.Data.Entity;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("сахарный_диабет_комментарий")]
+
+    [Table("diabetes_comment")]
+    // [Table("сахарный_диабет_комментарий")]
     public class SugarDiabetComment
     {
         [Key]
         [Column("id")]
         public int Id { set; get; }
-        [Column("название")]
+        [Column("name")]
         public string Str { set; get; }
 
         public override string ToString()
@@ -24,7 +26,7 @@ namespace WpfApp2.Db.Models
     {
         public SugarDiabetCommentRepository(DbContext context) : base(context)
         {
-           
+
         }
     }
 }

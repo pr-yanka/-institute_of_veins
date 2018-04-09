@@ -10,23 +10,24 @@ using System.Text;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("выписка_операция")]
+    // [Table("выписка_операция")]
+    [Table("statement_operation")]
     public class StatementOperation
     {
         [Key]
         [Column("id")]
         public int Id { set; get; }
 
-        [Column("Документ")]
+        [Column("document")]
         public Byte[] DocTemplate { set; get; }
 
-        [Column("Первая_нога")]
+        [Column("first_leg")]
         public int FirstIsRightIfNull { set; get; }
 
-        [Column("Количество_дней")]
+        [Column("days_count")]
         public int CountDays { set; get; }
 
-        [Column("id_врача")]
+        [Column("id_doctor")]
         public int DoctorId { set; get; }
 
     }

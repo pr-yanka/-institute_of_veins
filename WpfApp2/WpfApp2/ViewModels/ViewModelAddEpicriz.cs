@@ -595,20 +595,20 @@ namespace WpfApp2.ViewModels
                                 }
                                 List<DiagnosisType> LeftDiagnosisList = new List<DiagnosisType>();
 
-                                foreach (var diag in Data.Diagnosis.GetAll.Where(s => s.isLeft == true && s.id_операции == Operation.Id).ToList())
+                                foreach (var diag in Data.Diagnosis.GetAll.Where(s => s.isLeft == true && s.id_operation == Operation.Id).ToList())
                                 {
 
-                                    LeftDiagnosisList.Add(Data.DiagnosisTypes.Get(diag.id_диагноз.Value));
+                                    LeftDiagnosisList.Add(Data.DiagnosisTypes.Get(diag.id_diagnosis.Value));
                                 }
 
                                 List<DiagnosisType> RightDiagnosisList = new List<DiagnosisType>();
 
 
 
-                                foreach (var diag in Data.Diagnosis.GetAll.Where(s => s.isLeft == false && s.id_операции == Operation.Id).ToList())
+                                foreach (var diag in Data.Diagnosis.GetAll.Where(s => s.isLeft == false && s.id_operation == Operation.Id).ToList())
                                 {
 
-                                    RightDiagnosisList.Add(Data.DiagnosisTypes.Get(diag.id_диагноз.Value));
+                                    RightDiagnosisList.Add(Data.DiagnosisTypes.Get(diag.id_diagnosis.Value));
                                 }
 
                                 int xx = 0;
@@ -814,25 +814,25 @@ namespace WpfApp2.ViewModels
                         string rightP = "";
                         foreach (var Diagnosis in Data.OperationTypeOperations.GetAll)
                         {
-                            if (Diagnosis.id_операции == Operation.Id)
+                            if (Diagnosis.id_operation == Operation.Id)
                             {
                                 if (Diagnosis.isLeft == true)
                                 {
                                     if (i1 != 0)
-                                        leftP += ", " + GetStrFixedForDocumemnt(Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str);
+                                        leftP += ", " + GetStrFixedForDocumemnt(Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str);
                                     else
                                     {
-                                        leftP += GetStrFixedForDocumemnt(Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str);
+                                        leftP += GetStrFixedForDocumemnt(Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str);
                                     }
                                     i1++;
                                 }
                                 else
                                 {
                                     if (i2 != 0)
-                                        rightP += ", " + GetStrFixedForDocumemnt(Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str);
+                                        rightP += ", " + GetStrFixedForDocumemnt(Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str);
                                     else
                                     {
-                                        rightP += GetStrFixedForDocumemnt(Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str);
+                                        rightP += GetStrFixedForDocumemnt(Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str);
                                     }
                                     i2++;
                                 }

@@ -10,18 +10,19 @@ using System.Text;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("непереносимость_припаратов_пациента")]
+    [Table("drug_intolerance_patient")]
+    //[Table("непереносимость_припаратов_пациента")]
     public class PreparateHatePatients
     {
         [Column(Order = 0), Key]
-        public int id_пациент { set; get; }
+        public int id_patient { set; get; }
         [Column(Order = 1), Key]
-        public int id_припарат { set; get; }
-
+        public int id_drug { set; get; }
+        //   public int id_припарат { set; get; }
         [Column(Order = 2)]
-        public string Комментарий { set; get; }
+        public string comment { set; get; }
 
-        
+
 
     }
     public class PreparateHatePatientsRepository : Repository<PreparateHatePatients>
@@ -31,5 +32,5 @@ namespace WpfApp2.Db.Models
 
         }
     }
-  
+
 }

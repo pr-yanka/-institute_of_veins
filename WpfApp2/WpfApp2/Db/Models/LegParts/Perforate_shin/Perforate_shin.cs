@@ -11,11 +11,11 @@ namespace WpfApp2.Db.Models
 {
     public class Perforate_shin
     {
-        
-    }
 
-    [Table("перфорант_голень_структура")]
-    public partial class Perforate_shinStructure :LegPartDbStructure, ILegPart
+    }
+    [Table("perforate_shin_structure")]
+    //[Table("перфорант_голень_structure")]
+    public partial class Perforate_shinStructure : LegPartDbStructure, ILegPart
     {
         [NotMapped]
         public override bool HasDoubleMetric { get { return false; } }
@@ -28,8 +28,8 @@ namespace WpfApp2.Db.Models
 
         public virtual ICollection<Perforate_shinEntry> Entries { get; set; } = new HashSet<Perforate_shinEntry>();
     }
-
-    [Table("перфорант_голень_комбо")]
+    [Table("perforate_shin_combo")]
+    //[Table("перфорант_голень_комбо")]
     public partial class Perforate_shinCombo : LegPartCombo, ILegPart
     {
         [Key]
@@ -37,32 +37,32 @@ namespace WpfApp2.Db.Models
         public int Id { get; set; }
 
         [Required]
-        [Column("структура_1")]
+        [Column("structure_1")]
         public int IdStr1 { get; set; }
 
         public virtual Perforate_shinStructure Str1 { get; set; }
 
-        [Column("структура_2")]
+        [Column("structure_2")]
         public int? IdStr2 { get; set; }
 
         public virtual Perforate_shinStructure Str2 { get; set; }
 
-        [Column("структура_3")]
+        [Column("structure_3")]
         public int? IdStr3 { get; set; }
         public virtual Perforate_shinStructure Str3 { get; set; }
 
-        [Column("структура_4")]
+        [Column("structure_4")]
         public int? IdStr4 { get; set; }
         public virtual Perforate_shinStructure Str4 { get; set; }
 
-        [Column("структура_5")]
+        [Column("structure_5")]
         public int? IdStr5 { get; set; }
         public virtual Perforate_shinStructure Str5 { get; set; }
 
         public override string ToString()
         {
             return Str1.ToString();
-        }   
+        }
     }
 
     /*
@@ -111,11 +111,12 @@ namespace WpfApp2.Db.Models
             return null;
         }
     }*/
-    [Table("перфорант_голень_подзапись")]
+    [Table("perforate_shin_sub_entry")]
+    //   [Table("перфорант_голень_sub_entry")]
     public class Perforate_shinEntry : LegPartEntry, ILegPart
     {
 
-        [Column("метрика")]
+        [Column("metrics")]
         public override float Size { get; set; }
         [NotMapped]
         public override float Size2 { get; set; }
@@ -131,8 +132,8 @@ namespace WpfApp2.Db.Models
     }
 
 
-
-    [Table("перфорант_голень")]
+    [Table("perforate_shin")]
+    //[Table("перфорант_голень")]
     public class Perforate_shinEntryFull : LegPartEntries
     {
         [NotMapped]
@@ -144,17 +145,17 @@ namespace WpfApp2.Db.Models
         public virtual Perforate_shinEntry Perforate_shinEntry4 { get; set; }
         public virtual Perforate_shinEntry Perforate_shinEntry5 { get; set; }
 
-        [Column("подзапись_1")]
+        [Column("sub_entry_1")]
         public override int EntryId1 { get; set; }
-        [Column("подзапись_2")]
+        [Column("sub_entry_2")]
         public override int? EntryId2 { get; set; }
-        [Column("подзапись_3")]
+        [Column("sub_entry_3")]
         public override int? EntryId3 { get; set; }
-        [Column("подзапись_4")]
+        [Column("sub_entry_4")]
         public override int? EntryId4 { get; set; }
-        [Column("подзапись_5")]
+        [Column("sub_entry_5")]
         public override int? EntryId5 { get; set; }
-      
+
 
         [NotMapped]
         public override int? EntryId6 { get; set; }

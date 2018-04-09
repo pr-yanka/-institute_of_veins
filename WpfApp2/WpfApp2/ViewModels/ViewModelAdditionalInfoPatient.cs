@@ -154,14 +154,14 @@ namespace WpfApp2.ViewModels
         private ObservableCollection<PreparateHateDataSource> _preparateHateTypes;
         private ObservableCollection<HirurgInterruptDataSource> _hirurgIntruptTypes;
         private ObservableCollection<AlergicAnevrizmListDataSource> _alergicAnevrizmTypes;
-        private ObservableCollection<OperationForAmbullatorCardDataSource> _operationForAmbulatornCardBuf;
+       //private ObservableCollection<OperationForAmbullatorCardDataSource> _operationForAmbulatornCardBuf;
 
 
         private CollectionViewSource _bloodExchangeList;
         private CollectionViewSource _preparateHateList;
         private CollectionViewSource _alergicAnevrizmList;
         private CollectionViewSource _hirurgInteruptList;
-        private CollectionViewSource _operationForAmbCard;
+        //private CollectionViewSource _operationForAmbCard;
 
 
         public CollectionViewSource BloodExchangeList { get { return _bloodExchangeList; } set { _bloodExchangeList = value; OnPropertyChanged(); NameOfButton = "Сохранить"; } }
@@ -169,7 +169,7 @@ namespace WpfApp2.ViewModels
         public CollectionViewSource AlergicAnevrizmList { get { return _alergicAnevrizmList; } set { _alergicAnevrizmList = value; OnPropertyChanged(); NameOfButton = "Сохранить"; } }
         public CollectionViewSource HirurgInteruptList { get { return _hirurgInteruptList; } set { _hirurgInteruptList = value; OnPropertyChanged(); NameOfButton = "Сохранить"; } }
         //public DelegateCommand ToSetOprerationForAmbCardListCommand { get; set; }
-        public CollectionViewSource OperationForAmbCard { get { return _operationForAmbCard; } set { _operationForAmbCard = value; OnPropertyChanged(); NameOfButton = "Сохранить"; } }
+        //public CollectionViewSource OperationForAmbCard { get { return _operationForAmbCard; } set { _operationForAmbCard = value; OnPropertyChanged(); NameOfButton = "Сохранить"; } }
 
         public DelegateCommand CreateWordDocumentCommand { get; private set; }
         public DelegateCommand ToSetHirurgInterruptCommand { get; private set; }
@@ -178,7 +178,7 @@ namespace WpfApp2.ViewModels
 
         //public ObservableCollection<string> OprTypes { get { return _oprTypes; } set { _oprTypes = value; OnPropertyChanged(); } }
         public ObservableCollection<BloodExchangeListDataSource> BloodExchange { get { return _bloodExchange; } set { _bloodExchange = value; NameOfButton = "Сохранить"; OnPropertyChanged(); } }
-        ObservableCollection<OperationForAmbullatorCardDataSource> OperationForAmbulatornCardBuf { get { return _operationForAmbulatornCardBuf; } set { _operationForAmbulatornCardBuf = value; NameOfButton = "Сохранить"; OnPropertyChanged(); } }
+      //  ObservableCollection<OperationForAmbullatorCardDataSource> OperationForAmbulatornCardBuf { get { return _operationForAmbulatornCardBuf; } set { _operationForAmbulatornCardBuf = value; NameOfButton = "Сохранить"; OnPropertyChanged(); } }
 
         ObservableCollection<AlergicAnevrizmListDataSource> AlergicAnevrizmBuf { get { return _alergicAnevrizmTypes; } set { _alergicAnevrizmTypes = value; NameOfButton = "Сохранить"; OnPropertyChanged(); } }
 
@@ -550,10 +550,10 @@ namespace WpfApp2.ViewModels
 
 
 
-                    var alList = AlergicAnevrizmPatients.GetAll.Where(s => s.id_пациента == CurrentPatient.Id).ToList();
+                    var alList = AlergicAnevrizmPatients.GetAll.Where(s => s.id_patient == CurrentPatient.Id).ToList();
                     foreach (var x in alList)
                     {
-                        var z = new AlergicAnevrizmListDataSource(AlergicAnevrizm.Get(x.id_анамнеза));
+                        var z = new AlergicAnevrizmListDataSource(AlergicAnevrizm.Get(x.id_amnestic));
                         DelegateCommand DelThis = new DelegateCommand(() =>
                         {
                             for (int i = 0; i < ((ObservableCollection<AlergicAnevrizmListDataSource>)AlergicAnevrizmList.Source).Count; i++)
@@ -590,14 +590,14 @@ namespace WpfApp2.ViewModels
 
 
 
-                    var blList = BloodExchangePatients.GetAll.Where(s => s.id_пациента == CurrentPatient.Id).ToList();
+                    var blList = BloodExchangePatients.GetAll.Where(s => s.id_patient == CurrentPatient.Id).ToList();
                     foreach (var x in blList)
                     {
                         DelegateCommand DelThis = new DelegateCommand(() =>
                         {
                             for (int i = 0; i < ((ObservableCollection<BloodExchangeListDataSource>)BloodExchangeList.Source).Count; i++)
                             {
-                                if (((ObservableCollection<BloodExchangeListDataSource>)BloodExchangeList.Source)[i].Data.Id == x.id_переливания)
+                                if (((ObservableCollection<BloodExchangeListDataSource>)BloodExchangeList.Source)[i].Data.Id == x.id_transfer)
                                 {
                                     ((ObservableCollection<BloodExchangeListDataSource>)BloodExchangeList.Source).RemoveAt(i);
                                 }
@@ -607,9 +607,9 @@ namespace WpfApp2.ViewModels
 
 
                         });
-                        var z = new BloodExchangeListDataSource(BloodExchangeRep.Get(x.id_переливания), DelThis);
+                        var z = new BloodExchangeListDataSource(BloodExchangeRep.Get(x.id_transfer), DelThis);
                         z.BloodExchangeCommentList = BloodExchangeCommentList;
-                        z.Commentary = x.Комментарий;
+                        z.Commentary = x.comment;
                         z.IsChecked = true;
                         BloodExchange.Add(z);
                         BloodExchangeBuf.Add(z);
@@ -634,10 +634,10 @@ namespace WpfApp2.ViewModels
 
 
 
-                    var hpList = HirurgInterupPatients.GetAll.Where(s => s.id_пациента == CurrentPatient.Id).ToList();
+                    var hpList = HirurgInterupPatients.GetAll.Where(s => s.id_patinet == CurrentPatient.Id).ToList();
                     foreach (var x in hpList)
                     {
-                        var z = new HirurgInterruptDataSource(HirurgInterup.Get(x.id_вмешательства));
+                        var z = new HirurgInterruptDataSource(HirurgInterup.Get(x.id_intervention));
                         DelegateCommand DelThis = new DelegateCommand(() =>
                         {
                             for (int i = 0; i < ((ObservableCollection<HirurgInterruptDataSource>)HirurgInteruptList.Source).Count; i++)
@@ -663,10 +663,10 @@ namespace WpfApp2.ViewModels
 
 
 
-                    var phList = PreparateHatePatients.GetAll.Where(s => s.id_пациент == CurrentPatient.Id).ToList();
+                    var phList = PreparateHatePatients.GetAll.Where(s => s.id_patient == CurrentPatient.Id).ToList();
                     foreach (var x in phList)
                     {
-                        var z = new PreparateHateDataSource(PreparateHate.Get(x.id_припарат));
+                        var z = new PreparateHateDataSource(PreparateHate.Get(x.id_drug));
                         DelegateCommand DelThis = new DelegateCommand(() =>
                         {
                             for (int i = 0; i < ((ObservableCollection<PreparateHateDataSource>)PreparateHateList.Source).Count; i++)
@@ -682,7 +682,7 @@ namespace WpfApp2.ViewModels
 
                         z.DeleteCommand = DelThis;
                         z.IsChecked = true;
-                        z.Commentary = x.Комментарий;
+                        z.Commentary = x.comment;
                         PreparateHateBuf.Add(z);
                     }
                     PreparateHateList.Source = PreparateHateBuf;
@@ -730,7 +730,7 @@ namespace WpfApp2.ViewModels
             PreparateHateList = new CollectionViewSource();
             AlergicAnevrizmList = new CollectionViewSource();
             HirurgInteruptList = new CollectionViewSource();
-            OperationForAmbCard = new CollectionViewSource();
+            //OperationForAmbCard = new CollectionViewSource();
             CreateWordDocumentCommand = new DelegateCommand(
            () =>
            {
@@ -799,7 +799,7 @@ namespace WpfApp2.ViewModels
             PreparateHateList.Source = PreparateHateBuf;
             AlergicAnevrizmList.Source = AlergicAnevrizmBuf;
             HirurgInteruptList.Source = HirurgInteruptBuf;
-            OperationForAmbCard.Source = OperationForAmbulatornCardBuf;
+         //   OperationForAmbCard.Source = OperationForAmbulatornCardBuf;
             //    MessageBus.Default.Subscribe("UpdateDictionariesOfLocationForNewPatient", GetDictionary);
             BloodExchangeList.Source = BloodExchange;
 
@@ -977,12 +977,12 @@ namespace WpfApp2.ViewModels
                 foreach (var dgOp in Data.BloodExchangePatients.GetAll)
                 {
 
-                    if (dgOp.id_пациента == CurrentPatient.Id)
+                    if (dgOp.id_patient == CurrentPatient.Id)
                     {
                         test = true;
                         foreach (var diag in (ObservableCollection<BloodExchangeListDataSource>)BloodExchangeList.Source)
                         {
-                            if (diag.IsChecked.Value && dgOp.id_переливания == diag.Data.Id)
+                            if (diag.IsChecked.Value && dgOp.id_transfer == diag.Data.Id)
                             {
                                 test = false;
                                 break;
@@ -1008,9 +1008,9 @@ namespace WpfApp2.ViewModels
                         test = true;
                         foreach (var rcOp in Data.BloodExchangePatients.GetAll)
                         {
-                            if (rcOp.id_переливания == rec.Data.Id && rcOp.id_пациента == CurrentPatient.Id)
+                            if (rcOp.id_transfer == rec.Data.Id && rcOp.id_patient == CurrentPatient.Id)
                             {
-                                var ToChange = Data.BloodExchange.Get(rcOp.id_переливания);
+                                var ToChange = Data.BloodExchange.Get(rcOp.id_transfer);
 
                                 if (ToChange.Date != rec.Data.Date || ToChange.Volume != rec.Data.Volume)
                                 {
@@ -1023,9 +1023,9 @@ namespace WpfApp2.ViewModels
                                     Data.BloodExchangePatients.Remove(rcOp);
                                     Data.Complete();
                                     var newRec = new BloodExchangePatients();
-                                    newRec.id_пациента = CurrentPatient.Id;
-                                    newRec.id_переливания = buff.Id;
-                                    newRec.Комментарий = rec.Commentary;
+                                    newRec.id_patient = CurrentPatient.Id;
+                                    newRec.id_transfer = buff.Id;
+                                    newRec.comment = rec.Commentary;
 
                                     bool xtest = false;
                                     foreach (var x in BloodExchangeCommentList)
@@ -1071,7 +1071,7 @@ namespace WpfApp2.ViewModels
                                             Data.Complete();
                                         }
                                     }
-                                    rcOp.Комментарий = rec.Commentary;
+                                    rcOp.comment = rec.Commentary;
                                 }
                                 Data.Complete();
                                 test = false;
@@ -1081,9 +1081,9 @@ namespace WpfApp2.ViewModels
                         if (test)
                         {
                             var newRec = new BloodExchangePatients();
-                            newRec.id_пациента = CurrentPatient.Id;
-                            newRec.id_переливания = rec.Data.Id;
-                            newRec.Комментарий = rec.Commentary;
+                            newRec.id_patient = CurrentPatient.Id;
+                            newRec.id_transfer = rec.Data.Id;
+                            newRec.comment = rec.Commentary;
                             Data.BloodExchangePatients.Add(newRec);
                             Data.Complete();
 
@@ -1110,12 +1110,12 @@ namespace WpfApp2.ViewModels
                 foreach (var dgOp in Data.AlergicAnevrizmPatients.GetAll)
                 {
 
-                    if (dgOp.id_пациента == CurrentPatient.Id)
+                    if (dgOp.id_patient == CurrentPatient.Id)
                     {
                         test = true;
                         foreach (var diag in (ObservableCollection<AlergicAnevrizmListDataSource>)AlergicAnevrizmList.Source)
                         {
-                            if (diag.IsChecked.Value && dgOp.id_анамнеза == diag.Data.Id)
+                            if (diag.IsChecked.Value && dgOp.id_amnestic == diag.Data.Id)
                             {
                                 test = false;
                                 break;
@@ -1139,9 +1139,9 @@ namespace WpfApp2.ViewModels
                         test = true;
                         foreach (var rcOp in Data.AlergicAnevrizmPatients.GetAll)
                         {
-                            if (rcOp.id_анамнеза == rec.Data.Id && rcOp.id_пациента == CurrentPatient.Id)
+                            if (rcOp.id_amnestic == rec.Data.Id && rcOp.id_patient == CurrentPatient.Id)
                             {
-                                var ToChange = Data.AlergicAnevrizm.Get(rcOp.id_анамнеза);
+                                var ToChange = Data.AlergicAnevrizm.Get(rcOp.id_amnestic);
 
                                 if (ToChange.Str != rec.Data.Str)
                                 {
@@ -1154,8 +1154,8 @@ namespace WpfApp2.ViewModels
                                     Data.AlergicAnevrizmPatients.Remove(rcOp);
                                     Data.Complete();
                                     var newRec = new AlergicAnevrizmPatients();
-                                    newRec.id_пациента = CurrentPatient.Id;
-                                    newRec.id_анамнеза = buff.Id;
+                                    newRec.id_patient = CurrentPatient.Id;
+                                    newRec.id_amnestic = buff.Id;
 
                                     Data.AlergicAnevrizmPatients.Add(newRec);
                                     Data.Complete();
@@ -1170,7 +1170,7 @@ namespace WpfApp2.ViewModels
 
 
                             var newRec = new AlergicAnevrizmPatients();
-                            newRec.id_пациента = CurrentPatient.Id;
+                            newRec.id_patient = CurrentPatient.Id;
                             var ToChange = Data.AlergicAnevrizm.Get(rec.Data.Id);
                             if (ToChange.Str != rec.Data.Str)
                             {
@@ -1180,7 +1180,7 @@ namespace WpfApp2.ViewModels
 
                                 Data.AlergicAnevrizm.Add(buff);
                                 Data.Complete();
-                                newRec.id_анамнеза = buff.Id;
+                                newRec.id_amnestic = buff.Id;
                                 Data.AlergicAnevrizmPatients.Add(newRec);
                                 Data.Complete();
 
@@ -1189,7 +1189,7 @@ namespace WpfApp2.ViewModels
                             {
 
 
-                                newRec.id_анамнеза = rec.Data.Id;
+                                newRec.id_amnestic = rec.Data.Id;
 
                                 Data.AlergicAnevrizmPatients.Add(newRec);
                                 Data.Complete();
@@ -1216,12 +1216,12 @@ namespace WpfApp2.ViewModels
                 foreach (var dgOp in Data.PreparateHatePatients.GetAll)
                 {
 
-                    if (dgOp.id_пациент == CurrentPatient.Id)
+                    if (dgOp.id_patient == CurrentPatient.Id)
                     {
                         test = true;
                         foreach (var diag in (ObservableCollection<PreparateHateDataSource>)PreparateHateList.Source)
                         {
-                            if (diag.IsChecked.Value && dgOp.id_припарат == diag.Data.Id)
+                            if (diag.IsChecked.Value && dgOp.id_drug == diag.Data.Id)
                             {
                                 test = false;
                                 break;
@@ -1245,9 +1245,9 @@ namespace WpfApp2.ViewModels
                         test = true;
                         foreach (var rcOp in Data.PreparateHatePatients.GetAll)
                         {
-                            if (rcOp.id_припарат == rec.Data.Id && rcOp.id_пациент == CurrentPatient.Id)
+                            if (rcOp.id_drug == rec.Data.Id && rcOp.id_patient == CurrentPatient.Id)
                             {
-                                var ToChange = Data.PreparateHate.Get(rcOp.id_припарат);
+                                var ToChange = Data.PreparateHate.Get(rcOp.id_drug);
 
                                 if (ToChange.Str != rec.Data.Str)
                                 {
@@ -1260,9 +1260,9 @@ namespace WpfApp2.ViewModels
                                     Data.PreparateHatePatients.Remove(rcOp);
                                     Data.Complete();
                                     var newRec = new PreparateHatePatients();
-                                    newRec.id_пациент = CurrentPatient.Id;
-                                    newRec.id_припарат = buff.Id;
-                                    newRec.Комментарий = rec.Commentary;
+                                    newRec.id_patient = CurrentPatient.Id;
+                                    newRec.id_drug = buff.Id;
+                                    newRec.comment = rec.Commentary;
                                     Data.PreparateHatePatients.Add(newRec);
                                     Data.Complete();
 
@@ -1289,7 +1289,7 @@ namespace WpfApp2.ViewModels
                                 else
                                 {
 
-                                    rcOp.Комментарий = rec.Commentary;
+                                    rcOp.comment = rec.Commentary;
                                     bool xtest = false;
                                     foreach (var x in PreparateHateCommentList)
                                     {
@@ -1320,8 +1320,8 @@ namespace WpfApp2.ViewModels
                         if (test)
                         {
                             var newRec = new PreparateHatePatients();
-                            newRec.id_пациент = CurrentPatient.Id;
-                            newRec.Комментарий = rec.Commentary;
+                            newRec.id_patient = CurrentPatient.Id;
+                            newRec.comment = rec.Commentary;
 
                             var ToChange = Data.PreparateHate.Get(rec.Data.Id);
                             if (ToChange.Str != rec.Data.Str)
@@ -1332,7 +1332,7 @@ namespace WpfApp2.ViewModels
 
                                 Data.PreparateHate.Add(buff);
                                 Data.Complete();
-                                newRec.id_припарат = buff.Id;
+                                newRec.id_drug = buff.Id;
                                 Data.PreparateHatePatients.Add(newRec);
                                 Data.Complete();
 
@@ -1342,7 +1342,7 @@ namespace WpfApp2.ViewModels
 
 
 
-                                newRec.id_припарат = rec.Data.Id;
+                                newRec.id_drug = rec.Data.Id;
 
                                 Data.PreparateHatePatients.Add(newRec);
                                 Data.Complete();
@@ -1373,12 +1373,12 @@ namespace WpfApp2.ViewModels
                 foreach (var dgOp in Data.HirurgInterupPatients.GetAll)
                 {
 
-                    if (dgOp.id_пациента == CurrentPatient.Id)
+                    if (dgOp.id_patinet == CurrentPatient.Id)
                     {
                         test = true;
                         foreach (var diag in (ObservableCollection<HirurgInterruptDataSource>)HirurgInteruptList.Source)
                         {
-                            if (diag.IsChecked.Value && dgOp.id_вмешательства == diag.Data.Id)
+                            if (diag.IsChecked.Value && dgOp.id_intervention == diag.Data.Id)
                             {
                                 test = false;
                                 break;
@@ -1402,9 +1402,9 @@ namespace WpfApp2.ViewModels
                         test = true;
                         foreach (var rcOp in Data.HirurgInterupPatients.GetAll)
                         {
-                            if (rcOp.id_вмешательства == rec.Data.Id && rcOp.id_пациента == CurrentPatient.Id)
+                            if (rcOp.id_intervention == rec.Data.Id && rcOp.id_patinet == CurrentPatient.Id)
                             {
-                                var ToChange = Data.HirurgInterup.Get(rcOp.id_вмешательства);
+                                var ToChange = Data.HirurgInterup.Get(rcOp.id_intervention);
 
                                 if (ToChange.Str != rec.Data.Str || ToChange.Date != rec.Data.Date)
                                 {
@@ -1417,8 +1417,8 @@ namespace WpfApp2.ViewModels
                                     Data.HirurgInterupPatients.Remove(rcOp);
                                     Data.Complete();
                                     var newRec = new HirurgInteruptPatients();
-                                    newRec.id_пациента = CurrentPatient.Id;
-                                    newRec.id_вмешательства = buff.Id;
+                                    newRec.id_patinet = CurrentPatient.Id;
+                                    newRec.id_intervention = buff.Id;
 
                                     Data.HirurgInterupPatients.Add(newRec);
                                     Data.Complete();
@@ -1431,7 +1431,7 @@ namespace WpfApp2.ViewModels
                         {
 
                             var newRec = new HirurgInteruptPatients();
-                            newRec.id_пациента = CurrentPatient.Id;
+                            newRec.id_patinet = CurrentPatient.Id;
                             var ToChange = Data.HirurgInterup.Get(rec.Data.Id);
                             if (ToChange.Str != rec.Data.Str)
                             {
@@ -1441,7 +1441,7 @@ namespace WpfApp2.ViewModels
 
                                 Data.HirurgInterup.Add(buff);
                                 Data.Complete();
-                                newRec.id_вмешательства = buff.Id;
+                                newRec.id_intervention = buff.Id;
                                 Data.HirurgInterupPatients.Add(newRec);
                                 Data.Complete();
 
@@ -1451,7 +1451,7 @@ namespace WpfApp2.ViewModels
 
 
 
-                                newRec.id_вмешательства = rec.Data.Id;
+                                newRec.id_intervention = rec.Data.Id;
                                 Data.HirurgInterupPatients.Add(newRec);
                                 Data.Complete();
                             }

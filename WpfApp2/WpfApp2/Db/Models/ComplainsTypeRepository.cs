@@ -4,13 +4,14 @@ using System.Data.Entity;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("виды_жалоб")]
+    [Table("complains_dictionar")]
     public class ComplainsType
     {
         [Key]
         [Column("id")]
         public int Id { set; get; }
-        [Column("описание")]
+        [Column("description")]
+        //      [Column("описание")]
         public string Str { set; get; }
 
         public override string ToString()

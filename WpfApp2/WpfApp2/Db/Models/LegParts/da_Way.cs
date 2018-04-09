@@ -10,11 +10,11 @@ namespace WpfApp2.Db.Models.LegParts
 {
     public abstract class da_Way
     {
-        [Column("id_вида"), Key]
-        public  int Id { get; set; }
-        [Column("описание")]
-        public  string Name { get; set; }
+        [Column("id_type"), Key]
+        public int Id { get; set; }
+        [Column("description")]
+        public string Name { get; set; }
 
     }
-   
+
 }

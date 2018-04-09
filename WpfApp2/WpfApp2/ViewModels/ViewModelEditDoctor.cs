@@ -202,11 +202,11 @@ namespace WpfApp2.ViewModels
 
                 foreach (var dcsp in dcspRep.GetAll)
                 {
-                    if (dcsp.id_врача == currentDoctor.Id)
+                    if (dcsp.id_doctor == currentDoctor.Id)
                     {
                         foreach (var spec in SpecializationsOld)
                         {
-                            if (spec.id == dcsp.id_специлизации)
+                            if (spec.id == dcsp.id_specialization)
                             {
                                 spec.IsChecked = true;
                             }
@@ -216,11 +216,11 @@ namespace WpfApp2.ViewModels
 
                 foreach (var dcsc in dcscRep.GetAll)
                 {
-                    if (dcsc.id_врача == currentDoctor.Id)
+                    if (dcsc.id_doctor == currentDoctor.Id)
                     {
                         foreach (var title in ScintificsOld)
                         {
-                            if (title.id == dcsc.id_звания)
+                            if (title.id == dcsc.id_title)
                             {
                                 title.IsChecked = true;
                             }
@@ -230,11 +230,11 @@ namespace WpfApp2.ViewModels
 
                 foreach (var dcsp in dcspRep.GetAll)
                 {
-                    if (dcsp.id_врача == currentDoctor.Id)
+                    if (dcsp.id_doctor == currentDoctor.Id)
                     {
                         foreach (var spec in Specializations)
                         {
-                            if (spec.id == dcsp.id_специлизации)
+                            if (spec.id == dcsp.id_specialization)
                             {
                                 spec.IsChecked = true;
                             }
@@ -244,11 +244,11 @@ namespace WpfApp2.ViewModels
 
                 foreach (var dcsc in dcscRep.GetAll)
                 {
-                    if (dcsc.id_врача == currentDoctor.Id)
+                    if (dcsc.id_doctor == currentDoctor.Id)
                     {
                         foreach (var title in Scintifics)
                         {
-                            if (title.id == dcsc.id_звания)
+                            if (title.id == dcsc.id_title)
                             {
                                 title.IsChecked = true;
                             }
@@ -500,7 +500,7 @@ namespace WpfApp2.ViewModels
 
                                     foreach (var doctorSpec in Data.DoctorsSpecializations.GetAll)
                                     {
-                                        if (doctorSpec.id_врача == currentDoctor.Id && doctorSpec.id_специлизации == specOld.id)
+                                        if (doctorSpec.id_doctor == currentDoctor.Id && doctorSpec.id_specialization == specOld.id)
                                         {
                                             Data.DoctorsSpecializations.Remove(doctorSpec);
                                             Data.Complete();
@@ -530,8 +530,8 @@ namespace WpfApp2.ViewModels
                                 if (specTestbuf == false)
                                 {
                                     DoctorsSpecializations bufDS = new DoctorsSpecializations();
-                                    bufDS.id_врача = currentDoctor.Id;
-                                    bufDS.id_специлизации = spec.id;
+                                    bufDS.id_doctor = currentDoctor.Id;
+                                    bufDS.id_specialization = spec.id;
                                     Data.DoctorsSpecializations.Add(bufDS);
                                     Data.Complete();
 
@@ -564,7 +564,7 @@ namespace WpfApp2.ViewModels
 
                                     foreach (var doctorSpec in Data.ScientificTitles.GetAll)
                                     {
-                                        if (doctorSpec.id_врача == currentDoctor.Id && doctorSpec.id_звания == specOld.id)
+                                        if (doctorSpec.id_doctor == currentDoctor.Id && doctorSpec.id_title == specOld.id)
                                         {
                                             Data.ScientificTitles.Remove(doctorSpec);
                                             Data.Complete();
@@ -594,8 +594,8 @@ namespace WpfApp2.ViewModels
                                 if (specTestbuf == false)
                                 {
                                     ScientificTitles bufDS = new ScientificTitles();
-                                    bufDS.id_врача = currentDoctor.Id;
-                                    bufDS.id_звания = spec.id;
+                                    bufDS.id_doctor = currentDoctor.Id;
+                                    bufDS.id_title = spec.id;
                                     Data.ScientificTitles.Add(bufDS);
                                     Data.Complete();
 

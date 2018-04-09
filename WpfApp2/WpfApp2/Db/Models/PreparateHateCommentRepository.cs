@@ -5,13 +5,15 @@ using System.Data.Entity;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("коментарий_к_непереносимости")]
+    //[Table("коментарий_к_непереносимости")]
+    [Table("comment_on_intolerance")]
+
     public class PreparateHateComment
     {
         [Key]
         [Column("id")]
         public int Id { set; get; }
-        [Column("коментарий")]
+        [Column("comment")]
         public string Str { set; get; }
 
         public override string ToString()

@@ -102,7 +102,7 @@
 
                         <DataGrid.Columns>
 
-                            <DataGridTemplateColumn  Header="Дата" Width="109" >
+                            <DataGridTemplateColumn  Header="Дата" Width="119" >
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate >
 
@@ -120,7 +120,7 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
-                            <DataGridTemplateColumn   Header="Комментарий" MinWidth="333" MaxWidth="333">
+                            <DataGridTemplateColumn   Header="Комментарий" MinWidth="323" MaxWidth="323">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate >
                                         <controls:AutoCompleteBox  MinimumPrefixLength ="0"  BorderThickness="1" Padding="4" Height="29"  Text="{Binding  Commentary,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"

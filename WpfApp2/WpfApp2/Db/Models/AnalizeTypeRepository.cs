@@ -6,13 +6,14 @@ using System.Linq;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("виды_анализа")]
+    //[Table("виды_анализа")]
+     [Table("analysis_dictionary")]
     public class AnalizeType
     {
         [Key]
         [Column("id")]
         public int Id { set; get; }
-        [Column("название")]
+        [Column("name")]
         public string Str { set; get; }
 
         public override string ToString()

@@ -11,7 +11,9 @@ using WpfApp2.Messaging;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("алергологичный_анамнез")]
+   // [Table("алергологичный_анамнез")]
+    [Table("allergic_anamnesis")]
+   
     public class AlergicAnevrizm
     {
 
@@ -19,7 +21,7 @@ namespace WpfApp2.Db.Models
         [Column("id")]
         public int Id { set; get; }
 
-        [Column("Название")]
+        [Column("name")]
         public string Str { set { _str = value; MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null); } get { return _str; } }
         [NotMapped]
         private string _str;

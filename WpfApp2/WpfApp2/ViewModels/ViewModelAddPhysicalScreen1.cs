@@ -1492,12 +1492,12 @@ namespace WpfApp2.ViewModels
                             foreach (var dgOp in Data.DiagnosisObs.GetAll)
                             {
 
-                                if (dgOp.id_обследование_ноги == examnTotal.Id && dgOp.isLeft == true)
+                                if (dgOp.id_leg_examination == examnTotal.Id && dgOp.isLeft == true)
                                 {
                                     test = true;
                                     foreach (var diag in LeftDiagnosisList)
                                     {
-                                        if (diag.IsChecked.Value && dgOp.id_диагноз == diag.Data.Id)
+                                        if (diag.IsChecked.Value && dgOp.id_diagnosis == diag.Data.Id)
                                         {
                                             test = false;
                                             break;
@@ -1523,7 +1523,7 @@ namespace WpfApp2.ViewModels
                                     foreach (var dgOp in Data.DiagnosisObs.GetAll)
                                     {
 
-                                        if (dgOp.id_диагноз == diag.Data.Id && dgOp.id_обследование_ноги == examnTotal.Id && dgOp.isLeft == true)
+                                        if (dgOp.id_diagnosis == diag.Data.Id && dgOp.id_leg_examination == examnTotal.Id && dgOp.isLeft == true)
                                         {
                                             test = false;
                                             break;
@@ -1532,8 +1532,8 @@ namespace WpfApp2.ViewModels
                                     if (test)
                                     {
                                         var newDiag = new DiagnosisObs();
-                                        newDiag.id_диагноз = diag.Data.Id;
-                                        newDiag.id_обследование_ноги = examnTotal.Id;
+                                        newDiag.id_diagnosis = diag.Data.Id;
+                                        newDiag.id_leg_examination = examnTotal.Id;
                                         newDiag.isLeft = true;
                                         Data.DiagnosisObs.Add(newDiag);
                                         Data.Complete();
@@ -1549,12 +1549,12 @@ namespace WpfApp2.ViewModels
                             foreach (var dgOp in Data.DiagnosisObs.GetAll)
                             {
 
-                                if (dgOp.id_обследование_ноги == examnTotal.Id && dgOp.isLeft == false)
+                                if (dgOp.id_leg_examination == examnTotal.Id && dgOp.isLeft == false)
                                 {
                                     test = true;
                                     foreach (var diag in RightDiagnosisList)
                                     {
-                                        if (diag.IsChecked.Value && dgOp.id_диагноз == diag.Data.Id)
+                                        if (diag.IsChecked.Value && dgOp.id_diagnosis == diag.Data.Id)
                                         {
                                             test = false;
                                             break;
@@ -1577,7 +1577,7 @@ namespace WpfApp2.ViewModels
                                     test = true;
                                     foreach (var dgOp in Data.DiagnosisObs.GetAll)
                                     {
-                                        if (dgOp.id_диагноз == diag.Data.Id && dgOp.id_обследование_ноги == examnTotal.Id && dgOp.isLeft == false)
+                                        if (dgOp.id_diagnosis == diag.Data.Id && dgOp.id_leg_examination == examnTotal.Id && dgOp.isLeft == false)
                                         {
                                             test = false;
                                             break;
@@ -1586,8 +1586,8 @@ namespace WpfApp2.ViewModels
                                     if (test)
                                     {
                                         var newDiag = new DiagnosisObs();
-                                        newDiag.id_диагноз = diag.Data.Id;
-                                        newDiag.id_обследование_ноги = examnTotal.Id;
+                                        newDiag.id_diagnosis = diag.Data.Id;
+                                        newDiag.id_leg_examination = examnTotal.Id;
                                         newDiag.isLeft = false;
                                         Data.DiagnosisObs.Add(newDiag);
                                         Data.Complete();
@@ -1602,12 +1602,12 @@ namespace WpfApp2.ViewModels
                             foreach (var dgOp in Data.RecomendationObs.GetAll)
                             {
 
-                                if (dgOp.id_обследования == examnTotal.Id)
+                                if (dgOp.id_examination == examnTotal.Id)
                                 {
                                     test = true;
                                     foreach (var diag in RecomendationsList)
                                     {
-                                        if (diag.IsChecked.Value && dgOp.id_рекомендации == diag.Data.Id)
+                                        if (diag.IsChecked.Value && dgOp.id_recommendations == diag.Data.Id)
                                         {
                                             test = false;
                                             break;
@@ -1632,7 +1632,7 @@ namespace WpfApp2.ViewModels
                                     test = true;
                                     foreach (var rcOp in Data.RecomendationObs.GetAll)
                                     {
-                                        if (rcOp.id_рекомендации == rec.Data.Id && rcOp.id_обследования == examnTotal.Id.Value)
+                                        if (rcOp.id_recommendations == rec.Data.Id && rcOp.id_examination == examnTotal.Id.Value)
                                         {
                                             test = false;
                                             break;
@@ -1641,8 +1641,8 @@ namespace WpfApp2.ViewModels
                                     if (test)
                                     {
                                         var newRec = new RecomendationObs();
-                                        newRec.id_рекомендации = rec.Data.Id;
-                                        newRec.id_обследования = examnTotal.Id.Value;
+                                        newRec.id_recommendations = rec.Data.Id;
+                                        newRec.id_examination = examnTotal.Id.Value;
                                         Data.RecomendationObs.Add(newRec);
                                         Data.Complete();
                                     }
@@ -1655,12 +1655,12 @@ namespace WpfApp2.ViewModels
                             foreach (var dgOp in Data.ComplanesObs.GetAll)
                             {
 
-                                if (dgOp.id_обследования == examnTotal.Id)
+                                if (dgOp.id_Examination == examnTotal.Id)
                                 {
                                     test = true;
                                     foreach (var diag in ComplainsList)
                                     {
-                                        if (diag.IsChecked.Value && dgOp.id_жалобы == diag.Data.Id)
+                                        if (diag.IsChecked.Value && dgOp.id_Complains == diag.Data.Id)
                                         {
                                             test = false;
                                             break;
@@ -1687,7 +1687,7 @@ namespace WpfApp2.ViewModels
                                     test = true;
                                     foreach (var cmOp in Data.ComplanesObs.GetAll)
                                     {
-                                        if (cmOp.id_жалобы == cmp.Data.Id && cmOp.id_обследования == examnTotal.Id.Value)
+                                        if (cmOp.id_Complains == cmp.Data.Id && cmOp.id_Examination == examnTotal.Id.Value)
                                         {
                                             test = false;
                                             break;
@@ -1696,8 +1696,8 @@ namespace WpfApp2.ViewModels
                                     if (test)
                                     {
                                         var newcmp = new ComplanesObs();
-                                        newcmp.id_жалобы = cmp.Data.Id;
-                                        newcmp.id_обследования = examnTotal.Id.Value;
+                                        newcmp.id_Complains = cmp.Data.Id;
+                                        newcmp.id_Examination = examnTotal.Id.Value;
                                         Data.ComplanesObs.Add(newcmp);
                                         Data.Complete();
                                     }
@@ -1863,8 +1863,8 @@ namespace WpfApp2.ViewModels
                             {
                                 var newDiag = new DiagnosisObs
                                 {
-                                    id_диагноз = diag.Data.Id,
-                                    id_обследование_ноги = examnTotal.Id,
+                                    id_diagnosis = diag.Data.Id,
+                                    id_leg_examination = examnTotal.Id,
                                     isLeft = true
                                 };
                                 Data.DiagnosisObs.Add(newDiag);
@@ -1878,8 +1878,8 @@ namespace WpfApp2.ViewModels
                             {
                                 var newDiag = new DiagnosisObs
                                 {
-                                    id_диагноз = diag.Data.Id,
-                                    id_обследование_ноги = examnTotal.Id,
+                                    id_diagnosis = diag.Data.Id,
+                                    id_leg_examination = examnTotal.Id,
                                     isLeft = false
                                 };
                                 Data.DiagnosisObs.Add(newDiag);
@@ -1894,8 +1894,8 @@ namespace WpfApp2.ViewModels
                             {
                                 var newRec = new RecomendationObs
                                 {
-                                    id_рекомендации = rec.Data.Id,
-                                    id_обследования = examnTotal.Id.Value
+                                    id_recommendations = rec.Data.Id,
+                                    id_examination = examnTotal.Id.Value
                                 };
                                 Data.RecomendationObs.Add(newRec);
                                 Data.Complete();
@@ -1908,8 +1908,8 @@ namespace WpfApp2.ViewModels
                             if (cmp.IsChecked.Value)
                             {
                                 var newcmp = new ComplanesObs();
-                                newcmp.id_жалобы = cmp.Data.Id;
-                                newcmp.id_обследования = examnTotal.Id.Value;
+                                newcmp.id_Complains = cmp.Data.Id;
+                                newcmp.id_Examination = examnTotal.Id.Value;
                                 Data.ComplanesObs.Add(newcmp);
                                 Data.Complete();
                             }
@@ -9989,9 +9989,9 @@ namespace WpfApp2.ViewModels
 
 
                 DiagnosisDataSource diagDSourceBuf;
-                foreach (var diag in Data.DiagnosisObs.GetAll.Where(s => s.isLeft == true && s.id_обследование_ноги == Exam.Id).ToList())
+                foreach (var diag in Data.DiagnosisObs.GetAll.Where(s => s.isLeft == true && s.id_leg_examination == Exam.Id).ToList())
                 {
-                    diagDSourceBuf = new DiagnosisDataSource(Data.DiagnosisTypes.Get(diag.id_диагноз.Value));
+                    diagDSourceBuf = new DiagnosisDataSource(Data.DiagnosisTypes.Get(diag.id_diagnosis.Value));
                     diagDSourceBuf.IsChecked = true;
                     LeftDiagnosisList.Add(diagDSourceBuf);
                 }
@@ -10000,9 +10000,9 @@ namespace WpfApp2.ViewModels
 
 
 
-                foreach (var diag in Data.DiagnosisObs.GetAll.Where(s => s.isLeft == false && s.id_обследование_ноги == Exam.Id).ToList())
+                foreach (var diag in Data.DiagnosisObs.GetAll.Where(s => s.isLeft == false && s.id_leg_examination == Exam.Id).ToList())
                 {
-                    diagDSourceBuf = new DiagnosisDataSource(Data.DiagnosisTypes.Get(diag.id_диагноз.Value));
+                    diagDSourceBuf = new DiagnosisDataSource(Data.DiagnosisTypes.Get(diag.id_diagnosis.Value));
                     diagDSourceBuf.IsChecked = true;
                     RightDiagnosisList.Add(diagDSourceBuf);
                 }
@@ -10011,18 +10011,18 @@ namespace WpfApp2.ViewModels
 
                 ComplainsList = new ObservableCollection<ComplainsDataSource>();
                 ComplainsDataSource compDSourceBuf;
-                foreach (var diag in Data.ComplanesObs.GetAll.Where(s => s.id_обследования == Exam.Id).ToList())
+                foreach (var diag in Data.ComplanesObs.GetAll.Where(s => s.id_Examination == Exam.Id).ToList())
                 {
-                    compDSourceBuf = new ComplainsDataSource(Data.ComplainsTypes.Get(diag.id_жалобы));
+                    compDSourceBuf = new ComplainsDataSource(Data.ComplainsTypes.Get(diag.id_Complains));
                     compDSourceBuf.IsChecked = true;
                     ComplainsList.Add(compDSourceBuf);
                 }
                 RecomendationsList = new ObservableCollection<RecomendationsDataSource>();
                 RecomendationsDataSource recDSourceBuf;
 
-                foreach (var diag in Data.RecomendationObs.GetAll.Where(s => s.id_обследования == Exam.Id).ToList())
+                foreach (var diag in Data.RecomendationObs.GetAll.Where(s => s.id_examination == Exam.Id).ToList())
                 {
-                    recDSourceBuf = new RecomendationsDataSource(Data.RecomendationsTypes.Get(diag.id_рекомендации));
+                    recDSourceBuf = new RecomendationsDataSource(Data.RecomendationsTypes.Get(diag.id_recommendations));
                     recDSourceBuf.IsChecked = true;
                     RecomendationsList.Add(recDSourceBuf);
                 }

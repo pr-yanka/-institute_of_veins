@@ -13,7 +13,8 @@ using WpfApp2.Messaging;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("хирургическое_вмешательство")]
+    //[Table("хирургическое_вмешательство")]  
+    [Table("surgery")]
     public class HirurgInterupt : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -28,10 +29,10 @@ namespace WpfApp2.Db.Models
         [Column("id")]
         public int Id { set; get; }
 
-        [Column("Название")]
+        [Column("name")]
         public string Str { set { _str = value; MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null); OnPropertyChanged(); } get {  return _str; } }
 
-        [Column("Дата")]
+        [Column("date")]
         public DateTime? Date { set { _date = value; MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null); OnPropertyChanged(); } get { if (_date == null) return DateTime.Now; return _date; } }
 
         [NotMapped]

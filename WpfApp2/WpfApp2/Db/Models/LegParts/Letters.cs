@@ -10,17 +10,18 @@ using WpfApp2.Db.Models.LegParts;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("буквы")]
+    [Table("letters")]
     public class Letters
     {
         [Key]
         [Column("id")]
         public int Id { get; set; }
 
-        [Column("буква")]
+        [Column("letter")]
         public string Leter { get; set; }
 
-        [Column("хвостик")]
+        [Column("second_part")]
+        //[Column("хвостик")]
         public string Text1 { get; set; }
 
         [NotMapped]

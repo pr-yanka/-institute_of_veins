@@ -17,7 +17,7 @@ namespace WpfApp2.Db.Models
         [Column("id")]
         public int Id { set; get; }
       
-        [Column("TemplateBinary")]
+        [Column("templateBinary")]
         public Byte[] DocTemplate { set; get; }
     }
 

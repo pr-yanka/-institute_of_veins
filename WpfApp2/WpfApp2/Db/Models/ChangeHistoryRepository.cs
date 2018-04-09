@@ -9,35 +9,37 @@ using System.Threading.Tasks;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("история_изменений")]
+   // [Table("история_изменений")]
+    [Table("changes_history")]
+    //change history
     public class ChangeHistory
 
     {
         [Key]
         [Column("id")]
         public int id { set; get; }
-        [Column("id_аккаунта")]
+        [Column("id_account")]
         public int id_аккаунта { set; get; }
-        [Column("id_записи")]
+        [Column("id_record")]
         public string id_записи { set; get; }
 
-        [Column("тип_изменения")]
+        [Column("type_change")]
         public int тип_изменения { set; get; }
 
-        
-        [Column("дата_изменения")]
+
+        [Column("date_of_change")]
         public DateTime дата_изменения { set; get; }
-        [Column("название_таблицы")]
+        [Column("table_name")]
         public string название_таблицы { set; get; }
-        [Column("название_столбца")]
+        [Column("column_name")]
         public string название_столбца { set; get; }
-        [Column("старое_значение")]
+        [Column("old_value")]
         public string старое_значение { set; get; }
-        [Column("новое_значение")]
+        [Column("new_value")]
         public string новое_значение { set; get; }
-        [Column("SomeBlobFileNew")]
+        [Column("someBlobFileNew")]
         public byte[] SomeBlobFileNew { set; get; }
-        [Column("SomeBlobFileOld")]
+        [Column("someBlobFileOld")]
         public byte[] SomeBlobFileOld { set; get; }
         
     }

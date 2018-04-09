@@ -215,9 +215,7 @@
     <Compile Include="Db\Models\PreparateHateCommentRepository.cs" />
     <Compile Include="Db\Models\BloodExchangeCommentRepository.cs" />
     <Compile Include="Db\Models\OperationTypeOperationsRepository.cs" />
-    <Compile Include="Db\Models\OperationForAmbulatornCardPatientsRepository.cs" />
     <Compile Include="Db\Models\AlergicAnevrizmPatientsRepository.cs" />
-    <Compile Include="Db\Models\OperationForAmbulatornCardRepository.cs" />
     <Compile Include="Db\Models\PreparateHatePatientsRepository.cs" />
     <Compile Include="Db\Models\HirurgInteruptPatientsRepository.cs" />
     <Compile Include="Db\Models\BloodExchangePatientsRepository.cs" />
@@ -387,7 +385,6 @@
     <Compile Include="ViewModels\Panels\BPVVayTypePanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\SclerozPanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\AnticogulantPanelViewModel.cs" />
-    <Compile Include="ViewModels\Panels\OperationForAmbullatorCardPanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\AlergicAnevrizmPanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\BloodExchangePanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\PreparateHatePanelViewModel.cs" />
@@ -425,7 +422,6 @@
     <Compile Include="ViewModels\ViewModelChangeHistory.cs" />
     <Compile Include="ViewModels\ViewModelAdditionalInfoPatient.cs" />
     <Compile Include="ViewModels\ViewModelAlergicAnevrizmList.cs" />
-    <Compile Include="ViewModels\ViewModelOperationForAmbullatorCardList.cs" />
     <Compile Include="ViewModels\ViewModelPreparateHate.cs" />
     <Compile Include="ViewModels\ViewModelHirurgInterruptList.cs" />
     <Compile Include="ViewModels\ViewModelRedactPathology.cs" />

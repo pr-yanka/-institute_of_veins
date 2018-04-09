@@ -45,13 +45,31 @@ namespace WpfApp2.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
-
         private Visibility _visOfNothingFaund;
         public Visibility VisOfNothingFaund
         {
             get { return _visOfNothingFaund; }
             set
-            { _visOfNothingFaund = value; OnPropertyChanged(); }
+            {
+                _visOfNothingFaund = value;
+                if (value == Visibility.Visible)
+                {
+                    IsCheckBoxVisible = Visibility.Hidden;
+                }
+                else
+                {
+                    IsCheckBoxVisible = Visibility.Visible;
+                }
+
+                OnPropertyChanged();
+            }
+        }
+        private Visibility _isCheckBoxVisible;
+        public Visibility IsCheckBoxVisible
+        {
+            get { return _isCheckBoxVisible; }
+            set
+            { _isCheckBoxVisible = value; OnPropertyChanged(); }
         }
         public Patient CurrentPatient { get; set; }
         public string initials { get; set; }
@@ -94,7 +112,7 @@ namespace WpfApp2.ViewModels
                 );
 
                     DateTime buf1 = DateTime.Parse(Operation.Time);
-                    if (Operation.отмена_операции != null && isCanceledOprVisible == false) { }
+                    if (Operation.cancel_operations != null && isCanceledOprVisible == false) { }
                     else
                         HistoryDataSource.Add(new HistoryDataSource(bufer, new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, buf1.Hour, buf1.Minute, buf1.Second), "Операция"));
                 }
@@ -148,7 +166,7 @@ namespace WpfApp2.ViewModels
                     }
                 }
             }
-            if(HistoryDataSource.Count == 0)
+            if (HistoryDataSource.Count == 0)
             {
                 VisOfNothingFaund = Visibility.Visible;
             }

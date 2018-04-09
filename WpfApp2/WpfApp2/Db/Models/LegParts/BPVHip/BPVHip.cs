@@ -14,7 +14,7 @@ namespace WpfApp2.Db.Models
         
     }
 
-    [Table("БПВ_на_бедре_структура")]
+    [Table("bpv_hip_structure")]
     public partial class BPVHipStructure :LegPartDbStructure, ILegPart
     {
         [NotMapped]
@@ -29,7 +29,8 @@ namespace WpfApp2.Db.Models
         public virtual ICollection<BPVHipEntry> Entries { get; set; } = new HashSet<BPVHipEntry>();
     }
 
-    [Table("БПВ_на_бедре_комбо")]
+    [Table("bpv_hip_combo")]
+   // [Table("БПВ_на_бедре_комбо")]
     public partial class BPVHipCombo : LegPartCombo, ILegPart
     {
         [Key]
@@ -37,25 +38,25 @@ namespace WpfApp2.Db.Models
         public int Id { get; set; }
 
         [Required]
-        [Column("структура1")]
+        [Column("structure1")]
         public int IdStr1 { get; set; }
 
         public virtual BPVHipStructure Str1 { get; set; }
 
-        [Column("структура2")]
+        [Column("structure2")]
         public int? IdStr2 { get; set; }
 
         public virtual BPVHipStructure Str2 { get; set; }
 
-        [Column("структура3")]
+        [Column("structure3")]
         public int? IdStr3 { get; set; }
         public virtual BPVHipStructure Str3 { get; set; }
 
-        [Column("структура4")]
+        [Column("structure4")]
         public int? IdStr4 { get; set; }
         public virtual BPVHipStructure Str4 { get; set; }
 
-        [Column("структура5")]
+        [Column("structure5")]
         public int? IdStr5 { get; set; }
         public virtual BPVHipStructure Str5 { get; set; }
 
@@ -111,11 +112,13 @@ namespace WpfApp2.Db.Models
             return null;
         }
     }*/
-    [Table("БПВ_на_бедре_подзапись")]
+
+    [Table("bpv_hip_sub_entry")]
+   // [Table("БПВ_на_бедре_подзапись")]
     public class BPVHipEntry : LegPartEntry, ILegPart
     {
 
-        [Column("метрика")]
+        [Column("metrics")]
         public override float Size { get; set; }
       
         [NotMapped]
@@ -131,16 +134,16 @@ namespace WpfApp2.Db.Models
         public virtual ICollection<BPVHipEntryFull> EntriesFull5 { get; set; } = new HashSet<BPVHipEntryFull>();
 
     }
-
-    [Table("вид_БПВ_хода")]
+    [Table("bpv_hip_way")]
+  // [Table("вид_БПВ_хода")]
     public class BPVHipWay : da_Way
     {
       
         public virtual ICollection<BPVHipEntryFull> EntriesFull { get; set; } = new HashSet<BPVHipEntryFull>();
 
     }
-
-    [Table("большая_подкожная_вена_на_бедре")]
+    [Table("big_saphenous_vein_on_hip")]
+   // [Table("большая_подкожная_вена_на_бедре")]
     public class BPVHipEntryFull : LegPartEntries
     {
         public virtual BPVHipWay BPVHipWay { get; set; }

@@ -1,40 +1,42 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
-using System.IO;
-using System.Linq;
-using System.Text;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("аккаунты")]
+    //  [Table("аккаунты")]
+    [Table("accounts")]
     public class Accaunt
     {
         [Key]
         [Column("id")]
         public int Id { set; get; }
-        [Column("врач")]
+        //doctor  [Column("врач")]
+        [Column("doctor")]
         public bool? isDoctor { set; get; }
-        [Column("админ")]
+        //[Column("админ")]
+        [Column("admin")]
         public bool? isAdmin { set; get; }
-        [Column("медперсонал")]
+        [Column("med_staff")]
+        //[Column("медперсонал")]
         public bool? isMedPersonal { set; get; }
-        [Column("секретарь")]
+        //[Column("секретарь")]
+        [Column("secretary")]
         public bool? isSecretar { set; get; }
         [Column("enabled/disabled")]
         public bool? isEnabled { set; get; }
 
-        [Column("idврач")]
+        [Column("id_doctor")]
+        // [Column("idврач")]
         public int? idврач { set; get; }
-        [Column("idмедперсонал")]
+        [Column("id_med_staff")]
+        //[Column("idмедперсонал")]
         public int? idмедперсонал { set; get; }
-
-        [Column("имя")]
+        //[Column("имя")]
+        [Column("name")]
         public string Name { set; get; }
-        [Column("пароль")]
+        [Column("password")]
+        //[Column("пароль")]
         public string Password { set; get; }
     }
 

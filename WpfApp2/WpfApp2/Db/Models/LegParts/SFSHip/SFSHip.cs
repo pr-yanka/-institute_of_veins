@@ -13,11 +13,11 @@ namespace WpfApp2.Db.Models
     {
         
     }
-
-    [Table("сфс_структура")]
+    [Table("sfs_structure")]
+    //[Table("сфс_structure")]
     public partial class SFSHipStructure : LegPartDbStructure, ILegPart
     {
-        [Column("двойная_метрика")]
+        [Column("double_metric")]
         public override bool HasDoubleMetric { get; set; }
 
         public virtual ICollection<SFSHipCombo> SFSs1 { get; set; } = new HashSet<SFSHipCombo>();
@@ -28,8 +28,8 @@ namespace WpfApp2.Db.Models
         public virtual ICollection<SFSHipCombo> SFSs6 { get; set; } = new HashSet<SFSHipCombo>();
         public virtual ICollection<SFSHipEntry> Entries { get; set; } = new HashSet<SFSHipEntry>();
     }
-
-    [Table("сфс_комбо")]
+    [Table("sfs_combo")]
+    //[Table("сфс_комбо")]
     public partial class SFSHipCombo : LegPartCombo, ILegPart
     {
         [Key]
@@ -37,29 +37,29 @@ namespace WpfApp2.Db.Models
         public int Id { get; set; }
 
         [Required]
-        [Column("структура1")]
+        [Column("structure1")]
         public int IdStr1 { get; set; }
 
         public virtual SFSHipStructure Str1 { get; set; }
 
-        [Column("структура2")]
+        [Column("structure2")]
         public int? IdStr2 { get; set; }
 
         public virtual SFSHipStructure Str2 { get; set; }
 
-        [Column("структура3")]
+        [Column("structure3")]
         public int? IdStr3 { get; set; }
         public virtual SFSHipStructure Str3 { get; set; }
 
-        [Column("структура4")]
+        [Column("structure4")]
         public int? IdStr4 { get; set; }
         public virtual SFSHipStructure Str4 { get; set; }
 
-        [Column("структура5")]
+        [Column("structure5")]
         public int? IdStr5 { get; set; }
         public virtual SFSHipStructure Str5 { get; set; }
 
-        [Column("структура6")]
+        [Column("structure6")]
         public int? IdStr6 { get; set; }
         public virtual SFSHipStructure Str6 { get; set; }
 
@@ -69,8 +69,8 @@ namespace WpfApp2.Db.Models
         }   
     }
 
-  
-    [Table("сфс_подзапись")]
+    [Table("sfs_sub_entry")]
+    //[Table("сфс_подзапись")]
     public class SFSHipEntry : LegPartEntry, ILegPart
     {
         public virtual SFSHipStructure Structure { get; set; }
@@ -90,8 +90,8 @@ namespace WpfApp2.Db.Models
     }
 
 
-
-    [Table("сафено-феморальное соустье")]
+    [Table("sapheno_femoral_fistula")]
+    //[Table("сафено-феморальное соустье")]
     public class SFSHipEntryFull : LegPartEntries
     {
       

@@ -5,13 +5,15 @@ using System.Data.Entity;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("вид_диагноз")]
+
+    // [Table("вид_диагноз")]
+    [Table("diagnosis_types_dictionary")]
     public class DiagnosisType
     {
         [Key]
-        [Column("id_вида")]
+        [Column("id_type")]
         public int Id { set; get; }
-        [Column("описание")]
+        [Column("description")]
         public string Str { set; get; }
 
         public override string ToString()

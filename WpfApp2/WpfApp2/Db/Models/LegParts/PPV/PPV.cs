@@ -9,7 +9,8 @@ using WpfApp2.Db.Models.LegParts;
 
 namespace WpfApp2.Db.Models.PPV
 {
-    [Table("ппв_структура")]
+    [Table("ppv_structure")]
+    // [Table("ппв_structure")]
     public partial class PPVStructure : LegPartDbStructure, ILegPart
     {
         [NotMapped]
@@ -17,11 +18,11 @@ namespace WpfApp2.Db.Models.PPV
 
         public virtual ICollection<PPVCombo> PPVs1 { get; set; } = new HashSet<PPVCombo>();
         public virtual ICollection<PPVCombo> PPVs2 { get; set; } = new HashSet<PPVCombo>();
-       
+
         public virtual ICollection<PPVEntry> Entries { get; set; } = new HashSet<PPVEntry>();
     }
-
-    [Table("ппв_комбо")]
+    [Table("ppv_combo")]
+    // [Table("ппв_комбо")]
     public partial class PPVCombo : LegPartCombo, ILegPart
     {
         [Key]
@@ -29,18 +30,18 @@ namespace WpfApp2.Db.Models.PPV
         public int Id { get; set; }
 
         [Required]
-        [Column("структура1")]
+        [Column("structure1")]
         public int IdStr1 { get; set; }
 
         public virtual PPVStructure Str1 { get; set; }
 
-        [Column("структура2")]
+        [Column("structure2")]
         public int? IdStr2 { get; set; }
 
         public virtual PPVStructure Str2 { get; set; }
 
 
-       
+
 
         public override string ToString()
         {
@@ -48,8 +49,8 @@ namespace WpfApp2.Db.Models.PPV
         }
     }
 
-
-    [Table("ппв_подзапись")]
+    [Table("ppv_sub_entry")]
+    //[Table("ппв_подзапись")]
     public class PPVEntry : LegPartEntry, ILegPart
     {
         public virtual PPVStructure Structure { get; set; }
@@ -61,12 +62,11 @@ namespace WpfApp2.Db.Models.PPV
 
         public virtual ICollection<PPVEntryFull> EntriesFull1 { get; set; } = new HashSet<PPVEntryFull>();
         public virtual ICollection<PPVEntryFull> EntriesFull2 { get; set; } = new HashSet<PPVEntryFull>();
-       
+
     }
 
-
-
-    [Table("подколенная_перфорантная_вена")]
+    [Table("popliteal_perforating_vein")]
+    //[Table("подколенная_перфорантная_вена")]
     public class PPVEntryFull : LegPartEntries
     {
 

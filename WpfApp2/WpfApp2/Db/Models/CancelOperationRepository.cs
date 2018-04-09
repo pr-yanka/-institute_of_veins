@@ -7,16 +7,18 @@ using System.Linq;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("отмена_операции")]
+    //  [Table("отмена_операции")]
+    [Table("cancel_operations")]
     public class CancelOperation { 
         [Key]
         [Column("id")]
         public int Id { set; get; }
-        [Column("дата_переноса")]
+        [Column("transfer_date")]
         public DateTime TransferDate { set; get; }
-        [Column("причина"),ForeignKey("ReasonCancle")]
+        [Column("reason"),ForeignKey("ReasonCancle")]
         public int Reason { set; get; }
-        [Column("операция_отменена")]
+        // [Column("операция_отменена")]
+        [Column("operation_canceled")]
         public bool isCancled { set; get; }
         public virtual ReasonsOfCancelOperation ReasonCancle { get; set; }
     }

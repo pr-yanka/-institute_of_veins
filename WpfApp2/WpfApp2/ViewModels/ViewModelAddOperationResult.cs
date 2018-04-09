@@ -80,25 +80,25 @@ namespace WpfApp2.ViewModels
             string rightP = "";
             foreach (var Diagnosis in Data.OperationTypeOperations.GetAll)
             {
-                if (Diagnosis.id_операции == Operation.Id)
+                if (Diagnosis.id_operation == Operation.Id)
                 {
                     if (Diagnosis.isLeft == true)
                     {
                         if (i1 != 0)
-                            leftP += ", " + Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                            leftP += ", " + Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str;
                         else
                         {
-                            leftP += Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                            leftP += Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str;
                         }
                         i1++;
                     }
                     else
                     {
                         if (i2 != 0)
-                            rightP += ", " + Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                            rightP += ", " + Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str;
                         else
                         {
-                            rightP += Data.OperationType.Get(Diagnosis.id_типОперации.Value).Str;
+                            rightP += Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str;
                         }
                         i2++;
                     }
@@ -121,14 +121,14 @@ namespace WpfApp2.ViewModels
             TextResultCancle = "Итоги операции";
             DateText = "Операция проведена";
             OtmenOrProv = "Проведённая ";
-            if (Operation.итоги_операции != null)
+            if (Operation.operation_result != null)
             {
                 using (var context = new MySqlContext())
                 {
                     OperationResultRepository opResRep = new OperationResultRepository(context);
-                    comment = opResRep.Get(Operation.итоги_операции.Value).Str;
-                    if(opResRep.Get(Operation.итоги_операции.Value).Date != null)
-                    Date = opResRep.Get(Operation.итоги_операции.Value).Date.Value;
+                    comment = opResRep.Get(Operation.operation_result.Value).Str;
+                    if(opResRep.Get(Operation.operation_result.Value).Date != null)
+                    Date = opResRep.Get(Operation.operation_result.Value).Date.Value;
                 }
             }
         }
@@ -142,13 +142,13 @@ namespace WpfApp2.ViewModels
                 () =>
                 {
 
-                    if (Operation.итоги_операции != null)
+                    if (Operation.operation_result != null)
                     {
                         using (var context = new MySqlContext())
                         {
                             OperationResultRepository opResRep = new OperationResultRepository(context);
 
-                            var Res = opResRep.Get(Operation.итоги_операции.Value);
+                            var Res = opResRep.Get(Operation.operation_result.Value);
                             if (Res.IdNextOperation == null)
                             {
                                 var result1 = MessageBox.Show("Назначить ещё одну операцию?", "", MessageBoxButton.YesNo);
@@ -208,7 +208,7 @@ namespace WpfApp2.ViewModels
                             buf.Str = comment;
                             buf.Date = Date;
                             Data.OperationResult.Add(buf);
-                            Operation.итоги_операции = buf.Id;
+                            Operation.operation_result = buf.Id;
                             Data.Complete();
                             MessageBus.Default.Call("SetCurrentACCOp", this, null);
                             MessageBus.Default.Call("SetCurrentPatientForOperation", this, Operation.PatientId);
@@ -223,7 +223,7 @@ namespace WpfApp2.ViewModels
                             buf.Str = comment;
                             buf.Date = Date;
                             Data.OperationResult.Add(buf);
-                            Operation.итоги_операции = buf.Id;
+                            Operation.operation_result = buf.Id;
                             Data.Complete();
                             MessageBus.Default.Call("SetCurrentACCOp", this, null);
                             MessageBus.Default.Call("GetOprForOprResultOverview", this, operationId);

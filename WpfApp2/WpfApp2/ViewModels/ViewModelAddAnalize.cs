@@ -206,7 +206,8 @@ namespace WpfApp2.ViewModels
                          Analize.ImageByte = bteToBD;
                      }
                      else if (op.SafeFileName.Contains(".jpg") || op.SafeFileName.Contains(".jpeg")
-                     || op.SafeFileName.Contains(".png"))
+                     || op.SafeFileName.Contains(".png") || op.SafeFileName.Contains(".JPG") || op.SafeFileName.Contains(".JPEG")
+                     || op.SafeFileName.Contains(".PNG"))
                      {
                          Analize.ImageByte = ImageToByte(new BitmapImage(new Uri(op.FileName)));
                      }

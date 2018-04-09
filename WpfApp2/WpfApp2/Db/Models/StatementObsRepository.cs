@@ -10,17 +10,20 @@ using System.Text;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("заключения_обследования")]
+    // [Table("заключения_обследования")] 
+    [Table("conclusions_examination")]
+
+
     public class StatementObs
     {
         [Key]
         [Column("id")]
         public int Id { set; get; }
 
-        [Column("Документ")]
+        [Column("document")]
         public Byte[] DocTemplate { set; get; }
 
-      
+
 
         //[Column("id_врача")]
         //public int DoctorId { set; get; }

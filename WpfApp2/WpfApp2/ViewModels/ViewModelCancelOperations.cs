@@ -105,7 +105,7 @@ namespace WpfApp2.ViewModels
                     }
                     buf.TransferDate = DateTime.Now;
                     Data.CancelOperation.Add(buf);
-                    Operation.отмена_операции = buf.Id;
+                    Operation.cancel_operations = buf.Id;
                     Data.Complete();
                     MessageBus.Default.Call("SetCurrentACCOp", this, null);
                     MessageBus.Default.Call("GetOperationForOverwiev", this, operationId);

@@ -13,15 +13,15 @@ namespace WpfApp2.Db.Models.LegParts
         [Key]
         [Column("id")]
         public int Id { get; set; }
-        [Column("id_структуры")]
+        [Column("id_structure")]
         public int StructureID { get; set; }
-        [Column("комментарий")]
+        [Column("comment")]
         public string Comment { get; set; }
 
 
-        [Column("метрика1")]
+        [Column("metrics1")]
         public virtual float Size { get; set; }
-        [Column("метрика2")]
+        [Column("metrics2")]
         public virtual float Size2 { get; set; }
 
     }

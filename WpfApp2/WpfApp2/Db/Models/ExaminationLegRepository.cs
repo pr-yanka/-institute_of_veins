@@ -10,40 +10,52 @@ using System.Text;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("обследование_ноги")]
+    //[Table("обследование_ноги")]
+    [Table("leg_examination")]
     public class ExaminationLeg
     {
         [Key]
-        [Column("id_обследования")]
+        [Column("id_examination")]
         public int Id { set; get; }
-        [Column("id_СФС")]
+        //[Column("id_СФС")]
+        [Column("id_SFS")]
         public int? SFSid { set; get; }
-        [Column("id_БПВ_на_бедре")]
+        [Column("id_BPV_on_hip")]
+        //    [Column("id_БПВ_на_бедре")]
         public int? BPVHip { set; get; }
-        [Column("id_ПДСВ")]
+        [Column("id_PDSV")]
+        //[Column("id_ПДСВ")]
         public int? PDSVid { set; get; }
-        [Column("id_ЗДСВ")]
+        [Column("id_ZDSV")]
+        //[Column("id_ЗДСВ")]
         public int? ZDSVid { set; get; }
-        [Column("id_перфоранты_бедра")]
+        [Column("id_perforate_hip")]
+        //[Column("id_перфоранты_бедра")]
         public int? PerforateHipid { set; get; }
-        [Column("id_БПВ_на_голени")]
+        [Column("id_BPV_on_shin")]
+        //[Column("id_БПВ_на_голени")]
         public int? BPVTibiaid { set; get; }
-        [Column("id_перфорант_голени")]
+        [Column("id_tibia_perforate")]
+       // [Column("id_перфорант_голени")]
         public int? TibiaPerforateid { set; get; }
-        [Column("id_СПС")]
+    //    [Column("id_СПС")]
+        [Column("id_SPS")]
         public int? SPSid { set; get; }
-
-        [Column("id_МПВ")]
+       // [Column("id_МПВ")]
+        [Column("id_MPV")]
         public int? MPVid { set; get; }
-        [Column("id_ТЕ_МПВ")]
+        //[Column("id_ТЕ_МПВ")]
+        [Column("id_TE_MPV")]
         public int? TEMPVid { set; get; }
-        [Column("id_ППВ")]
+       // [Column("id_ППВ")]
+        [Column("id_PPV")]
         public int? PPVid { set; get; }
 
 
-        [Column("Примечание")]
+       // [Column("Примечание")]
+        [Column("note")]
         public string additionalText { set; get; }
-        [Column("id_глубокие_вены")]
+        [Column("id_deep_veins")]
         public int? GVid { set; get; }
         
         [Column(Order = 0), ForeignKey("Cs")]

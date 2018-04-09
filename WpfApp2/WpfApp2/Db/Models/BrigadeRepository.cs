@@ -10,15 +10,16 @@ using System.Text;
 
 namespace WpfApp2.Db.Models
 {
-    [Table("бригада")]
+    //[Table("бригада")]
+    [Table("brigade")]
     public class Brigade
     {
        
         [Column(Order = 0) ,Key, ForeignKey("Doctor")]
-        public int? id_врача { set; get; }
+        public int? id_doctor { set; get; }
      
         [Column(Order = 1), Key, ForeignKey("Operation")]
-        public int? id_операции { set; get; }
+        public int? id_operation { set; get; }
 
         public virtual Doctor Doctor { get; set; }
         public virtual Operation Operation { get; set; }

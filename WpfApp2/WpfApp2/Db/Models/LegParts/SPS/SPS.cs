@@ -9,10 +9,11 @@ using WpfApp2.Db.Models.LegParts;
 
 namespace WpfApp2.Db.Models.SPS
 {
-    [Table("спс_структура")]
+    [Table("sps_structure")]
+   // [Table("спс_structure")]
     public partial class SPSHipStructure : LegPartDbStructure, ILegPart
     {
-        [Column("двойная_метрика")]
+        [Column("double_metric")]
         public override bool HasDoubleMetric { get; set; }
 
         public virtual ICollection<SPSHipCombo> SPSs1 { get; set; } = new HashSet<SPSHipCombo>();
@@ -21,7 +22,8 @@ namespace WpfApp2.Db.Models.SPS
         public virtual ICollection<SPSHipEntry> Entries { get; set; } = new HashSet<SPSHipEntry>();
     }
 
-    [Table("спс_комбо")]
+    [Table("sps_combo")]
+    //[Table("спс_комбо")]
     public partial class SPSHipCombo : LegPartCombo, ILegPart
     {
         [Key]
@@ -29,17 +31,17 @@ namespace WpfApp2.Db.Models.SPS
         public int Id { get; set; }
 
         [Required]
-        [Column("структура1")]
+        [Column("structure1")]
         public int IdStr1 { get; set; }
 
         public virtual SPSHipStructure Str1 { get; set; }
 
-        [Column("структура2")]
+        [Column("structure2")]
         public int? IdStr2 { get; set; }
 
         public virtual SPSHipStructure Str2 { get; set; }
 
-        [Column("структура3")]
+        [Column("structure3")]
         public int? IdStr3 { get; set; }
         public virtual SPSHipStructure Str3 { get; set; }
 
@@ -52,7 +54,8 @@ namespace WpfApp2.Db.Models.SPS
     }
 
 
-    [Table("спс_голень_подзапись")]
+    [Table("sps_hip_sub_entry")]
+    //[Table("спс_голень_подзапись")]
     public class SPSHipEntry : LegPartEntry, ILegPart
     {
         public virtual SPSHipStructure Structure { get; set; }
@@ -69,8 +72,8 @@ namespace WpfApp2.Db.Models.SPS
     }
 
 
-
-    [Table("сафено_поплитеальное_соустье")]
+    [Table("sapheno_apical_fistula")]
+   // [Table("сафено_поплитеальное_соустье")]
     public class SPSHipEntryFull : LegPartEntries
     {
 

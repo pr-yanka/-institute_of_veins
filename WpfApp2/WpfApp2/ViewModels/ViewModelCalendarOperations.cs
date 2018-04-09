@@ -55,7 +55,7 @@ namespace WpfApp2.ViewModels
 
         public OperationStruct(DelegateCommand ToOperation, Operation Op, DelegateCommand ToOpRes)
         {
-            if (Op.итоги_операции != null)
+            if (Op.operation_result != null)
             {
                 IsOpResult = Visibility.Visible;
 
@@ -246,7 +246,7 @@ namespace WpfApp2.ViewModels
                             foreach (var Brigade in BrigadeRep.GetAll)
                             {
 
-                                if (Brigade.id_операции == Operation.Id && SelectedDocOrMed.id == Brigade.id_врача)
+                                if (Brigade.id_operation == Operation.Id && SelectedDocOrMed.id == Brigade.id_doctor)
                                 {
                                     test = false;
                                 }
@@ -254,7 +254,7 @@ namespace WpfApp2.ViewModels
                         else if (!SelectedDocOrMed.isDoc)
                             foreach (var Brigade in BrigadeMedRep.GetAll)
                             {
-                                if (Brigade.id_операции == Operation.Id && SelectedDocOrMed.id == Brigade.id_медперсонал)
+                                if (Brigade.id_operation == Operation.Id && SelectedDocOrMed.id == Brigade.id_med_staff)
                                 {
                                     test = false;
                                 }
@@ -275,7 +275,7 @@ namespace WpfApp2.ViewModels
 
                             });
 
-                            if (Operation.итоги_операции != null)
+                            if (Operation.operation_result != null)
                             {
                                 bufer2 = new DelegateCommand(
                            () =>
@@ -532,7 +532,7 @@ namespace WpfApp2.ViewModels
                                 foreach (var Brigade in BrigadeRep.GetAll)
                                 {
 
-                                    if (Brigade.id_операции == Operation.Id && CurrentAc.idврач == Brigade.id_врача)
+                                    if (Brigade.id_operation == Operation.Id && CurrentAc.idврач == Brigade.id_doctor)
                                     {
                                         test = false;
                                     }
@@ -540,7 +540,7 @@ namespace WpfApp2.ViewModels
                             else if (CurrentAc.isMedPersonal != null && CurrentAc.isMedPersonal.Value)
                                 foreach (var Brigade in BrigadeMedRep.GetAll)
                                 {
-                                    if (Brigade.id_операции == Operation.Id && CurrentAc.idмедперсонал == Brigade.id_медперсонал)
+                                    if (Brigade.id_operation == Operation.Id && CurrentAc.idмедперсонал == Brigade.id_med_staff)
                                     {
                                         test = false;
                                     }
@@ -562,7 +562,7 @@ namespace WpfApp2.ViewModels
 
                         });
 
-                                if (Operation.итоги_операции != null)
+                                if (Operation.operation_result != null)
                                 {
                                     bufer2 = new DelegateCommand(
                                () =>
