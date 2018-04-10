@@ -379,56 +379,58 @@ namespace WpfApp2.ViewModels
                     //  Changes = new ObservableCollection<ChangeHistoryClass>();
                     //  ViewSource = new CollectionViewSource();
                     test = true;
-                    string query = "SELECT * FROM med_db.история_изменений ORDER BY id DESC";
+                   
+                    // string query = "SELECT * FROM med_db.история_изменений ORDER BY id DESC";
                     int limit = 0;
                     if(SortId == 0)
                     {
                         limit = 5;
-                        query += " LIMIT " + limit.ToString();
+                        //query += " LIMIT " + limit.ToString();
                     }
                     else if (SortId == 1)
                     {
                         limit = 10;
-                        query +=  " LIMIT " + limit.ToString();
+                       // query +=  " LIMIT " + limit.ToString();
                     }
                     else if (SortId == 2)
                     {
                         limit = 20;
-                        query +=  " LIMIT " + limit.ToString();
+                      //  query +=  " LIMIT " + limit.ToString();
                     }
                     else if (SortId == 3)
                     {
                         limit = 30;
-                        query +=  " LIMIT " + limit.ToString();
+                      //  query +=  " LIMIT " + limit.ToString();
                     }
                     else if (SortId == 4)
                     {
                         limit = 40;
-                        query +=  " LIMIT " + limit.ToString();
+                        //query +=  " LIMIT " + limit.ToString();
                     }
                     else if (SortId == 5)
                     {
                         limit = 50;
-                        query +=  " LIMIT " + limit.ToString();
-                    }
+                        //query +=  " LIMIT " + limit.ToString();
+                    }//
                     else if (SortId == 6)
                     {
                         limit = 100;
-                        query +=  " LIMIT " + limit.ToString();
+                        //query +=  " LIMIT " + limit.ToString();
                     }
                     else if (SortId == 7)
                     {
                         limit = 200;
-                        query +=  " LIMIT " + limit.ToString();
+                        //query +=  " LIMIT " + limit.ToString();
                     }
                     else if (SortId == 8)
                     {
                        
                     }
-                  
+                    var buflist = context.Set<ChangeHistory>().Take(limit).OrderByDescending(entry => entry.id).ToList();
+
                     Changes = new ObservableCollection<ChangeHistoryClass>();
                     FullCopy = new List<ChangeHistoryClass>();
-                    foreach (ChangeHistory Ch in context.Database.SqlQuery<ChangeHistory>(query).ToList())
+                    foreach (ChangeHistory Ch in buflist)
                     {
 
 
