@@ -24,6 +24,7 @@ namespace WpfApp2.Db.Models
     }
     public class DistrictsRepository : Repository<Districts>
     {
+ 
         public DistrictsRepository(DbContext context) : base(context)
         {
 

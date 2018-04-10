@@ -634,7 +634,7 @@ namespace WpfApp2.ViewModels
 
 
 
-                    var hpList = HirurgInterupPatients.GetAll.Where(s => s.id_patinet == CurrentPatient.Id).ToList();
+                    var hpList = HirurgInterupPatients.GetAll.Where(s => s.id_patient == CurrentPatient.Id).ToList();
                     foreach (var x in hpList)
                     {
                         var z = new HirurgInterruptDataSource(HirurgInterup.Get(x.id_intervention));
@@ -1373,7 +1373,7 @@ namespace WpfApp2.ViewModels
                 foreach (var dgOp in Data.HirurgInterupPatients.GetAll)
                 {
 
-                    if (dgOp.id_patinet == CurrentPatient.Id)
+                    if (dgOp.id_patient == CurrentPatient.Id)
                     {
                         test = true;
                         foreach (var diag in (ObservableCollection<HirurgInterruptDataSource>)HirurgInteruptList.Source)
@@ -1402,7 +1402,7 @@ namespace WpfApp2.ViewModels
                         test = true;
                         foreach (var rcOp in Data.HirurgInterupPatients.GetAll)
                         {
-                            if (rcOp.id_intervention == rec.Data.Id && rcOp.id_patinet == CurrentPatient.Id)
+                            if (rcOp.id_intervention == rec.Data.Id && rcOp.id_patient == CurrentPatient.Id)
                             {
                                 var ToChange = Data.HirurgInterup.Get(rcOp.id_intervention);
 
@@ -1417,7 +1417,7 @@ namespace WpfApp2.ViewModels
                                     Data.HirurgInterupPatients.Remove(rcOp);
                                     Data.Complete();
                                     var newRec = new HirurgInteruptPatients();
-                                    newRec.id_patinet = CurrentPatient.Id;
+                                    newRec.id_patient = CurrentPatient.Id;
                                     newRec.id_intervention = buff.Id;
 
                                     Data.HirurgInterupPatients.Add(newRec);
@@ -1431,7 +1431,7 @@ namespace WpfApp2.ViewModels
                         {
 
                             var newRec = new HirurgInteruptPatients();
-                            newRec.id_patinet = CurrentPatient.Id;
+                            newRec.id_patient = CurrentPatient.Id;
                             var ToChange = Data.HirurgInterup.Get(rec.Data.Id);
                             if (ToChange.Str != rec.Data.Str)
                             {
