@@ -371,11 +371,9 @@ namespace WpfApp2.ViewModels
             {
                 try
                 {
-
-
                     ChangeHistoryRepository ChangeRp = new ChangeHistoryRepository(context);
 
-                    if (Changes.Count != FullCopy.Count)
+                    if (FullCopy != null && Changes != null && Changes.Count != FullCopy.Count)
                         Changes = new ObservableCollection<ChangeHistoryClass>(FullCopy);
                     //FullCopy = new List<ChangeHistoryClass>();
                     //  Changes = new ObservableCollection<ChangeHistoryClass>();
@@ -468,10 +466,10 @@ namespace WpfApp2.ViewModels
                     {
                         VisOfNothingFaund = Visibility.Collapsed;
                     }
-
-                    ViewSource.Source = Changes;
-
-
+                    if (ViewSource != null)
+                        ViewSource.Source = Changes;
+                    else
+                        ViewSource = new CollectionViewSource();
                     if (_isSortByData == true)
                     {
 
@@ -484,7 +482,8 @@ namespace WpfApp2.ViewModels
                     else
                     {
                         ViewSource.SortDescriptions.Clear();
-                        ViewSource.View.Refresh();
+                        if (ViewSource.View != null)
+                            ViewSource.View.Refresh();
                     }
                     //    Controller.NavigateTo<ViewModelChangesHistoy>();
                 }
@@ -492,9 +491,13 @@ namespace WpfApp2.ViewModels
                 {
                     ViewSource = new CollectionViewSource();
                     Changes = new ObservableCollection<ChangeHistoryClass>();
-                    ViewSource.Source = Changes;
+                    if (ViewSource != null)
+                        ViewSource.Source = Changes;
+                    else
+                        ViewSource = new CollectionViewSource();
                     ViewSource.SortDescriptions.Clear();
-                    ViewSource.View.Refresh();
+                    if (ViewSource.View != null)
+                        ViewSource.View.Refresh();
                 }
             }
             _filterText = "";
