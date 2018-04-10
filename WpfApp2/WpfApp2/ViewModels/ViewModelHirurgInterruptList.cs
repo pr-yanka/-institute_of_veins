@@ -206,11 +206,20 @@ namespace WpfApp2.ViewModels
             FullCopy = new List<HirurgInterruptDataSource>();
             using (var context = new MySqlContext())
             {
+                bool test = true;
                 HirurgInteruptRepository sRep = new HirurgInteruptRepository(context);
                 foreach (var HirurgInterupType in sRep.GetAll)
                 {
-                    DataSourceList.Add(new HirurgInterruptDataSource(HirurgInterupType));
-                    FullCopy.Add(new HirurgInterruptDataSource(HirurgInterupType));
+                    foreach (var x in DataSourceList)
+                    {
+                        if (x.Data.Str == HirurgInterupType.Str)
+                        { test = false; }
+                    }
+                    if (test)
+                    {
+                        DataSourceList.Add(new HirurgInterruptDataSource(HirurgInterupType));
+                        FullCopy.Add(new HirurgInterruptDataSource(HirurgInterupType));
+                    }
                 }
             }
 
@@ -305,11 +314,20 @@ namespace WpfApp2.ViewModels
                     FullCopy = new List<HirurgInterruptDataSource>();
                     using (var context = new MySqlContext())
                     {
+                        bool test = true;
                         HirurgInteruptRepository sRep = new HirurgInteruptRepository(context);
                         foreach (var HirurgInterupType in sRep.GetAll)
                         {
-                            DataSourceList.Add(new HirurgInterruptDataSource(HirurgInterupType));
-                            FullCopy.Add(new HirurgInterruptDataSource(HirurgInterupType));
+                            foreach (var x in DataSourceList)
+                            {
+                                if (x.Data.Str == HirurgInterupType.Str)
+                                { test = false; }
+                            }
+                            if (test)
+                            {
+                                DataSourceList.Add(new HirurgInterruptDataSource(HirurgInterupType));
+                                FullCopy.Add(new HirurgInterruptDataSource(HirurgInterupType));
+                            }
                         }
                     }
 

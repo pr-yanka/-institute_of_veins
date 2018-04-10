@@ -89,33 +89,33 @@ namespace WpfApp2.ViewModels
             // Date = Op.Date.Day.ToString() + "." + Op.Date.Month.ToString() + "." + Op.Date.Year.ToString();
             // Time = buf1.Hour.ToString() + ":" + buf1.Minute.ToString();
             Date = Ch.дата_изменения;
-          
-                AccauntRepository acRep = new AccauntRepository(context);
-                ChangesInDBTypeRepository chindbRep = new ChangesInDBTypeRepository(context);
-                Accaunt CurAcc = acRep.Get(Ch.id_аккаунта);
 
-                AccName = CurAcc.Name;
+            AccauntRepository acRep = new AccauntRepository(context);
+            ChangesInDBTypeRepository chindbRep = new ChangesInDBTypeRepository(context);
+            Accaunt CurAcc = acRep.Get(Ch.id_аккаунта);
 
-
-                if (CurAcc.isAdmin != null && CurAcc.isAdmin.Value)
-                {
-                    AccPost = "Администратор";
-                }
-                else if (CurAcc.isDoctor != null && CurAcc.isDoctor.Value)
-                {
-                    AccPost = "Врач";
-                }
-                else if (CurAcc.isMedPersonal != null && CurAcc.isMedPersonal.Value)
-                {
-                    AccPost = "Медперсонал";
-                }
-
-                ChangeType = chindbRep.Get(Ch.тип_изменения).Str;
-                //var CurrentPatient = PtRep.Get(Ex.PatientId.Value);
-                //Patient = CurrentPatient.Sirname + " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
+            AccName = CurAcc.Name;
 
 
-            
+            if (CurAcc.isAdmin != null && CurAcc.isAdmin.Value)
+            {
+                AccPost = "Администратор";
+            }
+            else if (CurAcc.isDoctor != null && CurAcc.isDoctor.Value)
+            {
+                AccPost = "Врач";
+            }
+            else if (CurAcc.isMedPersonal != null && CurAcc.isMedPersonal.Value)
+            {
+                AccPost = "Медперсонал";
+            }
+
+            ChangeType = chindbRep.Get(Ch.тип_изменения).Str;
+            //var CurrentPatient = PtRep.Get(Ex.PatientId.Value);
+            //Patient = CurrentPatient.Sirname + " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
+
+
+
 
         }
 
@@ -127,9 +127,11 @@ namespace WpfApp2.ViewModels
         {
             get { return _sortId; }
             set
-            { _sortId = value;
+            {
+                _sortId = value;
                 SetChangesInDB(null, null);
-                OnPropertyChanged(); }
+                OnPropertyChanged();
+            }
         }
         #region Inotify realisation
         public event PropertyChangedEventHandler PropertyChanged;
@@ -373,16 +375,16 @@ namespace WpfApp2.ViewModels
 
                     ChangeHistoryRepository ChangeRp = new ChangeHistoryRepository(context);
 
-                    if(Changes.Count != FullCopy.Count)
+                    if (Changes.Count != FullCopy.Count)
                         Changes = new ObservableCollection<ChangeHistoryClass>(FullCopy);
                     //FullCopy = new List<ChangeHistoryClass>();
                     //  Changes = new ObservableCollection<ChangeHistoryClass>();
                     //  ViewSource = new CollectionViewSource();
                     test = true;
-                   
+
                     // string query = "SELECT * FROM med_db.история_изменений ORDER BY id DESC";
                     int limit = 0;
-                    if(SortId == 0)
+                    if (SortId == 0)
                     {
                         limit = 5;
                         //query += " LIMIT " + limit.ToString();
@@ -390,17 +392,17 @@ namespace WpfApp2.ViewModels
                     else if (SortId == 1)
                     {
                         limit = 10;
-                       // query +=  " LIMIT " + limit.ToString();
+                        // query +=  " LIMIT " + limit.ToString();
                     }
                     else if (SortId == 2)
                     {
                         limit = 20;
-                      //  query +=  " LIMIT " + limit.ToString();
+                        //  query +=  " LIMIT " + limit.ToString();
                     }
                     else if (SortId == 3)
                     {
                         limit = 30;
-                      //  query +=  " LIMIT " + limit.ToString();
+                        //  query +=  " LIMIT " + limit.ToString();
                     }
                     else if (SortId == 4)
                     {
@@ -422,12 +424,16 @@ namespace WpfApp2.ViewModels
                         limit = 200;
                         //query +=  " LIMIT " + limit.ToString();
                     }
-                    else if (SortId == 8)
+                    List<ChangeHistory> buflist = new List<ChangeHistory>();
+                    if (SortId == 8)
                     {
-                       
-                    }
-                    var buflist = context.Set<ChangeHistory>().Take(limit).OrderByDescending(entry => entry.id).ToList();
+                        buflist = context.Set<ChangeHistory>().OrderByDescending(entry => entry.id).ToList();
 
+                    }
+                    else
+                    {
+                        buflist = context.Set<ChangeHistory>().Take(limit).OrderByDescending(entry => entry.id).ToList();
+                    }
                     Changes = new ObservableCollection<ChangeHistoryClass>();
                     FullCopy = new List<ChangeHistoryClass>();
                     foreach (ChangeHistory Ch in buflist)
@@ -437,16 +443,16 @@ namespace WpfApp2.ViewModels
                         //test = true;
                         //for (int i = 0; i < Changes.Count; ++i)
                         //{
-                          
+
                         //    if (Changes[i].Ch.id == Ch.id)
                         //    { test = false;break; }
-                          
+
                         //}
                         //if (test)
                         //{
-                            ChangeHistoryClass buf = new ChangeHistoryClass(Ch, context);
-                            FullCopy.Add(buf);
-                            Changes.Add(buf);
+                        ChangeHistoryClass buf = new ChangeHistoryClass(Ch, context);
+                        FullCopy.Add(buf);
+                        Changes.Add(buf);
                         //}
 
 

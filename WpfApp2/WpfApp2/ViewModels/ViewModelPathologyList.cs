@@ -114,7 +114,7 @@ namespace WpfApp2.ViewModels
         }
         private void GetPatientForPatology(object sender, object data)
         {
-            
+
             PatologyList = new ObservableCollection<PatologyDataSource>();
             using (var context = new MySqlContext())
             {
@@ -183,9 +183,9 @@ namespace WpfApp2.ViewModels
                 () =>
                 {
                     //MessageBus.Default.Call("GetCurrentPatientId", this, CurrentPatient.Id);
-                    //  Controller.NavigateTo<ViewModelCurrentPatient>();
-                //    MessageBus.Default.Call("SetCurrentPatientIDForAmbCard", this, CurrentPatient.Id);
-
+                    //Controller.NavigateTo<ViewModelCurrentPatient>();
+                    //MessageBus.Default.Call("SetCurrentPatientIDForAmbCard", this, CurrentPatient.Id);
+                    MessageBus.Default.Call("SetPatologyListforAdditionalInfo", null, null);
                     Controller.NavigateTo<ViewModelAdditionalInfoPatient>();
                 }
             );

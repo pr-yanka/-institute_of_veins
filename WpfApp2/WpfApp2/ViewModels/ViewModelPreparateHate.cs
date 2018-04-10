@@ -213,11 +213,22 @@ namespace WpfApp2.ViewModels
             {
                 PreparateHateRepository sRep = new PreparateHateRepository(context);
 
-
+                bool test = true;
                 foreach (var HirurgInterupType in sRep.GetAll)
                 {
-                    DataSourceList.Add(new PreparateHateDataSource(HirurgInterupType));
-                    FullCopy.Add(new PreparateHateDataSource(HirurgInterupType));
+
+                    foreach (var x in DataSourceList)
+                    {
+                        if (x.Data.Str == HirurgInterupType.Str)
+                        {
+                            test = false;
+                        }
+                    }
+                    if (test)
+                    {
+                        DataSourceList.Add(new PreparateHateDataSource(HirurgInterupType));
+                        FullCopy.Add(new PreparateHateDataSource(HirurgInterupType));
+                    }
                 }
             }
         }
@@ -313,11 +324,21 @@ namespace WpfApp2.ViewModels
                     {
                         PreparateHateRepository sRep = new PreparateHateRepository(context);
 
-
+                        bool test = true;
                         foreach (var HirurgInterupType in sRep.GetAll)
                         {
-                            DataSourceList.Add(new PreparateHateDataSource(HirurgInterupType));
-                            FullCopy.Add(new PreparateHateDataSource(HirurgInterupType));
+                            foreach (var x in DataSourceList)
+                            {
+                                if (x.Data.Str == HirurgInterupType.Str)
+                                {
+                                    test = false;
+                                }
+                            }
+                            if (test)
+                            {
+                                DataSourceList.Add(new PreparateHateDataSource(HirurgInterupType));
+                                FullCopy.Add(new PreparateHateDataSource(HirurgInterupType));
+                            }
                         }
                     }
 

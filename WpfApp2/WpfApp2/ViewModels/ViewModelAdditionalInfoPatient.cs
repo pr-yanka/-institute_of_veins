@@ -136,6 +136,9 @@ namespace WpfApp2.ViewModels
             }
         }
 
+        private ObservableCollection<PatologyDataSource> _patologyList;
+        public ObservableCollection<PatologyDataSource> PatologyList { get { return _patologyList; } set { _patologyList = value; OnPropertyChanged(); } }
+
         private IEnumerable<String> _districtList;
         public IEnumerable<String> BloodExchangeCommentList { get { return _districtList; } set { _districtList = value; OnPropertyChanged(); } }
         private IEnumerable<String> _districtList1;
@@ -154,7 +157,7 @@ namespace WpfApp2.ViewModels
         private ObservableCollection<PreparateHateDataSource> _preparateHateTypes;
         private ObservableCollection<HirurgInterruptDataSource> _hirurgIntruptTypes;
         private ObservableCollection<AlergicAnevrizmListDataSource> _alergicAnevrizmTypes;
-       //private ObservableCollection<OperationForAmbullatorCardDataSource> _operationForAmbulatornCardBuf;
+        //private ObservableCollection<OperationForAmbullatorCardDataSource> _operationForAmbulatornCardBuf;
 
 
         private CollectionViewSource _bloodExchangeList;
@@ -178,7 +181,7 @@ namespace WpfApp2.ViewModels
 
         //public ObservableCollection<string> OprTypes { get { return _oprTypes; } set { _oprTypes = value; OnPropertyChanged(); } }
         public ObservableCollection<BloodExchangeListDataSource> BloodExchange { get { return _bloodExchange; } set { _bloodExchange = value; NameOfButton = "Сохранить"; OnPropertyChanged(); } }
-      //  ObservableCollection<OperationForAmbullatorCardDataSource> OperationForAmbulatornCardBuf { get { return _operationForAmbulatornCardBuf; } set { _operationForAmbulatornCardBuf = value; NameOfButton = "Сохранить"; OnPropertyChanged(); } }
+        //  ObservableCollection<OperationForAmbullatorCardDataSource> OperationForAmbulatornCardBuf { get { return _operationForAmbulatornCardBuf; } set { _operationForAmbulatornCardBuf = value; NameOfButton = "Сохранить"; OnPropertyChanged(); } }
 
         ObservableCollection<AlergicAnevrizmListDataSource> AlergicAnevrizmBuf { get { return _alergicAnevrizmTypes; } set { _alergicAnevrizmTypes = value; NameOfButton = "Сохранить"; OnPropertyChanged(); } }
 
@@ -302,10 +305,63 @@ namespace WpfApp2.ViewModels
         //    BloodExchangeList.View.Refresh();
         //}
 
+        /*
+          
+         */
 
 
+        private void SetPatologyList(object sender, object data)
+        {
+            PatologyList = new ObservableCollection<PatologyDataSource>();
+            using (var context = new MySqlContext())
+            {
+                
+                PatologyTypeRepository ptTRep = new PatologyTypeRepository(context);
+                PatologyRepository ptRep = new PatologyRepository(context);
+                foreach (var Patology in ptRep.GetAll)
+                {
+                    //Patology sadasew
+                    if (Patology.id_пациента == CurrentPatient.Id)
+                    {
+                        foreach (var PatoType in ptTRep.GetAll)
+                        {
+                            if (PatoType.Id == Patology.id_патологии)
+                            {
+
+                                if (Patology.isArchivatied != true)
+                                {
+                                    float OpacityBuf = 0.0f;
+
+                                    string DateAppear = getmonthName(Patology.MonthAppear.Value.Month) + " " + Patology.YearAppear.Value.Year.ToString() + " года";
+                                    string DateDisappear = "";
+                                    try
+                                    {
+                                        DateDisappear = getmonthName(Patology.MonthDisappear.Value.Month) + " " + Patology.YearDisappear.Value.Year.ToString() + " года";
+                                    }
+                                    catch { }
+                                    DelegateCommand ToRedactP = new DelegateCommand(
+                                        () =>
+                                        {
 
 
+                                        }
+                                        );
+                                    DelegateCommand ToArchiveP = new DelegateCommand(
+                                        () =>
+                                        {
+
+
+                                        }
+                                        );
+                                    PatologyList.Add(new PatologyDataSource(PatoType.Str, DateAppear, DateDisappear, ToArchiveP, ToRedactP, Patology, OpacityBuf));
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
         private void SetPreparateHateList(object sender, object data)
         {
             PreparateHateBuf = (ObservableCollection<PreparateHateDataSource>)data;
@@ -454,11 +510,12 @@ namespace WpfApp2.ViewModels
             AlergicAnevrizmList = new CollectionViewSource();
             HirurgInteruptList = new CollectionViewSource();
             //OperationForAmbCard = new CollectionViewSource();
-
+            PatologyList = new ObservableCollection<PatologyDataSource>();
             using (var context = new MySqlContext())
             {
                 PatientsRepository PatientsRep = new PatientsRepository(context);
-
+                PatologyTypeRepository ptTRep = new PatologyTypeRepository(context);
+                PatologyRepository ptRep = new PatologyRepository(context);
                 //OperationForAmbulatornCardPatientsRepository OperationForAmbulatornCardPatients = new OperationForAmbulatornCardPatientsRepository(context);
                 //OperationForAmbulatornCardRepository OperationForAmbulatornCard = new OperationForAmbulatornCardRepository(context);
                 AlergicAnevrizmRepository AlergicAnevrizm = new AlergicAnevrizmRepository(context);
@@ -479,6 +536,53 @@ namespace WpfApp2.ViewModels
                 try
                 {
                     CurrentPatient = PatientsRep.Get((int)data);
+
+
+
+                    foreach (var Patology in ptRep.GetAll)
+                    {
+                        //Patology sadasew
+                        if (Patology.id_пациента == CurrentPatient.Id)
+                        {
+                            foreach (var PatoType in ptTRep.GetAll)
+                            {
+                                if (PatoType.Id == Patology.id_патологии)
+                                {
+
+                                    if (Patology.isArchivatied != true)
+                                    {
+                                        float OpacityBuf = 0.0f;
+
+                                        string DateAppear = getmonthName(Patology.MonthAppear.Value.Month) + " " + Patology.YearAppear.Value.Year.ToString() + " года";
+                                        string DateDisappear = "";
+                                        try
+                                        {
+                                            DateDisappear = getmonthName(Patology.MonthDisappear.Value.Month) + " " + Patology.YearDisappear.Value.Year.ToString() + " года";
+                                        }
+                                        catch { }
+                                        DelegateCommand ToRedactP = new DelegateCommand(
+                                            () =>
+                                            {
+
+
+                                            }
+                                            );
+                                        DelegateCommand ToArchiveP = new DelegateCommand(
+                                            () =>
+                                            {
+
+
+                                            }
+                                            );
+                                        PatologyList.Add(new PatologyDataSource(PatoType.Str, DateAppear, DateDisappear, ToArchiveP, ToRedactP, Patology, OpacityBuf));
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+
+
                     hirurgOverviewId = CurrentPatient.Амбулаторная_карта_документ_id;
                     Initials = "Пациент: " + CurrentPatient.Sirname + " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ". ";
 
@@ -718,6 +822,8 @@ namespace WpfApp2.ViewModels
         {
 
             BloodExchange = new ObservableCollection<BloodExchangeListDataSource>();
+            //SetPatologyList
+            MessageBus.Default.Subscribe("SetPatologyListforAdditionalInfo", SetPatologyList);
             MessageBus.Default.Subscribe("SetIdOfAdditionalInfoDoc", SetIdOfOverview);
             MessageBus.Default.Subscribe("SetnameOfButtonForAmbCard", SetDNameToSave);
             MessageBus.Default.Subscribe("SetCurrentPatientIDForAmbCard", SetCurrentPatientID);
@@ -799,7 +905,7 @@ namespace WpfApp2.ViewModels
             PreparateHateList.Source = PreparateHateBuf;
             AlergicAnevrizmList.Source = AlergicAnevrizmBuf;
             HirurgInteruptList.Source = HirurgInteruptBuf;
-         //   OperationForAmbCard.Source = OperationForAmbulatornCardBuf;
+            //   OperationForAmbCard.Source = OperationForAmbulatornCardBuf;
             //    MessageBus.Default.Subscribe("UpdateDictionariesOfLocationForNewPatient", GetDictionary);
             BloodExchangeList.Source = BloodExchange;
 
@@ -1411,7 +1517,7 @@ namespace WpfApp2.ViewModels
                                     var buff = new HirurgInterupt();
                                     buff.Str = rec.Data.Str;
                                     buff.Date = rec.Data.Date;
-
+                                   
                                     Data.HirurgInterup.Add(buff);
                                     Data.Complete();
                                     Data.HirurgInterupPatients.Remove(rcOp);
@@ -1433,7 +1539,7 @@ namespace WpfApp2.ViewModels
                             var newRec = new HirurgInteruptPatients();
                             newRec.id_patient = CurrentPatient.Id;
                             var ToChange = Data.HirurgInterup.Get(rec.Data.Id);
-                            if (ToChange.Str != rec.Data.Str)
+                            if (ToChange.Str != rec.Data.Str || ToChange.Date != rec.Data.Date)
                             {
                                 var buff = new HirurgInterupt();
                                 buff.Str = rec.Data.Str;

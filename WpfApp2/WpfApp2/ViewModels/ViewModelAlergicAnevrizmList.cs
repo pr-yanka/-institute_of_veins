@@ -199,11 +199,21 @@ namespace WpfApp2.ViewModels
             using (var context = new MySqlContext())
             {
                 AlergicAnevrizmRepository sRep = new AlergicAnevrizmRepository(context);
-
+                bool test = true;
                 foreach (var HirurgInterupType in sRep.GetAll)
                 {
-                    DataSourceList.Add(new AlergicAnevrizmListDataSource(HirurgInterupType));
-                    FullCopy.Add(new AlergicAnevrizmListDataSource(HirurgInterupType));
+                    foreach (var x in DataSourceList)
+                    {
+                        if (x.Data.Str == HirurgInterupType.Str)
+                        {
+                            test = false;
+                        }
+                    }
+                    if (test)
+                    {
+                        DataSourceList.Add(new AlergicAnevrizmListDataSource(HirurgInterupType));
+                        FullCopy.Add(new AlergicAnevrizmListDataSource(HirurgInterupType));
+                    }
                 }
             }
         }
@@ -303,11 +313,21 @@ namespace WpfApp2.ViewModels
                     using (var context = new MySqlContext())
                     {
                         AlergicAnevrizmRepository sRep = new AlergicAnevrizmRepository(context);
-
+                        bool test = true;
                         foreach (var HirurgInterupType in sRep.GetAll)
                         {
-                            DataSourceList.Add(new AlergicAnevrizmListDataSource(HirurgInterupType));
-                            FullCopy.Add(new AlergicAnevrizmListDataSource(HirurgInterupType));
+                            foreach (var x in DataSourceList)
+                            {
+                                if (x.Data.Str == HirurgInterupType.Str)
+                                {
+                                    test = false;
+                                }
+                            }
+                            if (test)
+                            {
+                                DataSourceList.Add(new AlergicAnevrizmListDataSource(HirurgInterupType));
+                                FullCopy.Add(new AlergicAnevrizmListDataSource(HirurgInterupType));
+                            }
                         }
                     }
 

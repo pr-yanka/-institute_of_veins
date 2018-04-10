@@ -48,12 +48,13 @@
                  Style="{StaticResource MyNormalBUTTON}" Width="200"/>
             <!--//CreateWordDocumentCommand-->
             <ScrollViewer  MaxHeight="570" Margin="24,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" >
-                <Grid  Height="983"   Width="993">
+                <Grid  Height="1093"   Width="993">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="186*"/>
                         <ColumnDefinition Width="1021*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="70*"/>
                         <RowDefinition Height="19*"/>
                         <RowDefinition Height="16*"/>
                         <RowDefinition Height="16*"/>
@@ -71,34 +72,87 @@
                         <RowDefinition Height="19*"/>
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
-                    
-                    <TextBlock x:Name="tesxtBlock" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="группа" VerticalAlignment="Top"  Grid.Row="1" Grid.Column="1"  FontSize="16"/>
-                    <TextBlock x:Name="tesxtBlocklyy" HorizontalAlignment="Left" TextWrapping="Wrap" Text="резус" VerticalAlignment="Top"  Grid.Row="1" Grid.Column="2" Margin="298,0,0,0" FontSize="16"/>
-                    <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="Группа крови" VerticalAlignment="Top"  Grid.Row="2"  FontSize="16"/>
-                    <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Grid.Row="3" Text="Переливание крови" Grid.RowSpan="2"/>
-                    <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap" Text="Сахарный диабет" VerticalAlignment="Top" FontSize="16" Grid.Row="5"/>
-                    <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap" Grid.RowSpan="2" Text="Хирургические вмешательства" VerticalAlignment="Top" FontSize="16" Grid.Row="6" Width="144"/>
-                    <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap"  Grid.RowSpan="2" Text="Аллергологический анамнез" VerticalAlignment="Top" FontSize="16" Grid.Row="8"/>
+
+                    <TextBlock x:Name="tesxtBlock" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="группа" VerticalAlignment="Top"  Grid.Row="2" Grid.Column="1"  FontSize="16"/>
+                    <TextBlock x:Name="tesxtBlocklyy" HorizontalAlignment="Left" TextWrapping="Wrap" Text="резус" VerticalAlignment="Top"  Grid.Row="2" Grid.Column="2" Margin="298,0,0,0" FontSize="16"/>
+                    <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="Группа крови" VerticalAlignment="Top"  Grid.Row="3"  FontSize="16"/>
+                    <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Grid.Row="4" Text="Переливание крови" Grid.RowSpan="2"/>
+                    <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap" Text="Сахарный диабет" VerticalAlignment="Top" FontSize="16" Grid.Row="6"/>
+                    <TextBlock x:Name="textBlock_Copy2" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap" Grid.RowSpan="2" Text="Хирургические вмешательства" VerticalAlignment="Top" FontSize="16" Grid.Row="7" Width="144"/>
+                    <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="0,3,0,0" TextWrapping="Wrap"  Grid.RowSpan="2" Text="Аллергологический анамнез" VerticalAlignment="Top" FontSize="16" Grid.Row="9"/>
 
 
-                    <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="Непереносимость лекарственных препаратов" VerticalAlignment="Top" FontSize="16" Grid.Row="11" Width="auto"/>
-                    <Button Command="{Binding ToPathologyListCommand}" Margin="0,6"  Height="27" FontSize="12" Width="572" Content="Патологии" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="0" VerticalAlignment="Top"></Button>
+                    <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="Непереносимость лекарственных препаратов" VerticalAlignment="Top" FontSize="16" Grid.Row="12" Width="auto"/>
+                    <DataGrid ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderBrush="Black" Grid.Row="0" Grid.Column="1" BorderThickness="1" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}" CanUserAddRows="False" CanUserResizeRows="false" CanUserResizeColumns="False" x:Name="dataGrid" HorizontalAlignment="Left" AutoGenerateColumns="False" Margin="0,0,0,0" VerticalAlignment="Top" Height="143" Width="572"  ItemsSource="{Binding Path=PatologyList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
+                        <DataGrid.RowStyle>
+
+                            <Style TargetType="DataGridRow"  BasedOn="{StaticResource {x:Type DataGridRow}}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="SkyBlue" ></Setter>
+                                    </Trigger>
+
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="LightSkyBlue" ></Setter>
+                                    </Trigger>
+                                    <DataTrigger Binding="{Binding Opacity}" Value="0.38">
+                                        <Setter Property="Background" Value="Gray" ></Setter>
+                                        <Setter Property="Opacity" Value="1" ></Setter>
+                                    </DataTrigger>
+
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+
+                        <DataGrid.Columns >
+
+                            <DataGridTemplateColumn Width="292"  Header="Патология" >
+
+                                <DataGridTemplateColumn.CellTemplate  >
+
+                                    <DataTemplate >
 
 
-                    <ComboBox SelectedIndex="{Binding BloodGroupID}" SelectedValue="{Binding BloodGroup}" Grid.Row="2"  x:Name="comboBoвx_Copy2" Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="275" Height="24"   >
+                                        <TextBlock HorizontalAlignment="Center"  Text="{Binding Name}" />
+
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn  Header="Дата появления">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock TextAlignment="Center" Text="{Binding DateAppear}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn   Header="Дата исчезнования">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock TextAlignment="Center" Text="{Binding DateDisapear}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <Button Command="{Binding ToPathologyListCommand}" Margin="0,6"  Height="27" FontSize="12" Width="572" Content="Патологии" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Top"></Button>
+
+
+                    <ComboBox SelectedIndex="{Binding BloodGroupID}" SelectedValue="{Binding BloodGroup}" Grid.Row="3"  x:Name="comboBoвx_Copy2" Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="275" Height="24"   >
                         <TextBlock>O(I)</TextBlock>
                         <TextBlock>A(II)</TextBlock>
                         <TextBlock>B(III)</TextBlock>
                         <TextBlock>AB(IV)</TextBlock>
                     </ComboBox>
 
-                    <ComboBox SelectedIndex="{Binding Path=IsPositiveGroupTypeID}" SelectedValue="{Binding IsPositiveGroupType}" x:Name="comboBox_Copy2" Grid.Column="2"  Grid.Row="2" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="275" Height="24" Margin="298,0,0,0"   >
+                    <ComboBox SelectedIndex="{Binding Path=IsPositiveGroupTypeID}" SelectedValue="{Binding IsPositiveGroupType}" x:Name="comboBox_Copy2" Grid.Column="2"  Grid.Row="3" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="275" Height="24" Margin="298,0,0,0"   >
                         <TextBlock>Rh−</TextBlock>
                         <TextBlock>Rh+</TextBlock>
                     </ComboBox>
 
 
-                    <DataGrid ColumnHeaderStyle="{StaticResource DGCHeaderStyle}" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False" AutoGenerateColumns="False"  ItemsSource="{Binding Path=BloodExchangeList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="148"  VerticalAlignment="Top" Width="572" Grid.Row="3" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" BorderBrush="Black" BorderThickness="1">
+                    <DataGrid ScrollViewer.HorizontalScrollBarVisibility="Hidden" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False" AutoGenerateColumns="False"  ItemsSource="{Binding Path=BloodExchangeList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="143"  VerticalAlignment="Top" Width="572" Grid.Row="4" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" BorderBrush="Black" BorderThickness="1">
 
                         <DataGrid.Columns>
 
@@ -159,11 +213,11 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button Command="{Binding OpenCommand}" Margin="0,6"  Height="27" FontSize="12" Width="572" Content="добавить переливание" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Top"></Button>
+                    <Button Command="{Binding OpenCommand}" Margin="0,6"  Height="27" FontSize="12" Width="572" Content="добавить переливание" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="5" VerticalAlignment="Top"></Button>
 
 
                     <controls:AutoCompleteBox x:Name="AutoSugar"  Margin="0,0" Padding="4"  BorderThickness="1"  Height="29"  Text="{Binding Path=Sugar,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                 FilterMode="StartsWith" Grid.Column="1"  MinimumPrefixLength ="0"   Grid.Row="5"    IsDropDownOpen="True" MaxDropDownHeight="100"       ItemsSource="{Binding Path=SugarDiabetCommentList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"        Width="572"   HorizontalAlignment="Left"   VerticalAlignment="Top">
+                 FilterMode="StartsWith" Grid.Column="1"  MinimumPrefixLength ="0"   Grid.Row="6"    IsDropDownOpen="True" MaxDropDownHeight="100"       ItemsSource="{Binding Path=SugarDiabetCommentList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"        Width="572"   HorizontalAlignment="Left"   VerticalAlignment="Top">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PreviewMouseDown">
                                 <i:InvokeCommandAction  Command="{Binding Path=ClickOnAutoComplete}" CommandParameter="{Binding ElementName=AutoSugar}"></i:InvokeCommandAction>
@@ -171,7 +225,7 @@
                         </i:Interaction.Triggers>
 
                     </controls:AutoCompleteBox>
-                    <!--<ListBox ItemsSource="{Binding Path=HirurgInteruptList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="148"  VerticalAlignment="Top" Width="572" Grid.Row="5" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
+                    <!--<ListBox ItemsSource="{Binding Path=HirurgInteruptList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="143"  VerticalAlignment="Top" Width="572" Grid.Row="5" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -192,9 +246,9 @@
                         </ListBox.ItemTemplate>
                     </ListBox>-->
 
-                    <DataGrid ColumnHeaderStyle="{StaticResource DGCHeaderStyle}" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False"
+                    <DataGrid ScrollViewer.HorizontalScrollBarVisibility="Hidden" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False"
                               AutoGenerateColumns="False"  ItemsSource="{Binding Path=HirurgInteruptList.View}"
-                              Grid.Column="1" HorizontalAlignment="Left" Height="148"  VerticalAlignment="Top" Width="572" Grid.Row="6" 
+                              Grid.Column="1" HorizontalAlignment="Left" Height="143"  VerticalAlignment="Top" Width="572" Grid.Row="7" 
                               Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" BorderBrush="Black" BorderThickness="1">
 
                         <DataGrid.Columns>
@@ -245,9 +299,9 @@
                         </DataGrid.Columns>
                     </DataGrid>
 
-                    <Button  Margin="0,5" Command="{Binding ToSetHirurgInterruptCommand}" Height="27" FontSize="12" Width="572" Content="добавить хирургическое вмешательство" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="7" VerticalAlignment="Top"></Button>
-                    <CheckBox IsChecked="{Binding IsAlergiActive}" FontSize="16" BorderThickness="1"  Height="29" Grid.Column="1" Grid.Row="8" Content="Пациент отрицает наличие аллергий" ></CheckBox>
-                    <ListBox Visibility="{Binding IsAlergiVisible}" ItemsSource="{Binding Path=AlergicAnevrizmList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="148"  VerticalAlignment="Top" Width="572" Grid.Row="9" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
+                    <Button  Margin="0,5" Command="{Binding ToSetHirurgInterruptCommand}" Height="27" FontSize="12" Width="572" Content="добавить хирургическое вмешательство" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="8" VerticalAlignment="Top"></Button>
+                    <CheckBox IsChecked="{Binding IsAlergiActive}" FontSize="16" BorderThickness="1"  Height="29" Grid.Column="1" Grid.Row="9" Content="Пациент отрицает наличие аллергий" ></CheckBox>
+                    <ListBox ScrollViewer.HorizontalScrollBarVisibility="Hidden" Visibility="{Binding IsAlergiVisible}" ItemsSource="{Binding Path=AlergicAnevrizmList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="143"  VerticalAlignment="Top" Width="572" Grid.Row="10" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -268,12 +322,12 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
 
-                    <Button  Visibility="{Binding IsAlergiVisible}" Command="{Binding ToSetAlergicAnevrizmCommand}" Margin="0,5" Height="27" FontSize="12" Width="572" Content="добавить аллергологический анамнез" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="10" VerticalAlignment="Top"></Button>
+                    <Button  Visibility="{Binding IsAlergiVisible}" Command="{Binding ToSetAlergicAnevrizmCommand}" Margin="0,5" Height="27" FontSize="12" Width="572" Content="добавить аллергологический анамнез" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="2" Grid.ColumnSpan="22" HorizontalAlignment="Left" Grid.Row="11" VerticalAlignment="Top"></Button>
 
 
 
 
-                    <!--<ListBox ItemsSource="{Binding Path=OperationForAmbCard.View,UpdateSourceTrigger=PropertyChanged}"  Grid.Column="1" HorizontalAlignment="Left" Height="148"  VerticalAlignment="Top" Width="572" Grid.Row="9" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
+                    <!--<ListBox ItemsSource="{Binding Path=OperationForAmbCard.View,UpdateSourceTrigger=PropertyChanged}"  Grid.Column="1" HorizontalAlignment="Left" Height="143"  VerticalAlignment="Top" Width="572" Grid.Row="9" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -302,13 +356,64 @@
 
 
 
+                    <DataGrid ScrollViewer.HorizontalScrollBarVisibility="Hidden" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserAddRows="False" AutoGenerateColumns="False"  ItemsSource="{Binding Path=PreparateHateList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="143"  VerticalAlignment="Top" Width="572" Grid.Row="12" Margin="0,0,0,0" Grid.RowSpan="1"    Foreground="Black" BorderBrush="Black" BorderThickness="1">
+
+                        <DataGrid.Columns>
+
+                            <DataGridTemplateColumn  Width="215" Header="Название"  >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate >
+
+                                        <TextBox  Padding="4" Height="29"  Text="{Binding  Data.Str,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  ></TextBox>
+
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn   Header="Комментарий" MinWidth="323" MaxWidth="323">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <controls:AutoCompleteBox  MinimumPrefixLength ="0"  BorderThickness="1" Padding="4" Height="29"  Text="{Binding  Commentary,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                 FilterMode="StartsWith"       IsDropDownOpen="True"        ItemsSource="{Binding Path=PreparateHateCommentList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"               x:Name="textBox_Copy323">
+
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="PreviewMouseDown">
+                                                    <i:InvokeCommandAction  Command="{Binding Path=ClickOnAutoComplete}" CommandParameter="{Binding ElementName=textBox_Copy323}"></i:InvokeCommandAction>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </controls:AutoCompleteBox>
 
 
-                    <ListBox ItemsSource="{Binding Path=PreparateHateList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="148"  VerticalAlignment="Top" Width="572" Grid.Row="11"  Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn >
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate >
+                                        <Grid>
+                                            <Button BorderThickness="0" Command="{Binding Path=DeleteCommand}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="30" Height="30" Background="{x:Null}" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}" >
+                                                <Button.Template>
+                                                    <ControlTemplate>
+                                                        <Border HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                                            <Image Source="pack://application:,,,/Images/delete.png"
+                               Width="27" 
+                               Height="27"/>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Button.Template>
+                                            </Button>
+                                        </Grid>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <!--<ListBox ItemsSource="{Binding Path=PreparateHateList.View}"  Grid.Column="1" HorizontalAlignment="Left" Height="143"  VerticalAlignment="Top" Width="572" Grid.Row="12"  Grid.RowSpan="1"    Foreground="Black" Background="WhiteSmoke">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <StackPanel>
+                                    
                                         <TextBox  TextWrapping="Wrap" Width="524"  HorizontalAlignment="Center" Height="auto" Text="{Binding  Data.Str,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                                         <TextBlock HorizontalAlignment="Left" Text="Комментарий"></TextBlock>
                                         <controls:AutoCompleteBox  Width="524" Text="{Binding  Commentary,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
@@ -320,7 +425,7 @@
                                             </i:Interaction.Triggers>
 
                                         </controls:AutoCompleteBox>
-                                    </StackPanel >
+                                     
                                     <Button VerticalAlignment="Center"  Command="{Binding Path=DeleteCommand}" x:Name="btn16x16" HorizontalAlignment="Left"   Width="30" Height="30" FontFamily="Franklin Gothic Medium" FontSize="14" BorderBrush="{x:Null}" >
                                         <Button.Template>
                                             <ControlTemplate>
@@ -337,8 +442,8 @@
 
                             </DataTemplate>
                         </ListBox.ItemTemplate>
-                    </ListBox>
-                    <Button Command="{Binding ToSetPreparateHateCommand}"  Height="27" FontSize="12" Width="572" Content="добавить препарат" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="1" Grid.ColumnSpan="22" Margin="0,5" HorizontalAlignment="Left" Grid.Row="12" VerticalAlignment="Top"></Button>
+                    </ListBox>-->
+                    <Button Command="{Binding ToSetPreparateHateCommand}"  Height="27" FontSize="12" Width="572" Content="добавить препарат" Style="{StaticResource MyConfirmBUTTON}"     Grid.Column="1" Grid.ColumnSpan="22" Margin="0,5" HorizontalAlignment="Left" Grid.Row="13" VerticalAlignment="Top"></Button>
 
 
                 </Grid>
