@@ -761,13 +761,13 @@ namespace WpfApp2.ViewModels
                             leftDiag = leftDiag.Remove(0, 1);
 
                         }
-                        if (chararrbuF.Length != 0 && chararrbuF[chararrbuF.Length - 1] == '.')
-                        { }
-                        else
-                        {
-                            leftDiag += ".";
-                        }
-
+                        //if (chararrbuF.Length != 0 && chararrbuF[chararrbuF.Length - 1] == '.')
+                        //{ }
+                        //else
+                        //{
+                        //    leftDiag += ".";
+                        //}
+                        leftDiag += " левой нижней конечности.";
 
                         xx = 0;
                         foreach (var x in RightDiagnosisList)
@@ -788,14 +788,14 @@ namespace WpfApp2.ViewModels
                             rightDiag = rightDiag.Remove(0, 1);
 
                         }
-                        if (chararrbuF.Length != 0 && chararrbuF[chararrbuF.Length - 1] == '.')
-                        { }
-                        else
-                        {
-                            rightDiag += ".";
-                        }
+                        //if (chararrbuF.Length != 0 && chararrbuF[chararrbuF.Length - 1] == '.')
+                        //{ }
+                        //else
+                        //{
+                        //    rightDiag += ".";
+                        //}
 
-
+                        rightDiag += " правой нижней конечности.";
 
 
 

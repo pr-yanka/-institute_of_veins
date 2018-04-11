@@ -523,6 +523,9 @@ namespace WpfApp2.ViewModels
                     {
 
                         FileName = fileName;
+                        
+                        document.ReplaceText("суток", "суток.\n");
+                        document.ReplaceText("произведена", "произведена операция:");
                         document.ReplaceText("«ФИО»", CurrentPatient.Sirname + " " + CurrentPatient.Name + " " + CurrentPatient.Patronimic);
                         document.ReplaceText("«Возраст»", CurrentPatient.Age.ToString());
 
@@ -665,9 +668,7 @@ namespace WpfApp2.ViewModels
                                 }
 
                                 lettersRight += " ";
-                                lettersLeft += "левой нижней конечности ";
-
-                                lettersRight += "правой нижней конечности ";
+                            
                                 if (leftLegExam.C != null)
                                 {
                                     bufLetter = LettersRep.Get(leftLegExam.C.Value);
@@ -818,45 +819,48 @@ namespace WpfApp2.ViewModels
                             {
                                 if (Diagnosis.isLeft == true)
                                 {
-                                    if (i1 != 0)
-                                        leftP += ", " + GetStrFixedForDocumemnt(Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str);
-                                    else
-                                    {
-                                        leftP += GetStrFixedForDocumemnt(Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str);
-                                    }
                                     i1++;
+                                    //if (i1 != 0)
+                                    //    leftP += ", " + GetStrFixedForDocumemnt(Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str);
+                                    //else
+                                    //{
+                                    leftP += i1.ToString() + ") " + GetStrFixedForDocumemnt(Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str) + "\n";
+                                    //}
+
                                 }
                                 else
                                 {
-                                    if (i2 != 0)
-                                        rightP += ", " + GetStrFixedForDocumemnt(Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str);
-                                    else
-                                    {
-                                        rightP += GetStrFixedForDocumemnt(Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str);
-                                    }
                                     i2++;
+                                    //if (i2 != 0)
+                                    //    rightP += ", " + GetStrFixedForDocumemnt(Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str);
+                                    //else
+                                    //{
+
+                                    rightP += i2.ToString() + ") " + GetStrFixedForDocumemnt(Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str) + "\n";
+                                    //}
+
                                 }
                             }
                         }
 
 
-
-
+                        
+                        
 
                         if (Operation.OnWhatLegOp == "0")
                         {
-                            operationType = "\n" + leftP + " левой нижней конечности\n";
+                            operationType = "\n" + leftP + "левой нижней конечности.\n";
                             document.ReplaceText("«IsLeft»", "ЛЕВАЯ");
 
                         }
                         if (Operation.OnWhatLegOp == "1")
                         {
-                            operationType = "\n" + rightP + " правой нижней конечности\n";
+                            operationType = "\n" + rightP + "правой нижней конечности.\n";
                             document.ReplaceText("«IsLeft»", "ПРАВАЯ");
                         }
                         if (Operation.OnWhatLegOp == "2")
                         {
-                            operationType = "\n" + rightP + " правой нижней конечности\n" + "" + leftP + " левой нижней конечности\n";
+                            operationType = "\n" + rightP + "правой нижней конечности.\n" + "" + leftP + "левой нижней конечности.\n";
                         }
 
                         document.ReplaceText("«Операция2»", operationType);
