@@ -75,19 +75,66 @@ namespace WpfApp2.ViewModels
                 _patologyType = value; OnPropertyChanged();
             }
         }
+        private void RebuildMonthList()
+        {
+            Month = new ObservableCollection<string>();
+            if (Year[YearSelectedId] == DateTime.Now.Year.ToString())
+            {
+
+                for (int i = 1; i <= DateTime.Now.Month; i++)
+                {
+                    Month.Add(getmonthName(i));
+                }
+
+            }
+            else
+            {
+                Month.Add("Январь");
+                Month.Add("Февраль");
+                Month.Add("Март");
+                Month.Add("Апрель");
+                Month.Add("Май");
+                Month.Add("Июнь");
+                Month.Add("Июль");
+                Month.Add("Август");
+                Month.Add("Сентябрь");
+                Month.Add("Октябрь");
+                Month.Add("Ноябрь");
+                Month.Add("Декабрь");
+            }
+        }
         private void rebuildMonthDissapearList()
         {
             Monthd = new ObservableCollection<string>();
-            for (int i = MonthSelectedId; i < Month.Count; ++i)
+            if (Month.Count != 0)
             {
+                if (Yeard.Count != 0 && Year.Count != 0 && Year[YearSelectedId] != DateTime.Now.Year.ToString() && Yeard[YearDissapearSelectedId] == DateTime.Now.Year.ToString() && MonthSelectedId != -1)
+                {
+                    for (int i = MonthSelectedId; i < DateTime.Now.Month; ++i)
+                    {
 
-                string buf = Month[i];
-                Monthd.Add(buf);
+                        string buf = Month[i];
+                        Monthd.Add(buf);
 
 
+                    }
+                    Monthd.Add("-");
+                    MonthDissapearSelectedId = Monthd.Count - 1;
+                }
+                else if (Yeard.Count != 0 && Year.Count != 0 && MonthSelectedId != -1)
+                {
+                    for (int i = MonthSelectedId; i < Month.Count; ++i)
+                    {
+
+                        string buf = Month[i];
+                        Monthd.Add(buf);
+
+
+                    }
+                    Monthd.Add("-");
+                    MonthDissapearSelectedId = Monthd.Count - 1;
+                }
             }
-            Monthd.Add("-");
-            MonthDissapearSelectedId = Monthd.Count - 1;
 
 
         }
@@ -108,9 +155,40 @@ namespace WpfApp2.ViewModels
 
 
         }
-      
 
-     
+
+        private string getmonthName(int number)
+        {
+            switch (number)
+            {
+                case 1:
+                    return "Январь";
+                case 2:
+                    return "Февраль";
+                case 3:
+                    return "Март";
+                case 4:
+                    return "Апрель";
+                case 5:
+                    return "Май";
+                case 6:
+                    return "Июнь";
+                case 7:
+                    return "Июль";
+                case 8:
+                    return "Август";
+                case 9:
+                    return "Сентябрь";
+                case 10:
+                    return "Октябрь";
+                case 11:
+                    return "Ноябрь";
+                case 12:
+                    return "Декабрь";
+            }
+            return "";
+
+        }
 
         private int getmonthName(string number)
         {
@@ -193,7 +271,7 @@ namespace WpfApp2.ViewModels
 
         private int _yearSelectedId;
 
-        public int YearSelectedId { get { return _yearSelectedId; } set { _yearSelectedId = value; TextAddOrSave = "Сохранить"; rebuildYearDissapearList(); OnPropertyChanged(); } }
+        public int YearSelectedId { get { return _yearSelectedId; } set { _yearSelectedId = value; TextAddOrSave = "Сохранить"; RebuildMonthList(); rebuildYearDissapearList(); OnPropertyChanged(); } }
 
         private int _monthSelectedId;
 
@@ -201,7 +279,7 @@ namespace WpfApp2.ViewModels
 
         private int _yearDissapearSelectedId;
 
-        public int YearDissapearSelectedId { get { return _yearDissapearSelectedId; } set { TextAddOrSave = "Сохранить"; _yearDissapearSelectedId = value; OnPropertyChanged(); } }
+        public int YearDissapearSelectedId { get { return _yearDissapearSelectedId; } set { TextAddOrSave = "Сохранить"; _yearDissapearSelectedId = value; rebuildMonthDissapearList(); OnPropertyChanged(); } }
 
         private int _monthDissapearSelectedId;
 
@@ -315,20 +393,21 @@ namespace WpfApp2.ViewModels
                         break;
                     }
                 }
-                MonthSelectedId = Month.IndexOf(getmonthNameClassic(CurrentPatology.MonthAppear.Value.Month));
-                
+              
                 YearSelectedId = Year.IndexOf(CurrentPatology.YearAppear.Value.Year.ToString());
+                MonthSelectedId = Month.IndexOf(getmonthNameClassic(CurrentPatology.MonthAppear.Value.Month));
 
                 try
                 {
-                    MonthDissapearSelectedId = Monthd.IndexOf(getmonthNameClassic(CurrentPatology.MonthDisappear.Value.Month));
                     YearDissapearSelectedId = Yeard.IndexOf(CurrentPatology.YearDisappear.Value.Year.ToString());
+                    MonthDissapearSelectedId = Monthd.IndexOf(getmonthNameClassic(CurrentPatology.MonthDisappear.Value.Month));
 
                 }
                 catch
                 {
-                    MonthDissapearSelectedId = Monthd.Count - 1;
                     YearDissapearSelectedId = Yeard.Count - 1;
+                    MonthDissapearSelectedId = Monthd.Count - 1;
+
                 }
 
 
@@ -400,9 +479,9 @@ namespace WpfApp2.ViewModels
             }
             return result;
         }
-        private List<string> _month;
+        private ObservableCollection<string> _month;
 
-        public List<string> Month { get { return _month; } set { _month = value; OnPropertyChanged(); } }
+        public ObservableCollection<string> Month { get { return _month; } set { _month = value; OnPropertyChanged(); } }
 
         private List<string> _year;
 
@@ -421,7 +500,7 @@ namespace WpfApp2.ViewModels
         {
             Monthd = new ObservableCollection<string>();
             Yeard = new ObservableCollection<string>();
-            Month = new List<string>();
+            Month = new ObservableCollection<string>();
             Year = new List<string>();
 
             // MonthAndYear = new List<string>();
@@ -548,7 +627,7 @@ namespace WpfApp2.ViewModels
 
 
 
-                    if ((CurrentPatology.isArchivatied && Monthd[MonthDissapearSelectedId] != "-" && Yeard[YearDissapearSelectedId] != "-") || !CurrentPatology.isArchivatied)
+                    if ((MonthDissapearSelectedId != -1 && CurrentPatology.isArchivatied && Monthd[MonthDissapearSelectedId] != "-" && Yeard[YearDissapearSelectedId] != "-") || !CurrentPatology.isArchivatied)
                     {
 
 

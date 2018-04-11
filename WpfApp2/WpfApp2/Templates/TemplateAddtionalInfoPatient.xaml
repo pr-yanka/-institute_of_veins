@@ -72,6 +72,7 @@
                         <RowDefinition Height="19*"/>
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
+                    <TextBlock x:Name="tesxtBl2ock" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="Патологии" VerticalAlignment="Top"  Grid.Row="0" Grid.Column="0"  FontSize="16"/>
 
                     <TextBlock x:Name="tesxtBlock" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="группа" VerticalAlignment="Top"  Grid.Row="2" Grid.Column="1"  FontSize="16"/>
                     <TextBlock x:Name="tesxtBlocklyy" HorizontalAlignment="Left" TextWrapping="Wrap" Text="резус" VerticalAlignment="Top"  Grid.Row="2" Grid.Column="2" Margin="298,0,0,0" FontSize="16"/>
