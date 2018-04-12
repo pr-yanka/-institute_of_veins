@@ -373,6 +373,13 @@ namespace WpfApp2.LegParts
                 test = true;
             }
 
+            if (test == false)
+            {
+                CurrentPanelViewModel.SelectedMetricText = "";
+
+                CurrentPanelViewModel.HasDoubleSize = false;
+                CurrentPanelViewModel.HasSize = false;
+            }
             return test;
         }
 
@@ -436,7 +443,7 @@ namespace WpfApp2.LegParts
                 CurrentPanelViewModel.TextSaveBTN = "Вернуться";
                 CurrentPanelViewModel.TextCancleOrResetBTN = "Сбросить";
 
-              
+
 
 
 
@@ -525,13 +532,16 @@ namespace WpfApp2.LegParts
             else newStr.Size = null;
             newStr.Level = _lastSender.ListNumber;
             newStr.Custom = true;
+            CurrentPanelViewModel.SelectedMetricText = "";
 
+            CurrentPanelViewModel.HasDoubleSize = false;
+            CurrentPanelViewModel.HasSize = false;
             return newStr;
 
 
         }
 
-     
+
 
         private void SetModeHandler(object sender, object data)
         {

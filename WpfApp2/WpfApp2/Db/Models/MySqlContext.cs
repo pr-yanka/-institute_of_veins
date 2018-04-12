@@ -15,7 +15,15 @@ namespace WpfApp2.Db.Models
 {
     public class MySqlContext : DbContext
     {
-        
+
+
+        public DbSet<SavedComplanesObs> SavedComplanesObs { get; }
+        public DbSet<SavedRecomendationObs> SavedRecomendationObs { get; }
+        public DbSet<SavedDiagnosisObs> SavedDiagnosisObs { get; }
+
+
+        public DbSet<SavedExamination> SavedExamination { get; }
+        public DbSet<SavedExaminationLeg> SavedExaminationLeg { get; }
         public DbSet<Veshestvo> Veshestvo { get; set; }
         public DbSet<Svetovod> Svetovod { get; set; }
         public DbSet<AdditionalInfoDocument> AdditionalInfoDocument { get; set; }

@@ -24,6 +24,12 @@ namespace WpfApp2.Db.Models
 {
     public interface IUnitOfWork : IDisposable
     {
+        SavedComplanesObsRepository SavedComplanesObs { get; }
+        SavedRecomendationObsRepository SavedRecomendationObs { get; }
+        SavedDiagnosisObsRepository SavedDiagnosisObs { get; }
+
+        SavedExaminationRepository SavedExamination { get; }
+        SavedExaminationLegRepository SavedExaminationLeg { get; }
         VeshestvoRepository Veshestvo { get; }
         SvetovodRepository Svetovod { get; }
         AdditionalInfoDocumentRepository AdditionalInfoDocument { get; }

@@ -24,6 +24,11 @@ namespace WpfApp2.Db.Models
 {
     public class UnitOfWork : IUnitOfWork
     {
+        public SavedComplanesObsRepository SavedComplanesObs { get; }
+        public SavedRecomendationObsRepository SavedRecomendationObs { get; }
+        public SavedDiagnosisObsRepository SavedDiagnosisObs { get; }
+        public SavedExaminationRepository SavedExamination { get; }
+        public SavedExaminationLegRepository SavedExaminationLeg { get; }
         public SvetovodRepository Svetovod { get; }
         public AdditionalInfoDocumentRepository AdditionalInfoDocument { get; }
         public EpicrizOperationRepository EpicrizOperation { get; }
@@ -208,6 +213,11 @@ namespace WpfApp2.Db.Models
         public UnitOfWork(MySqlContext context)
         {
             _context = context;
+            SavedComplanesObs = new SavedComplanesObsRepository(_context);
+            SavedRecomendationObs = new SavedRecomendationObsRepository(_context);
+            SavedDiagnosisObs = new SavedDiagnosisObsRepository(_context);
+            SavedExamination = new SavedExaminationRepository(_context);
+            SavedExaminationLeg = new SavedExaminationLegRepository(_context);
             Veshestvo = new VeshestvoRepository(_context);
             Svetovod = new SvetovodRepository(_context);
             AdditionalInfoDocument = new AdditionalInfoDocumentRepository(_context);

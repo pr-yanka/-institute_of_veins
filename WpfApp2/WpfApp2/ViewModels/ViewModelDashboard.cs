@@ -1,7 +1,9 @@
 ﻿using Microsoft.Practices.Prism.Commands;
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using WpfApp2.Db.Models;
 using WpfApp2.Messaging;
@@ -72,8 +74,36 @@ namespace WpfApp2.ViewModels
 
             AccauntName = Data.Accaunt.Get((int)data).Name;
 
+            DelaySaveCheck();
         }
 
+        private async void DelaySaveCheck()
+        {
+            try
+            {
+                await Task.Delay(1000);
+                var savedExam = Data.SavedExamination.GetAll.ToList();
+                if (savedExam.Count != 0 && savedExam[0].PatientId != null)
+                {
+
+
+                    MessageBoxResult dialogResult = MessageBox.Show("Есть резервная копия обследования, хотите ли её восстановить?", "", MessageBoxButton.YesNo);
+                    if (dialogResult == MessageBoxResult.Yes)
+                    {
+                        if (savedExam[0].PatientId != null)
+                        {
+                            var patient = Data.Patients.Get(savedExam[0].PatientId.Value);
+
+                            MessageBus.Default.Call("GetCurrentPatientIdForOperation", this, patient.Id);
+                            MessageBus.Default.Call("GetObsFromSavedOverview", this, savedExam[0].Id.Value);
+                            Controller.NavigateTo<ViewModelAddPhysical>();
+                        }
+                    }
+                }
+            }
+            catch { }
+
+        }
         public ViewModelDashboard(NavigationController controller) : base(controller)
         {
             base.HasNavigation = true;
