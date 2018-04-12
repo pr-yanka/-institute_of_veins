@@ -1375,6 +1375,8 @@ namespace WpfApp2.ViewModels
                         ExaminationRepository ExamRep = new ExaminationRepository(context);
                         ExaminationLegRepository LegExamRep = new ExaminationLegRepository(context);
 
+                        SavedExaminationRepository SavedExamRep = new SavedExaminationRepository(context);
+                        SavedExaminationLegRepository SavedLegExamRep = new SavedExaminationLegRepository(context);
 
 
 
@@ -1385,9 +1387,9 @@ namespace WpfApp2.ViewModels
                         examnTotal.hirurgOverviewId = hirurgOverviewId;
 
 
-                        SavedExamination savedExamnTotal = Data.SavedExamination.GetAll.FirstOrDefault();
-                        SavedExaminationLeg savedLegExamL = Data.SavedExaminationLeg.Get(savedExamnTotal.idLeftLegExamination.Value);
-                        SavedExaminationLeg savedLegExamR = Data.SavedExaminationLeg.Get(savedExamnTotal.idRightLegExamination.Value);
+                        SavedExamination savedExamnTotal = SavedExamRep.GetAll.FirstOrDefault();
+                        SavedExaminationLeg savedLegExamL = SavedLegExamRep.Get(savedExamnTotal.idLeftLegExamination.Value);
+                        SavedExaminationLeg savedLegExamR = SavedLegExamRep.Get(savedExamnTotal.idRightLegExamination.Value);
 
                         examnTotal.height = savedExamnTotal.height;
                         examnTotal.weight = savedExamnTotal.weight;
@@ -4315,7 +4317,7 @@ namespace WpfApp2.ViewModels
                 () =>
                 {
                     testThread = false;
-                 
+
                     RemoveAllSaves();
                     MessageBus.Default.Call("GetCurrentPatientId", this, CurrentPatient.Id);
                     Controller.NavigateTo<ViewModelCurrentPatient>();
@@ -10411,7 +10413,9 @@ namespace WpfApp2.ViewModels
             statementOverviewId = 0;
             hirurgOverviewId = 0;
             SetAllBordersDefault();
+            
             testThread = true;
+          
             if (!isDelayStarted)
                 DelayTest();
         }
@@ -10695,22 +10699,23 @@ namespace WpfApp2.ViewModels
                 Data.SavedRecomendationObs.Remove(x);
             }
         }
-        private LegPartEntries SaveForSavedProc(LegPartViewModel Part, LegPartEntries FullEntry, bool isLeft, int obsid)
+        private LegPartEntries SaveForSavedProc(ref SavedExaminationLeg LegExam, ref SavedExamination Exam, LegPartViewModel Part, LegPartEntries FullEntry, bool isLeft, int obsid)
         {
 
 
-            SavedExamination Exam = Data.SavedExamination.Get(obsid);
-            SavedExaminationLeg LegExam = new SavedExaminationLeg();
-            if (Exam == null || LegExam == null)
-                return FullEntry;
-            if (isLeft)
-            {
-                LegExam = Data.SavedExaminationLeg.Get(Exam.idLeftLegExamination.Value);
-            }
-            else
-            {
-                LegExam = Data.SavedExaminationLeg.Get(Exam.idRightLegExamination.Value);
-            }
+
+            //SavedExamination Exam = Data.SavedExamination.Get(obsid);
+            //SavedExaminationLeg LegExam = new SavedExaminationLeg();
+            //if (Exam == null || LegExam == null)
+            //    return FullEntry;
+            //if (isLeft)
+            //{
+            //    LegExam = Data.SavedExaminationLeg.Get(Exam.idLeftLegExamination.Value);
+            //}
+            //else
+            //{
+            //    LegExam = Data.SavedExaminationLeg.Get(Exam.idRightLegExamination.Value);
+            //}
 
             LegPartEntries LeftSFSEntryFullbuf = FullEntry;
 
@@ -13353,7 +13358,9 @@ namespace WpfApp2.ViewModels
                 {
                     await Task.Delay(16000);
                     if (!testThread)
-                    { return; }
+                    {
+                        isDelayStarted = false; return; 
+                    }
                     //RemoveAllSaves();
                     SaveExaminationToSavedTable();
                     //SavedExamination examnTotal = new SavedExamination();
@@ -13372,7 +13379,7 @@ namespace WpfApp2.ViewModels
                 }
                 else
                 {
-                    return;
+                    isDelayStarted = false; return;
                 }
             }
         }
@@ -13387,68 +13394,124 @@ namespace WpfApp2.ViewModels
             examnTotal.hirurgOverviewId = hirurgOverviewId;
 
             if (mode == "EDIT")
+            {
                 examnTotal.id_current_examination = obsid;
-            //{
-            //    Examination savedExamnTotal = Data.Examination.Get(obsid);
-            //    ExaminationLeg savedLegExamL = Data.ExaminationLeg.Get(savedExamnTotal.idLeftLegExamination.Value);
-            //    ExaminationLeg savedLegExamR = Data.ExaminationLeg.Get(savedExamnTotal.idRightLegExamination.Value);
+
+                Examination savedExamnTotal = Data.Examination.Get(obsid);
+                ExaminationLeg savedLegExamL = Data.ExaminationLeg.Get(savedExamnTotal.idLeftLegExamination.Value);
+                ExaminationLeg savedLegExamR = Data.ExaminationLeg.Get(savedExamnTotal.idRightLegExamination.Value);
 
 
-            //    examnTotal.height = savedExamnTotal.height;
-            //    examnTotal.weight = savedExamnTotal.weight;
-            //    // examnTotal.Comment = savedExamnTotal.Comment;
-            //    examnTotal.Date = savedExamnTotal.Date;
-            //    examnTotal.DoctorID = savedExamnTotal.DoctorID;
-            //    examnTotal.hirurgOverviewId = savedExamnTotal.hirurgOverviewId;
-            //    examnTotal.NB = savedExamnTotal.NB;
-            //    // examnTotal.OperationType = savedExamnTotal.OperationType;
-            //    examnTotal.PatientId = savedExamnTotal.PatientId;
-            //    examnTotal.statementOverviewId = savedExamnTotal.statementOverviewId;
+                examnTotal.height = savedExamnTotal.height;
+                examnTotal.weight = savedExamnTotal.weight;
+                // examnTotal.Comment = savedExamnTotal.Comment;
+                examnTotal.Date = savedExamnTotal.Date;
+                examnTotal.DoctorID = savedExamnTotal.DoctorID;
+                examnTotal.hirurgOverviewId = savedExamnTotal.hirurgOverviewId;
+                examnTotal.NB = savedExamnTotal.NB;
+                // examnTotal.OperationType = savedExamnTotal.OperationType;
+                examnTotal.PatientId = savedExamnTotal.PatientId;
+                examnTotal.statementOverviewId = savedExamnTotal.statementOverviewId;
+
+                if (LegExamL.A == null)
+                    LegExamL.A = savedLegExamL.A;
+                if (LegExamL.additionalText == null)
+                    LegExamL.additionalText = savedLegExamL.additionalText;
+                if (LegExamL.BPVHip == null)
+                    LegExamL.BPVHip = savedLegExamL.BPVHip;
+                if (LegExamL.BPVTibiaid == null)
+                    LegExamL.BPVTibiaid = savedLegExamL.BPVTibiaid;
+                if (LegExamL.C == null)
+                    LegExamL.C = savedLegExamL.C;
+                if (LegExamL.E == null)
+                    LegExamL.E = savedLegExamL.E;
+                if (LegExamL.GVid == null)
+                    LegExamL.GVid = savedLegExamL.GVid;
+                if (LegExamL.MPVid == null)
+                    LegExamL.MPVid = savedLegExamL.MPVid;
+                if (LegExamL.P == null)
+                    LegExamL.P = savedLegExamL.P;
+                if (LegExamL.PDSVid == null)
+                    LegExamL.PDSVid = savedLegExamL.PDSVid;
+                if (LegExamL.PerforateHipid == null)
+                    LegExamL.PerforateHipid = savedLegExamL.PerforateHipid;
+                if (LegExamL.PPVid == null)
+                    LegExamL.PPVid = savedLegExamL.PPVid;
+                if (LegExamL.SFSid == null)
+                    LegExamL.SFSid = savedLegExamL.SFSid;
+                if (LegExamL.SPSid == null)
+                    LegExamL.SPSid = savedLegExamL.SPSid;
+                if (LegExamL.TEMPVid == null)
+                    LegExamL.TEMPVid = savedLegExamL.TEMPVid;
+                if (LegExamL.TibiaPerforateid == null)
+                    LegExamL.TibiaPerforateid = savedLegExamL.TibiaPerforateid;
+                if (LegExamL.ZDSVid == null)
+                    LegExamL.ZDSVid = savedLegExamL.ZDSVid;
 
 
-            //    LegExamL.A = savedLegExamL.A;
-            //    LegExamL.additionalText = savedLegExamL.additionalText;
-            //    LegExamL.BPVHip = savedLegExamL.BPVHip;
-            //    LegExamL.BPVTibiaid = savedLegExamL.BPVTibiaid;
-            //    LegExamL.C = savedLegExamL.C;
-            //    LegExamL.E = savedLegExamL.E;
-            //    LegExamL.GVid = savedLegExamL.GVid;
-            //    LegExamL.MPVid = savedLegExamL.MPVid;
-            //    LegExamL.P = savedLegExamL.P;
-            //    LegExamL.PDSVid = savedLegExamL.PDSVid;
-            //    LegExamL.PerforateHipid = savedLegExamL.PerforateHipid;
-            //    LegExamL.PPVid = savedLegExamL.PPVid;
-            //    LegExamL.SFSid = savedLegExamL.SFSid;
-            //    LegExamL.SPSid = savedLegExamL.SPSid;
-            //    LegExamL.TEMPVid = savedLegExamL.TEMPVid;
-            //    LegExamL.TibiaPerforateid = savedLegExamL.TibiaPerforateid;
-            //    LegExamL.ZDSVid = savedLegExamL.ZDSVid;
 
-            //    LegExamR.A = savedLegExamR.A;
-            //    LegExamR.additionalText = savedLegExamR.additionalText;
-            //    LegExamR.BPVHip = savedLegExamR.BPVHip;
-            //    LegExamR.BPVTibiaid = savedLegExamR.BPVTibiaid;
-            //    LegExamR.C = savedLegExamR.C;
-            //    LegExamR.E = savedLegExamR.E;
-            //    LegExamR.GVid = savedLegExamR.GVid;
-            //    LegExamR.MPVid = savedLegExamR.MPVid;
-            //    LegExamR.P = savedLegExamR.P;
-            //    LegExamR.PDSVid = savedLegExamR.PDSVid;
-            //    LegExamR.PerforateHipid = savedLegExamR.PerforateHipid;
-            //    LegExamR.PPVid = savedLegExamR.PPVid;
-            //    LegExamR.SFSid = savedLegExamR.SFSid;
-            //    LegExamR.SPSid = savedLegExamR.SPSid;
-            //    LegExamR.TEMPVid = savedLegExamR.TEMPVid;
-            //    LegExamR.TibiaPerforateid = savedLegExamR.TibiaPerforateid;
-            //    LegExamR.ZDSVid = savedLegExamR.ZDSVid;
-
-
-            //    examnTotal.hirurgOverviewId = hirurgOverviewId;
-            //    examnTotal.statementOverviewId = statementOverviewId;
-            //    //SaveAll();
+                if (LegExamR.A == null)
+                    LegExamR.A = savedLegExamR.A;
+                if (LegExamR.additionalText == null)
+                    LegExamR.additionalText = savedLegExamR.additionalText;
+                if (LegExamR.BPVHip == null)
+                    LegExamR.BPVHip = savedLegExamR.BPVHip;
+                if (LegExamR.BPVTibiaid == null)
+                    LegExamR.BPVTibiaid = savedLegExamR.BPVTibiaid;
+                if (LegExamR.C == null)
+                    LegExamR.C = savedLegExamR.C;
+                if (LegExamR.E == null)
+                    LegExamR.E = savedLegExamR.E;
+                if (LegExamR.GVid == null)
+                    LegExamR.GVid = savedLegExamR.GVid;
+                if (LegExamR.MPVid == null)
+                    LegExamR.MPVid = savedLegExamR.MPVid;
+                if (LegExamR.P == null)
+                    LegExamR.P = savedLegExamR.P;
+                if (LegExamR.PDSVid == null)
+                    LegExamR.PDSVid = savedLegExamR.PDSVid;
+                if (LegExamR.PerforateHipid == null)
+                    LegExamR.PerforateHipid = savedLegExamR.PerforateHipid;
+                if (LegExamR.PPVid == null)
+                    LegExamR.PPVid = savedLegExamR.PPVid;
+                if (LegExamR.SFSid == null)
+                    LegExamR.SFSid = savedLegExamR.SFSid;
+                if (LegExamR.SPSid == null)
+                    LegExamR.SPSid = savedLegExamR.SPSid;
+                if (LegExamR.TEMPVid == null)
+                    LegExamR.TEMPVid = savedLegExamR.TEMPVid;
+                if (LegExamR.TibiaPerforateid == null)
+                    LegExamR.TibiaPerforateid = savedLegExamR.TibiaPerforateid;
+                if (LegExamR.ZDSVid == null)
+                    LegExamR.ZDSVid = savedLegExamR.ZDSVid;
 
 
-            //}
+                Data.Complete();
+                ////LegExamR.A = savedLegExamR.A;
+                ////LegExamR.additionalText = savedLegExamR.additionalText;
+                ////LegExamR.BPVHip = savedLegExamR.BPVHip;
+                ////LegExamR.BPVTibiaid = savedLegExamR.BPVTibiaid;
+                ////LegExamR.C = savedLegExamR.C;
+                ////LegExamR.E = savedLegExamR.E;
+                ////LegExamR.GVid = savedLegExamR.GVid;
+                ////LegExamR.MPVid = savedLegExamR.MPVid;
+                ////LegExamR.P = savedLegExamR.P;
+                ////LegExamR.PDSVid = savedLegExamR.PDSVid;
+                ////LegExamR.PerforateHipid = savedLegExamR.PerforateHipid;
+                ////LegExamR.PPVid = savedLegExamR.PPVid;
+                ////LegExamR.SFSid = savedLegExamR.SFSid;
+                ////LegExamR.SPSid = savedLegExamR.SPSid;
+                ////LegExamR.TEMPVid = savedLegExamR.TEMPVid;
+                ////LegExamR.TibiaPerforateid = savedLegExamR.TibiaPerforateid;
+                ////LegExamR.ZDSVid = savedLegExamR.ZDSVid;
+
+
+                //examnTotal.hirurgOverviewId = hirurgOverviewId;
+                //examnTotal.statementOverviewId = statementOverviewId;
+                ////SaveAll();
+
+
+            }
 
 
             RightBPV_TibiaEntryFull = new BPV_TibiaEntryFull();
@@ -13476,37 +13539,37 @@ namespace WpfApp2.ViewModels
             RightGVEntryFull = new GVEntryFull();
             LeftGVEntryFull = new GVEntryFull();
 
-            RightBPV_TibiaEntryFull = (BPV_TibiaEntryFull)SaveForSavedProc(RightBPVTibia, RightBPV_TibiaEntryFull, false, examnTotal.Id.Value);
-            LeftBPV_TibiaEntryFull = (BPV_TibiaEntryFull)SaveForSavedProc(LeftBPVTibia, LeftBPV_TibiaEntryFull, true, examnTotal.Id.Value);
-            RightPerforate_hipEntryFull = (Perforate_hipEntryFull)SaveForSavedProc(RightPerforate, RightPerforate_hipEntryFull, false, examnTotal.Id.Value);
-            LeftPerforate_hipEntryFull = (Perforate_hipEntryFull)SaveForSavedProc(LeftPerforate, LeftPerforate_hipEntryFull, true, examnTotal.Id.Value);
-            RightZDSVEntryFull = (ZDSVEntryFull)SaveForSavedProc(RightZDSV, RightZDSVEntryFull, false, examnTotal.Id.Value);
-            LeftZDSVEntryFull = (ZDSVEntryFull)SaveForSavedProc(LeftZDSV, LeftZDSVEntryFull, true, examnTotal.Id.Value);
-            RightPDSVEntryFull = (PDSVHipEntryFull)SaveForSavedProc(RightPDSV, RightPDSVEntryFull, false, examnTotal.Id.Value);
-            LeftPDSVEntryFull = (PDSVHipEntryFull)SaveForSavedProc(LeftPDSV, LeftPDSVEntryFull, true, examnTotal.Id.Value);
-            RightBPVEntryFull = (BPVHipEntryFull)SaveForSavedProc(RightBPVHip, RightBPVEntryFull, false, examnTotal.Id.Value);
-            LeftBPVEntryFull = (BPVHipEntryFull)SaveForSavedProc(LeftBPVHip, LeftBPVEntryFull, true, examnTotal.Id.Value);
-            RightSFSEntryFull = (SFSHipEntryFull)SaveForSavedProc(RightSFS, RightSFSEntryFull, false, examnTotal.Id.Value);
-            LeftSFSEntryFull = (SFSHipEntryFull)SaveForSavedProc(LeftSFS, LeftSFSEntryFull, true, examnTotal.Id.Value);
+            RightBPV_TibiaEntryFull = (BPV_TibiaEntryFull)SaveForSavedProc(ref LegExamR, ref examnTotal, RightBPVTibia, RightBPV_TibiaEntryFull, false, examnTotal.Id.Value);
+            LeftBPV_TibiaEntryFull = (BPV_TibiaEntryFull)SaveForSavedProc(ref LegExamL, ref examnTotal, LeftBPVTibia, LeftBPV_TibiaEntryFull, true, examnTotal.Id.Value);
+            RightPerforate_hipEntryFull = (Perforate_hipEntryFull)SaveForSavedProc(ref LegExamR, ref examnTotal, RightPerforate, RightPerforate_hipEntryFull, false, examnTotal.Id.Value);
+            LeftPerforate_hipEntryFull = (Perforate_hipEntryFull)SaveForSavedProc(ref LegExamL, ref examnTotal, LeftPerforate, LeftPerforate_hipEntryFull, true, examnTotal.Id.Value);
+            RightZDSVEntryFull = (ZDSVEntryFull)SaveForSavedProc(ref LegExamR, ref examnTotal, RightZDSV, RightZDSVEntryFull, false, examnTotal.Id.Value);
+            LeftZDSVEntryFull = (ZDSVEntryFull)SaveForSavedProc(ref LegExamL, ref examnTotal, LeftZDSV, LeftZDSVEntryFull, true, examnTotal.Id.Value);
+            RightPDSVEntryFull = (PDSVHipEntryFull)SaveForSavedProc(ref LegExamR, ref examnTotal, RightPDSV, RightPDSVEntryFull, false, examnTotal.Id.Value);
+            LeftPDSVEntryFull = (PDSVHipEntryFull)SaveForSavedProc(ref LegExamL, ref examnTotal, LeftPDSV, LeftPDSVEntryFull, true, examnTotal.Id.Value);
+            RightBPVEntryFull = (BPVHipEntryFull)SaveForSavedProc(ref LegExamR, ref examnTotal, RightBPVHip, RightBPVEntryFull, false, examnTotal.Id.Value);
+            LeftBPVEntryFull = (BPVHipEntryFull)SaveForSavedProc(ref LegExamL, ref examnTotal, LeftBPVHip, LeftBPVEntryFull, true, examnTotal.Id.Value);
+            RightSFSEntryFull = (SFSHipEntryFull)SaveForSavedProc(ref LegExamR, ref examnTotal, RightSFS, RightSFSEntryFull, false, examnTotal.Id.Value);
+            LeftSFSEntryFull = (SFSHipEntryFull)SaveForSavedProc(ref LegExamL, ref examnTotal, LeftSFS, LeftSFSEntryFull, true, examnTotal.Id.Value);
 
-            RightSPSEntryFull = (SPSHipEntryFull)SaveForSavedProc(RightSPS, RightSPSEntryFull, false, examnTotal.Id.Value);
-            LeftSPSEntryFull = (SPSHipEntryFull)SaveForSavedProc(LeftSPS, LeftSPSEntryFull, true, examnTotal.Id.Value);
+            RightSPSEntryFull = (SPSHipEntryFull)SaveForSavedProc(ref LegExamR, ref examnTotal, RightSPS, RightSPSEntryFull, false, examnTotal.Id.Value);
+            LeftSPSEntryFull = (SPSHipEntryFull)SaveForSavedProc(ref LegExamL, ref examnTotal, LeftSPS, LeftSPSEntryFull, true, examnTotal.Id.Value);
 
-            RightPerforate_shinEntryFull = (Perforate_shinEntryFull)SaveForSavedProc(RightTibiaPerforate, RightPerforate_shinEntryFull, false, examnTotal.Id.Value);
-            LeftPerforate_shinEntryFull = (Perforate_shinEntryFull)SaveForSavedProc(LeftTibiaPerforate, LeftPerforate_shinEntryFull, true, examnTotal.Id.Value);
+            RightPerforate_shinEntryFull = (Perforate_shinEntryFull)SaveForSavedProc(ref LegExamR, ref examnTotal, RightTibiaPerforate, RightPerforate_shinEntryFull, false, examnTotal.Id.Value);
+            LeftPerforate_shinEntryFull = (Perforate_shinEntryFull)SaveForSavedProc(ref LegExamL, ref examnTotal, LeftTibiaPerforate, LeftPerforate_shinEntryFull, true, examnTotal.Id.Value);
 
-            RightTEMPVEntryFull = (TEMPVEntryFull)SaveForSavedProc(RightTEMPV, RightTEMPVEntryFull, false, examnTotal.Id.Value);
-            LeftTEMPVEntryFull = (TEMPVEntryFull)SaveForSavedProc(LeftTEMPV, LeftTEMPVEntryFull, true, examnTotal.Id.Value);
+            RightTEMPVEntryFull = (TEMPVEntryFull)SaveForSavedProc(ref LegExamR, ref examnTotal, RightTEMPV, RightTEMPVEntryFull, false, examnTotal.Id.Value);
+            LeftTEMPVEntryFull = (TEMPVEntryFull)SaveForSavedProc(ref LegExamL, ref examnTotal, LeftTEMPV, LeftTEMPVEntryFull, true, examnTotal.Id.Value);
 
-            RightMPVEntryFull = (MPVEntryFull)SaveForSavedProc(RightMPV, RightMPVEntryFull, false, examnTotal.Id.Value);
-            LeftMPVEntryFull = (MPVEntryFull)SaveForSavedProc(LeftMPV, LeftMPVEntryFull, true, examnTotal.Id.Value);
+            RightMPVEntryFull = (MPVEntryFull)SaveForSavedProc(ref LegExamR, ref examnTotal, RightMPV, RightMPVEntryFull, false, examnTotal.Id.Value);
+            LeftMPVEntryFull = (MPVEntryFull)SaveForSavedProc(ref LegExamL, ref examnTotal, LeftMPV, LeftMPVEntryFull, true, examnTotal.Id.Value);
 
 
-            RightPPVEntryFull = (PPVEntryFull)SaveForSavedProc(RightPPV, RightPPVEntryFull, false, examnTotal.Id.Value);
-            LeftPPVEntryFull = (PPVEntryFull)SaveForSavedProc(LeftPPV, LeftPPVEntryFull, true, examnTotal.Id.Value);
+            RightPPVEntryFull = (PPVEntryFull)SaveForSavedProc(ref LegExamR, ref examnTotal, RightPPV, RightPPVEntryFull, false, examnTotal.Id.Value);
+            LeftPPVEntryFull = (PPVEntryFull)SaveForSavedProc(ref LegExamL, ref examnTotal, LeftPPV, LeftPPVEntryFull, true, examnTotal.Id.Value);
 
-            RightGVEntryFull = (GVEntryFull)SaveForSavedProc(RightGV, RightGVEntryFull, false, examnTotal.Id.Value);
-            LeftGVEntryFull = (GVEntryFull)SaveForSavedProc(LeftGV, LeftGVEntryFull, true, examnTotal.Id.Value);
+            RightGVEntryFull = (GVEntryFull)SaveForSavedProc(ref LegExamR, ref examnTotal, RightGV, RightGVEntryFull, false, examnTotal.Id.Value);
+            LeftGVEntryFull = (GVEntryFull)SaveForSavedProc(ref LegExamL, ref examnTotal, LeftGV, LeftGVEntryFull, true, examnTotal.Id.Value);
 
 
             //Examination Exam = Data.Examination.Get(obsid);
@@ -13514,6 +13577,16 @@ namespace WpfApp2.ViewModels
             //ExaminationLeg LegExamR = new ExaminationLeg();
             //LegExamL = Data.ExaminationLeg.Get(Exam.idLeftLegExamination.Value);
             //LegExamR = Data.ExaminationLeg.Get(Exam.idRightLegExamination.Value);
+            Data.Complete();
+            //using (var context = new MySqlContext())
+            //{
+            //    SavedExaminationRepository SavedExamRep = new SavedExaminationRepository(context);
+            //    SavedExaminationLegRepository SavedLegExamRep = new SavedExaminationLegRepository(context);
+            //    examnTotal = SavedExamRep.GetAll.FirstOrDefault();
+            //    LegExamL = SavedLegExamRep.Get(examnTotal.idLeftLegExamination.Value);
+            //    LegExamR = SavedLegExamRep.Get(examnTotal.idRightLegExamination.Value);
+
+            //}
             if (!RightBPVHip.IsEmpty && LegExamR.BPVHip == null)
             {
 
