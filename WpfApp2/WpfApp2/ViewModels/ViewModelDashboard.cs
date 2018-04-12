@@ -87,7 +87,7 @@ namespace WpfApp2.ViewModels
                 {
 
 
-                    MessageBoxResult dialogResult = MessageBox.Show("Есть резервная копия обследования, хотите ли её восстановить?", "", MessageBoxButton.YesNo);
+                    MessageBoxResult dialogResult = MessageBox.Show("Была сохранена резервная копия обследования, желаете ли её восстановить?", "", MessageBoxButton.YesNo);
                     if (dialogResult == MessageBoxResult.Yes)
                     {
                         if (savedExam[0].PatientId != null)
