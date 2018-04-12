@@ -13351,7 +13351,7 @@ namespace WpfApp2.ViewModels
             {
                 if (testThread)
                 {
-                    await Task.Delay(46000);
+                    await Task.Delay(16000);
                     if (!testThread)
                     { return; }
                     //RemoveAllSaves();
