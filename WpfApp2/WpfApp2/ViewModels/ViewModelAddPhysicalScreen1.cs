@@ -2100,7 +2100,7 @@ namespace WpfApp2.ViewModels
                 if (!LegPart.IsEmpty)
                 {
 
-                    if (LegPart.SelectedWayType != null && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name))
+                    if (LegPart.SelectedWayType != null && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name) && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name))
                     {
                         x++;
 
@@ -3065,7 +3065,7 @@ namespace WpfApp2.ViewModels
         {
 
             string p4 = "";
-            if (LegPart.SelectedWayType != null && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name))
+            if (LegPart.SelectedWayType != null && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name) && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name))
                 p4 += "Вид хода: " + LegPart.SelectedWayType.Name + "\n";
             if (LegPart is TEMPVViewModel)
                 p4 += "Протяженность: " + ((TEMPVViewModel)LegPart).FF_length + " см\n";
@@ -7027,7 +7027,7 @@ namespace WpfApp2.ViewModels
                         LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
                     }
                 }
-                if (Part.SelectedWayType != null)
+                if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                 {
                     LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                 }
@@ -7055,7 +7055,7 @@ namespace WpfApp2.ViewModels
 
                 LegPartEntries LeftSFSEntryFullbuf = FullEntry;
 
-                if (Part.SelectedWayType != null)
+                if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                 {
                     LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                 }
@@ -7265,7 +7265,7 @@ namespace WpfApp2.ViewModels
                     }
 
 
-                    if (Part.SelectedWayType != null)
+                    if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                     {
                         LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                     }
@@ -7486,7 +7486,7 @@ namespace WpfApp2.ViewModels
                     }
 
 
-                    if (Part.SelectedWayType != null)
+                    if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                     {
                         LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                     }
@@ -7701,7 +7701,7 @@ namespace WpfApp2.ViewModels
                     }
 
 
-                    if (Part.SelectedWayType != null)
+                    if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                     {
                         LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                     }
@@ -7914,7 +7914,7 @@ namespace WpfApp2.ViewModels
                     }
 
 
-                    if (Part.SelectedWayType != null)
+                    if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                     {
                         LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                     }
@@ -8143,7 +8143,7 @@ namespace WpfApp2.ViewModels
                     }
 
 
-                    if (Part.SelectedWayType != null)
+                    if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                     {
                         LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                     }
@@ -8363,7 +8363,7 @@ namespace WpfApp2.ViewModels
                     }
 
 
-                    if (Part.SelectedWayType != null)
+                    if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                     {
                         LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                     }
@@ -8590,7 +8590,7 @@ namespace WpfApp2.ViewModels
                     }
 
 
-                    if (Part.SelectedWayType != null)
+                    if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                     {
                         LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                     }
@@ -8811,7 +8811,7 @@ namespace WpfApp2.ViewModels
                     }
 
 
-                    if (Part.SelectedWayType != null)
+                    if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                     {
                         LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                     }
@@ -9032,7 +9032,7 @@ namespace WpfApp2.ViewModels
                     }
 
 
-                    if (Part.SelectedWayType != null)
+                    if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                     {
                         LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                     }
@@ -9246,7 +9246,7 @@ namespace WpfApp2.ViewModels
                     }
 
 
-                    if (Part.SelectedWayType != null)
+                    if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                     {
                         LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                     }
@@ -9461,7 +9461,7 @@ namespace WpfApp2.ViewModels
                     }
 
 
-                    if (Part.SelectedWayType != null)
+                    if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                     {
                         LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                     }
@@ -9675,7 +9675,7 @@ namespace WpfApp2.ViewModels
                     }
 
 
-                    if (Part.SelectedWayType != null)
+                    if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                     {
                         LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                     }
@@ -10413,9 +10413,9 @@ namespace WpfApp2.ViewModels
             statementOverviewId = 0;
             hirurgOverviewId = 0;
             SetAllBordersDefault();
-            
+
             testThread = true;
-          
+
             if (!isDelayStarted)
                 DelayTest();
         }
@@ -10719,7 +10719,7 @@ namespace WpfApp2.ViewModels
 
             LegPartEntries LeftSFSEntryFullbuf = FullEntry;
 
-            if (Part.SelectedWayType != null)
+            if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
             {
                 LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
             }
@@ -10929,7 +10929,7 @@ namespace WpfApp2.ViewModels
                 }
 
 
-                if (Part.SelectedWayType != null)
+                if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                 {
                     LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                 }
@@ -11150,7 +11150,7 @@ namespace WpfApp2.ViewModels
                 }
 
 
-                if (Part.SelectedWayType != null)
+                if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                 {
                     LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                 }
@@ -11365,7 +11365,7 @@ namespace WpfApp2.ViewModels
                 }
 
 
-                if (Part.SelectedWayType != null)
+                if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                 {
                     LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                 }
@@ -11578,7 +11578,7 @@ namespace WpfApp2.ViewModels
                 }
 
 
-                if (Part.SelectedWayType != null)
+                if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                 {
                     LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                 }
@@ -11807,7 +11807,7 @@ namespace WpfApp2.ViewModels
                 }
 
 
-                if (Part.SelectedWayType != null)
+                if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                 {
                     LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                 }
@@ -12027,7 +12027,7 @@ namespace WpfApp2.ViewModels
                 }
 
 
-                if (Part.SelectedWayType != null)
+                if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                 {
                     LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                 }
@@ -12254,7 +12254,7 @@ namespace WpfApp2.ViewModels
                 }
 
 
-                if (Part.SelectedWayType != null)
+                if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                 {
                     LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                 }
@@ -12475,7 +12475,7 @@ namespace WpfApp2.ViewModels
                 }
 
 
-                if (Part.SelectedWayType != null)
+                if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                 {
                     LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                 }
@@ -12696,7 +12696,7 @@ namespace WpfApp2.ViewModels
                 }
 
 
-                if (Part.SelectedWayType != null)
+                if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                 {
                     LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                 }
@@ -12910,7 +12910,7 @@ namespace WpfApp2.ViewModels
                 }
 
 
-                if (Part.SelectedWayType != null)
+                if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                 {
                     LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                 }
@@ -13125,7 +13125,7 @@ namespace WpfApp2.ViewModels
                 }
 
 
-                if (Part.SelectedWayType != null)
+                if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                 {
                     LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                 }
@@ -13339,7 +13339,7 @@ namespace WpfApp2.ViewModels
                 }
 
 
-                if (Part.SelectedWayType != null)
+                if (Part.SelectedWayType != null && !string.IsNullOrWhiteSpace(Part.SelectedWayType.Name))
                 {
                     LeftSFSEntryFullbuf.WayID = Part.SelectedWayType.Id;
                 }
@@ -13359,7 +13359,7 @@ namespace WpfApp2.ViewModels
                     await Task.Delay(16000);
                     if (!testThread)
                     {
-                        isDelayStarted = false; return; 
+                        isDelayStarted = false; return;
                     }
                     //RemoveAllSaves();
                     SaveExaminationToSavedTable();

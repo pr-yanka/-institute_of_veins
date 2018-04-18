@@ -419,8 +419,8 @@ namespace WpfApp2.ViewModels
 
           if (string.IsNullOrWhiteSpace(((TextBox)sender).Text))
           {
-              ((TextBox)sender).Text = "0";
-              E1 = 0;
+              ((TextBox)sender).Text = "0.0";
+              E1 = 0f;
           }
 
 
@@ -431,8 +431,8 @@ namespace WpfApp2.ViewModels
 
        if (string.IsNullOrWhiteSpace(((TextBox)sender).Text))
        {
-           ((TextBox)sender).Text = "0";
-           E2 = 0;
+           ((TextBox)sender).Text = "0.0";
+           E2 = 0f;
        }
 
 

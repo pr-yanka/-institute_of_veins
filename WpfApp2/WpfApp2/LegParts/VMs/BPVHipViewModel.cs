@@ -216,8 +216,8 @@ namespace WpfApp2.LegParts.VMs
         {
             if (((LegPartViewModel)Controller.CurrentViewModel.Controller.LegViewModel).CurrentLegSide != this.CurrentLegSide) return; using (MySqlContext context = new MySqlContext())
             {
-              
-              
+
+
                 BPVHipRepository BPVHip = new BPVHipRepository(context);
                 MetricsRepository Metrics = new MetricsRepository(context);
                 var bufSaveLegSection = new List<int?>();
@@ -298,7 +298,7 @@ namespace WpfApp2.LegParts.VMs
                     LegSectionsSaved.Add(new BPVHipSectionViewModel(Controller, null, i + 1));
             }
 
-             commentSave = Comment; for (int i = 0; i < LegSections.Count; i++)
+            commentSave = Comment; for (int i = 0; i < LegSections.Count; i++)
             {
 
                 LegSectionsSaved[i].Comment = LegSections[i].Comment;
@@ -320,7 +320,9 @@ namespace WpfApp2.LegParts.VMs
                 //    SelectedBpvWayTypeId = BpvWayType.IndexOf(SelectedWayTypeSave as BPVHipWay);
                 //}
             }
-
+            BPVHipWay emptyWay = new BPVHipWay();
+            emptyWay.Name = "";
+            BpvWayType.Add(emptyWay);
             SelectedWayType = SelectedWayTypeSave;
         }
 
@@ -404,6 +406,9 @@ namespace WpfApp2.LegParts.VMs
                     {
                         BpvWayType.Add(Scintific);
                     }
+                    BPVHipWay emptyWay1 = new BPVHipWay();
+                    emptyWay1.Name = "";
+                    BpvWayType.Add(emptyWay1);
                     SelectedBpvWayTypeId = BpvWayType.Count - 1;
                     // Controller.NavigateTo<BPVHipViewModel>();
 
@@ -452,7 +457,7 @@ namespace WpfApp2.LegParts.VMs
                            {
                                var newCombo = new BPVHipCombo();
 
-                                commentSave = Comment; for (int i = 0; i < LegSections.Count; i++)
+                               commentSave = Comment; for (int i = 0; i < LegSections.Count; i++)
                                {
                                    var currentStructure = LegSections[i].SelectedValue;
                                    //ничего не было выбрано
@@ -505,6 +510,9 @@ namespace WpfApp2.LegParts.VMs
             {
                 BpvWayType.Add(way);
             }
+            BPVHipWay emptyWay = new BPVHipWay();
+            emptyWay.Name = "";
+            BpvWayType.Add(emptyWay);
             SelectedBpvWayTypeId = 0;
             LevelCount = 5;
             _sections = new ObservableCollection<LegSectionViewModel>();

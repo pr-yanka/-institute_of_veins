@@ -292,6 +292,9 @@ namespace WpfApp2.LegParts.VMs
             {
                 TEMPVWayType.Add(Scintific);
             }
+            TEMPVWay emptyWay = new TEMPVWay();
+            emptyWay.Name = "";
+            TEMPVWayType.Add(emptyWay);
             SelectedWayType = SelectedWayTypeSave;
         }
 
@@ -334,6 +337,9 @@ namespace WpfApp2.LegParts.VMs
                     {
                         TEMPVWayType.Add(Scintific);
                     }
+                    TEMPVWay emptyWay1 = new TEMPVWay();
+                    emptyWay1.Name = "";
+                    TEMPVWayType.Add(emptyWay1);
                     SelectedTEMPVWayTypeId = TEMPVWayType.Count - 1;
                     // Controller.NavigateTo<BPVHipViewModel>();
 
@@ -467,7 +473,9 @@ namespace WpfApp2.LegParts.VMs
             {
                 TEMPVWayType.Add(way);
             }
-
+            TEMPVWay emptyWay = new TEMPVWay();
+            emptyWay.Name = "";
+            TEMPVWayType.Add(emptyWay);
 
             LevelCount = 3;
             _sections = new ObservableCollection<LegSectionViewModel>();

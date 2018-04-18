@@ -211,7 +211,7 @@ namespace WpfApp2.LegParts.VMs
 
             if (((LegPartViewModel)Controller.CurrentViewModel.Controller.LegViewModel).CurrentLegSide != this.CurrentLegSide) return; using (MySqlContext context = new MySqlContext())
             {
-                
+
                 MPVRepository MPV = new MPVRepository(context);
                 MetricsRepository Metrics = new MetricsRepository(context);
                 var bufSaveLegSection = new List<int?>();
@@ -286,7 +286,7 @@ namespace WpfApp2.LegParts.VMs
                     LegSectionsSaved.Add(new MPVSectionViewModel(Controller, null, i + 1));
             }
 
-             commentSave = Comment; for (int i = 0; i < LegSections.Count; i++)
+            commentSave = Comment; for (int i = 0; i < LegSections.Count; i++)
             {
 
                 LegSectionsSaved[i].Comment = LegSections[i].Comment;
@@ -303,7 +303,9 @@ namespace WpfApp2.LegParts.VMs
             {
                 MPVWayType.Add(Scintific);
             }
-
+            MPVWay emptyWay = new MPVWay();
+            emptyWay.Name = "";
+            MPVWayType.Add(emptyWay);
             SelectedWayType = SelectedWayTypeSave;
         }
 
@@ -346,6 +348,9 @@ namespace WpfApp2.LegParts.VMs
                     {
                         MPVWayType.Add(Scintific);
                     }
+                    MPVWay emptyWay = new MPVWay();
+                    emptyWay.Name = "";
+                    MPVWayType.Add(emptyWay);
                     SelectedMPVWayTypeId = MPVWayType.Count - 1;
                     // Controller.NavigateTo<BPVHipViewModel>();
 
@@ -365,7 +370,7 @@ namespace WpfApp2.LegParts.VMs
                 if (!string.IsNullOrWhiteSpace(panel.Text1) || !string.IsNullOrWhiteSpace(panel.Text2))
                 {
                     CurrentLegSide = CurrentLegSide;
-                 
+
                     if (IsStructEdited(CurrentPanelViewModel.LegPrt) && testOnUnique(CurrentPanelViewModel.LegPrt))
                     {
                         var newStruct = GetPanelStructure();
@@ -425,7 +430,7 @@ namespace WpfApp2.LegParts.VMs
                           {
                               var newCombo = new MPVCombo();
 
-                               commentSave = Comment; for (int i = 0; i < LegSections.Count; i++)
+                              commentSave = Comment; for (int i = 0; i < LegSections.Count; i++)
                               {
                                   var currentStructure = LegSections[i].SelectedValue;
                                   //ничего не было выбрано

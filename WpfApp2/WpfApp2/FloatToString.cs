@@ -36,10 +36,10 @@ namespace WpfApp2
             this._scrollViewer = base.AssociatedObject;
             this._scrollViewer.ScrollChanged += new ScrollChangedEventHandler(_scrollViewer_LayoutUpdated);
         }
-       public bool SetOneTime { get; set; }
+        public bool SetOneTime { get; set; }
         public void SetScroll(object sender, object data)
         {
-           
+
             MessageBus.Default.Call("SaveScrollSize", null, _height);
 
         }
@@ -57,8 +57,8 @@ namespace WpfApp2
             {
                 MessageBus.Default.Call("GetScrollSize", null, _height);
 
-                if(SetOneTime)
-                this._scrollViewer.ScrollToVerticalOffset(this._height);
+                if (SetOneTime)
+                    this._scrollViewer.ScrollToVerticalOffset(this._height);
 
                 SetOneTime = false;
             }
@@ -109,7 +109,7 @@ namespace WpfApp2
         public bool SetOneTime { get; set; }
         public void SetScroll(object sender, object data)
         {
-          
+
             MessageBus.Default.Call("SaveScrollSizeRight", null, _height);
         }
         public void SetScrollOnly(object sender, object data)
@@ -123,7 +123,7 @@ namespace WpfApp2
         {
             if (this._scrollViewer.VerticalOffset == 0)
             {
-              
+
                 MessageBus.Default.Call("GetScrollSizeRight", null, _height);
                 if (SetOneTime)
                     this._scrollViewer.ScrollToVerticalOffset(this._height);
@@ -300,13 +300,15 @@ namespace WpfApp2
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return Math.Round((float)value).ToString();
+            //return Math.Round((float)value).ToString();
+            return value.ToString();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             float buf = 0.0f;
-            if (float.TryParse(value as string, out buf))
+
+            if (float.TryParse(value.ToString().Replace('.', ','), out buf))
             {
                 return buf;
             }

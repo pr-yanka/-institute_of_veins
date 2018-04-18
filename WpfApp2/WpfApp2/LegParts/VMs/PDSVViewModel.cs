@@ -298,6 +298,10 @@ namespace WpfApp2.LegParts.VMs
             {
                 PDSVWayType.Add(Scintific);
             }
+
+            PDSVHipWay emptyWay = new PDSVHipWay();
+            emptyWay.Name = "";
+            PDSVWayType.Add(emptyWay);
             SelectedWayType = SelectedWayTypeSave;
         }
 
@@ -340,6 +344,10 @@ namespace WpfApp2.LegParts.VMs
                     {
                         PDSVWayType.Add(Scintific);
                     }
+
+                    PDSVHipWay emptyWay1 = new PDSVHipWay();
+                    emptyWay1.Name = "";
+                    PDSVWayType.Add(emptyWay1);
                     SelectedPDSVWayTypeId = PDSVWayType.IndexOf(newType);
                     // Controller.NavigateTo<BPVHipViewModel>();
 
@@ -467,7 +475,9 @@ namespace WpfApp2.LegParts.VMs
             {
                 PDSVWayType.Add(way);
             }
-
+            PDSVHipWay emptyWay = new PDSVHipWay();
+            emptyWay.Name = "";
+            PDSVWayType.Add(emptyWay);
 
             LevelCount = 3;
             _sections = new ObservableCollection<LegSectionViewModel>();
