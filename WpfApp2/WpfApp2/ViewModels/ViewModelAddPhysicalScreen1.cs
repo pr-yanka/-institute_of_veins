@@ -1261,54 +1261,54 @@ namespace WpfApp2.ViewModels
                 MessageBox.Show("ГВ справа не заполнено");
             }
 
-            else if (LeftPDSV.IsEmpty == true)
+            else if (LeftSFS.IsEmpty == true)
             {
-                MessageBox.Show("ПДСВ слева не заполнено");
+                MessageBox.Show("СФС слева не заполнено");
             }
-            else if (RightPDSV.IsEmpty == true)
+            else if (RightSFS.IsEmpty == true)
             {
-                MessageBox.Show("ПДСВ справа не заполнено");
+                MessageBox.Show("СФС справа не заполнено");
             }
-            else if (RightZDSV.IsEmpty == true)
+            else if (RightBPVHip.IsEmpty == true)
             {
-                MessageBox.Show("ЗДСВ справа не заполнено");
+                MessageBox.Show("БПВ на бедре справа не заполнено");
             }
-            else if (LeftZDSV.IsEmpty == true)
+            else if (LeftBPVHip.IsEmpty == true)
             {
-                MessageBox.Show("ЗДСВ слева не заполнено");
+                MessageBox.Show("БПВ на бедре слева не заполнено");
             }
-            else if (RightPerforate.IsEmpty == true)
+            else if (RightBPVTibia.IsEmpty == true)
             {
-                MessageBox.Show("Перфоранты бедра и несафенные вены справа не заполнено");
+                MessageBox.Show("БПВ на голени справа не заполнено");
             }
-            else if (LeftPerforate.IsEmpty == true)
+            else if (LeftBPVTibia.IsEmpty == true)
             {
-                MessageBox.Show("Перфоранты бедра и несафенные вены слева не заполнено");
+                MessageBox.Show("БПВ на голени справа не заполнено");
             }
-            else if (RightTibiaPerforate.IsEmpty == true)
+            else if (RightSPS.IsEmpty == true)
             {
-                MessageBox.Show("Перфоранты голени справа не заполнено");
+                MessageBox.Show("СПС справа не заполнено");
             }
-            else if (LeftTibiaPerforate.IsEmpty == true)
+            else if (LeftSPS.IsEmpty == true)
             {
-                MessageBox.Show("Перфоранты голени слева не заполнено");
+                MessageBox.Show("СПС слева не заполнено");
             }
-            else if (RightTEMPV.IsEmpty == true)
+            else if (RightMPV.IsEmpty == true)
             {
-                MessageBox.Show("ТЕ МПВ справа не заполнено");
+                MessageBox.Show("МПВ справа не заполнено");
             }
-            else if (LeftTEMPV.IsEmpty == true)
+            else if (LeftMPV.IsEmpty == true)
             {
-                MessageBox.Show("ТЕ МПВ слева не заполнено");
+                MessageBox.Show("МПВ слева не заполнено");
             }
-            else if (RightPPV.IsEmpty == true)
-            {
-                MessageBox.Show("ППВ справа не заполнено");
-            }
-            else if (LeftPPV.IsEmpty == true)
-            {
-                MessageBox.Show("ППВ слева не заполнено");
-            }
+            //else if (RightPPV.IsEmpty == true)
+            //{
+            //    MessageBox.Show("ППВ справа не заполнено");
+            //}
+            //else if (LeftPPV.IsEmpty == true)
+            //{
+            //    MessageBox.Show("ППВ слева не заполнено");
+            //}
             else if (string.IsNullOrWhiteSpace(RightAdditionalText))
             {
                 MessageBox.Show("Примечание справа не заполнено");
@@ -2623,6 +2623,20 @@ namespace WpfApp2.ViewModels
 
 
 
+
+
+
+
+
+            //else if (RightMPV.IsEmpty == true)
+            //{
+            //    MessageBox.Show("МПВ справа не заполнено");
+            //}
+            //else if (LeftMPV.IsEmpty == true)
+            //{
+            //    MessageBox.Show("МПВ слева не заполнено");
+            //}
+
             if (LeftGV.IsEmpty == true)
             {
 
@@ -2648,23 +2662,23 @@ namespace WpfApp2.ViewModels
             }
 
 
-            if (LeftPDSV.IsEmpty == true)
+            if (LeftSFS.IsEmpty == true)
             {
 
                 BPDSV = Brushes.Red;
             }
-            else if (LeftPDSV.IsEmpty != true)
+            else if (LeftSFS.IsEmpty != true)
             {
                 BPDSV = null;
             }
 
 
-            if (RightPDSV.IsEmpty == true)
+            if (RightSFS.IsEmpty == true)
             {
 
                 BPDSVL = Brushes.Red;
             }
-            else if (RightPDSV.IsEmpty != true)
+            else if (RightSFS.IsEmpty != true)
             {
                 BPDSVL = null;
             }
@@ -2672,109 +2686,109 @@ namespace WpfApp2.ViewModels
 
 
 
-            if (RightZDSV.IsEmpty == true)
+            if (RightBPVHip.IsEmpty == true)
             {
 
                 BZDSVL = Brushes.Red;
             }
-            else if (RightZDSV.IsEmpty != true)
+            else if (RightBPVHip.IsEmpty != true)
             {
                 BZDSVL = null;
             }
 
 
-            if (LeftZDSV.IsEmpty == true)
+            if (LeftBPVHip.IsEmpty == true)
             {
 
                 BZDSV = Brushes.Red;
             }
-            else if (LeftZDSV.IsEmpty != true)
+            else if (LeftBPVHip.IsEmpty != true)
             {
                 BZDSV = null;
             }
 
-            if (RightPerforate.IsEmpty == true)
+            if (RightBPVTibia.IsEmpty == true)
             {
 
                 BPerforate1L = Brushes.Red;
             }
-            else if (RightPerforate.IsEmpty != true)
+            else if (RightBPVTibia.IsEmpty != true)
             {
                 BPerforate1L = null;
             }
 
-            if (LeftPerforate.IsEmpty == true)
+            if (LeftBPVTibia.IsEmpty == true)
             {
 
                 BPerforate1 = Brushes.Red;
             }
-            else if (LeftPerforate.IsEmpty != true)
+            else if (LeftBPVTibia.IsEmpty != true)
             {
                 BPerforate1 = null;
             }
 
 
-            if (RightTibiaPerforate.IsEmpty == true)
+            if (RightSPS.IsEmpty == true)
             {
 
                 BPerforateGoleniL = Brushes.Red;
             }
 
-            else if (RightTibiaPerforate.IsEmpty != true)
+            else if (RightSPS.IsEmpty != true)
             {
                 BPerforateGoleniL = null;
             }
 
 
-            if (LeftTibiaPerforate.IsEmpty == true)
+            if (LeftSPS.IsEmpty == true)
             {
 
                 BPerforateGoleni = Brushes.Red;
             }
-            else if (LeftTibiaPerforate.IsEmpty != true)
+            else if (LeftSPS.IsEmpty != true)
             {
                 BPerforateGoleni = null;
             }
+            //1313
 
-
-            if (RightTEMPV.IsEmpty == true)
+            if (RightMPV.IsEmpty == true)
             {
 
                 BTEMPVL = Brushes.Red;
             }
-            else if (RightTEMPV.IsEmpty != true)
+            else if (RightMPV.IsEmpty != true)
             {
                 BTEMPVL = null;
             }
-            if (LeftTEMPV.IsEmpty == true)
+            if (LeftMPV.IsEmpty == true)
             {
 
                 BTEMPV = Brushes.Red;
             }
-            else if (LeftTEMPV.IsEmpty != true)
+            else if (LeftMPV.IsEmpty != true)
             {
                 BTEMPV = null;
             }
 
-            if (RightPPV.IsEmpty == true)
-            {
+            //if (RightPPV.IsEmpty == true)
+            //{
 
-                BPPVL = Brushes.Red;
-            }
-            else if (RightPPV.IsEmpty != true)
-            {
-                BPPVL = null;
-            }
+            //    BPPVL = Brushes.Red;
+            //}
+            //else if (RightPPV.IsEmpty != true)
+            //{
+            //    BPPVL = null;
+            //}
 
-            if (LeftPPV.IsEmpty == true)
-            {
+            //if (LeftPPV.IsEmpty == true)
+            //{
 
-                BPPV = Brushes.Red;
-            }
-            else if (LeftPPV.IsEmpty != true)
-            {
-                BPPV = null;
-            }
+            //    BPPV = Brushes.Red;
+            //}
+            //else if (LeftPPV.IsEmpty != true)
+            //{
+            //    BPPV = null;
+            //}
 
             if (string.IsNullOrWhiteSpace(RightAdditionalText))
             {
@@ -3606,58 +3620,99 @@ namespace WpfApp2.ViewModels
                         MessageBox.Show("Рекомендации не заполнены");
 
                     }
-                    else if (RightGV.IsEmpty == true)
-                    {
-                        MessageBox.Show("ГВ справа не заполнено");
-                    }
+                    //else if (RightGV.IsEmpty == true)
+                    //{
+                    //    MessageBox.Show("ГВ справа не заполнено");
+                    //}
 
-                    else if (LeftPDSV.IsEmpty == true)
+                    //else if (LeftPDSV.IsEmpty == true)
+                    //{
+                    //    MessageBox.Show("ПДСВ слева не заполнено");
+                    //}
+                    //else if (RightPDSV.IsEmpty == true)
+                    //{
+                    //    MessageBox.Show("ПДСВ справа не заполнено");
+                    //}
+                    //else if (RightZDSV.IsEmpty == true)
+                    //{
+                    //    MessageBox.Show("ЗДСВ справа не заполнено");
+                    //}
+                    //else if (LeftZDSV.IsEmpty == true)
+                    //{
+                    //    MessageBox.Show("ЗДСВ слева не заполнено");
+                    //}
+                    //else if (RightPerforate.IsEmpty == true)
+                    //{
+                    //    MessageBox.Show("Перфоранты бедра и несафенные вены справа не заполнено");
+                    //}
+                    //else if (LeftPerforate.IsEmpty == true)
+                    //{
+                    //    MessageBox.Show("Перфоранты бедра и несафенные вены слева не заполнено");
+                    //}
+                    //else if (RightTibiaPerforate.IsEmpty == true)
+                    //{
+                    //    MessageBox.Show("Перфоранты голени справа не заполнено");
+                    //}
+                    //else if (LeftTibiaPerforate.IsEmpty == true)
+                    //{
+                    //    MessageBox.Show("Перфоранты голени слева не заполнено");
+                    //}
+                    //else if (RightTEMPV.IsEmpty == true)
+                    //{
+                    //    MessageBox.Show("ТЕ МПВ справа не заполнено");
+                    //}
+                    //else if (LeftTEMPV.IsEmpty == true)
+                    //{
+                    //    MessageBox.Show("ТЕ МПВ слева не заполнено");
+                    //}
+                    //else if (RightPPV.IsEmpty == true)
+                    //{
+                    //    MessageBox.Show("ППВ справа не заполнено");
+                    //}
+                    //else if (LeftPPV.IsEmpty == true)
+                    //{
+                    //    MessageBox.Show("ППВ слева не заполнено");
+                    //}
+
+                    else if (LeftSFS.IsEmpty == true)
                     {
-                        MessageBox.Show("ПДСВ слева не заполнено");
+                        MessageBox.Show("СФС слева не заполнено");
                     }
-                    else if (RightPDSV.IsEmpty == true)
+                    else if (RightSFS.IsEmpty == true)
                     {
-                        MessageBox.Show("ПДСВ справа не заполнено");
+                        MessageBox.Show("СФС справа не заполнено");
                     }
-                    else if (RightZDSV.IsEmpty == true)
+                    else if (RightBPVHip.IsEmpty == true)
                     {
-                        MessageBox.Show("ЗДСВ справа не заполнено");
+                        MessageBox.Show("БПВ на бедре справа не заполнено");
                     }
-                    else if (LeftZDSV.IsEmpty == true)
+                    else if (LeftBPVHip.IsEmpty == true)
                     {
-                        MessageBox.Show("ЗДСВ слева не заполнено");
+                        MessageBox.Show("БПВ на бедре слева не заполнено");
                     }
-                    else if (RightPerforate.IsEmpty == true)
+                    else if (RightBPVTibia.IsEmpty == true)
                     {
-                        MessageBox.Show("Перфоранты бедра и несафенные вены справа не заполнено");
+                        MessageBox.Show("БПВ на голени справа не заполнено");
                     }
-                    else if (LeftPerforate.IsEmpty == true)
+                    else if (LeftBPVTibia.IsEmpty == true)
                     {
-                        MessageBox.Show("Перфоранты бедра и несафенные вены слева не заполнено");
+                        MessageBox.Show("БПВ на голени справа не заполнено");
                     }
-                    else if (RightTibiaPerforate.IsEmpty == true)
+                    else if (RightSPS.IsEmpty == true)
                     {
-                        MessageBox.Show("Перфоранты голени справа не заполнено");
+                        MessageBox.Show("СПС справа не заполнено");
                     }
-                    else if (LeftTibiaPerforate.IsEmpty == true)
+                    else if (LeftSPS.IsEmpty == true)
                     {
-                        MessageBox.Show("Перфоранты голени слева не заполнено");
+                        MessageBox.Show("СПС слева не заполнено");
                     }
-                    else if (RightTEMPV.IsEmpty == true)
+                    else if (RightMPV.IsEmpty == true)
                     {
-                        MessageBox.Show("ТЕ МПВ справа не заполнено");
+                        MessageBox.Show("МПВ справа не заполнено");
                     }
-                    else if (LeftTEMPV.IsEmpty == true)
+                    else if (LeftMPV.IsEmpty == true)
                     {
-                        MessageBox.Show("ТЕ МПВ слева не заполнено");
-                    }
-                    else if (RightPPV.IsEmpty == true)
-                    {
-                        MessageBox.Show("ППВ справа не заполнено");
-                    }
-                    else if (LeftPPV.IsEmpty == true)
-                    {
-                        MessageBox.Show("ППВ слева не заполнено");
+                        MessageBox.Show("МПВ слева не заполнено");
                     }
                     else if (string.IsNullOrWhiteSpace(RightAdditionalText))
                     {
@@ -14539,7 +14594,15 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(LeftMPV);
                     MPVLeftstr = result.stringList;
                     IsVisibleMPVleft = result.listVisibility;
+                    if (LeftMPV.IsEmpty == true)
+                    {
 
+                        BTEMPV = Brushes.Red;
+                    }
+                    else if (LeftMPV.IsEmpty != true)
+                    {
+                        BTEMPV = null;
+                    }
                 }
 
                 else
@@ -14552,6 +14615,15 @@ namespace WpfApp2.ViewModels
                     MPVRightstr = result.stringList;
                     IsVisibleMPVRight = result.listVisibility;
 
+                    if (RightMPV.IsEmpty == true)
+                    {
+
+                        BTEMPVL = Brushes.Red;
+                    }
+                    else if (RightMPV.IsEmpty != true)
+                    {
+                        BTEMPVL = null;
+                    }
                 }
 
 
@@ -14613,15 +14685,15 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(LeftTEMPV);
                     TEMPVLeftstr = result.stringList;
                     IsVisibleTEMPVleft = result.listVisibility;
-                    if (LeftTEMPV.IsEmpty == true)
-                    {
+                    //if (LeftTEMPV.IsEmpty == true)
+                    //{
 
-                        BTEMPV = Brushes.Red;
-                    }
-                    else if (LeftTEMPV.IsEmpty != true)
-                    {
-                        BTEMPV = null;
-                    }
+                    //    BTEMPV = Brushes.Red;
+                    //}
+                    //else if (LeftTEMPV.IsEmpty != true)
+                    //{
+                    //    BTEMPV = null;
+                    //}
                 }
 
                 else
@@ -14636,15 +14708,15 @@ namespace WpfApp2.ViewModels
 
 
 
-                    if (RightTEMPV.IsEmpty == true)
-                    {
+                    //if (RightTEMPV.IsEmpty == true)
+                    //{
 
-                        BTEMPVL = Brushes.Red;
-                    }
-                    else if (RightTEMPV.IsEmpty != true)
-                    {
-                        BTEMPVL = null;
-                    }
+                    //    BTEMPVL = Brushes.Red;
+                    //}
+                    //else if (RightTEMPV.IsEmpty != true)
+                    //{
+                    //    BTEMPVL = null;
+                    //}
 
 
                 }
@@ -14659,7 +14731,15 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(LeftSFS);
                     SFSLeftstr = result.stringList;
                     IsVisibleSFSleft = result.listVisibility;
+                    if (LeftSFS.IsEmpty == true)
+                    {
 
+                        BPDSV = Brushes.Red;
+                    }
+                    else if (LeftSFS.IsEmpty != true)
+                    {
+                        BPDSV = null;
+                    }
                 }
 
                 else
@@ -14671,7 +14751,15 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(RightSFS);
                     SFSRightstr = result.stringList;
                     IsVisibleSFSRight = result.listVisibility;
+                    if (RightSFS.IsEmpty == true)
+                    {
 
+                        BPDSVL = Brushes.Red;
+                    }
+                    else if (RightSFS.IsEmpty != true)
+                    {
+                        BPDSVL = null;
+                    }
                 }
 
             //
@@ -14687,6 +14775,15 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(LeftSPS);
                     SPSLeftstr = result.stringList;
                     IsVisibleSPSleft = result.listVisibility;
+                    if (LeftSPS.IsEmpty == true)
+                    {
+
+                        BPerforateGoleni = Brushes.Red;
+                    }
+                    else if (LeftSPS.IsEmpty != true)
+                    {
+                        BPerforateGoleni = null;
+                    }
                 }
 
                 else
@@ -14698,7 +14795,16 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(RightSPS);
                     SPSRightstr = result.stringList;
                     IsVisibleSPSRight = result.listVisibility;
+                    if (RightSPS.IsEmpty == true)
+                    {
 
+                        BPerforateGoleniL = Brushes.Red;
+                    }
+
+                    else if (RightSPS.IsEmpty != true)
+                    {
+                        BPerforateGoleniL = null;
+                    }
                 }
 
 
@@ -14716,15 +14822,15 @@ namespace WpfApp2.ViewModels
 
 
 
-                    if (LeftTibiaPerforate.IsEmpty == true)
-                    {
+                    //if (LeftTibiaPerforate.IsEmpty == true)
+                    //{
 
-                        BPerforateGoleni = Brushes.Red;
-                    }
-                    else if (LeftTibiaPerforate.IsEmpty != true)
-                    {
-                        BPerforateGoleni = null;
-                    }
+                    //    BPerforateGoleni = Brushes.Red;
+                    //}
+                    //else if (LeftTibiaPerforate.IsEmpty != true)
+                    //{
+                    //    BPerforateGoleni = null;
+                    //}
                 }
 
                 else
@@ -14736,16 +14842,16 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(RightTibiaPerforate);
                     Perforate_shinRightstr = result.stringList;
                     IsVisiblePerforate_shinRight = result.listVisibility;
-                    if (RightTibiaPerforate.IsEmpty == true)
-                    {
+                    //if (RightTibiaPerforate.IsEmpty == true)
+                    //{
 
-                        BPerforateGoleniL = Brushes.Red;
-                    }
+                    //    BPerforateGoleniL = Brushes.Red;
+                    //}
 
-                    else if (RightTibiaPerforate.IsEmpty != true)
-                    {
-                        BPerforateGoleniL = null;
-                    }
+                    //else if (RightTibiaPerforate.IsEmpty != true)
+                    //{
+                    //    BPerforateGoleniL = null;
+                    //}
                 }
 
 
@@ -14764,7 +14870,15 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(LeftBPVHip);
                     BpvLeftstr = result.stringList;
                     IsVisibleBPVleft = result.listVisibility;
+                    if (LeftBPVHip.IsEmpty == true)
+                    {
 
+                        BZDSV = Brushes.Red;
+                    }
+                    else if (LeftBPVHip.IsEmpty != true)
+                    {
+                        BZDSV = null;
+                    }
                 }
                 else
                 {
@@ -14774,7 +14888,15 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(RightBPVHip);
                     BpvRightstr = result.stringList;
                     IsVisibleBPVRight = result.listVisibility;
+                    if (RightZDSV.IsEmpty == true)
+                    {
 
+                        BZDSVL = Brushes.Red;
+                    }
+                    else if (RightZDSV.IsEmpty != true)
+                    {
+                        BZDSVL = null;
+                    }
                 }
 
             if (senderType == typeof(PDSVViewModel))
@@ -14787,15 +14909,15 @@ namespace WpfApp2.ViewModels
                     PDSVLeftstr = result.stringList;
                     IsVisiblePDSVleft = result.listVisibility;
                     //SaveAll();
-                    if (LeftPDSV.IsEmpty == true)
-                    {
+                    //if (LeftPDSV.IsEmpty == true)
+                    //{
 
-                        BPDSV = Brushes.Red;
-                    }
-                    else if (LeftPDSV.IsEmpty != true)
-                    {
-                        BPDSV = null;
-                    }
+                    //    BPDSV = Brushes.Red;
+                    //}
+                    //else if (LeftPDSV.IsEmpty != true)
+                    //{
+                    //    BPDSV = null;
+                    //}
 
                 }
                 else
@@ -14810,15 +14932,15 @@ namespace WpfApp2.ViewModels
 
 
 
-                    if (RightPDSV.IsEmpty == true)
-                    {
+                    //if (RightPDSV.IsEmpty == true)
+                    //{
 
-                        BPDSVL = Brushes.Red;
-                    }
-                    else if (RightPDSV.IsEmpty != true)
-                    {
-                        BPDSVL = null;
-                    }
+                    //    BPDSVL = Brushes.Red;
+                    //}
+                    //else if (RightPDSV.IsEmpty != true)
+                    //{
+                    //    BPDSVL = null;
+                    //}
 
                 }
 
@@ -14833,15 +14955,15 @@ namespace WpfApp2.ViewModels
                     ZDSVLeftstr = result.stringList;
                     IsVisibleZDSVleft = result.listVisibility;
 
-                    if (LeftZDSV.IsEmpty == true)
-                    {
+                    //if (LeftZDSV.IsEmpty == true)
+                    //{
 
-                        BZDSV = Brushes.Red;
-                    }
-                    else if (LeftZDSV.IsEmpty != true)
-                    {
-                        BZDSV = null;
-                    }
+                    //    BZDSV = Brushes.Red;
+                    //}
+                    //else if (LeftZDSV.IsEmpty != true)
+                    //{
+                    //    BZDSV = null;
+                    //}
                 }
                 else
                 {
@@ -14853,15 +14975,15 @@ namespace WpfApp2.ViewModels
                     IsVisibleZDSVright = result.listVisibility;
 
 
-                    if (RightZDSV.IsEmpty == true)
-                    {
+                    //if (RightZDSV.IsEmpty == true)
+                    //{
 
-                        BZDSVL = Brushes.Red;
-                    }
-                    else if (RightZDSV.IsEmpty != true)
-                    {
-                        BZDSVL = null;
-                    }
+                    //    BZDSVL = Brushes.Red;
+                    //}
+                    //else if (RightZDSV.IsEmpty != true)
+                    //{
+                    //    BZDSVL = null;
+                    //}
 
 
 
@@ -14877,15 +14999,15 @@ namespace WpfApp2.ViewModels
                     IsVisiblePerforateHIPleft = result.listVisibility;
 
 
-                    if (LeftPerforate.IsEmpty == true)
-                    {
+                    //if (LeftPerforate.IsEmpty == true)
+                    //{
 
-                        BPerforate1 = Brushes.Red;
-                    }
-                    else if (LeftPerforate.IsEmpty != true)
-                    {
-                        BPerforate1 = null;
-                    }
+                    //    BPerforate1 = Brushes.Red;
+                    //}
+                    //else if (LeftPerforate.IsEmpty != true)
+                    //{
+                    //    BPerforate1 = null;
+                    //}
                 }
                 else
                 {
@@ -14895,15 +15017,15 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(RightPerforate);
                     Perforate_hipRightstr = result.stringList;
                     IsVisiblePerforateHIPright = result.listVisibility;
-                    if (RightPerforate.IsEmpty == true)
-                    {
+                    //if (RightPerforate.IsEmpty == true)
+                    //{
 
-                        BPerforate1L = Brushes.Red;
-                    }
-                    else if (RightPerforate.IsEmpty != true)
-                    {
-                        BPerforate1L = null;
-                    }
+                    //    BPerforate1L = Brushes.Red;
+                    //}
+                    //else if (RightPerforate.IsEmpty != true)
+                    //{
+                    //    BPerforate1L = null;
+                    //}
                 }
             if (senderType == typeof(BPVTibiaViewModel))
                 if (senderVM.CurrentLegSide == LegSide.Left)
@@ -14914,7 +15036,15 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(LeftBPVTibia);
                     BPV_TibiaLeftstr = result.stringList;
                     IsVisibleBPV_Tibialeft = result.listVisibility;
+                    if (LeftBPVTibia.IsEmpty == true)
+                    {
 
+                        BPerforate1 = Brushes.Red;
+                    }
+                    else if (LeftBPVTibia.IsEmpty != true)
+                    {
+                        BPerforate1 = null;
+                    }
                 }
                 else
                 {
@@ -14924,7 +15054,15 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(RightBPVTibia);
                     BPV_TibiaRightstr = result.stringList;
                     IsVisibleBPV_Tibiaright = result.listVisibility;
+                    if (RightBPVTibia.IsEmpty == true)
+                    {
 
+                        BPerforate1L = Brushes.Red;
+                    }
+                    else if (RightBPVTibia.IsEmpty != true)
+                    {
+                        BPerforate1L = null;
+                    }
                 }
 
             if (senderType == typeof(LettersViewModel))

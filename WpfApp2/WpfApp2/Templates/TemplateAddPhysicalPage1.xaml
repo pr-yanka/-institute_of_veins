@@ -49,8 +49,8 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="I. СФС (Сафено-феморальное соустье)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="buttonSFS1" BorderBrush="{Binding bSFS}" Command="{Binding ToLeftSFSCommand}" Content="{Binding Path=LeftSFS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
+                                <TextBlock  TextDecorations="Underline" Text="I. СФС (Сафено-феморальное соустье)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttonSFS1" BorderBrush="{Binding BPDSV}" Command="{Binding ToLeftSFSCommand}" Content="{Binding Path=LeftSFS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
@@ -66,8 +66,8 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="II. БПВ на бедре (Большая подкожная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button  BorderBrush="{Binding bBPV}" x:Name="buttonBPVHip1" Command="{Binding ToLeftBPVHipCommand}" Content="{Binding Path=LeftBPVHip.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
+                                <TextBlock  TextDecorations="Underline" Text="II. БПВ на бедре (Большая подкожная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button  BorderBrush="{Binding BZDSV}" x:Name="buttonBPVHip1" Command="{Binding ToLeftBPVHipCommand}" Content="{Binding Path=LeftBPVHip.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
@@ -86,8 +86,8 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock  TextDecorations="Underline" Text="III. ПДСВ (Передняя добавочная сафенная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button  BorderBrush="{Binding BPDSV}" x:Name="buttonPDSV1" Command="{Binding ToLeftPDSVCommand}" Content="{Binding Path=LeftPDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
+                                <TextBlock  Text="III. ПДСВ (Передняя добавочная сафенная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button   x:Name="buttonPDSV1" Command="{Binding ToLeftPDSVCommand}" Content="{Binding Path=LeftPDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
                         <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
@@ -104,8 +104,8 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock TextDecorations="Underline" Text="IV. ЗДСВ (Задняя добавочная сафенная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="buttonZDSV1"  BorderBrush="{Binding BZDSV}" Command="{Binding ToLeftZDSVCommand}" Content="{Binding Path=LeftZDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
+                                <TextBlock  Text="IV. ЗДСВ (Задняя добавочная сафенная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttonZDSV1"   Command="{Binding ToLeftZDSVCommand}" Content="{Binding Path=LeftZDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
@@ -120,8 +120,8 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock TextDecorations="Underline" Text="V. Перфоранты бедра и несафенные вены" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="buttonPerforate1"  BorderBrush="{Binding BPerforate1}" Command="{Binding ToLeftPerforateCommand}" Content="{Binding Path=LeftPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
+                                <TextBlock   Text="V. Перфоранты бедра и несафенные вены" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttonPerforate1" Command="{Binding ToLeftPerforateCommand}" Content="{Binding Path=LeftPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
@@ -138,8 +138,8 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="VI. БПВ на голени" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="buttonBPVTibia1"  BorderBrush="{Binding bBPVTibia}" Command="{Binding ToLeftBPVTibiaCommand}" Content="{Binding Path=LeftBPVTibia.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
+                                <TextBlock  TextDecorations="Underline" Text="VI. БПВ на голени" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttonBPVTibia1"  BorderBrush="{Binding BPerforate1}" Command="{Binding ToLeftBPVTibiaCommand}" Content="{Binding Path=LeftBPVTibia.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
@@ -156,8 +156,8 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock TextDecorations="Underline" Text="VII. Перфоранты голени" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="buttonPerforateTibia1"  BorderBrush="{Binding BPerforateGoleni}" Command="{Binding ToLeftTibiaPerforateCommand}" Content="{Binding Path=LeftTibiaPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
+                                <TextBlock   Text="VII. Перфоранты голени" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttonPerforateTibia1"   Command="{Binding ToLeftTibiaPerforateCommand}" Content="{Binding Path=LeftTibiaPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
 
@@ -175,8 +175,8 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="VIII. СПС (Сафено-поплитеальное соустье)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="buttonSPS1"  BorderBrush="{Binding bSPS}" Command="{Binding ToLeftSPSCommand}" Content="{Binding Path=LeftSPS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
+                                <TextBlock  TextDecorations="Underline" Text="VIII. СПС (Сафено-поплитеальное соустье)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttonSPS1"  BorderBrush="{Binding BPerforateGoleni}" Command="{Binding ToLeftSPSCommand}" Content="{Binding Path=LeftSPS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
@@ -190,8 +190,8 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="IX. МПВ (Малая подкожная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="buttfonPDSV1"  BorderBrush="{Binding bMPV}" Command="{Binding ToLeftMPVCommand}" Content="{Binding Path=LeftMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
+                                <TextBlock  TextDecorations="Underline" Text="IX. МПВ (Малая подкожная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="buttfonPDSV1"  BorderBrush="{Binding BTEMPV}" Command="{Binding ToLeftMPVCommand}" Content="{Binding Path=LeftMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
@@ -208,8 +208,8 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock TextWrapping="Wrap" TextDecorations="Underline" Text="X. ТЕ МПВ (Бедренное продолжение малой подкожной вены)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button  BorderBrush="{Binding BTEMPV}" x:Name="buttfonвPDSV1" Command="{Binding ToLeftTEMPVCommand}" Content="{Binding Path=LeftTEMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
+                                <TextBlock TextWrapping="Wrap"  Text="X. ТЕ МПВ (Бедренное продолжение малой подкожной вены)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button   x:Name="buttfonвPDSV1" Command="{Binding ToLeftTEMPVCommand}" Content="{Binding Path=LeftTEMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
@@ -227,8 +227,8 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock TextDecorations="Underline" Text="XI. ППВ (Подколенная перфорантная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button x:Name="butаtffohnвPDSV1"  BorderBrush="{Binding BPPV}" Command="{Binding ToLeftPPVCommand}" Content="{Binding Path=LeftPPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
+                                <TextBlock  Text="XI. ППВ (Подколенная перфорантная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button x:Name="butаtffohnвPDSV1"   Command="{Binding ToLeftPPVCommand}" Content="{Binding Path=LeftPPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
@@ -297,8 +297,8 @@
                     <Expander>
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="I. СФС (Сафено-феморальное соустье)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button BorderBrush= "{Binding BSFSL}" x:Name="buttonBPVHip2" Command="{Binding ToRightSFSCommand}" Content="{Binding Path=RightSFS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
+                                <TextBlock TextDecorations="Underline" Text="I. СФС (Сафено-феморальное соустье)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button   BorderBrush="{Binding BPDSVL}" x:Name="buttonBPVHip2" Command="{Binding ToRightSFSCommand}" Content="{Binding Path=RightSFS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
@@ -315,8 +315,8 @@
                     <Expander>
                         <Expander.Header>
                             <StackPanel  Orientation="Horizontal">
-                                <TextBlock Text="II. БПВ на бедре (Большая подкожная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button BorderBrush= "{Binding BBPVL}" x:Name="buttonSFS2" Command="{Binding ToRightBPVHipCommand}" Content="{Binding Path=RightBPVHip.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
+                                <TextBlock TextDecorations="Underline" Text="II. БПВ на бедре (Большая подкожная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button BorderBrush="{Binding BZDSVL}"  x:Name="buttonSFS2" Command="{Binding ToRightBPVHipCommand}" Content="{Binding Path=RightBPVHip.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
 
 
                             </StackPanel>
@@ -337,8 +337,8 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock TextDecorations="Underline" Text="III. ПДСВ (Передняя добавочная сафенная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button BorderBrush= "{Binding BPDSVL}"  x:Name="buttonPDSV2" Command="{Binding ToRightPDSVCommand}" Content="{Binding Path=RightPDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
+                                <TextBlock  Text="III. ПДСВ (Передняя добавочная сафенная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button    x:Name="buttonPDSV2" Command="{Binding ToRightPDSVCommand}" Content="{Binding Path=RightPDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
@@ -355,8 +355,8 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock TextDecorations="Underline" Text="IV. ЗДСВ (Задняя добавочная сафенная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button  BorderBrush= "{Binding BZDSVL}"  x:Name="buttonZDSV2" Command="{Binding ToRightZDSVCommand}" Content="{Binding Path=RightZDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
+                                <TextBlock  Text="IV. ЗДСВ (Задняя добавочная сафенная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button    x:Name="buttonZDSV2" Command="{Binding ToRightZDSVCommand}" Content="{Binding Path=RightZDSV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
@@ -371,8 +371,8 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock TextDecorations="Underline" Text="V. Перфоранты бедра и несафенные вены" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button BorderBrush= "{Binding BPerforate1L}" x:Name="buttonPerforate2" Command="{Binding ToRightPerforateCommand}" Content="{Binding Path=RightPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
+                                <TextBlock  Text="V. Перфоранты бедра и несафенные вены" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button   x:Name="buttonPerforate2" Command="{Binding ToRightPerforateCommand}" Content="{Binding Path=RightPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
@@ -389,8 +389,8 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="VI. БПВ на голени" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button BorderBrush= "{Binding BBPVL}" x:Name="buttonPeвrforate2" Command="{Binding ToRightBPVTibiaCommand}" Content="{Binding Path=RightBPVTibia.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
+                                <TextBlock TextDecorations="Underline" Text="VI. БПВ на голени" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button BorderBrush="{Binding BPerforate1L}" x:Name="buttonPeвrforate2" Command="{Binding ToRightBPVTibiaCommand}" Content="{Binding Path=RightBPVTibia.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
@@ -408,8 +408,8 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock TextDecorations="Underline" Text="VII. Перфоранты голени" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button BorderBrush= "{Binding BPerforateGoleniL}" x:Name="buttondPeвrforate2" Command="{Binding ToRightTibiaPerforateCommand}" Content="{Binding Path=RightTibiaPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
+                                <TextBlock  Text="VII. Перфоранты голени" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button   x:Name="buttondPeвrforate2" Command="{Binding ToRightTibiaPerforateCommand}" Content="{Binding Path=RightTibiaPerforate.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
@@ -427,8 +427,8 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="VIII. СПС (Сафено-поплитеальное соустье)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button BorderBrush= "{Binding ddddd}" x:Name="buttdondPeвrforate2" Command="{Binding ToRightSPSCommand}" Content="{Binding Path=RightSPS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
+                                <TextBlock TextDecorations="Underline" Text="VIII. СПС (Сафено-поплитеальное соустье)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button  BorderBrush="{Binding BPerforateGoleniL}" x:Name="buttdondPeвrforate2" Command="{Binding ToRightSPSCommand}" Content="{Binding Path=RightSPS.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
@@ -444,8 +444,8 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="IX. МПВ (Малая подкожная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button BorderBrush= "{Binding fffff}" x:Name="butаtfonPDSV1" Command="{Binding ToRightMPVCommand}" Content="{Binding Path=RightMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
+                                <TextBlock TextDecorations="Underline" Text="IX. МПВ (Малая подкожная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button BorderBrush="{Binding BTEMPVL}" x:Name="butаtfonPDSV1" Command="{Binding ToRightMPVCommand}" Content="{Binding Path=RightMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
@@ -462,8 +462,8 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock TextDecorations="Underline" Text="X. ТЕ МПВ (Бедренное продолжение малой подкожной вены)" TextWrapping="Wrap" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                                <Button  BorderBrush= "{Binding BTEMPVL}"  x:Name="butаtfonвPDSV1" Command="{Binding ToRightTEMPVCommand}" Content="{Binding Path=RightTEMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
+                                <TextBlock   Text="X. ТЕ МПВ (Бедренное продолжение малой подкожной вены)" TextWrapping="Wrap" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                                <Button     x:Name="butаtfonвPDSV1" Command="{Binding ToRightTEMPVCommand}" Content="{Binding Path=RightTEMPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
@@ -481,9 +481,9 @@
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock TextDecorations="Underline" Text="XI. ППВ (Подколенная перфорантная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0">
+                                <TextBlock   Text="XI. ППВ (Подколенная перфорантная вена)" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0">
                                 </TextBlock>
-                                <Button   x:Name="butdsаtfohnвPfDSV1" BorderBrush= "{Binding BPPVL}" Command="{Binding ToRightPPVCommand}" Content="{Binding Path=RightPPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
+                                <Button   x:Name="butdsаtfohnвPfDSV1"   Command="{Binding ToRightPPVCommand}" Content="{Binding Path=RightPPV.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
                             </StackPanel>
                         </Expander.Header>
                          <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">

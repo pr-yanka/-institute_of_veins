@@ -315,7 +315,7 @@ namespace WpfApp2.LegParts.VMs
                 else
                     LegSections.Add(new SFSSectionViewModel(Controller, null, i + 1));
             }
-            _title = "Сафенно-феморальное соустье";
+            _title = "Сафено-феморальное соустье";
 
             SavePanelCommand = new DelegateCommand(() =>
             {
