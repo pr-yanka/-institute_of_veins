@@ -379,8 +379,11 @@ namespace WpfApp2.ViewModels
                         }
                     }
                 }
+                Data.Complete();
             }
-            catch { }
+            catch {
+
+            }
 
         }
         public ViewModelDashboard(NavigationController controller) : base(controller)

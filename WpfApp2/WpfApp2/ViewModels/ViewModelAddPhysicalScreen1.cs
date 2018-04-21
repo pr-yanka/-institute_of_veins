@@ -9813,9 +9813,62 @@ namespace WpfApp2.ViewModels
 
 
             // IsVisibleBPVleftbuf.Add(Visibility.Visible);
+            if (sender is BPVHipViewModel)
+            {
+                var aditionalStructureValue = ((BPVHipViewModel)(sender)).AdditionalStructure;
 
+                if (aditionalStructureValue.SelectedValue == null || (aditionalStructureValue.SelectedValue.Text2 == "" && aditionalStructureValue.SelectedValue.Text1 == ""))
+                {
+
+                  
+                }
+                else
+                {
+                    if (aditionalStructureValue.SelectedValue.HasSize || aditionalStructureValue.HasDoubleSize)
+                    {
+                        if (aditionalStructureValue.HasDoubleSize)
+                        {
+                            if (!string.IsNullOrWhiteSpace(aditionalStructureValue.CurrentEntry.Comment))
+                                bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + "*" + aditionalStructureValue.CurrentEntry.Size2 + aditionalStructureValue.SelectedValue.Metrics + " " + aditionalStructureValue.SelectedValue.Text2 + " \nКомментарий : \"" + aditionalStructureValue.CurrentEntry.Comment + "\"");
+                            else
+                            {
+                                bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + "*" + aditionalStructureValue.CurrentEntry.Size2 + aditionalStructureValue.SelectedValue.Metrics + " " + aditionalStructureValue.SelectedValue.Text2 + "");
+
+                            }
+                        }
+                        else
+                        {
+                            if (!string.IsNullOrWhiteSpace(aditionalStructureValue.CurrentEntry.Comment))
+                                bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + aditionalStructureValue.SelectedValue.Metrics + " " + aditionalStructureValue.SelectedValue.Text2 + " \nКомментарий : \"" + aditionalStructureValue.CurrentEntry.Comment + "\"");
+                            else
+                            {
+                                bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + aditionalStructureValue.SelectedValue.Metrics + " " + aditionalStructureValue.SelectedValue.Text2 + "");
+
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrWhiteSpace(aditionalStructureValue.CurrentEntry.Comment))
+                            bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.SelectedValue.Text2 + " \nКомментарий : \"" + aditionalStructureValue.CurrentEntry.Comment + "\"");
+                        else
+                        {
+                            bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.SelectedValue.Text2 + "");
+
+                        }
+
+                    }
+
+                    IsVisibleBPVleftbuf.Add(Visibility.Visible);
+                }
+                //    name = "БПВНБ";
+
+                //  continue;
+            }
             for (int i = 0; i < sender.LegSections.Count; ++i)
             {
+
                 if (sender.LegSections[i].SelectedValue == null || sender.LegSections[i].SelectedValue.ToNextPart)
                 {
 
@@ -9950,6 +10003,8 @@ namespace WpfApp2.ViewModels
 
                 bufBpvLeftStr[bufBpvLeftStr.Count - 1] += "\nКомментарий к " + name + " : " + sender.Comment + "";
             }
+
+
             //bufBpvLeftStr += sender.Comment;
             SaveSet result = new SaveSet(bufBpvLeftStr, IsVisibleBPVleftbuf);
             return result;
@@ -13686,7 +13741,7 @@ namespace WpfApp2.ViewModels
                 if (LegExamR.ZDSVid == null)
                     LegExamR.ZDSVid = savedLegExamR.ZDSVid;
 
-                
+
                 Data.Complete();
                 ////LegExamR.A = savedLegExamR.A;
                 ////LegExamR.additionalText = savedLegExamR.additionalText;
