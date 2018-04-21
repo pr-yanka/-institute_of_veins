@@ -29,7 +29,8 @@ namespace WpfApp2.Db.Models.LegParts
 
 
 
-
+        [Column("sub_entry0")]
+        public virtual int? EntryId0 { get; set; }
         //[Column("комментарий")]
         //public virtual string Commentary { get; set; }
 

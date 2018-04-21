@@ -87,7 +87,8 @@ namespace WpfApp2.Db.Models.SPS
         public override int EntryId1 { get; set; }
         public override int? EntryId2 { get; set; }
         public override int? EntryId3 { get; set; }
-     
+        [NotMapped]
+        public override int? EntryId0 { get; set; }
         [NotMapped]
         public override int? EntryId4 { get; set; }
 

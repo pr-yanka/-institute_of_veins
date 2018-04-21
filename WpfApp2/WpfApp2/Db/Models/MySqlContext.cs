@@ -16,6 +16,7 @@ namespace WpfApp2.Db.Models
     public class MySqlContext : DbContext
     {
 
+        //public DbSet<BPVHipAdditionalStructure> BPVHipAdditionalStructure { get; }
 
         public DbSet<SavedComplanesObs> SavedComplanesObs { get; }
         public DbSet<SavedRecomendationObs> SavedRecomendationObs { get; }
@@ -1078,6 +1079,8 @@ namespace WpfApp2.Db.Models
             .HasRequired<BPVHipEntry>(s => s.BPVHipEntry5).WithMany(g => g.EntriesFull5).HasForeignKey<int?>(s => s.EntryId5);
 
 
+            modelBuilder.Entity<BPVHipEntryFull>()
+          .HasRequired<BPVHipEntry>(s => s.BPVHipEntry0).WithMany(g => g.EntriesFull0).HasForeignKey<int?>(s => s.EntryId5);
 
 
 

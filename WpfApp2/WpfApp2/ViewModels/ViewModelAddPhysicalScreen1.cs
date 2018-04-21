@@ -6169,7 +6169,12 @@ namespace WpfApp2.ViewModels
                     else if (Part is BPVHipViewModel)
                     {
 
+                        if (FullEntry.EntryId0 != null)
+                        {
+                            LeftBPVHip.AdditionalStructure.CurrentEntry = BPVHipEntryRep.Get(FullEntry.EntryId0.Value);
+                            LeftBPVHip.AdditionalStructure.SelectedValue = BPVHipStructRep.Get(LeftBPVHip.AdditionalStructure.CurrentEntry.StructureID);
 
+                        }
 
                         if (BPVHipEntryRep.Get(FullEntry.EntryId1) != null)
                         {
@@ -6586,7 +6591,12 @@ namespace WpfApp2.ViewModels
                     }
                     else if (Part is BPVHipViewModel)
                     {
+                        if (FullEntry.EntryId0 != null)
+                        {
+                            RightBPVHip.AdditionalStructure.CurrentEntry = BPVHipEntryRep.Get(FullEntry.EntryId0.Value);
+                            RightBPVHip.AdditionalStructure.SelectedValue = BPVHipStructRep.Get(RightBPVHip.AdditionalStructure.CurrentEntry.StructureID);
 
+                        }
 
 
                         if (BPVHipEntryRep.Get(FullEntry.EntryId1) != null)
@@ -6945,11 +6955,19 @@ namespace WpfApp2.ViewModels
             if (mode != "EDIT" && !Part.IsEmpty)
             {
                 LegPartEntries LeftSFSEntryFullbuf = FullEntry;
+                LegPartEntry newSFSentry;
+                if (Part is BPVHipViewModel)
+                {
+                    newSFSentry = ((BPVHipViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
+                    newSFSentry.StructureID = ((BPVHipViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
+                    Data.BPVHipEntries.Add((BPVHipEntry)newSFSentry);
+                    Data.Complete();
+                }
                 foreach (var section in Part.LegSections)
                 {
                     if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                     { break; }
-                    LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                    newSFSentry = (LegPartEntry)section.CurrentEntry;
                     newSFSentry.StructureID = section.SelectedValue.Id;
 
                     //Data.Complete();
@@ -7998,18 +8016,57 @@ namespace WpfApp2.ViewModels
 
                     BPVHipEntry EntToChange = new BPVHipEntry();
                     BPVHipEntryFull EntFullToChange = Data.BPVHipsFull.Get(LegExam.BPVHip.Value);
+                    LegPartEntry newSFSentry;
+                    bool test = true;
+
+                    if (((BPVHipViewModel)(Part)).AdditionalStructure.SelectedValue == null)
+                    {
+                        test = false;
+                        EntFullToChange.EntryId0 = null;
+
+                    }
+                    else
+                    {
+                        newSFSentry = ((BPVHipViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
+                        newSFSentry.StructureID = ((BPVHipViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
+
+                        if (EntFullToChange.EntryId0 == null)
+                        {
+                            test = false;
+                            Data.BPVHipEntries.Add((BPVHipEntry)newSFSentry);
+                            Data.Complete();
+                            EntFullToChange.EntryId0 = newSFSentry.Id;
+                            Data.Complete();
+                        }
+                        else
+                            EntToChange = Data.BPVHipEntries.Get(EntFullToChange.EntryId0.Value);
+                        LeftSFSEntryFullbuf.EntryId0 = newSFSentry.Id;
+
+                    }
+                    if (test)
+                    {
+                        newSFSentry = ((BPVHipViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
+                        newSFSentry.StructureID = ((BPVHipViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
+
+                        EntToChange.Comment = ((BPVHipEntry)newSFSentry).Comment;
+                        EntToChange.Size = ((BPVHipEntry)newSFSentry).Size;
+                        EntToChange.Size2 = ((BPVHipEntry)newSFSentry).Size2;
+                        EntToChange.StructureID = ((BPVHipEntry)newSFSentry).StructureID;
+                    }
+
+
                     for (int i = 0; i < Part.LegSections.Count; ++i)
                     {
                         if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                         { break; }
 
-                        LegPartEntry newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                        newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
 
                         if (Part.LegSections[i].SelectedValue != null)
                         {
                             newSFSentry.StructureID = Part.LegSections[i].SelectedValue.Id;
                         }
-                        bool test = true;
+                        test = true;
                         if (i == 0)
                         {
 
@@ -10452,6 +10509,7 @@ namespace WpfApp2.ViewModels
                 else
                     LeftBPVHip.LegSections.Add(new BPVHipSectionViewModel(Controller, null, i + 1));
             }
+            LeftBPVHip.AdditionalStructure = new BPVHipAdditionalSectionViewModel(Controller, null, 0);
             RightBPVHip.Comment = "";
             RightBPVHip.IsEmpty = true;
             RightBPVHip.LegSections = new ObservableCollection<LegSectionViewModel>();
@@ -10462,7 +10520,7 @@ namespace WpfApp2.ViewModels
                 else
                     RightBPVHip.LegSections.Add(new BPVHipSectionViewModel(Controller, null, i + 1));
             }
-
+            RightBPVHip.AdditionalStructure = new BPVHipAdditionalSectionViewModel(Controller, null, 0);
             LeftAdditionalText = "";
             RightAdditionalText = "";
             statementOverviewId = 0;
@@ -10784,12 +10842,20 @@ namespace WpfApp2.ViewModels
 
                 PDSVHipEntry EntToChange = new PDSVHipEntry();
                 PDSVHipEntryFull EntFullToChange = Data.PDSVFull.Get(LegExam.PDSVid.Value);
+                LegPartEntry newSFSentry;
+                if (Part is BPVHipViewModel)
+                {
+                    newSFSentry = ((BPVHipViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
+                    newSFSentry.StructureID = ((BPVHipViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
+                    Data.BPVHipEntries.Add((BPVHipEntry)newSFSentry);
+                    Data.Complete();
+                }
                 for (int i = 0; i < Part.LegSections.Count; ++i)
                 {
                     if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                     { break; }
 
-                    LegPartEntry newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                    newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
 
                     if (Part.LegSections[i].SelectedValue != null)
                     {
@@ -11662,18 +11728,58 @@ namespace WpfApp2.ViewModels
 
                 BPVHipEntry EntToChange = new BPVHipEntry();
                 BPVHipEntryFull EntFullToChange = Data.BPVHipsFull.Get(LegExam.BPVHip.Value);
+                LegPartEntry newSFSentry;
+                bool test = true;
+
+
+                var aditionalStructureValue = ((BPVHipViewModel)(Part)).AdditionalStructure.SelectedValue;
+                if (aditionalStructureValue == null || (aditionalStructureValue.Text2 == "" && aditionalStructureValue.Text1 == ""))
+                {
+                    test = false;
+                    EntFullToChange.EntryId0 = null;
+
+                }
+                else
+                {
+                    newSFSentry = ((BPVHipViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
+                    newSFSentry.StructureID = ((BPVHipViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
+
+                    if (EntFullToChange.EntryId0 == null)
+                    {
+                        test = false;
+                        Data.BPVHipEntries.Add((BPVHipEntry)newSFSentry);
+                        Data.Complete();
+                        EntFullToChange.EntryId0 = newSFSentry.Id;
+                        Data.Complete();
+                    }
+                    else
+                        EntToChange = Data.BPVHipEntries.Get(EntFullToChange.EntryId0.Value);
+                    LeftSFSEntryFullbuf.EntryId0 = newSFSentry.Id;
+
+                }
+                if (test)
+                {
+                    newSFSentry = ((BPVHipViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
+                    newSFSentry.StructureID = ((BPVHipViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
+                    EntToChange.Comment = ((BPVHipEntry)newSFSentry).Comment;
+                    EntToChange.Size = ((BPVHipEntry)newSFSentry).Size;
+                    EntToChange.Size2 = ((BPVHipEntry)newSFSentry).Size2;
+                    EntToChange.StructureID = ((BPVHipEntry)newSFSentry).StructureID;
+                }
+
+
                 for (int i = 0; i < Part.LegSections.Count; ++i)
                 {
                     if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                     { break; }
 
-                    LegPartEntry newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                    newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
 
                     if (Part.LegSections[i].SelectedValue != null)
                     {
                         newSFSentry.StructureID = Part.LegSections[i].SelectedValue.Id;
                     }
-                    bool test = true;
+                    test = true;
                     if (i == 0)
                     {
 
@@ -11826,15 +11932,55 @@ namespace WpfApp2.ViewModels
             }
             else if (Part is BPVHipViewModel && Part != null && Part.LegSections != null && Part.LegSections[0].SelectedValue != null)
             {
+
+                LegPartEntry newSFSentry;
+
+
+
+
+                if (((BPVHipViewModel)(Part)).AdditionalStructure.SelectedValue != null)
+                {
+
+                    //EntFullToChange.EntryId0 = null;
+
+                    //}
+                    //else
+                    //{
+                    newSFSentry = ((BPVHipViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
+                    newSFSentry.StructureID = ((BPVHipViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
+
+
+
+                    Data.BPVHipEntries.Add((BPVHipEntry)newSFSentry);
+
+                    Data.Complete();
+                    LeftSFSEntryFullbuf.EntryId0 = newSFSentry.Id;
+                    //Data.Complete();
+
+                }
+                //if (test)
+                //{
+                //    newSFSentry = ((BPVHipViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
+                //    newSFSentry.StructureID = ((BPVHipViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
+                //    EntToChange.Comment = ((BPVHipEntry)newSFSentry).Comment;
+                //    EntToChange.Size = ((BPVHipEntry)newSFSentry).Size;
+                //    EntToChange.Size2 = ((BPVHipEntry)newSFSentry).Size2;
+                //    EntToChange.StructureID = ((BPVHipEntry)newSFSentry).StructureID;
+                //}
+
+
                 foreach (var section in Part.LegSections)
                 {
                     if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                     { break; }
-                    LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                    newSFSentry = (LegPartEntry)section.CurrentEntry;
                     newSFSentry.StructureID = section.SelectedValue.Id;
 
                     Data.BPVHipEntries.Add((BPVHipEntry)newSFSentry);
                     Data.Complete();
+
+
+
                     if (section.ListNumber == 1)
                     {
                         LeftSFSEntryFullbuf.EntryId1 = newSFSentry.Id;
@@ -13540,7 +13686,7 @@ namespace WpfApp2.ViewModels
                 if (LegExamR.ZDSVid == null)
                     LegExamR.ZDSVid = savedLegExamR.ZDSVid;
 
-
+                
                 Data.Complete();
                 ////LegExamR.A = savedLegExamR.A;
                 ////LegExamR.additionalText = savedLegExamR.additionalText;
@@ -14888,12 +15034,12 @@ namespace WpfApp2.ViewModels
                     SaveSet result = SaveViewModel(RightBPVHip);
                     BpvRightstr = result.stringList;
                     IsVisibleBPVRight = result.listVisibility;
-                    if (RightZDSV.IsEmpty == true)
+                    if (RightBPVHip.IsEmpty == true)
                     {
 
                         BZDSVL = Brushes.Red;
                     }
-                    else if (RightZDSV.IsEmpty != true)
+                    else if (RightBPVHip.IsEmpty != true)
                     {
                         BZDSVL = null;
                     }

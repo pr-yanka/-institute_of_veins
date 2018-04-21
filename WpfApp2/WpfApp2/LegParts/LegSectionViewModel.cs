@@ -55,7 +55,7 @@ namespace WpfApp2.LegParts
 
         public int? SelectedIndex { get { return _selectedIndex; } set { _selectedIndex = value; OnPropertyChanged(); } }
 
-        public LegPartDbStructure SelectedValue
+        public virtual LegPartDbStructure SelectedValue
         {
             get { return _selectedValue; }
             set

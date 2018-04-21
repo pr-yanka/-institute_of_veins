@@ -68,6 +68,8 @@ namespace WpfApp2.Db.Models.GV
     public class GVEntryFull : LegPartEntries
     {
         [NotMapped]
+        public override int? EntryId0 { get; set; }
+        [NotMapped]
         public override int? WayID { get; set; }
 
         public virtual GVEntry GVEntry1 { get; set; }

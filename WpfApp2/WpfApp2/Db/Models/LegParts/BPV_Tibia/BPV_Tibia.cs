@@ -99,7 +99,8 @@ namespace WpfApp2.Db.Models
         public virtual BPV_TibiaEntry BPV_TibiaEntry2 { get; set; }
         public virtual BPV_TibiaEntry BPV_TibiaEntry3 { get; set; }
         public virtual BPV_TibiaEntry BPV_TibiaEntry4 { get; set; }
-
+        [NotMapped]
+        public override int? EntryId0 { get; set; }
         [NotMapped]
         public override int? WayID { get; set; }
 

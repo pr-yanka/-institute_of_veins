@@ -145,7 +145,8 @@ namespace WpfApp2.Db.Models
 
         [NotMapped]
         public override int? WayID { get; set; }
-
+        [NotMapped]
+        public override int? EntryId0 { get; set; }
 
         public override int EntryId1 { get; set; }
         public override int? EntryId2 { get; set; }

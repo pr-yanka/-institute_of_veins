@@ -146,7 +146,8 @@ namespace WpfApp2.Db.Models
 
         [Column("length_FF")]
         public float FF_Length { get; set; }
-
+        [NotMapped]
+        public override int? EntryId0 { get; set; }
         public override int EntryId1 { get; set; }
         public override int? EntryId2 { get; set; }
         public override int? EntryId3 { get; set; }

@@ -1,9 +1,8 @@
 ﻿using Microsoft.Practices.Prism.Commands;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using WpfApp2.Db.Models;
@@ -35,6 +34,9 @@ namespace WpfApp2.LegParts.VMs
             set { _selectedBpvWayTypeId = value; OnPropertyChanged(); }
         }
         private BPVVayTypePanelViewModel _currentPanelViewModelWaySelect;
+
+        public DelegateCommand SaveAdditionalPanelCommand { get; private set; }
+
         public override ViewModelBase CurrentPanelViewModelWaySelect
         {
             get { return _currentPanelViewModelWaySelect; }
@@ -289,6 +291,9 @@ namespace WpfApp2.LegParts.VMs
             MessageBus.Default.Call("LegDataSaved", this, this.GetType());
             FF_lengthSave = FF_length;
             SelectedWayTypeSave = SelectedWayType;
+
+           
+
             LegSectionsSaved = new List<LegSectionViewModel>();
             for (int i = 0; i < LevelCount; i++)
             {
@@ -326,6 +331,13 @@ namespace WpfApp2.LegParts.VMs
             SelectedWayType = SelectedWayTypeSave;
         }
 
+        private BPVHipAdditionalSectionViewModel additionalStructure;
+        public BPVHipAdditionalSectionViewModel AdditionalStructure
+        {
+            get { return additionalStructure; }
+            set { additionalStructure = value; }
+        }
+
         private ObservableCollection<LegSectionViewModel> _sections;
 
         public override ObservableCollection<LegSectionViewModel> LegSections
@@ -340,10 +352,83 @@ namespace WpfApp2.LegParts.VMs
         public DelegateCommand SavetWayCommand { set; get; }
 
         public ICommand OpenAddtWayCommand { protected set; get; }
+        private bool testAdditionalStructOnUnique(LegPartDbStructure structure)
+        {
+            if (Controller.CurrentViewModel.Controller.LegViewModel == this)
+            {
 
+                foreach (var x in AdditionalStructure.StructureSource)
+                {
+                    if (mode == "Edit")
+                    {
+                        if (x.HasDoubleMetric == CurrentPanelViewModel.HasDoubleSize
+                            && x.HasSize == CurrentPanelViewModel.HasSize
+                             && (x.Text1 == CurrentPanelViewModel.Text1 || (string.IsNullOrWhiteSpace(x.Text1) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text1)))
+                               && (x.Text2 == CurrentPanelViewModel.Text2 || (string.IsNullOrWhiteSpace(x.Text2) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text2)))
+                            && x.Id != structure.Id)
+                        {
+                            if (x.HasSize == true)
+                            {
+                                if ((x.Metrics == CurrentPanelViewModel.SelectedMetricText || string.IsNullOrWhiteSpace(x.Metrics) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.SelectedMetricText)))
+                                {
+                                    MessageBox.Show("Такое описание уже существует!");
+
+                                    return false;
+                                }
+                                else
+                                {
+                                    return true;
+                                }
+                            }
+
+
+                            MessageBox.Show("Такое описание уже существует!");
+
+                            return false;
+
+                        }
+                    }
+                    else
+                    {
+                        if (x.HasDoubleMetric == CurrentPanelViewModel.HasDoubleSize
+                               && x.HasSize == CurrentPanelViewModel.HasSize
+                               && (x.Text1 == CurrentPanelViewModel.Text1 || (string.IsNullOrWhiteSpace(x.Text1) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text1)))
+                               && (x.Text2 == CurrentPanelViewModel.Text2 || (string.IsNullOrWhiteSpace(x.Text2) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text2))))
+
+                        {
+
+                            if (x.HasSize == true)
+                            {
+                                if ((x.Metrics == CurrentPanelViewModel.SelectedMetricText || string.IsNullOrWhiteSpace(x.Metrics) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.SelectedMetricText)))
+                                {
+                                    MessageBox.Show("Такое описание уже существует!");
+
+                                    return false;
+                                }
+                                else
+                                {
+                                    return true;
+                                }
+                            }
+
+
+                            MessageBox.Show("Такое описание уже существует!");
+
+                            return false;
+                        }
+
+                    }
+                }
+
+            }
+            return true;
+        }
         public void Initialize()
         {
             TextOFNewType = "Новый БПВ ход";
+            MessageBus.Default.Subscribe("SetAdditionalStructDefault", SetAdditionalStructDefault);
+
+
             MessageBus.Default.Subscribe("RebuildFirstBPV", RebuildFirst);
             MessageBus.Default.Subscribe("RebuildLegSectionViewModel", Rebuild);
             BpvWayType = new ObservableCollection<BPVHipWay>();
@@ -354,16 +439,22 @@ namespace WpfApp2.LegParts.VMs
                 if (!string.IsNullOrWhiteSpace(panel.Text1) || !string.IsNullOrWhiteSpace(panel.Text2))
                 {
                     CurrentLegSide = CurrentLegSide;
-                    if (IsStructEdited(CurrentPanelViewModel.LegPrt) && testOnUnique(CurrentPanelViewModel.LegPrt))
+
+                    if (IsStructEdited(CurrentPanelViewModel.LegPrt))
                     {
-                        var newStruct = GetPanelStructure();
-                        newStruct.Custom = false;
-                        Data.BPVHips.Add((BPVHipStructure)newStruct);
-                        Data.Complete();
-                        _lastSender.StructureSource.Add(newStruct);
-                        _lastSender.SelectedValue = newStruct;
-                        CurrentPanelViewModel.PanelOpened = false;
-                        handled = false;
+                        if ((LevelSelected != 0 && testOnUnique(CurrentPanelViewModel.LegPrt)) || (LevelSelected == 0 && testAdditionalStructOnUnique(CurrentPanelViewModel.LegPrt)))
+                        {
+
+
+                            var newStruct = GetPanelStructure();
+                            newStruct.Custom = false;
+                            Data.BPVHips.Add((BPVHipStructure)newStruct);
+                            Data.Complete();
+                            _lastSender.StructureSource.Add(newStruct);
+                            _lastSender.SelectedValue = newStruct;
+                            CurrentPanelViewModel.PanelOpened = false;
+                            handled = false;
+                        }
                     }
                     if (!IsStructEdited(CurrentPanelViewModel.LegPrt))
                     {
@@ -505,7 +596,7 @@ namespace WpfApp2.LegParts.VMs
                }
            );
 
-
+            AdditionalStructure = new BPVHipAdditionalSectionViewModel(Controller, null, 0);
             foreach (var way in Data.BPVHipWay.GetAll)
             {
                 BpvWayType.Add(way);
@@ -526,6 +617,15 @@ namespace WpfApp2.LegParts.VMs
             }
             _title = "Большая подкожная вена на бедре";
 
+        }
+
+        private void SetAdditionalStructDefault(object arg1, object arg2)
+        {
+            try
+            {
+                AdditionalStructure.SelectedValue = arg1 as LegPartDbStructure;
+            }
+            catch { }
         }
 
         public BPVHipViewModel(NavigationController controller) : base(controller) { }

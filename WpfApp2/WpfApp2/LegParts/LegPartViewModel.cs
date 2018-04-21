@@ -191,7 +191,14 @@ namespace WpfApp2.LegParts
                      }
                      else
                      {
-                         LegSections[_lastSender.ListNumber - 1].SelectedValue = _lastSender.SelectedValue;
+                         if (_lastSender.ListNumber == 0)
+                         {
+                             MessageBus.Default.Call("SetAdditionalStructDefault", _lastSender.SelectedValue, null);
+                         }
+                         else
+                         {
+                             LegSections[_lastSender.ListNumber - 1].SelectedValue = _lastSender.SelectedValue;
+                         }
                      }
                      CurrentPanelViewModel.PanelOpened = false;
                      handled = false;
@@ -225,7 +232,7 @@ namespace WpfApp2.LegParts
 
         LegPartDbStructure LegPrt;
 
-        int LevelSelected;
+        public int LevelSelected;
 
         public bool testOnUnique(LegPartDbStructure structure)
         {
@@ -367,10 +374,10 @@ namespace WpfApp2.LegParts
 
             if (test == false)
             {
-                CurrentPanelViewModel.SelectedMetricText = "";
+                //CurrentPanelViewModel.SelectedMetricText = "";
 
-                CurrentPanelViewModel.HasDoubleSize = false;
-                CurrentPanelViewModel.HasSize = false;
+                //CurrentPanelViewModel.HasDoubleSize = false;
+                //CurrentPanelViewModel.HasSize = false;
             }
             return test;
         }

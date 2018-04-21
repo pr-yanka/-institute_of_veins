@@ -138,7 +138,8 @@ namespace WpfApp2.Db.Models
         public virtual MPVEntry MPVEntry3 { get; set; }
         public virtual MPVEntry MPVEntry4 { get; set; }
 
-
+        [NotMapped]
+        public override int? EntryId0 { get; set; }
 
         public override int EntryId1 { get; set; }
         public override int? EntryId2 { get; set; }

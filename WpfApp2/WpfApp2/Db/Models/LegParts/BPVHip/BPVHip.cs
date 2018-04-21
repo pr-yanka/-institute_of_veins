@@ -1,21 +1,86 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 using WpfApp2.Db.Models.LegParts;
 
 namespace WpfApp2.Db.Models
 {
     public class BPVHip
     {
-        
+
     }
 
+
+
+
+    //[Table("bpv_hip_additional_structure")]
+    //public partial class BPVHipAdditionalStructure : INotifyPropertyChanged
+    //{
+    //    #region Inotify realisation
+    //    public event PropertyChangedEventHandler PropertyChanged;
+    //    protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    //    {
+    //        //если PropertyChanged не нулевое - оно будет разбужено
+    //        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    //    }
+    //    #endregion
+    //    [Key]
+    //    [Column("id")]
+    //    public int Id { get; set; }
+    //    [NotMapped]
+    //    private string _text2;
+    //    [NotMapped]
+    //    private string _metric;
+    //    [NotMapped]
+    //    private string _text1;
+    //    [NotMapped]
+    //    private int? _size;
+    //    [Column("name1")]
+    //    public string Text1
+    //    {
+    //        get { return _text1; }
+    //        set { _text1 = value; OnPropertyChanged(); }
+    //    }
+    //    [Column("name2")]
+    //    public string Text2
+    //    {
+    //        get { return _text2; }
+    //        set { _text2 = value; OnPropertyChanged(); }
+    //    }
+
+    //    [Required]
+    //    [Column("is_metrics")]
+    //    public bool HasSize
+    //    {
+    //        get;
+    //        set;
+    //    }
+
+    //    [Column("id_metrics")]
+    //    public int? Size
+    //    {
+    //        get { return _size; }
+    //        set { _size = value; OnPropertyChanged(); }
+    //    }
+
+    //    [Column("metrics_value")]
+    //    public string Metrics
+    //    {
+    //        get { return _metric; }
+    //        set { _metric = value; OnPropertyChanged(); }
+    //    }
+    //    [NotMapped]
+    //    public string NameContext { get { return Text1 + " " + Metrics + " " + Text2; } set { } }
+
+    //}
+
+
+
+
     [Table("bpv_hip_structure")]
-    public partial class BPVHipStructure :LegPartDbStructure, ILegPart
+    public partial class BPVHipStructure : LegPartDbStructure, ILegPart
     {
         [NotMapped]
         public override bool HasDoubleMetric { get { return false; } }
@@ -30,7 +95,7 @@ namespace WpfApp2.Db.Models
     }
 
     [Table("bpv_hip_combo")]
-   // [Table("БПВ_на_бедре_комбо")]
+    // [Table("БПВ_на_бедре_комбо")]
     public partial class BPVHipCombo : LegPartCombo, ILegPart
     {
         [Key]
@@ -63,7 +128,7 @@ namespace WpfApp2.Db.Models
         public override string ToString()
         {
             return Str1.ToString();
-        }   
+        }
     }
 
     /*
@@ -114,19 +179,19 @@ namespace WpfApp2.Db.Models
     }*/
 
     [Table("bpv_hip_sub_entry")]
-   // [Table("БПВ_на_бедре_подзапись")]
+    // [Table("БПВ_на_бедре_подзапись")]
     public class BPVHipEntry : LegPartEntry, ILegPart
     {
 
         [Column("metrics")]
         public override float Size { get; set; }
-      
+
         [NotMapped]
         public override float Size2 { get; set; }
-       
+
 
         public virtual BPVHipStructure Structure { get; set; }
-
+        public virtual ICollection<BPVHipEntryFull> EntriesFull0 { get; set; } = new HashSet<BPVHipEntryFull>();
         public virtual ICollection<BPVHipEntryFull> EntriesFull1 { get; set; } = new HashSet<BPVHipEntryFull>();
         public virtual ICollection<BPVHipEntryFull> EntriesFull2 { get; set; } = new HashSet<BPVHipEntryFull>();
         public virtual ICollection<BPVHipEntryFull> EntriesFull3 { get; set; } = new HashSet<BPVHipEntryFull>();
@@ -135,15 +200,14 @@ namespace WpfApp2.Db.Models
 
     }
     [Table("bpv_hip_way")]
-  // [Table("вид_БПВ_хода")]
+    // [Table("вид_БПВ_хода")]
     public class BPVHipWay : da_Way
     {
-      
+
         public virtual ICollection<BPVHipEntryFull> EntriesFull { get; set; } = new HashSet<BPVHipEntryFull>();
 
     }
     [Table("big_saphenous_vein_on_hip")]
-   // [Table("большая_подкожная_вена_на_бедре")]
     public class BPVHipEntryFull : LegPartEntries
     {
         public virtual BPVHipWay BPVHipWay { get; set; }
@@ -152,17 +216,18 @@ namespace WpfApp2.Db.Models
         public virtual BPVHipEntry BPVHipEntry3 { get; set; }
         public virtual BPVHipEntry BPVHipEntry4 { get; set; }
         public virtual BPVHipEntry BPVHipEntry5 { get; set; }
+        public virtual BPVHipEntry BPVHipEntry0 { get; set; }
 
-      
 
-      
-             
+    
+        public override int? EntryId0 { get; set; }
+
         public override int EntryId1 { get; set; }
         public override int? EntryId2 { get; set; }
         public override int? EntryId3 { get; set; }
         public override int? EntryId4 { get; set; }
         public override int? EntryId5 { get; set; }
-       
+
 
         [NotMapped]
         public override int? EntryId6 { get; set; }

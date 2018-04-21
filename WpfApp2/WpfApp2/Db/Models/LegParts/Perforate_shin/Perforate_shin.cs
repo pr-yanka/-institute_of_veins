@@ -144,7 +144,8 @@ namespace WpfApp2.Db.Models
         public virtual Perforate_shinEntry Perforate_shinEntry3 { get; set; }
         public virtual Perforate_shinEntry Perforate_shinEntry4 { get; set; }
         public virtual Perforate_shinEntry Perforate_shinEntry5 { get; set; }
-
+        [NotMapped]
+        public override int? EntryId0 { get; set; }
         [Column("sub_entry_1")]
         public override int EntryId1 { get; set; }
         [Column("sub_entry_2")]

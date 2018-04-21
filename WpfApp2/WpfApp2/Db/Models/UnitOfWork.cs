@@ -24,6 +24,7 @@ namespace WpfApp2.Db.Models
 {
     public class UnitOfWork : IUnitOfWork
     {
+        //public BPVHipAdditionalStructureRepository BPVHipAdditionalStructure { get; }
         public SavedComplanesObsRepository SavedComplanesObs { get; }
         public SavedRecomendationObsRepository SavedRecomendationObs { get; }
         public SavedDiagnosisObsRepository SavedDiagnosisObs { get; }
@@ -213,6 +214,7 @@ namespace WpfApp2.Db.Models
         public UnitOfWork(MySqlContext context)
         {
             _context = context;
+            //BPVHipAdditionalStructure = new BPVHipAdditionalStructureRepository(_context);
             SavedComplanesObs = new SavedComplanesObsRepository(_context);
             SavedRecomendationObs = new SavedRecomendationObsRepository(_context);
             SavedDiagnosisObs = new SavedDiagnosisObsRepository(_context);
