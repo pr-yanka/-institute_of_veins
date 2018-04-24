@@ -223,7 +223,35 @@ namespace WpfApp2.LegParts.VMs
                 BPVHipRepository BPVHip = new BPVHipRepository(context);
                 MetricsRepository Metrics = new MetricsRepository(context);
                 var bufSaveLegSection = new List<int?>();
+                float savedValue = -1;
+                int bufSaveLegAdditionalSection = -1;
+                if (AdditionalStructure.SelectedValue != null)
+                {
+                    bufSaveLegAdditionalSection = AdditionalStructure.SelectedValue.Id;
+                    if (AdditionalStructure.CurrentEntry != null)
+                    {
+                        savedValue = AdditionalStructure.CurrentEntry.Size;
+                    }
+                }
+                AdditionalStructure = new BPVHipAdditionalSectionViewModel(Controller, null, 0);
+                if (bufSaveLegAdditionalSection != -1)
+                {
+                    for (int j = 0; j < AdditionalStructure.StructureSource.Count; ++j)
+                    {
+                        if (AdditionalStructure.StructureSource[j].Id == bufSaveLegAdditionalSection)
+                        {
+                            bufSaveLegAdditionalSection = j;
+                            break;
+                        }
+                    }
 
+                    //   if (bufSaveLegAdditionalSection != -1)
+                    AdditionalStructure.SelectedValue = AdditionalStructure.StructureSource[bufSaveLegAdditionalSection];
+                    if(savedValue != -1)
+                    {
+                        AdditionalStructure.CurrentEntry.Size = savedValue;
+                    }
+                }
                 foreach (var x in LegSections)
                 {
                     if (x.SelectedValue != null)
@@ -233,6 +261,11 @@ namespace WpfApp2.LegParts.VMs
                         bufSaveLegSection.Add(null);
                     }
                 }
+
+
+
+
+
                 for (int i = 0; i < LegSections.Count; ++i)
                 {
                     var bufSave = new ObservableCollection<LegPartDbStructure>();
@@ -292,7 +325,7 @@ namespace WpfApp2.LegParts.VMs
             FF_lengthSave = FF_length;
             SelectedWayTypeSave = SelectedWayType;
 
-           
+
 
             LegSectionsSaved = new List<LegSectionViewModel>();
             for (int i = 0; i < LevelCount; i++)

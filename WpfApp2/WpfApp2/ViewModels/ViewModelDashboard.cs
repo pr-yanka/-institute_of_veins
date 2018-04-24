@@ -381,7 +381,7 @@ namespace WpfApp2.ViewModels
                 }
                 Data.Complete();
             }
-            catch {
+            catch(Exception ex) {
 
             }
 

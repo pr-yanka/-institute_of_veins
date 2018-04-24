@@ -96,6 +96,7 @@
                             <TextBlock Visibility="{Binding IsVisiblePDSVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding PDSVLeftstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisiblePDSVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding PDSVLeftstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisiblePDSVleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding PDSVLeftstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePDSVleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding PDSVLeftstr[3]}"></TextBlock>
 
                         </StackPanel>
                     </Expander>
@@ -348,6 +349,7 @@
                             <TextBlock Visibility="{Binding IsVisiblePDSVright[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding PDSVRightstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisiblePDSVright[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding PDSVRightstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisiblePDSVright[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding PDSVRightstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisiblePDSVright[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding PDSVRightstr[3]}"></TextBlock>
 
                         </StackPanel>
                     </Expander>

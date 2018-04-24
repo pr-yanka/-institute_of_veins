@@ -1031,6 +1031,8 @@ namespace WpfApp2.Db.Models
             modelBuilder.Entity<PDSVHipEntryFull>()
             .HasRequired<PDSVHipEntry>(s => s.PDSVHipEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int?>(s => s.EntryId3);
 
+            modelBuilder.Entity<PDSVHipEntryFull>()
+  .HasRequired<PDSVHipEntry>(s => s.PDSVHipEntry0).WithMany(g => g.EntriesFull0).HasForeignKey<int?>(s => s.EntryId0);
 
 
 
@@ -1080,7 +1082,7 @@ namespace WpfApp2.Db.Models
 
 
             modelBuilder.Entity<BPVHipEntryFull>()
-          .HasRequired<BPVHipEntry>(s => s.BPVHipEntry0).WithMany(g => g.EntriesFull0).HasForeignKey<int?>(s => s.EntryId5);
+          .HasRequired<BPVHipEntry>(s => s.BPVHipEntry0).WithMany(g => g.EntriesFull0).HasForeignKey<int?>(s => s.EntryId0);
 
 
 

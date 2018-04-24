@@ -114,6 +114,7 @@ namespace WpfApp2.Db.Models
 
         public virtual PDSVHipStructure Structure { get; set; }
 
+        public virtual ICollection<PDSVHipEntryFull> EntriesFull0 { get; set; } = new HashSet<PDSVHipEntryFull>();
         public virtual ICollection<PDSVHipEntryFull> EntriesFull1 { get; set; } = new HashSet<PDSVHipEntryFull>();
         public virtual ICollection<PDSVHipEntryFull> EntriesFull2 { get; set; } = new HashSet<PDSVHipEntryFull>();
         public virtual ICollection<PDSVHipEntryFull> EntriesFull3 { get; set; } = new HashSet<PDSVHipEntryFull>();
@@ -136,15 +137,15 @@ namespace WpfApp2.Db.Models
         public virtual PDSVHipEntry PDSVHipEntry2 { get; set; }
         public virtual PDSVHipEntry PDSVHipEntry3 { get; set; }
 
+        public virtual PDSVHipEntry PDSVHipEntry0 { get; set; }
 
-      
 
         public override int EntryId1 { get; set; }
         public override int? EntryId2 { get; set; }
         public override int? EntryId3 { get; set; }
 
 
-        [NotMapped]
+      
         public override int? EntryId0 { get; set; }
         [NotMapped]
         public override int? EntryId4 { get; set; }

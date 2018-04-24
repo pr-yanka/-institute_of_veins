@@ -29,7 +29,7 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
                 <Button Margin="7,0" Command="{Binding OpenAddtWayCommand}"  FontSize="11" Content="Свой вариант ответа" Width="190" Style="{StaticResource MyConfirmBUTTON}" Height="26"></Button>-->
-                <DockPanel Margin="5,5,0,5" Width="Auto" LastChildFill="True">
+                <DockPanel Margin="15,5,0,5" Width="Auto" LastChildFill="True">
                     
                     <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="0,4,5,0" TextWrapping="Wrap" Text="БПВ на бедре интерфасциально располагается" VerticalAlignment="Top" FontSize="18"/>
 
@@ -52,7 +52,7 @@
                     </Button>
                 </DockPanel>
                 <StackPanel Orientation="Horizontal"  HorizontalAlignment="Left">
-                <DockPanel Width="Auto" LastChildFill="True" Margin="5,5,0,5">
+                <DockPanel Width="Auto" LastChildFill="True" Margin="15,5,0,5">
                     <TextBlock  Margin="0,5,0,5" TextWrapping="Wrap" x:Name="inches1Text_Copy1" Text="{Binding Path=AdditionalStructure.SelectedValue.Text1}" Visibility="{Binding Path=AdditionalStructure.HasFirstPart, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left"  VerticalAlignment="Top" RenderTransformOrigin="0.368,0.538" FontSize="18"/>
                     <TextBox  Margin="10,5,0,5" x:Name="size1Box" Text="{Binding Path = AdditionalStructure.CurrentEntry.Size, Converter={StaticResource FloatConvert}}" Visibility="{Binding Path = AdditionalStructure.SelectedValue.HasSize,UpdateSourceTrigger=PropertyChanged, FallbackValue=Hidden, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="30">
                         <i:Interaction.Triggers>

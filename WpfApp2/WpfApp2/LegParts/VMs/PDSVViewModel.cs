@@ -1,10 +1,7 @@
 ﻿using Microsoft.Practices.Prism.Commands;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WpfApp2.Db.Models;
@@ -18,6 +15,12 @@ namespace WpfApp2.LegParts.VMs
 {
     public class PDSVViewModel : LegPartViewModel
     {
+        private PDSVAdditionalSectionViewModel additionalStructure;
+        public PDSVAdditionalSectionViewModel AdditionalStructure
+        {
+            get { return additionalStructure; }
+            set { additionalStructure = value; }
+        }
         private ObservableCollection<PDSVHipWay> _bpvWayType;
         public ObservableCollection<PDSVHipWay> PDSVWayType
         {
@@ -207,7 +210,35 @@ namespace WpfApp2.LegParts.VMs
                 PDSVHipRepository PDSVHips = new PDSVHipRepository(context);
                 MetricsRepository Metrics = new MetricsRepository(context);
                 var bufSaveLegSection = new List<int?>();
+                float savedValue = -1;
+                int bufSaveLegAdditionalSection = -1;
+                if (AdditionalStructure.SelectedValue != null)
+                {
+                    bufSaveLegAdditionalSection = AdditionalStructure.SelectedValue.Id;
+                    if (AdditionalStructure.CurrentEntry != null)
+                    {
+                        savedValue = AdditionalStructure.CurrentEntry.Size;
+                    }
+                }
+                AdditionalStructure = new PDSVAdditionalSectionViewModel(Controller, null, 0);
+                if (bufSaveLegAdditionalSection != -1)
+                {
+                    for (int j = 0; j < AdditionalStructure.StructureSource.Count; ++j)
+                    {
+                        if (AdditionalStructure.StructureSource[j].Id == bufSaveLegAdditionalSection)
+                        {
+                            bufSaveLegAdditionalSection = j;
+                            break;
+                        }
+                    }
 
+                    //   if (bufSaveLegAdditionalSection != -1)
+                    AdditionalStructure.SelectedValue = AdditionalStructure.StructureSource[bufSaveLegAdditionalSection];
+                    if (savedValue != -1)
+                    {
+                        AdditionalStructure.CurrentEntry.Size = savedValue;
+                    }
+                }
                 foreach (var x in LegSections)
                 {
                     if (x.SelectedValue != null)
@@ -311,7 +342,77 @@ namespace WpfApp2.LegParts.VMs
             get { return _sections; }
             set { _sections = value; }
         }
+        private bool testAdditionalStructOnUnique(LegPartDbStructure structure)
+        {
+            if (Controller.CurrentViewModel.Controller.LegViewModel == this)
+            {
 
+                foreach (var x in AdditionalStructure.StructureSource)
+                {
+                    if (mode == "Edit")
+                    {
+                        if (x.HasDoubleMetric == CurrentPanelViewModel.HasDoubleSize
+                            && x.HasSize == CurrentPanelViewModel.HasSize
+                             && (x.Text1 == CurrentPanelViewModel.Text1 || (string.IsNullOrWhiteSpace(x.Text1) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text1)))
+                               && (x.Text2 == CurrentPanelViewModel.Text2 || (string.IsNullOrWhiteSpace(x.Text2) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text2)))
+                            && x.Id != structure.Id)
+                        {
+                            if (x.HasSize == true)
+                            {
+                                if ((x.Metrics == CurrentPanelViewModel.SelectedMetricText || string.IsNullOrWhiteSpace(x.Metrics) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.SelectedMetricText)))
+                                {
+                                    MessageBox.Show("Такое описание уже существует!");
+
+                                    return false;
+                                }
+                                else
+                                {
+                                    return true;
+                                }
+                            }
+
+
+                            MessageBox.Show("Такое описание уже существует!");
+
+                            return false;
+
+                        }
+                    }
+                    else
+                    {
+                        if (x.HasDoubleMetric == CurrentPanelViewModel.HasDoubleSize
+                               && x.HasSize == CurrentPanelViewModel.HasSize
+                               && (x.Text1 == CurrentPanelViewModel.Text1 || (string.IsNullOrWhiteSpace(x.Text1) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text1)))
+                               && (x.Text2 == CurrentPanelViewModel.Text2 || (string.IsNullOrWhiteSpace(x.Text2) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text2))))
+
+                        {
+
+                            if (x.HasSize == true)
+                            {
+                                if ((x.Metrics == CurrentPanelViewModel.SelectedMetricText || string.IsNullOrWhiteSpace(x.Metrics) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.SelectedMetricText)))
+                                {
+                                    MessageBox.Show("Такое описание уже существует!");
+
+                                    return false;
+                                }
+                                else
+                                {
+                                    return true;
+                                }
+                            }
+
+
+                            MessageBox.Show("Такое описание уже существует!");
+
+                            return false;
+                        }
+
+                    }
+                }
+
+            }
+            return true;
+        }
         public void Initialize()
         {
             TextOFNewType = "Новый ПДСВ ход";
@@ -367,16 +468,19 @@ namespace WpfApp2.LegParts.VMs
                 if (!string.IsNullOrWhiteSpace(panel.Text1) || !string.IsNullOrWhiteSpace(panel.Text2))
                 {
                     CurrentLegSide = CurrentLegSide;
-                    if (IsStructEdited(CurrentPanelViewModel.LegPrt) && testOnUnique(CurrentPanelViewModel.LegPrt))
+                    if (IsStructEdited(CurrentPanelViewModel.LegPrt))
                     {
-                        var newStruct = GetPanelStructure();
-                        newStruct.Custom = false;
-                        Data.PDSVHips.Add((PDSVHipStructure)newStruct);
-                        Data.Complete();
-                        _lastSender.StructureSource.Add(newStruct);
-                        _lastSender.SelectedValue = newStruct;
-                        CurrentPanelViewModel.PanelOpened = false;
-                        handled = false;
+                        if ((LevelSelected != 0 && testOnUnique(CurrentPanelViewModel.LegPrt)) || (LevelSelected == 0 && testAdditionalStructOnUnique(CurrentPanelViewModel.LegPrt)))
+                        {
+                            var newStruct = GetPanelStructure();
+                            newStruct.Custom = false;
+                            Data.PDSVHips.Add((PDSVHipStructure)newStruct);
+                            Data.Complete();
+                            _lastSender.StructureSource.Add(newStruct);
+                            _lastSender.SelectedValue = newStruct;
+                            CurrentPanelViewModel.PanelOpened = false;
+                            handled = false;
+                        }
                     }
                     if (!IsStructEdited(CurrentPanelViewModel.LegPrt))
                     {
@@ -481,6 +585,7 @@ namespace WpfApp2.LegParts.VMs
 
             LevelCount = 3;
             _sections = new ObservableCollection<LegSectionViewModel>();
+            AdditionalStructure = new PDSVAdditionalSectionViewModel(Controller, null, 0);
             for (int i = 0; i < LevelCount; i++)
             {
                 if (i != 0)
