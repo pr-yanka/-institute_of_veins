@@ -118,7 +118,8 @@
                     <DataGridTextColumn Width="auto"  CellStyle="{StaticResource MyDataGridCell2}" Binding="{Binding Path=Date,StringFormat=dd.MM.yyyy hh:mm}" ClipboardContentBinding="{x:Null}" Header="Дата" />
                     <DataGridTextColumn Width="172"  CellStyle="{StaticResource MyDataGridCell}" Binding="{Binding Path=Patient}" ClipboardContentBinding="{x:Null}" Header="Пациент"  />
 
-                    <DataGridTextColumn Width="179"  CellStyle="{StaticResource MyDataGridCell3}" Binding="{Binding Path=Anestetic}" ClipboardContentBinding="{x:Null}" Header="Анестезик" />
+                    <DataGridTextColumn Width="179"  CellStyle="{StaticResource MyDataGridCell3}" Binding="{Binding Path=Anestetic}" ClipboardContentBinding="{x:Null}" Header="Анестетик" />
+                   
                     <DataGridTemplateColumn Header="К операции" >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate >

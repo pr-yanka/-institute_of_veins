@@ -588,7 +588,8 @@ namespace WpfApp2.ViewModels
                     bool test = false;
                     if (SelectedLegId == 0)
                     {
-                        if (LeftDiagnosisList.Source == null || ((ObservableCollection<DiagnosisDataSource>)RightDiagnosisList.Source).Count == 0 || ((ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source).Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false)
+                      //  ObservableCollection<OperationTypesDataSource> aray = (ObservableCollection<OperationTypesDataSource>)LeftOperationList.Source;
+                        if (LeftOperationList.Source == null || ((ObservableCollection<OperationTypesDataSource>)LeftOperationList.Source).Count == 0 || ((ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source).Count == 0 || LeftDiagnosisList.Source == null || ((ObservableCollection<DiagnosisDataSource>)RightDiagnosisList.Source).Count == 0 || ((ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source).Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false)
                         {
                             MessageBox.Show("Не всё заполнено!");
                         }
@@ -600,7 +601,7 @@ namespace WpfApp2.ViewModels
                     else if (SelectedLegId == 1)
                     {
 
-                        if (RightDiagnosisList.Source == null || ((ObservableCollection<DiagnosisDataSource>)RightDiagnosisList.Source).Count == 0 || ((ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source).Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false)
+                        if (RightOperationList.Source == null || ((ObservableCollection<OperationTypesDataSource>)RightOperationList.Source).Count == 0 || RightDiagnosisList.Source == null || ((ObservableCollection<DiagnosisDataSource>)RightDiagnosisList.Source).Count == 0 || ((ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source).Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false)
                         {
                             MessageBox.Show("Не всё заполнено!");
                         }
@@ -610,7 +611,7 @@ namespace WpfApp2.ViewModels
                         }
 
                     }
-                    else if (LeftDiagnosisList.Source == null || RightDiagnosisList.Source == null || ((ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source).Count == 0 || ((ObservableCollection<DiagnosisDataSource>)RightDiagnosisList.Source).Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false)
+                    else if (RightOperationList.Source == null || ((ObservableCollection<OperationTypesDataSource>)RightOperationList.Source).Count == 0 || LeftOperationList.Source == null || ((ObservableCollection<OperationTypesDataSource>)LeftOperationList.Source).Count == 0 || LeftDiagnosisList.Source == null || RightDiagnosisList.Source == null || ((ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source).Count == 0 || ((ObservableCollection<DiagnosisDataSource>)RightDiagnosisList.Source).Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false)
                     {
                         MessageBox.Show("Не всё заполнено!");
                     }

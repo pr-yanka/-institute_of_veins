@@ -1387,10 +1387,10 @@ namespace WpfApp2.ViewModels
                         examnTotal.hirurgOverviewId = hirurgOverviewId;
 
 
-                        SavedExamination savedExamnTotal = SavedExamRep.GetAll.FirstOrDefault();
+                        SavedExamination savedExamnTotal = SavedExamRep.GetAll.Where(e => e.acc_id == Acc_id).FirstOrDefault();
                         SavedExaminationLeg savedLegExamL = SavedLegExamRep.Get(savedExamnTotal.idLeftLegExamination.Value);
                         SavedExaminationLeg savedLegExamR = SavedLegExamRep.Get(savedExamnTotal.idRightLegExamination.Value);
-
+                        //savedExamnTotal.acc_id = Acc_id;
                         examnTotal.height = savedExamnTotal.height;
                         examnTotal.weight = savedExamnTotal.weight;
                         // examnTotal.Comment = savedExamnTotal.Comment;
@@ -1798,7 +1798,7 @@ namespace WpfApp2.ViewModels
                     Examination examnTotal = new Examination();
                     ExaminationLeg leftLegExams = new ExaminationLeg();
                     ExaminationLeg rightLegExams = new ExaminationLeg();
-                    SavedExamination savedExamnTotal = Data.SavedExamination.GetAll.FirstOrDefault();
+                    SavedExamination savedExamnTotal = Data.SavedExamination.GetAll.Where(e => e.acc_id == Acc_id).FirstOrDefault();
                     SavedExaminationLeg savedLegExamL = Data.SavedExaminationLeg.Get(savedExamnTotal.idLeftLegExamination.Value);
                     SavedExaminationLeg savedLegExamR = Data.SavedExaminationLeg.Get(savedExamnTotal.idRightLegExamination.Value);
 
@@ -2099,7 +2099,7 @@ namespace WpfApp2.ViewModels
                 }
                 if (!LegPart.IsEmpty)
                 {
-                  
+
                     if (LegPart is BPVHipViewModel)
                     {
                         var section = ((BPVHipViewModel)LegPart).AdditionalStructure;
@@ -2167,7 +2167,7 @@ namespace WpfApp2.ViewModels
                         {
                             ++x;
                             p4.Append("ПДСВ на бедре интерфасциально располагается ").Font("Times new roman").FontSize(11.0);
-                          //  p4 += "ПДСВ на бедре интерфасциально располагается ";
+                            //  p4 += "ПДСВ на бедре интерфасциально располагается ";
                             if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
                             {
 
@@ -2228,7 +2228,7 @@ namespace WpfApp2.ViewModels
                         {
                             ++x;
                             p4.Append("ЗДСВ на бедре интерфасциально располагается ").Font("Times new roman").FontSize(11.0);
-                          
+
                             if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
                             {
 
@@ -3338,10 +3338,10 @@ namespace WpfApp2.ViewModels
                     p4 += "БПВ на бедре интерфасциально располагается ";
                     if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
                     {
-                        
-                            p4 += "" + section.SelectedValue.Text1 + "";
 
-                         
+                        p4 += "" + section.SelectedValue.Text1 + "";
+
+
                     }
 
                     if (section.SelectedValue.HasSize || section.HasDoubleSize)
@@ -3387,7 +3387,7 @@ namespace WpfApp2.ViewModels
                     //
 
                 }
-               
+
             }
             else if (LegPart is PDSVViewModel)
             {
@@ -4020,6 +4020,8 @@ namespace WpfApp2.ViewModels
             }
 
             IsVisibleBPVleft = IsVisibleBPVleftBuf;
+
+            MessageBus.Default.Subscribe("SetAccIDForAddExamination", SetAccID);
             MessageBus.Default.Subscribe("GetObsFromSavedOverview", GetObsFromSavedOverview);
             MessageBus.Default.Subscribe("GetObsForOverview", GetObsForOverview);
             MessageBus.Default.Subscribe("ClearObsledovanie", Clear);
@@ -4863,6 +4865,10 @@ namespace WpfApp2.ViewModels
             );
         }
 
+        private void SetAccID(object sender, object data)
+        {
+            Acc_id = (int)data;
+        }
         private void GetObsFromSavedOverview(object sender, object data)
         {
             Clear(this, null);//?
@@ -5510,9 +5516,9 @@ namespace WpfApp2.ViewModels
                     document.ReplaceText("«Врач»", Doctor);
 
 
-                  
 
-                 
+
+
                     //if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightPDSV)))
                     //{
                     //    document.ReplaceText("СФСр", "ПДСВСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
@@ -5526,7 +5532,7 @@ namespace WpfApp2.ViewModels
                     //    document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightZDSV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
                     //}
-               
+
 
 
                     //if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightPerforate)))
@@ -5534,7 +5540,7 @@ namespace WpfApp2.ViewModels
                     //    document.ReplaceText("СФСр", "Перфоранты бедра и несафенные веныСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
                     //    document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightPerforate) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
                     //}
-                   
+
                     //if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightTibiaPerforate)))
                     //{
 
@@ -5542,7 +5548,7 @@ namespace WpfApp2.ViewModels
                     //    document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightTibiaPerforate) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
 
-                      
+
 
                     //}
                     //if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightTEMPV)))
@@ -5551,7 +5557,7 @@ namespace WpfApp2.ViewModels
                     //    document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightTEMPV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
                     //}
-                  
+
 
 
 
@@ -5560,7 +5566,7 @@ namespace WpfApp2.ViewModels
                     //    document.ReplaceText("СФСр", "ППВСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
                     //    document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightPPV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
                     //}
-                     
+
 
 
                     //if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightGV)))
@@ -5627,9 +5633,9 @@ namespace WpfApp2.ViewModels
 
 
 
-               
 
-                  
+
+
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightPDSV)))
                         RightLL += "ПДСВ : " + CreateStrForOverview(RightPDSV) + "\n";
 
@@ -5640,9 +5646,9 @@ namespace WpfApp2.ViewModels
                     //
 
 
-                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightPerforate))) 
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightPerforate)))
 
-                         RightLL += "Перфоранты бедра и несафенные вены " + CreateStrForOverview(RightPerforate) + "\n";
+                        RightLL += "Перфоранты бедра и несафенные вены " + CreateStrForOverview(RightPerforate) + "\n";
 
 
                     //
@@ -11490,8 +11496,43 @@ namespace WpfApp2.ViewModels
         bool testThread = false;
         private void RemoveAllSaves()
         {
-            foreach (var x in Data.SavedExamination.GetAll)
+
+            foreach (var x in Data.SavedExamination.GetAll.Where(e => e.acc_id == Acc_id))
             {
+
+                foreach (var y in Data.SavedExaminationLeg.GetAll.Where(e => e.Id == x.idLeftLegExamination || e.Id == x.idRightLegExamination))
+                {
+                    y.A = null;
+                    y.additionalText = "";
+
+                    y.BPVHip = null;
+                    y.BPVTibiaid = null;
+                    y.C = null;
+                    y.E = null;
+                    y.GVid = null;
+                    y.MPVid = null;
+                    y.P = null;
+                    y.PDSVid = null;
+                    y.PerforateHipid = null;
+                    y.PPVid = null;
+                    y.SFSid = null;
+                    y.SPSid = null;
+                    y.TEMPVid = null;
+                    y.TibiaPerforateid = null;
+                    y.ZDSVid = null;
+                }
+                foreach (var y in Data.SavedComplanesObs.GetAll.Where(e => e.id_Examination == x.Id))
+                {
+                    Data.SavedComplanesObs.Remove(y);
+                }
+                foreach (var y in Data.SavedDiagnosisObs.GetAll.Where(e => e.id_leg_examination == x.Id))
+                {
+                    Data.SavedDiagnosisObs.Remove(y);
+                }
+                foreach (var y in Data.SavedRecomendationObs.GetAll.Where(e => e.id_examination == x.Id))
+                {
+                    Data.SavedRecomendationObs.Remove(y);
+                }
                 x.height = 0;
                 x.weight = 0;
                 x.Comment = "";
@@ -11504,268 +11545,10 @@ namespace WpfApp2.ViewModels
                 x.PatientId = null;
                 x.statementOverviewId = null;
                 x.id_current_examination = null;
+
+
             }
-            foreach (var x in Data.SavedExaminationLeg.GetAll)
-            {
 
-                //if (x.PDSVid != null)
-                //{
-                //    var legPrt = Data.PDSVFull.Get(x.PDSVid.Value);
-                //    //Data.PDSVHipEntries.Remove(Data.PDSVHipEntries.Get(legPrt.EntryId1));
-                //    //if (legPrt.EntryId2 != null)
-                //    //    Data.PDSVHipEntries.Remove(Data.PDSVHipEntries.Get(legPrt.EntryId2.Value));
-                //    //if (legPrt.EntryId3 != null)
-                //    //    Data.PDSVHipEntries.Remove(Data.PDSVHipEntries.Get(legPrt.EntryId3.Value));
-                //    //if (legPrt.EntryId4 != null)
-                //    //    Data.PDSVHipEntries.Remove(Data.PDSVHipEntries.Get(legPrt.EntryId4.Value));
-                //    //if (legPrt.EntryId5 != null)
-                //    //    Data.PDSVHipEntries.Remove(Data.PDSVHipEntries.Get(legPrt.EntryId5.Value));
-                //    //if (legPrt.EntryId6 != null)
-                //    //    Data.PDSVHipEntries.Remove(Data.PDSVHipEntries.Get(legPrt.EntryId6.Value));
-
-                //    Data.PDSVFull.Remove(legPrt);
-                //}
-                //if (x.ZDSVid != null)
-                //{
-                //    var legPrt = Data.ZDSVFull.Get(x.ZDSVid.Value);
-                //    //Data.ZDSVEntries.Remove(Data.ZDSVEntries.Get(legPrt.EntryId1));
-                //    //if (legPrt.EntryId2 != null)
-                //    //    Data.ZDSVEntries.Remove(Data.ZDSVEntries.Get(legPrt.EntryId2.Value));
-                //    //if (legPrt.EntryId3 != null)
-                //    //    Data.ZDSVEntries.Remove(Data.ZDSVEntries.Get(legPrt.EntryId3.Value));
-                //    //if (legPrt.EntryId4 != null)
-                //    //    Data.ZDSVEntries.Remove(Data.ZDSVEntries.Get(legPrt.EntryId4.Value));
-                //    //if (legPrt.EntryId5 != null)
-                //    //    Data.ZDSVEntries.Remove(Data.ZDSVEntries.Get(legPrt.EntryId5.Value));
-                //    //if (legPrt.EntryId6 != null)
-                //    //    Data.ZDSVEntries.Remove(Data.ZDSVEntries.Get(legPrt.EntryId6.Value));
-
-                //    Data.ZDSVFull.Remove(legPrt);
-                //}
-                //if (x.BPVTibiaid != null)
-                //{
-                //    var legPrt = Data.BPV_TibiaFull.Get(x.BPVTibiaid.Value);
-                //    //Data.BPV_TibiaEntries.Remove(Data.BPV_TibiaEntries.Get(legPrt.EntryId1));
-                //    //if (legPrt.EntryId2 != null)
-                //    //    Data.BPV_TibiaEntries.Remove(Data.BPV_TibiaEntries.Get(legPrt.EntryId2.Value));
-                //    //if (legPrt.EntryId3 != null)
-                //    //    Data.BPV_TibiaEntries.Remove(Data.BPV_TibiaEntries.Get(legPrt.EntryId3.Value));
-                //    //if (legPrt.EntryId4 != null)
-                //    //    Data.BPV_TibiaEntries.Remove(Data.BPV_TibiaEntries.Get(legPrt.EntryId4.Value));
-                //    //if (legPrt.EntryId5 != null)
-                //    //    Data.BPV_TibiaEntries.Remove(Data.BPV_TibiaEntries.Get(legPrt.EntryId5.Value));
-                //    //if (legPrt.EntryId6 != null)
-                //    //    Data.BPV_TibiaEntries.Remove(Data.BPV_TibiaEntries.Get(legPrt.EntryId6.Value));
-
-                //    Data.BPV_TibiaFull.Remove(legPrt);
-                //}
-
-
-                //if (x.BPVHip != null)
-                //{
-                //    var legPrt = Data.BPVHipsFull.Get(x.BPVHip.Value);
-                //    //Data.BPVHipEntries.Remove(Data.BPVHipEntries.Get(legPrt.EntryId1));
-                //    //if (legPrt.EntryId2 != null)
-                //    //    Data.BPVHipEntries.Remove(Data.BPVHipEntries.Get(legPrt.EntryId2.Value));
-                //    //if (legPrt.EntryId3 != null)
-                //    //    Data.BPVHipEntries.Remove(Data.BPVHipEntries.Get(legPrt.EntryId3.Value));
-                //    //if (legPrt.EntryId4 != null)
-                //    //    Data.BPVHipEntries.Remove(Data.BPVHipEntries.Get(legPrt.EntryId4.Value));
-                //    //if (legPrt.EntryId5 != null)
-                //    //    Data.BPVHipEntries.Remove(Data.BPVHipEntries.Get(legPrt.EntryId5.Value));
-                //    //if (legPrt.EntryId6 != null)
-                //    //    Data.BPVHipEntries.Remove(Data.BPVHipEntries.Get(legPrt.EntryId6.Value));
-
-                //    Data.BPVHipsFull.Remove(legPrt);
-
-                //}
-                ////      Data.BPVHipsFull.Remove(Data.BPVHipsFull.Get(x.BPVHip.Value));
-
-                //if (x.GVid != null)
-                //{
-                //    var legPrt = Data.GVFull.Get(x.GVid.Value);
-                //    //Data.GVEntries.Remove(Data.GVEntries.Get(legPrt.EntryId1));
-                //    //if (legPrt.EntryId2 != null)
-                //    //    Data.GVEntries.Remove(Data.GVEntries.Get(legPrt.EntryId2.Value));
-                //    //if (legPrt.EntryId3 != null)
-                //    //    Data.GVEntries.Remove(Data.GVEntries.Get(legPrt.EntryId3.Value));
-                //    //if (legPrt.EntryId4 != null)
-                //    //    Data.GVEntries.Remove(Data.GVEntries.Get(legPrt.EntryId4.Value));
-                //    //if (legPrt.EntryId5 != null)
-                //    //    Data.GVEntries.Remove(Data.GVEntries.Get(legPrt.EntryId5.Value));
-                //    //if (legPrt.EntryId6 != null)
-                //    //    Data.GVEntries.Remove(Data.GVEntries.Get(legPrt.EntryId6.Value));
-
-                //    Data.GVFull.Remove(legPrt);
-                //}
-                //// Data.GVFull.Remove(Data.GVFull.Get(x.GVid.Value));
-
-                //if (x.MPVid != null)
-                //{
-                //    var legPrt = Data.MPVFull.Get(x.MPVid.Value);
-                //    //Data.MPVEntries.Remove(Data.MPVEntries.Get(legPrt.EntryId1));
-                //    //if (legPrt.EntryId2 != null)
-                //    //    Data.MPVEntries.Remove(Data.MPVEntries.Get(legPrt.EntryId2.Value));
-                //    //if (legPrt.EntryId3 != null)
-                //    //    Data.MPVEntries.Remove(Data.MPVEntries.Get(legPrt.EntryId3.Value));
-                //    //if (legPrt.EntryId4 != null)
-                //    //    Data.MPVEntries.Remove(Data.MPVEntries.Get(legPrt.EntryId4.Value));
-                //    //if (legPrt.EntryId5 != null)
-                //    //    Data.MPVEntries.Remove(Data.MPVEntries.Get(legPrt.EntryId5.Value));
-                //    //if (legPrt.EntryId6 != null)
-                //    //    Data.MPVEntries.Remove(Data.MPVEntries.Get(legPrt.EntryId6.Value));
-
-                //    Data.MPVFull.Remove(legPrt);
-                //}
-                //// Data.MPVFull.Remove();
-
-                //if (x.PerforateHipid != null)
-                //{
-                //    var legPrt = Data.Perforate_hipFull.Get(x.PerforateHipid.Value);
-                //    //Data.Perforate_hipEntries.Remove(Data.Perforate_hipEntries.Get(legPrt.EntryId1));
-                //    //if (legPrt.EntryId2 != null)
-                //    //    Data.Perforate_hipEntries.Remove(Data.Perforate_hipEntries.Get(legPrt.EntryId2.Value));
-                //    //if (legPrt.EntryId3 != null)
-                //    //    Data.Perforate_hipEntries.Remove(Data.Perforate_hipEntries.Get(legPrt.EntryId3.Value));
-                //    //if (legPrt.EntryId4 != null)
-                //    //    Data.Perforate_hipEntries.Remove(Data.Perforate_hipEntries.Get(legPrt.EntryId4.Value));
-                //    //if (legPrt.EntryId5 != null)
-                //    //    Data.Perforate_hipEntries.Remove(Data.Perforate_hipEntries.Get(legPrt.EntryId5.Value));
-                //    //if (legPrt.EntryId6 != null)
-                //    //    Data.Perforate_hipEntries.Remove(Data.Perforate_hipEntries.Get(legPrt.EntryId6.Value));
-
-                //    Data.Perforate_hipFull.Remove(legPrt);
-                //}
-                ////  Data.Perforate_hipFull.Remove(Data.Perforate_hipFull.Get(x.PerforateHipid.Value));
-
-                //if (x.TibiaPerforateid != null)
-                //{
-                //    var legPrt = Data.Perforate_shinFull.Get(x.TibiaPerforateid.Value);
-                //    //Data.Perforate_shinEntries.Remove(Data.Perforate_shinEntries.Get(legPrt.EntryId1));
-                //    //if (legPrt.EntryId2 != null)
-                //    //    Data.Perforate_shinEntries.Remove(Data.Perforate_shinEntries.Get(legPrt.EntryId2.Value));
-                //    //if (legPrt.EntryId3 != null)
-                //    //    Data.Perforate_shinEntries.Remove(Data.Perforate_shinEntries.Get(legPrt.EntryId3.Value));
-                //    //if (legPrt.EntryId4 != null)
-                //    //    Data.Perforate_shinEntries.Remove(Data.Perforate_shinEntries.Get(legPrt.EntryId4.Value));
-                //    //if (legPrt.EntryId5 != null)
-                //    //    Data.Perforate_shinEntries.Remove(Data.Perforate_shinEntries.Get(legPrt.EntryId5.Value));
-                //    //if (legPrt.EntryId6 != null)
-                //    //    Data.Perforate_shinEntries.Remove(Data.Perforate_shinEntries.Get(legPrt.EntryId6.Value));
-
-                //    Data.Perforate_shinFull.Remove(legPrt);
-                //}
-                ////Data.Perforate_shinFull.Remove(Data.Perforate_shinFull.Get(x.TibiaPerforateid.Value));
-
-                //if (x.PPVid != null)
-                //{
-                //    var legPrt = Data.PPVFull.Get(x.PPVid.Value);
-                //    //Data.PPVEntries.Remove(Data.PPVEntries.Get(legPrt.EntryId1));
-                //    //if (legPrt.EntryId2 != null)
-                //    //    Data.PPVEntries.Remove(Data.PPVEntries.Get(legPrt.EntryId2.Value));
-                //    //if (legPrt.EntryId3 != null)
-                //    //    Data.PPVEntries.Remove(Data.PPVEntries.Get(legPrt.EntryId3.Value));
-                //    //if (legPrt.EntryId4 != null)
-                //    //    Data.PPVEntries.Remove(Data.PPVEntries.Get(legPrt.EntryId4.Value));
-                //    //if (legPrt.EntryId5 != null)
-                //    //    Data.PPVEntries.Remove(Data.PPVEntries.Get(legPrt.EntryId5.Value));
-                //    //if (legPrt.EntryId6 != null)
-                //    //    Data.PPVEntries.Remove(Data.PPVEntries.Get(legPrt.EntryId6.Value));
-
-                //    Data.PPVFull.Remove(legPrt);
-                //}
-                ////  Data.PPVFull.Remove(Data.PPVFull.Get(x.PPVid.Value));
-
-                //if (x.SFSid != null)
-                //{
-                //    var legPrt = Data.SFSFull.Get(x.SFSid.Value);
-                //    //Data.SFSHipEntries.Remove(Data.SFSHipEntries.Get(legPrt.EntryId1));
-                //    //if (legPrt.EntryId2 != null)
-                //    //    Data.SFSHipEntries.Remove(Data.SFSHipEntries.Get(legPrt.EntryId2.Value));
-                //    //if (legPrt.EntryId3 != null)
-                //    //    Data.SFSHipEntries.Remove(Data.SFSHipEntries.Get(legPrt.EntryId3.Value));
-                //    //if (legPrt.EntryId4 != null)
-                //    //    Data.SFSHipEntries.Remove(Data.SFSHipEntries.Get(legPrt.EntryId4.Value));
-                //    //if (legPrt.EntryId5 != null)
-                //    //    Data.SFSHipEntries.Remove(Data.SFSHipEntries.Get(legPrt.EntryId5.Value));
-                //    //if (legPrt.EntryId6 != null)
-                //    //    Data.SFSHipEntries.Remove(Data.SFSHipEntries.Get(legPrt.EntryId6.Value));
-
-                //    Data.SFSFull.Remove(legPrt);
-                //}
-                ////     Data.SFSFull.Remove(Data.SFSFull.Get(x.SFSid.Value));
-
-                //if (x.SPSid != null)
-                //{
-                //    var legPrt = Data.SPSHipFull.Get(x.SPSid.Value);
-                //    //Data.SPSEntries.Remove(Data.SPSEntries.Get(legPrt.EntryId1));
-                //    //if (legPrt.EntryId2 != null)
-                //    //    Data.SPSEntries.Remove(Data.SPSEntries.Get(legPrt.EntryId2.Value));
-                //    //if (legPrt.EntryId3 != null)
-                //    //    Data.SPSEntries.Remove(Data.SPSEntries.Get(legPrt.EntryId3.Value));
-                //    //if (legPrt.EntryId4 != null)
-                //    //    Data.SPSEntries.Remove(Data.SPSEntries.Get(legPrt.EntryId4.Value));
-                //    //if (legPrt.EntryId5 != null)
-                //    //    Data.SPSEntries.Remove(Data.SPSEntries.Get(legPrt.EntryId5.Value));
-                //    //if (legPrt.EntryId6 != null)
-                //    //    Data.SPSEntries.Remove(Data.SPSEntries.Get(legPrt.EntryId6.Value));
-
-                //    Data.SPSHipFull.Remove(legPrt);
-                //}
-                ////  Data.SPSHipFull.Remove(Data.SPSHipFull.Get(x.SPSid.Value));
-
-                //if (x.TEMPVid != null)
-                //{
-                //    var legPrt = Data.TEMPVFull.Get(x.TEMPVid.Value);
-                //    //Data.TEMPVEntries.Remove(Data.TEMPVEntries.Get(legPrt.EntryId1));
-                //    //if (legPrt.EntryId2 != null)
-                //    //    Data.TEMPVEntries.Remove(Data.TEMPVEntries.Get(legPrt.EntryId2.Value));
-                //    //if (legPrt.EntryId3 != null)
-                //    //    Data.TEMPVEntries.Remove(Data.TEMPVEntries.Get(legPrt.EntryId3.Value));
-                //    //if (legPrt.EntryId4 != null)
-                //    //    Data.TEMPVEntries.Remove(Data.TEMPVEntries.Get(legPrt.EntryId4.Value));
-                //    //if (legPrt.EntryId5 != null)
-                //    //    Data.TEMPVEntries.Remove(Data.TEMPVEntries.Get(legPrt.EntryId5.Value));
-                //    //if (legPrt.EntryId6 != null)
-                //    //    Data.TEMPVEntries.Remove(Data.TEMPVEntries.Get(legPrt.EntryId6.Value));
-
-                //    Data.TEMPVFull.Remove(legPrt);
-                //}
-                // Data.TEMPVFull.Remove(Data.TEMPVFull.Get(x.TEMPVid.Value));
-
-
-
-                x.A = null;
-                x.additionalText = "";
-
-                x.BPVHip = null;
-                x.BPVTibiaid = null;
-                x.C = null;
-                x.E = null;
-                x.GVid = null;
-                x.MPVid = null;
-                x.P = null;
-                x.PDSVid = null;
-                x.PerforateHipid = null;
-                x.PPVid = null;
-                x.SFSid = null;
-                x.SPSid = null;
-                x.TEMPVid = null;
-                x.TibiaPerforateid = null;
-                x.ZDSVid = null;
-            }
-            foreach (var x in Data.SavedComplanesObs.GetAll)
-            {
-                Data.SavedComplanesObs.Remove(x);
-            }
-            foreach (var x in Data.SavedDiagnosisObs.GetAll)
-            {
-                Data.SavedDiagnosisObs.Remove(x);
-            }
-            foreach (var x in Data.SavedRecomendationObs.GetAll)
-            {
-                Data.SavedRecomendationObs.Remove(x);
-            }
         }
         private LegPartEntries SaveForSavedProc(ref SavedExaminationLeg LegExam, ref SavedExamination Exam, LegPartViewModel Part, LegPartEntries FullEntry, bool isLeft, int obsid)
         {
@@ -12005,25 +11788,24 @@ namespace WpfApp2.ViewModels
             else if (Part is PDSVViewModel && Part != null && Part.LegSections != null && Part.LegSections[0].SelectedValue != null)
             {
                 LegPartEntry newSFSentry;
-                if (((PDSVViewModel)(Part)).AdditionalStructure.SelectedValue != null)
+                var aditionalStruct = ((PDSVViewModel)(Part)).AdditionalStructure;
+                if (aditionalStruct.SelectedValue != null)
                 {
-
-                    //EntFullToChange.EntryId0 = null;
-
-                    //}
-                    //else
-                    //{
-                    newSFSentry = ((PDSVViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
-                    newSFSentry.StructureID = ((PDSVViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
+                    if (aditionalStruct.SelectedValue.Text1 == "" && aditionalStruct.SelectedValue.Text2 == "")
+                    { }
+                    else
+                    {
+                        newSFSentry = ((PDSVViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
+                        newSFSentry.StructureID = ((PDSVViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
 
 
 
-                    Data.PDSVHipEntries.Add((PDSVHipEntry)newSFSentry);
+                        Data.PDSVHipEntries.Add((PDSVHipEntry)newSFSentry);
 
-                    Data.Complete();
-                    LeftSFSEntryFullbuf.EntryId0 = newSFSentry.Id;
-                    //Data.Complete();
-
+                        Data.Complete();
+                        LeftSFSEntryFullbuf.EntryId0 = newSFSentry.Id;
+                        //Data.Complete();
+                    }
                 }
 
 
@@ -12291,25 +12073,30 @@ namespace WpfApp2.ViewModels
 
 
 
-                if (((ZDSVViewModel)(Part)).AdditionalStructure.SelectedValue != null)
+                var aditionalStruct = ((ZDSVViewModel)(Part)).AdditionalStructure;
+                if (aditionalStruct.SelectedValue != null)
                 {
+                    if (aditionalStruct.SelectedValue.Text1 == "" && aditionalStruct.SelectedValue.Text2 == "")
+                    {
+                    }
+                    else
+                    {
+                        //EntFullToChange.EntryId0 = null;
 
-                    //EntFullToChange.EntryId0 = null;
-
-                    //}
-                    //else
-                    //{
-                    newSFSentry = ((ZDSVViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
-                    newSFSentry.StructureID = ((ZDSVViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
+                        //}
+                        //else
+                        //{
+                        newSFSentry = ((ZDSVViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
+                        newSFSentry.StructureID = ((ZDSVViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
 
 
 
-                    Data.ZDSVEntries.Add((ZDSVEntry)newSFSentry);
+                        Data.ZDSVEntries.Add((ZDSVEntry)newSFSentry);
 
-                    Data.Complete();
-                    LeftSFSEntryFullbuf.EntryId0 = newSFSentry.Id;
-                    //Data.Complete();
-
+                        Data.Complete();
+                        LeftSFSEntryFullbuf.EntryId0 = newSFSentry.Id;
+                        //Data.Complete();
+                    }
                 }
                 foreach (var section in Part.LegSections)
                 {
@@ -13015,25 +12802,30 @@ namespace WpfApp2.ViewModels
 
 
 
-                if (((BPVHipViewModel)(Part)).AdditionalStructure.SelectedValue != null)
+                var aditionalStruct = ((BPVHipViewModel)(Part)).AdditionalStructure;
+                if (aditionalStruct.SelectedValue != null)
                 {
+                    if (aditionalStruct.SelectedValue.Text1 == "" && aditionalStruct.SelectedValue.Text2 == "")
+                    {
+                    }
+                    else
+                    {
+                        //EntFullToChange.EntryId0 = null;
 
-                    //EntFullToChange.EntryId0 = null;
-
-                    //}
-                    //else
-                    //{
-                    newSFSentry = ((BPVHipViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
-                    newSFSentry.StructureID = ((BPVHipViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
+                        //}
+                        //else
+                        //{
+                        newSFSentry = ((BPVHipViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
+                        newSFSentry.StructureID = ((BPVHipViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
 
 
 
-                    Data.BPVHipEntries.Add((BPVHipEntry)newSFSentry);
+                        Data.BPVHipEntries.Add((BPVHipEntry)newSFSentry);
 
-                    Data.Complete();
-                    LeftSFSEntryFullbuf.EntryId0 = newSFSentry.Id;
-                    //Data.Complete();
-
+                        Data.Complete();
+                        LeftSFSEntryFullbuf.EntryId0 = newSFSentry.Id;
+                        //Data.Complete();
+                    }
                 }
                 //if (test)
                 //{
@@ -13762,25 +13554,32 @@ namespace WpfApp2.ViewModels
 
 
 
-                if (((SPSViewModel)(Part)).AdditionalStructure.SelectedValue != null)
+                var aditionalStruct = ((SPSViewModel)(Part)).AdditionalStructure;
+                if (aditionalStruct.SelectedValue != null)
                 {
+                    if (aditionalStruct.SelectedValue.Text1 == "" && aditionalStruct.SelectedValue.Text2 == "")
+                    {
+                    }
+                    else
+                    {
 
-                    //EntFullToChange.EntryId0 = null;
+                        //EntFullToChange.EntryId0 = null;
 
-                    //}
-                    //else
-                    //{
-                    newSFSentry = ((SPSViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
-                    newSFSentry.StructureID = ((SPSViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
+                        //}
+                        //else
+                        //{
+                        newSFSentry = ((SPSViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
+                        newSFSentry.StructureID = ((SPSViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
 
 
 
-                    Data.SPSEntries.Add((SPSHipEntry)newSFSentry);
+                        Data.SPSEntries.Add((SPSHipEntry)newSFSentry);
 
-                    Data.Complete();
-                    LeftSFSEntryFullbuf.EntryId0 = newSFSentry.Id;
-                    //Data.Complete();
+                        Data.Complete();
+                        LeftSFSEntryFullbuf.EntryId0 = newSFSentry.Id;
+                        //Data.Complete();
 
+                    }
                 }
                 foreach (var section in Part.LegSections)
                 {
@@ -14726,6 +14525,8 @@ namespace WpfApp2.ViewModels
                 }
             }
         }
+
+        int Acc_id = 0;
         private void SaveExaminationToSavedTable()
         {
 
@@ -14735,7 +14536,7 @@ namespace WpfApp2.ViewModels
             SavedExaminationLeg LegExamR = Data.SavedExaminationLeg.Get(examnTotal.idRightLegExamination.Value);
             examnTotal.statementOverviewId = statementOverviewId;
             examnTotal.hirurgOverviewId = hirurgOverviewId;
-
+            examnTotal.acc_id = Acc_id;
             if (mode == "EDIT")
             {
                 examnTotal.id_current_examination = obsid;

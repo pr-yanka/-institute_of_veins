@@ -169,7 +169,7 @@
                         <TextBlock  Canvas.Left="10"  FontFamily="/fonts/#Pescadero" FontSize="18" TextWrapping="Wrap" Canvas.Top="40"   Text="УЗ-контроль на"  />
 
                         <!--УЗ-контроль на-->
-                        <TextBlock   Canvas.Left="200" Canvas.Top="40"   FontFamily="/fonts/#Pescadero" FontSize="18" TextWrapping="Wrap"  Text="суток" />
+                        <TextBlock   Canvas.Left="200" Canvas.Top="40"   FontFamily="/fonts/#Pescadero" FontSize="18" TextWrapping="Wrap"  Text="сутки" />
 
                         <TextBox  Canvas.Left="150" Padding="1"  Canvas.Top="40"   Name="sizde1Box"  Text="{Binding Path=ParentVM.Days}" Width="40" Height="23"  >
                             <i:Interaction.Triggers>

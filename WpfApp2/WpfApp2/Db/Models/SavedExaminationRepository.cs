@@ -56,6 +56,8 @@ namespace WpfApp2.Db.Models
         public string Comment { set; get; }
         [Column("id_current_examination")]
         public int? id_current_examination { set; get; }
+        [Column("acc_id")]
+        public int acc_id { set; get; }
 
     }
     public class SavedExaminationRepository : Repository<SavedExamination>

@@ -291,11 +291,18 @@ namespace WpfApp2.ViewModels
                     AnticogulantSelected.Add(doc);
 
                 }
+                Anticogulants emptyA = new Anticogulants();
+                emptyA.Str = "";
+                AnticogulantSelected.Add(emptyA);
                 foreach (var doc in SclezingRep.GetAll)
                 {
                     SclerozSelected.Add(doc);
 
+
                 }
+                Sclezing empty = new Sclezing();
+                empty.Str = "";
+                SclerozSelected.Add(empty);
                 if (Operation.EpicrizId != null && Operation.EpicrizId != 0)
                 {
                     IsDocAdded = Visibility.Visible;
@@ -523,7 +530,7 @@ namespace WpfApp2.ViewModels
                     {
 
                         FileName = fileName;
-                        
+
                         document.ReplaceText("суток", "суток.\n");
                         document.ReplaceText("произведена", "произведена операция:");
                         document.ReplaceText("«ФИО»", CurrentPatient.Sirname + " " + CurrentPatient.Name + " " + CurrentPatient.Patronimic);
@@ -668,7 +675,7 @@ namespace WpfApp2.ViewModels
                                 }
 
                                 lettersRight += " ";
-                            
+
                                 if (leftLegExam.C != null)
                                 {
                                     bufLetter = LettersRep.Get(leftLegExam.C.Value);
@@ -710,6 +717,12 @@ namespace WpfApp2.ViewModels
                                     bufLetter = LettersRep.Get(rightLegExam.P.Value);
                                     lettersRight += bufLetter.Leter + bufLetter.Text1 + " ";
                                 }
+
+                            }
+                            else
+                            {
+                                document.ReplaceText("«Гибрид»", "");
+                                document.ReplaceText("«Гибрид2»", "");
 
                             }
 
@@ -766,20 +779,45 @@ namespace WpfApp2.ViewModels
                         //    document.ReplaceText("«Операция2»", Data.OperationType.Get(Operation.OperationTypeId).LongName);
 
                         document.ReplaceText("«Анестетик»", Data.Anestethic.Get(Operation.AnestheticId).Str);
+
                         try
                         {
                             document.ReplaceText("«Антикоагулянты»", AnticogulantSelected[AnticogulantIdSelected].Str);
                         }
                         catch
                         {
-                            document.ReplaceText("«Антикоагулянты»", "");
+                            document.ReplaceText("«Антикоагулянты».", "");
                         }
-                        document.ReplaceText("«E1»", E1.ToString());
-                        document.ReplaceText("«E2»", E2.ToString());
-                        document.ReplaceText("«E12»", E1.ToString());
-                        document.ReplaceText("«E22»", E2.ToString());
-                        document.ReplaceText("«световод»", Svetoootvod);
-                        document.ReplaceText("«световод2»", Svetoootvod);
+                        int numerator = 1;
+
+                        if (E1 != 0f || E2 != 0f || !string.IsNullOrWhiteSpace(Svetoootvod))
+                        {
+                            string res = "";
+                            res += numerator + ") ЭВЛА ";
+                            if (E1 != 0f)
+                            {
+
+                                res += E1.ToString() + " Вт ";
+                            }
+                            if (E2 != 0f)
+                            {
+                                res += E2.ToString() + " Дж/см";
+                            }
+                            if (!string.IsNullOrWhiteSpace(Svetoootvod))
+                            {
+                                res += ",\n" + Svetoootvod + " световод";
+                            }
+                            document.ReplaceText("«POS1»", res + "\n\n«POS1»");
+                            document.ReplaceText("«POS2»", res + "\n\n«POS2»");
+                            //document.ReplaceText("«E2»", E2.ToString());
+                            //document.ReplaceText("«E12»", E1.ToString());
+                            //document.ReplaceText("«E22»", E2.ToString());
+                            //document.ReplaceText("«световод»", Svetoootvod);
+                            //document.ReplaceText("«световод2»", Svetoootvod);
+                            numerator++;
+                        }
+
+
                         string brigade = "";
                         int ix = 0;
                         foreach (var brg in DoctorsSelected)
@@ -794,20 +832,27 @@ namespace WpfApp2.ViewModels
                         }
                         document.ReplaceText("«Бригада»", brigade);
 
-
-                        document.ReplaceText("«сутки»", Days.ToString());
+                        if (Days != 0)
+                            document.ReplaceText("«сутки»", Days.ToString());
+                        else
+                            document.ReplaceText("Рекомендовано дебандажирование на «сутки» суток.", "");
                         document.ReplaceText("«Врач»", Doctors[SelectedDoctor].ToString());
                         try
                         {
-                            string tesr = (!string.IsNullOrWhiteSpace(CommentaryForDock)) ? " Комментарий : " + CommentaryForDock : "";
-                            document.ReplaceText("«PNS»", SclerozSelected[SclezingIdSelected].ToString() + tesr);
+                            if (!string.IsNullOrWhiteSpace(SclerozSelected[SclezingIdSelected].ToString()))
+                            {
+                                string tesr = (!string.IsNullOrWhiteSpace(CommentaryForDock)) ? " Комментарий : " + CommentaryForDock : "";
+                                document.ReplaceText("«POS1»", numerator + ") Пенное склерозирование: " + SclerozSelected[SclezingIdSelected].ToString() + tesr + "\n\n«POS1»");
 
-                            document.ReplaceText("«PNS2»", SclerozSelected[SclezingIdSelected].ToString() + tesr);
+                                document.ReplaceText("«POS2»", numerator + ") Пенное склерозирование: " + SclerozSelected[SclezingIdSelected].ToString() + tesr + "\n\n«POS2»");
+                                numerator++;
+                            }
+                            
                         }
                         catch
                         {
-                            document.ReplaceText("«PNS»", "");
-                            document.ReplaceText("«PNS2»", "");
+                            //document.ReplaceText("«POS1»", "");
+                            //document.ReplaceText("«POS2»", "");
                         }
                         int i1 = 0;
                         int i2 = 0;
@@ -824,7 +869,7 @@ namespace WpfApp2.ViewModels
                                     //    leftP += ", " + GetStrFixedForDocumemnt(Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str);
                                     //else
                                     //{
-                                    leftP += i1.ToString() + ") " + GetStrFixedForDocumemnt(Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str) + "\n";
+                                    leftP += i1.ToString() + ". " + GetStrFixedForDocumemnt(Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str) + "\n";
                                     //}
 
                                 }
@@ -836,7 +881,7 @@ namespace WpfApp2.ViewModels
                                     //else
                                     //{
 
-                                    rightP += i2.ToString() + ") " + GetStrFixedForDocumemnt(Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str) + "\n";
+                                    rightP += i2.ToString() + ". " + GetStrFixedForDocumemnt(Data.OperationType.Get(Diagnosis.id_operation_type.Value).Str) + "\n";
                                     //}
 
                                 }
@@ -844,8 +889,8 @@ namespace WpfApp2.ViewModels
                         }
 
 
-                        
-                        
+
+
 
                         if (Operation.OnWhatLegOp == "0")
                         {
@@ -866,12 +911,12 @@ namespace WpfApp2.ViewModels
                         document.ReplaceText("«Операция2»", operationType);
 
 
-                        document.ReplaceText("«Минифлебэктомия»", leftP);
+                        document.ReplaceText("«POS1»", numerator + ") Проведены операции: \n" + leftP);
 
 
 
 
-                        document.ReplaceText("«Минифлебэктомия2»", rightP);
+                        document.ReplaceText("«POS2»", numerator + ") Проведены операции: \n" + rightP);
 
                         //область
 

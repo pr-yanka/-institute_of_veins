@@ -28,6 +28,9 @@ namespace WpfApp2.Db.Models
 
         public override string ToString()
         {
+            if(string.IsNullOrWhiteSpace(Str))
+            { return ""; }
+
             return Str + " " + Ml + " мл " + Prcent + " % " + "Вещество : " + Veshestvo;
         }
     }

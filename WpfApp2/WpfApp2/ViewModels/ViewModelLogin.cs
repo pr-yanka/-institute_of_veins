@@ -59,7 +59,7 @@ namespace WpfApp2.ViewModels
                         CurrAccId = acc.Id;
                         MessageBus.Default.Call("SetCurrentACCIDForContext", null, acc.Id);
                         MessageBus.Default.Call("GetAcaunt", null, acc.Id);
-
+                        MessageBus.Default.Call("SetAccIDForAddExamination", null, acc.Id);
 
 
 
@@ -76,6 +76,12 @@ namespace WpfApp2.ViewModels
                             MessageBus.Default.Call("SetAlertVisibility", this, Visibility.Collapsed);
                             MessageBus.Default.Call("SetVisibilityForDocsOrMed", this, Visibility.Collapsed);
                             MessageBus.Default.Call("SetCurrentACCOp", this, acc.Id);
+                        }
+                        else if(acc.isSecretar != null && acc.isSecretar.Value)
+                        {
+                            MessageBus.Default.Call("SetAlertVisibility", this, Visibility.Collapsed);
+                            MessageBus.Default.Call("SetVisibilityPanelAdmin", this, Visibility.Collapsed);
+                            MessageBus.Default.Call("SetVisibilityForDocsOrMed", this, Visibility.Collapsed);
                         }
                         else
                         {

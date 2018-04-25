@@ -1001,7 +1001,7 @@ namespace WpfApp2.ViewModels
                             dayStr = day.ToString();
                         }
                         document.ReplaceText("«сутки»", Days.ToString());
-                        document.ReplaceText("сутки", "суток");
+                        //document.ReplaceText("сутки", "суток");
                         document.ReplaceText("“сегодняшнеечисломесяц”  ", dayStr + "." + mnthStr);
                         document.ReplaceText("«год»", DateTime.Now.Year.ToString());
                         document.ReplaceText("«Врач»", Doctors[SelectedDoctor].ToString());
