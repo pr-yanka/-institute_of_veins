@@ -3,7 +3,7 @@
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                     xmlns:local="WpfApp2.LegParts.LegPartMainTemplate.StandartPartTemplate">
     <DataTemplate x:Key="StandartPartTemplate">
-        <Grid Margin="10,0,10,0" ShowGridLines="True">
+        <Grid Margin="10,0,10,0"  >
             <StackPanel Orientation="Vertical" Visibility="{Binding Path=IsVisible}">
                 <DockPanel Margin="0,5,0,5" Width="Auto" LastChildFill="True">
                     <Label x:Name="label" Content="{Binding Path=ListNumber}" HorizontalAlignment="Left" Margin="5,0,5,0" VerticalAlignment="Top" Height="30" Width="30" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" FontFamily="Georgia" Background="#FFD2E6F7" BorderThickness="1" BorderBrush="Black"/>

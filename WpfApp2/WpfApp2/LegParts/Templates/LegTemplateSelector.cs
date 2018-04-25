@@ -15,12 +15,14 @@ namespace WpfApp2.LegParts.Templates
         public DataTemplate PDSVHipTemplate { get; set; }
         public DataTemplate TEMPVTemplate { get; set; }
         public DataTemplate MPVTemplate { get; set; }
-        //public DataTemplate PerfarateHipTemplate { get; set; }
+        public DataTemplate ZDSVTemplate { get; set; }
+        public DataTemplate SPSTemplate { get; set; }
+    //public DataTemplate PerfarateHipTemplate { get; set; }
 
-        //public DataTemplate ZDSVTemplate { get; set; }
-        //public DataTemplate BPVTibiaTemplate { get; set; }
+    //public DataTemplate ZDSVTemplate { get; set; }
+    //public DataTemplate BPVTibiaTemplate { get; set; }
 
-        public override DataTemplate SelectTemplate(object item, DependencyObject container)
+    public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
             if (item == null)
                 return null;
@@ -39,7 +41,7 @@ namespace WpfApp2.LegParts.Templates
                 return PDSVHipTemplate;
 
             if (item.GetType() == typeof(ZDSVViewModel))
-                return EmptyTemplate;
+                return ZDSVTemplate;
 
             if (item.GetType() == typeof(BPVTibiaViewModel))
                 return EmptyTemplate;
@@ -54,7 +56,7 @@ namespace WpfApp2.LegParts.Templates
                 return EmptyTemplate;
 
             if (item.GetType() == typeof(SPSViewModel))
-                return EmptyTemplate;
+                return SPSTemplate;
             if (item.GetType() == typeof(MPVViewModel))
                 return MPVTemplate;
 

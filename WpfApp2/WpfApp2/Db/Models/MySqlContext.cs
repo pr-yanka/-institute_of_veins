@@ -857,6 +857,8 @@ namespace WpfApp2.Db.Models
             modelBuilder.Entity<SPSHipEntryFull>()
             .HasRequired<SPSHipEntry>(s => s.SPSHipEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int?>(s => s.EntryId3);
 
+            modelBuilder.Entity<SPSHipEntryFull>()
+            .HasRequired<SPSHipEntry>(s => s.SPSHipEntry0).WithMany(g => g.EntriesFull0).HasForeignKey<int?>(s => s.EntryId0);
 
 
 
@@ -998,6 +1000,8 @@ namespace WpfApp2.Db.Models
             modelBuilder.Entity<ZDSVEntryFull>()
             .HasRequired<ZDSVEntry>(s => s.ZDSVEntry3).WithMany(g => g.EntriesFull3).HasForeignKey<int?>(s => s.EntryId3);
 
+            modelBuilder.Entity<ZDSVEntryFull>()
+        .HasRequired<ZDSVEntry>(s => s.ZDSVEntry0).WithMany(g => g.EntriesFull0).HasForeignKey<int?>(s => s.EntryId0);
 
 
 
@@ -1005,6 +1009,7 @@ namespace WpfApp2.Db.Models
 
 
 
+            
 
 
             modelBuilder.Entity<PDSVHipCombo>()

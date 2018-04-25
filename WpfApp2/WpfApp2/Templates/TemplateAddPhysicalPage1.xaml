@@ -113,6 +113,7 @@
                             <TextBlock Visibility="{Binding IsVisibleZDSVleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding ZDSVLeftstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleZDSVleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding ZDSVLeftstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleZDSVleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding ZDSVLeftstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleZDSVleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding ZDSVLeftstr[3]}"></TextBlock>
 
                         </StackPanel>
                     </Expander>
@@ -184,6 +185,7 @@
                             <TextBlock Visibility="{Binding IsVisibleSPSleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SPSLeftstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleSPSleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SPSLeftstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleSPSleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SPSLeftstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSPSleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SPSLeftstr[3]}"></TextBlock>
 
                         </StackPanel>
                     </Expander>
@@ -366,6 +368,7 @@
                             <TextBlock Visibility="{Binding IsVisibleZDSVright[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding ZDSVRightstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleZDSVright[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding ZDSVRightstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleZDSVright[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding ZDSVRightstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleZDSVright[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding ZDSVRightstr[3]}"></TextBlock>
 
                         </StackPanel>
                     </Expander>
@@ -439,6 +442,7 @@
                             <TextBlock Visibility="{Binding IsVisibleSPSRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SPSRightstr[0]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleSPSRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SPSRightstr[1]}"></TextBlock>
                             <TextBlock Visibility="{Binding IsVisibleSPSRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SPSRightstr[2]}"></TextBlock>
+                            <TextBlock Visibility="{Binding IsVisibleSPSRight[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding SPSRightstr[3]}"></TextBlock>
 
                         </StackPanel>
 

@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                     xmlns:local="clr-namespace:WpfApp2.LegParts.Templates">
-    <DataTemplate x:Key="PDSVHipTemplate">
+    <DataTemplate x:Key="SPSTemplate">
         <!--<StackPanel Orientation="Horizontal"  HorizontalAlignment="Center">
             <TextBlock x:Name="textBlock"   Margin="0,3,10,0" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Вид хода (не обязательно):" VerticalAlignment="Top" FontSize="16"/>
             <ComboBox x:Name="comboBox" SelectedItem="{Binding SelectedWayType}" SelectedIndex="{Binding SelectedPDSVWayTypeId}" ItemsSource="{Binding PDSVWayType}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="180">
@@ -18,9 +18,9 @@
 
         </StackPanel>-->
         <StackPanel Orientation="Vertical"  HorizontalAlignment="Left">
-            <StackPanel Orientation="Horizontal"  HorizontalAlignment="Center">
+            <!--<StackPanel Orientation="Horizontal"  HorizontalAlignment="Center">
                 <TextBlock x:Name="textBlock" Margin="0,3,10,0" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Вид хода:" VerticalAlignment="Top" FontSize="16"/>
-                <ComboBox x:Name="comboBox" SelectedItem="{Binding SelectedWayType}" SelectedIndex="{Binding SelectedBpvWayTypeId}" ItemsSource="{Binding PDSVWayType}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="180">
+                <ComboBox x:Name="comboBox" SelectedItem="{Binding SelectedWayType}" SelectedIndex="{Binding SelectedBpvWayTypeId}" ItemsSource="{Binding BpvWayType}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="180">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
@@ -30,7 +30,7 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
                 <Button Margin="7,0" Command="{Binding OpenAddtWayCommand}"  FontSize="11" Content="Новый ход" Width="190" Style="{StaticResource MyConfirmBUTTON}" Height="26"></Button>
-            </StackPanel>
+            </StackPanel>-->
             <StackPanel Orientation="Vertical"  HorizontalAlignment="Left">
                 <!--<TextBlock x:Name="texіtBlock" Margin="0,3,10,0" HorizontalAlignment="Center" TextWrapping="Wrap" Text="БПВ на бедре интерфасциально располагается" VerticalAlignment="Top" FontSize="16"/>
                 <ComboBox x:Name="combіoBox" SelectedItem="{Binding SelectedWayType}" SelectedIndex="{Binding SelectedBpvWayTypeId}" ItemsSource="{Binding BpvWayType}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="180">
@@ -45,9 +45,9 @@
                 <Button Margin="7,0" Command="{Binding OpenAddtWayCommand}"  FontSize="11" Content="Свой вариант ответа" Width="190" Style="{StaticResource MyConfirmBUTTON}" Height="26"></Button>-->
                 <DockPanel Margin="15,5,0,5" Width="Auto" LastChildFill="True">
 
-                    <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="0,4,5,0" TextWrapping="Wrap" Text="ПДСВ интерфасциально располагается" VerticalAlignment="Top" FontSize="18"/>
+                    <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="0,4,5,0" TextWrapping="Wrap" Text="Расположение" VerticalAlignment="Top" FontSize="18"/>
 
-                    <ComboBox Height="30" x:Name="firstLevelBlock" SelectedIndex="{Binding Path=AdditionalStructure.SelectedIndex,UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding Path=AdditionalStructure.SelectedValue,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Path=AdditionalStructure.StructureSource,UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Width="560">
+                    <ComboBox Height="30" x:Name="firstLevelBlock" SelectedIndex="{Binding Path=AdditionalStructure.SelectedIndex,UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding Path=AdditionalStructure.SelectedValue,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Path=AdditionalStructure.StructureSource,UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Width="820">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">

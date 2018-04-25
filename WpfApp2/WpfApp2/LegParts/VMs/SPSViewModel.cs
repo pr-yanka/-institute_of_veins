@@ -1,10 +1,7 @@
 ﻿using Microsoft.Practices.Prism.Commands;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using WpfApp2.Db.Models;
 using WpfApp2.Db.Models.LegParts;
@@ -13,10 +10,88 @@ using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 using WpfApp2.ViewModels;
 
+
 namespace WpfApp2.LegParts.VMs
 {
     public class SPSViewModel : LegPartViewModel
     {
+        private SPSAdditionalSectionViewModel additionalStructure;
+        public SPSAdditionalSectionViewModel AdditionalStructure
+        {
+            get { return additionalStructure; }
+            set { additionalStructure = value; }
+        }
+        private bool testAdditionalStructOnUnique(LegPartDbStructure structure)
+        {
+            if (Controller.CurrentViewModel.Controller.LegViewModel == this)
+            {
+
+                foreach (var x in AdditionalStructure.StructureSource)
+                {
+                    if (mode == "Edit")
+                    {
+                        if (x.HasDoubleMetric == CurrentPanelViewModel.HasDoubleSize
+                            && x.HasSize == CurrentPanelViewModel.HasSize
+                             && (x.Text1 == CurrentPanelViewModel.Text1 || (string.IsNullOrWhiteSpace(x.Text1) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text1)))
+                               && (x.Text2 == CurrentPanelViewModel.Text2 || (string.IsNullOrWhiteSpace(x.Text2) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text2)))
+                            && x.Id != structure.Id)
+                        {
+                            if (x.HasSize == true)
+                            {
+                                if ((x.Metrics == CurrentPanelViewModel.SelectedMetricText || string.IsNullOrWhiteSpace(x.Metrics) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.SelectedMetricText)))
+                                {
+                                    MessageBox.Show("Такое описание уже существует!");
+
+                                    return false;
+                                }
+                                else
+                                {
+                                    return true;
+                                }
+                            }
+
+
+                            MessageBox.Show("Такое описание уже существует!");
+
+                            return false;
+
+                        }
+                    }
+                    else
+                    {
+                        if (x.HasDoubleMetric == CurrentPanelViewModel.HasDoubleSize
+                               && x.HasSize == CurrentPanelViewModel.HasSize
+                               && (x.Text1 == CurrentPanelViewModel.Text1 || (string.IsNullOrWhiteSpace(x.Text1) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text1)))
+                               && (x.Text2 == CurrentPanelViewModel.Text2 || (string.IsNullOrWhiteSpace(x.Text2) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text2))))
+
+                        {
+
+                            if (x.HasSize == true)
+                            {
+                                if ((x.Metrics == CurrentPanelViewModel.SelectedMetricText || string.IsNullOrWhiteSpace(x.Metrics) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.SelectedMetricText)))
+                                {
+                                    MessageBox.Show("Такое описание уже существует!");
+
+                                    return false;
+                                }
+                                else
+                                {
+                                    return true;
+                                }
+                            }
+
+
+                            MessageBox.Show("Такое описание уже существует!");
+
+                            return false;
+                        }
+
+                    }
+                }
+
+            }
+            return true;
+        }
         private void RebuildFirst(object sender, object data)
         {
 
@@ -35,6 +110,37 @@ namespace WpfApp2.LegParts.VMs
                         bufSaveLegSection.Add(null);
                     }
                 }
+
+                float savedValue = -1;
+                int bufSaveLegAdditionalSection = -1;
+                if (AdditionalStructure.SelectedValue != null)
+                {
+                    bufSaveLegAdditionalSection = AdditionalStructure.SelectedValue.Id;
+                    if (AdditionalStructure.CurrentEntry != null)
+                    {
+                        savedValue = AdditionalStructure.CurrentEntry.Size;
+                    }
+                }
+                AdditionalStructure = new SPSAdditionalSectionViewModel(Controller, null, 0);
+                if (bufSaveLegAdditionalSection != -1)
+                {
+                    for (int j = 0; j < AdditionalStructure.StructureSource.Count; ++j)
+                    {
+                        if (AdditionalStructure.StructureSource[j].Id == bufSaveLegAdditionalSection && AdditionalStructure.StructureSource[j].Text1 != "Свой вариант ответа")
+                        {
+                            bufSaveLegAdditionalSection = j;
+                            break;
+                        }
+                    }
+
+                    //   if (bufSaveLegAdditionalSection != -1)
+                    AdditionalStructure.SelectedValue = AdditionalStructure.StructureSource[bufSaveLegAdditionalSection];
+                    if (savedValue != -1)
+                    {
+                        AdditionalStructure.CurrentEntry.Size = savedValue;
+                    }
+                }
+
                 for (int i = 0; i < LegSections.Count; ++i)
                 {
                     var bufSave = new ObservableCollection<LegPartDbStructure>();
@@ -279,7 +385,7 @@ namespace WpfApp2.LegParts.VMs
                 {
 
                     CurrentLegSide = CurrentLegSide;
-                    if (IsStructEdited(CurrentPanelViewModel.LegPrt) && testOnUnique(CurrentPanelViewModel.LegPrt))
+                    if ((LevelSelected != 0 && testOnUnique(CurrentPanelViewModel.LegPrt)) || (LevelSelected == 0 && testAdditionalStructOnUnique(CurrentPanelViewModel.LegPrt)))
                     {
                         var newStruct = GetPanelStructure();
                         newStruct.Custom = false;
@@ -386,6 +492,7 @@ namespace WpfApp2.LegParts.VMs
              }
          );
             LevelCount = 3;
+            AdditionalStructure = new SPSAdditionalSectionViewModel(Controller, null, 0);
             _sections = new ObservableCollection<LegSectionViewModel>();
             for (int i = 0; i < LevelCount; i++)
             {

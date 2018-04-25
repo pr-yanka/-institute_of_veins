@@ -6060,7 +6060,7 @@ namespace WpfApp2.ViewModels
         //}
         private void GetLegPartFromEntry(LegPartEntries FullEntry, LegPartViewModel Part, bool isLeft)
         {
-            if(FullEntry == null)
+            if (FullEntry == null)
             {
                 throw new Exception("FullEntry is null");
             }
@@ -6303,7 +6303,12 @@ namespace WpfApp2.ViewModels
                     else if (Part is ZDSVViewModel)
                     {
 
+                        if (FullEntry.EntryId0 != null)
+                        {
+                            LeftZDSV.AdditionalStructure.CurrentEntry = ZDSVEntryRep.Get(FullEntry.EntryId0.Value);
+                            LeftZDSV.AdditionalStructure.SelectedValue = ZDSVStructRep.Get(LeftZDSV.AdditionalStructure.CurrentEntry.StructureID);
 
+                        }
 
                         if (ZDSVEntryRep.Get(FullEntry.EntryId1) != null)
                         {
@@ -6331,7 +6336,12 @@ namespace WpfApp2.ViewModels
                     else if (Part is SPSViewModel)
                     {
 
+                        if (FullEntry.EntryId0 != null)
+                        {
+                            LeftSPS.AdditionalStructure.CurrentEntry = SPSEntryRep.Get(FullEntry.EntryId0.Value);
+                            LeftSPS.AdditionalStructure.SelectedValue = SPSStructRep.Get(LeftSPS.AdditionalStructure.CurrentEntry.StructureID);
 
+                        }
 
                         if (SPSEntryRep.Get(FullEntry.EntryId1) != null)
                         {
@@ -6732,6 +6742,12 @@ namespace WpfApp2.ViewModels
                     {
 
 
+                        if (FullEntry.EntryId0 != null)
+                        {
+                            RightZDSV.AdditionalStructure.CurrentEntry = ZDSVEntryRep.Get(FullEntry.EntryId0.Value);
+                            RightZDSV.AdditionalStructure.SelectedValue = ZDSVStructRep.Get(RightZDSV.AdditionalStructure.CurrentEntry.StructureID);
+
+                        }
 
                         if (ZDSVEntryRep.Get(FullEntry.EntryId1) != null)
                         {
@@ -6758,7 +6774,12 @@ namespace WpfApp2.ViewModels
                     }
                     else if (Part is SPSViewModel)
                     {
+                        if (FullEntry.EntryId0 != null)
+                        {
+                            RightSPS.AdditionalStructure.CurrentEntry = SPSEntryRep.Get(FullEntry.EntryId0.Value);
+                            RightSPS.AdditionalStructure.SelectedValue = SPSStructRep.Get(RightSPS.AdditionalStructure.CurrentEntry.StructureID);
 
+                        }
 
 
                         if (SPSEntryRep.Get(FullEntry.EntryId1) != null)
@@ -6970,6 +6991,13 @@ namespace WpfApp2.ViewModels
             {
                 LegPartEntries LeftSFSEntryFullbuf = FullEntry;
                 LegPartEntry newSFSentry;
+                if (Part is ZDSVViewModel)
+                {
+                    newSFSentry = ((ZDSVViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
+                    newSFSentry.StructureID = ((ZDSVViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
+                    Data.ZDSVEntries.Add((ZDSVEntry)newSFSentry);
+                    Data.Complete();
+                }
                 if (Part is BPVHipViewModel)
                 {
                     newSFSentry = ((BPVHipViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
@@ -7380,18 +7408,55 @@ namespace WpfApp2.ViewModels
 
                     ZDSVEntry EntToChange = new ZDSVEntry();
                     ZDSVEntryFull EntFullToChange = Data.ZDSVFull.Get(LegExam.ZDSVid.Value);
+                    LegPartEntry newSFSentry;
+                    bool test = true;
+
+                    if (((ZDSVViewModel)(Part)).AdditionalStructure.SelectedValue == null)
+                    {
+                        test = false;
+                        EntFullToChange.EntryId0 = null;
+
+                    }
+                    else
+                    {
+                        newSFSentry = ((ZDSVViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
+                        newSFSentry.StructureID = ((ZDSVViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
+
+                        if (EntFullToChange.EntryId0 == null)
+                        {
+                            test = false;
+                            Data.ZDSVEntries.Add((ZDSVEntry)newSFSentry);
+                            Data.Complete();
+                            EntFullToChange.EntryId0 = newSFSentry.Id;
+                            Data.Complete();
+                        }
+                        else
+                            EntToChange = Data.ZDSVEntries.Get(EntFullToChange.EntryId0.Value);
+                        LeftSFSEntryFullbuf.EntryId0 = newSFSentry.Id;
+
+                    }
+                    if (test)
+                    {
+                        newSFSentry = ((ZDSVViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
+                        newSFSentry.StructureID = ((ZDSVViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
+
+                        EntToChange.Comment = ((ZDSVEntry)newSFSentry).Comment;
+                        EntToChange.Size = ((ZDSVEntry)newSFSentry).Size;
+                        EntToChange.Size2 = ((ZDSVEntry)newSFSentry).Size2;
+                        EntToChange.StructureID = ((ZDSVEntry)newSFSentry).StructureID;
+                    }
                     for (int i = 0; i < Part.LegSections.Count; ++i)
                     {
                         if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                         { break; }
 
-                        LegPartEntry newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                        newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
 
                         if (Part.LegSections[i].SelectedValue != null)
                         {
                             newSFSentry.StructureID = Part.LegSections[i].SelectedValue.Id;
                         }
-                        bool test = true;
+                        test = true;
                         if (i == 0)
                         {
 
@@ -8744,18 +8809,55 @@ namespace WpfApp2.ViewModels
 
                     SPSHipEntry EntToChange = new SPSHipEntry();
                     SPSHipEntryFull EntFullToChange = Data.SPSHipFull.Get(LegExam.SPSid.Value);
+                    LegPartEntry newSFSentry;
+                    bool test = true;
+
+                    if (((SPSViewModel)(Part)).AdditionalStructure.SelectedValue == null)
+                    {
+                        test = false;
+                        EntFullToChange.EntryId0 = null;
+
+                    }
+                    else
+                    {
+                        newSFSentry = ((SPSViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
+                        newSFSentry.StructureID = ((SPSViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
+
+                        if (EntFullToChange.EntryId0 == null)
+                        {
+                            test = false;
+                            Data.SPSEntries.Add((SPSHipEntry)newSFSentry);
+                            Data.Complete();
+                            EntFullToChange.EntryId0 = newSFSentry.Id;
+                            Data.Complete();
+                        }
+                        else
+                            EntToChange = Data.SPSEntries.Get(EntFullToChange.EntryId0.Value);
+                        LeftSFSEntryFullbuf.EntryId0 = newSFSentry.Id;
+
+                    }
+                    if (test)
+                    {
+                        newSFSentry = ((SPSViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
+                        newSFSentry.StructureID = ((SPSViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
+
+                        EntToChange.Comment = ((SPSHipEntry)newSFSentry).Comment;
+                        EntToChange.Size = ((SPSHipEntry)newSFSentry).Size;
+                        EntToChange.Size2 = ((SPSHipEntry)newSFSentry).Size2;
+                        EntToChange.StructureID = ((SPSHipEntry)newSFSentry).StructureID;
+                    }
                     for (int i = 0; i < Part.LegSections.Count; ++i)
                     {
                         if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                         { break; }
 
-                        LegPartEntry newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                          newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
 
                         if (Part.LegSections[i].SelectedValue != null)
                         {
                             newSFSentry.StructureID = Part.LegSections[i].SelectedValue.Id;
                         }
-                        bool test = true;
+                          test = true;
                         if (i == 0)
                         {
 
@@ -9831,8 +9933,112 @@ namespace WpfApp2.ViewModels
 
 
             var IsVisibleBPVleftbuf = new ObservableCollection<Visibility>();
+            if (sender is SPSViewModel)
+            {
+                var aditionalStructureValue = ((SPSViewModel)(sender)).AdditionalStructure;
+
+                if (aditionalStructureValue.SelectedValue == null || (aditionalStructureValue.SelectedValue.Text2 == "" && aditionalStructureValue.SelectedValue.Text1 == ""))
+                {
 
 
+                }
+                else
+                {
+                    if (aditionalStructureValue.SelectedValue.HasSize || aditionalStructureValue.HasDoubleSize)
+                    {
+                        if (aditionalStructureValue.HasDoubleSize)
+                        {
+                            if (!string.IsNullOrWhiteSpace(aditionalStructureValue.CurrentEntry.Comment))
+                                bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + "*" + aditionalStructureValue.CurrentEntry.Size2 + aditionalStructureValue.SelectedValue.Metrics + " " + aditionalStructureValue.SelectedValue.Text2 + " \nКомментарий : \"" + aditionalStructureValue.CurrentEntry.Comment + "\"");
+                            else
+                            {
+                                bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + "*" + aditionalStructureValue.CurrentEntry.Size2 + aditionalStructureValue.SelectedValue.Metrics + " " + aditionalStructureValue.SelectedValue.Text2 + "");
+
+                            }
+                        }
+                        else
+                        {
+                            if (!string.IsNullOrWhiteSpace(aditionalStructureValue.CurrentEntry.Comment))
+                                bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + aditionalStructureValue.SelectedValue.Metrics + " " + aditionalStructureValue.SelectedValue.Text2 + " \nКомментарий : \"" + aditionalStructureValue.CurrentEntry.Comment + "\"");
+                            else
+                            {
+                                bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + aditionalStructureValue.SelectedValue.Metrics + " " + aditionalStructureValue.SelectedValue.Text2 + "");
+
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrWhiteSpace(aditionalStructureValue.CurrentEntry.Comment))
+                            bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.SelectedValue.Text2 + " \nКомментарий : \"" + aditionalStructureValue.CurrentEntry.Comment + "\"");
+                        else
+                        {
+                            bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.SelectedValue.Text2 + "");
+
+                        }
+
+                    }
+
+                    IsVisibleBPVleftbuf.Add(Visibility.Visible);
+                }
+                //    name = "БПВНБ";
+
+                //  continue;
+            }
+            if (sender is ZDSVViewModel)
+            {
+                var aditionalStructureValue = ((ZDSVViewModel)(sender)).AdditionalStructure;
+
+                if (aditionalStructureValue.SelectedValue == null || (aditionalStructureValue.SelectedValue.Text2 == "" && aditionalStructureValue.SelectedValue.Text1 == ""))
+                {
+
+
+                }
+                else
+                {
+                    if (aditionalStructureValue.SelectedValue.HasSize || aditionalStructureValue.HasDoubleSize)
+                    {
+                        if (aditionalStructureValue.HasDoubleSize)
+                        {
+                            if (!string.IsNullOrWhiteSpace(aditionalStructureValue.CurrentEntry.Comment))
+                                bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + "*" + aditionalStructureValue.CurrentEntry.Size2 + aditionalStructureValue.SelectedValue.Metrics + " " + aditionalStructureValue.SelectedValue.Text2 + " \nКомментарий : \"" + aditionalStructureValue.CurrentEntry.Comment + "\"");
+                            else
+                            {
+                                bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + "*" + aditionalStructureValue.CurrentEntry.Size2 + aditionalStructureValue.SelectedValue.Metrics + " " + aditionalStructureValue.SelectedValue.Text2 + "");
+
+                            }
+                        }
+                        else
+                        {
+                            if (!string.IsNullOrWhiteSpace(aditionalStructureValue.CurrentEntry.Comment))
+                                bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + aditionalStructureValue.SelectedValue.Metrics + " " + aditionalStructureValue.SelectedValue.Text2 + " \nКомментарий : \"" + aditionalStructureValue.CurrentEntry.Comment + "\"");
+                            else
+                            {
+                                bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + aditionalStructureValue.SelectedValue.Metrics + " " + aditionalStructureValue.SelectedValue.Text2 + "");
+
+
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrWhiteSpace(aditionalStructureValue.CurrentEntry.Comment))
+                            bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.SelectedValue.Text2 + " \nКомментарий : \"" + aditionalStructureValue.CurrentEntry.Comment + "\"");
+                        else
+                        {
+                            bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.SelectedValue.Text2 + "");
+
+                        }
+
+                    }
+
+                    IsVisibleBPVleftbuf.Add(Visibility.Visible);
+                }
+                //    name = "БПВНБ";
+
+                //  continue;
+            }
             // IsVisibleBPVleftbuf.Add(Visibility.Visible);
             if (sender is BPVHipViewModel)
             {
@@ -9841,7 +10047,7 @@ namespace WpfApp2.ViewModels
                 if (aditionalStructureValue.SelectedValue == null || (aditionalStructureValue.SelectedValue.Text2 == "" && aditionalStructureValue.SelectedValue.Text1 == ""))
                 {
 
-                  
+
                 }
                 else
                 {
@@ -10420,7 +10626,7 @@ namespace WpfApp2.ViewModels
                 else
                     RightMPV.LegSections.Add(new MPVSectionViewModel(Controller, null, i + 1));
             }
-
+            LeftZDSV.AdditionalStructure = new ZDSVAdditionalSectionViewModel(Controller, null, 0);
             LeftZDSV.Comment = "";
             LeftZDSV.IsEmpty = true;
             LeftZDSV.LegSections = new ObservableCollection<LegSectionViewModel>();
@@ -10431,6 +10637,7 @@ namespace WpfApp2.ViewModels
                 else
                     LeftZDSV.LegSections.Add(new ZDSVSectionViewModel(Controller, null, i + 1));
             }
+            RightZDSV.AdditionalStructure = new ZDSVAdditionalSectionViewModel(Controller, null, 0);
             RightZDSV.Comment = "";
             RightZDSV.IsEmpty = true;
             RightZDSV.LegSections = new ObservableCollection<LegSectionViewModel>();
@@ -10478,6 +10685,7 @@ namespace WpfApp2.ViewModels
             }
             RightSPS.Comment = "";
             RightSPS.IsEmpty = true;
+            RightSPS.AdditionalStructure = new SPSAdditionalSectionViewModel(Controller, null, 0);
             RightSPS.LegSections = new ObservableCollection<LegSectionViewModel>();
             for (int i = 0; i < LeftSPS.LevelCount; i++)
             {
@@ -10490,6 +10698,7 @@ namespace WpfApp2.ViewModels
 
             LeftSFS.Comment = "";
             LeftSFS.IsEmpty = true;
+            LeftSPS.AdditionalStructure = new SPSAdditionalSectionViewModel(Controller, null, 0);
             LeftSFS.LegSections = new ObservableCollection<LegSectionViewModel>();
             for (int i = 0; i < LeftSFS.LevelCount; i++)
             {
@@ -11025,7 +11234,7 @@ namespace WpfApp2.ViewModels
                     {
                         newSFSentry.StructureID = Part.LegSections[i].SelectedValue.Id;
                     }
-                      test = true;
+                    test = true;
                     if (i == 0)
                     {
 
@@ -11258,18 +11467,56 @@ namespace WpfApp2.ViewModels
 
                 ZDSVEntry EntToChange = new ZDSVEntry();
                 ZDSVEntryFull EntFullToChange = Data.ZDSVFull.Get(LegExam.ZDSVid.Value);
+                LegPartEntry newSFSentry;
+                bool test = true;
+
+
+                var aditionalStructureValue = ((ZDSVViewModel)(Part)).AdditionalStructure.SelectedValue;
+                if (aditionalStructureValue == null || (aditionalStructureValue.Text2 == "" && aditionalStructureValue.Text1 == ""))
+                {
+                    test = false;
+                    EntFullToChange.EntryId0 = null;
+
+                }
+                else
+                {
+                    newSFSentry = ((ZDSVViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
+                    newSFSentry.StructureID = ((ZDSVViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
+
+                    if (EntFullToChange.EntryId0 == null)
+                    {
+                        test = false;
+                        Data.ZDSVEntries.Add((ZDSVEntry)newSFSentry);
+                        Data.Complete();
+                        EntFullToChange.EntryId0 = newSFSentry.Id;
+                        Data.Complete();
+                    }
+                    else
+                        EntToChange = Data.ZDSVEntries.Get(EntFullToChange.EntryId0.Value);
+                    LeftSFSEntryFullbuf.EntryId0 = newSFSentry.Id;
+
+                }
+                if (test)
+                {
+                    newSFSentry = ((ZDSVViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
+                    newSFSentry.StructureID = ((ZDSVViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
+                    EntToChange.Comment = ((ZDSVEntry)newSFSentry).Comment;
+                    EntToChange.Size = ((ZDSVEntry)newSFSentry).Size;
+                    EntToChange.Size2 = ((ZDSVEntry)newSFSentry).Size2;
+                    EntToChange.StructureID = ((ZDSVEntry)newSFSentry).StructureID;
+                }
                 for (int i = 0; i < Part.LegSections.Count; ++i)
                 {
                     if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                     { break; }
 
-                    LegPartEntry newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                    newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
 
                     if (Part.LegSections[i].SelectedValue != null)
                     {
                         newSFSentry.StructureID = Part.LegSections[i].SelectedValue.Id;
                     }
-                    bool test = true;
+                    test = true;
                     if (i == 0)
                     {
 
@@ -11422,11 +11669,36 @@ namespace WpfApp2.ViewModels
             }
             else if (Part is ZDSVViewModel && Part != null && Part.LegSections != null && Part.LegSections[0].SelectedValue != null)
             {
+                LegPartEntry newSFSentry;
+
+
+
+
+                if (((ZDSVViewModel)(Part)).AdditionalStructure.SelectedValue != null)
+                {
+
+                    //EntFullToChange.EntryId0 = null;
+
+                    //}
+                    //else
+                    //{
+                    newSFSentry = ((ZDSVViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
+                    newSFSentry.StructureID = ((ZDSVViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
+
+
+
+                    Data.ZDSVEntries.Add((ZDSVEntry)newSFSentry);
+
+                    Data.Complete();
+                    LeftSFSEntryFullbuf.EntryId0 = newSFSentry.Id;
+                    //Data.Complete();
+
+                }
                 foreach (var section in Part.LegSections)
                 {
                     if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                     { break; }
-                    LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                    newSFSentry = (LegPartEntry)section.CurrentEntry;
                     newSFSentry.StructureID = section.SelectedValue.Id;
 
                     Data.ZDSVEntries.Add((ZDSVEntry)newSFSentry);
@@ -12079,6 +12351,7 @@ namespace WpfApp2.ViewModels
                             LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
                         }
                     }
+
                     else if (i == 5)
                     {
                         if (Part.LegSections[i].SelectedValue == null)
@@ -12663,18 +12936,56 @@ namespace WpfApp2.ViewModels
 
                 SPSHipEntry EntToChange = new SPSHipEntry();
                 SPSHipEntryFull EntFullToChange = Data.SPSHipFull.Get(LegExam.SPSid.Value);
+                LegPartEntry newSFSentry;
+                bool test = true;
+
+
+                var aditionalStructureValue = ((SPSViewModel)(Part)).AdditionalStructure.SelectedValue;
+                if (aditionalStructureValue == null || (aditionalStructureValue.Text2 == "" && aditionalStructureValue.Text1 == ""))
+                {
+                    test = false;
+                    EntFullToChange.EntryId0 = null;
+
+                }
+                else
+                {
+                    newSFSentry = ((SPSViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
+                    newSFSentry.StructureID = ((SPSViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
+
+                    if (EntFullToChange.EntryId0 == null)
+                    {
+                        test = false;
+                        Data.SPSEntries.Add((SPSHipEntry)newSFSentry);
+                        Data.Complete();
+                        EntFullToChange.EntryId0 = newSFSentry.Id;
+                        Data.Complete();
+                    }
+                    else
+                        EntToChange = Data.SPSEntries.Get(EntFullToChange.EntryId0.Value);
+                    LeftSFSEntryFullbuf.EntryId0 = newSFSentry.Id;
+
+                }
+                if (test)
+                {
+                    newSFSentry = ((SPSViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
+                    newSFSentry.StructureID = ((SPSViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
+                    EntToChange.Comment = ((SPSHipEntry)newSFSentry).Comment;
+                    EntToChange.Size = ((SPSHipEntry)newSFSentry).Size;
+                    EntToChange.Size2 = ((SPSHipEntry)newSFSentry).Size2;
+                    EntToChange.StructureID = ((SPSHipEntry)newSFSentry).StructureID;
+                }
                 for (int i = 0; i < Part.LegSections.Count; ++i)
                 {
                     if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                     { break; }
 
-                    LegPartEntry newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                    newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
 
                     if (Part.LegSections[i].SelectedValue != null)
                     {
                         newSFSentry.StructureID = Part.LegSections[i].SelectedValue.Id;
                     }
-                    bool test = true;
+                    test = true;
                     if (i == 0)
                     {
 
@@ -12827,11 +13138,38 @@ namespace WpfApp2.ViewModels
             }
             else if (Part is SPSViewModel && Part != null && Part.LegSections != null && Part.LegSections[0].SelectedValue != null)
             {
+
+
+                LegPartEntry newSFSentry;
+
+
+
+
+                if (((SPSViewModel)(Part)).AdditionalStructure.SelectedValue != null)
+                {
+
+                    //EntFullToChange.EntryId0 = null;
+
+                    //}
+                    //else
+                    //{
+                    newSFSentry = ((SPSViewModel)(Part)).AdditionalStructure.CurrentEntry as LegPartEntry;
+                    newSFSentry.StructureID = ((SPSViewModel)(Part)).AdditionalStructure.SelectedValue.Id;
+
+
+
+                    Data.SPSEntries.Add((SPSHipEntry)newSFSentry);
+
+                    Data.Complete();
+                    LeftSFSEntryFullbuf.EntryId0 = newSFSentry.Id;
+                    //Data.Complete();
+
+                }
                 foreach (var section in Part.LegSections)
                 {
                     if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                     { break; }
-                    LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                    newSFSentry = (LegPartEntry)section.CurrentEntry;
                     newSFSentry.StructureID = section.SelectedValue.Id;
 
                     Data.SPSEntries.Add((SPSHipEntry)newSFSentry);

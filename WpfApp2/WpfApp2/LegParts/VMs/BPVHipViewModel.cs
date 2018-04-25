@@ -238,7 +238,13 @@ namespace WpfApp2.LegParts.VMs
                 {
                     for (int j = 0; j < AdditionalStructure.StructureSource.Count; ++j)
                     {
-                        if (AdditionalStructure.StructureSource[j].Id == bufSaveLegAdditionalSection)
+                        
+                    //    if(bufSaveLegAdditionalSection == 0 && AdditionalStructure.StructureSource[j].Text1 == " " && AdditionalStructure.StructureSource[j].Text2 == " ")
+                    //    {
+                    //        bufSaveLegAdditionalSection = j;
+                    //        break;
+                    //    }
+                        if (AdditionalStructure.StructureSource[j].Id == bufSaveLegAdditionalSection && AdditionalStructure.StructureSource[j].Text1 != "Свой вариант ответа")
                         {
                             bufSaveLegAdditionalSection = j;
                             break;

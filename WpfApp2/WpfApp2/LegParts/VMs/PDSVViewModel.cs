@@ -225,7 +225,7 @@ namespace WpfApp2.LegParts.VMs
                 {
                     for (int j = 0; j < AdditionalStructure.StructureSource.Count; ++j)
                     {
-                        if (AdditionalStructure.StructureSource[j].Id == bufSaveLegAdditionalSection)
+                        if (AdditionalStructure.StructureSource[j].Id == bufSaveLegAdditionalSection && AdditionalStructure.StructureSource[j].Text1 != "Свой вариант ответа")
                         {
                             bufSaveLegAdditionalSection = j;
                             break;

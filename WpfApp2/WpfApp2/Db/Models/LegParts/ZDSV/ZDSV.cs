@@ -67,7 +67,7 @@ namespace WpfApp2.Db.Models
         public override float Size2 { get; set; }
 
         public virtual ZDSVStructure Structure { get; set; }
-
+        public virtual ICollection<ZDSVEntryFull> EntriesFull0 { get; set; } = new HashSet<ZDSVEntryFull>();
         public virtual ICollection<ZDSVEntryFull> EntriesFull1 { get; set; } = new HashSet<ZDSVEntryFull>();
         public virtual ICollection<ZDSVEntryFull> EntriesFull2 { get; set; } = new HashSet<ZDSVEntryFull>();
         public virtual ICollection<ZDSVEntryFull> EntriesFull3 { get; set; } = new HashSet<ZDSVEntryFull>();
@@ -83,7 +83,7 @@ namespace WpfApp2.Db.Models
         public virtual ZDSVEntry ZDSVEntry1 { get; set; }
         public virtual ZDSVEntry ZDSVEntry2 { get; set; }
         public virtual ZDSVEntry ZDSVEntry3 { get; set; }
-
+        public virtual ZDSVEntry ZDSVEntry0 { get; set; }
 
         [NotMapped]
         public override int? WayID { get; set; }
@@ -91,8 +91,7 @@ namespace WpfApp2.Db.Models
         public override int EntryId1 { get; set; }
         public override int? EntryId2 { get; set; }
         public override int? EntryId3 { get; set; }
-
-        [NotMapped]
+ 
         public override int? EntryId0 { get; set; }
         [NotMapped]
         public override int? EntryId4 { get; set; }

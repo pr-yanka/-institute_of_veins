@@ -10,14 +10,14 @@
         <ResourceDictionary Source="SFSTemplate.xaml"/>
         <ResourceDictionary Source="TEMPVTemplate.xaml"/>
         <ResourceDictionary Source="MPVTemplate.xaml"/>
-
-
+        <ResourceDictionary Source="ZDSVTemplate.xaml"/>
+        <ResourceDictionary Source="SPSTemplate.xaml"/>
 
     </ResourceDictionary.MergedDictionaries>
 
     <local:LegTemplateSelector x:Key="LegTemplateSelector" 
                          
-                               
+                              ZDSVTemplate="{StaticResource ZDSVTemplate}"
                               StandartTemplate="{StaticResource StandartPartTemplate}"
                               EmptyTemplate="{StaticResource EmptyTemplate}"
                               BPVHipTemplate="{StaticResource BPVHipTemplate}"
@@ -25,6 +25,7 @@
                               PDSVHipTemplate="{StaticResource PDSVHipTemplate}"
                               TEMPVTemplate="{StaticResource TEMPVTemplate}"
                               MPVTemplate="{StaticResource MPVTemplate}"
+                              SPSTemplate="{StaticResource SPSTemplate}"
                                />
 
 </ResourceDictionary>

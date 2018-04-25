@@ -68,7 +68,7 @@ namespace WpfApp2.Db.Models.SPS
         public virtual ICollection<SPSHipEntryFull> EntriesFull1 { get; set; } = new HashSet<SPSHipEntryFull>();
         public virtual ICollection<SPSHipEntryFull> EntriesFull2 { get; set; } = new HashSet<SPSHipEntryFull>();
         public virtual ICollection<SPSHipEntryFull> EntriesFull3 { get; set; } = new HashSet<SPSHipEntryFull>();
-    
+        public virtual ICollection<SPSHipEntryFull> EntriesFull0 { get; set; } = new HashSet<SPSHipEntryFull>();
     }
 
 
@@ -80,14 +80,14 @@ namespace WpfApp2.Db.Models.SPS
         public virtual SPSHipEntry SPSHipEntry1 { get; set; }
         public virtual SPSHipEntry SPSHipEntry2 { get; set; }
         public virtual SPSHipEntry SPSHipEntry3 { get; set; }
-
+        public virtual SPSHipEntry SPSHipEntry0 { get; set; }
         [NotMapped]
         public override int? WayID { get; set; }
 
         public override int EntryId1 { get; set; }
         public override int? EntryId2 { get; set; }
         public override int? EntryId3 { get; set; }
-        [NotMapped]
+     
         public override int? EntryId0 { get; set; }
         [NotMapped]
         public override int? EntryId4 { get; set; }

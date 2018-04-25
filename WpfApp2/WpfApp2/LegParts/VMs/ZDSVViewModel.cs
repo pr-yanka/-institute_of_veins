@@ -1,10 +1,7 @@
 ﻿using Microsoft.Practices.Prism.Commands;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using WpfApp2.Db.Models;
 using WpfApp2.Db.Models.LegParts;
@@ -37,21 +34,98 @@ namespace WpfApp2.LegParts.VMs
 
 
 
+        private ZDSVAdditionalSectionViewModel additionalStructure;
+        public ZDSVAdditionalSectionViewModel AdditionalStructure
+        {
+            get { return additionalStructure; }
+            set { additionalStructure = value; }
+        }
 
 
 
 
+        private bool testAdditionalStructOnUnique(LegPartDbStructure structure)
+        {
+            if (Controller.CurrentViewModel.Controller.LegViewModel == this)
+            {
+
+                foreach (var x in AdditionalStructure.StructureSource)
+                {
+                    if (mode == "Edit")
+                    {
+                        if (x.HasDoubleMetric == CurrentPanelViewModel.HasDoubleSize
+                            && x.HasSize == CurrentPanelViewModel.HasSize
+                             && (x.Text1 == CurrentPanelViewModel.Text1 || (string.IsNullOrWhiteSpace(x.Text1) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text1)))
+                               && (x.Text2 == CurrentPanelViewModel.Text2 || (string.IsNullOrWhiteSpace(x.Text2) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text2)))
+                            && x.Id != structure.Id)
+                        {
+                            if (x.HasSize == true)
+                            {
+                                if ((x.Metrics == CurrentPanelViewModel.SelectedMetricText || string.IsNullOrWhiteSpace(x.Metrics) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.SelectedMetricText)))
+                                {
+                                    MessageBox.Show("Такое описание уже существует!");
+
+                                    return false;
+                                }
+                                else
+                                {
+                                    return true;
+                                }
+                            }
 
 
+                            MessageBox.Show("Такое описание уже существует!");
+
+                            return false;
+
+                        }
+                    }
+                    else
+                    {
+                        if (x.HasDoubleMetric == CurrentPanelViewModel.HasDoubleSize
+                               && x.HasSize == CurrentPanelViewModel.HasSize
+                               && (x.Text1 == CurrentPanelViewModel.Text1 || (string.IsNullOrWhiteSpace(x.Text1) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text1)))
+                               && (x.Text2 == CurrentPanelViewModel.Text2 || (string.IsNullOrWhiteSpace(x.Text2) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.Text2))))
+
+                        {
+
+                            if (x.HasSize == true)
+                            {
+                                if ((x.Metrics == CurrentPanelViewModel.SelectedMetricText || string.IsNullOrWhiteSpace(x.Metrics) && string.IsNullOrWhiteSpace(CurrentPanelViewModel.SelectedMetricText)))
+                                {
+                                    MessageBox.Show("Такое описание уже существует!");
+
+                                    return false;
+                                }
+                                else
+                                {
+                                    return true;
+                                }
+                            }
+
+
+                            MessageBox.Show("Такое описание уже существует!");
+
+                            return false;
+                        }
+
+                    }
+                }
+
+            }
+            return true;
+        }
 
         private void RebuildFirst(object sender, object data)
         {
-           
+
             if (((LegPartViewModel)Controller.CurrentViewModel.Controller.LegViewModel).CurrentLegSide != this.CurrentLegSide) return; using (MySqlContext context = new MySqlContext())
             {
                 ZDSVRepository ZDSV = new ZDSVRepository(context);
                 MetricsRepository Metrics = new MetricsRepository(context);
                 var bufSaveLegSection = new List<int?>();
+                float savedValue = -1;
+                int bufSaveLegAdditionalSection = -1;
                 foreach (var x in LegSections)
                 {
                     if (x.SelectedValue != null)
@@ -59,6 +133,39 @@ namespace WpfApp2.LegParts.VMs
                     else
                     {
                         bufSaveLegSection.Add(null);
+                    }
+                }
+                if (AdditionalStructure.SelectedValue != null)
+                {
+                    bufSaveLegAdditionalSection = AdditionalStructure.SelectedValue.Id;
+                    if (AdditionalStructure.CurrentEntry != null)
+                    {
+                        savedValue = AdditionalStructure.CurrentEntry.Size;
+                    }
+                }
+                AdditionalStructure = new ZDSVAdditionalSectionViewModel(Controller, null, 0);
+                if (bufSaveLegAdditionalSection != -1)
+                {
+                    for (int j = 0; j < AdditionalStructure.StructureSource.Count; ++j)
+                    {
+
+                        //    if(bufSaveLegAdditionalSection == 0 && AdditionalStructure.StructureSource[j].Text1 == " " && AdditionalStructure.StructureSource[j].Text2 == " ")
+                        //    {
+                        //        bufSaveLegAdditionalSection = j;
+                        //        break;
+                        //    }
+                        if (AdditionalStructure.StructureSource[j].Id == bufSaveLegAdditionalSection && AdditionalStructure.StructureSource[j].Text1 != "Свой вариант ответа")
+                        {
+                            bufSaveLegAdditionalSection = j;
+                            break;
+                        }
+                    }
+
+                    //   if (bufSaveLegAdditionalSection != -1)
+                    AdditionalStructure.SelectedValue = AdditionalStructure.StructureSource[bufSaveLegAdditionalSection];
+                    if (savedValue != -1)
+                    {
+                        AdditionalStructure.CurrentEntry.Size = savedValue;
                     }
                 }
                 for (int i = 0; i < LegSections.Count; ++i)
@@ -120,8 +227,8 @@ namespace WpfApp2.LegParts.VMs
                 else
                     LegSectionsSaved.Add(new ZDSVSectionViewModel(Controller, null, i + 1));
             }
-          
-             commentSave = Comment; for (int i = 0; i < LegSections.Count; i++)
+
+            commentSave = Comment; for (int i = 0; i < LegSections.Count; i++)
             {
 
                 LegSectionsSaved[i].Comment = LegSections[i].Comment;
@@ -311,13 +418,14 @@ namespace WpfApp2.LegParts.VMs
         {
             MessageBus.Default.Subscribe("RebuildFirstZDSV", RebuildFirst);
             MessageBus.Default.Subscribe("RebuildLegSectionViewModel", Rebuild);
+            AdditionalStructure = new ZDSVAdditionalSectionViewModel(Controller, null, 0);
             SavePanelCommand = new DelegateCommand(() =>
             {
                 var panel = CurrentPanelViewModel;
                 if (!string.IsNullOrWhiteSpace(panel.Text1) || !string.IsNullOrWhiteSpace(panel.Text2))
                 {
                     CurrentLegSide = CurrentLegSide;
-                    if (IsStructEdited(CurrentPanelViewModel.LegPrt) && testOnUnique(CurrentPanelViewModel.LegPrt))
+                    if ((LevelSelected != 0 && testOnUnique(CurrentPanelViewModel.LegPrt)) || (LevelSelected == 0 && testAdditionalStructOnUnique(CurrentPanelViewModel.LegPrt)))
                     {
                         var newStruct = GetPanelStructure();
                         newStruct.Custom = false;
@@ -339,8 +447,8 @@ namespace WpfApp2.LegParts.VMs
                     MessageBox.Show("Не все поля заполнены");
                 }
 
-            //_lastSender.DeleteCustom();
-        });
+                //_lastSender.DeleteCustom();
+            });
 
 
             SaveCommand = new DelegateCommand(
@@ -353,11 +461,11 @@ namespace WpfApp2.LegParts.VMs
                       {
                           if (leg.HasSize && leg.CurrentEntry.Size == 0)
                           { test = false; }
-                      //if(leg.HasDoubleSize && leg.Size2 == 0)
-                      //{
-                      //    test = false;
-                      //}
-                  }
+                          //if(leg.HasDoubleSize && leg.Size2 == 0)
+                          //{
+                          //    test = false;
+                          //}
+                      }
                       if (test)
                       {
                           IsEmpty = false;
@@ -366,43 +474,43 @@ namespace WpfApp2.LegParts.VMs
 
                           foreach (var leg in LegSections)
                           {
-                          //никогда так не делайте
-                          if (leg.IsVisible == Visibility.Visible && leg.ListNumber != 1 && leg.SelectedValue != null && leg.SelectedValue.Id != 0)
+                              //никогда так не делайте
+                              if (leg.IsVisible == Visibility.Visible && leg.ListNumber != 1 && leg.SelectedValue != null && leg.SelectedValue.Id != 0)
                                   ids.Add(leg.SelectedValue.Id);
                           }
 
                           var combo = Data.ZDSVCombos.FindCombo(LegSections[0].SelectedValue.Id, ids);
-                      //если комбо не нашлось - значит оно кастомное, мы его запомним и отправим в базу на радость будущим пользователям
-                      if (combo == null)
+                          //если комбо не нашлось - значит оно кастомное, мы его запомним и отправим в базу на радость будущим пользователям
+                          if (combo == null)
                           {
                               var newCombo = new ZDSVCombo();
 
-                               commentSave = Comment; for (int i = 0; i < LegSections.Count; i++)
+                              commentSave = Comment; for (int i = 0; i < LegSections.Count; i++)
                               {
                                   var currentStructure = LegSections[i].SelectedValue;
-                              //ничего не было выбрано
-                              if (currentStructure == null) continue;
-                              //добавляем структуры, которые встретились впервые, чтобы потом добавить комбо
-                              if (currentStructure.Id == 0
-                        //потому что переход к след.разделу в комбо добавлять не надо, это излишняя информация
-                        && !currentStructure.ToNextPart)
+                                  //ничего не было выбрано
+                                  if (currentStructure == null) continue;
+                                  //добавляем структуры, которые встретились впервые, чтобы потом добавить комбо
+                                  if (currentStructure.Id == 0
+                            //потому что переход к след.разделу в комбо добавлять не надо, это излишняя информация
+                            && !currentStructure.ToNextPart)
                                   {
-                                  //currentStructure.Level = i + 1;
-                                  //Data.ZDSVs.Add((ZDSVStructure)currentStructure);
-                                  //Data.Complete();
-                                  //((ZDSVEntry)LegSections[i].CurrentEntry).Structure = (ZDSVStructure)currentStructure;
-                                  //(LegSections[i].CurrentEntry).StructureID = currentStructure.Id;
-                                  //Data.ZDSVEntries.Add((ZDSVEntry)LegSections[i].CurrentEntry);
-                                  //Data.Complete();
-                                  //if (i == 0) newCombo.IdStr1 = currentStructure.Id;
-                                  ////там гда раньше был ноль теперь будет актуальный айдишник
-                                  //else ids[i - 2] = currentStructure.Id;
-                              }
+                                      //currentStructure.Level = i + 1;
+                                      //Data.ZDSVs.Add((ZDSVStructure)currentStructure);
+                                      //Data.Complete();
+                                      //((ZDSVEntry)LegSections[i].CurrentEntry).Structure = (ZDSVStructure)currentStructure;
+                                      //(LegSections[i].CurrentEntry).StructureID = currentStructure.Id;
+                                      //Data.ZDSVEntries.Add((ZDSVEntry)LegSections[i].CurrentEntry);
+                                      //Data.Complete();
+                                      //if (i == 0) newCombo.IdStr1 = currentStructure.Id;
+                                      ////там гда раньше был ноль теперь будет актуальный айдишник
+                                      //else ids[i - 2] = currentStructure.Id;
+                                  }
                               }
 
                               newCombo.IdStr1 = LegSections[0].SelectedValue.Id;
-                          //заполняем комбо
-                          Data.ZDSVCombos.AddCombo(newCombo, ids);
+                              //заполняем комбо
+                              Data.ZDSVCombos.AddCombo(newCombo, ids);
                               Data.Complete();
                               MessageBus.Default.Call("RebuildFirstZDSV", this, LegSections[0]);
                               MessageBus.Default.Call("RebuildLegSectionViewModel", this, LegSections[0]);
