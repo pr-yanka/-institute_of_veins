@@ -48,7 +48,10 @@ namespace WpfApp2.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private Visibility _isVisibleForSecretary;
 
+
+        public Visibility IsVisibleForSecretary { get { return _isVisibleForSecretary; } set { _isVisibleForSecretary = value; OnPropertyChanged(); } }
 
 
         private Brush _bPDSV;
@@ -4868,6 +4871,15 @@ namespace WpfApp2.ViewModels
         private void SetAccID(object sender, object data)
         {
             Acc_id = (int)data;
+            var acc = Data.Accaunt.Get(Acc_id);
+            if (acc.isSecretar != null && acc.isSecretar.Value)
+            {
+                IsVisibleForSecretary = Visibility.Hidden;
+            }
+            else
+            {
+                IsVisibleForSecretary = Visibility.Visible;
+            }
         }
         private void GetObsFromSavedOverview(object sender, object data)
         {
@@ -14530,10 +14542,48 @@ namespace WpfApp2.ViewModels
         private void SaveExaminationToSavedTable()
         {
 
-
-            SavedExamination examnTotal = Data.SavedExamination.GetAll.FirstOrDefault();
-            SavedExaminationLeg LegExamL = Data.SavedExaminationLeg.Get(examnTotal.idLeftLegExamination.Value);
-            SavedExaminationLeg LegExamR = Data.SavedExaminationLeg.Get(examnTotal.idRightLegExamination.Value);
+            /*  */
+            var savedExam = Data.SavedExamination.GetAll.Where(e => e.acc_id == Acc_id).ToList();
+            SavedExamination examnTotal;
+            SavedExaminationLeg LegExamL;
+            SavedExaminationLeg LegExamR;
+            if (savedExam.Count != 0)
+            {
+                examnTotal = savedExam[0];
+                LegExamL = Data.SavedExaminationLeg.Get(examnTotal.idLeftLegExamination.Value);
+                LegExamR = Data.SavedExaminationLeg.Get(examnTotal.idRightLegExamination.Value);
+            }
+            else
+            {
+                LegExamL = new SavedExaminationLeg();
+                LegExamR = new SavedExaminationLeg();
+                Data.SavedExaminationLeg.Add(LegExamL);
+                Data.SavedExaminationLeg.Add(LegExamR);
+                Data.Complete();
+                examnTotal = new SavedExamination();
+                examnTotal.idLeftLegExamination = LegExamL.Id;
+                examnTotal.idRightLegExamination = LegExamR.Id;
+                examnTotal.height = 0;
+                examnTotal.weight = 0;
+                examnTotal.Comment = "";
+                examnTotal.Date = null;
+                examnTotal.DoctorID = null;
+                examnTotal.hirurgOverviewId = null;
+                examnTotal.isNeedOperation = null;
+                examnTotal.NB = "";
+                examnTotal.OperationType = null;
+                examnTotal.PatientId = null;
+                examnTotal.statementOverviewId = null;
+                examnTotal.id_current_examination = null;
+                examnTotal.statementOverviewId = statementOverviewId;
+                examnTotal.hirurgOverviewId = hirurgOverviewId;
+                examnTotal.acc_id = Acc_id;
+                Data.SavedExamination.Add(examnTotal);
+                Data.Complete();
+            }
+            //examnTotal = Data.SavedExamination.GetAll.FirstOrDefault();
+            //LegExamL = Data.SavedExaminationLeg.Get(examnTotal.idLeftLegExamination.Value);
+            //LegExamR = Data.SavedExaminationLeg.Get(examnTotal.idRightLegExamination.Value);
             examnTotal.statementOverviewId = statementOverviewId;
             examnTotal.hirurgOverviewId = hirurgOverviewId;
             examnTotal.acc_id = Acc_id;
