@@ -2099,18 +2099,260 @@ namespace WpfApp2.ViewModels
                 }
                 if (!LegPart.IsEmpty)
                 {
-
-                    if (LegPart.SelectedWayType != null && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name) && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name))
+                  
+                    if (LegPart is BPVHipViewModel)
                     {
-                        x++;
-
-                        if (!isNormal)
-                            p4.Append("вид хода: " + LegPart.SelectedWayType.Name).Font("Times new roman").FontSize(11.0);
-                        else
+                        var section = ((BPVHipViewModel)LegPart).AdditionalStructure;
+                        if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
                         {
-                            p4.Append("вид хода: " + LegPart.SelectedWayType.Name).Font("Times new roman").FontSize(11.0);
+                            ++x;
+                            p4.Append("БПВ на бедре интерфасциально располагается ").Font("Times new roman").FontSize(11.0);
+                            if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
+                            {
+
+                                p4.Append(section.SelectedValue.Text1).Font("Times new roman").FontSize(11.0);
+
+
+                            }
+
+                            if (section.SelectedValue.HasSize || section.HasDoubleSize)
+                            {
+                                if (section.HasDoubleSize)
+                                {
+                                    p4.Append(section.CurrentEntry.Size + "*" + section.CurrentEntry.Size2 + " " + section.SelectedValue.Metrics).Font("Times new roman").FontSize(11.0);
+
+                                }
+                                else
+                                {
+                                    if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
+                                        p4.Append(" " + section.CurrentEntry.Size + " " + section.SelectedValue.Metrics).Font("Times new roman").FontSize(11.0);
+                                    else
+                                    {
+                                        p4.Append(" " + section.CurrentEntry.Size + "").Font("Times new roman").FontSize(11.0);
+
+                                    }
+
+                                }
+                            }
+                            else
+                            {
+                                p4.Append("").Font("Times new roman").FontSize(11.0);
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
+                                p4.Append(section.SelectedValue.Text2).Font("Times new roman").FontSize(11.0); ;
+                            //if (!string.IsNullOrWhiteSpace(section.CurrentEntry.Comment))
+                            //{
+                            //    if (LegPart.LegSections[x].SelectedValue != null && !LegPart.LegSections[x].SelectedValue.ToNextPart)
+                            //        p4 += "\nКомментарий : " + section.CurrentEntry.Comment + "\n";
+                            //    else
+                            //    {
+                            //        p4 += "\nКомментарий : " + section.CurrentEntry.Comment;
+                            //    }
+
+                            //}
+
+
+                            //
+
+                            //
+
                         }
+
                     }
+                    else if (LegPart is PDSVViewModel)
+                    {
+                        var section = ((PDSVViewModel)LegPart).AdditionalStructure;
+                        if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
+                        {
+                            ++x;
+                            p4.Append("ПДСВ на бедре интерфасциально располагается ").Font("Times new roman").FontSize(11.0);
+                          //  p4 += "ПДСВ на бедре интерфасциально располагается ";
+                            if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
+                            {
+
+                                p4.Append(section.SelectedValue.Text1).Font("Times new roman").FontSize(11.0);
+
+
+                            }
+
+                            if (section.SelectedValue.HasSize || section.HasDoubleSize)
+                            {
+                                if (section.HasDoubleSize)
+                                {
+                                    p4.Append(section.CurrentEntry.Size + "*" + section.CurrentEntry.Size2 + " " + section.SelectedValue.Metrics).Font("Times new roman").FontSize(11.0);
+
+                                }
+                                else
+                                {
+                                    if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
+                                        p4.Append(" " + section.CurrentEntry.Size + " " + section.SelectedValue.Metrics).Font("Times new roman").FontSize(11.0);
+                                    else
+                                    {
+                                        p4.Append(" " + section.CurrentEntry.Size + "").Font("Times new roman").FontSize(11.0);
+
+                                    }
+
+                                }
+                            }
+                            else
+                            {
+                                p4.Append("").Font("Times new roman").FontSize(11.0);
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
+                                p4.Append(section.SelectedValue.Text2).Font("Times new roman").FontSize(11.0);
+                            //if (!string.IsNullOrWhiteSpace(section.CurrentEntry.Comment))
+                            //{
+                            //    if (LegPart.LegSections[x].SelectedValue != null && !LegPart.LegSections[x].SelectedValue.ToNextPart)
+                            //        p4 += "\nКомментарий : " + section.CurrentEntry.Comment + "\n";
+                            //    else
+                            //    {
+                            //        p4 += "\nКомментарий : " + section.CurrentEntry.Comment;
+                            //    }
+
+                            //}
+
+
+                            //
+
+                            //
+
+                        }
+
+                    }
+                    else if (LegPart is ZDSVViewModel)
+                    {
+                        var section = ((ZDSVViewModel)LegPart).AdditionalStructure;
+                        if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
+                        {
+                            ++x;
+                            p4.Append("ЗДСВ на бедре интерфасциально располагается ").Font("Times new roman").FontSize(11.0);
+                          
+                            if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
+                            {
+
+                                p4.Append(section.SelectedValue.Text1).Font("Times new roman").FontSize(11.0);
+
+
+                            }
+
+                            if (section.SelectedValue.HasSize || section.HasDoubleSize)
+                            {
+                                if (section.HasDoubleSize)
+                                {
+                                    p4.Append(section.CurrentEntry.Size + "*" + section.CurrentEntry.Size2 + " " + section.SelectedValue.Metrics).Font("Times new roman").FontSize(11.0);
+
+                                }
+                                else
+                                {
+                                    if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
+                                        p4.Append(" " + section.CurrentEntry.Size + " " + section.SelectedValue.Metrics).Font("Times new roman").FontSize(11.0);
+                                    else
+                                    {
+                                        p4.Append(" " + section.CurrentEntry.Size + "").Font("Times new roman").FontSize(11.0);
+
+                                    }
+
+                                }
+                            }
+                            else
+                            {
+                                p4.Append("").Font("Times new roman").FontSize(11.0);
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
+                                p4.Append(section.SelectedValue.Text2).Font("Times new roman").FontSize(11.0);
+                            //if (!string.IsNullOrWhiteSpace(section.CurrentEntry.Comment))
+                            //{
+                            //    if (LegPart.LegSections[x].SelectedValue != null && !LegPart.LegSections[x].SelectedValue.ToNextPart)
+                            //        p4 += "\nКомментарий : " + section.CurrentEntry.Comment + "\n";
+                            //    else
+                            //    {
+                            //        p4 += "\nКомментарий : " + section.CurrentEntry.Comment;
+                            //    }
+
+                            //}
+
+
+                            //
+
+                            //
+
+                        }
+
+                    }
+                    else if (LegPart is SPSViewModel)
+                    {
+                        var section = ((SPSViewModel)LegPart).AdditionalStructure;
+                        if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
+                        {
+                            ++x;
+                            p4.Append("расположение : ").Font("Times new roman").FontSize(11.0);
+                            if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
+                            {
+
+                                p4.Append(section.SelectedValue.Text1).Font("Times new roman").FontSize(11.0);
+
+
+                            }
+
+                            if (section.SelectedValue.HasSize || section.HasDoubleSize)
+                            {
+                                if (section.HasDoubleSize)
+                                {
+                                    p4.Append(section.CurrentEntry.Size + "*" + section.CurrentEntry.Size2 + " " + section.SelectedValue.Metrics).Font("Times new roman").FontSize(11.0);
+
+                                }
+                                else
+                                {
+                                    if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
+                                        p4.Append(" " + section.CurrentEntry.Size + " " + section.SelectedValue.Metrics).Font("Times new roman").FontSize(11.0);
+                                    else
+                                    {
+                                        p4.Append(" " + section.CurrentEntry.Size + "").Font("Times new roman").FontSize(11.0);
+
+                                    }
+
+                                }
+                            }
+                            else
+                            {
+                                p4.Append("").Font("Times new roman").FontSize(11.0);
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
+                                p4.Append(section.SelectedValue.Text2).Font("Times new roman").FontSize(11.0);
+                            //if (!string.IsNullOrWhiteSpace(section.CurrentEntry.Comment))
+                            //{
+                            //    if (LegPart.LegSections[x].SelectedValue != null && !LegPart.LegSections[x].SelectedValue.ToNextPart)
+                            //        p4 += "\nКомментарий : " + section.CurrentEntry.Comment + "\n";
+                            //    else
+                            //    {
+                            //        p4 += "\nКомментарий : " + section.CurrentEntry.Comment;
+                            //    }
+
+                            //}
+
+
+                            //
+
+                            //
+
+                        }
+
+                    }
+                    //if (LegPart.SelectedWayType != null && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name) && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name))
+                    //{
+                    //    x++;
+
+                    //    if (!isNormal)
+                    //        p4.Append("вид хода: " + LegPart.SelectedWayType.Name).Font("Times new roman").FontSize(11.0);
+                    //    else
+                    //    {
+                    //        p4.Append("вид хода: " + LegPart.SelectedWayType.Name).Font("Times new roman").FontSize(11.0);
+                    //    }
+                    //}
                     if (LegPart is TEMPVViewModel)
                     {
                         if (x == 0)
@@ -2409,19 +2651,19 @@ namespace WpfApp2.ViewModels
                     p2.Append("Допплерография вен нижних конечностей:\n").Font("Times new roman").Bold().FontSize(13.0);
                     p3.Append("Правая нижняя конечность:").Font("Times new roman").Bold().FontSize(11.0);
                     //if(!RightSFS.)
-                    BuildStr(ref p4, RightSFS, false);
-
-                    BuildStr(ref p4, RightBPVHip, true);
-                    BuildStr(ref p4, RightPDSV, false);
-                    BuildStr(ref p4, RightZDSV, false);
-                    BuildStr(ref p4, RightPerforate, false);
-                    BuildStr(ref p4, RightBPVTibia, true);
-                    BuildStr(ref p4, RightTibiaPerforate, false);
-                    BuildStr(ref p4, RightSPS, false);
-                    BuildStr(ref p4, RightMPV, true);
-                    BuildStr(ref p4, RightTEMPV, true);
-                    BuildStr(ref p4, RightPPV, true);
                     BuildStr(ref p4, RightGV, false);
+                    BuildStr(ref p4, RightSFS, true);
+                    BuildStr(ref p4, RightBPVHip, false);
+                    BuildStr(ref p4, RightPDSV, true);
+                    BuildStr(ref p4, RightZDSV, true);
+                    BuildStr(ref p4, RightPerforate, true);
+                    BuildStr(ref p4, RightBPVTibia, false);
+                    BuildStr(ref p4, RightTibiaPerforate, true);
+                    BuildStr(ref p4, RightSPS, true);
+                    BuildStr(ref p4, RightMPV, false);
+                    BuildStr(ref p4, RightTEMPV, false);
+                    BuildStr(ref p4, RightPPV, false);
+
 
                     if (!string.IsNullOrWhiteSpace(RightAdditionalText))
                     {
@@ -2437,19 +2679,20 @@ namespace WpfApp2.ViewModels
                         }
                     }
                     p4.Append("\n\nЛевая нижняя конечность:\n").Font("Times new roman").Bold().FontSize(11.0);
-                    BuildStr(ref p4, LeftSFS, false);
-                    BuildStr(ref p4, LeftBPVHip, true);
-                    BuildStr(ref p4, LeftPDSV, true);
-                    BuildStr(ref p4, LeftZDSV, false);
-                    BuildStr(ref p4, LeftPerforate, false);
-                    BuildStr(ref p4, LeftBPVTibia, true);
-                    BuildStr(ref p4, LeftTibiaPerforate, false);
-                    BuildStr(ref p4, LeftSPS, false);
-                    BuildStr(ref p4, LeftMPV, true);
-                    BuildStr(ref p4, LeftTEMPV, true);
-                    BuildStr(ref p4, LeftPPV, true);
                     BuildStr(ref p4, LeftGV, false);
+                    BuildStr(ref p4, LeftSFS, true);
+                    BuildStr(ref p4, LeftBPVHip, false);
+                    BuildStr(ref p4, LeftPDSV, false);
+                    BuildStr(ref p4, LeftZDSV, true);
+                    BuildStr(ref p4, LeftPerforate, true);
+                    BuildStr(ref p4, LeftBPVTibia, false);
+                    BuildStr(ref p4, LeftTibiaPerforate, true);
+                    BuildStr(ref p4, LeftSPS, true);
+                    BuildStr(ref p4, LeftMPV, false);
+                    BuildStr(ref p4, LeftTEMPV, false);
+                    BuildStr(ref p4, LeftPPV, false);
 
+                    //true false
                     if (!string.IsNullOrWhiteSpace(LeftAdditionalText))
                     {
                         string buf1 = LeftAdditionalText[LeftAdditionalText.Length - 1].ToString();
@@ -3077,14 +3320,255 @@ namespace WpfApp2.ViewModels
         //}
         public string CreateStrForOverview(LegPartViewModel LegPart)
         {
-
+            if (LegPart.IsEmpty) { return ""; }
             string p4 = "";
             if (LegPart.SelectedWayType != null && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name) && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name))
                 p4 += "Вид хода: " + LegPart.SelectedWayType.Name + "\n";
             if (LegPart is TEMPVViewModel)
                 p4 += "Протяженность: " + ((TEMPVViewModel)LegPart).FF_length + " см\n";
 
+
             int x = 0;
+            if (LegPart is BPVHipViewModel)
+            {
+                var section = ((BPVHipViewModel)LegPart).AdditionalStructure;
+                if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
+                {
+                    ++x;
+                    p4 += "БПВ на бедре интерфасциально располагается ";
+                    if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
+                    {
+                        
+                            p4 += "" + section.SelectedValue.Text1 + "";
+
+                         
+                    }
+
+                    if (section.SelectedValue.HasSize || section.HasDoubleSize)
+                    {
+                        if (section.HasDoubleSize)
+                        {
+                            p4 += " " + section.CurrentEntry.Size + "*" + section.CurrentEntry.Size2 + " " + section.SelectedValue.Metrics + "";
+
+                        }
+                        else
+                        {
+                            if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
+                                p4 += " " + section.CurrentEntry.Size + "" + section.SelectedValue.Metrics + "";
+                            else
+                            {
+                                p4 += " " + section.CurrentEntry.Size + "";
+
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        p4 += "";
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
+                        p4 += "" + section.SelectedValue.Text2 + "";
+                    //if (!string.IsNullOrWhiteSpace(section.CurrentEntry.Comment))
+                    //{
+                    //    if (LegPart.LegSections[x].SelectedValue != null && !LegPart.LegSections[x].SelectedValue.ToNextPart)
+                    //        p4 += "\nКомментарий : " + section.CurrentEntry.Comment + "\n";
+                    //    else
+                    //    {
+                    //        p4 += "\nКомментарий : " + section.CurrentEntry.Comment;
+                    //    }
+
+                    //}
+
+
+                    //
+
+                    //
+
+                }
+               
+            }
+            else if (LegPart is PDSVViewModel)
+            {
+                var section = ((PDSVViewModel)LegPart).AdditionalStructure;
+                if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
+                {
+                    ++x;
+                    p4 += "ПДСВ на бедре интерфасциально располагается ";
+                    if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
+                    {
+
+                        p4 += "" + section.SelectedValue.Text1 + "";
+
+
+                    }
+
+                    if (section.SelectedValue.HasSize || section.HasDoubleSize)
+                    {
+                        if (section.HasDoubleSize)
+                        {
+                            p4 += " " + section.CurrentEntry.Size + "*" + section.CurrentEntry.Size2 + " " + section.SelectedValue.Metrics + "";
+
+                        }
+                        else
+                        {
+                            if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
+                                p4 += " " + section.CurrentEntry.Size + "" + section.SelectedValue.Metrics + "";
+                            else
+                            {
+                                p4 += " " + section.CurrentEntry.Size + "";
+
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        p4 += "";
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
+                        p4 += "" + section.SelectedValue.Text2 + "";
+                    //if (!string.IsNullOrWhiteSpace(section.CurrentEntry.Comment))
+                    //{
+                    //    if (LegPart.LegSections[x].SelectedValue != null && !LegPart.LegSections[x].SelectedValue.ToNextPart)
+                    //        p4 += "\nКомментарий : " + section.CurrentEntry.Comment + "\n";
+                    //    else
+                    //    {
+                    //        p4 += "\nКомментарий : " + section.CurrentEntry.Comment;
+                    //    }
+
+                    //}
+
+
+                    //
+
+                    //
+
+                }
+
+            }
+            else if (LegPart is ZDSVViewModel)
+            {
+                var section = ((ZDSVViewModel)LegPart).AdditionalStructure;
+                if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
+                {
+                    ++x;
+                    p4 += "ЗДСВ на бедре интерфасциально располагается ";
+                    if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
+                    {
+
+                        p4 += "" + section.SelectedValue.Text1 + "";
+
+
+                    }
+
+                    if (section.SelectedValue.HasSize || section.HasDoubleSize)
+                    {
+                        if (section.HasDoubleSize)
+                        {
+                            p4 += " " + section.CurrentEntry.Size + "*" + section.CurrentEntry.Size2 + " " + section.SelectedValue.Metrics + "";
+
+                        }
+                        else
+                        {
+                            if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
+                                p4 += " " + section.CurrentEntry.Size + "" + section.SelectedValue.Metrics + "";
+                            else
+                            {
+                                p4 += " " + section.CurrentEntry.Size + "";
+
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        p4 += "";
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
+                        p4 += "" + section.SelectedValue.Text2 + "";
+                    //if (!string.IsNullOrWhiteSpace(section.CurrentEntry.Comment))
+                    //{
+                    //    if (LegPart.LegSections[x].SelectedValue != null && !LegPart.LegSections[x].SelectedValue.ToNextPart)
+                    //        p4 += "\nКомментарий : " + section.CurrentEntry.Comment + "\n";
+                    //    else
+                    //    {
+                    //        p4 += "\nКомментарий : " + section.CurrentEntry.Comment;
+                    //    }
+
+                    //}
+
+
+                    //
+
+                    //
+
+                }
+
+            }
+            else if (LegPart is SPSViewModel)
+            {
+                var section = ((SPSViewModel)LegPart).AdditionalStructure;
+                if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
+                {
+                    ++x;
+                    p4 += "расположение : ";
+                    if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
+                    {
+
+                        p4 += "" + section.SelectedValue.Text1 + "";
+
+
+                    }
+
+                    if (section.SelectedValue.HasSize || section.HasDoubleSize)
+                    {
+                        if (section.HasDoubleSize)
+                        {
+                            p4 += " " + section.CurrentEntry.Size + "*" + section.CurrentEntry.Size2 + " " + section.SelectedValue.Metrics + "";
+
+                        }
+                        else
+                        {
+                            if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
+                                p4 += " " + section.CurrentEntry.Size + "" + section.SelectedValue.Metrics + "";
+                            else
+                            {
+                                p4 += " " + section.CurrentEntry.Size + "";
+
+                            }
+
+                        }
+                    }
+                    else
+                    {
+                        p4 += " ";
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
+                        p4 += "" + section.SelectedValue.Text2 + "";
+                    //if (!string.IsNullOrWhiteSpace(section.CurrentEntry.Comment))
+                    //{
+                    //    if (LegPart.LegSections[x].SelectedValue != null && !LegPart.LegSections[x].SelectedValue.ToNextPart)
+                    //        p4 += "\nКомментарий : " + section.CurrentEntry.Comment + "\n";
+                    //    else
+                    //    {
+                    //        p4 += "\nКомментарий : " + section.CurrentEntry.Comment;
+                    //    }
+
+                    //}
+
+
+                    //
+
+                    //
+
+                }
+
+            }
             foreach (var section in LegPart.LegSections)
             {
                 if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
@@ -3776,7 +4260,6 @@ namespace WpfApp2.ViewModels
 
 
 
-
                   if (LeftGV.IsEmpty == true)
                   {
                       MessageBox.Show("ГВ слева не заполнено");
@@ -3807,54 +4290,54 @@ namespace WpfApp2.ViewModels
                       MessageBox.Show("ГВ справа не заполнено");
                   }
 
-                  else if (LeftPDSV.IsEmpty == true)
+                  else if (LeftSFS.IsEmpty == true)
                   {
-                      MessageBox.Show("ПДСВ слева не заполнено");
+                      MessageBox.Show("СФС слева не заполнено");
                   }
-                  else if (RightPDSV.IsEmpty == true)
+                  else if (RightSFS.IsEmpty == true)
                   {
-                      MessageBox.Show("ПДСВ справа не заполнено");
+                      MessageBox.Show("СФС справа не заполнено");
                   }
-                  else if (RightZDSV.IsEmpty == true)
+                  else if (RightBPVHip.IsEmpty == true)
                   {
-                      MessageBox.Show("ЗДСВ справа не заполнено");
+                      MessageBox.Show("БПВ на бедре справа не заполнено");
                   }
-                  else if (LeftZDSV.IsEmpty == true)
+                  else if (LeftBPVHip.IsEmpty == true)
                   {
-                      MessageBox.Show("ЗДСВ слева не заполнено");
+                      MessageBox.Show("БПВ на бедре слева не заполнено");
                   }
-                  else if (RightPerforate.IsEmpty == true)
+                  else if (RightBPVTibia.IsEmpty == true)
                   {
-                      MessageBox.Show("Перфоранты бедра и несафенные вены справа не заполнено");
+                      MessageBox.Show("БПВ на голени справа не заполнено");
                   }
-                  else if (LeftPerforate.IsEmpty == true)
+                  else if (LeftBPVTibia.IsEmpty == true)
                   {
-                      MessageBox.Show("Перфоранты бедра и несафенные вены слева не заполнено");
+                      MessageBox.Show("БПВ на голени справа не заполнено");
                   }
-                  else if (RightTibiaPerforate.IsEmpty == true)
+                  else if (RightSPS.IsEmpty == true)
                   {
-                      MessageBox.Show("Перфоранты голени справа не заполнено");
+                      MessageBox.Show("СПС справа не заполнено");
                   }
-                  else if (LeftTibiaPerforate.IsEmpty == true)
+                  else if (LeftSPS.IsEmpty == true)
                   {
-                      MessageBox.Show("Перфоранты голени слева не заполнено");
+                      MessageBox.Show("СПС слева не заполнено");
                   }
-                  else if (RightTEMPV.IsEmpty == true)
+                  else if (RightMPV.IsEmpty == true)
                   {
-                      MessageBox.Show("ТЕ МПВ справа не заполнено");
+                      MessageBox.Show("МПВ справа не заполнено");
                   }
-                  else if (LeftTEMPV.IsEmpty == true)
+                  else if (LeftMPV.IsEmpty == true)
                   {
-                      MessageBox.Show("ТЕ МПВ слева не заполнено");
+                      MessageBox.Show("МПВ слева не заполнено");
                   }
-                  else if (RightPPV.IsEmpty == true)
-                  {
-                      MessageBox.Show("ППВ справа не заполнено");
-                  }
-                  else if (LeftPPV.IsEmpty == true)
-                  {
-                      MessageBox.Show("ППВ слева не заполнено");
-                  }
+                  //else if (RightPPV.IsEmpty == true)
+                  //{
+                  //    MessageBox.Show("ППВ справа не заполнено");
+                  //}
+                  //else if (LeftPPV.IsEmpty == true)
+                  //{
+                  //    MessageBox.Show("ППВ слева не заполнено");
+                  //}
                   else if (string.IsNullOrWhiteSpace(RightAdditionalText))
                   {
                       MessageBox.Show("Примечание справа не заполнено");
@@ -5027,61 +5510,105 @@ namespace WpfApp2.ViewModels
                     document.ReplaceText("«Врач»", Doctor);
 
 
-                    //область
+                  
 
-                    //  RightLL += " " + CreateStrForOverview(RightPDSV) + "\n";
-                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightPDSV)))
+                 
+                    //if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightPDSV)))
+                    //{
+                    //    document.ReplaceText("СФСр", "ПДСВСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                    //    document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightPDSV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+
+                    //}
+
+                    //if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightZDSV)))
+                    //{
+                    //    document.ReplaceText("СФСр", "ЗДСВСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                    //    document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightZDSV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+
+                    //}
+               
+
+
+                    //if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightPerforate)))
+                    //{
+                    //    document.ReplaceText("СФСр", "Перфоранты бедра и несафенные веныСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                    //    document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightPerforate) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                    //}
+                   
+                    //if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightTibiaPerforate)))
+                    //{
+
+                    //    document.ReplaceText("СФСр", "Перфоранты голениСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                    //    document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightTibiaPerforate) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+
+
+                      
+
+                    //}
+                    //if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightTEMPV)))
+                    //{
+                    //    document.ReplaceText("СФСр", "ТЕМПВСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                    //    document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightTEMPV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+
+                    //}
+                  
+
+
+
+                    //if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightPPV)))
+                    //{
+                    //    document.ReplaceText("СФСр", "ППВСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                    //    document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightPPV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                    //}
+                     
+
+
+                    //if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightGV)))
+                    //{
+                    //    document.ReplaceText("СФСр", "Глубокие веныСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                    //    document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightGV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+
+                    //}
+
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightSFS)))
                     {
-                        document.ReplaceText("СФСр", "ПДСВСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightPDSV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                        document.ReplaceText("СФСр", "СФССФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightSFS) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
                     }
-
-                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightZDSV)))
+                    //
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightBPVHip)))
                     {
-                        document.ReplaceText("СФСр", "ЗДСВСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightZDSV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                        document.ReplaceText("СФСр", "БПВ на бедреСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightBPVHip) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
                     }
-                    //RightLL += "ЗДСВ : " + CreateStrForOverview(RightZDSV) + "\n";
+                    //
 
 
-
-                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightPerforate)))
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightBPVTibia)))
                     {
-                        document.ReplaceText("СФСр", "Перфоранты бедра и несафенные веныСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightPerforate) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                        document.ReplaceText("СФСр", "БПВ на голениСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightBPVTibia) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
                     }
-                    //  RightLL += "Перфоранты бедра и несафенные вены : " + CreateStrForOverview(RightPerforate) + "\n";
-                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightTibiaPerforate)))
+                    //
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightSPS)))
                     {
 
-                        document.ReplaceText("СФСр", "Перфоранты голениСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightTibiaPerforate) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                        document.ReplaceText("СФСр", "СПССФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightSPS) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
 
-                        //  RightLL += "Перфоранты голени : " + CreateStrForOverview(RightTibiaPerforate) + "\n";
 
-                    }
-                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightTEMPV)))
-                    {
-                        document.ReplaceText("СФСр", "ТЕМПВСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightTEMPV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
                     }
-                    // RightLL += "ТЕМПВ : " + CreateStrForOverview(RightTEMPV) + "\n";
-
-
-
-
-                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightPPV)))
+                    //
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightMPV)))
                     {
-                        document.ReplaceText("СФСр", "ППВСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightPPV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                        document.ReplaceText("СФСр", "МПВСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightMPV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+
                     }
-                    //RightLL += "ППВ : " + CreateStrForOverview(RightPPV) + "\n";
-
-
 
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightGV)))
                     {
@@ -5089,37 +5616,44 @@ namespace WpfApp2.ViewModels
                         document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightGV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
                     }
-                    // RightLL += "Глубокие вены : " + CreateStrForOverview(RightGV) + "\nСФСр";
-
-
-                    // document.ReplaceText("СФСр", RightLL, false, System.Text.RegularExpressions.RegexOptions.None, d);
-
-
+                    //
                     RightLL = "";
-                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightSFS)))
-                        RightLL += "СФС : " + CreateStrForOverview(RightSFS) + "\n";
-
-
-                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightBPVHip)))
-                        RightLL += "БПВ на бедре : " + CreateStrForOverview(RightBPVHip) + "\n";
-
-
-
-
-                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightBPVTibia)))
-
-                        RightLL += "БПВ на голени " + CreateStrForOverview(RightBPVTibia) + "\n";
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightPPV)))
+                    {
+                        RightLL += "ППВ : " + CreateStrForOverview(RightPPV) + "\n";
+                        //document.ReplaceText("СФСр", "ППВСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        //document.ReplaceText("СФСр", ": " + CreateStrForOverview(RightPPV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                    }
 
 
 
-                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightSPS)))
+               
 
-                        RightLL += "СПС : " + CreateStrForOverview(RightSPS) + "\n";
+                  
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightPDSV)))
+                        RightLL += "ПДСВ : " + CreateStrForOverview(RightPDSV) + "\n";
+
+                    //
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightZDSV)))
+                        RightLL += "ЗДСВ : " + CreateStrForOverview(RightZDSV) + "\n";
+
+                    //
 
 
-                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightMPV)))
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightPerforate))) 
 
-                        RightLL += "МПВ : " + CreateStrForOverview(RightMPV) + "\n";
+                         RightLL += "Перфоранты бедра и несафенные вены " + CreateStrForOverview(RightPerforate) + "\n";
+
+
+                    //
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightTibiaPerforate)))
+
+                        RightLL += "Перфоранты голени : " + CreateStrForOverview(RightTibiaPerforate) + "\n";
+
+
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightTEMPV)))
+
+                        RightLL += "ТЕМПВ : " + CreateStrForOverview(RightTEMPV) + "\n";
 
 
 
@@ -5139,98 +5673,181 @@ namespace WpfApp2.ViewModels
 
 
                     //область
-                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftPDSV)))
-                    {
-                        document.ReplaceText("СФСл", "ПДСВСФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСл", ": " + CreateStrForOverview(LeftPDSV) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                    //if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftPDSV)))
+                    //{
+                    //    document.ReplaceText("СФСл", "ПДСВСФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                    //    document.ReplaceText("СФСл", ": " + CreateStrForOverview(LeftPDSV) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
-                    }
+                    //}
 
-                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftZDSV)))
-                    {
-                        document.ReplaceText("СФСл", "ЗДСВСФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСл", ": " + CreateStrForOverview(LeftZDSV) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                    //if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftZDSV)))
+                    //{
+                    //    document.ReplaceText("СФСл", "ЗДСВСФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                    //    document.ReplaceText("СФСл", ": " + CreateStrForOverview(LeftZDSV) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
-                    }
-                    //LeftLL += "ЗДСВ : " + CreateStrForOverview(LeftZDSV) + "\n";
-
-
-
-                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftPerforate)))
-                    {
-                        document.ReplaceText("СФСл", "Перфоранты бедра и несафенные веныСФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСл", ": " + CreateStrForOverview(LeftPerforate) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
-                    }
-                    //  LeftLL += "Перфоранты бедра и несафенные вены : " + CreateStrForOverview(LeftPerforate) + "\n";
-                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftTibiaPerforate)))
-                    {
-
-                        document.ReplaceText("СФСл", "Перфоранты голениСФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСл", ": " + CreateStrForOverview(LeftTibiaPerforate) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
-
-
-                        //  LeftLL += "Перфоранты голени : " + CreateStrForOverview(LeftTibiaPerforate) + "\n";
-
-                    }
-                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftTEMPV)))
-                    {
-                        document.ReplaceText("СФСл", "ТЕМПВСФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСл", ": " + CreateStrForOverview(LeftTEMPV) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
-
-                    }
-                    // LeftLL += "ТЕМПВ : " + CreateStrForOverview(LeftTEMPV) + "\n";
+                    //}
+                    ////LeftLL += "ЗДСВ : " + CreateStrForOverview(LeftZDSV) + "\n";
 
 
 
+                    //if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftPerforate)))
+                    //{
+                    //    document.ReplaceText("СФСл", "Перфоранты бедра и несафенные веныСФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                    //    document.ReplaceText("СФСл", ": " + CreateStrForOverview(LeftPerforate) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                    //}
+                    ////  LeftLL += "Перфоранты бедра и несафенные вены : " + CreateStrForOverview(LeftPerforate) + "\n";
+                    //if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftTibiaPerforate)))
+                    //{
 
-                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftPPV)))
-                    {
-                        document.ReplaceText("СФСл", "ППВСФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСл", ": " + CreateStrForOverview(LeftPPV) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
-
-                    }
-                    //LeftLL += "ППВ : " + CreateStrForOverview(LeftPPV) + "\n";
-
-
-
-                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftGV)))
-                    {
-                        document.ReplaceText("СФСл", "Глубокие веныСФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
-                        document.ReplaceText("СФСл", ": " + CreateStrForOverview(LeftGV) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
-
-                    }
-                    // LeftLL += "Глубокие вены : " + CreateStrForOverview(LeftGV) + "\nСФСл";
+                    //    document.ReplaceText("СФСл", "Перфоранты голениСФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                    //    document.ReplaceText("СФСл", ": " + CreateStrForOverview(LeftTibiaPerforate) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
 
-                    // document.ReplaceText("СФСл", LeftLL, false, System.Text.RegularExpressions.RegexOptions.None, d);
+                    //    //  LeftLL += "Перфоранты голени : " + CreateStrForOverview(LeftTibiaPerforate) + "\n";
+
+                    //}
+                    //if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftTEMPV)))
+                    //{
+                    //    document.ReplaceText("СФСл", "ТЕМПВСФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                    //    document.ReplaceText("СФСл", ": " + CreateStrForOverview(LeftTEMPV) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+
+                    //}
+                    //// LeftLL += "ТЕМПВ : " + CreateStrForOverview(LeftTEMPV) + "\n";
 
 
-                    LeftLL = "";
+
+
+                    //if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftPPV)))
+                    //{
+                    //    document.ReplaceText("СФСл", "ППВСФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                    //    document.ReplaceText("СФСл", ": " + CreateStrForOverview(LeftPPV) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+
+                    //}
+                    ////LeftLL += "ППВ : " + CreateStrForOverview(LeftPPV) + "\n";
+
+
+
+                    //if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftGV)))
+                    //{
+                    //    document.ReplaceText("СФСл", "Глубокие веныСФСл", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                    //    document.ReplaceText("СФСл", ": " + CreateStrForOverview(LeftGV) + "\nСФСл", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+
+                    //}
+                    //// LeftLL += "Глубокие вены : " + CreateStrForOverview(LeftGV) + "\nСФСл";
+
+
+                    //// document.ReplaceText("СФСл", LeftLL, false, System.Text.RegularExpressions.RegexOptions.None, d);
+
+
+                    //LeftLL = "";
+                    //if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftSFS)))
+                    //    LeftLL += "СФС : " + CreateStrForOverview(LeftSFS) + "\n";
+
+
+                    //if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftBPVHip)))
+                    //    LeftLL += "БПВ на бедре : " + CreateStrForOverview(LeftBPVHip) + "\n";
+
+
+
+
+                    //if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftBPVTibia)))
+
+                    //    LeftLL += "БПВ на голени " + CreateStrForOverview(LeftBPVTibia) + "\n";
+
+
+
+                    //if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftSPS)))
+
+                    //    LeftLL += "СПС : " + CreateStrForOverview(LeftSPS) + "\n";
+
+
+                    //if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftMPV)))
+
+                    //    LeftLL += "МПВ : " + CreateStrForOverview(LeftMPV) + "\n";
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftSFS)))
-                        LeftLL += "СФС : " + CreateStrForOverview(LeftSFS) + "\n";
+                    {
+                        document.ReplaceText("СФСр", "СФССФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСр", ": " + CreateStrForOverview(LeftSFS) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
-
+                    }
+                    //
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftBPVHip)))
-                        LeftLL += "БПВ на бедре : " + CreateStrForOverview(LeftBPVHip) + "\n";
+                    {
+                        document.ReplaceText("СФСр", "БПВ на бедреСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСр", ": " + CreateStrForOverview(LeftBPVHip) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
-
+                    }
+                    //
 
 
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftBPVTibia)))
-
-                        LeftLL += "БПВ на голени " + CreateStrForOverview(LeftBPVTibia) + "\n";
-
-
-
+                    {
+                        document.ReplaceText("СФСр", "БПВ на голениСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСр", ": " + CreateStrForOverview(LeftBPVTibia) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                    }
+                    //
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftSPS)))
+                    {
 
-                        LeftLL += "СПС : " + CreateStrForOverview(LeftSPS) + "\n";
+                        document.ReplaceText("СФСр", "СПССФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСр", ": " + CreateStrForOverview(LeftSPS) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
 
+
+
+                    }
+                    //
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftMPV)))
+                    {
+                        document.ReplaceText("СФСр", "МПВСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСр", ": " + CreateStrForOverview(LeftMPV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
 
-                        LeftLL += "МПВ : " + CreateStrForOverview(LeftMPV) + "\n";
+                    }
 
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftGV)))
+                    {
+                        document.ReplaceText("СФСр", "Глубокие веныСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        document.ReplaceText("СФСр", ": " + CreateStrForOverview(LeftGV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+
+                    }
+                    //
+                    LeftLL = "";
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftPPV)))
+                    {
+                        LeftLL += "ППВ : " + CreateStrForOverview(LeftPPV) + "\n";
+                        //document.ReplaceText("СФСр", "ППВСФСр", false, System.Text.RegularExpressions.RegexOptions.None, d);
+                        //document.ReplaceText("СФСр", ": " + CreateStrForOverview(LeftPPV) + "\nСФСр", false, System.Text.RegularExpressions.RegexOptions.None, dx);
+                    }
+
+
+
+
+
+
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftPDSV)))
+                        LeftLL += "ПДСВ : " + CreateStrForOverview(LeftPDSV) + "\n";
+
+                    //
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftZDSV)))
+                        LeftLL += "ЗДСВ : " + CreateStrForOverview(LeftZDSV) + "\n";
+
+                    //
+
+
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftPerforate)))
+
+                        LeftLL += "Перфоранты бедра и несафенные вены " + CreateStrForOverview(LeftPerforate) + "\n";
+
+
+                    //
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftTibiaPerforate)))
+
+                        LeftLL += "Перфоранты голени : " + CreateStrForOverview(LeftTibiaPerforate) + "\n";
+
+
+                    if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftTEMPV)))
+
+                        LeftLL += "ТЕМПВ : " + CreateStrForOverview(LeftTEMPV) + "\n";
 
 
 
@@ -8851,13 +9468,13 @@ namespace WpfApp2.ViewModels
                         if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                         { break; }
 
-                          newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                        newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
 
                         if (Part.LegSections[i].SelectedValue != null)
                         {
                             newSFSentry.StructureID = Part.LegSections[i].SelectedValue.Id;
                         }
-                          test = true;
+                        test = true;
                         if (i == 0)
                         {
 
