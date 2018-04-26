@@ -63,7 +63,17 @@ namespace WpfApp2.ViewModels
         public SclerozPanelViewModel CurrentSavePanelViewModel { get; protected set; }
         public ICommand OpenAddSaveCommand { protected set; get; }
         public DelegateCommand RevertSaveCommand { set; get; }
+        private Visibility _isDocAddedSave;
 
+        public Visibility IsDocAddedSave
+        {
+            get { return _isDocAddedSave; }
+            set
+            {
+                _isDocAddedSave = value;
+                OnPropertyChanged();
+            }
+        }
         //public ObservableCollection<Docs> _doctors;
         //public ObservableCollection<Docs> Doctors { get { return _doctors; } set { _doctors = value; OnPropertyChanged(); } }
         //private int _doctorSelectedId;
@@ -77,6 +87,21 @@ namespace WpfApp2.ViewModels
         //        OnPropertyChanged();
         //    }
         //}
+        int Acc_id = 0;
+        private void SetAccID(object sender, object data)
+        {
+            Acc_id = (int)data;
+            var acc = Data.Accaunt.Get(Acc_id);
+            if (acc.isSecretar != null && acc.isSecretar.Value)
+            {
+                IsVisibleForSecretary = Visibility.Hidden;
+                IsDocAddedSave = Visibility.Hidden;
+            }
+            else
+            {
+                IsVisibleForSecretary = Visibility.Visible;
+            }
+        }
         private Visibility _isDocAdded;
 
         public Visibility IsDocAdded
@@ -88,6 +113,10 @@ namespace WpfApp2.ViewModels
                 OnPropertyChanged();
             }
         }
+        private Visibility _isVisibleForSecretary;
+
+
+        public Visibility IsVisibleForSecretary { get { return _isVisibleForSecretary; } set { _isVisibleForSecretary = value; OnPropertyChanged(); } }
 
         private string _fileName;
         public string _fileNameOnly;
@@ -181,12 +210,15 @@ namespace WpfApp2.ViewModels
                         //}
                         // DoctorSelectedId = CurrentDocument.DoctorId;
                         IsDocAdded = Visibility.Visible;
+                        if (IsVisibleForSecretary != Visibility.Hidden)
+                            IsDocAddedSave = Visibility.Visible;
                         TextForDoWhat = "";
                     }
                     else
                     {
                         //DoctorSelectedId = 0;
                         IsDocAdded = Visibility.Hidden;
+                        IsDocAddedSave = Visibility.Hidden;
                         TextForDoWhat = "Сформируйте или загрузите документ";
 
                     }
@@ -239,7 +271,7 @@ namespace WpfApp2.ViewModels
         {
             IsAnalizeLoadedVisibility = Visibility.Hidden;
             ButtonName = "К Пациенту";//SetCurrentPatientIDRealyThisTime
-
+            MessageBus.Default.Subscribe("SetAccIDForExaminationStatement", SetAccID);
             MessageBus.Default.Subscribe("GetStatementForStatementFILENAME", GetStatementForStatementFILENAME);
             MessageBus.Default.Subscribe("GetStatementForStatement", SetCurrentPatientID);
             MessageBus.Default.Subscribe("SetCurrentPatientIDRealyThisTimeStatement", SetCurrentPatientIDRealyThisTime);

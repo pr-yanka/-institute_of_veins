@@ -60,8 +60,8 @@ namespace WpfApp2.ViewModels
                         MessageBus.Default.Call("SetCurrentACCIDForContext", null, acc.Id);
                         MessageBus.Default.Call("GetAcaunt", null, acc.Id);
                         MessageBus.Default.Call("SetAccIDForAddExamination", null, acc.Id);
-
-
+                        MessageBus.Default.Call("SetAccIDForExaminationStatement", null, acc.Id);
+                        MessageBus.Default.Call("SetAccIDForHirurgOverview", null, acc.Id); 
 
                         if ((acc.isDoctor != null && acc.isDoctor.Value) || (acc.isMedPersonal != null && acc.isMedPersonal.Value))
                         {

@@ -71,6 +71,36 @@ namespace WpfApp2.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        int Acc_id = 0;
+        private void SetAccID(object sender, object data)
+        {
+            Acc_id = (int)data;
+            var acc = Data.Accaunt.Get(Acc_id);
+            if (acc.isSecretar != null && acc.isSecretar.Value)
+            {
+                IsVisibleForSecretary = Visibility.Hidden;
+                IsDocAddedSave = Visibility.Hidden;
+            }
+            else
+            {
+                IsVisibleForSecretary = Visibility.Visible;
+            }
+        }
+
+        private Visibility _isVisibleForSecretary;
+        public Visibility IsVisibleForSecretary { get { return _isVisibleForSecretary; } set { _isVisibleForSecretary = value; OnPropertyChanged(); } }
+        private Visibility _isDocAddedSave;
+
+        public Visibility IsDocAddedSave
+        {
+            get { return _isDocAddedSave; }
+            set
+            {
+                _isDocAddedSave = value;
+                OnPropertyChanged();
+            }
+        }
         private Visibility _isDocAdded;
 
         public Visibility IsDocAdded
@@ -169,11 +199,14 @@ namespace WpfApp2.ViewModels
                         }
                         // DoctorSelectedId = CurrentDocument.DoctorId;
                         IsDocAdded = Visibility.Visible;
+                        if(IsVisibleForSecretary != Visibility.Hidden)
+                        IsDocAddedSave = Visibility.Visible;
                         TextForDoWhat = "";
                     }
                     else
                     {
                         DoctorSelectedId = 0;
+                        IsDocAddedSave = Visibility.Hidden;
                         IsDocAdded = Visibility.Hidden;
                         TextForDoWhat = "Сформируйте или загрузите документ";
 
@@ -208,6 +241,7 @@ namespace WpfApp2.ViewModels
         {
             IsAnalizeLoadedVisibility = Visibility.Hidden;
             ButtonName = "К Пациенту";//SetCurrentPatientIDRealyThisTime
+            MessageBus.Default.Subscribe("SetAccIDForHirurgOverview", SetAccID);
             MessageBus.Default.Subscribe("GetHirurgOverviewForHirurgOverview", SetCurrentPatientID);
             MessageBus.Default.Subscribe("SetCurrentPatientIDRealyThisTime", SetCurrentPatientIDRealyThisTime);
             // MessageBus.Default.Subscribe("GetAnalizeForAnalizeOverview", SetCurrentAnalizeID);

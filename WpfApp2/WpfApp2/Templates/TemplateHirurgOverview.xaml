@@ -22,10 +22,10 @@
                 <ColumnDefinition Width="530"></ColumnDefinition>
                 <ColumnDefinition Width="300"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Style="{StaticResource MyNormalBUTTON}"  Width="290" FontSize="13" Content="Сформировать документ"  Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Command="{Binding Path=OpenSelectDoctorCommand}" ></Button>
-            <Button Style="{StaticResource MyConfirmBUTTON}" Width="290" Content="Загрузить существующий документ" Margin="0,0,0,50"  Grid.Column="0" Grid.Row="1" Grid.RowSpan="4" FontSize="13" Command="{Binding Path=OpenFile}" ></Button>
+            <Button Visibility="{Binding IsVisibleForSecretary}"  Style="{StaticResource MyNormalBUTTON}"  Width="290" FontSize="13" Content="Сформировать документ"  Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Command="{Binding Path=OpenSelectDoctorCommand}" ></Button>
+            <Button Visibility="{Binding IsVisibleForSecretary}"  Style="{StaticResource MyConfirmBUTTON}" Width="290" Content="Загрузить существующий документ" Margin="0,0,0,50"  Grid.Column="0" Grid.Row="1" Grid.RowSpan="4" FontSize="13" Command="{Binding Path=OpenFile}" ></Button>
             <Button Style="{StaticResource MyConfirmBUTTON}" Width="290" Visibility="{Binding IsDocAdded}"  Content="Открыть документ"     Margin="0,0,0,10"  Grid.Column="0" Grid.Row="3" Grid.RowSpan="2" FontSize="13" Command="{Binding Path=OpenWordDocument}" ></Button>
-            <Button Style="{StaticResource MyConfirmBUTTON}" Width="290" Visibility="{Binding IsDocAdded}"  Content="Сохранить изменения"   Grid.Column="0" Grid.Row="3" Grid.RowSpan="3" FontSize="13" Margin="0,69,0,0" Command="{Binding Path=OpenAddSaveCommand}" ></Button>
+            <Button Style="{StaticResource MyConfirmBUTTON}" Width="290" Visibility="{Binding IsDocAddedSave}"  Content="Сохранить изменения"   Grid.Column="0" Grid.Row="3" Grid.RowSpan="3" FontSize="13" Margin="0,69,0,0" Command="{Binding Path=OpenAddSaveCommand}" ></Button>
 
             <!--загрузить другой анализ-->
             <TextBlock  FontSize="18pt" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="10"  HorizontalAlignment="Left" FontFamily="/fonts/#Pescadero"  Height="38" VerticalAlignment="Top" Margin="40,0">
