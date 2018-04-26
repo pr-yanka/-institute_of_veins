@@ -37,6 +37,25 @@ namespace WpfApp2.ViewModels
 
     public class ViewModelViewHistory : ViewModelBase, INotifyPropertyChanged
     {
+        private Visibility _isVisibleForSecretary;
+        int Acc_id = 0;
+
+        private void SetAccID(object sender, object data)
+        {
+            Acc_id = (int)data;
+            var acc = Data.Accaunt.Get(Acc_id);
+            if (acc.isSecretar != null && acc.isSecretar.Value)
+            {
+                IsVisibleForSecretary = Visibility.Hidden;
+            }
+            else
+            {
+                IsVisibleForSecretary = Visibility.Visible;
+            }
+        }
+
+        public Visibility IsVisibleForSecretary { get { return _isVisibleForSecretary; } set { _isVisibleForSecretary = value; OnPropertyChanged(); } }
+
         #region Inotify realisation
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -183,6 +202,7 @@ namespace WpfApp2.ViewModels
 
             base.HasNavigation = true;
             HasNavigation = true;
+            MessageBus.Default.Subscribe("SetAccIDForCurrentPatientHistory", SetAccID);
             MessageBus.Default.Subscribe("OpenHistoryOfPatient", SetCurrentPatientID);
 
             ToAddPhysicalCommand = new DelegateCommand(

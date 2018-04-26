@@ -859,7 +859,7 @@ namespace WpfApp2.ViewModels
                         // document.ReplaceText("буквы_2Ж", lettersLeft);
                         //  document.ReplaceText("буквы_1Ж", "");
                         document.ReplaceText("«Заключение_11»", rightDiag + "\n");
-                        document.ReplaceText("«Заключение_22»", leftDiag + "\n");
+                        document.ReplaceText("«Заключение_22»", "Диагноз: " + leftDiag + "\n");
                         //document.ReplaceText("«Заключение_1»", rightDiag + "\n");
 
                         //document.ReplaceText("«Заключение_2»", "");
@@ -899,7 +899,7 @@ namespace WpfApp2.ViewModels
                             if (Operation.OnWhatLegOp == "0")
                             {
                                 document.ReplaceText(" «Заключение_11Ж»", "");
-                                document.ReplaceText(" «Заключение_22Ж»", leftDiag + "\n");
+                                document.ReplaceText(" «Заключение_22Ж»",   leftDiag + "\n");
                                 document.ReplaceText("«Заключение_1»", rightDiag + "\n");
                                 document.ReplaceText("«Заключение_2»", "");
                             }
@@ -908,7 +908,7 @@ namespace WpfApp2.ViewModels
                                 document.ReplaceText(" «Заключение_11Ж»", rightDiag + "\n");
 
                                 document.ReplaceText(" «Заключение_22Ж»", "");
-                                document.ReplaceText("«Заключение_2»", leftDiag + "\n");
+                                document.ReplaceText("«Заключение_2»", "Диагноз: " + leftDiag + "\n");
                                 document.ReplaceText("«Заключение_1»", "");
 
                             }
@@ -916,7 +916,7 @@ namespace WpfApp2.ViewModels
                             {
                                 document.ReplaceText(" «Заключение_11Ж»", rightDiag + "\n");
                                 // document.ReplaceText("буквы_1Ж", lettersRight);
-                                document.ReplaceText(" «Заключение_22Ж»", leftDiag + "\n");
+                                document.ReplaceText(" «Заключение_22Ж»",  leftDiag + "\n");
                                 // document.ReplaceText("буквы_2Ж", lettersLeft);
                                 document.ReplaceText("«Заключение_1»", "");
                                 document.ReplaceText("«Заключение_2»", "");
@@ -930,13 +930,13 @@ namespace WpfApp2.ViewModels
                                 document.ReplaceText(" «Заключение_11Ж»", leftDiag + "\n");
                                 document.ReplaceText(" «Заключение_22Ж»", "");
                                 document.ReplaceText("«Заключение_1»", "");
-                                document.ReplaceText("«Заключение_2»", rightDiag + "\n");
+                                document.ReplaceText("«Заключение_2»", "Диагноз: " + rightDiag + "\n");
                             }
                             if (Operation.OnWhatLegOp == "1")
                             {
                                 document.ReplaceText(" «Заключение_11Ж»", "");
 
-                                document.ReplaceText(" «Заключение_22Ж»", rightDiag + "\n");
+                                document.ReplaceText(" «Заключение_22Ж»",  rightDiag + "\n");
                                 document.ReplaceText("«Заключение_2»", "");
                                 document.ReplaceText("«Заключение_1»", leftDiag + "\n");
 
@@ -945,7 +945,7 @@ namespace WpfApp2.ViewModels
                             {
                                 document.ReplaceText(" «Заключение_11Ж»", leftDiag + "\n");
                                 // document.ReplaceText("буквы_1Ж", lettersRight);
-                                document.ReplaceText(" «Заключение_22Ж»", rightDiag + "\n");
+                                document.ReplaceText(" «Заключение_22Ж»",  rightDiag + "\n");
                                 // document.ReplaceText("буквы_2Ж", lettersLeft);
                                 document.ReplaceText("«Заключение_1»", "");
                                 document.ReplaceText("«Заключение_2»", "");

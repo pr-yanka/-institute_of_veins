@@ -23,6 +23,24 @@ namespace WpfApp2.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+        private Visibility _isVisibleForSecretary;
+        public Visibility IsVisibleForSecretary { get { return _isVisibleForSecretary; } set { _isVisibleForSecretary = value; OnPropertyChanged(); } }
+
+        int Acc_id = 0;
+
+        private void SetAccID(object sender, object data)
+        {
+            Acc_id = (int)data;
+            var acc = Data.Accaunt.Get(Acc_id);
+            if (acc.isSecretar != null && acc.isSecretar.Value)
+            {
+                IsVisibleForSecretary = Visibility.Hidden;
+            }
+            else
+            {
+                IsVisibleForSecretary = Visibility.Visible;
+            }
+        }
         public DelegateCommand ToEditPatientCommand { get; protected set; }
         public DelegateCommand ToTablePatientsCommand { get; protected set; }
         public DelegateCommand ToDashboardCommand { get; protected set; }
@@ -115,7 +133,7 @@ namespace WpfApp2.ViewModels
         public ViewModelCurrentPatient(NavigationController controller) : base(controller)
         {
             MessageBus.Default.Subscribe("GetCurrentPatientId", SetCurrentPatientID);
-
+            MessageBus.Default.Subscribe("SetAccIDForCurrentPatient", SetAccID);
             base.HasNavigation = true;
 
 

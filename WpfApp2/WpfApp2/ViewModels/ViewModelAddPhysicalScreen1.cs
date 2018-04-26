@@ -48,6 +48,11 @@ namespace WpfApp2.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private Visibility _isVisibleForSecretarySign;
+
+
+        public Visibility IsVisibleForSecretarySign { get { return _isVisibleForSecretarySign; } set { _isVisibleForSecretarySign = value; OnPropertyChanged(); } }
+
         private Visibility _isVisibleForSecretary;
 
 
@@ -4859,11 +4864,20 @@ namespace WpfApp2.ViewModels
             ToCurrentPatientCommand = new DelegateCommand(
                 () =>
                 {
-                    testThread = false;
 
-                    RemoveAllSaves();
-                    MessageBus.Default.Call("GetCurrentPatientId", this, CurrentPatient.Id);
-                    Controller.NavigateTo<ViewModelCurrentPatient>();
+
+                    MessageBoxResult dialogResult = MessageBox.Show("Вернуться на страницу пациента? Текущий прогресс будет потерян", "", MessageBoxButton.YesNo);
+                    if (dialogResult == MessageBoxResult.Yes)
+                    {
+                        testThread = false;
+                        RemoveAllSaves();
+                        MessageBus.Default.Call("GetCurrentPatientId", this, CurrentPatient.Id);
+                        Controller.NavigateTo<ViewModelCurrentPatient>();
+
+                    }
+
+
+
                 }
             );
         }
@@ -4875,10 +4889,12 @@ namespace WpfApp2.ViewModels
             if (acc.isSecretar != null && acc.isSecretar.Value)
             {
                 IsVisibleForSecretary = Visibility.Hidden;
+                IsVisibleForSecretarySign = Visibility.Visible;
             }
             else
             {
                 IsVisibleForSecretary = Visibility.Visible;
+                IsVisibleForSecretarySign = Visibility.Hidden;
             }
         }
         private void GetObsFromSavedOverview(object sender, object data)
@@ -11501,8 +11517,8 @@ namespace WpfApp2.ViewModels
             SetAllBordersDefault();
 
             testThread = true;
-
-            if (!isDelayStarted)
+            var acc = Data.Accaunt.Get(Acc_id);
+            if (!isDelayStarted && (acc.isSecretar == null || !acc.isSecretar.Value))
                 DelayTest();
         }
         bool testThread = false;
@@ -14508,7 +14524,7 @@ namespace WpfApp2.ViewModels
             //textBox1.Text += "\r\nThread Sleeps!";
             for (; ; )
             {
-                if (testThread)
+                if (testThread && IsVisibleForSecretary != Visibility.Visible)
                 {
                     await Task.Delay(16000);
                     if (!testThread)
