@@ -14524,7 +14524,7 @@ namespace WpfApp2.ViewModels
             //textBox1.Text += "\r\nThread Sleeps!";
             for (; ; )
             {
-                if (testThread && IsVisibleForSecretary != Visibility.Visible)
+                if (testThread)
                 {
                     await Task.Delay(16000);
                     if (!testThread)
