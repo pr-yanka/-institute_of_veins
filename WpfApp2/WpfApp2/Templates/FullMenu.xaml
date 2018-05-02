@@ -24,6 +24,9 @@
                 <Separator HorizontalAlignment="Left" Visibility="{Binding PanelAdminVisibility}"         VerticalAlignment="Top" Width="199"/>
 
                 <Button x:Name="button_Copey4" Visibility="{Binding PanelAdminVisibility}"         Content="ПАНЕЛЬ АДМИНИСТРАТОРА" FontFamily="Segoe UI Light" Command="{Binding ToAdminPanelCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="212" Height="43"  Background="{x:Null}" FontSize="14" BorderBrush="{x:Null}"  Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+                <Separator HorizontalAlignment="Left"        VerticalAlignment="Top" Width="199"/>
+
+                <Button x:Name="button_Cop8ey4" Visibility="Visible"         Content="Сменить аккаунт" FontFamily="Segoe UI Light" Command="{Binding ToLoginCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="212" Height="43"  Background="{x:Null}" FontSize="14" BorderBrush="{x:Null}"  Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
 
             </StackPanel>
 

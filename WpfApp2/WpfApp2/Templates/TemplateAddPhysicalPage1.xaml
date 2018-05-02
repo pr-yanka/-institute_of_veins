@@ -26,6 +26,7 @@
             <Separator HorizontalAlignment="Left" Height="5" Margin="0,28,0,0" VerticalAlignment="Top" Width="1016" RenderTransformOrigin="0.51,0.49"/>
             <!--У вас нет прав для просмотра этого раздела.-->
             <TextBlock  Visibility="{Binding IsVisibleForSecretarySign}" x:Name="textBlock332" TextAlignment="Center" HorizontalAlignment="Left" Margin="300,330,0,0" TextWrapping="Wrap" Text="У вас нет прав для просмотра этого раздела." VerticalAlignment="Top" Width="auto" FontSize="18pt" Height="28" FontFamily="Segoe UI Semibold" />
+            <TextBlock  Visibility="{Binding IsVisibleForSecretarySign}" x:Name="textBloвck332" TextAlignment="Center" HorizontalAlignment="Left" Margin="240,601,0,0" TextWrapping="Wrap" Text="Рекомендации" VerticalAlignment="Top" Width="auto" FontSize="12pt" Height="28" FontFamily="Segoe UI Semibold" />
 
             <ListBox Visibility="{Binding IsVisibleForSecretary}" x:Name="listBox1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=ComplainsList}" HorizontalAlignment="Left" Height="97" Margin="505,62,0,0" VerticalAlignment="Top" Width="487" BorderThickness="1">
                 <ListBox.ItemTemplate>

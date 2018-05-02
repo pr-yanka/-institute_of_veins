@@ -25,7 +25,12 @@ namespace WpfApp2.ViewModels
         public DelegateCommand<object> ToDashboardCommand { get; protected set; }
 
         public BPVHipRepository rep;
+        private void SetDefault(object sender, object data)
+        {
 
+            Name = "";
+
+        }
         private void SetCurrAccIdBack(object sender, object data)
         {
 
@@ -37,7 +42,8 @@ namespace WpfApp2.ViewModels
         {
             HasNavigation = false;
             MessageBus.Default.Subscribe("SetCurrAccIdBack", SetCurrAccIdBack);
-
+            MessageBus.Default.Subscribe("SetAccNameDefault", SetDefault);
+            
 
             ToDashboardCommand = new DelegateCommand<object>(
         (sender) =>
@@ -84,13 +90,14 @@ namespace WpfApp2.ViewModels
                             MessageBus.Default.Call("SetAlertVisibility", this, Visibility.Collapsed);
                             MessageBus.Default.Call("SetVisibilityPanelAdmin", this, Visibility.Collapsed);
                             MessageBus.Default.Call("SetVisibilityForDocsOrMed", this, Visibility.Collapsed);
+                            MessageBus.Default.Call("SetCurrentACCOp", this, acc.Id);
                         }
                         else
                         {
                             MessageBus.Default.Call("SetAlertVisibility", this, Visibility.Collapsed);
                             MessageBus.Default.Call("SetVisibilityPanelAdmin", this, Visibility.Collapsed);
                             MessageBus.Default.Call("SetVisibilityForDocsOrMed", this, Visibility.Collapsed);
-
+                            MessageBus.Default.Call("SetCurrentACCOp", this, acc.Id);
                         }
                         Controller.NavigateTo<ViewModelDashboard>();
 

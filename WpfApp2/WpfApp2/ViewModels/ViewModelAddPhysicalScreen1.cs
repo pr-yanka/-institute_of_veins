@@ -158,15 +158,15 @@ namespace WpfApp2.ViewModels
             set
             {
                 _leftAdditionalText = value; OnPropertyChanged();
-                if (string.IsNullOrWhiteSpace(LeftAdditionalText))
-                {
+                //if (string.IsNullOrWhiteSpace(LeftAdditionalText))
+                //{
 
-                    BAdditionalText = Brushes.Red;
-                }
-                else if (!string.IsNullOrWhiteSpace(LeftAdditionalText))
-                {
-                    BAdditionalText = null;
-                }
+                //    BAdditionalText = Brushes.Red;
+                //}
+                //else if (!string.IsNullOrWhiteSpace(LeftAdditionalText))
+                //{
+                //    BAdditionalText = null;
+                //}
 
             }
         }
@@ -176,15 +176,15 @@ namespace WpfApp2.ViewModels
             set
             {
                 _rightAdditionalText = value; OnPropertyChanged();
-                if (string.IsNullOrWhiteSpace(RightAdditionalText))
-                {
+                //if (string.IsNullOrWhiteSpace(RightAdditionalText))
+                //{
 
-                    BAdditionalTextL = Brushes.Red;
-                }
-                else if (!string.IsNullOrWhiteSpace(RightAdditionalText))
-                {
-                    BAdditionalTextL = null;
-                }
+                //    BAdditionalTextL = Brushes.Red;
+                //}
+                //else if (!string.IsNullOrWhiteSpace(RightAdditionalText))
+                //{
+                //    BAdditionalTextL = null;
+                //}
             }
         }
         private Visibility _isVisibleTextTTT;
@@ -1317,14 +1317,14 @@ namespace WpfApp2.ViewModels
             //{
             //    MessageBox.Show("ППВ слева не заполнено");
             //}
-            else if (string.IsNullOrWhiteSpace(RightAdditionalText))
-            {
-                MessageBox.Show("Примечание справа не заполнено");
-            }
-            else if (string.IsNullOrWhiteSpace(LeftAdditionalText))
-            {
-                MessageBox.Show("Примечание слева не заполнено");
-            }
+            //else if (string.IsNullOrWhiteSpace(RightAdditionalText))
+            //{
+            //    MessageBox.Show("Примечание справа не заполнено");
+            //}
+            //else if (string.IsNullOrWhiteSpace(LeftAdditionalText))
+            //{
+            //    MessageBox.Show("Примечание слева не заполнено");
+            //}
 
 
 
@@ -2722,7 +2722,7 @@ namespace WpfApp2.ViewModels
                         if (letter.IsChecked != null && letter.IsChecked == true)
                         {
                             if (x == 0)
-                                p4.Append("" + letter.Data.Str + "").Font("Times new roman").FontSize(11.0);
+                                p4.Append("" + FirstCharToLower(GetStrFixedForDocumemnt(letter.Data.Str)) + "").Font("Times new roman").FontSize(11.0);
 
                             else
                             {
@@ -2761,7 +2761,7 @@ namespace WpfApp2.ViewModels
                         if (letter.IsChecked != null && letter.IsChecked == true)
                         {
                             if (x == 0)
-                                p4.Append("" + letter.Data.Str + "").Font("Times new roman").FontSize(11.0);
+                                p4.Append("" + FirstCharToLower(GetStrFixedForDocumemnt(letter.Data.Str)) + "").Font("Times new roman").FontSize(11.0);
 
                             else
                             {
@@ -3041,26 +3041,26 @@ namespace WpfApp2.ViewModels
             //    BPPV = null;
             //}
 
-            if (string.IsNullOrWhiteSpace(RightAdditionalText))
-            {
+            //if (string.IsNullOrWhiteSpace(RightAdditionalText))
+            //{
 
-                BAdditionalTextL = Brushes.Red;
-            }
-            else if (!string.IsNullOrWhiteSpace(RightAdditionalText))
-            {
-                BAdditionalTextL = null;
-            }
+            //    BAdditionalTextL = Brushes.Red;
+            //}
+            //else if (!string.IsNullOrWhiteSpace(RightAdditionalText))
+            //{
+            //    BAdditionalTextL = null;
+            //}
 
 
-            if (string.IsNullOrWhiteSpace(LeftAdditionalText))
-            {
+            //if (string.IsNullOrWhiteSpace(LeftAdditionalText))
+            //{
 
-                BAdditionalText = Brushes.Red;
-            }
-            else if (!string.IsNullOrWhiteSpace(LeftAdditionalText))
-            {
-                BAdditionalText = null;
-            }
+            //    BAdditionalText = Brushes.Red;
+            //}
+            //else if (!string.IsNullOrWhiteSpace(LeftAdditionalText))
+            //{
+            //    BAdditionalText = null;
+            //}
 
             if (LeftCEAR.LegSections[0].SelectedValue == null)
             {
@@ -3109,7 +3109,7 @@ namespace WpfApp2.ViewModels
             }
 
         }
-
+        bool isEdited = false;
         //private bool TestAllFIelds()
         //{
 
@@ -4208,14 +4208,14 @@ namespace WpfApp2.ViewModels
                     {
                         MessageBox.Show("МПВ слева не заполнено");
                     }
-                    else if (string.IsNullOrWhiteSpace(RightAdditionalText))
-                    {
-                        MessageBox.Show("Примечание справа не заполнено");
-                    }
-                    else if (string.IsNullOrWhiteSpace(LeftAdditionalText))
-                    {
-                        MessageBox.Show("Примечание слева не заполнено");
-                    }
+                    //else if (string.IsNullOrWhiteSpace(RightAdditionalText))
+                    //{
+                    //    MessageBox.Show("Примечание справа не заполнено");
+                    //}
+                    //else if (string.IsNullOrWhiteSpace(LeftAdditionalText))
+                    //{
+                    //    MessageBox.Show("Примечание слева не заполнено");
+                    //}
 
 
 
@@ -4865,19 +4865,25 @@ namespace WpfApp2.ViewModels
                 () =>
                 {
 
-
-                    MessageBoxResult dialogResult = MessageBox.Show("Вернуться на страницу пациента? Текущий прогресс будет потерян", "", MessageBoxButton.YesNo);
-                    if (dialogResult == MessageBoxResult.Yes)
+                    var acc = Data.Accaunt.Get(Acc_id);
+                    if ((acc.isSecretar == null || !acc.isSecretar.Value) && isEdited == true)
+                    {
+                        MessageBoxResult dialogResult = MessageBox.Show("Вернуться на страницу пациента? Текущий прогресс будет потерян.", "", MessageBoxButton.YesNo);
+                        if (dialogResult == MessageBoxResult.Yes)
+                        {
+                            testThread = false;
+                            RemoveAllSaves();
+                            MessageBus.Default.Call("GetCurrentPatientId", this, CurrentPatient.Id);
+                            Controller.NavigateTo<ViewModelCurrentPatient>();
+                        }
+                    }
+                    else
                     {
                         testThread = false;
                         RemoveAllSaves();
                         MessageBus.Default.Call("GetCurrentPatientId", this, CurrentPatient.Id);
                         Controller.NavigateTo<ViewModelCurrentPatient>();
-
                     }
-
-
-
                 }
             );
         }
@@ -5199,8 +5205,9 @@ namespace WpfApp2.ViewModels
                     obsid = Exam.id_current_examination.Value;
                 }
             }
-
+           
             Controller.NavigateTo<ViewModelAddPhysical>();
+            isEdited = false;
         }
 
         private void CreateStatement(object p1, object p2)
@@ -11520,6 +11527,8 @@ namespace WpfApp2.ViewModels
             var acc = Data.Accaunt.Get(Acc_id);
             if (!isDelayStarted && (acc.isSecretar == null || !acc.isSecretar.Value))
                 DelayTest();
+
+            isEdited = false;
         }
         bool testThread = false;
         private void RemoveAllSaves()
@@ -15655,6 +15664,7 @@ namespace WpfApp2.ViewModels
 
             }
             MessageBus.Default.Call("SetMode", this, "Normal");
+            isEdited = false;
         }
         //  public ObservableCollection<>
         //кто присылает и что присылает
@@ -15686,7 +15696,7 @@ namespace WpfApp2.ViewModels
 
             isOneTime = true;
             isOneTimeRight = true;
-
+            isEdited = true;
             MessageBus.Default.Call("SetScrollForAddObsled", ScrollSize, null);
             MessageBus.Default.Call("SetScrollForAddObsledRight", ScrollSize, null);
             Type senderType = sender.GetType();

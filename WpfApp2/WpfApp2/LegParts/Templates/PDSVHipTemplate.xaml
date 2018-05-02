@@ -47,7 +47,7 @@
 
                     <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="0,4,5,0" TextWrapping="Wrap" Text="ПДСВ интерфасциально располагается" VerticalAlignment="Top" FontSize="18"/>
 
-                    <ComboBox Height="30" x:Name="firstLevelBlock" SelectedIndex="{Binding Path=AdditionalStructure.SelectedIndex,UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding Path=AdditionalStructure.SelectedValue,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Path=AdditionalStructure.StructureSource,UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Width="623">
+                    <ComboBox Height="30" x:Name="firstLevelBlock" SelectedIndex="{Binding Path=AdditionalStructure.SelectedIndex,UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding Path=AdditionalStructure.SelectedValue,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding Path=AdditionalStructure.StructureSource,UpdateSourceTrigger=PropertyChanged}" Margin="15,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Width="623">
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">

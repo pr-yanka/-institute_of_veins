@@ -411,7 +411,9 @@ namespace WpfApp2.ViewModels
 
                     // Controller.NavigateTo<ViewModelCalendarOperations>();
                 }
-                catch { }
+                catch(Exception ex) {
+
+                }
             }
         }
 
@@ -461,7 +463,7 @@ namespace WpfApp2.ViewModels
                         CurrentAcaunt = (int)data;
 
                         CurrentAc = Data.Accaunt.Get((int)data);
-                        if (CurrentAc.isAdmin != null && CurrentAc.isAdmin.Value)
+                        if ((CurrentAc.isDoctor == null || !CurrentAc.isDoctor.Value) || (CurrentAc.isMedPersonal == null || !CurrentAc.isMedPersonal.Value))
                         {
                             isMyOpVisible = Visibility.Collapsed;
                             SelectedIdDocMed = 0;
@@ -486,7 +488,7 @@ namespace WpfApp2.ViewModels
                     else
                     {
                         CurrentAc = Data.Accaunt.Get(CurrentAcaunt);
-                        if (CurrentAc.isAdmin != null && CurrentAc.isAdmin.Value)
+                        if ((CurrentAc.isDoctor == null || !CurrentAc.isDoctor.Value) || (CurrentAc.isMedPersonal == null || !CurrentAc.isMedPersonal.Value))
                         {
                             isMyOpVisible = Visibility.Collapsed;
                             SelectedIdDocMed = 0;

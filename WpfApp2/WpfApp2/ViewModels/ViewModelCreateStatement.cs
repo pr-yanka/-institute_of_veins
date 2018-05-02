@@ -103,6 +103,17 @@ namespace WpfApp2.ViewModels
         public DateTime Date { get; set; }
         public string OperationType { get; set; }
         // public Patient CurrentPatient;
+
+        public static string FirstCharToLower(string input)
+        {
+            switch (input)
+            {
+                case null: return "";
+                case "": return "";
+                default: return input.First().ToString().ToLower() + input.Substring(1);
+            }
+        }
+
         private int operationId;
         private Patient _currentPatient;
         public SclerozPanelViewModel CurrentSelectDoctorPanelViewModel { get; protected set; }

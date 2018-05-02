@@ -95,6 +95,7 @@ namespace WpfApp2.ViewModels
             ToLoginCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("SetAccNameDefault", null, null);
                     Controller.NavigateTo<ViewModelLogin>();
                 });
 

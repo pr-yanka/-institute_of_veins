@@ -118,6 +118,8 @@
     </Style>
     <DataTemplate x:Key="TemplateTablePatients">
         <Grid>
+            <Button x:Name="button_Copy4f" Content="Новый пациент"  Command="{Binding Path=ToNewPatientCommand}" HorizontalAlignment="Left" Margin="750,672,0,0" VerticalAlignment="Top"
+                 Style="{StaticResource MyConfirmBUTTON}"  />
             <Menu Height="61" VerticalAlignment="Top" Background="{x:Null}" HorizontalContentAlignment="Right">
                 <MenuItem Margin="1120,0,0,0">
                     <MenuItem.Header>
@@ -136,7 +138,7 @@
             <TextBlock Canvas.ZIndex="2" Visibility="{Binding VisOfNothingFaund}" TextWrapping="Wrap" Height="28" Text="Ничего не найдено" FontFamily="/fonts/#Pescadero" FontSize="14pt" Margin="514,350,0,230" RenderTransformOrigin="0.591,0.516"/>
 
             <DataGrid  BorderBrush="Black" BorderThickness="1" CanUserReorderColumns="False" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  AutoGenerateColumns="False" ItemsSource="{Binding Path=ViewSource.View}" x:Name="dataGrid" ScrollViewer.VerticalScrollBarVisibility="Visible"
-                 Margin="251,140,0,0" Height="500" VerticalScrollBarVisibility="Auto" Width="696" FontSize="14" HorizontalAlignment="Left">
+                 Margin="251,165,0,0" Height="420" VerticalScrollBarVisibility="Auto" Width="696" FontSize="14" HorizontalAlignment="Left">
                 <DataGrid.Columns >
                     <DataGridTextColumn  IsReadOnly="True"   Header="Фамилия" CellStyle="{StaticResource MyDataGridCell2}"  Binding="{Binding CurrentPatient.Sirname}" ></DataGridTextColumn>
                     <DataGridTextColumn  IsReadOnly="True"   Header="Имя" CellStyle="{StaticResource MyDataGridCell}"  Binding="{Binding CurrentPatient.Name}" ></DataGridTextColumn>

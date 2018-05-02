@@ -359,7 +359,7 @@ namespace WpfApp2.ViewModels
             if (Date.Day >= DateTime.Now.Day && Date.Month >= DateTime.Now.Month && Date.Year >= DateTime.Now.Year)
             {
                 Date_B = Brushes.Red;
-                MessageBox.Show("Дата заполнена неправильно");
+                MessageBox.Show("Дата рождения заполнена неправильно");
 
             }
 
