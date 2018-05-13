@@ -711,7 +711,7 @@ namespace WpfApp2.Db.Models
         }
 
 
-        public MySqlContext() : base("server=localhost;user=root;database=med_db;password=22222;")
+        public MySqlContext() : base(System.Configuration.ConfigurationManager.ConnectionStrings["MySql"].ConnectionString)
         {
             Currid_аккаунта = 0;
             MessageBus.Default.Subscribe("SetCurrentACCIDForContext", SetCurrentid_аккаунтаForContext);
