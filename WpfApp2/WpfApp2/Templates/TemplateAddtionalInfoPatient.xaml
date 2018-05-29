@@ -14,40 +14,45 @@
     </Style>
     <DataTemplate x:Key="TemplateAddtionalInfoPatient">
         <Grid Margin="227,57,0,0" >
-            <TextBlock FontFamily="/fonts/#Pescadero" Width="Auto" FontSize="22pt" HorizontalAlignment="Left" VerticalAlignment="Top" Height="Auto"  Text="Амбулаторная карта">
-
-                <TextBlock.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform/>
-                        <TranslateTransform Y="10"/>
-                        <TranslateTransform X="25"/>
-                    </TransformGroup>
-                </TextBlock.RenderTransform>
-            </TextBlock>
-            <TextBlock FontFamily="/fonts/#Pescadero"  FontSize="22pt" HorizontalAlignment="Right" Width="422" VerticalAlignment="Top" Height="Auto" Margin="30,0" x:Name="ddsadsds" Text="{Binding Path=Initials}">
-
-                <TextBlock.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform/>
-                        <TranslateTransform Y="10"/>
-                        <TranslateTransform X="10"/>
-                    </TransformGroup>
-                </TextBlock.RenderTransform>
-            </TextBlock>
-
-            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button" Visibility="Hidden" Content="Загрузить данные из регистратуры" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top"/>
-            <Button x:Name="button_Copy3" Visibility="{Binding Path=Visibility}" Content="Сбросить" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="-6,630,0,0" VerticalAlignment="Top"
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <TextBlock FontFamily="/fonts/#Pescadero" Width="Auto" FontSize="22pt" HorizontalAlignment="Left" VerticalAlignment="Top" Height="Auto"  Text="Амбулаторная карта">
+                    <TextBlock.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform Y="10"/>
+                            <TranslateTransform X="25"/>
+                        </TransformGroup>
+                    </TextBlock.RenderTransform>
+                </TextBlock>
+                <TextBlock FontFamily="/fonts/#Pescadero"  FontSize="22pt" HorizontalAlignment="Right" Width="422" VerticalAlignment="Top" Height="Auto" Margin="30,0" x:Name="ddsadsds" Text="{Binding Path=Initials}">
+                    <TextBlock.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform Y="10"/>
+                            <TranslateTransform X="10"/>
+                        </TransformGroup>
+                    </TextBlock.RenderTransform>
+                </TextBlock>
+            </StackPanel>
+            <!--<Button Grid.Row="2" Style="{StaticResource MyConfirmBUTTON}" x:Name="button" Visibility="Collapsed" Content="Загрузить данные из регистратуры" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"/>-->
+            <Button Grid.Row="2" x:Name="button_Copy3" Visibility="{Binding Path=Visibility}" Content="Сбросить" Command="{Binding Path=ToDashboardCommand}" HorizontalAlignment="Left" Margin="-6,0,0,0"  
                  Style="{StaticResource MyNormalBUTTON}" Width="200"/>
-            <Button x:Name="button_Copy4" Content="{Binding Path=NameOfButton}"  Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="550,630,0,0" VerticalAlignment="Top"
+            <Button  Grid.Row="2" x:Name="button_Copy4" Content="{Binding Path=NameOfButton}"  Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="550,0,0,0"  
                  Style="{StaticResource MyConfirmBUTTON}" Width="200"/>
-            <Button x:Name="button_Cdopy3" Visibility="{Binding Path=Visibility}" Content="Документ" Command="{Binding Path=CreateWordDocumentCommand}" HorizontalAlignment="Left" Margin="280,630,0,0" VerticalAlignment="Top"
+            <Button Grid.Row="2" x:Name="button_Cdopy3" Visibility="{Binding Path=Visibility}" Content="Документ" Command="{Binding Path=CreateWordDocumentCommand}" HorizontalAlignment="Left" Margin="280,0,0,0"  
                  Style="{StaticResource MyNormalBUTTON}" Width="200"/>
             <!--//CreateWordDocumentCommand-->
-            <ScrollViewer  MaxHeight="570" Margin="24,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" >
+            <ScrollViewer Grid.Row="1"  MaxHeight="570" Margin="24,50,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" >
                 <Grid  Height="1093"   Width="993">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="186*"/>
@@ -68,12 +73,10 @@
                         <RowDefinition Height="19*"/>
                         <RowDefinition Height="70*"/>
                         <RowDefinition Height="19*"/>
-
                         <RowDefinition Height="19*"/>
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
                     <TextBlock x:Name="tesxtBl2ock" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="Патологии" VerticalAlignment="Top"  Grid.Row="0" Grid.Column="0"  FontSize="16"/>
-
                     <TextBlock x:Name="tesxtBlock" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="группа" VerticalAlignment="Top"  Grid.Row="2" Grid.Column="1"  FontSize="16"/>
                     <TextBlock x:Name="tesxtBlocklyy" HorizontalAlignment="Left" TextWrapping="Wrap" Text="резус" VerticalAlignment="Top"  Grid.Row="2" Grid.Column="2" Margin="298,0,0,0" FontSize="16"/>
                     <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="Группа крови" VerticalAlignment="Top"  Grid.Row="3"  FontSize="16"/>
@@ -450,7 +453,7 @@
                 </Grid>
             </ScrollViewer>
 
-            <Border Grid.RowSpan="4" Visibility="{Binding Path = CurrentPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOv5erlay">
+            <Border Grid.Row="0" Grid.RowSpan="4" Visibility="{Binding Path = CurrentPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOv5erlay">
                 <Border.Background>
                     <SolidColorBrush Color="Black" Opacity="0.78"/>
                 </Border.Background>
@@ -512,5 +515,4 @@
             </Border>
         </Grid>
     </DataTemplate>
-
 </ResourceDictionary>

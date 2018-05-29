@@ -162,7 +162,11 @@
 
     <DataTemplate x:Key="TemplateChangeHistory">
         <Grid Margin="0,75,0,0">
-            <TextBlock  TextWrapping="Wrap"  Height="32" Margin="460,0,0,610" Text="История изменений" FontFamily="/fonts/#Pescadero" FontSize="22pt" RenderTransformOrigin="0.591,0.516">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
+            <TextBlock  VerticalAlignment="Top" TextWrapping="Wrap"  Height="32" Margin="460,0,0,0" Text="История изменений" FontFamily="/fonts/#Pescadero" FontSize="22pt" RenderTransformOrigin="0.591,0.516">
                 <TextBlock.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -192,7 +196,7 @@
             </ComboBox>
             <TextBlock Canvas.ZIndex="2" Visibility="{Binding VisOfNothingFaund}" TextWrapping="Wrap" Height="28" Text="Ничего не найдено" FontFamily="/fonts/#Pescadero" FontSize="14pt" Margin="510,280,0,230" RenderTransformOrigin="0.591,0.516"/>
 
-            <DataGrid BorderBrush="Black" BorderThickness="1"  Visibility="Visible" FontSize="14" Width="696" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  RowStyle="{StaticResource MyDataGridRow}"  IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="500" Margin="251,160,0,0" VerticalAlignment="Top"  >
+            <DataGrid Grid.Row="0" BorderBrush="Black" BorderThickness="1"  Visibility="Visible" FontSize="14" Width="696" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  RowStyle="{StaticResource MyDataGridRow}"  IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left"  Margin="251,160,0,0"  >
 
                 <DataGrid.Columns  >
 

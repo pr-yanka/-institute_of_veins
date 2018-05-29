@@ -5,21 +5,31 @@
     <DataTemplate x:Key="TemplateCancleOperations">
         
         <Grid Margin="0,80,0,0">
-          
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+             
+ 
+                <RowDefinition   Height="*"/>
+                <RowDefinition   Height="Auto"/>
+                
+            </Grid.RowDefinitions>
             <Label x:Name="label" Content="{Binding Path=TextResultCancle}" HorizontalAlignment="Left" Margin="397,10,0,0" VerticalAlignment="Top" FontSize="22pt"/>
-            <Button  Width="300"  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy1" Content="Сохранить" Command="{Binding Path=ToOperationCommand}" HorizontalAlignment="Left" Margin="683,541,0,0" VerticalAlignment="Top"  
+            <Button  Width="300" Grid.Row="4"  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy1" Content="Сохранить" Command="{Binding Path=ToOperationCommand}" HorizontalAlignment="Left" Margin="690,0,0,10" 
                    />
             <Label x:Name="label1" Content="{Binding Path=DateText}" HorizontalAlignment="Left"  
-                   Margin="35,70,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.491,0.474" FontSize="22"/>
-            <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="39,136,0,0" TextWrapping="Wrap"  
+                   Margin="35,60,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.491,0.474" FontSize="22"/>
+            <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="39,106,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Foreground="#FF234A72" FontSize="24" Width="603"><Run Text=" "/>
               </TextBlock>
-            <TextBlock Width="200" Height="200" Foreground="#FF234A72" FontSize="24" Margin="15,0,760,221" Text="Причина : "></TextBlock>
+            <TextBlock Width="200" Height="200" Foreground="#FF234A72" VerticalAlignment="Top" FontSize="24" Margin="-725,90,0,0" Text="Причина : "></TextBlock>
             <ComboBox SelectedIndex="{Binding Path=ReasonSelected}" Visibility="{Binding Path=VisibilityOfReasons}"  ItemsSource="{Binding Path=CancelsReasons}" Margin="39,169,0,0"  x:Name="richTextBox" HorizontalAlignment="Left" Height="auto"  VerticalAlignment="Top"  
                          Width="700" FontSize="22">
             </ComboBox>
 
-            <TextBox  Visibility="{Binding VisibilityOfOtherReason}" Text="{Binding Path=OtherReasonText}"  Margin="32,0,499,50" Opacity="0" Width="480" Height="200">
+            <TextBox VerticalAlignment="Top"  TextWrapping="Wrap" Visibility="{Binding VisibilityOfOtherReason}" Text="{Binding Path=OtherReasonText}"  Margin="-440,120,0,0" Opacity="0" Width="480" Height="200">
                 <TextBox.Style>
                     <Style TargetType="TextBox">
                         <Style.Triggers>
@@ -33,7 +43,7 @@
                                 To="1"
                                 Duration="0:0:0.35" />
                                             <ThicknessAnimation
-                  From="32,0,499,50" To="32,190,499,0"
+                 From="-440,120,0,0" To="-440,170,0,0"
                   Duration="0:0:0.35"
                   Storyboard.TargetProperty
                   ="Margin"/>
@@ -47,11 +57,11 @@
                 </TextBox.Style>
 
             </TextBox>
-            <Button Width="300" Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy33" Command="{Binding Path=OtherReasonCommand}" Content="Другая причина" HorizontalAlignment="Left" Margin="39,224,0,0"              
+            <Button Width="300" Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy33" Command="{Binding Path=OtherReasonCommand}" Content="Другая причина" HorizontalAlignment="Left" Margin="39,124,0,0"              
                     VerticalAlignment="Top" />
-            <DatePickerTextBox IsReadOnly="True" x:Name="label1_Copy" Text="{Binding Path=Date, StringFormat=dd.MM.yyyy hh:mm}" HorizontalAlignment="Left" Margin="816,70,0,0"  
+            <DatePickerTextBox IsReadOnly="True" x:Name="label1_Copy" Text="{Binding Path=Date, StringFormat=dd.MM.yyyy hh:mm}" HorizontalAlignment="Left" Margin="816,65,0,0"  
                    VerticalAlignment="Top" RenderTransformOrigin="0.491,0.474" FontSize="22"/>
-            <Button Width="300" Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy" Command="{Binding Path=ToOperationOverviewCommand}" Content="Вернуться к операции" HorizontalAlignment="Left" Margin="39,541,0,0"              
+            <Button Width="300" Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy" Command="{Binding Path=ToOperationOverviewCommand}" Content="Вернуться к операции" HorizontalAlignment="Left" Grid.Row="4" Margin="40,0,0,0"              
                     VerticalAlignment="Top" />
         </Grid>
     </DataTemplate>

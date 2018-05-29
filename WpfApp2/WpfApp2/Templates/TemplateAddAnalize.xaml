@@ -14,6 +14,7 @@
                 <RowDefinition Height="35"></RowDefinition>
                 <RowDefinition Height="35"></RowDefinition>
                 <RowDefinition Height="353*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -42,8 +43,8 @@
             <Button Style="{StaticResource MyConfirmBUTTON}" Grid.Column="4" Grid.Row="3" x:Name="button_вCopy143" Content="Другой тип" Command="{Binding Path=OpenCommand}" HorizontalAlignment="Left" Width="200" Height="35" VerticalAlignment="Top" Margin="-70,5,0,0"/>
 
 
-            <Button Style="{StaticResource MyNormalBUTTON}" Grid.Column="1" Grid.Row="6" x:Name="button_Copy143" Content="ВЕРНУТЬСЯ К ПАЦИЕНТУ" Command="{Binding Path=ToCurrentPatientRealy}" HorizontalAlignment="Left" Width="250"  VerticalAlignment="Top" Margin="0,0,0,0"/>
-            <Button Grid.Column="2" Grid.Row="6" Grid.RowSpan="2" x:Name="button_Copy13" Content="{Binding Path=ButtonName}" Command="{Binding Path=ToCurrentPatient}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="250" Style="{StaticResource MyNormalBUTTON}" Margin="30,0,0,0" RenderTransformOrigin="0.5,0.484"/>
+            <Button Style="{StaticResource MyNormalBUTTON}" Grid.Column="1" Grid.Row="7" x:Name="button_Copy143" Content="ВЕРНУТЬСЯ К ПАЦИЕНТУ" Command="{Binding Path=ToCurrentPatientRealy}" HorizontalAlignment="Left" Width="250"  VerticalAlignment="Top" Margin="0,0,0,10"/>
+            <Button Grid.Column="2" Grid.Row="7" Grid.RowSpan="2" x:Name="button_Copy13" Content="{Binding Path=ButtonName}" Command="{Binding Path=ToCurrentPatient}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="250" Style="{StaticResource MyNormalBUTTON}" Margin="30,0,0,10" RenderTransformOrigin="0.5,0.484"/>
 
 
             <Border Grid.RowSpan="243"  Grid.ColumnSpan="203" Visibility="{Binding Path = CurrentPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOv5erlay">

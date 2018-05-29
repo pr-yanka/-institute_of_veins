@@ -10,6 +10,12 @@
     </Style>
     <DataTemplate x:Key="TemplatePathologyList">
         <Grid Margin="220,80,0,0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
             <TextBlock FontFamily="/fonts/#Pescadero"  FontSize="22pt" HorizontalAlignment="Right" Width="430" VerticalAlignment="Top" Height="Auto" Margin="0,5" x:Name="ddsadsds" Text="{Binding Path=Initials}">
 
                 <TextBlock.RenderTransform>
@@ -23,7 +29,7 @@
                 </TextBlock.RenderTransform>
             </TextBlock>
             <Label x:Name="label" Content="Патологии" HorizontalAlignment="Left" Margin="24,10,0,0" FontFamily="/fonts/#Pescadero" FontSize="22pt" VerticalAlignment="Top"/>
-            <DataGrid BorderBrush="Black" BorderThickness="1" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}" CanUserAddRows="False" CanUserResizeRows="false" CanUserResizeColumns="False" x:Name="dataGrid" HorizontalAlignment="Left" AutoGenerateColumns="False" Margin="30,81,0,0" VerticalAlignment="Top" Height="500" Width="696"  ItemsSource="{Binding Path=PatologyList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
+            <DataGrid Grid.Row="1" BorderBrush="Black" BorderThickness="1" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}" CanUserAddRows="False" CanUserResizeRows="false" CanUserResizeColumns="False" x:Name="dataGrid" HorizontalAlignment="Left" AutoGenerateColumns="False" Margin="30,0,0,0"     Width="696"  ItemsSource="{Binding Path=PatologyList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
                 <DataGrid.RowStyle>
 
                     <Style TargetType="DataGridRow"  BasedOn="{StaticResource {x:Type DataGridRow}}">
@@ -96,9 +102,9 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy1" Command="{Binding Path=ToAddPathologyCommand}" Content="Указать патологию" HorizontalAlignment="Left" Margin="30,590,0,0"  
+            <Button Grid.Row="2" Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy1" Command="{Binding Path=ToAddPathologyCommand}" Content="Указать патологию" HorizontalAlignment="Left" Margin="30,10,0,0"  
                     VerticalAlignment="Top" Width="300" />
-            <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy2" Command="{Binding Path=ToCurrentPatientCommand}" Content="Возврат" HorizontalAlignment="Left" Margin="426,590,0,0"  
+            <Button Grid.Row="2"  Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy2" Command="{Binding Path=ToCurrentPatientCommand}" Content="Возврат" HorizontalAlignment="Left" Margin="426,10,0,0"  
                     VerticalAlignment="Top" Width="300"/>
         </Grid>
     </DataTemplate>

@@ -6,6 +6,7 @@
     </ResourceDictionary.MergedDictionaries>
     <DataTemplate x:Key="TemplateCheckboxes">
         <Grid Name="RootGrid">
+         
             <StackPanel Orientation="Vertical" Background="White">
                 <TextBlock x:Name="textBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Path=HeaderText}" VerticalAlignment="Top" FontSize="28">
                     <TextBlock.RenderTransform>

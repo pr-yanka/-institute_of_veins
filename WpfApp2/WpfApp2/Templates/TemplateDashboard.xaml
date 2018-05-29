@@ -3,10 +3,10 @@
                     xmlns:local="clr-namespace:WpfApp2.Templates">
     <DataTemplate x:Key="TemplateDashboard">
         <Grid Name="RootGrid">
-            <TextBlock TextAlignment="Center" FontSize="24" Margin="273,72,144,569" Height="32" Foreground="#FF13283E"><Run Text="Здравствуйте, "/><TextBlock Text="{Binding AccauntName}"></TextBlock></TextBlock>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Top" FontSize="24" Margin="153,92,0,0" Height="32" Foreground="#FF13283E"><Run Text="Здравствуйте, "/><TextBlock Text="{Binding AccauntName}"></TextBlock></TextBlock>
 
             <Label Visibility="{Binding AlertOpOperation}" FontFamily="Source Sans Pro" x:Name="label" Content="{Binding NextOpText}" Margin="220,141,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.338,0.401" Height="40" Background="#FFFFF0F0" HorizontalAlignment="Left" Width="757" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" FontSize="20" />
-            <Label  Visibility="{Binding AlertOpOperation}" Target="{Binding ElementName=TextArea}" Margin="758,140,144,524" FontFamily="Segoe UI Light" FontSize="18">
+            <Label  Visibility="{Binding AlertOpOperation}" Target="{Binding ElementName=TextArea}" Margin="758,140,0,0" VerticalAlignment="Top" FontFamily="Segoe UI Light" FontSize="18">
                 <Hyperlink Command="{Binding Path=ToOperationOverviewCommand}">
                     (подробнее)
                 </Hyperlink>

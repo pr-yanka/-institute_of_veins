@@ -430,7 +430,7 @@ namespace WpfApp2.ViewModels
         #endregion
         public ViewModelAddUser(NavigationController controller) : base(controller)
         {
-            NameOfPerson = "+Добавить врача";
+            NameOfPerson = "Добавить врача";
             AddPerson = new DelegateCommand(
       () =>
       {

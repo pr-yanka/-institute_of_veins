@@ -6,9 +6,9 @@
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
-        Title="Вход" Height="768" Width="1024"
+        Title="Вход" Height="700" MinHeight="330" Width="1024" MinWidth="1024" MaxWidth="1024"
         GlowBrush="Black"
-        DataContext="{StaticResource ResourceKey=MainWindowViewModel}" ResizeMode="NoResize" Background="#FFF7F7F7">
+        DataContext="{StaticResource ResourceKey=MainWindowViewModel}" ResizeMode="CanResize" Background="#FFF7F7F7">
 
     <Controls:MetroWindow.Resources>
         <ResourceDictionary>
@@ -18,25 +18,24 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Controls:MetroWindow.Resources>
-    <Grid>
+    <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="191*"/>
             <ColumnDefinition Width="47*"/>
             <ColumnDefinition Width="271*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition   Height="*"/>
         </Grid.RowDefinitions>
         <Rectangle Height="63" Stroke="#FF4FD5E0" VerticalAlignment="Top" Fill="#FF4FD5E0" RenderTransformOrigin="0.388,0.524" Grid.ColumnSpan="3"/>
-        <Image x:Name="veins_logo_jpg" Margin="-340,0,476,676" Source="pack://application:,,,/Images/veins-logo.jpg" StretchDirection="DownOnly" MaxWidth="70" MaxHeight="70" MinWidth="76" MinHeight="76" RenderTransformOrigin="0.608,0.401" Height="63" VerticalAlignment="Bottom" Grid.ColumnSpan="3"/>
+        <Image x:Name="veins_logo_jpg"  Margin="30,0,0,0" HorizontalAlignment="Left" Source="pack://application:,,,/Images/veins-logo.jpg" StretchDirection="Both" VerticalAlignment="Top" MaxWidth="70" MaxHeight="60" MinWidth="76" MinHeight="60" RenderTransformOrigin="0.608,0.401"    Grid.ColumnSpan="3"/>
         <TextBlock FontFamily="Segoe UI Symbol" HorizontalAlignment="Left" Margin="142,0,0,0" TextWrapping="Wrap" Text="ИНСТИТУТ ВЕН" VerticalAlignment="Top" Foreground="White" Height="38" Width="159" FontSize="16" RenderTransformOrigin="0.5,0.528"/>
         <TextBlock TextAlignment="Center" FontFamily="Segoe UI Symbol" HorizontalAlignment="Left" Margin="142,23,0,0" TextWrapping="Wrap" Text="медицинский центр" VerticalAlignment="Top" Foreground="White" Height="38" Width="117" FontSize="14"/>
         <!--Меню-->
-        <ContentControl Content="{Binding CurrentNavigation}" ContentTemplate="{StaticResource FullNavigation}" Background="#FFF7F7F7"
+        <ContentControl     Content="{Binding CurrentNavigation}" ContentTemplate="{StaticResource FullNavigation}" Background="#FFF7F7F7"
                         Visibility="{Binding Path=Controller.CurrentViewModel.HasNavigation, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVis}}" Grid.ColumnSpan="3">
         </ContentControl>
-        <ContentControl Content="{Binding Controller.CurrentViewModel}" ContentTemplateSelector="{StaticResource MyTemplateSelector}" Background="#FFF7F7F7" Grid.ColumnSpan="3">
+        <ContentControl     Content="{Binding Controller.CurrentViewModel}" ContentTemplateSelector="{StaticResource MyTemplateSelector}" Background="#FFF7F7F7" Grid.ColumnSpan="3">
         </ContentControl>
     </Grid>
 </Controls:MetroWindow>

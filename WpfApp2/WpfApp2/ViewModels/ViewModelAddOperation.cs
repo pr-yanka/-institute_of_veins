@@ -486,7 +486,7 @@ namespace WpfApp2.ViewModels
             TimeCheckMinute = true;
             ButtonSaveText = "Назначить операцию";
 
-
+          
             MessageBus.Default.Subscribe("SetOperationResult", SetOperResult);
             MessageBus.Default.Subscribe("SetCurrentPatientForOperation", SetCurrentPatientID);
             MessageBus.Default.Subscribe("SetRightDiagnosisListForOperation", SetRightDiagnosisList);

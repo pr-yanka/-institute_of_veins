@@ -118,7 +118,11 @@
     </Style>
     <DataTemplate x:Key="TemplateTablePatients">
         <Grid>
-            <Button x:Name="button_Copy4f" Content="Новый пациент"  Command="{Binding Path=ToNewPatientCommand}" HorizontalAlignment="Left" Margin="750,672,0,0" VerticalAlignment="Top"
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="1" x:Name="button_Copy4f" Content="Новый пациент"  Command="{Binding Path=ToNewPatientCommand}" HorizontalAlignment="Left" Margin="750,10,0,10"
                  Style="{StaticResource MyConfirmBUTTON}"  />
             <Menu Height="61" VerticalAlignment="Top" Background="{x:Null}" HorizontalContentAlignment="Right">
                 <MenuItem Margin="1120,0,0,0">
@@ -132,13 +136,13 @@
                 </MenuItem>
             </Menu>
 
-            <TextBlock FontFamily="/fonts/#Pescadero" FontSize="22pt" VerticalAlignment="Center" Margin="540,0,0,530" Height="38" Text="Пациенты"/>
+            <TextBlock FontFamily="/fonts/#Pescadero" FontSize="22pt" VerticalAlignment="Top" Margin="540,85,0,0" Height="38" Text="Пациенты"/>
             <TextBlock HorizontalAlignment="Left" Margin="250,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="164" FontSize="20" Text="Поиск по слову:" RenderTransformOrigin="-0.027,0.471"/>
             <TextBox Padding="4" Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="26" Margin="410,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="537" RenderTransformOrigin="0.632,0.9"/>
-            <TextBlock Canvas.ZIndex="2" Visibility="{Binding VisOfNothingFaund}" TextWrapping="Wrap" Height="28" Text="Ничего не найдено" FontFamily="/fonts/#Pescadero" FontSize="14pt" Margin="514,350,0,230" RenderTransformOrigin="0.591,0.516"/>
+            <TextBlock Canvas.ZIndex="2" VerticalAlignment="Top" Visibility="{Binding VisOfNothingFaund}" TextWrapping="Wrap" Height="28"   Text="Ничего не найдено" FontFamily="/fonts/#Pescadero" FontSize="14pt" Margin="514,350,0,0" RenderTransformOrigin="0.591,0.516"/>
 
-            <DataGrid  BorderBrush="Black" BorderThickness="1" CanUserReorderColumns="False" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  AutoGenerateColumns="False" ItemsSource="{Binding Path=ViewSource.View}" x:Name="dataGrid" ScrollViewer.VerticalScrollBarVisibility="Visible"
-                 Margin="251,165,0,0" Height="420" VerticalScrollBarVisibility="Auto" Width="696" FontSize="14" HorizontalAlignment="Left">
+            <DataGrid Grid.Row = "0"  BorderBrush="Black" BorderThickness="1" CanUserReorderColumns="False" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  AutoGenerateColumns="False" ItemsSource="{Binding Path=ViewSource.View}" x:Name="dataGrid" ScrollViewer.VerticalScrollBarVisibility="Visible"
+                 Margin="251,195,0,0"    VerticalScrollBarVisibility="Auto" Width="696" FontSize="14" HorizontalAlignment="Left">
                 <DataGrid.Columns >
                     <DataGridTextColumn  IsReadOnly="True"   Header="Фамилия" CellStyle="{StaticResource MyDataGridCell2}"  Binding="{Binding CurrentPatient.Sirname}" ></DataGridTextColumn>
                     <DataGridTextColumn  IsReadOnly="True"   Header="Имя" CellStyle="{StaticResource MyDataGridCell}"  Binding="{Binding CurrentPatient.Name}" ></DataGridTextColumn>

@@ -91,6 +91,10 @@
     </Style>
     <DataTemplate x:Key="TemplateCalendarOperations">
         <Grid Margin="220,80,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
             <TextBlock HorizontalAlignment="Left" Margin="30,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="35" Width="164" FontSize="20" Text="Поиск по слову:" RenderTransformOrigin="-0.027,0.471"/>
             <TextBox Text="{Binding Path=FilterText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  HorizontalAlignment="Left" Height="26" Margin="185,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="541" RenderTransformOrigin="0.632,0.9">
                 <TextBox.InputBindings>
@@ -111,9 +115,9 @@
             <CheckBox Content="отображать только мои операции&#xD;&#xA;" IsChecked="{Binding IsMyOpChecked}" Visibility="{Binding isMyOpVisible}" HorizontalAlignment="Left" Margin="30,127,0,0" VerticalAlignment="Top"  FontSize="16"  Height="20" Width="397"/>
             <CheckBox Content="сортировать по дате&#xD;&#xA;" IsChecked="{Binding IsSortByData}" HorizontalAlignment="Left" Margin="30,60,0,0" VerticalAlignment="Top"  FontSize="16"  Height="20" Width="245"/>
             <CheckBox Content="отображать проведённые&#xD;&#xA;" IsChecked="{Binding IsCompletedOp}" HorizontalAlignment="Left" Margin="30,93,0,0" VerticalAlignment="Top"  FontSize="16"  Height="20" Width="243"/>
-            <TextBlock Canvas.ZIndex="2" Visibility="{Binding VisOfNothingFaund}" TextWrapping="Wrap" Height="28" Text="Ничего не найдено" FontFamily="/fonts/#Pescadero"  FontSize="16"  Margin="300,409,324,188" RenderTransformOrigin="0.591,0.516"/>
+            <TextBlock Canvas.ZIndex="2" Visibility="{Binding VisOfNothingFaund}" TextWrapping="Wrap" Height="28" Text="Ничего не найдено" VerticalAlignment="Top" FontFamily="/fonts/#Pescadero"  FontSize="16"  Margin="300,350,0,0" RenderTransformOrigin="0.591,0.516"/>
 
-            <DataGrid BorderBrush="Black" BorderThickness="1" FontSize="14" VerticalScrollBarVisibility="Auto" CanUserReorderColumns="False" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  RowStyle="{StaticResource MyDataGridRow}" IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left" Height="450" Margin="30,204,0,0" VerticalAlignment="Top" Width="696" >
+            <DataGrid Grid.Row="0" BorderBrush="Black" BorderThickness="1" FontSize="14" VerticalScrollBarVisibility="Auto" CanUserReorderColumns="False" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  RowStyle="{StaticResource MyDataGridRow}" IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left"   Margin="30,204,0,0"   Width="696" >
                 <DataGrid.Columns  >
                     <DataGridTextColumn Width="auto"  CellStyle="{StaticResource MyDataGridCell2}" Binding="{Binding Path=Date,StringFormat=dd.MM.yyyy hh:mm}" ClipboardContentBinding="{x:Null}" Header="Дата" />
                     <DataGridTextColumn Width="172"  CellStyle="{StaticResource MyDataGridCell}" Binding="{Binding Path=Patient}" ClipboardContentBinding="{x:Null}" Header="Пациент"  />

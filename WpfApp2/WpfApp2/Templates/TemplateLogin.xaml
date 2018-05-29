@@ -3,23 +3,23 @@
                     xmlns:local="clr-namespace:WpfApp2.Templates"
                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                     >
-    <DataTemplate  x:Key="TemplateLogin">
-        <Grid>
+    <DataTemplate   x:Key="TemplateLogin">
+        <Grid    >
             <Grid.InputBindings>
                 <KeyBinding 
             Key="Enter" 
             Command="{Binding ToDashboardCommand}" 
             CommandParameter="{Binding ElementName=passwordBox1}" />
             </Grid.InputBindings>
-            <Border BorderThickness="1" HorizontalAlignment="Left" Height="404" Margin="320,92,0,0" VerticalAlignment="Top" Width="453" Background="#FFB0E8EE"></Border>
-            <StackPanel Orientation="Vertical" Margin="320,100,251,236">
+            <Border  BorderThickness="1" HorizontalAlignment="Left" Height="404" Margin="320,92,0,0" VerticalAlignment="Top" Width="453" Background="#FFB0E8EE"></Border>
+            <StackPanel  VerticalAlignment="Top" Orientation="Vertical" Margin="90,100,0,0">
                 <TextBlock Margin="0,10,0,10" Height="49" HorizontalAlignment="Center" Width="454" x:Name="textBlockHeading" VerticalAlignment="Top" FontSize="18" Padding="5" RenderTransformOrigin="1.955,1.44" Foreground="#FBB25E5E" TextDecorations="{x:Null}" LineHeight="6" TextAlignment="Center" Text="ДОБРО ПОЖАЛОВАТЬ В ИНСТИТУТ ВЕН!" FontWeight="Bold"/>
                 <TextBlock Margin="0,10,0,10" Height="23" HorizontalAlignment="Center" x:Name="LoginHeading" Text="Вход в кабинет" VerticalAlignment="Top" FontSize="24" FontStretch="ExtraCondensed" TextDecorations="{x:Null}" Foreground="#FF958585"/>
                 <TextBlock Height="23" HorizontalAlignment="Center" Margin="0,10,0,10" x:Name="textBlock1" Text="Логин:" VerticalAlignment="Top" Width="68" FontSize="20" Foreground="#FF6A6A6A" />
                 <TextBox  Text="{Binding Name}" HorizontalContentAlignment="Center" Height="34" TextAlignment="Center" HorizontalAlignment="Center" x:Name="textBoxEmail" VerticalAlignment="Top" Width="300" BorderBrush="{x:Null}" FontSize="18" Foreground="#FF8B8B8B" Cursor="Arrow" CaretBrush="#FC8B8B8B" />
                 <TextBlock Height="23" HorizontalAlignment="Center" Margin="0,10,0,0" x:Name="textBlock2" Text="Пароль:" VerticalAlignment="Top" Width="77" FontSize="20" Foreground="#FF6A6A6A" RenderTransformOrigin="0.734,1.565" />
                 <PasswordBox Height="34" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Margin="0,10,0,10" x:Name="passwordBox1" FontSize="18" Foreground="#FF8B8B8B" Cursor="Arrow" CaretBrush="#FC8B8B8B" VerticalAlignment="Top" Width="300" BorderBrush="{x:Null}"  />
-                <Button Style="{StaticResource MyConfirmBUTTON}" CommandParameter="{Binding ElementName=passwordBox1}" Margin="0,40,0,20" Content="ВОЙТИ" Command="{Binding Path=ToDashboardCommand}"  HorizontalAlignment="Center"/>
+                <Button Style="{StaticResource MyConfirmBUTTON}" CommandParameter="{Binding ElementName=passwordBox1}" Margin="0,35,0,20" Content="ВОЙТИ" Command="{Binding Path=ToDashboardCommand}"  HorizontalAlignment="Center"/>
             </StackPanel>
         </Grid>
     </DataTemplate>

@@ -15,6 +15,7 @@
                 <RowDefinition Height="35"></RowDefinition>
                 <RowDefinition Height="77"></RowDefinition>
                 <RowDefinition Height="1*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -50,7 +51,7 @@
 
             <!--<Button Style="{StaticResource MyNormalBUTTON}" Grid.Column="1" Grid.Row="6" x:Name="button_Copy13" Width="250"  Content="Вернуться в пациенту" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="380,0" VerticalAlignment="Top"/>-->
 
-            <Button Style="{StaticResource MyNormalBUTTON}" Grid.Column="1" Grid.Row="6" x:Name="b3utton_Copy13" Width="265"  Content="Вернуться к обследованию" Command="{Binding Path=ToCurrentObsledCommand}" HorizontalAlignment="Left"  Margin="40,0" VerticalAlignment="Top"/>
+            <Button Style="{StaticResource MyNormalBUTTON}" Grid.Column="1" Grid.Row="1" Grid.RowSpan="7" x:Name="b3utton_Copy13" Width="265"  Content="Вернуться к обследованию" Command="{Binding Path=ToCurrentObsledCommand}" HorizontalAlignment="Left"  Margin="40,10" VerticalAlignment="Bottom"/>
             <Border  Grid.RowSpan="20" Grid.ColumnSpan="20" Visibility="{Binding Path = CurrentSavePanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOввv5edrlay">
                 <Border.Background>
                     <SolidColorBrush Color="Black" Opacity="0.78"/>

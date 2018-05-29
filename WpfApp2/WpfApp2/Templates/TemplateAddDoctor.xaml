@@ -18,9 +18,9 @@
             <TextBlock FontFamily="/fonts/#Pescadero" Width="Auto" FontSize="18pt" Margin="227,15,200,200" Height="Auto" Text="{Binding Path=TextHeader}"/>
             <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="button" Visibility="Hidden" Content="Загрузить данные из регистратуры" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" />
 
-            <StackPanel  Orientation="Horizontal" Margin="0,300,0,0"  >
+            <StackPanel VerticalAlignment="Bottom" Orientation="Horizontal" Margin="0,0,0,10"  >
 
-                <Button   x:Name="button_Coаpy3" Visibility="{Binding VisibilityOfGoBAck}" Content="Вернуться" Command="{Binding GoToDoctorListCommand}"   Style="{StaticResource MyNormalBUTTON}" Margin="0,148"/>
+                <Button   x:Name="button_Coаpy3" Visibility="{Binding VisibilityOfGoBAck}" Content="Вернуться" Command="{Binding GoToDoctorListCommand}"   Style="{StaticResource MyNormalBUTTON}" Margin="0,0"/>
 
                 <Button  Margin="79,0"  x:Name="button_Copy3" Visibility="{Binding Visibility}" Content="Сбросить" Command="{Binding ToDashboardCommand}"   Style="{StaticResource MyNormalBUTTON}"/>
                 <Button Width="{Binding WidthOfBtn}" x:Name="button_Copy4" Content="{Binding nameOfButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Command="{Binding SaveAndGoDoctorListCommand}"   Style="{StaticResource MyConfirmBUTTON}" />
@@ -94,8 +94,8 @@
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
-                <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="butвton" Command="{Binding Path=OpenAddSpecCommand}" Grid.Row="10" Visibility="Visible" Content="Другая специальность" HorizontalAlignment="Left" VerticalAlignment="Top" Width="190" Height="26"  Grid.ColumnSpan="2" FontSize="10" Margin="32,18,0,0" Grid.RowSpan="2"/>
-                <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="butвtoвn" Command="{Binding Path=OpenAddScintificsCommand}" Grid.Column="1" Margin="70,18,0,0" Grid.Row="10" Visibility="Visible" Content="Другое научное звание" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Height="26" FontSize="10" Grid.RowSpan="2"/>
+                <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="butвton" Command="{Binding Path=OpenAddSpecCommand}" Grid.Row="10" Visibility="Visible" Content="Другая специальность" HorizontalAlignment="Left" VerticalAlignment="Top" Width="190" Height="26"  Grid.ColumnSpan="2" FontSize="10" Margin="0,18,0,0" Grid.RowSpan="2"/>
+                <Button  Style="{StaticResource MyConfirmBUTTON}" x:Name="butвtoвn" Command="{Binding Path=OpenAddScintificsCommand}" Grid.Column="1" Margin="15,18,0,0" Grid.Row="10" Visibility="Visible" Content="Другое научное звание" HorizontalAlignment="Left" VerticalAlignment="Top" Width="180" Height="26" FontSize="10" Grid.RowSpan="2"/>
 
                 <Grid Grid.Row="5" Grid.Column="1" Margin="120,25,0,6" Grid.RowSpan="5" Width="auto" >
                     <Grid.ColumnDefinitions>

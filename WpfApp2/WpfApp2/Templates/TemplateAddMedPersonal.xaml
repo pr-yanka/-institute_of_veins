@@ -5,10 +5,10 @@
         <Grid Name="RootGrid"  Margin="220,70,0,0" >
             <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button" Visibility="Hidden" Content="Загрузить данные из регистратуры" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" />
 
-            <TextBlock FontFamily="/fonts/#Pescadero" Width="Auto" FontSize="18pt" Margin="227,15,200,200" Height="Auto" Text="{Binding Path=TextHeader}"/>
-            <StackPanel  Orientation="Horizontal" Margin="0,300,0,0"  >
+            <TextBlock FontFamily="/fonts/#Pescadero" Width="Auto" FontSize="18pt" Margin="227,15,0,0" Height="Auto" Text="{Binding Path=TextHeader}"/>
+            <StackPanel VerticalAlignment="Bottom"  Orientation="Horizontal" Margin="0,0,0,10"  >
 
-                <Button Visibility="{Binding VisibilityOfGoBAck}"  x:Name="button_Coаpy3" Content="Вернуться" Command="{Binding GoToDoctorListCommand}"   Style="{StaticResource MyNormalBUTTON}" Margin="50,146,0,147"/>
+                <Button Visibility="{Binding VisibilityOfGoBAck}"  x:Name="button_Coаpy3" Content="Вернуться" Command="{Binding GoToDoctorListCommand}"   Style="{StaticResource MyNormalBUTTON}" Margin="50,0,0,0"/>
 
                 <Button  Margin="60,0" x:Name="button_Copy3" Visibility="{Binding Visibility}" Content="Сбросить" Command="{Binding ToDashboardCommand}" Style="{StaticResource MyNormalBUTTON}"/>
                 <Button Width="{Binding WidthOfBtn}"  x:Name="button_Copy4" Content="{Binding nameOfButton, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Command="{Binding SaveAndGoDoctorListCommand}" Style="{StaticResource MyConfirmBUTTON}"/>
@@ -33,15 +33,16 @@
                     <RowDefinition Height="22*"/>
                     <RowDefinition Height="26*"/>
                     <RowDefinition Height="18*"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="71,1,0,0" TextWrapping="Wrap" Text="Имя" VerticalAlignment="Top" FontSize="16" Grid.Row="1"/>
+                <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="71,1,0,0" TextWrapping="Wrap" Text="Имя"   FontSize="16" Grid.Row="1"/>
                 <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="57,-4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Text="Фамилия"/>
                 <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="55,3,0,0" TextWrapping="Wrap" Text="Отчество" VerticalAlignment="Top" FontSize="16" Grid.Row="2"/>
 
-                <TextBox  BorderBrush="{Binding Path=TextBoxNameB}"  x:Name="textBox" Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Width="511" Grid.Row="1" Margin="0,1,0,0"/>
-                <TextBox BorderBrush="{Binding Path=TextBoxSurnameB}" x:Name="textBox_Copy" Text="{Binding Path=Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Width="511" Margin="0,-4,0,0"/>
-                <TextBox BorderBrush="{Binding Path=TextBoxPatronimicB}" x:Name="textBox_Copy1"  Text="{Binding Path=Patronimic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Width="511" Grid.Row="2" Margin="0,3,0,0"/>
+                <TextBox  BorderBrush="{Binding Path=TextBoxNameB}"  x:Name="textBox" Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap"   Width="511" Grid.Row="1" Margin="0,0,0,0"/>
+                <TextBox BorderBrush="{Binding Path=TextBoxSurnameB}" x:Name="textBox_Copy" Text="{Binding Path=Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap"   Width="511" Margin="0,0,0,0"/>
+                <TextBox BorderBrush="{Binding Path=TextBoxPatronimicB}" x:Name="textBox_Copy1"  Text="{Binding Path=Patronimic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap"   Width="511" Grid.Row="2" Margin="0,0,0,0"/>
 
             </Grid>
         </Grid>

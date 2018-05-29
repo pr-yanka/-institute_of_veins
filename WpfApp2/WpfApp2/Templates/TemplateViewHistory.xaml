@@ -8,14 +8,18 @@
     </Style>
     <DataTemplate x:Key="TemplateViewHistory">
         <Grid Name="RootGrid"  Margin="220,65,0,0" >
-
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
             <TextBlock Canvas.ZIndex="2" HorizontalAlignment="Center" Visibility="{Binding VisOfNothingFaund}" TextWrapping="Wrap" Height="28" Text="У пациента нет анализов, операций и обследований" FontFamily="/fonts/#Pescadero"  FontSize="16"  Margin="0,0,0,188" Width="399" RenderTransformOrigin="0.591,0.516"/>
 
-            <TextBlock HorizontalAlignment="Center" DockPanel.Dock="Top" FontFamily="/fonts/#Pescadero" FontSize="22pt"  VerticalAlignment="Top" Margin="0,10,0,0" Height="38" Text="{Binding Path=initials}"></TextBlock>
-            <CheckBox Visibility="{Binding IsCheckBoxVisible}" x:Name="button2" Content="показывать отменённые операции" IsChecked="{Binding Path=isCanceledOprVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Margin="26,60,0,0" VerticalAlignment="Top" Width="auto"  Height="44" FontFamily="Franklin Gothic Medium" FontSize="20"/>
-            <Button Style="{StaticResource MyConfirmBUTTON}" Visibility="{Binding IsVisibleForSecretary}" x:Name="button" Content="начать обследование" Command="{Binding Path=ToAddPhysicalCommand}" HorizontalAlignment="Left" Margin="0,460,0,0" VerticalAlignment="Top" Width="240"/>
-            <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy3" Content="ВЕРНУТЬСЯ К ПАЦИЕНТУ" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="259,517,0,0" VerticalAlignment="Top" Width="240" />
-            <DataGrid ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" HorizontalAlignment="Left" Height="304" VerticalAlignment="Top" Margin="24,96,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Foreground="Black"  ItemsSource="{Binding Path=HistoryDataSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" Width="709" CanUserResizeRows="False">
+            <TextBlock HorizontalAlignment="Center" DockPanel.Dock="Top" FontFamily="/fonts/#Pescadero" FontSize="22pt"  VerticalAlignment="Top" Margin="0,50,0,0" Height="38" Text="{Binding Path=initials}"></TextBlock>
+            <CheckBox Visibility="{Binding IsCheckBoxVisible}" x:Name="button2" Content="показывать отменённые операции" IsChecked="{Binding Path=isCanceledOprVisible,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Margin="26,0,0,0" VerticalAlignment="Top" Width="auto"  Height="44" FontFamily="Franklin Gothic Medium" FontSize="20"/>
+            <Button Grid.Row="1" Style="{StaticResource MyConfirmBUTTON}" Visibility="{Binding IsVisibleForSecretary}" x:Name="button" Content="начать обследование" Command="{Binding Path=ToAddPhysicalCommand}" HorizontalAlignment="Left" Margin="0,0,0,0"  Width="240"/>
+            <Button Grid.Row="2" Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy3" Content="ВЕРНУТЬСЯ К ПАЦИЕНТУ" Command="{Binding Path=ToCurrentPatientCommand}" HorizontalAlignment="Left" Margin="259,10,0,10"   Width="240" />
+            <DataGrid   Grid.Row = "0"  ColumnHeaderStyle="{StaticResource MyDataGridHEADER}" HorizontalAlignment="Left"    Margin="24,96,0,0" BorderBrush="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Foreground="Black"  ItemsSource="{Binding Path=HistoryDataSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserDeleteRows="False" CanUserResizeColumns="False" CanUserSortColumns="False" Width="709" CanUserResizeRows="False">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
@@ -52,8 +56,8 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button   Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy4" Content="НАЗНАЧИТЬ операцию" Width="240" Command="{Binding Path=ToAddOperationCommand}" HorizontalAlignment="Left" Margin="517,460,0,0" VerticalAlignment="Top" />
-            <Button   Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy6" Content="Добавить анализы" Command="{Binding Path=ToAddAnalizeCommand}" HorizontalAlignment="Left" Margin="259,460,0,0" VerticalAlignment="Top" Width="240" />
+            <Button Grid.Row="1"  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy4" Content="НАЗНАЧИТЬ операцию" Width="240" Command="{Binding Path=ToAddOperationCommand}" HorizontalAlignment="Left" Margin="517,0,0,0"  />
+            <Button  Grid.Row="1" Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy6" Content="Добавить анализы" Command="{Binding Path=ToAddAnalizeCommand}" HorizontalAlignment="Left" Margin="259,0,0,0"  Width="240" />
         </Grid>
     </DataTemplate>
 

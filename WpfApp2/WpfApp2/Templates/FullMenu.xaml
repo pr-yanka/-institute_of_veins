@@ -7,7 +7,7 @@
 
 
     <DataTemplate x:Key="FullNavigation">
-        <Grid>
+        <Grid Height="500" VerticalAlignment="Top">
             <StackPanel Margin="0,60">
                 <Button x:Name="button_Copy0" Content="ГЛАВНОЕ МЕНЮ" FontFamily="Segoe UI Light" Command="{Binding ToMainMenuCommand}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="189" Height="43" Background="{x:Null}" FontSize="14" BorderBrush="{x:Null}" Foreground="#FF555151" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
                 <Separator HorizontalAlignment="Left"  Width="199"/>

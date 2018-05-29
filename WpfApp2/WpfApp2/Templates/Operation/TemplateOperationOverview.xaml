@@ -4,24 +4,53 @@
 
 
     <DataTemplate x:Key="TemplateOperationOverview">
-        <Grid Margin="0,80,0,0">
-            <TextBlock HorizontalAlignment="Right" FontSize="22pt" Height="38" VerticalAlignment="Top" Text="{Binding Path=CurrentPatient.Name}"><TextBlock Text="{Binding Path=initials}"></TextBlock></TextBlock>
-            <TextBlock HorizontalAlignment="Left" FontSize="22pt" Height="38" VerticalAlignment="Top" Margin="397,0,0,0" ><Run Text="Просмотр"/><Run Text=" операции"/></TextBlock>
-            <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy1"  Command="{Binding Path=ToCurrentPatientCommand}" Content="Вернуться к пациенту" HorizontalAlignment="Left" Margin="378,558,0,0" VerticalAlignment="Top"  
+        <Grid ShowGridLines="False" Margin="0,80,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition   Height="Auto"/>
+                <RowDefinition   Height="Auto"/>
+                <RowDefinition   Height="Auto"/>
+                <RowDefinition   Height="20"/>
+                <RowDefinition   Height="*"/>
+                <RowDefinition   Height="Auto"/>
+                <RowDefinition   Height="Auto"/>
+                <RowDefinition   Height="5"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock  FontSize="22pt" Height="38" VerticalAlignment="Top" Margin="0,0,0,0" ><Run Text="Просмотр"/><Run Text=" операции"/></TextBlock>
+                <TextBlock   FontSize="22pt" Height="38" Margin="150,0,0,0"  VerticalAlignment="Top" Text="{Binding Path=CurrentPatient.Name}"><TextBlock Text="{Binding Path=initials}"></TextBlock></TextBlock>
+            </StackPanel>
+            <TextBlock  Grid.Row="1"   FontSize="24" Height="33"   Margin="0,0,0,0" Text="{Binding Path=OperationResults}" Foreground="#FF5D140D" Width="1024" Background="#FFB9E0E6" TextAlignment="Center" />
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                   <TextBlock  x:Name="textBlock_Copy3"   Margin="5,0,0,0" TextWrapping="Wrap"  
+                         VerticalAlignment="Center"  FontSize="18"  Width="247"><Run Text="А"/><Run Text="нестетик"/><Run Text=": "/><TextBlock Text="{Binding Path=AnesteticSelected}"/></TextBlock>
+            <TextBlock x:Name="textBlock_Copy4"   Margin="100,0,0,0" TextWrapping="Wrap"  
+                      VerticalAlignment="Center"   FontSize="16"><Run Text="Б"/><Run Text="ригада"/></TextBlock>
+                <TextBlock x:Name="textBlock_Copy7"   Margin="90,0,0,0" TextWrapping="Wrap"  
+                     VerticalAlignment="Center"    Text="Диагноз справа" RenderTransformOrigin="2.097,10.521" FontSize="16"/>
+                <TextBlock x:Name="textBlock_Copy6"    Margin="147,0,0,0" TextWrapping="Wrap"  
+                       VerticalAlignment="Center" Text="Диагноз слева" FontSize="16"/>
+              
+            </StackPanel>
+            <Button Grid.Row="6" Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy1"  Command="{Binding Path=ToCurrentPatientCommand}" Content="Вернуться к пациенту" HorizontalAlignment="Left" Margin="378,10,0,0" VerticalAlignment="Top"  
                   Width="300" />
-            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copfy1"  Command="{Binding Path=ToCreateEpicrizCommand}" Visibility="{Binding Path=VisiBIlityOfAddCancle}" Content="Предоперационный эпикриз" HorizontalAlignment="Left" Margin="693,608,0,0" VerticalAlignment="Top"  
+            <Button Grid.Row="6" Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copfy1"  Command="{Binding Path=ToCreateEpicrizCommand}" Visibility="{Binding Path=VisiBIlityOfAddCancle}" Content="Предоперационный эпикриз" HorizontalAlignment="Left" Margin="693,55,0,0" VerticalAlignment="Top"  
                   Width="300"/>
-            <TextBlock Visibility="{Binding IsLeftLegInOperation}" x:Name="textBlock" HorizontalAlignment="Left" Margin="184,167,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top"  FontSize="16" Height="44" Width="357"><Run  FontSize="16"  Text="Операции слева"/><Run Text=":"/> <TextBlock Text="{Binding Path=OprTypeSelected}"></TextBlock></TextBlock>
-            <TextBlock x:Name="tвextBlock" HorizontalAlignment="Left" Margin="1,167,0,0"  TextWrapping="Wrap"  
-                  Visibility="{Binding IsRightLegInOperation}"      VerticalAlignment="Top"  FontSize="16" Height="44" Width="357"><Run  FontSize="16" Text="Операции справа"/><Run Text=":"/> <TextBlock Text="{Binding Path=OprTypeSelected}"></TextBlock></TextBlock>
+            <StackPanel Grid.Row="3" Orientation="Horizontal">
+                <TextBlock  x:Name="tвextBlock"    Margin="5,0,0,0"  TextWrapping="Wrap"  
+                  Visibility="{Binding IsRightLegInOperation}"        FontSize="16"  Width="auto"><Run  FontSize="16" Text="Операции справа"/><Run Text=":"/> <TextBlock Text="{Binding Path=OprTypeSelected}"></TextBlock></TextBlock>
 
-            <TextBlock x:Name="textBlock_Copy3" HorizontalAlignment="Left" Margin="1,130,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top" FontSize="18" Height="32" Width="247"><Run Text="А"/><Run Text="нестетик"/><Run Text=": "/><TextBlock Text="{Binding Path=AnesteticSelected}"/></TextBlock>
-            <TextBlock x:Name="textBlock_Copy4" HorizontalAlignment="Left" Margin="369,130,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top" FontSize="16"><Run Text="Б"/><Run Text="ригада"/></TextBlock>
+                <TextBlock  Visibility="{Binding IsLeftLegInOperation}" x:Name="textBlock"  Margin="35,0,0,0" TextWrapping="Wrap"  
+                         FontSize="16"   Width="auto"><Run  FontSize="16"  Text="Операции слева"/><Run Text=":"/> <TextBlock Text="{Binding Path=OprTypeSelected}"></TextBlock></TextBlock>
+              
+            </StackPanel>
+         
+         
 
-            <ListBox Visibility="{Binding IsLeftLegInOperation}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Left" Height="170" Margin="184,190,0,0"  VerticalAlignment="Top" Width="169"  
+            <ListBox Grid.Row="3"  Grid.RowSpan="2" Visibility="{Binding IsLeftLegInOperation}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Left"  Margin="178,30,0,0"    Width="169"  
                        ItemsSource="{Binding Path=LeftOperationList}"   Foreground="Black" Background="White">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -30,7 +59,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Left" Height="170" Margin="0,190,0,0" VerticalAlignment="Top" Width="169"  
+            <ListBox Grid.Row="3" Grid.RowSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Left" Margin="5,30,0,0"  Width="169"  
                    Visibility="{Binding IsRightLegInOperation}"    ItemsSource="{Binding Path=RightOperationList}"   Foreground="Black" Background="White">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -41,7 +70,7 @@
             </ListBox>
 
 
-            <DataGrid HorizontalAlignment="Left" Height="375" Margin="369,161,0,0" VerticalAlignment="Top" Width="auto"  
+            <DataGrid Grid.Row="3" Grid.RowSpan="3" HorizontalAlignment="Left"   Margin="352,0,0,0"  Width="144"  
                           Foreground="Black"  
                      ItemsSource="{Binding Path=Controller.CurrentViewModel.DoctorsSelected}" AutoGenerateColumns="False" HeadersVisibility="None" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" >
                 <DataGrid.Columns>
@@ -61,23 +90,15 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="20,450,0,0" TextWrapping="Wrap"  
+            <TextBlock Grid.Row="5" x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="20,10,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Top" Text="NB!"/>
-            <Border BorderThickness="1" BorderBrush="Black"  Width="230" HorizontalAlignment="Left" Height="86" Margin="57,450,0,0" VerticalAlignment="Top">
-                
-            
-            <TextBlock  Text="{Binding Path=Operation.NB}" x:Name="richTextBox">
-               
+            <Border Grid.Row="5" BorderThickness="1" BorderBrush="Black"  Width="230" HorizontalAlignment="Left" Height="86" Margin="57,10,0,0" VerticalAlignment="Top">
+            <TextBlock TextWrapping="Wrap" Text="{Binding Path=Operation.NB}" x:Name="richTextBox">
             </TextBlock>
             </Border>
-            <TextBlock x:Name="textBlock_Copy6" HorizontalAlignment="Left"  Margin="750,130,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Top" Text="Диагноз слева" FontSize="16"/>
-            <TextBlock x:Name="textBlock_Copy7" HorizontalAlignment="Left" Margin="468,132,0,0" TextWrapping="Wrap"  
-                      VerticalAlignment="Top" Text="Диагноз справа" RenderTransformOrigin="2.097,10.521" FontSize="16"/>
-            <Button  Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy3"  Visibility="{Binding Path=VisiBIlityOfAddCancle}" Content="Отменить операцию" HorizontalAlignment="Left" Width="300" Margin="63,558,0,0"              
+            <Button Grid.Row="6" Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy3"  Visibility="{Binding Path=VisiBIlityOfAddCancle}" Content="Отменить операцию" HorizontalAlignment="Left" Width="300" Margin="63,10,0,0"              
                     VerticalAlignment="Top"  Command="{Binding Path=ToCancleOperationCommand}" RenderTransformOrigin="0.502,0.471"/>
-
-            <ListBox  ScrollViewer.HorizontalScrollBarVisibility="Disabled"  HorizontalAlignment="Left" Height="375" Margin="750,161,0,0"  VerticalAlignment="Top" Width="259"   
+            <ListBox Grid.Row="3" Grid.RowSpan="3"   ScrollViewer.HorizontalScrollBarVisibility="Disabled"      Margin="760,0,0,0"    Width="259"   
                           Foreground="Black" 
                        ItemsSource="{Binding Path=Controller.CurrentViewModel.LeftDiagnosisList}">
                 <ListBox.ItemTemplate>
@@ -86,7 +107,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <ListBox  ScrollViewer.HorizontalScrollBarVisibility="Disabled"  HorizontalAlignment="Left" Height="375" Margin="468,161,0,0" VerticalAlignment="Top" Width="259"  
+            <ListBox Grid.RowSpan="3"  Grid.Row="3"  ScrollViewer.HorizontalScrollBarVisibility="Disabled"     Margin="235,0,0,0"  Width="259"  
                           Foreground="Black"
                        ItemsSource="{Binding Path=Controller.CurrentViewModel.RightDiagnosisList}"   >
            
@@ -97,10 +118,11 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <!--<TextBlock HorizontalAlignment="Left" FontSize="24" Height="38" VerticalAlignment="Top" Margin="45,38,0,0" Text="дата время" ><DatePickerTextBox IsReadOnly="True" Text="{Binding Path=Operation.Date}"></DatePickerTextBox></TextBlock>-->
-            <TextBlock HorizontalAlignment="Left" FontSize="24" Height="33" VerticalAlignment="Top" Margin="0,76,0,0" Text="{Binding Path=OperationResults}" Foreground="#FF5D140D" Width="1024" Background="#FFB9E0E6" TextAlignment="Center" />
-            <Button Style="{StaticResource MyNormalBUTTON}" Visibility="{Binding Path=VisiBIlityOfAddResult}" x:Name="button_Copy" Content="{Binding ResultButtonName}" Command="{Binding Path=ToAddOperationResultCommand}" HorizontalAlignment="Left" Margin="694,558,0,0"              
+
+            <Button Grid.Row="6" Style="{StaticResource MyNormalBUTTON}" Visibility="{Binding Path=VisiBIlityOfAddResult}" x:Name="button_Copy" Content="{Binding ResultButtonName}" Command="{Binding Path=ToAddOperationResultCommand}" HorizontalAlignment="Left" Margin="694,10,0,0"              
             VerticalAlignment="Top" Width="300"  RenderTransformOrigin="0.502,0.471"/>
         </Grid>
+        <!--<TextBlock HorizontalAlignment="Left" FontSize="24" Height="38" VerticalAlignment="Top" Margin="45,38,0,0" Text="дата время" ><DatePickerTextBox IsReadOnly="True" Text="{Binding Path=Operation.Date}"></DatePickerTextBox></TextBlock>-->
+
     </DataTemplate>
 </ResourceDictionary>

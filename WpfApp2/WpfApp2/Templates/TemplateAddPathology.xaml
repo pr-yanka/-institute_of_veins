@@ -6,7 +6,12 @@
     </ResourceDictionary.MergedDictionaries>
     <DataTemplate x:Key="TemplateAddPathology">
         <Grid Margin="203,62,0,0">
-
+            <Grid.RowDefinitions>
+ 
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
             <TextBlock FontSize="22pt"  Height="32" x:Name="label" Text="Патологии" HorizontalAlignment="Left" Margin="304,10,0,0" VerticalAlignment="Top">
             <TextBlock.RenderTransform>
                 <TransformGroup>
@@ -29,9 +34,9 @@
                     </TransformGroup>
                 </TextBlock.RenderTransform>
             </TextBlock>
-            <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy1" Content="{Binding TextAddOrSave}" Command="{Binding Path=ToPathologyListCommand}" HorizontalAlignment="Left" Margin="279,264,0,0" VerticalAlignment="Top"  
+            <Button Grid.Row="1" Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy1" Content="{Binding TextAddOrSave}" Command="{Binding Path=ToPathologyListCommand}" HorizontalAlignment="Left" Margin="279,0,0,0" VerticalAlignment="Top"  
                     />
-            <Button  Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy" Content="{Binding ReturnBtnName}"  Command="{Binding Path=ToPathologyListNoSaveCommands}" HorizontalAlignment="Left" Margin="59,264,0,0" VerticalAlignment="Top"  
+            <Button Grid.Row="1"  Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy" Content="{Binding ReturnBtnName}"  Command="{Binding Path=ToPathologyListNoSaveCommands}" HorizontalAlignment="Left" Margin="59,0,0,0" VerticalAlignment="Top"  
                     />
 
             <ComboBox IsEnabled="{Binding Path=isReadOnly}"  x:Name="comboBox" ItemsSource="{Binding Path=PatologyTypes}" 
@@ -62,12 +67,12 @@
 
             <TextBlock x:Name="textBlock_Co4py" HorizontalAlignment="Left" Margin="380,170,0,0" TextWrapping="Wrap" Text="Дата исчезнования"  
                        VerticalAlignment="Top" RenderTransformOrigin="0.247,0.521"/>
-            <Border Visibility="{Binding Path = CurrentPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOverlay" Width="auto" Height="auto">
+            <Border Grid.RowSpan="3" Visibility="{Binding Path = CurrentPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOverlay" Width="auto" Height="auto">
                 <Border.Background>
                     <SolidColorBrush Color="Black" Opacity="0.78"/>
                 </Border.Background>
             </Border>
-            <Border x:Name="panelControl" Grid.RowSpan="4" Margin="0,0,-450,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="450" Height="175" DataContext="{Binding Path=CurrentPanelViewModel}" >
+            <Border x:Name="panelControl" Grid.RowSpan="6" Margin="0,0,-450,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="450" Height="175" DataContext="{Binding Path=CurrentPanelViewModel}" >
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
                         <Style.Triggers>

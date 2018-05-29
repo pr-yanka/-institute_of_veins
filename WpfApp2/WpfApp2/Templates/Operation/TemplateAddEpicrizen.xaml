@@ -17,8 +17,9 @@
 
                 <RowDefinition Height="22"></RowDefinition>
                 <RowDefinition Height="55"></RowDefinition>
-                <RowDefinition Height="55"></RowDefinition>
-                <RowDefinition Height="97*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="AUTO"></RowDefinition>
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
@@ -50,9 +51,9 @@
 
             
           
-              <TextBlock Grid.Column="1" Grid.Row="2" Grid.RowSpan="4" FontFamily="/fonts/#Pescadero" FontSize="14pt" Text="{Binding TextForDoWhat}" Margin="10,10,178,1" TextWrapping="Wrap" Grid.ColumnSpan="2"/>
+            <TextBlock Grid.Column="1" Grid.Row="2" Grid.RowSpan="4" FontFamily="/fonts/#Pescadero" FontSize="14pt" Text="{Binding TextForDoWhat}" Margin="10,10,178,1" TextWrapping="Wrap" Grid.ColumnSpan="2"/>
        
-            <Button  Style="{StaticResource MyNormalBUTTON}" Grid.Column="1" Grid.Row="6" Grid.RowSpan="4" x:Name="b3utton_Copy13" Width="265"  Content="Вернуться к операции" Command="{Binding Path=ToOperationOverviewCommand}" HorizontalAlignment="Left"  Margin="10,-5" VerticalAlignment="Top"/>
+            <Button  Style="{StaticResource MyNormalBUTTON}" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="7" Grid.RowSpan="2"  x:Name="b3utton_Copy13" Width="265"  Content="Вернуться к операции" Command="{Binding Path=ToOperationOverviewCommand}" HorizontalAlignment="Left"  Margin="0,10"  />
  
 
  
