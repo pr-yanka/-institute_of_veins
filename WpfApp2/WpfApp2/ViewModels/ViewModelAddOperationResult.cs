@@ -69,10 +69,10 @@ namespace WpfApp2.ViewModels
             
             Operation = Data.Operation.Get((int)data);
             operationId = (int)data;
-            DateTime bufTime = DateTime.Parse(Operation.Time);
+            //DateTime bufTime = DateTime.Parse(Operation.Time);
 
-            Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
-            Date = Operation.Date;
+            //Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
+            Date = Data.OperationDateTime.Get(Operation.Datetime_id.Value).Datetime;
 
             int i1 = 0;
             int i2 = 0;

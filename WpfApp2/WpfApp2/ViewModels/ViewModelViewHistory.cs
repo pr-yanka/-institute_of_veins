@@ -130,10 +130,10 @@ namespace WpfApp2.ViewModels
                     }
                 );
 
-                    DateTime buf1 = DateTime.Parse(Operation.Time);
+                    //DateTime buf1 = DateTime.Parse(Operation.Time);
                     if (Operation.cancel_operations != null && isCanceledOprVisible == false) { }
                     else
-                        HistoryDataSource.Add(new HistoryDataSource(bufer, new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, buf1.Hour, buf1.Minute, buf1.Second), "Операция"));
+                        HistoryDataSource.Add(new HistoryDataSource(bufer, Data.OperationDateTime.Get(Operation.Datetime_id.Value).Datetime, "Операция"));
                 }
             }
 

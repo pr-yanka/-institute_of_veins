@@ -169,7 +169,7 @@ namespace WpfApp2.ViewModels
                 visibilityOfNextOP = Visibility.Hidden;
             }
             comment = oprresult.Str;
-            DateTime bufTime = DateTime.Parse(Operation.Time);
+            //DateTime bufTime = DateTime.Parse(Operation.Time);
             // operationType = Data.OperationType.Get(Operation.OperationTypeId).LongName;
 
             i1 = 0;
@@ -214,8 +214,8 @@ namespace WpfApp2.ViewModels
             {
                 operationType = "На левую нижнюю конечность :" + leftP + " " + "На правую нижнюю конечность :" + rightP;
             }
-            Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
-            Date = Operation.Date;
+            //Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
+            Date = Data.OperationDateTime.Get(Operation.Datetime_id.Value).Datetime;
 
         }
 

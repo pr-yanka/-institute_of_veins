@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Practices.Prism.Commands;
 using WpfApp2.Db.Models;
-using WpfApp2.LegParts.VMs;
 using WpfApp2.Navigation;
 
 namespace WpfApp2.ViewModels.Panels
@@ -17,7 +10,7 @@ namespace WpfApp2.ViewModels.Panels
     {
         public ViewModelBase ParentVM { get; protected set; }
 
-        private bool _panelOpened = false;
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -27,8 +20,18 @@ namespace WpfApp2.ViewModels.Panels
         }
         public ObservableCollection<Docs> _doctors;
         public ObservableCollection<Docs> Doctors { get { return _doctors; } set { _doctors = value; OnPropertyChanged(); } }
-        public int DoctorSelectedId { get; set; }
 
+        private int _doctorSelectedId;
+        public int DoctorSelectedId
+        {
+            get { return _doctorSelectedId; }
+            set
+            {
+                _doctorSelectedId = value;
+                OnPropertyChanged();
+            }
+        }
+        private bool _panelOpened = false;
         public bool PanelOpened
         {
             get { return _panelOpened; }
@@ -39,10 +42,20 @@ namespace WpfApp2.ViewModels.Panels
             }
         }
 
-
+        private string _commentary;
+        public string Commentary
+        {
+            get { return _commentary; }
+            set
+            {
+                _commentary = value;
+                OnPropertyChanged();
+            }
+        }
 
         public DoctorSelectPanelViewModel(ViewModelBase parentVM) : base(parentVM.Controller)
         {
+            DoctorSelectedId = 0;
             using (var context = new MySqlContext())
             {
                 DoctorRepository DoctorRep = new DoctorRepository(context);
@@ -55,6 +68,7 @@ namespace WpfApp2.ViewModels.Panels
                         Doctors.Add(new Docs(doc));
                     }
                 }
+                DoctorSelectedId = Doctors.Count - 1;
             }
             ParentVM = parentVM;
 
@@ -70,7 +84,6 @@ namespace WpfApp2.ViewModels.Panels
                 OnPropertyChanged();
             }
         }
-
         //private string _longText;
         //public string LongText
         //{
@@ -93,6 +106,7 @@ namespace WpfApp2.ViewModels.Panels
 
         internal void ClearPanel()
         {
+            DoctorSelectedId = 0;
             using (var context = new MySqlContext())
             {
                 DoctorRepository DoctorRep = new DoctorRepository(context);
@@ -105,6 +119,7 @@ namespace WpfApp2.ViewModels.Panels
                         Doctors.Add(new Docs(doc));
                     }
                 }
+                DoctorSelectedId = Doctors.Count - 1;
             }
             //LongText = "";
             ShortText = "";

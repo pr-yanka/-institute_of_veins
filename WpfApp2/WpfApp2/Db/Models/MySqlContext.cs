@@ -18,13 +18,14 @@ namespace WpfApp2.Db.Models
 
         //public DbSet<BPVHipAdditionalStructure> BPVHipAdditionalStructure { get; }
 
-        public DbSet<SavedComplanesObs> SavedComplanesObs { get; }
-        public DbSet<SavedRecomendationObs> SavedRecomendationObs { get; }
-        public DbSet<SavedDiagnosisObs> SavedDiagnosisObs { get; }
+        public DbSet<OperationDateTime> OperationDateTime { get; set; }
+        public DbSet<SavedComplanesObs> SavedComplanesObs { get; set; }
+        public DbSet<SavedRecomendationObs> SavedRecomendationObs { get; set; }
+        public DbSet<SavedDiagnosisObs> SavedDiagnosisObs { get; set; }
 
 
-        public DbSet<SavedExamination> SavedExamination { get; }
-        public DbSet<SavedExaminationLeg> SavedExaminationLeg { get; }
+        public DbSet<SavedExamination> SavedExamination { get; set; }
+        public DbSet<SavedExaminationLeg> SavedExaminationLeg { get; set; }
         public DbSet<Veshestvo> Veshestvo { get; set; }
         public DbSet<Svetovod> Svetovod { get; set; }
         public DbSet<AdditionalInfoDocument> AdditionalInfoDocument { get; set; }
@@ -1009,7 +1010,7 @@ namespace WpfApp2.Db.Models
 
 
 
-            
+
 
 
             modelBuilder.Entity<PDSVHipCombo>()

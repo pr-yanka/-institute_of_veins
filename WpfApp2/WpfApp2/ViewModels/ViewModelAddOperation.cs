@@ -16,6 +16,7 @@ using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 using WpfApp2.ViewModels.Panels;
 using System.Windows.Data;
+using System.Globalization;
 
 namespace WpfApp2.ViewModels
 {
@@ -106,9 +107,19 @@ namespace WpfApp2.ViewModels
         public ICommand OpenPanelCommand { protected set; get; }
         public ICommand OpenPanelAnesteticCommand { protected set; get; }
         public OperationTypePanelViewModel CurrentPanelViewModel { get; protected set; }
+
         public AnetheticTypePanelViewModel CurrentPanelAnestViewModel { get; protected set; }
+        #region SELECTtIME
+        public DelegateCommand SaveSelectTimeCommand { set; get; }
+        public DelegateCommand RevertSelectTimeCommand { get; private set; }
+        public ICommand OpenPanelSelectTime { protected set; get; }
+        public SelectTimePanelViewModel CurrentPanelSelectTime { get; protected set; }
+        #endregion
         public static bool Handled = false;
         public UIElement UI;
+
+
+
 
         public DelegateCommand NewOpTypeCommand { get; set; }
         public DelegateCommand NewAnetheticTypeCommand { get; set; }
@@ -294,6 +305,9 @@ namespace WpfApp2.ViewModels
         private int _oprTypeSelected;
         public int OprTypeSelected { get { return _oprTypeSelected; } set { _oprTypeSelected = value; OnPropertyChanged(); } }
 
+        private string _textForTime;
+        public string TextForDate { get { return _textForTime; } set { _textForTime = value; OnPropertyChanged(); } }
+
         public string ButtonSaveText { get; set; }
         public DelegateCommand ToLeftDiagCommand { get; protected set; }
         public DelegateCommand ToRightDiagCommand { get; protected set; }
@@ -387,7 +401,7 @@ namespace WpfApp2.ViewModels
 
             CurrentPanelViewModel.PanelOpened = true;
 
-
+            TextForDate = "Время не выбрано";
             using (var context = new MySqlContext())
             {
                 LeftDiagnosisList = new CollectionViewSource();
@@ -405,7 +419,7 @@ namespace WpfApp2.ViewModels
                 MedPersonalRepository MedPersonalRep = new MedPersonalRepository(context);
                 DoctorRepository DoctorRep = new DoctorRepository(context);
                 Operation = new Operation();
-                Operation.Date = DateTime.Now;
+                // Operation.Date = DateTime.Now;
                 CurrentPatient = Data.Patients.Get((int)data);
                 initials = " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
 
@@ -486,7 +500,7 @@ namespace WpfApp2.ViewModels
             TimeCheckMinute = true;
             ButtonSaveText = "Назначить операцию";
 
-          
+
             MessageBus.Default.Subscribe("SetOperationResult", SetOperResult);
             MessageBus.Default.Subscribe("SetCurrentPatientForOperation", SetCurrentPatientID);
             MessageBus.Default.Subscribe("SetRightDiagnosisListForOperation", SetRightDiagnosisList);
@@ -502,7 +516,7 @@ namespace WpfApp2.ViewModels
             Controller = controller;
             HasNavigation = false;
             Operation = new Operation();
-            Operation.Date = DateTime.Now;
+            // Operation.Date = DateTime.Now;
             LeftDiagnosisList = new CollectionViewSource();
             RightDiagnosisList = new CollectionViewSource();
             LeftOperationList = new CollectionViewSource();
@@ -588,8 +602,8 @@ namespace WpfApp2.ViewModels
                     bool test = false;
                     if (SelectedLegId == 0)
                     {
-                      //  ObservableCollection<OperationTypesDataSource> aray = (ObservableCollection<OperationTypesDataSource>)LeftOperationList.Source;
-                        if (LeftOperationList.Source == null || ((ObservableCollection<OperationTypesDataSource>)LeftOperationList.Source).Count == 0 || ((ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source).Count == 0 || LeftDiagnosisList.Source == null || ((ObservableCollection<DiagnosisDataSource>)RightDiagnosisList.Source).Count == 0 || ((ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source).Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false)
+                        //  ObservableCollection<OperationTypesDataSource> aray = (ObservableCollection<OperationTypesDataSource>)LeftOperationList.Source;
+                        if (LeftOperationList.Source == null || ((ObservableCollection<OperationTypesDataSource>)LeftOperationList.Source).Count == 0 || ((ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source).Count == 0 || LeftDiagnosisList.Source == null || ((ObservableCollection<DiagnosisDataSource>)RightDiagnosisList.Source).Count == 0 || ((ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source).Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false || Operation.Datetime_id == null)
                         {
                             MessageBox.Show("Не всё заполнено!");
                         }
@@ -601,7 +615,7 @@ namespace WpfApp2.ViewModels
                     else if (SelectedLegId == 1)
                     {
 
-                        if (RightOperationList.Source == null || ((ObservableCollection<OperationTypesDataSource>)RightOperationList.Source).Count == 0 || RightDiagnosisList.Source == null || ((ObservableCollection<DiagnosisDataSource>)RightDiagnosisList.Source).Count == 0 || ((ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source).Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false)
+                        if (RightOperationList.Source == null || ((ObservableCollection<OperationTypesDataSource>)RightOperationList.Source).Count == 0 || RightDiagnosisList.Source == null || ((ObservableCollection<DiagnosisDataSource>)RightDiagnosisList.Source).Count == 0 || ((ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source).Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false || Operation.Datetime_id == null)
                         {
                             MessageBox.Show("Не всё заполнено!");
                         }
@@ -611,7 +625,7 @@ namespace WpfApp2.ViewModels
                         }
 
                     }
-                    else if (RightOperationList.Source == null || ((ObservableCollection<OperationTypesDataSource>)RightOperationList.Source).Count == 0 || LeftOperationList.Source == null || ((ObservableCollection<OperationTypesDataSource>)LeftOperationList.Source).Count == 0 || LeftDiagnosisList.Source == null || RightDiagnosisList.Source == null || ((ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source).Count == 0 || ((ObservableCollection<DiagnosisDataSource>)RightDiagnosisList.Source).Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false)
+                    else if (RightOperationList.Source == null || ((ObservableCollection<OperationTypesDataSource>)RightOperationList.Source).Count == 0 || LeftOperationList.Source == null || ((ObservableCollection<OperationTypesDataSource>)LeftOperationList.Source).Count == 0 || LeftDiagnosisList.Source == null || RightDiagnosisList.Source == null || ((ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source).Count == 0 || ((ObservableCollection<DiagnosisDataSource>)RightDiagnosisList.Source).Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false || Operation.Datetime_id == null)
                     {
                         MessageBox.Show("Не всё заполнено!");
                     }
@@ -623,14 +637,19 @@ namespace WpfApp2.ViewModels
                     if (test)
                     {
 
-                        Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, MinuteHour.Hour, MinuteHour.Minute, 0);
-                        Operation.Time = MinuteHour.Hour + ":" + MinuteHour.Minute + ":" + 0;
+                        // Operation.Date = new DateTime(Operation.Date.Year,// Operation.Date.Month,// Operation.Date.Day, MinuteHour.Hour, MinuteHour.Minute, 0);
+                        // Operation.Time = MinuteHour.Hour + ":" + MinuteHour.Minute + ":" + 0;
+                        var opDate = Data.OperationDateTime.Get(Operation.Datetime_id.Value);
 
                         Operation.PatientId = CurrentPatient.Id;
                         Operation.AnestheticId = AnestethicTypesID[AnesteticSelected];
                         Operation.OnWhatLegOp = SelectedLegId.ToString();
                         Data.Operation.Add(Operation);
                         Data.Complete();
+                        opDate.Operation_id = Operation.Id;
+                        var SelectedOpDate = CurrentPanelSelectTime.OpViewList.Where(e => e.id == opDate.Id).FirstOrDefault();
+                        opDate.Doctor_id = SelectedOpDate.Doctor.Id;
+                        opDate.Note = SelectedOpDate.Note;
                         foreach (var Doctor in DoctorsSelected)
                         {
                             if (Doctor.isDoctor)
@@ -775,7 +794,35 @@ namespace WpfApp2.ViewModels
                 CurrentPanelViewModel.ClearPanel();
                 CurrentPanelViewModel.PanelOpened = true;
             });
-
+            #region Select time comands
+            CurrentPanelSelectTime = new SelectTimePanelViewModel(this);
+            OpenPanelSelectTime = new DelegateCommand(() =>
+            {
+                CurrentPanelSelectTime.ClearPanel();
+                CurrentPanelSelectTime.PanelOpened = true;
+            });
+            RevertSelectTimeCommand = new DelegateCommand(() =>
+            {
+                CurrentPanelSelectTime.PanelOpened = false;
+                Handled = false;
+            });
+            TextForDate = "Время не выбрано";
+            SaveSelectTimeCommand = new DelegateCommand(() =>
+            {
+                if (CurrentPanelSelectTime.SelectedOpTimeView != null)
+                {
+                    Operation.Datetime_id = CurrentPanelSelectTime.SelectedOpTimeView.id;
+                    
+                    TextForDate = CurrentPanelSelectTime.SelectedOpTimeView.Datetime.ToString("HH:mm dd MMMM yyyy года, dddd", CultureInfo.GetCultureInfo("ru-ru"));
+                }
+                else
+                {
+                    Operation.Datetime_id = null;
+                    TextForDate = "Время не выбрано";
+                }
+                CurrentPanelSelectTime.PanelOpened = false;
+            });
+            #endregion
             #region Anestetic New type comands
             CurrentPanelAnestViewModel = new AnetheticTypePanelViewModel(this);
             OpenPanelAnesteticCommand = new DelegateCommand(() =>

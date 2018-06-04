@@ -202,6 +202,7 @@
     <Compile Include="Controls\AddReport.xaml.cs">
       <DependentUpon>AddReport.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Db\Models\OperationDateTime.cs" />
     <Compile Include="Db\Models\SavedComplanesObsRepository.cs" />
     <Compile Include="Db\Models\SavedRecomendationObsRepository.cs" />
     <Compile Include="Db\Models\SavedDiagnosisObsRepository.cs" />
@@ -384,6 +385,8 @@
     <Compile Include="LegParts\VMs\MPVSectionViewModel.cs" />
     <Compile Include="LegParts\VMs\MPVViewModel.cs" />
     <Compile Include="ViewModels\Panels\AnalizePanelViewModel.cs" />
+    <Compile Include="ViewModels\Panels\AddTimeRowPanelViewModel.cs" />
+    <Compile Include="ViewModels\Panels\SelectTimePanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\TEMPVVayTypePanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\PDSVVayTypePanelViewModel.cs" />
     <Compile Include="ViewModels\Panels\MPVVayTypePanelViewModel.cs" />

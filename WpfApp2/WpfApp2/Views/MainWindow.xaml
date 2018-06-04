@@ -27,6 +27,7 @@
         <Grid.RowDefinitions>
             <RowDefinition   Height="*"/>
         </Grid.RowDefinitions>
+        <Border  Visibility="{Binding Path=Controller.CurrentViewModel.HasNavigation, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVis}}" Grid.ColumnSpan="3" BorderThickness="1"  Height="700" Margin="150,0,0,0" VerticalAlignment="Top" Width="756" Background="White" BorderBrush="#FFC9C9C9"></Border>
         <Rectangle Height="63" Stroke="#FF4FD5E0" VerticalAlignment="Top" Fill="#FF4FD5E0" RenderTransformOrigin="0.388,0.524" Grid.ColumnSpan="3"/>
         <Image x:Name="veins_logo_jpg"  Margin="30,0,0,0" HorizontalAlignment="Left" Source="pack://application:,,,/Images/veins-logo.jpg" StretchDirection="Both" VerticalAlignment="Top" MaxWidth="70" MaxHeight="60" MinWidth="76" MinHeight="60" RenderTransformOrigin="0.608,0.401"    Grid.ColumnSpan="3"/>
         <TextBlock FontFamily="Segoe UI Symbol" HorizontalAlignment="Left" Margin="142,0,0,0" TextWrapping="Wrap" Text="ИНСТИТУТ ВЕН" VerticalAlignment="Top" Foreground="White" Height="38" Width="159" FontSize="16" RenderTransformOrigin="0.5,0.528"/>

@@ -74,9 +74,110 @@ namespace WpfApp2.ViewModels
             }
 
         }
+        private void SetFunctionsToReturnToOpOwervier(object sender, object data)
+        {
+            ToOperationCommand = new DelegateCommand(
+              () =>
+              {
+                  var buf = new CancelOperation();
+                  if (IsOtherReason != "Yes")
+                  {
+                      buf.Reason = ReasonSelected + 1;
+                  }
+                  else
+                  {
+                      ReasonsOfCancelOperation buf1 = new ReasonsOfCancelOperation();
+                      if (OtherReasonText == null)
+                          OtherReasonText = "";
+                      buf1.Str = OtherReasonText;
+                      Data.ReasonsOfCancleOperation.Add(buf1);
+                      buf.Reason = buf1.Id;
+                      Data.Complete();
+
+
+                  }
+                  buf.TransferDate = DateTime.Now;
+                  Data.CancelOperation.Add(buf);
+                  Operation.cancel_operations = buf.Id;
+                  Data.Complete();
+                  if (Operation.Datetime_id != null && Operation.Datetime_id != 0)
+                  {
+                      var opDate = Data.OperationDateTime.Get(Operation.Datetime_id.Value);
+                      opDate.Doctor_id = null;
+                      opDate.Note = "Время свободно";
+                      opDate.Operation_id = null;
+                      Data.Complete();
+                  }
+                  MessageBus.Default.Call("SetCurrentACCOp", this, null);
+                  MessageBus.Default.Call("GetOperationForOverwiev", this, operationId);
+                  Controller.NavigateTo<ViewModelOperationOverview>();
+              }
+          );
+            ToOperationOverviewCommand = new DelegateCommand(
+                () =>
+                {
+                    MessageBus.Default.Call("GetOperationForOverwiev", this, operationId);
+                    Controller.NavigateTo<ViewModelOperationOverview>();
+                }
+            );
+        }
+
+        private void SetFunctionsToReturnToOpCreation(object sender, object data)
+        {
+            ToOperationCommand = new DelegateCommand(
+                () =>
+                {
+                    var buf = new CancelOperation();
+                    if (IsOtherReason != "Yes")
+                    {
+                        buf.Reason = ReasonSelected + 1;
+                    }
+                    else
+                    {
+                        ReasonsOfCancelOperation buf1 = new ReasonsOfCancelOperation();
+                        if (OtherReasonText == null)
+                            OtherReasonText = "";
+                        buf1.Str = OtherReasonText;
+                        Data.ReasonsOfCancleOperation.Add(buf1);
+                        buf.Reason = buf1.Id;
+                        Data.Complete();
+
+
+                    }
+                    buf.TransferDate = DateTime.Now;
+                    Data.CancelOperation.Add(buf);
+                    Operation.cancel_operations = buf.Id;
+                    Data.Complete();
+                    if (Operation.Datetime_id != null && Operation.Datetime_id != 0)
+                    {
+                        var opDate = Data.OperationDateTime.Get(Operation.Datetime_id.Value);
+                        opDate.Doctor_id = null;
+                        opDate.Note = "Время свободно";
+                        opDate.Operation_id = null;
+                        Data.Complete();
+                    }
+                    MessageBus.Default.Call("SetCurrentACCOp", this, null);
+                    MessageBus.Default.Call("ConfirmCancle", null, null);
+                    //MessageBus.Default.Call("GetOperationForOverwiev", this, operationId);
+                    Controller.NavigateTo<ViewModelAddOperation>();
+                }
+            );
+            ToOperationOverviewCommand = new DelegateCommand(
+                () =>
+                {
+                    //MessageBus.Default.Call("GetOperationForOverwiev", this, operationId);
+                    Controller.NavigateTo<ViewModelAddOperation>();
+                }
+            );
+        }
+
+
         public ViewModelCancelOperations(NavigationController controller) : base(controller)
         {
             MessageBus.Default.Subscribe("GetOperationIDForAddCancel", GetOperationid);
+
+            MessageBus.Default.Subscribe("SetFunctionsToReturnToOpOwervier", SetFunctionsToReturnToOpOwervier);
+            MessageBus.Default.Subscribe("SetFunctionsToReturnToOpCreation", SetFunctionsToReturnToOpCreation);
             HasNavigation = false;
             OtherReasonCommand = new DelegateCommand(
                 () =>
@@ -109,6 +210,14 @@ namespace WpfApp2.ViewModels
                     Data.CancelOperation.Add(buf);
                     Operation.cancel_operations = buf.Id;
                     Data.Complete();
+                    if (Operation.Datetime_id != null && Operation.Datetime_id != 0)
+                    {
+                        var opDate = Data.OperationDateTime.Get(Operation.Datetime_id.Value);
+                        opDate.Doctor_id = null;
+                        opDate.Note = "Время свободно";
+                        opDate.Operation_id = null;
+                        Data.Complete();
+                    }
                     MessageBus.Default.Call("SetCurrentACCOp", this, null);
                     MessageBus.Default.Call("GetOperationForOverwiev", this, operationId);
                     Controller.NavigateTo<ViewModelOperationOverview>();

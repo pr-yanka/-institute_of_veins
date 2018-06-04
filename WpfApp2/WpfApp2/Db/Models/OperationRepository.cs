@@ -19,12 +19,18 @@ namespace WpfApp2.Db.Models
         public int Id { set; get; }
         [Column("id_patient")]
         public int PatientId { set; get; }
-        //[Column("дата_операции")]
-        [Column("operation_date")]
-        public DateTime Date { set; get; }
-        //  [Column("время_операции")]
-        [Column("operation_time")]
-        public string Time { set; get; }
+
+        //  [Column("operation_date")]
+        //[NotMapped]
+        //public DateTime Date { set; get; }
+
+        ////  [Column("operation_time")]
+        //[NotMapped]
+        //public string Time { set; get; }
+
+        [Column("datetime_id")]
+        public int? Datetime_id { set; get; }
+        
         [Column("on_which_leg_operation")]
         public string OnWhatLegOp { set; get; }
         [Column("id_type_anesthetic")]

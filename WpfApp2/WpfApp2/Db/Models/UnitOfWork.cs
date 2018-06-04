@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WpfApp2.Db.Models.LegParts;
+﻿using WpfApp2.Db.Models.LegParts;
 using WpfApp2.Db.Models.LegParts.BPV_Tibia;
 using WpfApp2.Db.Models.LegParts.BPV_Tibia_Tibia;
 using WpfApp2.Db.Models.LegParts.BPVHip;
@@ -25,6 +20,7 @@ namespace WpfApp2.Db.Models
     public class UnitOfWork : IUnitOfWork
     {
         //public BPVHipAdditionalStructureRepository BPVHipAdditionalStructure { get; }
+        public OperationDateTimeRepository OperationDateTime { get; }
         public SavedComplanesObsRepository SavedComplanesObs { get; }
         public SavedRecomendationObsRepository SavedRecomendationObs { get; }
         public SavedDiagnosisObsRepository SavedDiagnosisObs { get; }
@@ -214,6 +210,7 @@ namespace WpfApp2.Db.Models
         public UnitOfWork(MySqlContext context)
         {
             _context = context;
+            OperationDateTime = new OperationDateTimeRepository(_context);
             //BPVHipAdditionalStructure = new BPVHipAdditionalStructureRepository(_context);
             SavedComplanesObs = new SavedComplanesObsRepository(_context);
             SavedRecomendationObs = new SavedRecomendationObsRepository(_context);
