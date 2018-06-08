@@ -202,6 +202,7 @@
     <Compile Include="Controls\AddReport.xaml.cs">
       <DependentUpon>AddReport.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Db\Models\ProgramVersionRepository.cs" />
     <Compile Include="Db\Models\OperationDateTime.cs" />
     <Compile Include="Db\Models\SavedComplanesObsRepository.cs" />
     <Compile Include="Db\Models\SavedRecomendationObsRepository.cs" />

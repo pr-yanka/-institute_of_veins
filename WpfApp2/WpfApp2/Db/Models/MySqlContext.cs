@@ -17,7 +17,8 @@ namespace WpfApp2.Db.Models
     {
 
         //public DbSet<BPVHipAdditionalStructure> BPVHipAdditionalStructure { get; }
-
+ 
+        public DbSet<ProgramVersion> ProgramVersion { get; set; }
         public DbSet<OperationDateTime> OperationDateTime { get; set; }
         public DbSet<SavedComplanesObs> SavedComplanesObs { get; set; }
         public DbSet<SavedRecomendationObs> SavedRecomendationObs { get; set; }
