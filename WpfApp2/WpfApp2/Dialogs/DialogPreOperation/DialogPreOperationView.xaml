@@ -5,6 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
              mc:Ignorable="d"  
              d:DesignHeight="300" d:DesignWidth="500">
+    <UserControl.Resources>
+        <ResourceDictionary Source="/LegParts/Templates/RightPanelAnimation.xaml"/>
+    </UserControl.Resources>
     <Grid Margin="4">
         <Label Content="Предварительное назначение операции" Margin="115,10,43,247" HorizontalAlignment="Center" Width="334" FontSize="16" FontFamily="Times New Roman" VerticalAlignment="Center" Height="35"/>
         <Button Style="{StaticResource MyConfirmBUTTON}" Content="ГОТОВО" HorizontalAlignment="Left" Margin="278,243,0,0" VerticalAlignment="Top" Width="171"   
@@ -15,9 +18,51 @@
                 CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
         <Label Content="Вид операции:" Margin="196,50,95,207" HorizontalAlignment="Center" Width="201" FontSize="16" FontFamily="Times New Roman" VerticalAlignment="Center" Height="35"/>
         <Label Content="Комментарий:" Margin="196,111,79,146" HorizontalAlignment="Center" Width="217" FontSize="16" FontFamily="Times New Roman" VerticalAlignment="Center" Height="35"/>
-        <ComboBox x:Name="comboBox" ItemsSource="{Binding OpTypes}" SelectedIndex="{Binding SelectedOpTypeID}" HorizontalAlignment="Left" Margin="38,85,0,0" VerticalAlignment="Top" Width="411"/>
+        <ComboBox x:Name="comboBox" ItemsSource="{Binding OpTypes}" SelectedIndex="{Binding SelectedOpTypeID}" HorizontalAlignment="Left" Margin="38,85,0,0" VerticalAlignment="Top" Width="284"/>
         <TextBox Text="{Binding Commentary}" x:Name="richTextBox" HorizontalAlignment="Left" Height="69" Margin="38,156,0,0" VerticalAlignment="Top" Width="411">
 
         </TextBox>
+        <Button Style="{StaticResource MyConfirmBUTTON}" Content="Новый вид" HorizontalAlignment="Left" Margin="327,78,0,0" VerticalAlignment="Top" Width="155"   
+            Command="{Binding OpenPanelCommand}" />
+        <Border Grid.RowSpan="5" Visibility="{Binding Path = CurrentPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOv5erlay">
+            <Border.Background>
+                <SolidColorBrush Color="Black" Opacity="0.78"/>
+            </Border.Background>
+        </Border>
+        <Border x:Name="panel34Corntrol" Grid.RowSpan="4" Margin="0,0,-680,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5"  Width="450" Height="195"  DataContext="{Binding Path=CurrentPanelViewModel}" >
+            <Border.Style>
+                <Style TargetType="{x:Type Border}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=PanelOpened}" Value="True">
+                            <DataTrigger.EnterActions>
+                                <RemoveStoryboard BeginStoryboardName="AnimationCloseStoryboard"/>
+                                <BeginStoryboard Storyboard="{StaticResource Open}" x:Name="AnimationBeginStoryboard"/>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <RemoveStoryboard BeginStoryboardName="AnimationBeginStoryboard"/>
+                                <BeginStoryboard Storyboard="{StaticResource Close}" x:Name="AnimationCloseStoryboard"/>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Border.Style>
+            <Border.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Border.RenderTransform>
+            <Grid>
+                <Canvas Background="#FFC6E8E6" Margin="0,0,0,29">
+                    <TextBlock x:Name="textfBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="10" FontSize="18" Canvas.Top="5" Text="{Binding ParentVM.TextOFNewType}"/>
+                    <TextBox x:Name="textBfox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" FontSize="18"  Width="430" Canvas.Left="10"  Canvas.Top="61" />
+                    <Button Style="{StaticResource MyNormalBUTTON}" x:Name="buttonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18"  Command="{Binding ParentVMD.RevertCommand}"  Canvas.Left="10" Canvas.Top="115" />
+                    <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtonfAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Command="{Binding ParentVMD.SaveCommand}" Canvas.Left="233" Canvas.Top="115" />
+                    <TextBlock x:Name="texftBlock_Copy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18" Canvas.Top="31" Canvas.Left="10" Text="Название:"/>
+                </Canvas>
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>

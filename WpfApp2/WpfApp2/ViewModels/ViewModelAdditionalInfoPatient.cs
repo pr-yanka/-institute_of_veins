@@ -147,7 +147,7 @@ namespace WpfApp2.ViewModels
         private IEnumerable<String> _townsList;
         public IEnumerable<String> PreparateHateCommentList { get { return _townsList; } set { _townsList = value; OnPropertyChanged(); } }
 
-        private Patient currentPatient;
+        //private Patient currentPatient;
         private Visibility _visibility;
         public Visibility Visibility { get { return _visibility; } set { _visibility = value; OnPropertyChanged(); } }
 

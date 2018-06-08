@@ -557,8 +557,8 @@ namespace WpfApp2.ViewModels
 
                         string lettersLeft = "";
                         string lettersRight = "";
-                        string BPVRight = "";
-                        string BPVLeft = "";
+                        //string BPVRight = "";
+                        //string BPVLeft = "";
                         using (var context = new MySqlContext())
                         {
                             ExaminationRepository ExamRep = new ExaminationRepository(context);

@@ -77,7 +77,7 @@ namespace WpfApp2.ViewModels
         //public ObservableCollection<Docs> _doctors;
         //public ObservableCollection<Docs> Doctors { get { return _doctors; } set { _doctors = value; OnPropertyChanged(); } }
         //private int _doctorSelectedId;
-        private int obsledId;
+        //private int obsledId;
         //public int DoctorSelectedId
         //{
         //    get { return _doctorSelectedId; }

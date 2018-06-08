@@ -146,7 +146,7 @@ namespace WpfApp2.ViewModels
 
 
 
-                    bool test = true;
+                    //bool test = true;
 
                     var Examsbuf = new ObservableCollection<ObsStruct>();
                     foreach (var Exam in ExamRp.GetAll)

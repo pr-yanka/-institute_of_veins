@@ -334,6 +334,15 @@ namespace WpfApp2.ViewModels
         }
         #region MessageBus
         bool isSetOperResult = false;
+
+
+        private void AddOperationTypeForDialogBox(object sender, object data)
+        {
+            Data.OperationType.Add(data as OperationType);
+            Data.Complete();
+        }
+
+
         private void SetRightDiagnosisList(object sender, object data)
         {
             var RightDiagnosisList1 = new ObservableCollection<DiagnosisDataSource>();
@@ -500,7 +509,8 @@ namespace WpfApp2.ViewModels
             TimeCheckMinute = true;
             ButtonSaveText = "Назначить операцию";
 
-
+            
+            MessageBus.Default.Subscribe("AddOperationTypeForDialogBox", AddOperationTypeForDialogBox);
             MessageBus.Default.Subscribe("SetOperationResult", SetOperResult);
             MessageBus.Default.Subscribe("SetCurrentPatientForOperation", SetCurrentPatientID);
             MessageBus.Default.Subscribe("SetRightDiagnosisListForOperation", SetRightDiagnosisList);

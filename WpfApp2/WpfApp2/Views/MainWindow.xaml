@@ -20,7 +20,7 @@
     </Controls:MetroWindow.Resources>
     <Grid >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="191*"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="47*"/>
             <ColumnDefinition Width="271*"/>
         </Grid.ColumnDefinitions>

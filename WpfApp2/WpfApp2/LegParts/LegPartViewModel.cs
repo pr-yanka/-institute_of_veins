@@ -149,7 +149,7 @@ namespace WpfApp2.LegParts
 
 
 
-        private DelegateCommand SaveEditPanelCommand;
+        //private DelegateCommand SaveEditPanelCommand;
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
