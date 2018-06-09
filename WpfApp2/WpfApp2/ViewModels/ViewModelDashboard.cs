@@ -51,7 +51,7 @@ namespace WpfApp2.ViewModels
             if (sender != null)
             {
                 op = (Operation)sender;
-                NextOpText = "   Ваша следущая операция назначена на " + DateTime.Parse(op.Time).Hour + ":" + DateTime.Parse(op.Time).Minute;
+                NextOpText = "   Ваша следущая операция назначена на " + Data.OperationDateTime.Get(op.Datetime_id.Value).Datetime.Hour + ":" + Data.OperationDateTime.Get(op.Datetime_id.Value).Datetime.Minute;
                 AlertOpOperation = Visibility.Visible;
 
                 ToOperationOverviewCommand = new DelegateCommand(
@@ -160,7 +160,12 @@ namespace WpfApp2.ViewModels
                         }
                         Data.Complete();
                     }
-
+                }
+                string value = System.Configuration.ConfigurationManager.AppSettings["version"];
+                
+                if(value != Data.ProgramVersion.Get(1).Version.ToString())
+                {
+                    MessageBox.Show("Обновите программу");
                 }
             }
             catch (Exception ex)

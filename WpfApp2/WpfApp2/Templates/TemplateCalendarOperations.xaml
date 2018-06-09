@@ -119,7 +119,7 @@
 
             <DataGrid Grid.Row="0" BorderBrush="Black" BorderThickness="1" FontSize="14" VerticalScrollBarVisibility="Auto" CanUserReorderColumns="False" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}"  RowStyle="{StaticResource MyDataGridRow}" IsReadOnly="True" ColumnHeaderHeight="30"  AutoGenerateColumns="False" ItemsSource="{Binding Path = ViewSource.View}" HorizontalAlignment="Left"   Margin="30,204,0,0"   Width="696" >
                 <DataGrid.Columns  >
-                    <DataGridTextColumn Width="auto"  CellStyle="{StaticResource MyDataGridCell2}" Binding="{Binding Path=Date,StringFormat=dd.MM.yyyy hh:mm}" ClipboardContentBinding="{x:Null}" Header="Дата" />
+                    <DataGridTextColumn Width="auto"  CellStyle="{StaticResource MyDataGridCell2}" Binding="{Binding Path=Date,StringFormat=dd.MM.yyyy HH:mm}" ClipboardContentBinding="{x:Null}" Header="Дата" />
                     <DataGridTextColumn Width="172"  CellStyle="{StaticResource MyDataGridCell}" Binding="{Binding Path=Patient}" ClipboardContentBinding="{x:Null}" Header="Пациент"  />
 
                     <DataGridTextColumn Width="179"  CellStyle="{StaticResource MyDataGridCell3}" Binding="{Binding Path=Anestetic}" ClipboardContentBinding="{x:Null}" Header="Анестетик" />

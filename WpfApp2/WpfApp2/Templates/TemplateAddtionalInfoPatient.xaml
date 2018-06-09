@@ -89,7 +89,6 @@
                     <TextBlock x:Name="textBlock_Copy5" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" Text="Непереносимость лекарственных препаратов" VerticalAlignment="Top" FontSize="16" Grid.Row="12" Width="auto"/>
                     <DataGrid ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderBrush="Black" Grid.Row="0" Grid.Column="1" BorderThickness="1" ColumnHeaderStyle="{StaticResource DGCHeaderStyle}" CanUserAddRows="False" CanUserResizeRows="false" CanUserResizeColumns="False" x:Name="dataGrid" HorizontalAlignment="Left" AutoGenerateColumns="False" Margin="0,0,0,0" VerticalAlignment="Top" Height="143" Width="572"  ItemsSource="{Binding Path=PatologyList,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
                         <DataGrid.RowStyle>
-
                             <Style TargetType="DataGridRow"  BasedOn="{StaticResource {x:Type DataGridRow}}">
                                 <Style.Triggers>
                                     <Trigger Property="IsSelected" Value="True">
@@ -107,18 +106,11 @@
                                 </Style.Triggers>
                             </Style>
                         </DataGrid.RowStyle>
-
-                        <DataGrid.Columns >
-
+                        <DataGrid.Columns>
                             <DataGridTemplateColumn Width="292"  Header="Патология" >
-
                                 <DataGridTemplateColumn.CellTemplate  >
-
                                     <DataTemplate >
-
-
                                         <TextBlock HorizontalAlignment="Center"  Text="{Binding Name}" />
-
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>

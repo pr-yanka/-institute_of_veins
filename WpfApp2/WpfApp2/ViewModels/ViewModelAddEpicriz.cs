@@ -271,10 +271,10 @@ namespace WpfApp2.ViewModels
                 OperationRepository Oprep = new OperationRepository(context);
                 Operation = Oprep.Get((int)data);
                 operationId = (int)data;
-                DateTime bufTime = DateTime.Parse(Operation.Time);
+                //DateTime bufTime = DateTime.Parse(Operation.Time);
 
-                Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
-                Date = Operation.Date;
+                //Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
+                Date = Data.OperationDateTime.Get(Operation.Datetime_id.Value).Datetime;
                 AnticogulantSelected = new ObservableCollection<Anticogulants>();
                 SclerozSelected = new ObservableCollection<Sclezing>();
                 PatientsRepository PatientsRep = new PatientsRepository(context);
@@ -557,8 +557,8 @@ namespace WpfApp2.ViewModels
 
                         string lettersLeft = "";
                         string lettersRight = "";
-                        string BPVRight = "";
-                        string BPVLeft = "";
+                        //string BPVRight = "";
+                        //string BPVLeft = "";
                         using (var context = new MySqlContext())
                         {
                             ExaminationRepository ExamRep = new ExaminationRepository(context);
@@ -732,7 +732,7 @@ namespace WpfApp2.ViewModels
 
                         document.ReplaceText("«Заключение_справа»", lettersRight + "\n");
 
-                        document.ReplaceText("«Дата_операции»", Operation.Date.ToString());
+                        document.ReplaceText("«Дата_операции»", Data.OperationDateTime.Get(Operation.Datetime_id.Value).Datetime.ToString());
 
                         if (CurrentPatient.Gender.ToLower() == "м")
                         {

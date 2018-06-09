@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WpfApp2.Db.Models.LegParts;
 using WpfApp2.Db.Models.LegParts.BPV_Tibia;
 using WpfApp2.Db.Models.LegParts.BPV_Tibia_Tibia;
@@ -24,7 +20,9 @@ namespace WpfApp2.Db.Models
 {
     public interface IUnitOfWork : IDisposable
     {
+        ProgramVersionRepository ProgramVersion { get; }
         //BPVHipAdditionalStructureRepository BPVHipAdditionalStructure { get; }
+        OperationDateTimeRepository OperationDateTime { get; }
         SavedComplanesObsRepository SavedComplanesObs { get; }
         SavedRecomendationObsRepository SavedRecomendationObs { get; }
         SavedDiagnosisObsRepository SavedDiagnosisObs { get; }

@@ -157,9 +157,9 @@ namespace WpfApp2.ViewModels
 
 
 
-                DateTime bufTime = DateTime.Parse(Operation.Time);
+                //DateTime bufTime = DateTime.Parse(Operation.Time);
 
-                Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
+                //Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
 
 
                 if (Operation.operation_result == null)
@@ -334,6 +334,7 @@ namespace WpfApp2.ViewModels
             ToCancleOperationCommand = new DelegateCommand(
                 () =>
                 {
+                    MessageBus.Default.Call("SetFunctionsToReturnToOpOwervier", null, null);
                     MessageBus.Default.Call("GetOperationIDForAddCancel", this, Operation.Id);
                     Controller.NavigateTo<ViewModelCancelOperations>();
                 }

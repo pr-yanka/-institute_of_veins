@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using Microsoft.Practices.Prism.Commands;
@@ -53,7 +49,7 @@ namespace WpfApp2.ViewModels
         public bool IsVisibleTotal { get; set; }
 
 
-        public OperationStruct(DelegateCommand ToOperation, Operation Op, DelegateCommand ToOpRes)
+        public OperationStruct(DelegateCommand ToOperation, Operation Op, DelegateCommand ToOpRes, DateTime OpDate)
         {
             if (Op.operation_result != null)
             {
@@ -73,8 +69,11 @@ namespace WpfApp2.ViewModels
             IsVisibleTotal = true;
             Operation = Op;
             this.ToOperation = ToOperation;
-            DateTime buf1 = DateTime.Parse(Op.Time);
-            Date = new DateTime(Op.Date.Year, Op.Date.Month, Op.Date.Day, buf1.Hour, buf1.Minute, buf1.Second);
+
+            Date = OpDate;
+
+            //DateTime buf1 = DateTime.Parse( Op.Time);
+            //Date = new DateTime(Op.Date.Year, Op.Date.Month, Op.Date.Day, buf1.Hour, buf1.Minute, buf1.Second);
             // Date = Op.Date.Day.ToString() + "." + Op.Date.Month.ToString() + "." + Op.Date.Year.ToString();
             // Time = buf1.Hour.ToString() + ":" + buf1.Minute.ToString();
 
@@ -95,9 +94,7 @@ namespace WpfApp2.ViewModels
 
                 Anestetic = AnestethicRep.Get(Op.AnestheticId).Str;
             }
-
         }
-
     }
 
     public class ViewModelCalendarOperations : ViewModelBase, INotifyPropertyChanged
@@ -136,8 +133,6 @@ namespace WpfApp2.ViewModels
             set
             {
                 _isCompletedOp = value;
-
-
                 SetSelectedMedOrDocOps();
                 Controller.NavigateTo<ViewModelCalendarOperations>();
                 OnPropertyChanged();
@@ -153,8 +148,6 @@ namespace WpfApp2.ViewModels
                 _isMyOpChecked = value; OnPropertyChanged();
                 if (value)
                     SetCurrentACCOp(null, null);
-
-
             }
         }
         public bool IsSortByData
@@ -207,7 +200,7 @@ namespace WpfApp2.ViewModels
         }
         private void SetSelectedMedOrDocOps()
         {
-           
+
             using (var context = new MySqlContext())
             {
                 try
@@ -219,7 +212,7 @@ namespace WpfApp2.ViewModels
 
                     OperationRepository OperationRp = new OperationRepository(context);
                     //bool testC = false;
-
+                    var OperationDateTimeRep = new OperationDateTimeRepository(context);
 
                     BrigadeRepository BrigadeRep = new BrigadeRepository(context);
                     BrigadeMedPersonalRepository BrigadeMedRep = new BrigadeMedPersonalRepository(context);
@@ -285,19 +278,20 @@ namespace WpfApp2.ViewModels
                            });
                             }
 
+                            if (Operation.OpResult != null && IsCompletedOp == false)
+                            {
 
-
-
-                            if (Operation.OpResult != null && IsCompletedOp == false) { }
+                            }
                             else if (Operation.OpCancle == null)
                             {
-                                DateTime buf1 = DateTime.Parse(Operation.Time);
-                                Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, buf1.Hour, buf1.Minute, buf1.Second);
-                                TimeSpan span = Operation.Date - DateTime.Now;
+                                DateTime OpDate = OperationDateTimeRep.Get(Operation.Datetime_id.Value).Datetime;
+                                //DateTime buf1 = DateTime.Parse(Operation.Time);
+                                //OpDate = new DateTime(OpDate.Year, OpDate.Month, OpDate.Day, buf1.Hour, buf1.Minute, buf1.Second);
+                                TimeSpan span = OpDate - DateTime.Now;
 
-                                if (_sortId == 0 && Operation.Date.Year == DateTime.Now.Year && Operation.Date.Month == DateTime.Now.Month && Operation.Date.Day == DateTime.Now.Day)
+                                if (_sortId == 0 && OpDate.Year == DateTime.Now.Year && OpDate.Month == DateTime.Now.Month && OpDate.Day == DateTime.Now.Day)
                                 {
-                                    Operations.Add(new OperationStruct(bufer, Operation, bufer2));
+                                    Operations.Add(new OperationStruct(bufer, Operation, bufer2, OpDate));
                                 }
                                 else if (_sortId == 1 && span.Days >= 0 && span.Days <= 3 && span.Hours > 0)
                                 {
@@ -306,7 +300,7 @@ namespace WpfApp2.ViewModels
                                     { }
                                     else
                                     {
-                                        Operations.Add(new OperationStruct(bufer, Operation, bufer2));
+                                        Operations.Add(new OperationStruct(bufer, Operation, bufer2, OpDate));
                                     }
                                 }
                                 else if (_sortId == 2 && span.Days >= 0 && span.Days <= 7 && span.Hours > 0)
@@ -316,7 +310,7 @@ namespace WpfApp2.ViewModels
                                     }
                                     else
                                     {
-                                        Operations.Add(new OperationStruct(bufer, Operation, bufer2));
+                                        Operations.Add(new OperationStruct(bufer, Operation, bufer2, OpDate));
                                     }
                                 }
                                 else if (_sortId == 3 && span.Days >= 0 && span.Days <= 32 && span.Hours > 0)
@@ -326,12 +320,12 @@ namespace WpfApp2.ViewModels
                                     }
                                     else
                                     {
-                                        Operations.Add(new OperationStruct(bufer, Operation, bufer2));
+                                        Operations.Add(new OperationStruct(bufer, Operation, bufer2, OpDate));
                                     }
                                 }
                                 else if (_sortId == 4)
                                 {
-                                    Operations.Add(new OperationStruct(bufer, Operation, bufer2));
+                                    Operations.Add(new OperationStruct(bufer, Operation, bufer2, OpDate));
                                 }
 
                             }
@@ -411,7 +405,8 @@ namespace WpfApp2.ViewModels
 
                     // Controller.NavigateTo<ViewModelCalendarOperations>();
                 }
-                catch(Exception ex) {
+                catch (Exception ex)
+                {
 
                 }
             }
@@ -419,7 +414,7 @@ namespace WpfApp2.ViewModels
 
         private void SetCurrentACCOp(object sender, object data)
         {
-          
+
             using (var context = new MySqlContext())
             {
                 try
@@ -452,7 +447,7 @@ namespace WpfApp2.ViewModels
 
                     OperationRepository OperationRp = new OperationRepository(context);
                     bool testC = false;
-
+                    var OperationDateTimeRep = new OperationDateTimeRepository(context);
 
                     BrigadeRepository BrigadeRep = new BrigadeRepository(context);
                     BrigadeMedPersonalRepository BrigadeMedRep = new BrigadeMedPersonalRepository(context);
@@ -578,17 +573,18 @@ namespace WpfApp2.ViewModels
                                 if (Operation.OpResult != null && IsCompletedOp == false) { }
                                 else if (Operation.OpCancle == null)
                                 {
-                                    DateTime buf1 = DateTime.Parse(Operation.Time);
-                                    Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, buf1.Hour, buf1.Minute, buf1.Second);
-                                    TimeSpan span = Operation.Date - DateTime.Now;
-                                    if (span.Days <= 2 && span.Days >= 0 && Operation.Date > DateTime.Now)
+                                    DateTime OpDate = OperationDateTimeRep.Get(Operation.Datetime_id.Value).Datetime;
+                                    //DateTime buf1 = DateTime.Parse(Operation.Time);
+                                    //OpDate = new DateTime(OpDate.Year, OpDate.Month, OpDate.Day, buf1.Hour, buf1.Minute, buf1.Second);
+                                    TimeSpan span = OpDate - DateTime.Now;
+                                    if (span.Days <= 2 && span.Days >= 0 && OpDate > DateTime.Now)
                                     {
-                                        Operationsbuf.Add(new OperationStruct(bufer, Operation, bufer2));
+                                        Operationsbuf.Add(new OperationStruct(bufer, Operation, bufer2, OpDate));
                                         testC = true;
                                     }
-                                    if (_sortId == 0 && Operation.Date.Year == DateTime.Now.Year && Operation.Date.Month == DateTime.Now.Month && Operation.Date.Day == DateTime.Now.Day)
+                                    if (_sortId == 0 && OpDate.Year == DateTime.Now.Year && OpDate.Month == DateTime.Now.Month && OpDate.Day == DateTime.Now.Day)
                                     {
-                                        Operations.Add(new OperationStruct(bufer, Operation, bufer2));
+                                        Operations.Add(new OperationStruct(bufer, Operation, bufer2, OpDate));
                                     }
                                     else if (_sortId == 1 && span.Days >= 0 && span.Days <= 3 && span.Hours > 0)
                                     {
@@ -597,7 +593,7 @@ namespace WpfApp2.ViewModels
                                         { }
                                         else
                                         {
-                                            Operations.Add(new OperationStruct(bufer, Operation, bufer2));
+                                            Operations.Add(new OperationStruct(bufer, Operation, bufer2, OpDate));
                                         }
                                     }
                                     else if (_sortId == 2 && span.Days >= 0 && span.Days <= 7 && span.Hours > 0)
@@ -607,7 +603,7 @@ namespace WpfApp2.ViewModels
                                         }
                                         else
                                         {
-                                            Operations.Add(new OperationStruct(bufer, Operation, bufer2));
+                                            Operations.Add(new OperationStruct(bufer, Operation, bufer2, OpDate));
                                         }
                                     }
                                     else if (_sortId == 3 && span.Days >= 0 && span.Days <= 32 && span.Hours > 0)
@@ -617,12 +613,12 @@ namespace WpfApp2.ViewModels
                                         }
                                         else
                                         {
-                                            Operations.Add(new OperationStruct(bufer, Operation, bufer2));
+                                            Operations.Add(new OperationStruct(bufer, Operation, bufer2, OpDate));
                                         }
                                     }
                                     else if (_sortId == 4)
                                     {
-                                        Operations.Add(new OperationStruct(bufer, Operation, bufer2));
+                                        Operations.Add(new OperationStruct(bufer, Operation, bufer2, OpDate));
                                     }
 
                                 }

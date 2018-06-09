@@ -11,15 +11,25 @@ using WpfApp2.Messaging;
 using System.IO;
 using System.Collections.Generic;
 using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace WpfApp2.ViewModels
 {
-    public class ViewModelLogin : ViewModelBase
+    public class ViewModelLogin : ViewModelBase, INotifyPropertyChanged
     {
+
+        #region Inotify realisation
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            //если PropertyChanged не нулевое - оно будет разбужено
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
         //private string Password { get; set; }
-
-        public string Name { get; set; }
-
+        private string _name;
+        public string Name { get { return _name; } set { _name = value; OnPropertyChanged(); } }
         int CurrAccId;
 
         public DelegateCommand<object> ToDashboardCommand { get; protected set; }
@@ -51,7 +61,8 @@ namespace WpfApp2.ViewModels
             string CheckSum = CalculateMD5Hash(((PasswordBox)sender).Password);
             sender = null;
             bool isUeserNameCorrect = false;
-
+            //Name = "Admin";
+            //CheckSum = CalculateMD5Hash("123");
             foreach (var acc in Data.Accaunt.GetAll)
             {
                

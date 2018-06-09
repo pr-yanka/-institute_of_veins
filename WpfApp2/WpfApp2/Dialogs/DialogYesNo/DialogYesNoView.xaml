@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
              mc:Ignorable="d"  
+             
              d:DesignHeight="100" d:DesignWidth="300">
     <Grid Margin="4">
         <Label Content="{Binding Message}" Margin="10,10,10,40" HorizontalAlignment="Center" Width="272" FontSize="16" FontFamily="Times New Roman" VerticalAlignment="Center"/>

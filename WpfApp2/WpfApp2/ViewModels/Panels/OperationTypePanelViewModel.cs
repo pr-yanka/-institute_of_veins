@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Practices.Prism.Commands;
 using WpfApp2.Db.Models;
-using WpfApp2.LegParts.VMs;
+using WpfApp2.DialogService;
 using WpfApp2.Navigation;
 
 namespace WpfApp2.ViewModels.Panels
@@ -16,7 +9,8 @@ namespace WpfApp2.ViewModels.Panels
     public class OperationTypePanelViewModel : ViewModelBase, INotifyPropertyChanged
     {
         public ViewModelBase ParentVM { get; protected set; }
-
+        public DialogViewModelBase ParentVMD { get; protected set; }
+        
         private bool _panelOpened = false;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -36,12 +30,17 @@ namespace WpfApp2.ViewModels.Panels
             }
         }
 
-        
+
 
         public OperationTypePanelViewModel(ViewModelBase parentVM) : base(parentVM.Controller)
         {
             ParentVM = parentVM;
-            
+
+        }
+
+        public OperationTypePanelViewModel(DialogViewModelBase parentVMD) : base(null)
+        {
+            ParentVMD = parentVMD;
         }
 
         private string _shortText;

@@ -18,7 +18,7 @@ namespace WpfApp2.LegParts
 {
     public abstract class LegSectionViewModel : ViewModelBase, INotifyPropertyChanged
     {
-        private int _listNumber;
+        //private int _listNumber;
         public int ListNumber { get; set; }
         private LegPartEntry _currentEntry;
         public LegPartEntry CurrentEntry
@@ -212,10 +212,10 @@ namespace WpfApp2.LegParts
         }
 
 
-        private string _text1;
+        //private string _text1;
         public string Text1 { get; set; }
 
-        private string _text2;
+        //private string _text2;
         public string Text2 { get; set; }
 
         private float _size;
@@ -246,7 +246,7 @@ namespace WpfApp2.LegParts
             }
         }
 
-        private float _size2;
+        //private float _size2;
 
         private LegSectionViewModel _previousSection;
 

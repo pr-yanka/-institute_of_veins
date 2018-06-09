@@ -46,7 +46,7 @@
                     <MenuItem Header="ВЫХОД" Background="WhiteSmoke" Command="{Binding ToLoginCommand}" />
                 </MenuItem>
             </Menu>
-            <Border BorderThickness="1" HorizontalAlignment="Left" Height="700" Margin="221,62,0,0" VerticalAlignment="Top" Width="756" Background="White" BorderBrush="#FFC9C9C9"></Border>
+            
         </Grid>
     </DataTemplate>
 

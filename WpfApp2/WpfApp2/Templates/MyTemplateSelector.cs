@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using WpfApp2.LegParts;
-using WpfApp2.Messaging;
 using WpfApp2.ViewModels;
 
 namespace WpfApp2.Templates

@@ -1309,6 +1309,8 @@ namespace WpfApp2.ViewModels
             {
                 MessageBox.Show("МПВ слева не заполнено");
             }
+
+
             //else if (RightPPV.IsEmpty == true)
             //{
             //    MessageBox.Show("ППВ справа не заполнено");
@@ -1787,15 +1789,15 @@ namespace WpfApp2.ViewModels
                 {
                     testThread = false;
 
-                    DialogViewModelBase vm =
+                    DialogYesNo.DialogYesNoViewModel vm =
                     new DialogYesNo.DialogYesNoViewModel("Назначить операцию?");
                     DialogResult result =
                         DialogService.DialogService.OpenDialog(vm, parameter as Window);
 
                     if (result == DialogResult.Yes)
                     {
-                        vm = new DialogPreOperationViewModel();
-                        result = DialogService.DialogService.OpenDialog(vm, parameter as Window);
+                        DialogPreOperationViewModel vm1 = new DialogPreOperationViewModel();
+                        result = DialogService.DialogService.OpenDialog(vm1, parameter as Window);
 
 
                     }

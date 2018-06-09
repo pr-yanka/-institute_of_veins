@@ -183,10 +183,10 @@ namespace WpfApp2.ViewModels
                 OperationRepository Oprep = new OperationRepository(context);
                 Operation = Oprep.Get((int)data);
                 operationId = (int)data;
-                DateTime bufTime = DateTime.Parse(Operation.Time);
+                //DateTime bufTime = DateTime.Parse(Operation.Time);
 
-                Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
-                Date = Operation.Date;
+                //Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
+                Date = Data.OperationDateTime.Get(Operation.Datetime_id.Value).Datetime;
 
                 PatientsRepository PatientsRep = new PatientsRepository(context);
                 CurrentPatient = PatientsRep.Get(Operation.PatientId);
@@ -731,8 +731,8 @@ namespace WpfApp2.ViewModels
                         }
 
 
-                        int day12 = Operation.Date.Day;
-                        int mnth12 = Operation.Date.Month;
+                        int day12 = Data.OperationDateTime.Get(Operation.Datetime_id.Value).Datetime.Day;
+                        int mnth12 = Data.OperationDateTime.Get(Operation.Datetime_id.Value).Datetime.Month;
                         string mnthStr1 = "";
                         string dayStr1 = "";
                         if (mnth12 < 10)
@@ -752,7 +752,7 @@ namespace WpfApp2.ViewModels
                         {
                             dayStr1 = day12.ToString();
                         }
-                        document.ReplaceText("«Дата»", dayStr1 + "." + mnthStr1 + "." + Operation.Date.Year.ToString());
+                        document.ReplaceText("«Дата»", dayStr1 + "." + mnthStr1 + "." + Data.OperationDateTime.Get(Operation.Datetime_id.Value).Datetime.Year.ToString());
                         int xx = 0;
                         foreach (var x in LeftDiagnosisList)
                         {
@@ -812,8 +812,8 @@ namespace WpfApp2.ViewModels
 
 
 
-                        int day = Operation.Date.Day;
-                        int mnth = Operation.Date.Month;
+                        int day = Data.OperationDateTime.Get(Operation.Datetime_id.Value).Datetime.Day;
+                        int mnth = Data.OperationDateTime.Get(Operation.Datetime_id.Value).Datetime.Month;
                         string mnthStr = "";
                         string dayStr = "";
                         if (mnth < 10)
@@ -833,7 +833,7 @@ namespace WpfApp2.ViewModels
                         {
                             dayStr = day.ToString();
                         }
-                        document.ReplaceText("«Дата_операции»", dayStr + "." + mnthStr + "." + Operation.Date.Year.ToString());
+                        document.ReplaceText("«Дата_операции»", dayStr + "." + mnthStr + "." + Data.OperationDateTime.Get(Operation.Datetime_id.Value).Datetime.Year.ToString());
 
                         string leftP = "", rightP = "", operationType = "";
                         int i1 = 0, i2 = 0;
