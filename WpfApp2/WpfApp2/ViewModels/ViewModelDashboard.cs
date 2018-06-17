@@ -161,12 +161,7 @@ namespace WpfApp2.ViewModels
                         Data.Complete();
                     }
                 }
-                string value = System.Configuration.ConfigurationManager.AppSettings["version"];
-                
-                if(value != Data.ProgramVersion.Get(1).Version.ToString())
-                {
-                    MessageBox.Show("Обновите программу");
-                }
+             
             }
             catch (Exception ex)
             {

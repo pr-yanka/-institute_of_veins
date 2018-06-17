@@ -50,6 +50,14 @@ namespace WpfApp2.ViewModels
 
         public ViewModelLogin(NavigationController controller) : base(controller)
         {
+            string value = System.Configuration.ConfigurationManager.AppSettings["version"];
+
+            if (value != Data.ProgramVersion.Get(1).Version.ToString())
+            {
+                MessageBox.Show("Обновите программу");
+                System.Windows.Application.Current.Shutdown();
+            }
+
             HasNavigation = false;
             MessageBus.Default.Subscribe("SetCurrAccIdBack", SetCurrAccIdBack);
             MessageBus.Default.Subscribe("SetAccNameDefault", SetDefault);

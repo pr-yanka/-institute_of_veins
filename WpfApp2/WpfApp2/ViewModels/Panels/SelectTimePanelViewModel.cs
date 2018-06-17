@@ -437,7 +437,7 @@ namespace WpfApp2.ViewModels.Panels
                 return;
             }
 
-            Date = (System.DateTime.Now.DayOfWeek == System.DayOfWeek.Sunday) ? System.DateTime.Now.AddDays(2) : System.DateTime.Now.AddDays(1);
+            Date = (System.DateTime.Now.DayOfWeek == System.DayOfWeek.Saturday) ? System.DateTime.Now.AddDays(2) : System.DateTime.Now.AddDays(1);
             LoadTimeTable();
             UpdateTimeTable();
             //}
