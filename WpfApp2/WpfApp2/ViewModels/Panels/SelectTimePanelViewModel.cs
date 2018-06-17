@@ -527,11 +527,13 @@ namespace WpfApp2.ViewModels.Panels
 
                     if (SelectedOpTimeView != null && ((ViewModelAddOperation)ParentVM).Operation.Datetime_id == null)
                     {
-                        opDataToModify = Data.OperationDateTime.Get(SelectedOpTimeView.id);
-                        opDataToModify.Doctor_id = SelectedOpTimeView.Doctor.Id;
-                        opDataToModify.Note = SelectedOpTimeView.Note;
-                        opDataToModify.Operation_id = SelectedOpTimeView.Operation.Id;
-                        opDataToModify.Datetime = SelectedOpTimeView.Datetime;
+                       
+                        opDataToModify = Data.OperationDateTime.Get(SelectedOpTimeViewCopy.id);
+                      
+                        opDataToModify.Doctor_id = SelectedOpTimeViewCopy.Doctor.Id;
+                        opDataToModify.Note = SelectedOpTimeViewCopy.Note;
+                        opDataToModify.Operation_id = SelectedOpTimeViewCopy.Operation.Id;
+                        opDataToModify.Datetime = SelectedOpTimeViewCopy.Datetime;
                         Data.Complete();
 
                         var timeItem = context.Set<OperationDateTime>().Where(e => e.Operation_id == null && e.Datetime.Hour == SelectedOpTimeView.Datetime.Hour && e.Datetime.Minute == SelectedOpTimeView.Datetime.Minute).FirstOrDefault();

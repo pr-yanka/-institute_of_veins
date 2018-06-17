@@ -68,11 +68,11 @@
                 </ListBox.ItemTemplate>
             </ListBox>
             <StackPanel Grid.Row="4" Grid.Column="0" Grid.RowSpan="3" Orientation="Vertical">
-                <TextBlock  x:Name="textBlock_Copy" HorizontalAlignment="Center" Margin="0,0,0,0" TextWrapping="Wrap"  
+                <TextBlock TextAlignment="Center" x:Name="textBlock_Copy" FontSize="14" HorizontalAlignment="Center" Margin="0,0,0,0" TextWrapping="Wrap"  
                        VerticalAlignment="Center"><Run Text="Выб"/><Run Text="ерите"/><Run Text=" время"/></TextBlock>
                 <Button  Width="auto"  Style="{StaticResource MyConfirmBUTTON}" x:Name="buttdon_Copy"  FontSize="10" Content="выбрать время"   Margin="0,0,0,0" Command="{Binding Path=OpenPanelSelectTime}"            
                      VerticalAlignment="Top" />
-                <TextBlock TextWrapping="Wrap" TextAlignment="Center"  Text="{Binding TextForDate}"></TextBlock>
+                <TextBlock TextWrapping="Wrap" TextAlignment="Center" Width="100"  FontSize="18"  Text="{Binding TextForDate}"></TextBlock>
                 <!--<xctk:TimePicker  HorizontalAlignment="Left"  Value="{Binding Path=MinuteHour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Format="ShortTime"    Margin="2,10,0,0"   Width="100" Height="20" />
 
                 <DatePicker   SelectedDate="{Binding Path=Operation.Date}" HorizontalAlignment="Left" Margin="2,10,0,0"   Width="100" Height="auto"  
@@ -308,7 +308,7 @@
                     </Canvas>
                 </Grid>
             </Border>
-            <Border Grid.RowSpan="9" Grid.ColumnSpan="6" Visibility="{Binding Path = CurrentPanelSelectTime.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOv56erlay">
+            <Border Grid.RowSpan="10" Grid.ColumnSpan="7" Visibility="{Binding Path = CurrentPanelSelectTime.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOv56erlay">
                 <Border.Background>
                     <SolidColorBrush Color="Black" Opacity="0.78"/>
                 </Border.Background>
@@ -358,7 +358,7 @@
                                 <Setter Property="Control.Template">
                                     <Setter.Value>
                                         <ControlTemplate>
-                                            <TextBox x:Name="PART_TextBox"
+                                            <TextBox x:Name="PART_TextBox" FontSize="15"
      Text="{Binding Path=SelectedDate, StringFormat = {}{0:dd MMMM yyyy года, dddd}, 
      RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
                                         </ControlTemplate>
@@ -369,10 +369,10 @@
                     </DatePicker>
                     <DataGrid Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Hidden" BorderBrush="Black"  HeadersVisibility="None"  BorderThickness="1"  CanUserAddRows="False" CanUserResizeRows="false" CanUserResizeColumns="False" x:Name="dataGrid" HorizontalAlignment="Left" AutoGenerateColumns="False" Margin="10,10,0,0"   Width="630"  ItemsSource="{Binding Path=ViewSource.View}" >
                         <DataGrid.Columns>
-                            <DataGridTemplateColumn   Header="Время" >
+                            <DataGridTemplateColumn Width="100"  Header="Время" >
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <DatePickerTextBox   HorizontalAlignment="Left"  Text="{Binding Datetime, StringFormat=HH:mm}" />
+                                        <DatePickerTextBox FontSize="18"  HorizontalAlignment="Left"  Text="{Binding Datetime, StringFormat=HH:mm}" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
@@ -380,8 +380,8 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel HorizontalAlignment="Left">
-                                            <TextBlock TextAlignment="Left" Text="{Binding PatientFullName}" />
-                                            <TextBox BorderThickness="0" Background="White" TextAlignment="Left" Text="{Binding Note}" />
+                                            <TextBlock FontSize="18" TextAlignment="Left" Text="{Binding PatientFullName}" />
+                                            <TextBlock FontSize="18"  TextAlignment="Left" Text="{Binding Note}" />
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -390,8 +390,8 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel>
-                                            <TextBlock TextAlignment="Center" Text="{Binding PatientNumber}" />
-                                            <TextBlock TextAlignment="Center" Text="{Binding Doctor.Sirname}" />
+                                            <TextBlock FontSize="18"  TextAlignment="Center" Text="{Binding PatientNumber}" />
+                                            <TextBlock  FontSize="18" TextAlignment="Center" Text="{Binding Doctor.Sirname}" />
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
@@ -399,40 +399,40 @@
                             <DataGridTemplateColumn  Width="25" >
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Grid.Row="2"   x:Name="Butto4nAdd" Content = "+"    Command="{Binding Select}"/>
+                                        <Button Grid.Row="2"    x:Name="Butto4nAdd" Content = "+"  ToolTip="Добавить"  Command="{Binding Select}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTemplateColumn  Width="25"  >
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Grid.Row="2"   x:Name="Butto4nAdd" Content="-"    Command="{Binding Delete}"/>
+                                        <Button Grid.Row="2"   x:Name="Butto4nAdd" Content="-" ToolTip="Удалить"   Command="{Binding Delete}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTemplateColumn  Width="25"  >
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Grid.Row="2"   x:Name="Butto4nAdd" Content="up"    Command="{Binding SetUp}"/>
+                                        <Button Grid.Row="2"   x:Name="Butto4nAdd" Content="up"   ToolTip="Поднять"  Command="{Binding SetUp}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                             <DataGridTemplateColumn   Width="25"  >
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <Button Grid.Row="2"   x:Name="Butto4nAdd" Content="down"    Command="{Binding SetDown}"/>
+                                        <Button Grid.Row="2"   x:Name="Butto4nAdd" Content="down"  ToolTip="Опустить"  Command="{Binding SetDown}"/>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                   
-                    <Border Grid.RowSpan="9" Grid.ColumnSpan="6" Visibility="{Binding Path = CurrentPanelSelectTime.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShfadowOv56erlay">
+                    <Border Grid.RowSpan="10" Grid.ColumnSpan="7" Width="650"  Visibility="{Binding Path = CurrentPanelSelectTime.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShfadowOv56erlay">
                         <Border.Background>
                             <SolidColorBrush Color="Black" Opacity="0.78"/>
                         </Border.Background>
                     </Border>
-                    <Border x:Name="panel34Corntrrol" Grid.RowSpan="9" Grid.ColumnSpan="6" Margin="0,0,-650,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="450" Height="160" DataContext="{Binding Path=CurrentPanelSelectTime}" >
+                    <Border x:Name="panel34Corntrrol" Grid.RowSpan="9" Grid.ColumnSpan="6" Margin="0,0,-650,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="450" Height="120" DataContext="{Binding Path=CurrentPanelSelectTime}" >
                         <Border.Style>
                             <Style TargetType="{x:Type Border}">
                                 <Style.Triggers>
@@ -459,11 +459,11 @@
                         </Border.RenderTransform>
                         <Grid>
                             <Canvas Background="#FFC6E8E6" Margin="0,-48,0,68">
-                                <TextBlock x:Name="textfgBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="135" FontSize="18" Canvas.Top="10" Text="Выберите время"/>
-                                <xctk:TimePicker x:Name="textBfogx1" HorizontalAlignment="Left"  Height="26" Value="{Binding Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="422" Canvas.Left="10" Canvas.Top="56" />
-                                <Button Style="{StaticResource MyNormalBUTTON}"  x:Name="buttgonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.RevertAddTimeRowCommand}" Canvas.Left="10" Canvas.Top="93" />
-                                <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtonfgAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.SaveAddTimeRowCommand}" Canvas.Left="232" Canvas.Top="93" />
-                                <TextBlock x:Name="texftBlock_gCopy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Top="32" Canvas.Left="10" Text="Время:" FontSize="16"/>
+                                <TextBlock x:Name="textfgBlock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="10" FontSize="19" Canvas.Top="20" Text="Выберите время :"/>
+                                <xctk:TimePicker x:Name="textBfogx1" HorizontalAlignment="Right"  Height="26" Value="{Binding Date, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="250" Canvas.Left="180" Canvas.Top="20" />
+                                <Button Style="{StaticResource MyNormalBUTTON}"  x:Name="buttgonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.RevertAddTimeRowCommand}" Canvas.Left="10" Canvas.Top="55" />
+                                <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtonfgAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.SaveAddTimeRowCommand}" Canvas.Left="232" Canvas.Top="55" />
+                                
                             </Canvas>
                         </Grid>
                     </Border>
@@ -499,12 +499,12 @@
                         </Border.RenderTransform>
                         <Grid>
                             <Canvas Background="#FFC6E8E6" Margin="0,-48,0,68">
-                                <TextBlock x:Name="textfgBslock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="135" FontSize="18" Canvas.Top="10" Text="Выберите врача"/>
+                                <TextBlock x:Name="textfgBslock7" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="149" FontSize="18" Canvas.Top="10" Text="Выберите врача"/>
                                 <Button Style="{StaticResource MyNormalBUTTON}"  x:Name="butstgonfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.RevertSelectDoctorRowCommand}" Canvas.Left="10" Canvas.Top="113" />
                                 <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="ButtonfdgAdd" Content="Добавить" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.SaveSelectDoctorRowCommand}" Canvas.Left="232" Canvas.Top="113" />
                                 <ComboBox ItemsSource="{Binding Doctors}" SelectedIndex="{Binding DoctorSelectedId}" Canvas.Left="10" Canvas.Top="38" Width="422" ></ComboBox>
                                 <TextBlock x:Name="texftBldock_gCopy24" HorizontalAlignment="Left" TextWrapping="Wrap"   Canvas.Top="66" Canvas.Left="10" Text="Комментарий:" FontSize="16"/>
-                                <TextBox Canvas.Left="10" Canvas.Top="88" Width="422" Text="{Binding Commentary}"></TextBox>
+                                <TextBox Canvas.Left="10" Height="25" Canvas.Top="85" Width="422" Text="{Binding Commentary}"></TextBox>
                             </Canvas>
                         </Grid>
                     </Border>

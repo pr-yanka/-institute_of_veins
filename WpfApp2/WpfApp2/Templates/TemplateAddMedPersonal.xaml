@@ -40,9 +40,9 @@
                 <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="57,-4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Text="Фамилия"/>
                 <TextBlock x:Name="textBlock_Copy1" HorizontalAlignment="Left" Margin="55,3,0,0" TextWrapping="Wrap" Text="Отчество" VerticalAlignment="Top" FontSize="16" Grid.Row="2"/>
 
-                <TextBox  BorderBrush="{Binding Path=TextBoxNameB}"  x:Name="textBox" Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap"   Width="511" Grid.Row="1" Margin="0,0,0,0"/>
-                <TextBox BorderBrush="{Binding Path=TextBoxSurnameB}" x:Name="textBox_Copy" Text="{Binding Path=Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap"   Width="511" Margin="0,0,0,0"/>
-                <TextBox BorderBrush="{Binding Path=TextBoxPatronimicB}" x:Name="textBox_Copy1"  Text="{Binding Path=Patronimic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap"   Width="511" Grid.Row="2" Margin="0,0,0,0"/>
+                <TextBox  TabIndex="1"    BorderBrush="{Binding Path=TextBoxNameB}"  x:Name="textBox" Text="{Binding Path=Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap"   Width="511" Grid.Row="1" Margin="0,0,0,0"/>
+                <TextBox  TabIndex="0"   BorderBrush="{Binding Path=TextBoxSurnameB}" x:Name="textBox_Copy" Text="{Binding Path=Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap"   Width="511" Margin="0,0,0,0"/>
+                <TextBox  TabIndex="2"    BorderBrush="{Binding Path=TextBoxPatronimicB}" x:Name="textBox_Copy1"  Text="{Binding Path=Patronimic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap"   Width="511" Grid.Row="2" Margin="0,0,0,0"/>
 
             </Grid>
         </Grid>

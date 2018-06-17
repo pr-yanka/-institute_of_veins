@@ -491,7 +491,15 @@ namespace WpfApp2.ViewModels
             }
             set { _isLeftLegInOperation = value; OnPropertyChanged(); }
         }
-
+        public static string FirstCharToUpper(string input)
+        {
+            switch (input)
+            {
+                case null: throw new ArgumentNullException(nameof(input));
+                case "": throw new ArgumentException($"{nameof(input)} cannot be empty", nameof(input));
+                default: return input.First().ToString().ToUpper() + input.Substring(1);
+            }
+        }
         public ViewModelAddOperation(NavigationController controller) : base(controller)
         {
             Doctors = new ObservableCollection<DoctorDataSource>();
@@ -625,7 +633,13 @@ namespace WpfApp2.ViewModels
                     if (SelectedLegId == 0)
                     {
                         //  ObservableCollection<OperationTypesDataSource> aray = (ObservableCollection<OperationTypesDataSource>)LeftOperationList.Source;
-                        if (LeftOperationList.Source == null || ((ObservableCollection<OperationTypesDataSource>)LeftOperationList.Source).Count == 0 || ((ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source).Count == 0 || LeftDiagnosisList.Source == null || ((ObservableCollection<DiagnosisDataSource>)RightDiagnosisList.Source).Count == 0 || ((ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source).Count == 0 || DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false || Operation.Datetime_id == null)
+                        if (LeftOperationList.Source == null ||
+                        ((ObservableCollection<OperationTypesDataSource>)LeftOperationList.Source).Count == 0 ||
+                        ((ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source).Count == 0 ||
+                        LeftDiagnosisList.Source == null || RightDiagnosisList.Source == null ||
+                        ((ObservableCollection<DiagnosisDataSource>)RightDiagnosisList.Source).Count == 0 ||
+                        ((ObservableCollection<DiagnosisDataSource>)LeftDiagnosisList.Source).Count == 0 ||
+                        DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false || Operation.Datetime_id == null)
                         {
                             MessageBox.Show("Не всё заполнено!");
                         }
@@ -855,7 +869,10 @@ namespace WpfApp2.ViewModels
                 {
                     Operation.Datetime_id = CurrentPanelSelectTime.SelectedOpTimeView.id;
 
-                    TextForDate = CurrentPanelSelectTime.SelectedOpTimeView.Datetime.ToString("HH:mm dd MMMM yyyy года, dddd", CultureInfo.GetCultureInfo("ru-ru"));
+                    TextForDate = CurrentPanelSelectTime.SelectedOpTimeView.Datetime.ToString("HH:mm\ndd MMMM yyyy\n", CultureInfo.GetCultureInfo("ru-ru"));
+                    string buff = FirstCharToUpper(CurrentPanelSelectTime.SelectedOpTimeView.Datetime.ToString("dddd", CultureInfo.GetCultureInfo("ru-ru")));
+                    //buff = buff.First().ToString().ToUpper() + buff.Substring(1);
+                    TextForDate += buff;
                 }
                 else
                 {
