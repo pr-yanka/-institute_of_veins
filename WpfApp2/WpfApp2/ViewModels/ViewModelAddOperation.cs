@@ -509,7 +509,7 @@ namespace WpfApp2.ViewModels
             TimeCheckMinute = true;
             ButtonSaveText = "Назначить операцию";
 
-            
+
             MessageBus.Default.Subscribe("AddOperationTypeForDialogBox", AddOperationTypeForDialogBox);
             MessageBus.Default.Subscribe("SetOperationResult", SetOperResult);
             MessageBus.Default.Subscribe("SetCurrentPatientForOperation", SetCurrentPatientID);
@@ -603,7 +603,19 @@ namespace WpfApp2.ViewModels
             );
 
             ToCurrentPatientCommand = new DelegateCommand(
-                () => { Controller.NavigateTo<ViewModelCurrentPatient>(); }
+                () =>
+                {
+
+                    if (Operation.Datetime_id != null && Operation.Datetime_id != 0)
+                    {
+                        Data.OperationDateTime.Remove(Data.OperationDateTime.Get(Operation.Datetime_id.Value));
+                        Data.Complete();
+                        CurrentPanelSelectTime.SelectedOpTimeView = null;
+                        CurrentPanelSelectTime.SelectedOpTimeViewCopy = null;
+                        CurrentPanelSelectTime.BuffSelectedOpTimeView = null;
+                    }
+                    Controller.NavigateTo<ViewModelCurrentPatient>();
+                }
             );
 
             ToOperationOverviewCommand = new DelegateCommand(
@@ -657,9 +669,20 @@ namespace WpfApp2.ViewModels
                         Data.Operation.Add(Operation);
                         Data.Complete();
                         opDate.Operation_id = Operation.Id;
-                        var SelectedOpDate = CurrentPanelSelectTime.OpViewList.Where(e => e.id == opDate.Id).FirstOrDefault();
-                        opDate.Doctor_id = SelectedOpDate.Doctor.Id;
-                        opDate.Note = SelectedOpDate.Note;
+
+                        using (var context = new MySqlContext())
+                        {
+
+                            //    var opDataToRemove = new OperationDateTime();
+                            //    var test = true;
+                            //    var OperationRep = new OperationRepository(context);
+                            var OperationDateTimeRep = new OperationDateTimeRepository(context);
+                            var SelectedOpDate = OperationDateTimeRep.Get(Operation.Datetime_id.Value);
+                            opDate.Doctor_id = SelectedOpDate.Doctor_id;
+                            opDate.Note = SelectedOpDate.Note;
+                        }
+
+
                         foreach (var Doctor in DoctorsSelected)
                         {
                             if (Doctor.isDoctor)
@@ -757,8 +780,14 @@ namespace WpfApp2.ViewModels
                             Data.Complete();
                             isSetOperResult = false;
                         }
+
+                        CurrentPanelSelectTime.SelectedOpTimeView = null;
+                        CurrentPanelSelectTime.SelectedOpTimeViewCopy = null;
+                        CurrentPanelSelectTime.BuffSelectedOpTimeView = null;
+
                         MessageBus.Default.Call("SetCurrentACCOp", this, null);
                         MessageBus.Default.Call("GetOperationForOverwiev", this, Operation.Id);
+
                         Controller.NavigateTo<ViewModelOperationOverview>();
                         //    Data.Complete();
                         Operation = new Operation();
@@ -815,6 +844,9 @@ namespace WpfApp2.ViewModels
             {
                 CurrentPanelSelectTime.PanelOpened = false;
                 Handled = false;
+                //CurrentPanelSelectTime.SelectedOpTimeView = null;
+                //CurrentPanelSelectTime.SelectedOpTimeViewCopy = null;
+                //CurrentPanelSelectTime.BuffSelectedOpTimeView = null;
             });
             TextForDate = "Время не выбрано";
             SaveSelectTimeCommand = new DelegateCommand(() =>
@@ -822,7 +854,7 @@ namespace WpfApp2.ViewModels
                 if (CurrentPanelSelectTime.SelectedOpTimeView != null)
                 {
                     Operation.Datetime_id = CurrentPanelSelectTime.SelectedOpTimeView.id;
-                    
+
                     TextForDate = CurrentPanelSelectTime.SelectedOpTimeView.Datetime.ToString("HH:mm dd MMMM yyyy года, dddd", CultureInfo.GetCultureInfo("ru-ru"));
                 }
                 else
