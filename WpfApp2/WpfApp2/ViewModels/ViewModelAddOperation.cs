@@ -6,12 +6,9 @@ using System.ComponentModel;
 using System.Windows.Media;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WpfApp2.Db.Models;
-using WpfApp2.LegParts;
 using WpfApp2.Messaging;
 using WpfApp2.Navigation;
 using WpfApp2.ViewModels.Panels;
@@ -605,7 +602,6 @@ namespace WpfApp2.ViewModels
                         {
                             MessageBox.Show("Нет диагноза справа последнего обследования");
                         }
-
                     }
                 }
             );
@@ -613,11 +609,26 @@ namespace WpfApp2.ViewModels
             ToCurrentPatientCommand = new DelegateCommand(
                 () =>
                 {
-
                     if (Operation.Datetime_id != null && Operation.Datetime_id != 0)
                     {
-                        Data.OperationDateTime.Remove(Data.OperationDateTime.Get(Operation.Datetime_id.Value));
+                        var OpDate = Data.OperationDateTime.Get(Operation.Datetime_id.Value);
+                        OpDate.Doctor_id = null;
+                        OpDate.Note = "Время свободно";
+                        OpDate.Operation_id = null;
                         Data.Complete();
+                        using (var context = new MySqlContext())
+                        {
+                            var timeItem = context.Set<OperationDateTime>().Where(e => e.Operation_id != null && e.Datetime.Year == OpDate.Datetime.Year && e.Datetime.Month == OpDate.Datetime.Month && e.Datetime.Day == OpDate.Datetime.Day).FirstOrDefault();
+                            if (timeItem == null)
+                            {
+                                foreach (var opDate in context.Set<OperationDateTime>().Where(e => e.Datetime.Year == OpDate.Datetime.Year && e.Datetime.Month == OpDate.Datetime.Month && e.Datetime.Day == OpDate.Datetime.Day))
+                                {
+                                    Data.OperationDateTime.Remove(Data.OperationDateTime.Get(opDate.Id));
+                                }
+                            }
+                            Data.Complete();
+                        }
+
                         CurrentPanelSelectTime.SelectedOpTimeView = null;
                         CurrentPanelSelectTime.SelectedOpTimeViewCopy = null;
                         CurrentPanelSelectTime.BuffSelectedOpTimeView = null;
@@ -867,7 +878,7 @@ namespace WpfApp2.ViewModels
             {
                 if (CurrentPanelSelectTime.SelectedOpTimeView != null)
                 {
-                    Operation.Datetime_id = CurrentPanelSelectTime.SelectedOpTimeView.id;
+                    Operation.Datetime_id = CurrentPanelSelectTime.SelectedOpTimeView.Id;
 
                     TextForDate = CurrentPanelSelectTime.SelectedOpTimeView.Datetime.ToString("HH:mm\ndd MMMM yyyy\n", CultureInfo.GetCultureInfo("ru-ru"));
                     string buff = FirstCharToUpper(CurrentPanelSelectTime.SelectedOpTimeView.Datetime.ToString("dddd", CultureInfo.GetCultureInfo("ru-ru")));

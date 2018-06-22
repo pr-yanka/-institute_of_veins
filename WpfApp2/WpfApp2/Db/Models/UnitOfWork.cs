@@ -20,6 +20,7 @@ namespace WpfApp2.Db.Models
     public class UnitOfWork : IUnitOfWork
     {
         //public BPVHipAdditionalStructureRepository BPVHipAdditionalStructure { get; }
+        public OperationDateTimeTemplateRepository OperationDateTimeTemplate { get; }
         public ProgramVersionRepository ProgramVersion { get; }
         public OperationDateTimeRepository OperationDateTime { get; }
         public SavedComplanesObsRepository SavedComplanesObs { get; }
@@ -211,6 +212,7 @@ namespace WpfApp2.Db.Models
         public UnitOfWork(MySqlContext context)
         {
             _context = context;
+            OperationDateTimeTemplate = new OperationDateTimeTemplateRepository(_context);
             ProgramVersion = new ProgramVersionRepository(_context);
             OperationDateTime = new OperationDateTimeRepository(_context);
             //BPVHipAdditionalStructure = new BPVHipAdditionalStructureRepository(_context);

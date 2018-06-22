@@ -20,6 +20,7 @@ namespace WpfApp2.Db.Models
 {
     public interface IUnitOfWork : IDisposable
     {
+        OperationDateTimeTemplateRepository OperationDateTimeTemplate { get; }
         ProgramVersionRepository ProgramVersion { get; }
         //BPVHipAdditionalStructureRepository BPVHipAdditionalStructure { get; }
         OperationDateTimeRepository OperationDateTime { get; }

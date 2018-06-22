@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -31,17 +32,29 @@ namespace WpfApp2.ViewModels.Panels
             ForCancleOpTimeView.PatientNumber = "";
             ForCancleOpTimeView.Note = "Время свободно";
             ForCancleOpTimeView.Doctor = null;
-            int id = Data.OperationDateTime.Get(ForCancleOpTimeView.id).Id;
-            ForCancleOpTimeView.Select = new DelegateCommand(() =>
-            {
-                if (SelectedOpTimeView != null)
-                    BuffSelectedOpTimeView = SelectedOpTimeView;
-                SelectedOpTimeView = OpViewList.Where(e => e.id == id).FirstOrDefault();
-                CurrentPanelSelectDoctor.ClearPanel();
-                CurrentPanelSelectDoctor.PanelOpened = true;
-            });
-            int buffForId = ForCancleOpTimeView.id;
-           // ForCancleOpTimeView.Delete = new DelegateCommand(() =>
+
+            int id = Data.OperationDateTime.Get(ForCancleOpTimeView.Id).Id;
+            //ForCancleOpTimeView.Select = new DelegateCommand(() =>
+            //{
+            //    if (SelectedOpTimeView != null)
+            //        BuffSelectedOpTimeView = SelectedOpTimeView;
+            //    using (var context = new MySqlContext())
+            //    {
+            //        var timeItem = context.Set<OperationDateTime>().Where(e => e.Operation_id != null && e.Datetime.Year == SelectedOpTimeView.Datetime.Year && e.Datetime.Month == SelectedOpTimeView.Datetime.Month && e.Datetime.Day == SelectedOpTimeView.Datetime.Day).FirstOrDefault();
+            //        if (timeItem == null)
+            //        {
+            //            foreach (var opDate in context.Set<OperationDateTime>().Where(e => e.Datetime.Year == SelectedOpTimeView.Datetime.Year && e.Datetime.Month == SelectedOpTimeView.Datetime.Month && e.Datetime.Day == SelectedOpTimeView.Datetime.Day))
+            //            {
+            //                Data.OperationDateTime.Remove(Data.OperationDateTime.Get(opDate.Id));
+            //            }
+            //        }
+            //    }
+            //    SelectedOpTimeView = OpViewList.Where(e => e.Id == id).FirstOrDefault();
+            //    CurrentPanelSelectDoctor.ClearPanel();
+            //    CurrentPanelSelectDoctor.PanelOpened = true;
+            //});
+            int buffForId = ForCancleOpTimeView.Id;
+            // ForCancleOpTimeView.Delete = new DelegateCommand(() =>
             //{
             //    var dialogResult = MessageBox.Show("Удалить?", "", MessageBoxButton.YesNo);
             //    if (dialogResult == MessageBoxResult.Yes)
@@ -50,7 +63,7 @@ namespace WpfApp2.ViewModels.Panels
             //        {
             //            OperationDateTimeRepository timeOpRep = new OperationDateTimeRepository(context1);
             //            var ourOpTime = timeOpRep.GetAll.Where(e => e.Operation_id == null && e.Id == buffForId).FirstOrDefault();
-            //            //ViewSource.View.Refresh();
+            //            ////ViewSource.View.Refresh();
 
 
             //            bool test = true;
@@ -68,7 +81,7 @@ namespace WpfApp2.ViewModels.Panels
             //                Data.OperationDateTime.Remove(opDataToRemove);
             //                Data.Complete();
             //                OpViewList.Remove(OpViewList.Where(e => e.id == ourOpTime.Id).FirstOrDefault());
-            //                ViewSource.View.Refresh();
+            //                //ViewSource.View.Refresh();
             //            }
             //            else
             //            {
@@ -80,7 +93,7 @@ namespace WpfApp2.ViewModels.Panels
             //});
 
             ForCancleOpTimeView = null;
-            //ViewSource.View.Refresh();
+            ////ViewSource.View.Refresh();
             LoadTimeTable();
             UpdateTimeTable();
         }
@@ -92,6 +105,7 @@ namespace WpfApp2.ViewModels.Panels
         public DoctorSelectPanelViewModel CurrentPanelSelectDoctor { get; protected set; }
         #endregion
         #region SELECTtIME
+        public DelegateCommand SaveTemplateCommand { get; private set; }
         public DelegateCommand SaveAddTimeRowCommand { set; get; }
         public DelegateCommand RevertAddTimeRowCommand { get; private set; }
         public ICommand OpenPanelAddTimeRow { protected set; get; }
@@ -113,6 +127,113 @@ namespace WpfApp2.ViewModels.Panels
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
             private System.DateTime _datetime;
+            private int _id;
+            private string _patientFullName;
+            private string _patientNumber;
+            private string _note;
+            private Operation _operation;
+            private DelegateCommand _delete;
+            private DelegateCommand _select;
+            private DelegateCommand _setUp;
+            private DelegateCommand _setDown;
+            private Doctor _doctor;
+            public Doctor Doctor
+            {
+                get
+                {
+                    return _doctor;
+                }
+                set
+                {
+                    _doctor = value;
+                    OnPropertyChanged();
+                }
+            }
+            public Operation Operation
+            {
+                get
+                {
+                    return _operation;
+                }
+                set
+                {
+                    _operation = value;
+                    OnPropertyChanged();
+                }
+            }
+            public DelegateCommand Delete
+            {
+                get
+                {
+                    return _delete;
+                }
+                set
+                {
+                    _delete = value;
+                    OnPropertyChanged();
+                }
+            }
+            public DelegateCommand Select
+            {
+                get
+                {
+                    return _select;
+                }
+                set
+                {
+                    _select = value;
+                    OnPropertyChanged();
+                }
+            }
+            public DelegateCommand SetUp
+            {
+                get
+                {
+                    return _setUp;
+                }
+                set
+                {
+                    _setUp = value;
+                    OnPropertyChanged();
+                }
+            }
+            public DelegateCommand SetDown
+            {
+                get
+                {
+                    return _setDown;
+                }
+                set
+                {
+                    _setDown = value;
+                    OnPropertyChanged();
+                }
+            }
+
+            public int Id
+            {
+                get
+                {
+                    return _id;
+                }
+                set
+                {
+                    _id = value;
+                    OnPropertyChanged();
+                }
+            }
+            public string PatientFullName
+            {
+                get
+                {
+                    return _patientFullName;
+                }
+                set
+                {
+                    _patientFullName = value;
+                    OnPropertyChanged();
+                }
+            }
             public System.DateTime Datetime
             {
                 get
@@ -125,29 +246,39 @@ namespace WpfApp2.ViewModels.Panels
                     OnPropertyChanged();
                 }
             }
-            public int id;
-            public Operation Operation { get; set; }
-            //public DelegateCommand Cancle { get; set; }
-            public DelegateCommand Delete { get; set; }
-            public DelegateCommand Select { get; set; }
-            public DelegateCommand SetUp { get; set; }
-            public DelegateCommand SetDown { get; set; }
-            public Doctor Doctor { get; set; }
-            public string PatientFullName { get; set; }
-            public string PatientNumber { get; set; }
-            public string Note { get; set; }
-            public OperationTimeView()
+            public string PatientNumber
             {
-                //Datetime = System.DateTime.Now;
-                Operation = new Operation();
-                Doctor = new Doctor();
+                get
+                {
+                    return _patientNumber;
+                }
+                set
+                {
+                    _patientNumber = value;
+                    OnPropertyChanged();
+                }
+            }
+            public string Note
+            {
+                get
+                {
+                    return _note;
+                }
+                set
+                {
+                    _note = value;
+                    OnPropertyChanged();
+                }
+            }
+
+
+            public OperationTimeView(int id, System.DateTime Datetime)
+            {
+                this.Id = id;
+                this.Datetime = Datetime;
                 PatientFullName = "";
-                Note = "";
-                //Cancle = new DelegateCommand(() => { });
-                //Delete = new DelegateCommand(() => { });
-                //Select = new DelegateCommand(() => { });
-                //SetUp = new DelegateCommand(() => { });
-                //SetDown = new DelegateCommand(() => { });
+                Note = "Время свободно";
+
             }
         }
 
@@ -180,256 +311,377 @@ namespace WpfApp2.ViewModels.Panels
                 OnPropertyChanged();
             }
         }
+        private bool _saveChangesBtnVis;
+        public bool SaveChangesBtnVis
+        {
+            get { return _saveChangesBtnVis; }
+            set
+            {
+                _saveChangesBtnVis = value;
 
-        public List<OperationTimeView> OpViewList { get; set; }
+                OnPropertyChanged();
+            }
+        }
+        public ObservableCollection<OperationTimeView> _opViewList;
+        public ObservableCollection<OperationTimeView> OpViewList { get { return _opViewList; } set { _opViewList = value; OnPropertyChanged(); } }
 
+        private void SetDefaultFunctions(ref OperationTimeView opViewElement)
+        {
+            var opCopy = opViewElement;
+            opViewElement.Select = new DelegateCommand(() =>
+            {
+                if (SelectedOpTimeView != null)
+                {
+                    BuffSelectedOpTimeView = SelectedOpTimeView;
+                    if (((ViewModelAddOperation)ParentVM).Operation.Datetime_id != null && ((ViewModelAddOperation)ParentVM).Operation.Datetime_id != 0)
+                    {
+                        var OpDate = Data.OperationDateTime.Get(((ViewModelAddOperation)ParentVM).Operation.Datetime_id.Value);
+                        if (OpDate != null)
+                        {
+                            Data.OperationDateTime.Remove(OpDate);
+                            Data.Complete();
+                            using (var context = new MySqlContext())
+                            {
+                                var timeItem = context.Set<OperationDateTime>().Where(e => e.Operation_id != null && e.Datetime.Year == OpDate.Datetime.Year && e.Datetime.Month == OpDate.Datetime.Month && e.Datetime.Day == OpDate.Datetime.Day).FirstOrDefault();
+                                if (timeItem == null)
+                                {
+                                    foreach (var opDate in context.Set<OperationDateTime>().Where(e => e.Datetime.Year == OpDate.Datetime.Year && e.Datetime.Month == OpDate.Datetime.Month && e.Datetime.Day == OpDate.Datetime.Day))
+                                    {
+                                        Data.OperationDateTime.Remove(Data.OperationDateTime.Get(opDate.Id));
+                                    }
+                                }
+                                Data.Complete();
+                            }
+                        }
+                    }
+                }
+                SelectedOpTimeView = OpViewList.Where(e => e.Id == opCopy.Id && e.Datetime == opCopy.Datetime).FirstOrDefault();
+                SelectedOpTimeView.Datetime = new System.DateTime(Date.Year, Date.Month, Date.Day, SelectedOpTimeView.Datetime.Hour, SelectedOpTimeView.Datetime.Minute, 0);
+                CurrentPanelSelectDoctor.ClearPanel();
+                CurrentPanelSelectDoctor.PanelOpened = true;
+            });
 
+            opViewElement.SetDown = new DelegateCommand(() =>
+            {
+                var CurElementIndex = OpViewList.IndexOf(OpViewList.Where(e => e.Id == opCopy.Id && e.Datetime == opCopy.Datetime).FirstOrDefault());
+                if (CurElementIndex != OpViewList.Count - 1)
+                {
+                    var Buff = OpViewList[CurElementIndex].Datetime;
+                    OpViewList[CurElementIndex].Datetime = OpViewList[CurElementIndex + 1].Datetime;
+                    OpViewList[CurElementIndex + 1].Datetime = Buff;
+                    OpViewList = new ObservableCollection<OperationTimeView>(OpViewList.OrderBy(i => i.Datetime));
+                    //OpViewList = new ObservableCollection<OperationTimeView>(OpViewList.OrderBy(i => i.Datetime));
+                }
+            });
 
+            opViewElement.SetUp = new DelegateCommand(() =>
+            {
+                var CurElementIndex = OpViewList.IndexOf(OpViewList.Where(e => e.Id == opCopy.Id && e.Datetime == opCopy.Datetime).FirstOrDefault());
+                if (CurElementIndex != 0)
+                {
+                    var Buff = OpViewList[CurElementIndex].Datetime;
+                    OpViewList[CurElementIndex].Datetime = OpViewList[CurElementIndex - 1].Datetime;
+                    OpViewList[CurElementIndex - 1].Datetime = Buff;
 
+                    OpViewList = new ObservableCollection<OperationTimeView>(OpViewList.OrderBy(i => i.Datetime));
+
+                    //ViewSource.View.Refresh();
+                }
+            });
+
+            opViewElement.Delete = new DelegateCommand(() =>
+            {
+                var dialogResult = MessageBox.Show("Удалить?", "", MessageBoxButton.YesNo);
+                if (dialogResult == MessageBoxResult.Yes)
+                {
+                    OpViewList.Remove(OpViewList.Where(e => e.Id == opCopy.Id && e.Datetime == opCopy.Datetime).FirstOrDefault());
+                    //bool test = true;
+                    //  OperationDateTime timeItem;
+                    //using (var context1 = new MySqlContext())
+                    //{
+                    //    OperationDateTimeRepository timeOpRep = new OperationDateTimeRepository(context1);
+                    //    var timeItem = timeOpRep.GetAll.Where(e => e.Operation_id != null && e.Operation_id != 0 && e.Datetime.Hour == opViewElement.Datetime.Hour && e.Datetime.Minute == opViewElement.Datetime.Minute).FirstOrDefault();
+                    //    if (timeItem == null)
+                    //    {
+                    //        test = false;
+                    //    }
+
+                    //    if (!test)
+                    //    {
+                    //        var opDataToRemove = Data.OperationDateTime.Get(opViewElement.id);
+                    //        Data.OperationDateTime.Remove(opDataToRemove);
+                    //        Data.Complete();
+                    //        OpViewList.Remove(OpViewList.Where(e => e.id == opViewElement.id).FirstOrDefault());
+                    //        //ViewSource.View.Refresh();
+                    //    }
+                    //    else
+                    //    {
+                    //        MessageBox.Show("На это время назначена операция" + timeItem.Datetime);
+                    //    }
+                    //}
+                }
+            });
+        }
 
         public void LoadTimeTable()
         {
             using (var context = new MySqlContext())
             {
-                OpViewList = new List<OperationTimeView>();
+                OpViewList = new ObservableCollection<OperationTimeView>();
                 //try
                 //{
-                bool ultraTest = false;
+                //bool ultraTest = false;
                 var DoctorRep = new DoctorRepository(context);
                 var OperationRep = new OperationRepository(context);
                 var OperationDateTimeRep = new OperationDateTimeRepository(context);
                 var PatientRep = new PatientsRepository(context);
-                var OpViewElement = new OperationTimeView();
+                var OpDateTimeTemplateRep = new OperationDateTimeTemplateRepository(context);
+                OperationTimeView opViewElement;
+
                 //context.Set<OperationDateTime>().Where(e => e.Datetime.Year == Date.Year && e.Datetime.Month == Date.Month && e.Datetime.Day == Date.Day)
-                foreach (var opDate in context.Set<OperationDateTime>().Where(e => e.Operation_id == null || e.Operation_id == 0))
+                foreach (var opDate in OpDateTimeTemplateRep.GetAll.ToArray())
                 {
 
-                    foreach (var item in OpViewList)
-                    {
-                        if (item.id != opDate.Id && opDate.Datetime.Hour == item.Datetime.Hour && opDate.Datetime.Minute == item.Datetime.Minute)
-                        {
-                            Data.OperationDateTime.Remove(Data.OperationDateTime.Get(opDate.Id));
-                            ultraTest = true;
-                        }
-                    }
-                    Data.Complete();
+                    opViewElement = new OperationTimeView(opDate.Id, new System.DateTime(Date.Year, Date.Month, Date.Day, opDate.TimeRow.Hour, opDate.TimeRow.Minute, 0));
 
-                    if (ultraTest)
-                    {
-                        continue;
-                    }
+                    SetDefaultFunctions(ref opViewElement);
 
-                    OpViewElement = new OperationTimeView();
-                    OpViewElement.id = opDate.Id;
-                    OpViewElement.Datetime = opDate.Datetime;
-                    OpViewElement.Note = opDate.Note;
-
-                    OpViewElement.Select = new DelegateCommand(() =>
-                    {
-                        if (SelectedOpTimeView != null)
-                            BuffSelectedOpTimeView = SelectedOpTimeView;
-                        SelectedOpTimeView = OpViewList.Where(e => e.id == opDate.Id).FirstOrDefault();
-                        SelectedOpTimeView.Datetime = new System.DateTime(Date.Year, Date.Month, Date.Day, SelectedOpTimeView.Datetime.Hour, SelectedOpTimeView.Datetime.Minute, 0);
-                        CurrentPanelSelectDoctor.ClearPanel();
-                        CurrentPanelSelectDoctor.PanelOpened = true;
-                    });
-
-                    OpViewElement.SetDown = new DelegateCommand(() =>
-                    {
-                        var CurElementIndex = OpViewList.IndexOf(OpViewList.Where(e => e.id == opDate.Id).FirstOrDefault());
-                        if (CurElementIndex != OpViewList.Count - 1)
-                        {
-                            var Buff = OpViewList[CurElementIndex].Datetime;
-                            OpViewList[CurElementIndex].Datetime = OpViewList[CurElementIndex + 1].Datetime;
-                            OpViewList[CurElementIndex + 1].Datetime = Buff;
-
-                            OpViewList.Sort((a, b) => a.Datetime.CompareTo(b.Datetime));
-
-                            ViewSource.View.Refresh();
-                        }
-                    });
-
-                    OpViewElement.SetUp = new DelegateCommand(() =>
-                    {
-                        var CurElementIndex = OpViewList.IndexOf(OpViewList.Where(e => e.id == opDate.Id).FirstOrDefault());
-                        if (CurElementIndex != 0)
-                        {
-                            //Operation op = Data.Operation.Get(OpViewList[CurElementIndex].Operation.Id);
-                            //op.Datetime_id = OpViewList[CurElementIndex - 1].id;
-                            //op = Data.Operation.Get(OpViewList[CurElementIndex - 1].Operation.Id);
-                            //op.Datetime_id = OpViewList[CurElementIndex].id;
-
-                            //OperationDateTime opData = Data.OperationDateTime.Get(OpViewList[CurElementIndex].id);
-                            //opData.Datetime = OpViewList[CurElementIndex - 1].Datetime;
-                            //Data.Complete();
-                            //opData = Data.OperationDateTime.Get(OpViewList[CurElementIndex - 1].id);
-                            //Data.Complete();
-
-                            var Buff = OpViewList[CurElementIndex].Datetime;
-                            OpViewList[CurElementIndex].Datetime = OpViewList[CurElementIndex - 1].Datetime;
-                            OpViewList[CurElementIndex - 1].Datetime = Buff;
-
-                            OpViewList.Sort((a, b) => a.Datetime.CompareTo(b.Datetime));
-
-                            ViewSource.View.Refresh();
-                        }
-                    });
-                    OpViewElement.Delete = new DelegateCommand(() =>
-                    {
-                        var dialogResult = MessageBox.Show("Удалить?", "", MessageBoxButton.YesNo);
-                        if (dialogResult == MessageBoxResult.Yes)
-                        {
-                            bool test = true;
-                            //  OperationDateTime timeItem;
-                            using (var context1 = new MySqlContext())
-                            {
-                                OperationDateTimeRepository timeOpRep = new OperationDateTimeRepository(context1);
-                                var timeItem = timeOpRep.GetAll.Where(e => e.Operation_id != null && e.Operation_id != 0 && e.Datetime.Hour == OpViewElement.Datetime.Hour && e.Datetime.Minute == OpViewElement.Datetime.Minute).FirstOrDefault();
-                                if (timeItem == null)
-                                {
-                                    test = false;
-                                }
-
-                                if (!test)
-                                {
-                                    var opDataToRemove = Data.OperationDateTime.Get(OpViewElement.id);
-                                    Data.OperationDateTime.Remove(opDataToRemove);
-                                    Data.Complete();
-                                    OpViewList.Remove(OpViewList.Where(e => e.id == OpViewElement.id).FirstOrDefault());
-                                    ViewSource.View.Refresh();
-                                }
-                                else
-                                {
-                                    MessageBox.Show("На это время назначена операция" + timeItem.Datetime);
-                                }
-                            }
-                        }
-
-                    });
-
-
-                    OpViewList.Add(OpViewElement);
+                    OpViewList.Add(opViewElement);
 
                 }
-                OpViewList.Sort((a, b) => a.Datetime.CompareTo(b.Datetime));
+                OpViewList = new ObservableCollection<OperationTimeView>(OpViewList.OrderBy(i => i.Datetime));
 
 
 
-                ViewSource.Source = OpViewList;
-                ViewSource.View.Refresh();
+                //ViewSource.Source = OpViewList;
+
+                //ViewSource.View.Refresh();
             }
         }
+
         public void UpdateTimeTable()
         {
-
             using (var context = new MySqlContext())
             {
-                var OpViewElement = new OperationTimeView();
-                var Patient = new Patient();
-                if (OpViewList != null)
+                var OpTimesOnCurrentDay = context.Set<OperationDateTime>().Where(e => e.Datetime.Year == Date.Year && e.Datetime.Month == Date.Month && e.Datetime.Day == Date.Day);
+                if (OpTimesOnCurrentDay.FirstOrDefault() != null)
                 {
-                    foreach (var time in OpViewList)
+                    SaveChangesBtnVis = true;
+                    OperationTimeView opViewElement;
+                    var Patient = new Patient();
+                    OpViewList = new ObservableCollection<OperationTimeView>();
+                    foreach (var opDate in OpTimesOnCurrentDay)
                     {
-                        time.Note = "Время свободно";
-                        time.Operation = null;
-                        time.PatientFullName = "";
-                        time.PatientNumber = "";
-                        time.Doctor = null;
-                        time.Delete = new DelegateCommand(() =>
+                        if (opDate.Operation_id != null && opDate.Operation_id != 0)
                         {
-                            var dialogResult = MessageBox.Show("Удалить?", "", MessageBoxButton.YesNo);
-                            if (dialogResult == MessageBoxResult.Yes)
+                            opViewElement = new OperationTimeView(opDate.Id, opDate.Datetime);
+
+                            SetDefaultFunctions(ref opViewElement);
+
+                            opViewElement.Delete = new DelegateCommand(() =>
                             {
-                                bool test = true;
-                                //  OperationDateTime timeItem;
-                                using (var context1 = new MySqlContext())
+                                var dialogResult = MessageBox.Show("Отменить операцию?", "", MessageBoxButton.YesNo);
+
+                                if (dialogResult == MessageBoxResult.Yes)
                                 {
-                                    OperationDateTimeRepository timeOpRep = new OperationDateTimeRepository(context1);
-                                    var timeItem = timeOpRep.GetAll.Where(e => e.Operation_id != null && e.Operation_id != 0 && e.Datetime.Hour == time.Datetime.Hour && e.Datetime.Minute == time.Datetime.Minute).FirstOrDefault();
-                                    if (timeItem == null)
-                                    {
-                                        test = false;
-                                    }
-
-                                    if (!test)
-                                    {
-                                        var opDataToRemove = Data.OperationDateTime.Get(time.id);
-                                        Data.OperationDateTime.Remove(opDataToRemove);
-                                        Data.Complete();
-                                        OpViewList.Remove(OpViewList.Where(e => e.id == time.id).FirstOrDefault());
-                                        ViewSource.View.Refresh();
-                                    }
-                                    else
-                                    {
-                                        MessageBox.Show("На это время назначена операция" + timeItem.Datetime);
-                                    }
+                                    ForCancleOpTimeView = OpViewList.Where(e => e.Operation != null && e.Operation.Id == opDate.Operation_id && opDate.Datetime.Hour == e.Datetime.Hour && opDate.Datetime.Minute == e.Datetime.Minute).FirstOrDefault();
+                                    MessageBus.Default.Call("SetFunctionsToReturnToOpCreation", null, null);
+                                    MessageBus.Default.Call("GetOperationIDForAddCancel", this, opDate.Operation_id);
+                                    Controller.NavigateTo<ViewModelCancelOperations>();
+                                    // a lot of work to do
                                 }
-                            }
-                        });
-                        time.Select = new DelegateCommand(() =>
-                        {
-                            if (SelectedOpTimeView != null)
-                                BuffSelectedOpTimeView = SelectedOpTimeView;
-                            SelectedOpTimeView = OpViewList.Where(e => e.id == time.id).FirstOrDefault();
-                            SelectedOpTimeView.Datetime = new System.DateTime(Date.Year, Date.Month, Date.Day, SelectedOpTimeView.Datetime.Hour, SelectedOpTimeView.Datetime.Minute, 0);
-                            CurrentPanelSelectDoctor.ClearPanel();
-                            CurrentPanelSelectDoctor.PanelOpened = true;
-                        });
-                    }
+                            });
 
-                    foreach (var opDate in context.Set<OperationDateTime>().Where(e => e.Operation_id != null && e.Operation_id != 0 && e.Datetime.Year == Date.Year && e.Datetime.Month == Date.Month && e.Datetime.Day == Date.Day))
-                    {
-                        //if (opDate.Operation_id != null && opDate.Operation_id != 0 && opDate.Datetime.Year == Date.Year && opDate.Datetime.Month == Date.Month && opDate.Datetime.Day == Date.Day)
-                        //{
-                        OpViewElement = OpViewList.Where(e => e.Datetime.Hour == opDate.Datetime.Hour && e.Datetime.Minute == opDate.Datetime.Minute).FirstOrDefault();
-                        OpViewElement.Delete = new DelegateCommand(() =>
-                        {
-                            var dialogResult = MessageBox.Show("Отменить операцию?", "", MessageBoxButton.YesNo);
-                            if (dialogResult == MessageBoxResult.Yes)
+                            opViewElement.Select = new DelegateCommand(() =>
                             {
-                                ForCancleOpTimeView = OpViewList.Where(e => e.Operation != null && e.Operation.Id == opDate.Operation_id && opDate.Datetime.Hour == e.Datetime.Hour && opDate.Datetime.Minute == e.Datetime.Minute).FirstOrDefault();
-                                MessageBus.Default.Call("SetFunctionsToReturnToOpCreation", null, null);
-                                MessageBus.Default.Call("GetOperationIDForAddCancel", this, opDate.Operation_id);
-                                Controller.NavigateTo<ViewModelCancelOperations>();
-                                // a lot of work to do
+                                MessageBox.Show("Сначала отмените операцию");
+                            });
 
-                                //OpViewList.Remove(OpViewElement);
+                            opViewElement.Operation = Data.Operation.Get(opDate.Operation_id.Value);
 
-                                //ViewSource.View.Refresh();
+                            if (opDate.Doctor_id != null && opDate.Doctor_id.Value != 0)
+                                opViewElement.Doctor = Data.Doctor.Get(opDate.Doctor_id.Value);
+                            //opViewElement.IsFree = false;
 
-                            }
-                        });
-                        OpViewElement.Select = new DelegateCommand(() =>
+                            Patient = Data.Patients.Get(opViewElement.Operation.PatientId);
+                            opViewElement.PatientFullName = Patient.Sirname + " " + Patient.Name + " " + Patient.Patronimic;
+                            opViewElement.PatientNumber = Patient.Phone;
+                            opViewElement.Note = opDate.Note;
+                        }
+                        else
                         {
-                            MessageBox.Show("Сначала отмените операцию");
-                        });
-                        OpViewElement.Operation = Data.Operation.Get(opDate.Operation_id.Value);
-                        if (opDate.Doctor_id != null && opDate.Doctor_id.Value != 0)
-                            OpViewElement.Doctor = Data.Doctor.Get(opDate.Doctor_id.Value);
-                        //OpViewElement.IsFree = false;
-                        Patient = Data.Patients.Get(OpViewElement.Operation.PatientId);
-                        OpViewElement.PatientFullName = Patient.Sirname + " " + Patient.Name + " " + Patient.Patronimic;
-                        OpViewElement.PatientNumber = Patient.Phone;
-                        OpViewElement.Note = opDate.Note;
+                            opViewElement = new OperationTimeView(opDate.Id, opDate.Datetime);
+                            SetDefaultFunctions(ref opViewElement);
+                        }
+                        OpViewList.Add(opViewElement);
+
                         //}
+                    }
+                    OpViewList = new ObservableCollection<OperationTimeView>(OpViewList.OrderBy(i => i.Datetime));
+                }
+                else
+                {
+                    SaveChangesBtnVis = false;
+                    LoadTimeTable();
+                }
+                if (SelectedOpTimeViewCopy != null && SelectedOpTimeViewCopy.Datetime.Year == Date.Year && SelectedOpTimeViewCopy.Datetime.Month == Date.Month && SelectedOpTimeViewCopy.Datetime.Day == Date.Day)
+                {
+                    SaveChangesBtnVis = true;
+                    var itemSelected = OpViewList.Where(e => e.Datetime.Hour == SelectedOpTimeViewCopy.Datetime.Hour && e.Datetime.Minute == SelectedOpTimeViewCopy.Datetime.Minute).FirstOrDefault();
+                    if (itemSelected != null)
+                    {
+                        itemSelected.Delete = SelectedOpTimeViewCopy.Delete;
+                        itemSelected.Doctor = SelectedOpTimeViewCopy.Doctor;
+                        itemSelected.Note = SelectedOpTimeViewCopy.Note;
+                        itemSelected.Operation = SelectedOpTimeViewCopy.Operation;
+                        itemSelected.PatientFullName = SelectedOpTimeViewCopy.PatientFullName;
+                        itemSelected.Datetime = SelectedOpTimeViewCopy.Datetime;
+                        itemSelected.PatientNumber = SelectedOpTimeViewCopy.PatientNumber;
+                    }
+                    else
+                    {
+                        var opViewElement = new OperationTimeView(SelectedOpTimeViewCopy.Id, SelectedOpTimeViewCopy.Datetime);
+                        SetDefaultFunctions(ref opViewElement);
+                        opViewElement.Delete = SelectedOpTimeViewCopy.Delete;
+                        opViewElement.Doctor = SelectedOpTimeViewCopy.Doctor;
+                        opViewElement.Note = SelectedOpTimeViewCopy.Note;
+                        opViewElement.Operation = SelectedOpTimeViewCopy.Operation;
+                        opViewElement.PatientFullName = SelectedOpTimeViewCopy.PatientFullName;
+                        opViewElement.Datetime = SelectedOpTimeViewCopy.Datetime;
+                        opViewElement.PatientNumber = SelectedOpTimeViewCopy.PatientNumber;
+                        OpViewList.Add(opViewElement);
+                        OpViewList = new ObservableCollection<OperationTimeView>(OpViewList.OrderBy(i => i.Datetime));
                     }
                 }
             }
-            if (SelectedOpTimeViewCopy != null && SelectedOpTimeViewCopy.Datetime.Year == Date.Year && SelectedOpTimeViewCopy.Datetime.Month == Date.Month && SelectedOpTimeViewCopy.Datetime.Day == Date.Day)
-            {
-                var itemSelected = OpViewList.Where(e => e.id == SelectedOpTimeViewCopy.id).FirstOrDefault();
-                // itemSelected.Cancle = SelectedOpTimeViewCopy.Cancle;
-                itemSelected.Delete = SelectedOpTimeViewCopy.Delete;
-                itemSelected.Doctor = SelectedOpTimeViewCopy.Doctor;
-                itemSelected.Note = SelectedOpTimeViewCopy.Note;
-                itemSelected.Operation = SelectedOpTimeViewCopy.Operation;
-                itemSelected.PatientFullName = SelectedOpTimeViewCopy.PatientFullName;
-                itemSelected.Datetime = SelectedOpTimeViewCopy.Datetime;
-                itemSelected.PatientNumber = SelectedOpTimeViewCopy.PatientNumber;
-            }
-            if (OpViewList != null)
-                ViewSource.View.Refresh();
         }
+        //                if (SelectedOpTimeViewCopy != null && SelectedOpTimeViewCopy.Datetime.Year == Date.Year && SelectedOpTimeViewCopy.Datetime.Month == Date.Month && SelectedOpTimeViewCopy.Datetime.Day == Date.Day)
+        //                {
+        //                    var itemSelected = OpViewList.Where(e => e.id == SelectedOpTimeViewCopy.id).FirstOrDefault();
+        //// itemSelected.Cancle = SelectedOpTimeViewCopy.Cancle;
+        //itemSelected.Delete = SelectedOpTimeViewCopy.Delete;
+        //                    itemSelected.Doctor = SelectedOpTimeViewCopy.Doctor;
+        //                    itemSelected.Note = SelectedOpTimeViewCopy.Note;
+        //                    itemSelected.Operation = SelectedOpTimeViewCopy.Operation;
+        //                    itemSelected.PatientFullName = SelectedOpTimeViewCopy.PatientFullName;
+        //                    itemSelected.Datetime = SelectedOpTimeViewCopy.Datetime;
+        //                    itemSelected.PatientNumber = SelectedOpTimeViewCopy.PatientNumber;
+        //                }
+
+
+        //{
+
+        //    using (var context = new MySqlContext())
+        //    {
+        //        OperationTimeView opViewElement;
+        //        var Patient = new Patient();
+        //        if (OpViewList != null)
+        //        {
+        //            foreach (var time in OpViewList)
+        //            {
+        //                time.Note = "Время свободно";
+        //                time.Operation = null;
+        //                time.PatientFullName = "";
+        //                time.PatientNumber = "";
+        //                time.Doctor = null;
+        //                time.Delete = new DelegateCommand(() =>
+        //                {
+        //                    var dialogResult = MessageBox.Show("Удалить?", "", MessageBoxButton.YesNo);
+        //                    if (dialogResult == MessageBoxResult.Yes)
+        //                    {
+        //                        bool test = true;
+        //                        //  OperationDateTime timeItem;
+        //                        using (var context1 = new MySqlContext())
+        //                        {
+        //                            OperationDateTimeRepository timeOpRep = new OperationDateTimeRepository(context1);
+        //                            var timeItem = timeOpRep.GetAll.Where(e => e.Operation_id != null && e.Operation_id != 0 && e.Datetime.Hour == time.Datetime.Hour && e.Datetime.Minute == time.Datetime.Minute).FirstOrDefault();
+        //                            if (timeItem == null)
+        //                            {
+        //                                test = false;
+        //                            }
+
+        //                            if (!test)
+        //                            {
+        //                                var opDataToRemove = Data.OperationDateTime.Get(time.id);
+        //                                Data.OperationDateTime.Remove(opDataToRemove);
+        //                                Data.Complete();
+        //                                OpViewList.Remove(OpViewList.Where(e => e.id == time.id).FirstOrDefault());
+        //                                //ViewSource.View.Refresh();
+        //                            }
+        //                            else
+        //                            {
+        //                                MessageBox.Show("На это время назначена операция" + timeItem.Datetime);
+        //                            }
+        //                        }
+        //                    }
+        //                });
+        //                time.Select = new DelegateCommand(() =>
+        //                {
+        //                    if (SelectedOpTimeView != null)
+        //                        BuffSelectedOpTimeView = SelectedOpTimeView;
+        //                    SelectedOpTimeView = OpViewList.Where(e => e.id == time.id).FirstOrDefault();
+        //                    SelectedOpTimeView.Datetime = new System.DateTime(Date.Year, Date.Month, Date.Day, SelectedOpTimeView.Datetime.Hour, SelectedOpTimeView.Datetime.Minute, 0);
+        //                    CurrentPanelSelectDoctor.ClearPanel();
+        //                    CurrentPanelSelectDoctor.PanelOpened = true;
+        //                });
+        //            }
+
+        //            foreach (var opDate in context.Set<OperationDateTime>().Where(e => e.Operation_id != null && e.Operation_id != 0 && e.Datetime.Year == Date.Year && e.Datetime.Month == Date.Month && e.Datetime.Day == Date.Day))
+        //            {
+        //                //if (opDate.Operation_id != null && opDate.Operation_id != 0 && opDate.Datetime.Year == Date.Year && opDate.Datetime.Month == Date.Month && opDate.Datetime.Day == Date.Day)
+        //                //{
+        //                opViewElement = OpViewList.Where(e => e.Datetime.Hour == opDate.Datetime.Hour && e.Datetime.Minute == opDate.Datetime.Minute).FirstOrDefault();
+        //                opViewElement.Delete = new DelegateCommand(() =>
+        //                {
+        //                    var dialogResult = MessageBox.Show("Отменить операцию?", "", MessageBoxButton.YesNo);
+        //                    if (dialogResult == MessageBoxResult.Yes)
+        //                    {
+        //                        ForCancleOpTimeView = OpViewList.Where(e => e.Operation != null && e.Operation.Id == opDate.Operation_id && opDate.Datetime.Hour == e.Datetime.Hour && opDate.Datetime.Minute == e.Datetime.Minute).FirstOrDefault();
+        //                        MessageBus.Default.Call("SetFunctionsToReturnToOpCreation", null, null);
+        //                        MessageBus.Default.Call("GetOperationIDForAddCancel", this, opDate.Operation_id);
+        //                        Controller.NavigateTo<ViewModelCancelOperations>();
+        //                        // a lot of work to do
+
+        //                        //OpViewList.Remove(opViewElement);
+
+        //                        ////ViewSource.View.Refresh();
+
+        //                    }
+        //                });
+        //                opViewElement.Select = new DelegateCommand(() =>
+        //                {
+        //                    MessageBox.Show("Сначала отмените операцию");
+        //                });
+        //                opViewElement.Operation = Data.Operation.Get(opDate.Operation_id.Value);
+        //                if (opDate.Doctor_id != null && opDate.Doctor_id.Value != 0)
+        //                    opViewElement.Doctor = Data.Doctor.Get(opDate.Doctor_id.Value);
+        //                //opViewElement.IsFree = false;
+        //                Patient = Data.Patients.Get(opViewElement.Operation.PatientId);
+        //                opViewElement.PatientFullName = Patient.Sirname + " " + Patient.Name + " " + Patient.Patronimic;
+        //                opViewElement.PatientNumber = Patient.Phone;
+        //                opViewElement.Note = opDate.Note;
+        //                //}
+        //            }
+        //        }
+        //    }
+        //    if (SelectedOpTimeViewCopy != null && SelectedOpTimeViewCopy.Datetime.Year == Date.Year && SelectedOpTimeViewCopy.Datetime.Month == Date.Month && SelectedOpTimeViewCopy.Datetime.Day == Date.Day)
+        //    {
+        //        var itemSelected = OpViewList.Where(e => e.id == SelectedOpTimeViewCopy.id).FirstOrDefault();
+        //        // itemSelected.Cancle = SelectedOpTimeViewCopy.Cancle;
+        //        itemSelected.Delete = SelectedOpTimeViewCopy.Delete;
+        //        itemSelected.Doctor = SelectedOpTimeViewCopy.Doctor;
+        //        itemSelected.Note = SelectedOpTimeViewCopy.Note;
+        //        itemSelected.Operation = SelectedOpTimeViewCopy.Operation;
+        //        itemSelected.PatientFullName = SelectedOpTimeViewCopy.PatientFullName;
+        //        itemSelected.Datetime = SelectedOpTimeViewCopy.Datetime;
+        //        itemSelected.PatientNumber = SelectedOpTimeViewCopy.PatientNumber;
+        //    }
+        //    //if (OpViewList != null)
+        //    //ViewSource.View.Refresh();
+        //}
+
+
+
         public void PanelClear()
         {
             if (((ViewModelAddOperation)ParentVM).Operation.Datetime_id != null)
@@ -445,7 +697,6 @@ namespace WpfApp2.ViewModels.Panels
             //{
             //    throw ex;
             //}
-
         }
 
         public SelectTimePanelViewModel(ViewModelBase parentVM) : base(parentVM.Controller)
@@ -474,24 +725,94 @@ namespace WpfApp2.ViewModels.Panels
 
             MessageBus.Default.Subscribe("ConfirmCancle", ConfirmCancle);
             ViewSource = new CollectionViewSource();
-            SelectedOpTimeViewCopy = new OperationTimeView();
+            //SelectedOpTimeViewCopy = new OperationTimeView();
             PanelClear();
+            AddTimeRow = new DelegateCommand(() =>
+            {
 
-            AddTimeRow = new DelegateCommand(
-                () =>
+                CurrentPanelSelectTime.ClearPanel();
+                CurrentPanelSelectTime.PanelOpened = true;
+
+            });
+
+            SaveTemplateCommand = new DelegateCommand(() =>
+            {
+                var dialogResult = MessageBox.Show("Сохранить шаблон?", "", MessageBoxButton.YesNo);
+                if (dialogResult == MessageBoxResult.Yes)
                 {
-
-                    CurrentPanelSelectTime.ClearPanel();
-                    CurrentPanelSelectTime.PanelOpened = true;
-
-                });
+                    foreach (var OpTime in Data.OperationDateTimeTemplate.GetAll)
+                    {
+                        Data.OperationDateTimeTemplate.Remove(OpTime);
+                    }
+                    Data.Complete();
+                    OperationDateTimeTemplate TimeRow;
+                    foreach (var OpTime in OpViewList)
+                    {
+                        TimeRow = new OperationDateTimeTemplate
+                        {
+                            TimeRow = new System.DateTime(1, 1, 1, OpTime.Datetime.Hour, OpTime.Datetime.Minute, 0)
+                        };
+                        Data.OperationDateTimeTemplate.Add(TimeRow);
+                    }
+                    Data.Complete();
+                }
+            });
 
             SaveAllCommand = new DelegateCommand(() =>
             {
                 using (var context = new MySqlContext())
                 {
+                    OperationDateTime ToModify;
+                    bool testToDelete = true;
+                    //var timeItem1 = context.Set<OperationDateTime>().Where(e => e.Operation_id != null && e.Datetime.Year == Date.Year && e.Datetime.Month == Date.Month && e.Datetime.Day == Date.Day).FirstOrDefault();
+                    //if (timeItem1 == null)
+                    //{
+                    //    ((ViewModelAddOperation)ParentVM).SaveSelectTimeCommand.Execute();
+                    //    return;
+                    //}
+                    foreach (var OpTimeInDb in context.Set<OperationDateTime>().Where(e => e.Datetime.Year == Date.Year && e.Datetime.Month == Date.Month && e.Datetime.Day == Date.Day))
+                    {
+                        foreach (var OpTime in OpViewList)
+                        {
+                            if (OpTimeInDb.Id == OpTime.Id)
+                            {
+                                testToDelete = false;
+                                ToModify = Data.OperationDateTime.Get(OpTimeInDb.Id);
+                                ToModify.Datetime = OpTime.Datetime;
+                                ToModify.Note = OpTime.Note;
+                                Data.Complete();
+                            }
+                            if (OpTime.Id == 0)
+                            {
+                                ToModify = new OperationDateTime
+                                {
+                                    Datetime = new System.DateTime(Date.Year, Date.Month, Date.Day, OpTime.Datetime.Hour, OpTime.Datetime.Minute, OpTime.Datetime.Second),
+                                    Note = OpTime.Note,
+                                };
+                                if (OpTime.Doctor != null)
+                                    ToModify.Doctor_id = OpTime.Doctor.Id;
+                                if (OpTime.Operation != null)
+                                    ToModify.Operation_id = OpTime.Operation.Id;
+                                Data.OperationDateTime.Add(ToModify);
+                                Data.Complete();
+                                OpTime.Id = ToModify.Id;
+                            }
+                        }
 
-                    var opDataToModify = new OperationDateTime();
+                        if (testToDelete)
+                        {
+                            Data.OperationDateTime.Remove(Data.OperationDateTime.Get(OpTimeInDb.Id));
+                            Data.Complete();
+                        }
+                        testToDelete = true;
+                    }
+
+
+
+                    // //using (var context = new MySqlContext())
+                    // //{
+
+                    //  // var opDataToModify = new OperationDateTime();
                     //    var opDataToRemove = new OperationDateTime();
                     //    var test = true;
                     //    var OperationRep = new OperationRepository(context);
@@ -525,32 +846,58 @@ namespace WpfApp2.ViewModels.Panels
                     //    }
                     //}
 
-                    if (SelectedOpTimeView != null && ((ViewModelAddOperation)ParentVM).Operation.Datetime_id == null)
+                    if (SelectedOpTimeView != null) /*&& ((ViewModelAddOperation)ParentVM).Operation.Datetime_id == null)*/
                     {
-                       
-                        opDataToModify = Data.OperationDateTime.Get(SelectedOpTimeViewCopy.id);
-                      
-                        opDataToModify.Doctor_id = SelectedOpTimeViewCopy.Doctor.Id;
-                        opDataToModify.Note = SelectedOpTimeViewCopy.Note;
-                        opDataToModify.Operation_id = SelectedOpTimeViewCopy.Operation.Id;
-                        opDataToModify.Datetime = SelectedOpTimeViewCopy.Datetime;
-                        Data.Complete();
+                        //var timeItem = context.Set<OperationDateTime>().Where(e => e.Operation_id == null && e.Datetime.Hour == SelectedOpTimeView.Datetime.Hour && e.Datetime.Minute == SelectedOpTimeView.Datetime.Minute).FirstOrDefault();
+                        //if (timeItem == null)
+                        // {
 
-                        var timeItem = context.Set<OperationDateTime>().Where(e => e.Operation_id == null && e.Datetime.Hour == SelectedOpTimeView.Datetime.Hour && e.Datetime.Minute == SelectedOpTimeView.Datetime.Minute).FirstOrDefault();
-                        if (timeItem == null)
+                        OperationDateTime TimeRow;
+                        var timeItem = context.Set<OperationDateTime>().Where(e => e.Operation_id == null && e.Datetime.Year == Date.Year && e.Datetime.Month == Date.Month && e.Datetime.Day == Date.Day);
+                        foreach (var Optime in OpViewList.Where(e => e.Operation == null))
                         {
-                            var TimeRow = new OperationDateTime
+                            if (timeItem.Where(e => e.Datetime.Hour == Optime.Datetime.Hour && e.Datetime.Minute == Optime.Datetime.Minute).FirstOrDefault() == null)
                             {
-                                Datetime = opDataToModify.Datetime,
-                                Note = "Время свободно"
+                                TimeRow = new OperationDateTime
+                                {
+                                    Datetime = new System.DateTime(Date.Year, Date.Month, Date.Day, Optime.Datetime.Hour, Optime.Datetime.Minute, Optime.Datetime.Second),
+                                    Note = Optime.Note,
+                                };
+                                Data.OperationDateTime.Add(TimeRow);
+                                Data.Complete();
+                            }
+                        }
+                        var timeForSelectedInDb = timeItem.Where(e => e.Datetime.Hour == SelectedOpTimeView.Datetime.Hour && e.Datetime.Minute == SelectedOpTimeView.Datetime.Minute).FirstOrDefault();
+                        if (timeForSelectedInDb != null)
+                        {
+                            timeForSelectedInDb = Data.OperationDateTime.Get(timeForSelectedInDb.Id);
+                            timeForSelectedInDb.Datetime = SelectedOpTimeView.Datetime;
+                            timeForSelectedInDb.Note = SelectedOpTimeView.Note;
+                            timeForSelectedInDb.Doctor_id = SelectedOpTimeView.Doctor.Id;
+                            timeForSelectedInDb.Operation_id = SelectedOpTimeView.Operation.Id;
+                            Data.Complete();
+                            SelectedOpTimeView.Id = timeForSelectedInDb.Id;
+                            //Data.Complete();
+                        }
+                        else
+                        {
+                            TimeRow = new OperationDateTime
+                            {
+                                Datetime = SelectedOpTimeView.Datetime,
+                                Note = SelectedOpTimeView.Note,
+                                Doctor_id = SelectedOpTimeView.Doctor.Id,
+                                Operation_id = SelectedOpTimeView.Operation.Id
                             };
                             Data.OperationDateTime.Add(TimeRow);
                             Data.Complete();
+                            SelectedOpTimeView.Id = TimeRow.Id;
                         }
 
-                    }
 
+                        // }
+                    }
                 }
+
                 ((ViewModelAddOperation)ParentVM).SaveSelectTimeCommand.Execute();
                 //SelectedOpTimeView = null;
                 //BuffSelectedOpTimeView = null;
@@ -566,96 +913,60 @@ namespace WpfApp2.ViewModels.Panels
             SaveAddTimeRowCommand = new DelegateCommand(() =>
             {
                 var newType = CurrentPanelSelectTime.GetPanelType();
+
                 CurrentPanelSelectTime.PanelOpened = false;
-                var OpViewElement = new OperationTimeView
-                {
-                    id = newType.Id,
-                    Note = "Время свободно",
-                    Datetime = new System.DateTime(Date.Year, Date.Month, Date.Day, newType.Datetime.Hour, newType.Datetime.Minute, newType.Datetime.Second)
-                };
-                OpViewElement.Select = new DelegateCommand(() =>
-                {
-                    if (SelectedOpTimeView != null)
-                        BuffSelectedOpTimeView = SelectedOpTimeView;
-                    SelectedOpTimeView = OpViewList.Where(e => e.id == OpViewElement.id).FirstOrDefault();
-                    CurrentPanelSelectDoctor.ClearPanel();
-                    CurrentPanelSelectDoctor.PanelOpened = true;
-                });
 
-                OpViewElement.SetDown = new DelegateCommand(() =>
-                {
-                    var CurElementIndex = OpViewList.IndexOf(OpViewList.Where(e => e.id == OpViewElement.id).FirstOrDefault());
-                    if (CurElementIndex != OpViewList.Count - 1)
-                    {
-                        var Buff = OpViewList[CurElementIndex].Datetime;
-                        OpViewList[CurElementIndex].Datetime = OpViewList[CurElementIndex + 1].Datetime;
-                        OpViewList[CurElementIndex + 1].Datetime = Buff;
+                var opViewElement = new OperationTimeView(0, new System.DateTime(Date.Year, Date.Month, Date.Day, newType.Datetime.Hour, newType.Datetime.Minute, newType.Datetime.Second));
 
-                        OpViewList.Sort((a, b) => a.Datetime.CompareTo(b.Datetime));
+                SetDefaultFunctions(ref opViewElement);
 
-                        ViewSource.View.Refresh();
-                    }
-                });
+                OpViewList.Add(opViewElement);
 
-                OpViewElement.SetUp = new DelegateCommand(() =>
-                {
-                    var CurElementIndex = OpViewList.IndexOf(OpViewList.Where(e => e.id == OpViewElement.id).FirstOrDefault());
-                    if (CurElementIndex != 0)
-                    {
-                        //Operation op = Data.Operation.Get(OpViewList[CurElementIndex].Operation.Id);
-                        //op.Datetime_id = OpViewList[CurElementIndex - 1].id;
-                        //op = Data.Operation.Get(OpViewList[CurElementIndex - 1].Operation.Id);
-                        //op.Datetime_id = OpViewList[CurElementIndex].id;
+                OpViewList = new ObservableCollection<OperationTimeView>(OpViewList.OrderBy(i => i.Datetime));
+                //opViewElement.Select = new DelegateCommand(() =>
+                //{
+                //    if (SelectedOpTimeView != null)
+                //        BuffSelectedOpTimeView = SelectedOpTimeView;
+                //    SelectedOpTimeView = OpViewList.Where(e => e.id == opViewElement.id && e.Datetime == opViewElement.Datetime).FirstOrDefault();
+                //    CurrentPanelSelectDoctor.ClearPanel();
+                //    CurrentPanelSelectDoctor.PanelOpened = true;
+                //});
 
-                        //OperationDateTime opData = Data.OperationDateTime.Get(OpViewList[CurElementIndex].id);
-                        //opData.Datetime = OpViewList[CurElementIndex - 1].Datetime;
-                        //Data.Complete();
-                        //opData = Data.OperationDateTime.Get(OpViewList[CurElementIndex - 1].id);
-                        //Data.Complete();
+                //opViewElement.SetDown = new DelegateCommand(() =>
+                //{
+                //    var CurElementIndex = OpViewList.IndexOf(OpViewList.Where(e => e.id == opViewElement.id && e.Datetime == opViewElement.Datetime).FirstOrDefault());
+                //    if (CurElementIndex != OpViewList.Count - 1)
+                //    {
+                //        var Buff = OpViewList[CurElementIndex].Datetime;
+                //        OpViewList[CurElementIndex].Datetime = OpViewList[CurElementIndex + 1].Datetime;
+                //        OpViewList[CurElementIndex + 1].Datetime = Buff;
 
-                        var Buff = OpViewList[CurElementIndex].Datetime;
-                        OpViewList[CurElementIndex].Datetime = OpViewList[CurElementIndex - 1].Datetime;
-                        OpViewList[CurElementIndex - 1].Datetime = Buff;
+                //        OpViewList = new ObservableCollection<OperationTimeView>(OpViewList.OrderBy(i => i.Datetime));
 
-                        OpViewList.Sort((a, b) => a.Datetime.CompareTo(b.Datetime));
+                //        //ViewSource.View.Refresh();
+                //    }
+                //});
 
-                        ViewSource.View.Refresh();
-                    }
-                });
-                OpViewElement.Delete = new DelegateCommand(() =>
-                {
-                    var dialogResult = MessageBox.Show("Удалить?", "", MessageBoxButton.YesNo);
-                    if (dialogResult == MessageBoxResult.Yes)
-                    {
-                        bool test = true;
-                        //  OperationDateTime timeItem;
-                        using (var context1 = new MySqlContext())
-                        {
-                            OperationDateTimeRepository timeOpRep = new OperationDateTimeRepository(context1);
-                            var timeItem = timeOpRep.GetAll.Where(e => e.Operation_id != null && e.Operation_id != 0 && e.Datetime.Hour == OpViewElement.Datetime.Hour && e.Datetime.Minute == OpViewElement.Datetime.Minute).FirstOrDefault();
-                            if (timeItem == null)
-                            {
-                                test = false;
-                            }
+                //opViewElement.SetUp = new DelegateCommand(() =>
+                //{
+                //    var CurElementIndex = OpViewList.IndexOf(OpViewList.Where(e => e.id == opViewElement.id && e.Datetime == opViewElement.Datetime).FirstOrDefault());
+                //    if (CurElementIndex != 0)
+                //    {
+                //        var Buff = OpViewList[CurElementIndex].Datetime;
+                //        OpViewList[CurElementIndex].Datetime = OpViewList[CurElementIndex - 1].Datetime;
+                //        OpViewList[CurElementIndex - 1].Datetime = Buff;
 
-                            if (!test)
-                            {
-                                var opDataToRemove = Data.OperationDateTime.Get(OpViewElement.id);
-                                Data.OperationDateTime.Remove(opDataToRemove);
-                                Data.Complete();
-                                OpViewList.Remove(OpViewList.Where(e => e.id == OpViewElement.id).FirstOrDefault());
-                                ViewSource.View.Refresh();
-                            }
-                            else
-                            {
-                                MessageBox.Show("На это время назначена операция" + timeItem.Datetime);
-                            }
-                        }
-                    }
-                });
-                OpViewList.Add(OpViewElement);
-                ViewSource.View.Refresh();
-
+                //        OpViewList = new ObservableCollection<OperationTimeView>(OpViewList.OrderBy(i => i.Datetime));
+                //    }
+                //});
+                //opViewElement.Delete = new DelegateCommand(() =>
+                //{
+                //    var dialogResult = MessageBox.Show("Удалить?", "", MessageBoxButton.YesNo);
+                //    if (dialogResult == MessageBoxResult.Yes)
+                //    {
+                //        OpViewList.Remove(OpViewList.Where(e => e.id == opViewElement.id && e.Datetime == opViewElement.Datetime).FirstOrDefault());
+                //    }
+                //});
             });
 
             CurrentPanelSelectDoctor = new DoctorSelectPanelViewModel(this);
@@ -678,90 +989,46 @@ namespace WpfApp2.ViewModels.Panels
                     BuffSelectedOpTimeView.PatientFullName = "";
                     BuffSelectedOpTimeView.PatientNumber = "";
                     BuffSelectedOpTimeView.Doctor = null;
-                    buffForId = BuffSelectedOpTimeView.id;
-                    //BuffSelectedOpTimeView.Delete = new DelegateCommand(() =>
-                    //{
-                    //    var dialogResult = MessageBox.Show("Удалить?", "", MessageBoxButton.YesNo);
-                    //    if (dialogResult == MessageBoxResult.Yes)
-                    //    {
-                    //        using (var context1 = new MySqlContext())
-                    //        {
-                    //            OperationDateTimeRepository timeOpRep = new OperationDateTimeRepository(context1);
-                    //            var ourOpTime = timeOpRep.GetAll.Where(e => e.Operation_id == null && e.Id == buffForId).FirstOrDefault();
-                    //            //ViewSource.View.Refresh();
-
-
-                    //            bool test = true;
-                    //            //  OperationDateTime timeItem;
-
-                    //            var timeItem = timeOpRep.GetAll.Where(e => e.Operation_id != null && e.Operation_id != 0 && e.Datetime.Hour == ourOpTime.Datetime.Hour && e.Datetime.Minute == ourOpTime.Datetime.Minute).FirstOrDefault();
-                    //            if (timeItem == null)
-                    //            {
-                    //                test = false;
-                    //            }
-
-                    //            if (!test)
-                    //            {
-                    //                var opDataToRemove = Data.OperationDateTime.Get(ourOpTime.Id);
-                    //                Data.OperationDateTime.Remove(opDataToRemove);
-                    //                Data.Complete();
-                    //                OpViewList.Remove(OpViewList.Where(e => e.id == ourOpTime.Id).FirstOrDefault());
-                    //                ViewSource.View.Refresh();
-                    //            }
-                    //            else
-                    //            {
-                    //                MessageBox.Show("На это время назначена операция" + timeItem.Datetime);
-                    //            }
-                    //        }
-
-                    //    }
-                    //});
+                    buffForId = BuffSelectedOpTimeView.Id;
                     BuffSelectedOpTimeView = null;
-
                 }
+
                 SelectedOpTimeView.Delete = new DelegateCommand(() =>
                 {
-                    var elem = OpViewList.Where(e => e.id == SelectedOpTimeView.id).FirstOrDefault();
+                    var elem = OpViewList.Where(e => e.Datetime == SelectedOpTimeView.Datetime).FirstOrDefault();
                     elem.Note = "Время свободно";
                     elem.Operation = null;
                     elem.PatientFullName = "";
                     elem.PatientNumber = "";
                     elem.Doctor = null;
-                    elem.Delete = new DelegateCommand(() =>
+                    SetDefaultFunctions(ref elem);
+                    if (((ViewModelAddOperation)ParentVM).Operation.Datetime_id != null && ((ViewModelAddOperation)ParentVM).Operation.Datetime_id != 0)
                     {
-                        var dialogResult = MessageBox.Show("Удалить?", "", MessageBoxButton.YesNo);
-                        if (dialogResult == MessageBoxResult.Yes)
+                        var OpDate = Data.OperationDateTime.Get(((ViewModelAddOperation)ParentVM).Operation.Datetime_id.Value);
+                        if (OpDate != null)
                         {
-                            bool test = true;
-                            //  OperationDateTime timeItem;
-                            using (var context1 = new MySqlContext())
+                            OpDate.Doctor_id = null;
+                            OpDate.Note = "Время свободно";
+                            OpDate.Operation_id = null;
+                            Data.Complete();
+                            using (var context = new MySqlContext())
                             {
-                                OperationDateTimeRepository timeOpRep = new OperationDateTimeRepository(context1);
-                                var timeItem = timeOpRep.GetAll.Where(e => e.Operation_id != null && e.Operation_id != 0 && e.Datetime.Hour == elem.Datetime.Hour && e.Datetime.Minute == elem.Datetime.Minute).FirstOrDefault();
+                                var timeItem = context.Set<OperationDateTime>().Where(e => e.Operation_id != null && e.Datetime.Year == OpDate.Datetime.Year && e.Datetime.Month == OpDate.Datetime.Month && e.Datetime.Day == OpDate.Datetime.Day).FirstOrDefault();
                                 if (timeItem == null)
                                 {
-                                    test = false;
+                                    foreach (var opDate in context.Set<OperationDateTime>().Where(e => e.Datetime.Year == OpDate.Datetime.Year && e.Datetime.Month == OpDate.Datetime.Month && e.Datetime.Day == OpDate.Datetime.Day))
+                                    {
+                                        Data.OperationDateTime.Remove(Data.OperationDateTime.Get(opDate.Id));
+                                    }
                                 }
-
-                                if (!test)
-                                {
-                                    var opDataToRemove = Data.OperationDateTime.Get(elem.id);
-                                    Data.OperationDateTime.Remove(opDataToRemove);
-                                    Data.Complete();
-                                    OpViewList.Remove(OpViewList.Where(e => e.id == elem.id).FirstOrDefault());
-                                    ViewSource.View.Refresh();
-                                }
-                                else
-                                {
-                                    MessageBox.Show("На это время назначена операция" + timeItem.Datetime);
-                                }
+                                Data.Complete();
                             }
                         }
-                    });
-
+                    }
                     SelectedOpTimeViewCopy = null;
                     SelectedOpTimeView = null;
-                    //ViewSource.View.Refresh();
+
+                    ////ViewSource.View.Refresh();
                     UpdateTimeTable();
                 });
                 Patient patient = ((ViewModelAddOperation)ParentVM).CurrentPatient;
@@ -772,19 +1039,16 @@ namespace WpfApp2.ViewModels.Panels
                 SelectedOpTimeView.Note = CurrentPanelSelectDoctor.Commentary;
                 CurrentPanelSelectDoctor.PanelOpened = false;
 
-                SelectedOpTimeViewCopy = new OperationTimeView();
-                // SelectedOpTimeViewCopy.Cancle = SelectedOpTimeView.Cancle;
-                SelectedOpTimeViewCopy.id = SelectedOpTimeView.id;
+                SelectedOpTimeViewCopy = new OperationTimeView(SelectedOpTimeView.Id, SelectedOpTimeView.Datetime);
                 SelectedOpTimeViewCopy.Delete = SelectedOpTimeView.Delete;
                 SelectedOpTimeViewCopy.Doctor = SelectedOpTimeView.Doctor;
                 SelectedOpTimeViewCopy.Note = SelectedOpTimeView.Note;
                 SelectedOpTimeViewCopy.Operation = SelectedOpTimeView.Operation;
                 SelectedOpTimeViewCopy.PatientFullName = SelectedOpTimeView.PatientFullName;
-                SelectedOpTimeViewCopy.Datetime = SelectedOpTimeView.Datetime;
                 SelectedOpTimeViewCopy.PatientNumber = SelectedOpTimeView.PatientNumber;
-
-                //ViewSource.View.Refresh();
-                UpdateTimeTable();
+                SaveChangesBtnVis = true;
+                ////ViewSource.View.Refresh();
+                //                UpdateTimeTable();
             });
         }
 

@@ -64,11 +64,8 @@ namespace WpfApp2.ViewModels.Panels
                 Datetime = Date,
                 Note = "Время свободно"
             };
-            Data.OperationDateTime.Add(TimeRow);
-            Data.Complete();
-            //var newType = new Anticogulants();
-            //newType.LongName = LongText;
-            //newType.Str = ShortText;
+            //Data.OperationDateTime.Add(TimeRow);
+            //Data.Complete();
             return TimeRow;
         }
 
