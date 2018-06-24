@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using Microsoft.Practices.Prism.Commands;
@@ -28,10 +29,14 @@ namespace WpfApp2.ViewModels
         #endregion
 
         private Visibility _visibilityOfOtherReason;
-        public Visibility VisibilityOfOtherReason { get { return _visibilityOfOtherReason; } set
+        public Visibility VisibilityOfOtherReason
+        {
+            get { return _visibilityOfOtherReason; }
+            set
             {
                 _visibilityOfOtherReason = value; OnPropertyChanged();
-            } }
+            }
+        }
         private Visibility _visibilityOfReasons;
         public Visibility VisibilityOfReasons
         {
@@ -68,7 +73,7 @@ namespace WpfApp2.ViewModels
             DateText = "Операция отменена";
             OtmenOrProv = "Отмененная ";
 
-            foreach(var Reason in Data.ReasonsOfCancleOperation.GetAll)
+            foreach (var Reason in Data.ReasonsOfCancleOperation.GetAll)
             {
                 CancelsReasons.Add(Reason.Str);
             }
@@ -107,6 +112,21 @@ namespace WpfApp2.ViewModels
                       opDate.Note = "Время свободно";
                       opDate.Operation_id = null;
                       Data.Complete();
+
+
+                      using (var context = new MySqlContext())
+                      {
+                          var timeItem = context.Set<OperationDateTime>().Where(e => e.Operation_id != null && e.Datetime.Year == opDate.Datetime.Year && e.Datetime.Month == opDate.Datetime.Month && e.Datetime.Day == opDate.Datetime.Day).FirstOrDefault();
+                          if (timeItem == null)
+                          {
+                              foreach (var opDate1 in context.Set<OperationDateTime>().Where(e => e.Datetime.Year == opDate.Datetime.Year && e.Datetime.Month == opDate.Datetime.Month && e.Datetime.Day == opDate.Datetime.Day))
+                              {
+                                  Data.OperationDateTime.Remove(Data.OperationDateTime.Get(opDate1.Id));
+                              }
+                          }
+                          Data.Complete();
+                      }
+
                   }
                   MessageBus.Default.Call("SetCurrentACCOp", this, null);
                   MessageBus.Default.Call("GetOperationForOverwiev", this, operationId);
@@ -155,6 +175,18 @@ namespace WpfApp2.ViewModels
                         opDate.Note = "Время свободно";
                         opDate.Operation_id = null;
                         Data.Complete();
+                        using (var context = new MySqlContext())
+                        {
+                            var timeItem = context.Set<OperationDateTime>().Where(e => e.Operation_id != null && e.Datetime.Year == opDate.Datetime.Year && e.Datetime.Month == opDate.Datetime.Month && e.Datetime.Day == opDate.Datetime.Day).FirstOrDefault();
+                            if (timeItem == null)
+                            {
+                                foreach (var opDate1 in context.Set<OperationDateTime>().Where(e => e.Datetime.Year == opDate.Datetime.Year && e.Datetime.Month == opDate.Datetime.Month && e.Datetime.Day == opDate.Datetime.Day))
+                                {
+                                    Data.OperationDateTime.Remove(Data.OperationDateTime.Get(opDate1.Id));
+                                }
+                            }
+                            Data.Complete();
+                        }
                     }
                     MessageBus.Default.Call("SetCurrentACCOp", this, null);
                     MessageBus.Default.Call("ConfirmCancle", null, null);
@@ -194,7 +226,8 @@ namespace WpfApp2.ViewModels
                     if (IsOtherReason != "Yes")
                     {
                         buf.Reason = ReasonSelected + 1;
-                    }else
+                    }
+                    else
                     {
                         ReasonsOfCancelOperation buf1 = new ReasonsOfCancelOperation();
                         if (OtherReasonText == null)
@@ -203,7 +236,7 @@ namespace WpfApp2.ViewModels
                         Data.ReasonsOfCancleOperation.Add(buf1);
                         buf.Reason = buf1.Id;
                         Data.Complete();
-                       
+
 
                     }
                     buf.TransferDate = DateTime.Now;

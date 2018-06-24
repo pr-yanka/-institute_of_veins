@@ -296,6 +296,10 @@ namespace WpfApp2.ViewModels
 
         private OperationResult OperationResult { get; set; }
 
+        private Brush _button_time_B;
+
+        public Brush Button_time_B { get { return _button_time_B; } set { _button_time_B = value; OnPropertyChanged(); } }
+
         bool TimeCheckHour;
         private int _anesteticSelected;
         public int AnesteticSelected { get { return _anesteticSelected; } set { _anesteticSelected = value; OnPropertyChanged(); } }
@@ -403,8 +407,10 @@ namespace WpfApp2.ViewModels
         }
         private void SetCurrentPatientID(object sender, object data)
         {
-
-
+            CurrentPanelSelectTime.SelectedOpTimeView = null;
+            CurrentPanelSelectTime.SelectedOpTimeViewCopy = null;
+            CurrentPanelSelectTime.BuffSelectedOpTimeView = null;
+            Button_time_B = Brushes.Gray;
             CurrentPanelViewModel.PanelOpened = true;
 
             TextForDate = "Время не выбрано";
@@ -536,6 +542,37 @@ namespace WpfApp2.ViewModels
             RightDiagnosisList = new CollectionViewSource();
             LeftOperationList = new CollectionViewSource();
             RightOperationList = new CollectionViewSource();
+
+
+
+
+            using (var context = new MySqlContext())
+            {
+                var timeItem = Data.OperationDateTime.GetAll.Where(e => e.Operation_id == 0);
+                foreach (var OpTImeWithNULL in timeItem)
+                {
+                    if (Data.OperationDateTime.GetAll.Where(e => e.Operation_id != null && e.Operation_id != 0 && e.Datetime.Year == OpTImeWithNULL.Datetime.Year && e.Datetime.Month == OpTImeWithNULL.Datetime.Month && e.Datetime.Day == OpTImeWithNULL.Datetime.Day).FirstOrDefault() == null)
+                    {
+                        foreach (var opDate in Data.OperationDateTime.GetAll.Where(e => e.Datetime.Year == OpTImeWithNULL.Datetime.Year && e.Datetime.Month == OpTImeWithNULL.Datetime.Month && e.Datetime.Day == OpTImeWithNULL.Datetime.Day))
+                        {
+                            Data.OperationDateTime.Remove(Data.OperationDateTime.Get(opDate.Id));
+                        }
+                    }
+                    else
+                    {
+                        var opDate1 = Data.OperationDateTime.Get(OpTImeWithNULL.Id);
+                        opDate1.Doctor_id = null;
+                        opDate1.Note = "Время свободно";
+                        opDate1.Operation_id = null;
+                        Data.Complete();
+                    }
+                }
+                Data.Complete();
+            }
+
+
+
+
             GetLeftFromLastObs = new DelegateCommand(
                 () =>
                 {
@@ -618,8 +655,8 @@ namespace WpfApp2.ViewModels
                         Data.Complete();
                         using (var context = new MySqlContext())
                         {
-                            var timeItem = context.Set<OperationDateTime>().Where(e => e.Operation_id != null && e.Datetime.Year == OpDate.Datetime.Year && e.Datetime.Month == OpDate.Datetime.Month && e.Datetime.Day == OpDate.Datetime.Day).FirstOrDefault();
-                            if (timeItem == null)
+                            var timeItem1 = context.Set<OperationDateTime>().Where(e => e.Operation_id != null && e.Datetime.Year == OpDate.Datetime.Year && e.Datetime.Month == OpDate.Datetime.Month && e.Datetime.Day == OpDate.Datetime.Day).FirstOrDefault();
+                            if (timeItem1 == null)
                             {
                                 foreach (var opDate in context.Set<OperationDateTime>().Where(e => e.Datetime.Year == OpDate.Datetime.Year && e.Datetime.Month == OpDate.Datetime.Month && e.Datetime.Day == OpDate.Datetime.Day))
                                 {
@@ -653,6 +690,14 @@ namespace WpfApp2.ViewModels
                         DoctorsSelected.Count == 0 || TimeCheckHour == false || TimeCheckMinute == false || Operation.Datetime_id == null)
                         {
                             MessageBox.Show("Не всё заполнено!");
+                            if (Operation.Datetime_id == null)
+                            {
+                                Button_time_B = Brushes.Red;
+                            }
+                            else
+                            {
+                                Button_time_B = Brushes.Gray;
+                            }
                         }
                         else
                         {
@@ -869,15 +914,19 @@ namespace WpfApp2.ViewModels
             {
                 CurrentPanelSelectTime.PanelOpened = false;
                 Handled = false;
-                //CurrentPanelSelectTime.SelectedOpTimeView = null;
-                //CurrentPanelSelectTime.SelectedOpTimeViewCopy = null;
-                //CurrentPanelSelectTime.BuffSelectedOpTimeView = null;
+                //if (Operation.Datetime_id == null || Operation.Datetime_id == 0)
+                //{
+                CurrentPanelSelectTime.SelectedOpTimeView = null;
+                CurrentPanelSelectTime.SelectedOpTimeViewCopy = null;
+                CurrentPanelSelectTime.BuffSelectedOpTimeView = null;
+                //}
             });
             TextForDate = "Время не выбрано";
             SaveSelectTimeCommand = new DelegateCommand(() =>
             {
                 if (CurrentPanelSelectTime.SelectedOpTimeView != null)
                 {
+                    Button_time_B = Brushes.Gray;
                     Operation.Datetime_id = CurrentPanelSelectTime.SelectedOpTimeView.Id;
 
                     TextForDate = CurrentPanelSelectTime.SelectedOpTimeView.Datetime.ToString("HH:mm\ndd MMMM yyyy\n", CultureInfo.GetCultureInfo("ru-ru"));

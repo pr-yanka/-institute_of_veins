@@ -67,10 +67,10 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <StackPanel Grid.Row="4" Grid.Column="0" Grid.RowSpan="3" Orientation="Vertical">
-                <TextBlock TextAlignment="Center" x:Name="textBlock_Copy" FontSize="14" HorizontalAlignment="Center" Margin="0,0,0,0" TextWrapping="Wrap"  
-                       VerticalAlignment="Center"><Run Text="Выб"/><Run Text="ерите"/><Run Text=" время"/></TextBlock>
-                <Button  Width="auto"  Style="{StaticResource MyConfirmBUTTON}" x:Name="buttdon_Copy"  FontSize="10" Content="выбрать время"   Margin="0,0,0,0" Command="{Binding Path=OpenPanelSelectTime}"            
+            <StackPanel Grid.Row="4" Grid.Column="0" Grid.RowSpan="3"  Orientation="Vertical">
+                <!--<TextBlock TextAlignment="Center" x:Name="textBlock_Copy" FontSize="14" HorizontalAlignment="Center" Margin="0,0,0,0" TextWrapping="Wrap"  
+                       VerticalAlignment="Center"><Run Text="Выб"/><Run Text="ерите"/><Run Text=" время"/></TextBlock>-->
+                <Button BorderBrush="{Binding Button_time_B, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Width="auto"  Style="{StaticResource MyConfirmBUTTON}" x:Name="buttdon_Copy"  FontSize="10" Content="выбрать время"   Margin="10,0,5,0" Command="{Binding Path=OpenPanelSelectTime}"            
                      VerticalAlignment="Top" />
                 <TextBlock TextWrapping="Wrap" TextAlignment="Center" Width="100"  FontSize="18"  Text="{Binding TextForDate}"></TextBlock>
                 <!--<xctk:TimePicker  HorizontalAlignment="Left"  Value="{Binding Path=MinuteHour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Format="ShortTime"    Margin="2,10,0,0"   Width="100" Height="20" />

@@ -504,7 +504,7 @@ namespace WpfApp2.ViewModels.Panels
                             //opViewElement.IsFree = false;
 
                             Patient = Data.Patients.Get(opViewElement.Operation.PatientId);
-                            opViewElement.PatientFullName = Patient.Sirname + " " + Patient.Name + " " + Patient.Patronimic;
+                            opViewElement.PatientFullName = Patient.Sirname + " " + Patient.Name.ToCharArray()[0] + ". " + Patient.Patronimic.ToCharArray()[0] + ".";
                             opViewElement.PatientNumber = Patient.Phone;
                             opViewElement.Note = opDate.Note;
                         }
@@ -689,6 +689,8 @@ namespace WpfApp2.ViewModels.Panels
                 return;
             }
 
+
+
             Date = (System.DateTime.Now.DayOfWeek == System.DayOfWeek.Saturday) ? System.DateTime.Now.AddDays(2) : System.DateTime.Now.AddDays(1);
             LoadTimeTable();
             UpdateTimeTable();
@@ -774,7 +776,7 @@ namespace WpfApp2.ViewModels.Panels
                     {
                         foreach (var OpTime in OpViewList)
                         {
-                            if (OpTimeInDb.Id == OpTime.Id)
+                            if (OpTimeInDb.Id == OpTime.Id && (SelectedOpTimeView == null || OpTime.Id != SelectedOpTimeView.Id))
                             {
                                 testToDelete = false;
                                 ToModify = Data.OperationDateTime.Get(OpTimeInDb.Id);
@@ -1032,7 +1034,7 @@ namespace WpfApp2.ViewModels.Panels
                     UpdateTimeTable();
                 });
                 Patient patient = ((ViewModelAddOperation)ParentVM).CurrentPatient;
-                SelectedOpTimeView.PatientFullName = patient.Sirname + " " + patient.Name + " " + patient.Patronimic;
+                SelectedOpTimeView.PatientFullName = patient.Sirname + " " + patient.Name.ToCharArray()[0] + ". " + patient.Patronimic.ToCharArray()[0] + ".";
                 SelectedOpTimeView.PatientNumber = patient.Phone;
                 SelectedOpTimeView.Operation = ((ViewModelAddOperation)ParentVM).Operation;
                 SelectedOpTimeView.Doctor = CurrentPanelSelectDoctor.Doctors[CurrentPanelSelectDoctor.DoctorSelectedId].doc;
