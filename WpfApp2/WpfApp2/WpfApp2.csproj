@@ -833,5 +833,26 @@
   <ItemGroup>
     <Resource Include="Images\trash_can_2_small.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Calendar_ico\chaeckVol1.png" />
+    <Resource Include="Images\Calendar_ico\chaeckVol2.png" />
+    <Resource Include="Images\Calendar_ico\del.png" />
+    <Resource Include="Images\Calendar_ico\UP - Revers.png" />
+    <Resource Include="Images\Calendar_ico\UP.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Calendar_ico\chaeckVol1.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Calendar_ico\caret-arrow-up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Calendar_ico\caret-arrow-up - Revers.png" />
+    <Resource Include="Images\Calendar_ico\check.png" />
+    <Resource Include="Images\Calendar_ico\multiply.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Calendar_ico\verified.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

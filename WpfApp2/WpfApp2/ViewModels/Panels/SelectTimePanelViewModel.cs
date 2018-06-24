@@ -778,7 +778,7 @@ namespace WpfApp2.ViewModels.Panels
                             {
                                 testToDelete = false;
                                 ToModify = Data.OperationDateTime.Get(OpTimeInDb.Id);
-                                ToModify.Datetime = OpTime.Datetime;
+                                ToModify.Datetime = new System.DateTime(Date.Year, Date.Month, Date.Day, OpTime.Datetime.Hour, OpTime.Datetime.Minute, OpTime.Datetime.Second);
                                 ToModify.Note = OpTime.Note;
                                 Data.Complete();
                             }
