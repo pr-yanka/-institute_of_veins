@@ -20,8 +20,9 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition MinHeight="190" Height="3*"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="20*"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="60"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="10"/>
             </Grid.RowDefinitions>
@@ -49,7 +50,7 @@
             <!--<TextBlock  Visibility="{Binding IsVisibleForSecretarySign}" x:Name="textBlock332" TextAlignment="Center" HorizontalAlignment="Left" Margin="300,330,0,0" TextWrapping="Wrap" Text="У вас нет прав для просмотра этого раздела." VerticalAlignment="Top" Width="auto" FontSize="18pt" Height="28" FontFamily="Segoe UI Semibold" />
             <TextBlock  Visibility="{Binding IsVisibleForSecretarySign}" x:Name="textBloвck332" TextAlignment="Center" HorizontalAlignment="Left" Margin="240,601,0,0" TextWrapping="Wrap" Text="Рекомендации" VerticalAlignment="Top" Width="auto" FontSize="12pt" Height="28" FontFamily="Segoe UI Semibold" />-->
 
-            <ListBox Grid.Row="2" Grid.ColumnSpan="2" Visibility="{Binding IsVisibleForSecretary}" x:Name="listBox1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=ComplainsList}" HorizontalAlignment="Left" Height="97" Margin="505,0,0,0" VerticalAlignment="Top" Width="510" BorderThickness="1">
+            <ListBox Grid.Row="2" Grid.ColumnSpan="2" Visibility="{Binding IsVisibleForSecretary}" x:Name="listBox1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=ComplainsList}" HorizontalAlignment="Left" Height="40" Margin="505,-2,0,0" VerticalAlignment="Top" Width="510" BorderThickness="1">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
 
@@ -58,11 +59,11 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Grid.ColumnSpan="2"  Grid.Row="1" Visibility="{Binding IsVisibleForSecretary}"  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy2" Content="Записать жалобы" Command="{Binding Path=ToSymptomsAddCommand}" Height="25" HorizontalAlignment="Left" Margin="505,0,0,0" VerticalAlignment="Top"  Width="510"  FontSize="12"/>
-            <Separator Grid.ColumnSpan="2" Grid.Row="2"  HorizontalAlignment="Left" Height="16" Margin="0,90,0,0" VerticalAlignment="Top" Width="1016" RenderTransformOrigin="0.51,0.49"/>
-            <TextBlock Grid.Column="0"  Grid.Row="2"  x:Name="textBlock1_Copy2" HorizontalAlignment="Center" Margin="0,100,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Visibility="{Binding IsVisibleForSecretary}" Width="118" FontSize="18" Text="Правая нога" TextAlignment="Center"/>
-            <Button Grid.Row="4" Grid.Column="0" Visibility="{Binding IsVisibleForSecretary}" Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy443" Command="{Binding Path=ToRightDiagCommand}" Content="Поставить диагноз" Height="25" HorizontalAlignment="Left"  Margin="3,0,0,0"  VerticalAlignment="Top" Width="497" FontSize="12"/>
-            <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center"  Visibility="{Binding IsVisibleForSecretary}"  x:Name="textBlock1_Copy3"  Margin="0,100,0,0" TextWrapping="Wrap" VerticalAlignment="Center"   FontSize="18"><Run Text="Левая "/><Run Text="нога"/></TextBlock>
+            <Button Grid.ColumnSpan="2"  Grid.Row="1" Visibility="{Binding IsVisibleForSecretary}"  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy2" Content="Записать жалобы" Command="{Binding Path=ToSymptomsAddCommand}" Height="25" HorizontalAlignment="Left" Margin="505,-5,0,0" VerticalAlignment="Top"  Width="510"  FontSize="12"/>
+            <Separator Grid.ColumnSpan="2" Grid.Row="2"  HorizontalAlignment="Left" Height="16" Margin="0,33,0,0" VerticalAlignment="Top" Width="1016" RenderTransformOrigin="0.51,0.49"/>
+            <TextBlock Grid.Column="0"  Grid.Row="2"  x:Name="textBlock1_Copy2" HorizontalAlignment="Center" Margin="0,40,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Visibility="{Binding IsVisibleForSecretary}" Width="118" FontSize="18" Text="Правая нога" TextAlignment="Center"/>
+            <Button Grid.Row="5" Grid.Column="0" Visibility="{Binding IsVisibleForSecretary}" Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy443" Command="{Binding Path=ToRightDiagCommand}" Content="Поставить диагноз" Height="25" HorizontalAlignment="Left"  Margin="3,1,0,0"  VerticalAlignment="Top" Width="497" FontSize="12"/>
+            <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center"  Visibility="{Binding IsVisibleForSecretary}"  x:Name="textBlock1_Copy3"  Margin="0,40,0,0" TextWrapping="Wrap" VerticalAlignment="Center"   FontSize="18"><Run Text="Левая "/><Run Text="нога"/></TextBlock>
 
 
             <ScrollViewer Grid.Column="1" Grid.Row="3" Visibility="{Binding IsVisibleForSecretary}"  Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5" FontSize="14">
@@ -267,7 +268,7 @@
                     </Expander>
 
                     <Separator/>
-                    <Expander FontSize="14">
+                    <!--<Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock TextDecorations="Underline" Text="CEAP" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
@@ -283,8 +284,8 @@
 
                         </StackPanel>
                     </Expander>
-                    <Separator/>
-                    <Expander FontSize="14" BorderBrush= "{Binding BAdditionalText}">
+                    <Separator/>-->
+                    <!--<Expander FontSize="14" BorderBrush= "{Binding BAdditionalText}">
                         <Expander.Header>
                             <StackPanel  Orientation="Horizontal">
                                 <TextBlock TextDecorations="Underline"    Text="XII. Примечание" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
@@ -294,7 +295,7 @@
                             <TextBox Width="470"  Height="50"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding LeftAdditionalText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
                         </StackPanel>
                     </Expander>
-                    <Separator/>
+                    <Separator/>-->
 
                     <Expander FontSize="14">
                         <Expander.Header>
@@ -527,7 +528,7 @@
 
                     <Separator/>
 
-                    <Expander FontSize="14">
+                    <!--<Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock TextDecorations="Underline" Text="CEAP" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
@@ -543,10 +544,10 @@
 
                         </StackPanel>
                     </Expander>
-                    <Separator/>
+                    <Separator/>-->
 
 
-                    <Expander FontSize="14" BorderBrush= "{Binding BAdditionalTextL}">
+                    <!--<Expander FontSize="14" BorderBrush= "{Binding BAdditionalTextL}">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock TextDecorations="Underline" Text="XII. Примечание" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
@@ -556,7 +557,7 @@
                             <TextBox  Height="50" Width="470"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding RightAdditionalText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
                         </StackPanel>
                     </Expander>
-                    <Separator/>
+                    <Separator/>-->
                     <Expander FontSize="14">
                         <Expander.Header>
                             <StackPanel Orientation="Horizontal">
@@ -580,23 +581,74 @@
                 </StackPanel>
             </ScrollViewer>
 
+            <StackPanel Grid.Row="4" Margin="3,5" Grid.Column="0" Width="495" HorizontalAlignment="Left">
+                <Expander FontSize="14">
+                    <Expander.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock TextDecorations="Underline" Text="CEAP" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                            <Button BorderBrush= "{Binding BCEARL}"  x:Name="butаtfohnвPfDSV1" Command="{Binding ToRightCEARCommand}" Content="{Binding Path=RightCEAR.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
+                        </StackPanel>
+                    </Expander.Header>
+                    <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
 
+                        <TextBlock Visibility="{Binding IsVisibleCEAPRight[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CEAPRightstr[0]}"></TextBlock>
+                        <TextBlock Visibility="{Binding IsVisibleCEAPRight[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CEAPRightstr[1]}"></TextBlock>
+                        <TextBlock Visibility="{Binding IsVisibleCEAPRight[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CEAPRightstr[2]}"></TextBlock>
+                        <TextBlock Visibility="{Binding IsVisibleCEAPRight[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CEAPRightstr[3]}"></TextBlock>
 
-            <Separator Grid.Row="6" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="6" Margin="0,0,0,0" VerticalAlignment="Top" Width="1024" RenderTransformOrigin="0.51,0.49" Background="Black"/>
+                    </StackPanel>
+                </Expander>
+                <Separator/>
+                <Expander FontSize="14" BorderBrush= "{Binding BAdditionalTextL}">
+                    <Expander.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock TextDecorations="Underline" Text="XII. Примечание" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                        </StackPanel>
+                    </Expander.Header>
+                    <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
+                        <TextBox  Height="50" Width="470"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding RightAdditionalText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    </StackPanel>
+                </Expander>
+                <!--<Separator/>-->
+            </StackPanel>
+            <StackPanel Grid.Row="4" Margin="0,5" Grid.Column="1" Width="498" HorizontalAlignment="Left">
+                <Expander FontSize="14">
+                    <Expander.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock TextDecorations="Underline" Text="CEAP" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                            <Button x:Name="butаtfohnвPDSV1"  BorderBrush="{Binding BCEAR}" Command="{Binding ToLeftCEARCommand}" Content="{Binding Path=LeftCEAR.ButtonText}" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource MyLittleButtonObsled}"/>
+                        </StackPanel>
+                    </Expander.Header>
+                    <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
+
+                        <TextBlock Visibility="{Binding IsVisibleCEAPleft[0],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CEAPLeftstr[0]}"></TextBlock>
+                        <TextBlock Visibility="{Binding IsVisibleCEAPleft[1],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CEAPLeftstr[1]}"></TextBlock>
+                        <TextBlock Visibility="{Binding IsVisibleCEAPleft[2],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CEAPLeftstr[2]}"></TextBlock>
+                        <TextBlock Visibility="{Binding IsVisibleCEAPleft[3],Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding CEAPLeftstr[3]}"></TextBlock>
+
+                    </StackPanel>
+                </Expander>
+                <Separator/>
+                <Expander FontSize="14" BorderBrush= "{Binding BAdditionalText}">
+                    <Expander.Header>
+                        <StackPanel  Orientation="Horizontal">
+                            <TextBlock TextDecorations="Underline"    Text="XII. Примечание" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
+                        </StackPanel>
+                    </Expander.Header>
+                    <StackPanel HorizontalAlignment="Center"  Orientation="Vertical">
+                        <TextBox Width="470"  Height="50"  HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding LeftAdditionalText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    </StackPanel>
+                </Expander>
+                <!--<Separator/>-->
+
+            </StackPanel>
+            <Separator Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="6" Margin="0,-5,0,0" VerticalAlignment="Top" Width="1024" RenderTransformOrigin="0.51,0.49" Background="Black"/>
            
-            <ListBox Grid.Row="7" Grid.ColumnSpan="2" x:Name="listBox1_Copy" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=RecomendationsList}" HorizontalAlignment="Left"  Margin="3,0,0,0"  Width="688" FontSize="14" BorderThickness="1">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
 
-                        <TextBlock HorizontalAlignment="Left" Width="487" TextWrapping="Wrap" Padding="5,0,5,0" Text="{Binding  Data.Str}" />
 
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+            <!--<TextBlock  Grid.Row="1" Grid.RowSpan="2" x:Name="textBlock1_Copy5" HorizontalAlignment="Left" Margin="13,30,0,0" TextWrapping="Wrap" Text="NB!" VerticalAlignment="Top" Width="43" FontSize="18" RenderTransformOrigin="0.504,0.985"/>-->
 
-            <TextBlock  Grid.Row="1" Grid.RowSpan="2" x:Name="textBlock1_Copy5" HorizontalAlignment="Left" Margin="13,30,0,0" TextWrapping="Wrap" Text="NB!" VerticalAlignment="Top" Width="43" FontSize="18" RenderTransformOrigin="0.504,0.985"/>
-
-            <TextBox Grid.Row="2" x:Name="textBox"  HorizontalAlignment="Left" Height="78" Margin="56,0,0,0" TextWrapping="Wrap" Text="{Binding Path=TextTip,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="431" VerticalScrollBarVisibility="Auto">
+            <!--<TextBox Grid.Row="2" x:Name="textBox"  HorizontalAlignment="Left" Height="78" Margin="56,0,0,0" TextWrapping="Wrap" Text="{Binding Path=TextTip,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="431" VerticalScrollBarVisibility="Auto">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="PreviewMouseDown">
                         <i:InvokeCommandAction  Command="{Binding Path=ClickOnTextTip}"/>
@@ -605,7 +657,7 @@
                         <i:InvokeCommandAction  Command="{Binding Path=LostOnTextTip}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-            </TextBox>
+            </TextBox>-->
             <TextBlock Grid.Row="1" x:Name="textBlock1_Copy6" HorizontalAlignment="Left" Margin="13,0,0,0" TextWrapping="Wrap" Text="Вес:" VerticalAlignment="Top" Width="43" FontSize="18" RenderTransformOrigin="0.674,0.459"/>
             <TextBox  Grid.Row="1"  x:Name="textBox_Copy" HorizontalAlignment="Left" Height="23" Margin="56,0,0,0" TextWrapping="Wrap" Text="{Binding Path=Weight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="42" RenderTransformOrigin="0.586,0.435">
                 <i:Interaction.Triggers>
@@ -642,7 +694,7 @@
                 
                 </TextBlock>
 
-            <ListBox Grid.Row="5" Grid.Column="1" Visibility="{Binding IsVisibleForSecretary}" x:Name="listBox1_Copy1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=LeftDiagnosisList}"  Margin="-15,0,0,0"   Width="497" BorderThickness="1">
+            <ListBox Grid.Row="6" Grid.Column="1" Visibility="{Binding IsVisibleForSecretary}" x:Name="listBox1_Copy1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=LeftDiagnosisList}"  Margin="-15,0,0,0"   Width="497" BorderThickness="1">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
 
@@ -651,7 +703,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <ListBox Grid.Row="5"  Visibility="{Binding IsVisibleForSecretary}" x:Name="listBox1_Copy2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=RightDiagnosisList}"     Margin="-10,0,0,0"   Width="497" BorderThickness="1">
+            <ListBox Grid.Row="6"  Visibility="{Binding IsVisibleForSecretary}" x:Name="listBox1_Copy2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=RightDiagnosisList}"     Margin="-10,0,0,0"   Width="497" BorderThickness="1">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
 
@@ -661,21 +713,29 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <StackPanel  Grid.Row="6" Grid.ColumnSpan="2" HorizontalAlignment="Left">
-                <TextBlock  Visibility="{Binding IsVisibleTextTTT}" Text="{Binding TextOfPreOperation}"  FontWeight="Bold" Width="auto" Margin="0,0,0,0" FontSize="18"></TextBlock>
-                <TextBlock  x:Name="textBlock1_Copy4"  Margin="0,0,0,0" TextWrapping="Wrap"  FontSize="18" Text="Рекомендации" TextAlignment="Center"/>
-                <Button   Visibility="{Binding IsVisibleForSecretary}" Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy4" Content="Добавить рекомендации" Height="23" Command="{Binding ToAddRecomendationsCommand}"    Width="688" Margin="3,0,0,0" FontSize="12"/>
+            <StackPanel  Grid.Row="7" Grid.ColumnSpan="2" HorizontalAlignment="Left">
+                <TextBlock   Visibility="{Binding IsVisibleTextTTT}" Text="{Binding TextOfPreOperation}"  FontWeight="Bold" Width="auto" Margin="0,5,0,0" TextAlignment="Center" FontSize="18"></TextBlock>
+                <!--<TextBlock  x:Name="textBlock1_Copy4"  Margin="0,0,0,0" TextWrapping="Wrap"  FontSize="18" Text="Рекомендации" TextAlignment="Center"/>-->
+                <Button   Visibility="{Binding IsVisibleForSecretary}" Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy4" Content="Добавить рекомендации" Height="23" Command="{Binding ToAddRecomendationsCommand}"    Width="688" Margin="3,8,0,0" FontSize="12"/>
             </StackPanel>
 
+            <ListBox Grid.Row="8" Grid.ColumnSpan="2" x:Name="listBox1_Copy" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=RecomendationsList}" HorizontalAlignment="Left"  Margin="3,0,0,0"  Width="688" FontSize="14" BorderThickness="1">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
 
-            <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Vertical" Margin="195,-60,0,0">
-                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy3" Margin="0,5,0,5" Height="30" Content="Вернуться к пациенту" Command="{Binding ToCurrentPatientCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="12"/>
-                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy10" Margin="0,0,0,5" Height="30" Content="Заключение" Command="{Binding ToPhysicalOverviewCommand}" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="300" FontSize="12"/>
-                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="butаton_Copy10" Margin="0,0,0,5" Height="30" Content="Осмотр хирурга" Command="{Binding ToPhysicalChirurgOverviewCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="12" />
+                        <TextBlock HorizontalAlignment="Left" Width="487" TextWrapping="Wrap" Padding="5,0,5,0" Text="{Binding  Data.Str}" />
 
-                <Button Visibility="{Binding IsVisibleForSecretary}" Style="{StaticResource MyConfirmBUTTON}"   x:Name="button_Copy9" Margin="0,0,0,5" Height="30" Content="{Binding TextOfEndBtn}"  Command="{Binding OpenDialogCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="12"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <StackPanel Grid.Row="8" Grid.Column="1" Orientation="Vertical" Margin="195,-40,0,0">
+                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy3"  Margin= "0,0,0,1" Height="30" Content="Вернуться к пациенту" Command="{Binding ToCurrentPatientCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="12"/>
+                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy10"  Margin="0,0,0,1" Height="30" Content="Заключение" Command="{Binding ToPhysicalOverviewCommand}" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="300" FontSize="12"/>
+                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="butаton_Copy10" Margin="0,0,0,1" Height="30" Content="Осмотр хирурга" Command="{Binding ToPhysicalChirurgOverviewCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="12" />
+
+                <Button Visibility="{Binding IsVisibleForSecretary}" Style="{StaticResource MyConfirmBUTTON}"   x:Name="button_Copy9" Margin="0,0,0,0" Height="30" Content="{Binding TextOfEndBtn}"  Command="{Binding OpenDialogCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="12"/>
             </StackPanel>
-            <Button  Grid.Row="4" Grid.Column="1" Visibility="{Binding IsVisibleForSecretary}" Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy" Command="{Binding Path=ToLeftDiagCommand}" Content="Поставить диагноз"   Height="25" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" Width="497" FontSize="12" />
+            <Button  Grid.Row="5" Grid.Column="1" Visibility="{Binding IsVisibleForSecretary}" Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy" Command="{Binding Path=ToLeftDiagCommand}" Content="Поставить диагноз"   Height="25" HorizontalAlignment="Left" Margin="0,1,0,0" VerticalAlignment="Top" Width="497" FontSize="12" />
 
 
 

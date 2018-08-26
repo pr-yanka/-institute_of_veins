@@ -2116,7 +2116,7 @@ namespace WpfApp2.ViewModels
                         if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
                         {
                             ++x;
-                            p4.Append("БПВ на бедре интерфасциально располагается ").Font("Times new roman").FontSize(11.0);
+                            p4.Append("\nБПВ на бедре интерфасциально располагается ").Font("Times new roman").FontSize(11.0);
                             if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
                             {
 
@@ -2176,7 +2176,7 @@ namespace WpfApp2.ViewModels
                         if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
                         {
                             ++x;
-                            p4.Append("ПДСВ на бедре интерфасциально располагается ").Font("Times new roman").FontSize(11.0);
+                            p4.Append("\nПДСВ на бедре интерфасциально располагается ").Font("Times new roman").FontSize(11.0);
                             //  p4 += "ПДСВ на бедре интерфасциально располагается ";
                             if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
                             {
@@ -2237,7 +2237,7 @@ namespace WpfApp2.ViewModels
                         if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
                         {
                             ++x;
-                            p4.Append("ЗДСВ на бедре интерфасциально располагается ").Font("Times new roman").FontSize(11.0);
+                            p4.Append("\nЗДСВ на бедре интерфасциально располагается ").Font("Times new roman").FontSize(11.0);
 
                             if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
                             {
@@ -3345,7 +3345,7 @@ namespace WpfApp2.ViewModels
                 if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
                 {
                     ++x;
-                    p4 += "БПВ на бедре интерфасциально располагается ";
+                    p4 += "\nБПВ на бедре интерфасциально располагается ";
                     if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
                     {
 
@@ -3465,7 +3465,7 @@ namespace WpfApp2.ViewModels
                 if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
                 {
                     ++x;
-                    p4 += "ЗДСВ на бедре интерфасциально располагается ";
+                    p4 += "\nЗДСВ на бедре интерфасциально располагается ";
                     if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
                     {
 
