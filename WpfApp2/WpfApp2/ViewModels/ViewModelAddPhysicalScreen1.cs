@@ -2110,67 +2110,7 @@ namespace WpfApp2.ViewModels
                 if (!LegPart.IsEmpty)
                 {
 
-                    if (LegPart is BPVHipViewModel)
-                    {
-                        var section = ((BPVHipViewModel)LegPart).AdditionalStructure;
-                        if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
-                        {
-                            ++x;
-                            p4.Append("\nБПВ на бедре интерфасциально располагается ").Font("Times new roman").FontSize(11.0);
-                            if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
-                            {
-
-                                p4.Append(section.SelectedValue.Text1).Font("Times new roman").FontSize(11.0);
-
-
-                            }
-
-                            if (section.SelectedValue.HasSize || section.HasDoubleSize)
-                            {
-                                if (section.HasDoubleSize)
-                                {
-                                    p4.Append(section.CurrentEntry.Size + "*" + section.CurrentEntry.Size2 + " " + section.SelectedValue.Metrics).Font("Times new roman").FontSize(11.0);
-
-                                }
-                                else
-                                {
-                                    if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
-                                        p4.Append(" " + section.CurrentEntry.Size + " " + section.SelectedValue.Metrics).Font("Times new roman").FontSize(11.0);
-                                    else
-                                    {
-                                        p4.Append(" " + section.CurrentEntry.Size + "").Font("Times new roman").FontSize(11.0);
-
-                                    }
-
-                                }
-                            }
-                            else
-                            {
-                                p4.Append("").Font("Times new roman").FontSize(11.0);
-                            }
-
-                            if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
-                                p4.Append(section.SelectedValue.Text2).Font("Times new roman").FontSize(11.0); ;
-                            //if (!string.IsNullOrWhiteSpace(section.CurrentEntry.Comment))
-                            //{
-                            //    if (LegPart.LegSections[x].SelectedValue != null && !LegPart.LegSections[x].SelectedValue.ToNextPart)
-                            //        p4 += "\nКомментарий : " + section.CurrentEntry.Comment + "\n";
-                            //    else
-                            //    {
-                            //        p4 += "\nКомментарий : " + section.CurrentEntry.Comment;
-                            //    }
-
-                            //}
-
-
-                            //
-
-                            //
-
-                        }
-
-                    }
-                    else if (LegPart is PDSVViewModel)
+                    if (LegPart is PDSVViewModel)
                     {
                         var section = ((PDSVViewModel)LegPart).AdditionalStructure;
                         if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
@@ -2482,6 +2422,52 @@ namespace WpfApp2.ViewModels
 
                         }
                     }
+
+                    if (LegPart is BPVHipViewModel)
+                    {
+                        var section = ((BPVHipViewModel)LegPart).AdditionalStructure;
+                        if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
+                        {
+                            ++x;
+                            p4.Append("\nБПВ на бедре интерфасциально располагается ").Font("Times new roman").FontSize(11.0);
+                            if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
+                            {
+
+                                p4.Append(section.SelectedValue.Text1).Font("Times new roman").FontSize(11.0);
+
+
+                            }
+
+                            if (section.SelectedValue.HasSize || section.HasDoubleSize)
+                            {
+                                if (section.HasDoubleSize)
+                                {
+                                    p4.Append(section.CurrentEntry.Size + "*" + section.CurrentEntry.Size2 + " " + section.SelectedValue.Metrics).Font("Times new roman").FontSize(11.0);
+
+                                }
+                                else
+                                {
+                                    if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
+                                        p4.Append(" " + section.CurrentEntry.Size + " " + section.SelectedValue.Metrics).Font("Times new roman").FontSize(11.0);
+                                    else
+                                    {
+                                        p4.Append(" " + section.CurrentEntry.Size + "").Font("Times new roman").FontSize(11.0);
+
+                                    }
+
+                                }
+                            }
+                            else
+                            {
+                                p4.Append("").Font("Times new roman").FontSize(11.0);
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
+                                p4.Append(section.SelectedValue.Text2).Font("Times new roman").FontSize(11.0);
+                        }
+                    }
+                    //else
+
 
                     string buf = p4.Text[p4.Text.Length - 1].ToString();
                     if (buf != ".")
@@ -3805,11 +3791,7 @@ namespace WpfApp2.ViewModels
         int togleforCreateStatement = 0;
         public ViewModelAddPhysical(NavigationController controller) : base(controller)
         {
-
             SetAllBordersDefault();
-
-
-
             CurrentPanelViewModel = new DoctorSelectPanelViewModel(this);
             using (var context = new MySqlContext())
             {
@@ -3823,20 +3805,14 @@ namespace WpfApp2.ViewModels
             }
             OpenCommand = new DelegateCommand(() =>
             {
-
                 MessageBus.Default.Call("SetCurrentPatientIDRealyThisTime", null, CurrentPatient.Id);
                 MessageBus.Default.Call("GetHirurgOverviewForHirurgOverview", null, hirurgOverviewId);
                 Controller.NavigateTo<ViewModelHirurgOverview>();
                 //CurrentPanelViewModel.ClearPanel();
                 //CurrentPanelViewModel.PanelOpened = true;
             });
-
             SaveCommand = new DelegateCommand(() =>
             {
-
-
-
-
             });
             RevertCommand = new DelegateCommand(() =>
             {
@@ -3846,7 +3822,6 @@ namespace WpfApp2.ViewModels
             TextTip = "";
             GVLeftstr = new List<string>();
             GVRightstr = new List<string>();
-
 
             PPVLeftstr = new List<string>();
             PPVRightstr = new List<string>();
@@ -5207,7 +5182,7 @@ namespace WpfApp2.ViewModels
                     obsid = Exam.id_current_examination.Value;
                 }
             }
-           
+
             Controller.NavigateTo<ViewModelAddPhysical>();
             isEdited = false;
         }
@@ -7278,6 +7253,7 @@ namespace WpfApp2.ViewModels
                         if (FullEntry.EntryId0 != null)
                         {
                             RightBPVHip.AdditionalStructure.CurrentEntry = BPVHipEntryRep.Get(FullEntry.EntryId0.Value);
+//var xs = BPVHipStructRep.Get(RightBPVHip.AdditionalStructure.CurrentEntry.StructureID);
                             RightBPVHip.AdditionalStructure.SelectedValue = BPVHipStructRep.Get(RightBPVHip.AdditionalStructure.CurrentEntry.StructureID);
 
                         }

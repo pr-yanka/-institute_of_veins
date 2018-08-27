@@ -68,7 +68,23 @@ namespace WpfApp2.Db.Models
         public int? Size
         {
             get { return _size; }
-            set { _size = value; OnPropertyChanged(); }
+            set
+            {
+                _size = value;
+
+                if (_size != null)
+                {
+                    using (var context = new MySqlContext())
+                    {
+                        MetricsRepository metricsRep = new MetricsRepository(context);
+                        Metrics = metricsRep.Get(Size.Value).Str;
+                    }
+
+                }
+
+
+                OnPropertyChanged();
+            }
         }
 
         [Required]
@@ -110,6 +126,7 @@ namespace WpfApp2.Db.Models
 
         public LegPartDbStructure()
         {
+
             //IsButtonsVisible = Visibility.Visible;
 
             //NameContext = Text1 + " " + Metrics + " " + Text2;
