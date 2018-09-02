@@ -1,8 +1,5 @@
 ﻿using Microsoft.Practices.Prism.Commands;
-using System;
 using System.Diagnostics;
-using System.Drawing;
-using System.Windows.Media.Imaging;
 using System.IO;
 using WpfApp2.Db.Models;
 using WpfApp2.Messaging;
@@ -12,14 +9,13 @@ using System.Windows;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
-using WpfApp2.DialogService;
 using WpfApp2.ViewModels.Panels;
 using System.Windows.Input;
 
 namespace WpfApp2.ViewModels
-{
+{       
     public class ViewModelHirurgOverview : ViewModelBase, INotifyPropertyChanged
-    {
+    {   
 
         #region Inotify realisation
         public event PropertyChangedEventHandler PropertyChanged;
@@ -35,7 +31,7 @@ namespace WpfApp2.ViewModels
 
         //      public AnalizeType AnalizeType { get; set; }
 
-
+        
         private Visibility _isAnalizeLoadedVisibility;
         public Visibility IsAnalizeLoadedVisibility
         {
@@ -89,7 +85,9 @@ namespace WpfApp2.ViewModels
         }
 
         private Visibility _isVisibleForSecretary;
+
         public Visibility IsVisibleForSecretary { get { return _isVisibleForSecretary; } set { _isVisibleForSecretary = value; OnPropertyChanged(); } }
+
         private Visibility _isDocAddedSave;
 
         public Visibility IsDocAddedSave
@@ -101,6 +99,7 @@ namespace WpfApp2.ViewModels
                 OnPropertyChanged();
             }
         }
+
         private Visibility _isDocAdded;
 
         public Visibility IsDocAdded
@@ -112,6 +111,7 @@ namespace WpfApp2.ViewModels
                 OnPropertyChanged();
             }
         }
+
         public string _fileNameOnly;
         private string _fileName;
 

@@ -2232,66 +2232,7 @@ namespace WpfApp2.ViewModels
                         }
 
                     }
-                    else if (LegPart is SPSViewModel)
-                    {
-                        var section = ((SPSViewModel)LegPart).AdditionalStructure;
-                        if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
-                        {
-                            ++x;
-                            p4.Append("расположение : ").Font("Times new roman").FontSize(11.0);
-                            if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
-                            {
 
-                                p4.Append(section.SelectedValue.Text1).Font("Times new roman").FontSize(11.0);
-
-
-                            }
-
-                            if (section.SelectedValue.HasSize || section.HasDoubleSize)
-                            {
-                                if (section.HasDoubleSize)
-                                {
-                                    p4.Append(section.CurrentEntry.Size + "*" + section.CurrentEntry.Size2 + " " + section.SelectedValue.Metrics).Font("Times new roman").FontSize(11.0);
-
-                                }
-                                else
-                                {
-                                    if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
-                                        p4.Append(" " + section.CurrentEntry.Size + " " + section.SelectedValue.Metrics).Font("Times new roman").FontSize(11.0);
-                                    else
-                                    {
-                                        p4.Append(" " + section.CurrentEntry.Size + "").Font("Times new roman").FontSize(11.0);
-
-                                    }
-
-                                }
-                            }
-                            else
-                            {
-                                p4.Append("").Font("Times new roman").FontSize(11.0);
-                            }
-
-                            if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
-                                p4.Append(section.SelectedValue.Text2).Font("Times new roman").FontSize(11.0);
-                            //if (!string.IsNullOrWhiteSpace(section.CurrentEntry.Comment))
-                            //{
-                            //    if (LegPart.LegSections[x].SelectedValue != null && !LegPart.LegSections[x].SelectedValue.ToNextPart)
-                            //        p4 += "\nКомментарий : " + section.CurrentEntry.Comment + "\n";
-                            //    else
-                            //    {
-                            //        p4 += "\nКомментарий : " + section.CurrentEntry.Comment;
-                            //    }
-
-                            //}
-
-
-                            //
-
-                            //
-
-                        }
-
-                    }
                     //if (LegPart.SelectedWayType != null && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name) && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name))
                     //{
                     //    x++;
@@ -2303,28 +2244,7 @@ namespace WpfApp2.ViewModels
                     //        p4.Append("вид хода: " + LegPart.SelectedWayType.Name).Font("Times new roman").FontSize(11.0);
                     //    }
                     //}
-                    if (LegPart is TEMPVViewModel)
-                    {
-                        if (x == 0)
-                        {
-                            if (!isNormal)
-                                p4.Append("протяженность: " + ((TEMPVViewModel)LegPart).FF_length + " см").Font("Times new roman").FontSize(11.0);
-                            else
-                            {
-                                p4.Append("протяженность: " + ((TEMPVViewModel)LegPart).FF_length + " см").Font("Times new roman").FontSize(11.0);
-                            }
-                        }
-                        else
-                        {
-                            if (!isNormal)
-                                p4.Append(", протяженность: " + ((TEMPVViewModel)LegPart).FF_length + " см").Font("Times new roman").FontSize(11.0);
-                            else
-                            {
-                                p4.Append(", протяженность: " + ((TEMPVViewModel)LegPart).FF_length + " см").Font("Times new roman").FontSize(11.0);
-                            }
-                        }
-                        x++;
-                    }
+
 
 
                     foreach (var section in LegPart.LegSections)
@@ -2466,6 +2386,88 @@ namespace WpfApp2.ViewModels
                                 p4.Append(section.SelectedValue.Text2).Font("Times new roman").FontSize(11.0);
                         }
                     }
+                    else if (LegPart is SPSViewModel)
+                    {
+                        var section = ((SPSViewModel)LegPart).AdditionalStructure;
+                        if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
+                        {
+                            ++x;
+                            p4.Append(", расположено ").Font("Times new roman").FontSize(11.0);
+                            if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
+                            {
+
+                                p4.Append(section.SelectedValue.Text1).Font("Times new roman").FontSize(11.0);
+
+
+                            }
+
+                            if (section.SelectedValue.HasSize || section.HasDoubleSize)
+                            {
+                                if (section.HasDoubleSize)
+                                {
+                                    p4.Append(section.CurrentEntry.Size + "*" + section.CurrentEntry.Size2 + " " + section.SelectedValue.Metrics).Font("Times new roman").FontSize(11.0);
+
+                                }
+                                else
+                                {
+                                    if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
+                                        p4.Append(" " + section.CurrentEntry.Size + " " + section.SelectedValue.Metrics).Font("Times new roman").FontSize(11.0);
+                                    else
+                                    {
+                                        p4.Append(" " + section.CurrentEntry.Size + "").Font("Times new roman").FontSize(11.0);
+
+                                    }
+
+                                }
+                            }
+                            else
+                            {
+                                p4.Append("").Font("Times new roman").FontSize(11.0);
+                            }
+
+                            if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
+                                p4.Append(section.SelectedValue.Text2).Font("Times new roman").FontSize(11.0);
+                            //if (!string.IsNullOrWhiteSpace(section.CurrentEntry.Comment))
+                            //{
+                            //    if (LegPart.LegSections[x].SelectedValue != null && !LegPart.LegSections[x].SelectedValue.ToNextPart)
+                            //        p4 += "\nКомментарий : " + section.CurrentEntry.Comment + "\n";
+                            //    else
+                            //    {
+                            //        p4 += "\nКомментарий : " + section.CurrentEntry.Comment;
+                            //    }
+
+                            //}
+
+
+                            //
+
+                            //
+
+                        }
+
+                    }
+                    if (LegPart is TEMPVViewModel)
+                    {
+                        if (x == 0)
+                        {
+                            if (!isNormal)
+                                p4.Append(", протяженностью " + ((TEMPVViewModel)LegPart).FF_length + " см").Font("Times new roman").FontSize(11.0);
+                            else
+                            {
+                                p4.Append(", протяженностью " + ((TEMPVViewModel)LegPart).FF_length + " см").Font("Times new roman").FontSize(11.0);
+                            }
+                        }
+                        else
+                        {
+                            if (!isNormal)
+                                p4.Append(", протяженностью " + ((TEMPVViewModel)LegPart).FF_length + " см").Font("Times new roman").FontSize(11.0);
+                            else
+                            {
+                                p4.Append(", протяженностью " + ((TEMPVViewModel)LegPart).FF_length + " см").Font("Times new roman").FontSize(11.0);
+                            }
+                        }
+                        x++;
+                    }
                     //else
 
 
@@ -2605,7 +2607,7 @@ namespace WpfApp2.ViewModels
 
         }
         // int docsCreated = 0;
-        private void CreateStatement(string docName, string _fileNameOnly)
+        private void CreateStatement(string docName, string _fileNameOnly, string doctorInits)
         {
             try
             {
@@ -2734,7 +2736,7 @@ namespace WpfApp2.ViewModels
                     {
                         if (letter.SelectedValue != null)
                         {
-                            p4.Append("" + letter.SelectedValue.Leter + letter.SelectedValue.Text1 + " ").Font("Times new roman").FontSize(11.0);
+                            p4.Append("" + letter.SelectedValue.Leter + letter.SelectedValue.Text1 + "").Font("Times new roman").FontSize(11.0);
 
                         }
                     }
@@ -2770,7 +2772,7 @@ namespace WpfApp2.ViewModels
                     {
                         if (letter.SelectedValue != null)
                         {
-                            p4.Append("" + letter.SelectedValue.Leter + letter.SelectedValue.Text1 + " ").Font("Times new roman").FontSize(11.0);
+                            p4.Append("" + letter.SelectedValue.Leter + letter.SelectedValue.Text1 + "").Font("Times new roman").FontSize(11.0);
 
                         }
                     }
@@ -2796,6 +2798,11 @@ namespace WpfApp2.ViewModels
                         //    if (section.SelectedValue != null)
                         //        p4.Append(" " + section.SelectedValue.Text1 + "").Font("Times new roman").FontSize(11.0);
                         //}
+                        if (!string.IsNullOrWhiteSpace(doctorInits))
+                        {
+                            p5.Alignment = Alignment.right;
+                            p5.Append("Врач: " + doctorInits).Font("Times new roman").FontSize(11.0);
+                        }
                     }
                     // Save this document.
                     document.Save();
@@ -3321,7 +3328,7 @@ namespace WpfApp2.ViewModels
             if (LegPart.SelectedWayType != null && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name) && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name))
                 p4 += "Вид хода: " + LegPart.SelectedWayType.Name + "\n";
             if (LegPart is TEMPVViewModel)
-                p4 += "Протяженность: " + ((TEMPVViewModel)LegPart).FF_length + " см\n";
+                p4 += "Протяженностью " + ((TEMPVViewModel)LegPart).FF_length + " см\n";
 
 
             int x = 0;
@@ -3511,7 +3518,7 @@ namespace WpfApp2.ViewModels
                 if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
                 {
                     ++x;
-                    p4 += "расположение : ";
+                    p4 += "расположено";
                     if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
                     {
 
@@ -5232,7 +5239,7 @@ namespace WpfApp2.ViewModels
                     try
                     {
 
-                        CreateStatement(docName, _fileNameOnly);
+                        CreateStatement(docName, _fileNameOnly, p1.ToString());
 
 
                         togleforCreateStatement += 1;
@@ -5447,43 +5454,43 @@ namespace WpfApp2.ViewModels
                             if (LeftCEAR.LegSections[0].SelectedValue != null)
                             {
                                 bufLetter = LeftCEAR.LegSections[0].SelectedValue;
-                                lettersLeft += bufLetter.Leter + bufLetter.Text1 + " ";
+                                lettersLeft += bufLetter.Leter + bufLetter.Text1 + "";
                             }
                             if (LeftCEAR.LegSections[1].SelectedValue != null)
                             {
                                 bufLetter = LeftCEAR.LegSections[1].SelectedValue;
-                                lettersLeft += bufLetter.Leter + bufLetter.Text1 + " ";
+                                lettersLeft += bufLetter.Leter + bufLetter.Text1 + "";
                             }
                             if (LeftCEAR.LegSections[2].SelectedValue != null)
                             {
                                 bufLetter = LeftCEAR.LegSections[2].SelectedValue;
-                                lettersLeft += bufLetter.Leter + bufLetter.Text1 + " ";
+                                lettersLeft += bufLetter.Leter + bufLetter.Text1 + "";
                             }
                             if (LeftCEAR.LegSections[3].SelectedValue != null)
                             {
                                 bufLetter = LeftCEAR.LegSections[3].SelectedValue;
-                                lettersLeft += bufLetter.Leter + bufLetter.Text1 + " ";
+                                lettersLeft += bufLetter.Leter + bufLetter.Text1 + "";
                             }
 
                             if (RightCEAR.LegSections[0].SelectedValue != null)
                             {
                                 bufLetter = RightCEAR.LegSections[0].SelectedValue;
-                                lettersRight += bufLetter.Leter + bufLetter.Text1 + " ";
+                                lettersRight += bufLetter.Leter + bufLetter.Text1 + "";
                             }
                             if (RightCEAR.LegSections[1].SelectedValue != null)
                             {
                                 bufLetter = RightCEAR.LegSections[1].SelectedValue;
-                                lettersRight += bufLetter.Leter + bufLetter.Text1 + " ";
+                                lettersRight += bufLetter.Leter + bufLetter.Text1 + "";
                             }
                             if (RightCEAR.LegSections[2].SelectedValue != null)
                             {
                                 bufLetter = RightCEAR.LegSections[2].SelectedValue;
-                                lettersRight += bufLetter.Leter + bufLetter.Text1 + " ";
+                                lettersRight += bufLetter.Leter + bufLetter.Text1 + "";
                             }
                             if (RightCEAR.LegSections[3].SelectedValue != null)
                             {
                                 bufLetter = RightCEAR.LegSections[3].SelectedValue;
-                                lettersRight += bufLetter.Leter + bufLetter.Text1 + " ";
+                                lettersRight += bufLetter.Leter + bufLetter.Text1 + "";
                             }
 
                         }
@@ -7253,7 +7260,7 @@ namespace WpfApp2.ViewModels
                         if (FullEntry.EntryId0 != null)
                         {
                             RightBPVHip.AdditionalStructure.CurrentEntry = BPVHipEntryRep.Get(FullEntry.EntryId0.Value);
-//var xs = BPVHipStructRep.Get(RightBPVHip.AdditionalStructure.CurrentEntry.StructureID);
+                            //var xs = BPVHipStructRep.Get(RightBPVHip.AdditionalStructure.CurrentEntry.StructureID);
                             RightBPVHip.AdditionalStructure.SelectedValue = BPVHipStructRep.Get(RightBPVHip.AdditionalStructure.CurrentEntry.StructureID);
 
                         }

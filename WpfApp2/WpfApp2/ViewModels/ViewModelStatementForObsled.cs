@@ -58,7 +58,9 @@ namespace WpfApp2.ViewModels
 
         public DelegateCommand ToCurrentPatientCommand { get; protected set; }
 
-
+        public SclerozPanelViewModel CurrentSelectDoctorPanelViewModel { get; protected set; }
+        public ICommand OpenSelectDoctorCommand { protected set; get; }
+        public DelegateCommand RevertSelectDoctorCommand { set; get; }
 
         public SclerozPanelViewModel CurrentSavePanelViewModel { get; protected set; }
         public ICommand OpenAddSaveCommand { protected set; get; }
@@ -178,10 +180,18 @@ namespace WpfApp2.ViewModels
                 using (var context = new MySqlContext())
                 {
                     StatementObsRepository HVRep = new StatementObsRepository(context);
-
+                    DoctorRepository DoctorRep = new DoctorRepository(context);
                     //  DoctorRepository DoctorRep = new DoctorRepository(context);
                     PatientsRepository PtRep = new PatientsRepository(context);
-
+                    Doctors = new ObservableCollection<Docs>();
+                    //bool tester = true;
+                    foreach (var doc in DoctorRep.GetAll)
+                    {
+                        if (doc.isEnabled.Value)
+                        {
+                            Doctors.Add(new Docs(doc));
+                        }
+                    }
                     // CurrentPatient = PtRep.Get((int)data);CurrentDocument
                     //Doctors = new ObservableCollection<Docs>();
                     ////bool tester = true;
@@ -266,7 +276,19 @@ namespace WpfApp2.ViewModels
 
         //    AnalizeType = Data.AnalizeType.Get(Analize.analyzeType);
         //}
+        public ObservableCollection<Docs> _doctors;
+        public ObservableCollection<Docs> Doctors { get { return _doctors; } set { _doctors = value; OnPropertyChanged(); } }
+        private int _doctorSelectedId;
 
+        public int DoctorSelectedId
+        {
+            get { return _doctorSelectedId; }
+            set
+            {
+                _doctorSelectedId = value;
+                OnPropertyChanged();
+            }
+        }
         public ViewModelStatementForObsled(NavigationController controller) : base(controller)
         {
             IsAnalizeLoadedVisibility = Visibility.Hidden;
@@ -278,6 +300,20 @@ namespace WpfApp2.ViewModels
             // MessageBus.Default.Subscribe("GetAnalizeForAnalizeOverview", SetCurrentAnalizeID);
             HasNavigation = false;
             Controller = controller;
+
+            CurrentSelectDoctorPanelViewModel = new SclerozPanelViewModel(this);
+
+            RevertSelectDoctorCommand = new DelegateCommand(() =>
+            {
+                CurrentSelectDoctorPanelViewModel.PanelOpened = false;
+            });
+
+            OpenSelectDoctorCommand = new DelegateCommand(() =>
+            {
+                CurrentSelectDoctorPanelViewModel.ClearPanel();
+                CurrentSelectDoctorPanelViewModel.PanelOpened = true;
+            });
+
             ToCurrentObsledCommand = new DelegateCommand(
             () =>
             {
@@ -334,16 +370,28 @@ namespace WpfApp2.ViewModels
                 //{
                 //    if (DoctorSelectedId == -1)
                 //    {
+                if (Doctors != null && Doctors.Count != 0)
+                {
+                    if (DoctorSelectedId == -1)
+                    {
+                        MessageBus.Default.Call("CreateStatement", "", null);
+                    }
+                    else
+                    {
+                        MessageBus.Default.Call("CreateStatement", Doctors[DoctorSelectedId].ToString(), Doctors[DoctorSelectedId].doc.Id);
+                    }
+                    TextForDoWhat = "Вы создали новый документ " + _fileNameOnly;
+                    CurrentSelectDoctorPanelViewModel.PanelOpened = false;
+                }
 
 
-                MessageBus.Default.Call("CreateStatement", "", null);
 
                 //}
                 //else
                 //{
                 //    MessageBus.Default.Call("CreateStatement", Doctors[DoctorSelectedId].ToString(), Doctors[DoctorSelectedId].doc.Id);
                 ////}
-                TextForDoWhat = "Вы создали новый документ " + _fileNameOnly;
+
 
                 //}
 
