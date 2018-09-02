@@ -257,25 +257,25 @@ namespace WpfApp2.ViewModels
 
                 result = false;
             }
-            if (String.IsNullOrWhiteSpace(Town))
-            {
-                TextBoxCityB = Brushes.Red;
+            //if (String.IsNullOrWhiteSpace(Town))
+            //{
+            //    TextBoxCityB = Brushes.Red;
 
-                result = false;
-            }
-            if (String.IsNullOrWhiteSpace(Street))
-            {
-                TextBoxStreetB = Brushes.Red;
+            //    result = false;
+            //}
+            //if (String.IsNullOrWhiteSpace(Street))
+            //{
+            //    TextBoxStreetB = Brushes.Red;
 
-                result = false;
-            }
+            //    result = false;
+            //}
 
-            if (String.IsNullOrWhiteSpace(House))
-            {
-                TextBoxHouseB = Brushes.Red;
+            //if (String.IsNullOrWhiteSpace(House))
+            //{
+            //    TextBoxHouseB = Brushes.Red;
 
-                result = false;
-            }
+            //    result = false;
+            //}
 
             if (String.IsNullOrWhiteSpace(Phone))
             {
@@ -300,12 +300,12 @@ namespace WpfApp2.ViewModels
             //    result = false;
             //}
 
-            if (String.IsNullOrWhiteSpace(Region))
-            {
-                TextBoxRegionB = Brushes.Red;
+            //if (String.IsNullOrWhiteSpace(Region))
+            //{
+            //    TextBoxRegionB = Brushes.Red;
 
-                result = false;
-            }
+            //    result = false;
+            //}
 
 
             //int flatBuffer = 0;
@@ -381,24 +381,24 @@ namespace WpfApp2.ViewModels
 
                 MessageBox.Show("Отчество не заполнено");
             }
-            else if (String.IsNullOrWhiteSpace(Town))
-            {
-                TextBoxCityB = Brushes.Red;
-                MessageBox.Show("Город не заполнен");
+            //else if (String.IsNullOrWhiteSpace(Town))
+            //{
+            //    TextBoxCityB = Brushes.Red;
+            //    MessageBox.Show("Город не заполнен");
 
-            }
-            else if (String.IsNullOrWhiteSpace(Street))
-            {
-                TextBoxStreetB = Brushes.Red;
-                MessageBox.Show("Улица не заполнена");
+            //}
+            //else if (String.IsNullOrWhiteSpace(Street))
+            //{
+            //    TextBoxStreetB = Brushes.Red;
+            //    MessageBox.Show("Улица не заполнена");
 
-            }
-            else if (String.IsNullOrWhiteSpace(House))
-            {
-                TextBoxHouseB = Brushes.Red;
-                MessageBox.Show("Дом не заполнен");
+            //}
+            //else if (String.IsNullOrWhiteSpace(House))
+            //{
+            //    TextBoxHouseB = Brushes.Red;
+            //    MessageBox.Show("Дом не заполнен");
 
-            }
+            //}
             else if (String.IsNullOrWhiteSpace(Phone))
             {
                 TextBoxPhoneB = Brushes.Red;
@@ -411,12 +411,12 @@ namespace WpfApp2.ViewModels
 
             //    result = false;
             //}
-            else if (String.IsNullOrWhiteSpace(Region))
-            {
-                TextBoxRegionB = Brushes.Red;
+            //else if (String.IsNullOrWhiteSpace(Region))
+            //{
+            //    TextBoxRegionB = Brushes.Red;
 
-                MessageBox.Show("Область не заполнена");
-            }
+            //    MessageBox.Show("Область не заполнена");
+            //}
 
             else if (!String.IsNullOrWhiteSpace(email))
             {

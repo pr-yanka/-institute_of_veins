@@ -77,7 +77,7 @@ namespace WpfApp2.Db.Models
             get;
         }
 
-        [Required]
+        //[Required]
        // [Column("номер_дома")]
         [Column("house_number")]
         public string House { set; get; }
