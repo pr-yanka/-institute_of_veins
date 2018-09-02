@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                     xmlns:implementation="clr-namespace:WpfApp2"
-                    xmlns:local="clr-namespace:WpfApp2.Templates">
+                    xmlns:local="clr-namespace:WpfApp2.Templates"
+                    >
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/LegParts/Templates/RightPanelAnimation.xaml"/>
     </ResourceDictionary.MergedDictionaries>
@@ -21,8 +22,8 @@
                 <RowDefinition MinHeight="190" Height="3*"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="60"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="10"/>
             </Grid.RowDefinitions>
@@ -62,7 +63,7 @@
             <Button Grid.ColumnSpan="2"  Grid.Row="1" Visibility="{Binding IsVisibleForSecretary}"  Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy2" Content="Записать жалобы" Command="{Binding Path=ToSymptomsAddCommand}" Height="25" HorizontalAlignment="Left" Margin="505,-5,0,0" VerticalAlignment="Top"  Width="510"  FontSize="12"/>
             <Separator Grid.ColumnSpan="2" Grid.Row="2"  HorizontalAlignment="Left" Height="16" Margin="0,33,0,0" VerticalAlignment="Top" Width="1016" RenderTransformOrigin="0.51,0.49"/>
             <TextBlock Grid.Column="0"  Grid.Row="2"  x:Name="textBlock1_Copy2" HorizontalAlignment="Center" Margin="0,40,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Visibility="{Binding IsVisibleForSecretary}" Width="118" FontSize="18" Text="Правая нога" TextAlignment="Center"/>
-            <Button Grid.Row="5" Grid.Column="0" Visibility="{Binding IsVisibleForSecretary}" Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy443" Command="{Binding Path=ToRightDiagCommand}" Content="Поставить диагноз" Height="25" HorizontalAlignment="Left"  Margin="3,1,0,0"  VerticalAlignment="Top" Width="497" FontSize="12"/>
+            <Button Grid.Row="5" Grid.Column="0" Visibility="{Binding IsVisibleForSecretary}" Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy443" Command="{Binding Path=ToRightDiagCommand}" Content="Поставить диагноз" Height="25"   Margin="-10,1,0,0"  VerticalAlignment="Top" Width="497" FontSize="12"/>
             <TextBlock Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center"  Visibility="{Binding IsVisibleForSecretary}"  x:Name="textBlock1_Copy3"  Margin="0,40,0,0" TextWrapping="Wrap" VerticalAlignment="Center"   FontSize="18"><Run Text="Левая "/><Run Text="нога"/></TextBlock>
 
 
@@ -582,7 +583,7 @@
             </ScrollViewer>
 
             <StackPanel Grid.Row="4" Margin="3,5" Grid.Column="0" Width="495" HorizontalAlignment="Left">
-                <Expander FontSize="14">
+                <Expander FontSize="14" Background="White">
                     <Expander.Header>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock TextDecorations="Underline" Text="CEAP" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
@@ -599,7 +600,7 @@
                     </StackPanel>
                 </Expander>
                 <Separator/>
-                <Expander FontSize="14" BorderBrush= "{Binding BAdditionalTextL}">
+                <Expander Background="White" FontSize="14" BorderBrush= "{Binding BAdditionalTextL}">
                     <Expander.Header>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock TextDecorations="Underline" Text="XII. Примечание" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
@@ -612,7 +613,7 @@
                 <!--<Separator/>-->
             </StackPanel>
             <StackPanel Grid.Row="4" Margin="0,5" Grid.Column="1" Width="498" HorizontalAlignment="Left">
-                <Expander FontSize="14">
+                <Expander FontSize="14" Background="White">
                     <Expander.Header>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock TextDecorations="Underline" Text="CEAP" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
@@ -629,7 +630,7 @@
                     </StackPanel>
                 </Expander>
                 <Separator/>
-                <Expander FontSize="14" BorderBrush= "{Binding BAdditionalText}">
+                <Expander Background="White" FontSize="14" BorderBrush= "{Binding BAdditionalText}">
                     <Expander.Header>
                         <StackPanel  Orientation="Horizontal">
                             <TextBlock TextDecorations="Underline"    Text="XII. Примечание" Width="320" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,5,0"/>
@@ -647,6 +648,7 @@
 
 
             <!--<TextBlock  Grid.Row="1" Grid.RowSpan="2" x:Name="textBlock1_Copy5" HorizontalAlignment="Left" Margin="13,30,0,0" TextWrapping="Wrap" Text="NB!" VerticalAlignment="Top" Width="43" FontSize="18" RenderTransformOrigin="0.504,0.985"/>-->
+            <TextBlock  Grid.Row="1" Grid.RowSpan="2"  Visibility="{Binding IsVisibleTextTTT}" Text="{Binding TextOfPreOperation}"  FontWeight="Bold" Width="auto" Margin="0,30,0,0" TextAlignment="Center" FontSize="18"></TextBlock>
 
             <!--<TextBox Grid.Row="2" x:Name="textBox"  HorizontalAlignment="Left" Height="78" Margin="56,0,0,0" TextWrapping="Wrap" Text="{Binding Path=TextTip,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="431" VerticalScrollBarVisibility="Auto">
                 <i:Interaction.Triggers>
@@ -713,11 +715,11 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <StackPanel  Grid.Row="7" Grid.ColumnSpan="2" HorizontalAlignment="Left">
-                <TextBlock   Visibility="{Binding IsVisibleTextTTT}" Text="{Binding TextOfPreOperation}"  FontWeight="Bold" Width="auto" Margin="0,5,0,0" TextAlignment="Center" FontSize="18"></TextBlock>
+            <!--<StackPanel  >-->
+                <!--<TextBlock   Visibility="{Binding IsVisibleTextTTT}" Text="{Binding TextOfPreOperation}"  FontWeight="Bold" Width="auto" Margin="0,5,0,0" TextAlignment="Center" FontSize="18"></TextBlock>-->
                 <!--<TextBlock  x:Name="textBlock1_Copy4"  Margin="0,0,0,0" TextWrapping="Wrap"  FontSize="18" Text="Рекомендации" TextAlignment="Center"/>-->
-                <Button   Visibility="{Binding IsVisibleForSecretary}" Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy4" Content="Добавить рекомендации" Height="23" Command="{Binding ToAddRecomendationsCommand}"    Width="688" Margin="3,8,0,0" FontSize="12"/>
-            </StackPanel>
+                <Button  Grid.Row="7" Grid.ColumnSpan="2" HorizontalAlignment="Left" Visibility="{Binding IsVisibleForSecretary}" Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy4" Content="Добавить рекомендации" Height="23" Command="{Binding ToAddRecomendationsCommand}"    Width="688" Margin="3,8,0,0" FontSize="12"/>
+            <!--</StackPanel>-->
 
             <ListBox Grid.Row="8" Grid.ColumnSpan="2" x:Name="listBox1_Copy" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=RecomendationsList}" HorizontalAlignment="Left"  Margin="3,0,0,0"  Width="688" FontSize="14" BorderThickness="1">
                 <ListBox.ItemTemplate>
@@ -728,14 +730,20 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <StackPanel Grid.Row="8" Grid.Column="1" Orientation="Vertical" Margin="195,-40,0,0">
-                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy3"  Margin= "0,0,0,1" Height="30" Content="Вернуться к пациенту" Command="{Binding ToCurrentPatientCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="12"/>
-                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy10"  Margin="0,0,0,1" Height="30" Content="Заключение" Command="{Binding ToPhysicalOverviewCommand}" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="300" FontSize="12"/>
-                <Button Style="{StaticResource MyNormalBUTTON}" x:Name="butаton_Copy10" Margin="0,0,0,1" Height="30" Content="Осмотр хирурга" Command="{Binding ToPhysicalChirurgOverviewCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="12" />
+            <StackPanel Grid.Row="8" Grid.Column="1" Orientation="Horizontal" Margin="195,-15,0,0">
+                <StackPanel>
+                    <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy3"  Margin= "0,0,0,1" Height="30" Content="К пациенту" Command="{Binding ToCurrentPatientCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" FontSize="12"/>
+                    <Button Style="{StaticResource MyNormalBUTTON}" x:Name="button_Copy10"  Margin="0,0,0,1" Height="30" Content="Заключение" Command="{Binding ToPhysicalOverviewCommand}" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="150" FontSize="12"/>
 
-                <Button Visibility="{Binding IsVisibleForSecretary}" Style="{StaticResource MyConfirmBUTTON}"   x:Name="button_Copy9" Margin="0,0,0,0" Height="30" Content="{Binding TextOfEndBtn}"  Command="{Binding OpenDialogCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" FontSize="12"/>
-            </StackPanel>
-            <Button  Grid.Row="5" Grid.Column="1" Visibility="{Binding IsVisibleForSecretary}" Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy" Command="{Binding Path=ToLeftDiagCommand}" Content="Поставить диагноз"   Height="25" HorizontalAlignment="Left" Margin="0,1,0,0" VerticalAlignment="Top" Width="497" FontSize="12" />
+                </StackPanel>
+                <StackPanel>
+                    <Button Style="{StaticResource MyNormalBUTTON}" x:Name="butаton_Copy10" Margin="0,0,0,1" Height="30" Content="Осмотр хирурга" Command="{Binding ToPhysicalChirurgOverviewCommand}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" FontSize="12" />
+
+                    <Button Visibility="{Binding IsVisibleForSecretary}" Style="{StaticResource MyConfirmBUTTON}"   x:Name="button_Copy9" Margin="0,0,0,0" Height="30" Content="{Binding TextOfEndBtn}"  Command="{Binding OpenDialogCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}}}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="150" FontSize="12"/>
+
+                </StackPanel>
+                                                </StackPanel>
+            <Button  Grid.Row="5" Grid.Column="1" Visibility="{Binding IsVisibleForSecretary}" Style="{StaticResource MyConfirmBUTTON}" x:Name="button_Copy" Command="{Binding Path=ToLeftDiagCommand}" Content="Поставить диагноз"   Height="25"  Margin="-15,1,0,0" VerticalAlignment="Top" Width="497" FontSize="12" />
 
 
 

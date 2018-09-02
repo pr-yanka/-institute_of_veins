@@ -21,7 +21,7 @@
                 <ColumnDefinition Width="700"></ColumnDefinition>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button  Visibility="{Binding IsVisibleForSecretary}" Style="{StaticResource MyNormalBUTTON}"  Width="290" FontSize="13" Content="Сформировать документ"  Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Command="{Binding Path=SetNewOverview}" ></Button>
+            <Button  Visibility="{Binding IsVisibleForSecretary}" Style="{StaticResource MyNormalBUTTON}"  Width="290" FontSize="13" Content="Сформировать документ"  Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Command="{Binding Path=OpenSelectDoctorCommand}" ></Button>
             <Button  Visibility="{Binding IsVisibleForSecretary}" Style="{StaticResource MyConfirmBUTTON}" Width="290" Content="Загрузить существующий документ" Margin="0,0,0,40"  Grid.Column="0" Grid.Row="1" Grid.RowSpan="4" FontSize="13" Command="{Binding Path=OpenFile}" ></Button>
             <Button Style="{StaticResource MyConfirmBUTTON}" Width="290" Visibility="{Binding IsDocAdded}"  Content="Открыть документ"     Margin="0,0,0,0"  Grid.Column="0" Grid.Row="3" Grid.RowSpan="2" FontSize="13" Command="{Binding Path=OpenWordDocument}" ></Button>
             <Button Style="{StaticResource MyConfirmBUTTON}" Width="290" Visibility="{Binding IsDocAddedSave}"  Content="Сохранить изменения"   Grid.Column="0" Grid.Row="3" Grid.RowSpan="3" FontSize="13" Margin="0,78,0,0" Command="{Binding Path=OpenAddSaveCommand}" ></Button>
@@ -93,6 +93,55 @@
                         <!--<TextBox x:Name="texвdtBfox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" Width="430" Canvas.Left="10"  Canvas.Top="61"  />-->
                         <Button Style="{StaticResource MyNormalBUTTON}" x:Name="bduttoвnfCancel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.RevertSaveCommand}" Canvas.Left="10" Canvas.Top="65" />
                         <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="BudttoвnfAdd" Content="Я сохранил данные" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.SaveWordDocument}" Canvas.Left="233" Canvas.Top="65"/>
+                        <!--<TextBlock x:Name="texfвtBlock_sCopy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18" Canvas.Top="31" Canvas.Left="10"  Text="Название:"/>-->
+
+                    </Canvas>
+                </Grid>
+            </Border>
+
+            <Border  Grid.RowSpan="20" Grid.ColumnSpan="20" Visibility="{Binding Path = CurrentSelectDoctorPanelViewModel.PanelOpened, Converter={StaticResource BoolToVis}}" x:Name="ShadowOв3вv5edrlay">
+                <Border.Background>
+                    <SolidColorBrush Color="Black" Opacity="0.78"/>
+                </Border.Background>
+            </Border>
+
+            <Border x:Name="panel34Cфівф1вoвdrntrol"  Grid.RowSpan="20" Grid.ColumnSpan="20" Margin="0,0,-380,0" VerticalAlignment="Stretch" HorizontalAlignment="Right" RenderTransformOrigin="0.5,0.5" Width="480" Height="145"  DataContext="{Binding Path=CurrentSelectDoctorPanelViewModel}" >
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=PanelOpened}" Value="True">
+                                <DataTrigger.EnterActions>
+                                    <RemoveStoryboard BeginStoryboardName="AnimationCloseStoryboard"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Open}" x:Name="AnimationBeginStoryboard"/>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <RemoveStoryboard BeginStoryboardName="AnimationBeginStoryboard"/>
+                                    <BeginStoryboard Storyboard="{StaticResource Close}" x:Name="AnimationCloseStoryboard"/>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Border.RenderTransform>
+
+                <Grid>
+                    <Canvas Background="#FFC6E8E6" Margin="0,0,0,29">
+                        <TextBlock x:Name="tвextfBlockd73" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Canvas.Left="10" FontSize="18" Canvas.Top="0"  Text="Выберите врача"/>
+                        <TextBlock      FontFamily="/fonts/#Pescadero" FontSize="18" Text="Врач :" Canvas.Left="10" Canvas.Top="32"/>
+
+                        <ComboBox  Width="193" FontSize="18" ItemsSource="{Binding ParentVM.Doctors}" Canvas.Left="75" Canvas.Top="30"  Height="25" HorizontalAlignment="Left"   SelectedIndex="{Binding ParentVM.DoctorSelectedId}"/>
+
+                        <!--<TextBox x:Name="texвdtBfox1" HorizontalAlignment="Left" Height="43" TextWrapping="Wrap" Text="{Binding Path=ShortText}" VerticalAlignment="Top" Width="430" Canvas.Left="10"  Canvas.Top="61"  />-->
+                        <Button Style="{StaticResource MyNormalBUTTON}" x:Name="bduttoвnfCa2ncel" Content="Отмена" HorizontalAlignment="Left" VerticalAlignment="Top"  Command="{Binding ParentVM.RevertSelectDoctorCommand}" Canvas.Left="10" Canvas.Top="65" />
+                        <Button Style="{StaticResource MyConfirmBUTTON}" x:Name="Budttoвn2fAdd" Content="Сформировать документ" HorizontalAlignment="Left" VerticalAlignment="Top" Width="240"  Command="{Binding ParentVM.SetNewOverview}" Canvas.Left="233" Canvas.Top="65"/>
                         <!--<TextBlock x:Name="texfвtBlock_sCopy24" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="18" Canvas.Top="31" Canvas.Left="10"  Text="Название:"/>-->
 
                     </Canvas>

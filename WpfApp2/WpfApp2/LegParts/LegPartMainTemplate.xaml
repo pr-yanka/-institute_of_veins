@@ -14,7 +14,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <DataTemplate x:Key="LegPartTemplate">
-        <Grid Margin="0,80,0,0" ShowGridLines="True">
+        <Grid Margin="0,80,0,0" ShowGridLines="False">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="Auto"/>
