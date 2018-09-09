@@ -2801,7 +2801,7 @@ namespace WpfApp2.ViewModels
                         if (!string.IsNullOrWhiteSpace(doctorInits))
                         {
                             p5.Alignment = Alignment.right;
-                            p5.Append("Врач: " + doctorInits).Font("Times new roman").FontSize(11.0);
+                            p5.Append("\n\nВрач: " + doctorInits).Font("Times new roman").FontSize(11.0);
                         }
                     }
                     // Save this document.
