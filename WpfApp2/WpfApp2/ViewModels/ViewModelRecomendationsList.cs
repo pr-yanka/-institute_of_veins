@@ -1,12 +1,9 @@
 ﻿using Microsoft.Practices.Prism.Commands;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using WpfApp2.Db.Models;
@@ -36,7 +33,19 @@ namespace WpfApp2.ViewModels
                     return false;
                 else return _isChecked;
             }
-            set { _isChecked = value; OnPropertyChanged(); }
+            set
+            {
+                _isChecked = value;
+                if (value == true)
+                {
+                    MessageBus.Default.Call("OneWayRecomendationListObsledovanie", this, "true");
+                }
+                else
+                {
+                    MessageBus.Default.Call("OneWayRecomendationListObsledovanie", this, "false");
+                }
+                OnPropertyChanged();
+            }
         }
         public RecomendationsDataSource(RecomendationsType Recomendations)
         {
@@ -216,9 +225,31 @@ namespace WpfApp2.ViewModels
                 }
             }
             FilterText = "";
-
-
         }
+
+        private void IsItChecked(object dataElement, object isSelected)
+        {
+            string isS = isSelected.ToString();
+            RecomendationsDataSource data = dataElement as RecomendationsDataSource;
+            bool test = true;
+            if (isS == "true")
+            {
+                foreach (var item in Sequence)
+                {
+                    if (item == data.Data.Id)
+                    {
+                        test = false;
+                    }
+                }
+                if (test)
+                    Sequence.Add(data.Data.Id);
+            }
+            else
+            {
+                Sequence.Remove(data.Data.Id);
+            }
+        }
+        List<int> Sequence;
         public DelegateCommand ToPhysicalCommand { get; protected set; }
         public DelegateCommand SaveChangesCommand { get; protected set; }
         public string TextOFNewType { get; private set; }
@@ -230,8 +261,10 @@ namespace WpfApp2.ViewModels
 
         public ViewModelRecomendationsList(NavigationController controller) : base(controller)
         {
+            Sequence = new List<int>();
             MessageBus.Default.Subscribe("SetClearRecomendationListObsledovanie", SetClear);
             MessageBus.Default.Subscribe("SetDRecomendationListBecauseOFEdit", SetDRecomendationListBecauseOFEdit);
+            MessageBus.Default.Subscribe("OneWayRecomendationListObsledovanie", IsItChecked);
             TextOFNewType = "Новый тип рекомендации";
             HeaderText = "Рекомендации";
             AddButtonText = "Другая рекомендацию";
@@ -249,17 +282,16 @@ namespace WpfApp2.ViewModels
             ToPhysicalCommand = new DelegateCommand(
                 () =>
                 {
-
-
-
-
-                   FilterText = "";
+                    FilterText = "";
                     ObservableCollection<RecomendationsDataSource> DataSourceListBuffer = new ObservableCollection<RecomendationsDataSource>();
-                    foreach (var Data in FullCopy)
+                    foreach (var ids in Sequence)
                     {
-                        if (Data.IsChecked == true)
+                        foreach (var Data in FullCopy)
                         {
-                            DataSourceListBuffer.Add(Data);
+                            if (Data.IsChecked == true && Data.Data.Id == ids)
+                            {
+                                DataSourceListBuffer.Add(Data);
+                            }
                         }
                     }
                     MessageBus.Default.Call("SetRecomendationsList", this, DataSourceListBuffer);
@@ -272,9 +304,6 @@ namespace WpfApp2.ViewModels
                     Controller.NavigateTo<ViewModelAddPhysical>();
                 }
             );
-
-
-
             CurrentPanelViewModel = new RecomendationPanelViewModel(this);
             OpenCommand = new DelegateCommand(() =>
             {
@@ -284,7 +313,7 @@ namespace WpfApp2.ViewModels
 
             SaveCommand = new DelegateCommand(() =>
             {
-               FilterText = "";
+                FilterText = "";
                 var newType = CurrentPanelViewModel.GetPanelType();
                 if (!string.IsNullOrWhiteSpace(newType.Str))
                 {

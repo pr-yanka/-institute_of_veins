@@ -33,8 +33,21 @@ namespace WpfApp2.ViewModels
                     return false;
                 else return _isChecked;
             }
-            set { _isChecked = value; OnPropertyChanged(); }
+            set
+            {
+                _isChecked = value;
+                if (value == true)
+                {
+                    MessageBus.Default.Call("OneWayComplanesListObsledovanie", this, "true");
+                }
+                else
+                {
+                    MessageBus.Default.Call("OneWayComplanesListObsledovanie", this, "false");
+                }
+                OnPropertyChanged();
+            }
         }
+
         public ComplainsDataSource(ComplainsType Complains)
         {
             IsVisibleTotal = true;
@@ -70,15 +83,15 @@ namespace WpfApp2.ViewModels
                 _filterText = value; OnPropertyChanged();
                 for (int i = 0; i < DataSourceList.Count; ++i)
                 {
-                    foreach(var x in FullCopy)
-                    if (DataSourceList[i].IsChecked != null && DataSourceList[i].IsChecked == true && x.Data.Id == DataSourceList[i].Data.Id)
-                    {
-                      x.IsChecked = true;
-                    }
-                    else if (x.Data.Id == DataSourceList[i].Data.Id)
-                    {
-                       x.IsChecked = false;
-                    }
+                    foreach (var x in FullCopy)
+                        if (DataSourceList[i].IsChecked != null && DataSourceList[i].IsChecked == true && x.Data.Id == DataSourceList[i].Data.Id)
+                        {
+                            x.IsChecked = true;
+                        }
+                        else if (x.Data.Id == DataSourceList[i].Data.Id)
+                        {
+                            x.IsChecked = false;
+                        }
                 }
                 if (lastLength >= value.Length)
                 {
@@ -208,8 +221,8 @@ namespace WpfApp2.ViewModels
             FilterText = "";
 
         }
-
-
+        public ObservableCollection<ComplainsDataSource> DataSourceListBuffer { get; set; }
+        List<int> Sequence;
         public DelegateCommand ToPhysicalCommand { get; protected set; }
         public DelegateCommand SaveChangesCommand { get; protected set; }
         public string TextOFNewType { get; private set; }
@@ -229,11 +242,38 @@ namespace WpfApp2.ViewModels
                 DataSourceList.Add(new ComplainsDataSource(ComplainsType));
             }
         }
+
+        private void IsItChecked(object dataElement, object isSelected)
+        {
+            string isS = isSelected.ToString();
+            ComplainsDataSource data = dataElement as ComplainsDataSource;
+            bool test = true;
+            if (isS == "true")
+            {
+                foreach (var item in Sequence)
+                {
+                    if (item == data.Data.Id)
+                    {
+                        test = false;
+                    }
+                }
+                if (test)
+                    Sequence.Add(data.Data.Id);
+            }
+            else
+            {
+                Sequence.Remove(data.Data.Id);
+            }
+        }
+
         public ViewModelComplainsList(NavigationController controller) : base(controller)
         {
+            Sequence = new List<int>();
+            DataSourceListBuffer = new ObservableCollection<ComplainsDataSource>();
             VisOfNothingFaund = Visibility.Collapsed;
             MessageBus.Default.Subscribe("SetDComplanesListBecauseOFEdit", SetDComplanesListBecauseOFEdit);
             MessageBus.Default.Subscribe("SetClearComplanesListObsledovanie", SetClear);
+            MessageBus.Default.Subscribe("OneWayComplanesListObsledovanie", IsItChecked);
             TextOFNewType = "Новый тип жалобы";
             HeaderText = "Жалобы";
             AddButtonText = "Другая жалоба";
@@ -248,12 +288,15 @@ namespace WpfApp2.ViewModels
                 () =>
                 {
                     FilterText = "";
-                    ObservableCollection<ComplainsDataSource> DataSourceListBuffer = new ObservableCollection<ComplainsDataSource>();
-                    foreach (var Data in FullCopy)
+                    DataSourceListBuffer = new ObservableCollection<ComplainsDataSource>();
+                    foreach (var ids in Sequence)
                     {
-                        if (Data.IsChecked == true)
+                        foreach (var Data in FullCopy)
                         {
-                            DataSourceListBuffer.Add(Data);
+                            if (Data.IsChecked == true && Data.Data.Id == ids)
+                            {
+                                DataSourceListBuffer.Add(Data);
+                            }
                         }
                     }
                     MessageBus.Default.Call("SetComplainsList", this, DataSourceListBuffer);
