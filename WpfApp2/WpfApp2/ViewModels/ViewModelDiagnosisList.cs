@@ -32,7 +32,16 @@ namespace WpfApp2.ViewModels
                     return false;
                 else return _isChecked;
             }
-            set { _isChecked = value; OnPropertyChanged(); }
+            set { _isChecked = value;
+                if (value == true)
+                {
+                    MessageBus.Default.Call("OneWayDiagnosisListObsledovanie", this, "true");
+                }
+                else
+                {
+                    MessageBus.Default.Call("OneWayDiagnosisListObsledovanie", this, "false");
+                }
+                OnPropertyChanged(); }
         }
         public DiagnosisType Data { get; set; }
 
@@ -54,7 +63,29 @@ namespace WpfApp2.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-
+        List<int> Sequence;
+        private void IsItChecked(object dataElement, object isSelected)
+        {
+            string isS = isSelected.ToString();
+            DiagnosisDataSource data = dataElement as DiagnosisDataSource;
+            bool test = true;
+            if (isS == "true")
+            {
+                foreach (var item in Sequence)
+                {
+                    if (item == data.Data.Id)
+                    {
+                        test = false;
+                    }
+                }
+                if (test)
+                    Sequence.Add(data.Data.Id);
+            }
+            else
+            {
+                Sequence.Remove(data.Data.Id);
+            }
+        }
         private int lastLength = 0;
         private Visibility _visOfNothingFaund;
         public Visibility VisOfNothingFaund
@@ -270,6 +301,7 @@ namespace WpfApp2.ViewModels
         }
         public ViewModelDiagnosisList(NavigationController controller) : base(controller)
         {
+            Sequence = new List<int>();
             VisOfNothingFaund = Visibility.Collapsed;
             TextOFNewType = "Новый тип диагноза";
             TextName = "Вернуться к обследованию";
@@ -278,6 +310,7 @@ namespace WpfApp2.ViewModels
             DataSourceList = new ObservableCollection<DiagnosisDataSource>();
             LeftDiag = new List<DiagnosisDataSource>();
             RightDiag = new List<DiagnosisDataSource>();
+            MessageBus.Default.Subscribe("OneWayDiagnosisListObsledovanie", IsItChecked);
             MessageBus.Default.Subscribe("SetClearDiagnosisListLeftRightObsled", SetClear);
             MessageBus.Default.Subscribe("SetDiagnosisListBecauseOFEdit", SetDiagnosisListBecauseOFEdit);
             MessageBus.Default.Subscribe("SetleftOrRightForObsled", SetDiagnosisList);
@@ -295,11 +328,14 @@ namespace WpfApp2.ViewModels
                 {
                     List<DiagnosisDataSource> DataSourceListBuffer = new List<DiagnosisDataSource>();
                     FilterText = "";
-                    foreach (var Data in FullCopy)
+                    foreach (var ids in Sequence)
                     {
-                        if (Data.IsChecked == true)
+                        foreach (var Data in FullCopy)
                         {
-                            DataSourceListBuffer.Add(Data);
+                            if (Data.IsChecked == true && Data.Data.Id == ids)
+                            {
+                                DataSourceListBuffer.Add(Data);
+                            }
                         }
                     }
                     if (ld == "Left")
