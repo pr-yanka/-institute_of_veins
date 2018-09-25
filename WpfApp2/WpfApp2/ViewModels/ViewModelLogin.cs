@@ -69,8 +69,8 @@ namespace WpfApp2.ViewModels
             string CheckSum = CalculateMD5Hash(((PasswordBox)sender).Password);
             sender = null;
             bool isUeserNameCorrect = false;
-            //Name = "Admin";
-            //CheckSum = CalculateMD5Hash("123");
+            Name = "Admin";
+            CheckSum = CalculateMD5Hash("123");
             foreach (var acc in Data.Accaunt.GetAll)
             {
                

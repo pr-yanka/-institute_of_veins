@@ -1,41 +1,41 @@
-﻿using System;
+﻿using Microsoft.Practices.Prism.Commands;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
-using Microsoft.Practices.Prism.Commands;
-using WpfApp2.Navigation;
 using System.Windows.Input;
+using System.Windows.Media;
+using WpfApp2.Db.Models;
+using WpfApp2.Db.Models.GV;
+using WpfApp2.Db.Models.LegParts;
+using WpfApp2.Db.Models.LegParts.BPV_Tibia;
+using WpfApp2.Db.Models.LegParts.BPVHip;
+using WpfApp2.Db.Models.LegParts.GV;
+using WpfApp2.Db.Models.LegParts.MPV;
+using WpfApp2.Db.Models.LegParts.PDSVHip;
+using WpfApp2.Db.Models.LegParts.Perforate_hip;
+using WpfApp2.Db.Models.LegParts.Perforate_shin;
+using WpfApp2.Db.Models.LegParts.PPV;
+using WpfApp2.Db.Models.LegParts.SFSHip;
+using WpfApp2.Db.Models.LegParts.SPSHip;
+using WpfApp2.Db.Models.LegParts.TEMPV;
+using WpfApp2.Db.Models.LegParts.ZDSV;
+using WpfApp2.Db.Models.PPV;
+using WpfApp2.Db.Models.SPS;
 using WpfApp2.DialogPreOperation;
 using WpfApp2.DialogService;
 using WpfApp2.LegParts;
 using WpfApp2.LegParts.VMs;
 using WpfApp2.Messaging;
-using WpfApp2.Db.Models;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Collections.ObjectModel;
-using WpfApp2.Db.Models.LegParts;
-using WpfApp2.Db.Models.SPS;
-using WpfApp2.Db.Models.PPV;
-using WpfApp2.Db.Models.GV;
-using Xceed.Words.NET;
-using System.Windows.Media;
-using System.Diagnostics;
-using System.IO;
-using WpfApp2.Db.Models.LegParts.PDSVHip;
-using System.Linq;
-using WpfApp2.Db.Models.LegParts.SFSHip;
-using WpfApp2.Db.Models.LegParts.BPVHip;
-using WpfApp2.Db.Models.LegParts.BPV_Tibia;
-using WpfApp2.Db.Models.LegParts.Perforate_hip;
-using WpfApp2.Db.Models.LegParts.ZDSV;
-using WpfApp2.Db.Models.LegParts.SPSHip;
-using WpfApp2.Db.Models.LegParts.Perforate_shin;
-using WpfApp2.Db.Models.LegParts.MPV;
-using WpfApp2.Db.Models.LegParts.TEMPV;
-using WpfApp2.Db.Models.LegParts.GV;
-using WpfApp2.Db.Models.LegParts.PPV;
+using WpfApp2.Navigation;
 using WpfApp2.ViewModels.Panels;
-using System.Threading.Tasks;
+using Xceed.Words.NET;
 
 namespace WpfApp2.ViewModels
 {
@@ -1002,7 +1002,12 @@ namespace WpfApp2.ViewModels
                 { _weight = ""; }
                 else if (float.TryParse(value, out buf) && buf >= 0) { _weight = buf.ToString(); }
 
-                if (float.TryParse(Weight, out buf) && float.TryParse(Growth, out buf) && buf >= 0) ITM = float.Parse(Weight) / ((float.Parse(Growth) / 100) * (float.Parse(Growth) / 100)); OnPropertyChanged();
+                if (float.TryParse(Weight, out buf) && float.TryParse(Growth, out buf) && buf >= 0)
+                {
+                    ITM = float.Parse(Weight) / ((float.Parse(Growth) / 100) * (float.Parse(Growth) / 100));
+                }
+
+                OnPropertyChanged();
             }
         }
         private string _textOfPreOperation;
@@ -1023,12 +1028,17 @@ namespace WpfApp2.ViewModels
             {
                 float buf = 0f;
                 if (value.Contains(",")) { _growth = value; } else if (value == "") { _growth = ""; } else if (float.TryParse(value, out buf) && buf >= 0) { _growth = buf.ToString(); }
-                if (float.TryParse(Weight, out buf) && float.TryParse(Growth, out buf) && buf >= 0) ITM = float.Parse(Weight) / ((float.Parse(Growth) / 100) * (float.Parse(Growth) / 100)); OnPropertyChanged();
+                if (float.TryParse(Weight, out buf) && float.TryParse(Growth, out buf) && buf >= 0)
+                {
+                    ITM = float.Parse(Weight) / ((float.Parse(Growth) / 100) * (float.Parse(Growth) / 100));
+                }
+
+                OnPropertyChanged();
             }
         }
 
         private double _itm;
-        public double ITM { get { return Math.Round(_itm, 3); } set { if (float.Parse(Growth) != 0) _itm = value; OnPropertyChanged(); } }
+        public double ITM { get { return Math.Round(_itm, 3); } set { if (float.Parse(Growth) != 0) { _itm = value; } OnPropertyChanged(); } }
 
         private string _textTip;
         public string TextTip { get { return _textTip; } set { _textTip = value; OnPropertyChanged(); } }
@@ -1151,8 +1161,8 @@ namespace WpfApp2.ViewModels
 
         public ICommand OpenDialogCommand
         {
-            get { return this.openDialogCommand; }
-            set { this.openDialogCommand = value; }
+            get { return openDialogCommand; }
+            set { openDialogCommand = value; }
         }
 
 
@@ -1222,14 +1232,20 @@ namespace WpfApp2.ViewModels
         private bool IsObservCollectionIsFilled<T>(ObservableCollection<T> x)
         {
             if (x != null && x.Count != 0)
+            {
                 return true;
+            }
+
             return false;
         }
 
         private bool IsListIsFilled<T>(List<T> x)
         {
             if (x != null && x.Count != 0)
+            {
                 return true;
+            }
+
             return false;
         }
         private void FinishAdding(object parameter)
@@ -1871,7 +1887,9 @@ namespace WpfApp2.ViewModels
                         examnTotal.Comment = OpCommentFromDialog;
                     }
                     else
+                    {
                         examnTotal.isNeedOperation = false;
+                    }
 
 
 
@@ -2003,9 +2021,14 @@ namespace WpfApp2.ViewModels
                     examnTotal.PatientId = CurrentPatient.Id;
                     examnTotal.Date = DateTime.Now;
                     if (result == DialogResult.Yes)
+                    {
                         examnTotal.isNeedOperation = true;
+                    }
                     else
+                    {
                         examnTotal.isNeedOperation = false;
+                    }
+
                     examnTotal.weight = float.Parse(Weight);
                     examnTotal.NB = TextTip;
                     examnTotal.height = float.Parse(Growth);
@@ -2014,6 +2037,7 @@ namespace WpfApp2.ViewModels
                     Data.Examination.Add(examnTotal);
                     Data.Complete();
                     if (LeftDiagnosisList != null)
+                    {
                         foreach (var diag in LeftDiagnosisList)
                         {
                             if (diag.IsChecked.Value)
@@ -2028,7 +2052,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                         }
+                    }
+
                     if (RightDiagnosisList != null)
+                    {
                         foreach (var diag in RightDiagnosisList)
                         {
                             if (diag.IsChecked.Value)
@@ -2043,8 +2070,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                         }
+                    }
 
                     if (RecomendationsList != null)
+                    {
                         foreach (var rec in RecomendationsList)
                         {
                             if (rec.IsChecked.Value)
@@ -2058,8 +2087,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                         }
-                    if (ComplainsList != null)
+                    }
 
+                    if (ComplainsList != null)
+                    {
                         foreach (var cmp in ComplainsList)
                         {
                             if (cmp.IsChecked.Value)
@@ -2071,6 +2102,7 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                         }
+                    }
                     //  Data.Complete();
                     testThread = false;
                     RemoveAllSaves();
@@ -2095,13 +2127,16 @@ namespace WpfApp2.ViewModels
                 default: return input.First().ToString().ToLower() + input.Substring(1);
             }
         }
-        void BuildStr(ref Paragraph p4, LegPartViewModel LegPart, bool isNormal)
+
+        private void BuildStr(ref Paragraph p4, LegPartViewModel LegPart, bool isNormal)
         {
             if (!LegPart.IsEmpty)
             {
                 int x = 0;
                 if (!isNormal)
+                {
                     p4.Append(LegPart.Title).Font("Times new roman").FontSize(11.0).UnderlineStyle(UnderlineStyle.singleLine).Append(": ").Font("Times new roman").FontSize(11.0);
+                }
                 else
                 {
                     p4.Append(LegPart.Title).Font("Times new roman").FontSize(11.0).Append(": ").Font("Times new roman").FontSize(11.0); ;
@@ -2115,16 +2150,8 @@ namespace WpfApp2.ViewModels
                         var section = ((PDSVViewModel)LegPart).AdditionalStructure;
                         if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
                         {
-                            ++x;
-                            p4.Append("\nПДСВ на бедре интерфасциально располагается ").Font("Times new roman").FontSize(11.0);
-                            //  p4 += "ПДСВ на бедре интерфасциально располагается ";
-                            if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
-                            {
+                            //++x;
 
-                                p4.Append(section.SelectedValue.Text1).Font("Times new roman").FontSize(11.0);
-
-
-                            }
 
                             if (section.SelectedValue.HasSize || section.HasDoubleSize)
                             {
@@ -2136,7 +2163,9 @@ namespace WpfApp2.ViewModels
                                 else
                                 {
                                     if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
+                                    {
                                         p4.Append(" " + section.CurrentEntry.Size + " " + section.SelectedValue.Metrics + ".").Font("Times new roman").FontSize(11.0);
+                                    }
                                     else
                                     {
                                         p4.Append(" " + section.CurrentEntry.Size + "").Font("Times new roman").FontSize(11.0);
@@ -2151,7 +2180,9 @@ namespace WpfApp2.ViewModels
                             }
 
                             if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
+                            {
                                 p4.Append(section.SelectedValue.Text2).Font("Times new roman").FontSize(11.0);
+                            }
                             //if (!string.IsNullOrWhiteSpace(section.CurrentEntry.Comment))
                             //{
                             //    if (LegPart.LegSections[x].SelectedValue != null && !LegPart.LegSections[x].SelectedValue.ToNextPart)
@@ -2160,32 +2191,24 @@ namespace WpfApp2.ViewModels
                             //    {
                             //        p4 += "\nКомментарий : " + section.CurrentEntry.Comment;
                             //    }
-
                             //}
-
-
-                            //
-
-                            //
-
                         }
-
                     }
                     else if (LegPart is ZDSVViewModel)
                     {
                         var section = ((ZDSVViewModel)LegPart).AdditionalStructure;
                         if (section.SelectedValue != null && section.SelectedValue.ToNextPart == false && (section.Text1 != "" && section.Text2 != ""))
                         {
-                            ++x;
-                            p4.Append("\nЗДСВ на бедре интерфасциально располагается ").Font("Times new roman").FontSize(11.0);
+                            //++x;
+                            //p4.Append("\nЗДСВ на бедре интерфасциально располагается ").Font("Times new roman").FontSize(11.0);
 
-                            if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
-                            {
+                            //if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
+                            //{
 
-                                p4.Append(section.SelectedValue.Text1).Font("Times new roman").FontSize(11.0);
+                            //    p4.Append(section.SelectedValue.Text1).Font("Times new roman").FontSize(11.0);
 
 
-                            }
+                            //}
 
                             if (section.SelectedValue.HasSize || section.HasDoubleSize)
                             {
@@ -2197,7 +2220,9 @@ namespace WpfApp2.ViewModels
                                 else
                                 {
                                     if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
+                                    {
                                         p4.Append(" " + section.CurrentEntry.Size + " " + section.SelectedValue.Metrics + ".").Font("Times new roman").FontSize(11.0);
+                                    }
                                     else
                                     {
                                         p4.Append(" " + section.CurrentEntry.Size + "").Font("Times new roman").FontSize(11.0);
@@ -2212,7 +2237,9 @@ namespace WpfApp2.ViewModels
                             }
 
                             if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
+                            {
                                 p4.Append(section.SelectedValue.Text2).Font("Times new roman").FontSize(11.0);
+                            }
                             //if (!string.IsNullOrWhiteSpace(section.CurrentEntry.Comment))
                             //{
                             //    if (LegPart.LegSections[x].SelectedValue != null && !LegPart.LegSections[x].SelectedValue.ToNextPart)
@@ -2275,7 +2302,9 @@ namespace WpfApp2.ViewModels
                                 if (section.HasDoubleSize)
                                 {
                                     if (!isNormal)
+                                    {
                                         p4.Append(" " + section.CurrentEntry.Size + "*" + section.CurrentEntry.Size2 + " " + section.SelectedValue.Metrics + ".").Font("Times new roman").FontSize(11.0);
+                                    }
                                     else
                                     {
                                         p4.Append(" " + section.CurrentEntry.Size + "*" + section.CurrentEntry.Size2 + " " + section.SelectedValue.Metrics + ".").Font("Times new roman").FontSize(11.0);
@@ -2288,7 +2317,9 @@ namespace WpfApp2.ViewModels
                                     if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
                                     {
                                         if (!isNormal)
+                                        {
                                             p4.Append(" " + section.CurrentEntry.Size + " " + section.SelectedValue.Metrics + ".").Font("Times new roman").FontSize(11.0);
+                                        }
                                         else
                                         {
                                             p4.Append(" " + section.CurrentEntry.Size + " " + section.SelectedValue.Metrics + ".").Font("Times new roman").FontSize(11.0);
@@ -2299,7 +2330,9 @@ namespace WpfApp2.ViewModels
                                     else
                                     {
                                         if (!isNormal)
+                                        {
                                             p4.Append(" " + section.CurrentEntry.Size + "").Font("Times new roman").FontSize(11.0);
+                                        }
                                         else
                                         {
                                             p4.Append(" " + section.CurrentEntry.Size + "").Font("Times new roman").FontSize(11.0);
@@ -2322,7 +2355,9 @@ namespace WpfApp2.ViewModels
                             if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
                             {
                                 if (!isNormal)
+                                {
                                     p4.Append(" " + section.SelectedValue.Text2 + "").Font("Times new roman").FontSize(11.0);
+                                }
                                 else
                                 {
                                     p4.Append(" " + section.SelectedValue.Text2 + "").Font("Times new roman").FontSize(11.0);
@@ -2332,7 +2367,9 @@ namespace WpfApp2.ViewModels
                             if (!string.IsNullOrWhiteSpace(section.CurrentEntry.Comment))
                             {
                                 if (!isNormal)
+                                {
                                     p4.Append("\nКомментарий: " + section.CurrentEntry.Comment + "").Font("Times new roman").FontSize(11.0);
+                                }
                                 else
                                 {
                                     p4.Append("\nКомментарий: " + section.CurrentEntry.Comment + "").Font("Times new roman").FontSize(11.0);
@@ -2342,7 +2379,20 @@ namespace WpfApp2.ViewModels
 
                         }
                     }
+                    if (LegPart is PDSVViewModel)
+                    {
+                        var section = ((PDSVViewModel)LegPart).AdditionalStructure;
 
+                        p4.Append(".\nПДСВ на бедре интерфасциально располагается ").Font("Times new roman").FontSize(11.0);
+                        //  p4 += "ПДСВ на бедре интерфасциально располагается ";
+                        if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
+                        {
+
+                            p4.Append(section.SelectedValue.Text1).Font("Times new roman").FontSize(11.0);
+
+
+                        }
+                    }
                     if (LegPart is BPVHipViewModel)
                     {
                         var section = ((BPVHipViewModel)LegPart).AdditionalStructure;
@@ -2368,7 +2418,9 @@ namespace WpfApp2.ViewModels
                                 else
                                 {
                                     if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
+                                    {
                                         p4.Append(" " + section.CurrentEntry.Size + " " + section.SelectedValue.Metrics + ".").Font("Times new roman").FontSize(11.0);
+                                    }
                                     else
                                     {
                                         p4.Append(" " + section.CurrentEntry.Size + "").Font("Times new roman").FontSize(11.0);
@@ -2383,7 +2435,9 @@ namespace WpfApp2.ViewModels
                             }
 
                             if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
+                            {
                                 p4.Append(section.SelectedValue.Text2).Font("Times new roman").FontSize(11.0);
+                            }
                         }
                     }
                     else if (LegPart is SPSViewModel)
@@ -2411,7 +2465,9 @@ namespace WpfApp2.ViewModels
                                 else
                                 {
                                     if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
+                                    {
                                         p4.Append(" " + section.CurrentEntry.Size + " " + section.SelectedValue.Metrics + ".").Font("Times new roman").FontSize(11.0);
+                                    }
                                     else
                                     {
                                         p4.Append(" " + section.CurrentEntry.Size + "").Font("Times new roman").FontSize(11.0);
@@ -2426,7 +2482,9 @@ namespace WpfApp2.ViewModels
                             }
 
                             if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
+                            {
                                 p4.Append(section.SelectedValue.Text2).Font("Times new roman").FontSize(11.0);
+                            }
                             //if (!string.IsNullOrWhiteSpace(section.CurrentEntry.Comment))
                             //{
                             //    if (LegPart.LegSections[x].SelectedValue != null && !LegPart.LegSections[x].SelectedValue.ToNextPart)
@@ -2446,12 +2504,28 @@ namespace WpfApp2.ViewModels
                         }
 
                     }
+                    if(LegPart is ZDSVViewModel)
+                    {
+                        var section = ((ZDSVViewModel)LegPart).AdditionalStructure;
+
+                        p4.Append(".\nЗДСВ на бедре интерфасциально располагается ").Font("Times new roman").FontSize(11.0);
+
+                        if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text1))
+                        {
+
+                            p4.Append(section.SelectedValue.Text1).Font("Times new roman").FontSize(11.0);
+
+
+                        }
+                    }
                     if (LegPart is TEMPVViewModel)
                     {
                         if (x == 0)
                         {
                             if (!isNormal)
+                            {
                                 p4.Append(", протяженностью " + ((TEMPVViewModel)LegPart).FF_length + " см.").Font("Times new roman").FontSize(11.0);
+                            }
                             else
                             {
                                 p4.Append(", протяженностью " + ((TEMPVViewModel)LegPart).FF_length + " см.").Font("Times new roman").FontSize(11.0);
@@ -2460,7 +2534,9 @@ namespace WpfApp2.ViewModels
                         else
                         {
                             if (!isNormal)
+                            {
                                 p4.Append(", протяженностью " + ((TEMPVViewModel)LegPart).FF_length + " см.").Font("Times new roman").FontSize(11.0);
+                            }
                             else
                             {
                                 p4.Append(", протяженностью " + ((TEMPVViewModel)LegPart).FF_length + " см.").Font("Times new roman").FontSize(11.0);
@@ -2561,7 +2637,9 @@ namespace WpfApp2.ViewModels
 
                         }
                         if (!isNormal)
+                        {
                             p4.Append("\nКомментарий к " + name + " : " + LegPart.Comment).Font("Times new roman").FontSize(11.0);
+                        }
                         else
                         {
                             p4.Append("\nКомментарий к " + name + " : " + LegPart.Comment).Font("Times new roman").FontSize(11.0);
@@ -2572,7 +2650,8 @@ namespace WpfApp2.ViewModels
                 p4.Append(" \n").FontSize(11.0);
             }
         }
-        string GetStrFixedForDocumemnt(string str)
+
+        private string GetStrFixedForDocumemnt(string str)
         {
             List<char> chararr = str.ToCharArray().ToList();
             if (chararr[chararr.Count - 1] == '.')
@@ -2705,15 +2784,16 @@ namespace WpfApp2.ViewModels
                     }
                     p4.Append("\n\nЗаключение:\n").Font("Times new roman").Bold().FontSize(11.0);
 
-                    p4.Append("Заключение справа: ").Font("Times new roman").FontSize(11.0);
+                    p4.Append("").Font("Times new roman").FontSize(11.0);
                     int x = 0;
                     foreach (var letter in RightDiagnosisList)
                     {
                         if (letter.IsChecked != null && letter.IsChecked == true)
                         {
                             if (x == 0)
-                                p4.Append("" + FirstCharToLower(GetStrFixedForDocumemnt(letter.Data.Str)) + "").Font("Times new roman").FontSize(11.0);
-
+                            {
+                                p4.Append("" + FirstCharToUpper(GetStrFixedForDocumemnt(letter.Data.Str)) + "").Font("Times new roman").FontSize(11.0);
+                            }
                             else
                             {
                                 p4.Append(", " + letter.Data.Str).Font("Times new roman").FontSize(11.0);
@@ -2740,19 +2820,18 @@ namespace WpfApp2.ViewModels
 
                         }
                     }
+                    p4.Append(".\n").Font("Times new roman").FontSize(11.0);
 
-
-
-
-                    p4.Append("\nЗаключение слева: ").Font("Times new roman").FontSize(11.0);
+                    //p4.Append("\nЗаключение слева: ").Font("Times new roman").FontSize(11.0);
                     x = 0;
                     foreach (var letter in LeftDiagnosisList)
                     {
                         if (letter.IsChecked != null && letter.IsChecked == true)
                         {
                             if (x == 0)
-                                p4.Append("" + FirstCharToLower(GetStrFixedForDocumemnt(letter.Data.Str)) + "").Font("Times new roman").FontSize(11.0);
-
+                            {
+                                p4.Append("" + FirstCharToUpper(GetStrFixedForDocumemnt(letter.Data.Str)) + "").Font("Times new roman").FontSize(11.0);
+                            }
                             else
                             {
                                 p4.Append(", " + letter.Data.Str).Font("Times new roman").FontSize(11.0);
@@ -2776,6 +2855,7 @@ namespace WpfApp2.ViewModels
 
                         }
                     }
+                    p4.Append(".").Font("Times new roman").FontSize(11.0);
                     int ia = 0;
                     p4.Append("\n\nРекомендовано").Font("Times new roman").FontSize(11.0).Bold().UnderlineStyle(UnderlineStyle.singleLine).Append(": ").Font("Times new roman").FontSize(11.0);
                     if (RecomendationsList != null)
@@ -2785,7 +2865,9 @@ namespace WpfApp2.ViewModels
                             if (rec.IsChecked == true)
                             {
                                 if (ia == 0)
+                                {
                                     p4.Append("" + rec.Data.Str + "").Font("Times new roman").FontSize(11.0);
+                                }
                                 else
                                 { p4.Append(", " + rec.Data.Str + "").Font("Times new roman").FontSize(11.0); }
                                 ia++;
@@ -3104,7 +3186,8 @@ namespace WpfApp2.ViewModels
             }
 
         }
-        bool isEdited = false;
+
+        private bool isEdited = false;
         //private bool TestAllFIelds()
         //{
 
@@ -3326,10 +3409,14 @@ namespace WpfApp2.ViewModels
             if (LegPart.IsEmpty) { return ""; }
             string p4 = "";
             if (LegPart.SelectedWayType != null && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name) && !string.IsNullOrWhiteSpace(LegPart.SelectedWayType.Name))
+            {
                 p4 += "Вид хода: " + LegPart.SelectedWayType.Name + "\n";
-            if (LegPart is TEMPVViewModel)
-                p4 += "Протяженностью " + ((TEMPVViewModel)LegPart).FF_length + " см\n";
+            }
 
+            if (LegPart is TEMPVViewModel)
+            {
+                p4 += "Протяженностью " + ((TEMPVViewModel)LegPart).FF_length + " см\n";
+            }
 
             int x = 0;
             if (LegPart is BPVHipViewModel)
@@ -3357,7 +3444,9 @@ namespace WpfApp2.ViewModels
                         else
                         {
                             if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
+                            {
                                 p4 += " " + section.CurrentEntry.Size + "" + section.SelectedValue.Metrics + ".";
+                            }
                             else
                             {
                                 p4 += " " + section.CurrentEntry.Size + "";
@@ -3372,7 +3461,9 @@ namespace WpfApp2.ViewModels
                     }
 
                     if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
+                    {
                         p4 += "" + section.SelectedValue.Text2 + "";
+                    }
                     //if (!string.IsNullOrWhiteSpace(section.CurrentEntry.Comment))
                     //{
                     //    if (LegPart.LegSections[x].SelectedValue != null && !LegPart.LegSections[x].SelectedValue.ToNextPart)
@@ -3417,7 +3508,9 @@ namespace WpfApp2.ViewModels
                         else
                         {
                             if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
+                            {
                                 p4 += " " + section.CurrentEntry.Size + "" + section.SelectedValue.Metrics + ".";
+                            }
                             else
                             {
                                 p4 += " " + section.CurrentEntry.Size + "";
@@ -3432,7 +3525,9 @@ namespace WpfApp2.ViewModels
                     }
 
                     if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
+                    {
                         p4 += "" + section.SelectedValue.Text2 + "";
+                    }
                     //if (!string.IsNullOrWhiteSpace(section.CurrentEntry.Comment))
                     //{
                     //    if (LegPart.LegSections[x].SelectedValue != null && !LegPart.LegSections[x].SelectedValue.ToNextPart)
@@ -3477,7 +3572,9 @@ namespace WpfApp2.ViewModels
                         else
                         {
                             if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
+                            {
                                 p4 += " " + section.CurrentEntry.Size + "" + section.SelectedValue.Metrics + ".";
+                            }
                             else
                             {
                                 p4 += " " + section.CurrentEntry.Size + "";
@@ -3492,7 +3589,9 @@ namespace WpfApp2.ViewModels
                     }
 
                     if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
+                    {
                         p4 += "" + section.SelectedValue.Text2 + "";
+                    }
                     //if (!string.IsNullOrWhiteSpace(section.CurrentEntry.Comment))
                     //{
                     //    if (LegPart.LegSections[x].SelectedValue != null && !LegPart.LegSections[x].SelectedValue.ToNextPart)
@@ -3537,7 +3636,9 @@ namespace WpfApp2.ViewModels
                         else
                         {
                             if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
+                            {
                                 p4 += " " + section.CurrentEntry.Size + "" + section.SelectedValue.Metrics + ".";
+                            }
                             else
                             {
                                 p4 += " " + section.CurrentEntry.Size + "";
@@ -3552,7 +3653,9 @@ namespace WpfApp2.ViewModels
                     }
 
                     if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
+                    {
                         p4 += "" + section.SelectedValue.Text2 + "";
+                    }
                     //if (!string.IsNullOrWhiteSpace(section.CurrentEntry.Comment))
                     //{
                     //    if (LegPart.LegSections[x].SelectedValue != null && !LegPart.LegSections[x].SelectedValue.ToNextPart)
@@ -3593,6 +3696,7 @@ namespace WpfApp2.ViewModels
                                 {
                                     p4 += ", " + section.SelectedValue.Text1 + "";
                                 }
+
                                 else
                                 {
                                     p4 += " " + section.SelectedValue.Text1 + "";
@@ -3612,7 +3716,9 @@ namespace WpfApp2.ViewModels
                         else
                         {
                             if (!string.IsNullOrWhiteSpace(section.SelectedValue.Metrics))
+                            {
                                 p4 += " " + section.CurrentEntry.Size + "" + section.SelectedValue.Metrics + ".";
+                            }
                             else
                             {
                                 p4 += " " + section.CurrentEntry.Size + "";
@@ -3627,11 +3733,16 @@ namespace WpfApp2.ViewModels
                     }
 
                     if (!string.IsNullOrWhiteSpace(section.SelectedValue.Text2))
+                    {
                         p4 += "" + section.SelectedValue.Text2 + "";
+                    }
+
                     if (!string.IsNullOrWhiteSpace(section.CurrentEntry.Comment))
                     {
                         if (LegPart.LegSections[x].SelectedValue != null && !LegPart.LegSections[x].SelectedValue.ToNextPart)
+                        {
                             p4 += "\nКомментарий : " + section.CurrentEntry.Comment + "\n";
+                        }
                         else
                         {
                             p4 += "\nКомментарий : " + section.CurrentEntry.Comment;
@@ -3651,6 +3762,8 @@ namespace WpfApp2.ViewModels
                 }
                 x++;
             }
+
+
             if (!string.IsNullOrWhiteSpace(p4))
             {
                 string buff = p4[p4.Length - 1].ToString();
@@ -3769,7 +3882,15 @@ namespace WpfApp2.ViewModels
 
         }
 
-
+        public string FirstCharToUpper(string input)
+        {
+            switch (input)
+            {
+                case null: throw new ArgumentNullException(nameof(input));
+                case "": throw new ArgumentException($"{nameof(input)} cannot be empty", nameof(input));
+                default: return input.First().ToString().ToUpper() + input.Substring(1);
+            }
+        }
 
         private void SetAllBordersDefault()
         {
@@ -3794,8 +3915,7 @@ namespace WpfApp2.ViewModels
             BGVL = null;
         }
 
-
-        int togleforCreateStatement = 0;
+        private int togleforCreateStatement = 0;
         public ViewModelAddPhysical(NavigationController controller) : base(controller)
         {
             SetAllBordersDefault();
@@ -4034,34 +4154,42 @@ namespace WpfApp2.ViewModels
             Controller = controller;
             base.HasNavigation = false;
 
-            this.openDialogCommand = new RelayCommand(FinishAdding);
+            openDialogCommand = new RelayCommand(FinishAdding);
 
             LostFocusOnWeight = new DelegateCommand(
               () =>
               {
                   if (string.IsNullOrWhiteSpace(Weight))
+                  {
                       Weight = "0";
+                  }
               }
           );
             LostFocusOnGrowth = new DelegateCommand(
             () =>
             {
                 if (string.IsNullOrWhiteSpace(Growth))
+                {
                     Growth = "0";
+                }
             }
         );
             ClickOnWeight = new DelegateCommand(
                 () =>
                 {
                     if (Weight == "0")
+                    {
                         Weight = "";
+                    }
                 }
             );
             ClickOnGrowth = new DelegateCommand(
                 () =>
                 {
                     if (Growth == "0")
+                    {
                         Growth = "";
+                    }
                 }
             );
 
@@ -4833,7 +4961,9 @@ namespace WpfApp2.ViewModels
                 () =>
                 {
                     if (TextTip == "Текст пометки")
+                    {
                         TextTip = "";
+                    }
                     //Controller.NavigateTo<ViewModelCurrentPatient>();
                 }
             );
@@ -4841,7 +4971,9 @@ namespace WpfApp2.ViewModels
                 () =>
                 {
                     if (string.IsNullOrWhiteSpace(TextTip))
+                    {
                         TextTip = "Текст пометки";
+                    }
                     //Controller.NavigateTo<ViewModelCurrentPatient>();
                 }
             );
@@ -4937,82 +5069,90 @@ namespace WpfApp2.ViewModels
 
                 BPVHipEntryFullRepository BPVEntryFullRep = new BPVHipEntryFullRepository(context);
                 if (leftLegExam.BPVHip != null)
+                {
                     GetLegPartFromEntry(BPVEntryFullRep.Get(leftLegExam.BPVHip.Value), LeftBPVHip, true);
-
+                }
 
                 BPV_TibiaEntryFullRepository BPVTibiaEntryFullRep = new BPV_TibiaEntryFullRepository(context);
                 if (leftLegExam.BPVTibiaid != null)
+                {
                     GetLegPartFromEntry(BPVTibiaEntryFullRep.Get(leftLegExam.BPVTibiaid.Value), LeftBPVTibia, true);
-
-
+                }
 
                 GVEntryFullRepository GVEntryFullRep = new GVEntryFullRepository(context);
                 if (leftLegExam.GVid != null)
+                {
                     GetLegPartFromEntry(GVEntryFullRep.Get(leftLegExam.GVid.Value), LeftGV, true);
-
+                }
 
                 MPVEntryFullRepository MPVEntryFullRep = new MPVEntryFullRepository(context);
                 if (leftLegExam.MPVid != null)
+                {
                     GetLegPartFromEntry(MPVEntryFullRep.Get(leftLegExam.MPVid.Value), LeftMPV, true);
-
+                }
 
                 Perforate_hipEntryFullRepository PerforateEntryFullRep = new Perforate_hipEntryFullRepository(context);
                 if (leftLegExam.PerforateHipid != null)
+                {
                     GetLegPartFromEntry(PerforateEntryFullRep.Get(leftLegExam.PerforateHipid.Value), LeftPerforate, true);
-
-
+                }
 
                 PPVEntryFullRepository PPVEntryFullRep = new PPVEntryFullRepository(context);
                 if (leftLegExam.PPVid != null)
+                {
                     GetLegPartFromEntry(PPVEntryFullRep.Get(leftLegExam.PPVid.Value), LeftPPV, true);
-
-
+                }
 
                 SFSHipEntryFullRepository SFSEntryFullRep = new SFSHipEntryFullRepository(context);
                 if (leftLegExam.SFSid != null)
+                {
                     GetLegPartFromEntry(SFSEntryFullRep.Get(leftLegExam.SFSid.Value), LeftSFS, true);
-
+                }
 
                 SPSHipEntryFullRepository SPSEntryFullRep = new SPSHipEntryFullRepository(context);
                 if (leftLegExam.SPSid != null)
+                {
                     GetLegPartFromEntry(SPSEntryFullRep.Get(leftLegExam.SPSid.Value), LeftSPS, true);
-
-
-
+                }
 
                 TEMPVEntryFullRepository TEMPVEntryFullRep = new TEMPVEntryFullRepository(context);
                 if (leftLegExam.TEMPVid != null)
+                {
                     GetLegPartFromEntry(TEMPVEntryFullRep.Get(leftLegExam.TEMPVid.Value), LeftTEMPV, true);
-
-
+                }
 
                 Perforate_shinEntryFullRepository TibiaPerforateEntryFullRep = new Perforate_shinEntryFullRepository(context);
                 if (leftLegExam.TibiaPerforateid != null)
+                {
                     GetLegPartFromEntry(TibiaPerforateEntryFullRep.Get(leftLegExam.TibiaPerforateid.Value), LeftTibiaPerforate, true);
-
-
-
-
+                }
 
                 ZDSVEntryFullRepository ZDSVEntryFullRep = new ZDSVEntryFullRepository(context);
 
                 if (leftLegExam.ZDSVid != null)
+                {
                     GetLegPartFromEntry(ZDSVEntryFullRep.Get(leftLegExam.ZDSVid.Value), LeftZDSV, true);
-
+                }
 
                 if (leftLegExam.C != null)
+                {
                     LeftCEAR.LegSections[0].SelectedValue = LettersRep.Get(leftLegExam.C.Value);
+                }
 
                 if (leftLegExam.E != null)
+                {
                     LeftCEAR.LegSections[1].SelectedValue = LettersRep.Get(leftLegExam.E.Value);
+                }
 
                 if (leftLegExam.A != null)
+                {
                     LeftCEAR.LegSections[2].SelectedValue = LettersRep.Get(leftLegExam.A.Value);
+                }
 
                 if (leftLegExam.P != null)
+                {
                     LeftCEAR.LegSections[3].SelectedValue = LettersRep.Get(leftLegExam.P.Value);
-
-
+                }
 
                 LeftCEAR.SaveCommand.Execute();
 
@@ -5033,75 +5173,84 @@ namespace WpfApp2.ViewModels
 
 
                 if (rightLegExam.PDSVid != null)
+                {
                     GetLegPartFromEntry(PDSVEntryFullRep.Get(rightLegExam.PDSVid.Value), RightPDSV, false);
-
-
-
+                }
 
                 if (rightLegExam.BPVHip != null)
+                {
                     GetLegPartFromEntry(BPVEntryFullRep.Get(rightLegExam.BPVHip.Value), RightBPVHip, false);
-
-
+                }
 
                 if (rightLegExam.BPVTibiaid != null)
+                {
                     GetLegPartFromEntry(BPVTibiaEntryFullRep.Get(rightLegExam.BPVTibiaid.Value), RightBPVTibia, false);
-
-
-
+                }
 
                 if (rightLegExam.GVid != null)
+                {
                     GetLegPartFromEntry(GVEntryFullRep.Get(rightLegExam.GVid.Value), RightGV, false);
-
-
+                }
 
                 if (rightLegExam.MPVid != null)
+                {
                     GetLegPartFromEntry(MPVEntryFullRep.Get(rightLegExam.MPVid.Value), RightMPV, false);
-
-
+                }
 
                 if (rightLegExam.PerforateHipid != null)
+                {
                     GetLegPartFromEntry(PerforateEntryFullRep.Get(rightLegExam.PerforateHipid.Value), RightPerforate, false);
-
-
-
+                }
 
                 if (rightLegExam.PPVid != null)
+                {
                     GetLegPartFromEntry(PPVEntryFullRep.Get(rightLegExam.PPVid.Value), RightPPV, false);
-
-
+                }
 
                 if (rightLegExam.SFSid != null)
+                {
                     GetLegPartFromEntry(SFSEntryFullRep.Get(rightLegExam.SFSid.Value), RightSFS, false);
-
-
+                }
 
                 if (rightLegExam.SPSid != null)
+                {
                     GetLegPartFromEntry(SPSEntryFullRep.Get(rightLegExam.SPSid.Value), RightSPS, false);
-
-
-
-
+                }
 
                 if (rightLegExam.TEMPVid != null)
+                {
                     GetLegPartFromEntry(TEMPVEntryFullRep.Get(rightLegExam.TEMPVid.Value), RightTEMPV, false);
+                }
 
                 if (rightLegExam.TibiaPerforateid != null)
+                {
                     GetLegPartFromEntry(TibiaPerforateEntryFullRep.Get(rightLegExam.TibiaPerforateid.Value), RightTibiaPerforate, false);
+                }
 
                 if (rightLegExam.ZDSVid != null)
+                {
                     GetLegPartFromEntry(ZDSVEntryFullRep.Get(rightLegExam.ZDSVid.Value), RightZDSV, false);
+                }
 
                 if (rightLegExam.C != null)
+                {
                     RightCEAR.LegSections[0].SelectedValue = LettersRep.Get(rightLegExam.C.Value);
+                }
 
                 if (rightLegExam.E != null)
+                {
                     RightCEAR.LegSections[1].SelectedValue = LettersRep.Get(rightLegExam.E.Value);
+                }
 
                 if (rightLegExam.A != null)
+                {
                     RightCEAR.LegSections[2].SelectedValue = LettersRep.Get(rightLegExam.A.Value);
+                }
 
                 if (rightLegExam.P != null)
+                {
                     RightCEAR.LegSections[3].SelectedValue = LettersRep.Get(rightLegExam.P.Value);
+                }
 
                 RightCEAR.SaveCommand.Execute();
 
@@ -5228,7 +5377,9 @@ namespace WpfApp2.ViewModels
                 _fileNameOnly = "Консультативное_заключение.docx";
 
                 if (togleforCreateStatement == 0)
+                {
                     docName = System.IO.Path.GetTempPath() + "Консультативное_заключение" + ".docx";
+                }
                 else
                 {
                     docName = System.IO.Path.GetTempPath() + "Консультативное_заключение" + togleforCreateStatement + ".docx";
@@ -5327,9 +5478,13 @@ namespace WpfApp2.ViewModels
 
                     document.ReplaceText("«ИМТ»", ITM.ToString());
                     if (!string.IsNullOrWhiteSpace(TextTip))
+                    {
                         document.ReplaceText("«NB_»", TextTip);
+                    }
                     else
+                    {
                         document.ReplaceText("«NB_»", "");
+                    }
 
                     int day12 = DateTime.Now.Day;
                     int mnth12 = DateTime.Now.Month;
@@ -5656,34 +5811,35 @@ namespace WpfApp2.ViewModels
 
 
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightPDSV)))
+                    {
                         RightLL += "ПДСВ : " + CreateStrForOverview(RightPDSV) + "\n";
+                    }
 
                     //
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightZDSV)))
+                    {
                         RightLL += "ЗДСВ : " + CreateStrForOverview(RightZDSV) + "\n";
+                    }
 
                     //
 
 
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightPerforate)))
-
+                    {
                         RightLL += "Перфоранты бедра и несафенные вены " + CreateStrForOverview(RightPerforate) + "\n";
+                    }
 
 
                     //
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightTibiaPerforate)))
-
+                    {
                         RightLL += "Перфоранты голени : " + CreateStrForOverview(RightTibiaPerforate) + "\n";
-
+                    }
 
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(RightTEMPV)))
-
+                    {
                         RightLL += "ТЕМПВ : " + CreateStrForOverview(RightTEMPV) + "\n";
-
-
-
-
-
+                    }
 
                     document.ReplaceText("«Примечание_справа»", "Примечание: " + RightAdditionalText);
                     d.Bold = false;
@@ -5850,33 +6006,35 @@ namespace WpfApp2.ViewModels
 
 
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftPDSV)))
+                    {
                         LeftLL += "ПДСВ : " + CreateStrForOverview(LeftPDSV) + "\n";
+                    }
 
                     //
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftZDSV)))
+                    {
                         LeftLL += "ЗДСВ : " + CreateStrForOverview(LeftZDSV) + "\n";
+                    }
 
                     //
 
 
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftPerforate)))
-
+                    {
                         LeftLL += "Перфоранты бедра и несафенные вены " + CreateStrForOverview(LeftPerforate) + "\n";
+                    }
 
 
                     //
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftTibiaPerforate)))
-
+                    {
                         LeftLL += "Перфоранты голени : " + CreateStrForOverview(LeftTibiaPerforate) + "\n";
-
+                    }
 
                     if (!string.IsNullOrWhiteSpace(CreateStrForOverview(LeftTEMPV)))
-
+                    {
                         LeftLL += "ТЕМПВ : " + CreateStrForOverview(LeftTEMPV) + "\n";
-
-
-
-
+                    }
 
                     document.ReplaceText("«Примечание_слева»", "Примечание: " + LeftAdditionalText);
                     d.Bold = false;
@@ -5983,7 +6141,7 @@ namespace WpfApp2.ViewModels
             }
         }
 
-        struct SaveSet
+        private struct SaveSet
         {
             public List<string> stringList;
             public ObservableCollection<Visibility> listVisibility;
@@ -6762,7 +6920,10 @@ namespace WpfApp2.ViewModels
 
                         }
                         if (FullEntry.WayID != null)
+                        {
                             LeftPDSV.SelectedWayType = LeftPDSV.PDSVWayType.Where(s => s.Id == FullEntry.WayID).ToList()[0];
+                        }
+
                         LeftPDSV.IsEmpty = false;
                         SaveSet result = SaveViewModel(LeftPDSV);
                         PDSVLeftstr = result.stringList;
@@ -6858,7 +7019,10 @@ namespace WpfApp2.ViewModels
                         }
 
                         if (FullEntry.WayID != null)
+                        {
                             LeftBPVHip.SelectedWayType = LeftBPVHip.BpvWayType.Where(s => s.Id == FullEntry.WayID).ToList()[0];
+                        }
+
                         LeftBPVHip.IsEmpty = false;
                         SaveSet result = SaveViewModel(LeftBPVHip);
                         BpvLeftstr = result.stringList;
@@ -7081,7 +7245,9 @@ namespace WpfApp2.ViewModels
 
 
                         if (FullEntry.WayID != null)
+                        {
                             LeftMPV.SelectedWayType = LeftMPV.MPVWayType.Where(s => s.Id == FullEntry.WayID).ToList()[0];
+                        }
 
                         LeftMPV.IsEmpty = false;
                         SaveSet result = SaveViewModel(LeftMPV);
@@ -7113,7 +7279,9 @@ namespace WpfApp2.ViewModels
                         }
 
                         if (FullEntry.WayID != null)
+                        {
                             LeftTEMPV.SelectedWayType = LeftTEMPV.TEMPVWayType.Where(s => s.Id == FullEntry.WayID).ToList()[0];
+                        }
 
                         LeftTEMPV.FF_length = ((TEMPVEntryFull)FullEntry).FF_Length;
                         LeftTEMPV.IsEmpty = false;
@@ -7200,7 +7368,10 @@ namespace WpfApp2.ViewModels
 
                         }
                         if (FullEntry.WayID != null)
+                        {
                             RightPDSV.SelectedWayType = RightPDSV.PDSVWayType.Where(s => s.Id == FullEntry.WayID).ToList()[0];
+                        }
+
                         RightPDSV.IsEmpty = false;
                         SaveSet result = SaveViewModel(RightPDSV);
                         PDSVRightstr = result.stringList;
@@ -7297,7 +7468,10 @@ namespace WpfApp2.ViewModels
                         }
 
                         if (FullEntry.WayID != null)
+                        {
                             RightBPVHip.SelectedWayType = RightBPVHip.BpvWayType.Where(s => s.Id == FullEntry.WayID).ToList()[0];
+                        }
+
                         RightBPVHip.IsEmpty = false;
                         SaveSet result = SaveViewModel(RightBPVHip);
                         BpvRightstr = result.stringList;
@@ -7521,7 +7695,9 @@ namespace WpfApp2.ViewModels
 
 
                         if (FullEntry.WayID != null)
+                        {
                             RightMPV.SelectedWayType = RightMPV.MPVWayType.Where(s => s.Id == FullEntry.WayID).ToList()[0];
+                        }
 
                         RightMPV.IsEmpty = false;
                         SaveSet result = SaveViewModel(RightMPV);
@@ -7553,7 +7729,9 @@ namespace WpfApp2.ViewModels
                         }
 
                         if (FullEntry.WayID != null)
+                        {
                             RightTEMPV.SelectedWayType = RightTEMPV.TEMPVWayType.Where(s => s.Id == FullEntry.WayID).ToList()[0];
+                        }
 
                         RightTEMPV.FF_length = ((TEMPVEntryFull)FullEntry).FF_Length;
                         RightTEMPV.IsEmpty = false;
@@ -7619,11 +7797,8 @@ namespace WpfApp2.ViewModels
 
         }
 
-
-
-        int? statementOverviewId;
-
-        int? hirurgOverviewId;
+        private int? statementOverviewId;
+        private int? hirurgOverviewId;
 
         private LegPartEntries SaveFullEntry(LegPartViewModel Part, LegPartEntries FullEntry, bool isLeft, string mode)
         {
@@ -7659,7 +7834,7 @@ namespace WpfApp2.ViewModels
                 {
                     if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                     { break; }
-                    newSFSentry = (LegPartEntry)section.CurrentEntry;
+                    newSFSentry = section.CurrentEntry;
                     newSFSentry.StructureID = section.SelectedValue.Id;
 
                     //Data.Complete();
@@ -7808,7 +7983,10 @@ namespace WpfApp2.ViewModels
                 Examination Exam = Data.Examination.Get(obsid);
                 ExaminationLeg LegExam = new ExaminationLeg();
                 if (Exam == null || LegExam == null)
+                {
                     return FullEntry;
+                }
+
                 if (isLeft)
                 {
                     LegExam = Data.ExaminationLeg.Get(Exam.idLeftLegExamination.Value);
@@ -7835,7 +8013,7 @@ namespace WpfApp2.ViewModels
                         if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                         { break; }
 
-                        LegPartEntry newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                        LegPartEntry newSFSentry = Part.LegSections[i].CurrentEntry;
 
                         if (Part.LegSections[i].SelectedValue != null)
                         {
@@ -7882,7 +8060,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.PDSVHipEntries.Get(EntFullToChange.EntryId2.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
 
                             }
@@ -7905,7 +8086,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.PDSVHipEntries.Get(EntFullToChange.EntryId3.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
                             }
                         }
@@ -7928,7 +8112,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.PDSVHipEntries.Get(EntFullToChange.EntryId4.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
                             }
                         }
@@ -7950,7 +8137,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.PDSVHipEntries.Get(EntFullToChange.EntryId5.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
                             }
                         }
@@ -7972,7 +8162,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.PDSVHipEntries.Get(EntFullToChange.EntryId6.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
                             }
                         }
@@ -7998,7 +8191,7 @@ namespace WpfApp2.ViewModels
                     {
                         if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                         { break; }
-                        LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                        LegPartEntry newSFSentry = section.CurrentEntry;
                         newSFSentry.StructureID = section.SelectedValue.Id;
 
                         Data.PDSVHipEntries.Add((PDSVHipEntry)newSFSentry);
@@ -8074,7 +8267,10 @@ namespace WpfApp2.ViewModels
                             Data.Complete();
                         }
                         else
+                        {
                             EntToChange = Data.ZDSVEntries.Get(EntFullToChange.EntryId0.Value);
+                        }
+
                         LeftSFSEntryFullbuf.EntryId0 = newSFSentry.Id;
 
                     }
@@ -8093,7 +8289,7 @@ namespace WpfApp2.ViewModels
                         if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                         { break; }
 
-                        newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                        newSFSentry = Part.LegSections[i].CurrentEntry;
 
                         if (Part.LegSections[i].SelectedValue != null)
                         {
@@ -8140,7 +8336,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.ZDSVEntries.Get(EntFullToChange.EntryId2.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
 
                             }
@@ -8163,7 +8362,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.ZDSVEntries.Get(EntFullToChange.EntryId3.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
                             }
                         }
@@ -8186,7 +8388,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.ZDSVEntries.Get(EntFullToChange.EntryId4.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
                             }
                         }
@@ -8208,7 +8413,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.ZDSVEntries.Get(EntFullToChange.EntryId5.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
                             }
                         }
@@ -8230,7 +8438,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.ZDSVEntries.Get(EntFullToChange.EntryId6.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
                             }
                         }
@@ -8256,7 +8467,7 @@ namespace WpfApp2.ViewModels
                     {
                         if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                         { break; }
-                        LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                        LegPartEntry newSFSentry = section.CurrentEntry;
                         newSFSentry.StructureID = section.SelectedValue.Id;
 
                         Data.ZDSVEntries.Add((ZDSVEntry)newSFSentry);
@@ -8308,7 +8519,7 @@ namespace WpfApp2.ViewModels
                         if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                         { break; }
 
-                        LegPartEntry newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                        LegPartEntry newSFSentry = Part.LegSections[i].CurrentEntry;
 
                         if (Part.LegSections[i].SelectedValue != null)
                         {
@@ -8355,7 +8566,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.Perforate_hipEntries.Get(EntFullToChange.EntryId2.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
 
                             }
@@ -8378,7 +8592,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.Perforate_hipEntries.Get(EntFullToChange.EntryId3.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
                             }
                         }
@@ -8401,7 +8618,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.Perforate_hipEntries.Get(EntFullToChange.EntryId4.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
                             }
                         }
@@ -8423,7 +8643,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.Perforate_hipEntries.Get(EntFullToChange.EntryId5.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
                             }
                         }
@@ -8445,7 +8668,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.Perforate_hipEntries.Get(EntFullToChange.EntryId6.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
                             }
                         }
@@ -8471,7 +8697,7 @@ namespace WpfApp2.ViewModels
                     {
                         if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                         { break; }
-                        LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                        LegPartEntry newSFSentry = section.CurrentEntry;
                         newSFSentry.StructureID = section.SelectedValue.Id;
 
                         Data.Perforate_hipEntries.Add((Perforate_hipEntry)newSFSentry);
@@ -8521,7 +8747,7 @@ namespace WpfApp2.ViewModels
                         if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                         { break; }
 
-                        LegPartEntry newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                        LegPartEntry newSFSentry = Part.LegSections[i].CurrentEntry;
 
                         if (Part.LegSections[i].SelectedValue != null)
                         {
@@ -8568,7 +8794,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.Perforate_shinEntries.Get(EntFullToChange.EntryId2.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
 
                             }
@@ -8591,7 +8820,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.Perforate_shinEntries.Get(EntFullToChange.EntryId3.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
                             }
                         }
@@ -8614,7 +8846,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.Perforate_shinEntries.Get(EntFullToChange.EntryId4.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
                             }
                         }
@@ -8636,7 +8871,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.Perforate_shinEntries.Get(EntFullToChange.EntryId5.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
                             }
                         }
@@ -8658,7 +8896,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.Perforate_shinEntries.Get(EntFullToChange.EntryId6.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
                             }
                         }
@@ -8684,7 +8925,7 @@ namespace WpfApp2.ViewModels
                     {
                         if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                         { break; }
-                        LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                        LegPartEntry newSFSentry = section.CurrentEntry;
                         newSFSentry.StructureID = section.SelectedValue.Id;
 
                         Data.Perforate_shinEntries.Add((Perforate_shinEntry)newSFSentry);
@@ -8768,7 +9009,10 @@ namespace WpfApp2.ViewModels
                             Data.Complete();
                         }
                         else
+                        {
                             EntToChange = Data.BPVHipEntries.Get(EntFullToChange.EntryId0.Value);
+                        }
+
                         LeftSFSEntryFullbuf.EntryId0 = newSFSentry.Id;
 
                     }
@@ -8789,7 +9033,7 @@ namespace WpfApp2.ViewModels
                         if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                         { break; }
 
-                        newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                        newSFSentry = Part.LegSections[i].CurrentEntry;
 
                         if (Part.LegSections[i].SelectedValue != null)
                         {
@@ -8836,7 +9080,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.BPVHipEntries.Get(EntFullToChange.EntryId2.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
 
                             }
@@ -8859,7 +9106,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.BPVHipEntries.Get(EntFullToChange.EntryId3.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
                             }
                         }
@@ -8882,7 +9132,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.BPVHipEntries.Get(EntFullToChange.EntryId4.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
                             }
                         }
@@ -8904,7 +9157,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.BPVHipEntries.Get(EntFullToChange.EntryId5.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
                             }
                         }
@@ -8926,7 +9182,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.BPVHipEntries.Get(EntFullToChange.EntryId6.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
                             }
                         }
@@ -8952,7 +9211,7 @@ namespace WpfApp2.ViewModels
                     {
                         if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                         { break; }
-                        LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                        LegPartEntry newSFSentry = section.CurrentEntry;
                         newSFSentry.StructureID = section.SelectedValue.Id;
 
                         Data.BPVHipEntries.Add((BPVHipEntry)newSFSentry);
@@ -9009,7 +9268,7 @@ namespace WpfApp2.ViewModels
                         if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                         { break; }
 
-                        LegPartEntry newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                        LegPartEntry newSFSentry = Part.LegSections[i].CurrentEntry;
 
                         if (Part.LegSections[i].SelectedValue != null)
                         {
@@ -9056,7 +9315,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.SFSHipEntries.Get(EntFullToChange.EntryId2.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
 
                             }
@@ -9079,7 +9341,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.SFSHipEntries.Get(EntFullToChange.EntryId3.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
                             }
                         }
@@ -9102,7 +9367,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.SFSHipEntries.Get(EntFullToChange.EntryId4.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
                             }
                         }
@@ -9124,7 +9392,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.SFSHipEntries.Get(EntFullToChange.EntryId5.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
                             }
                         }
@@ -9146,7 +9417,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.SFSHipEntries.Get(EntFullToChange.EntryId6.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
                             }
                         }
@@ -9172,7 +9446,7 @@ namespace WpfApp2.ViewModels
                     {
                         if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                         { break; }
-                        LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                        LegPartEntry newSFSentry = section.CurrentEntry;
                         newSFSentry.StructureID = section.SelectedValue.Id;
 
                         Data.SFSHipEntries.Add((SFSHipEntry)newSFSentry);
@@ -9236,7 +9510,7 @@ namespace WpfApp2.ViewModels
                         if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                         { break; }
 
-                        LegPartEntry newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                        LegPartEntry newSFSentry = Part.LegSections[i].CurrentEntry;
 
                         if (Part.LegSections[i].SelectedValue != null)
                         {
@@ -9283,7 +9557,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.BPV_TibiaEntries.Get(EntFullToChange.EntryId2.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
 
                             }
@@ -9306,7 +9583,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.BPV_TibiaEntries.Get(EntFullToChange.EntryId3.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
                             }
                         }
@@ -9329,7 +9609,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.BPV_TibiaEntries.Get(EntFullToChange.EntryId4.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
                             }
                         }
@@ -9351,7 +9634,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.BPV_TibiaEntries.Get(EntFullToChange.EntryId5.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
                             }
                         }
@@ -9373,7 +9659,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.BPV_TibiaEntries.Get(EntFullToChange.EntryId6.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
                             }
                         }
@@ -9399,7 +9688,7 @@ namespace WpfApp2.ViewModels
                     {
                         if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                         { break; }
-                        LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                        LegPartEntry newSFSentry = section.CurrentEntry;
                         newSFSentry.StructureID = section.SelectedValue.Id;
 
                         Data.BPV_TibiaEntries.Add((BPV_TibiaEntry)newSFSentry);
@@ -9475,7 +9764,10 @@ namespace WpfApp2.ViewModels
                             Data.Complete();
                         }
                         else
+                        {
                             EntToChange = Data.SPSEntries.Get(EntFullToChange.EntryId0.Value);
+                        }
+
                         LeftSFSEntryFullbuf.EntryId0 = newSFSentry.Id;
 
                     }
@@ -9494,7 +9786,7 @@ namespace WpfApp2.ViewModels
                         if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                         { break; }
 
-                        newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                        newSFSentry = Part.LegSections[i].CurrentEntry;
 
                         if (Part.LegSections[i].SelectedValue != null)
                         {
@@ -9541,7 +9833,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.SPSEntries.Get(EntFullToChange.EntryId2.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
 
                             }
@@ -9564,7 +9859,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.SPSEntries.Get(EntFullToChange.EntryId3.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
                             }
                         }
@@ -9587,7 +9885,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.SPSEntries.Get(EntFullToChange.EntryId4.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
                             }
                         }
@@ -9609,7 +9910,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.SPSEntries.Get(EntFullToChange.EntryId5.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
                             }
                         }
@@ -9631,7 +9935,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.SPSEntries.Get(EntFullToChange.EntryId6.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
                             }
                         }
@@ -9657,7 +9964,7 @@ namespace WpfApp2.ViewModels
                     {
                         if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                         { break; }
-                        LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                        LegPartEntry newSFSentry = section.CurrentEntry;
                         newSFSentry.StructureID = section.SelectedValue.Id;
 
                         Data.SPSEntries.Add((SPSHipEntry)newSFSentry);
@@ -9715,7 +10022,7 @@ namespace WpfApp2.ViewModels
                         if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                         { break; }
 
-                        LegPartEntry newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                        LegPartEntry newSFSentry = Part.LegSections[i].CurrentEntry;
 
                         if (Part.LegSections[i].SelectedValue != null)
                         {
@@ -9762,7 +10069,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.MPVEntries.Get(EntFullToChange.EntryId2.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
 
                             }
@@ -9785,7 +10095,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.MPVEntries.Get(EntFullToChange.EntryId3.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
                             }
                         }
@@ -9808,7 +10121,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.MPVEntries.Get(EntFullToChange.EntryId4.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
                             }
                         }
@@ -9830,7 +10146,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.MPVEntries.Get(EntFullToChange.EntryId5.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
                             }
                         }
@@ -9852,7 +10171,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.MPVEntries.Get(EntFullToChange.EntryId6.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
                             }
                         }
@@ -9878,7 +10200,7 @@ namespace WpfApp2.ViewModels
                     {
                         if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                         { break; }
-                        LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                        LegPartEntry newSFSentry = section.CurrentEntry;
                         newSFSentry.StructureID = section.SelectedValue.Id;
 
                         Data.MPVEntries.Add((MPVEntry)newSFSentry);
@@ -9929,7 +10251,7 @@ namespace WpfApp2.ViewModels
                         if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                         { break; }
 
-                        LegPartEntry newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                        LegPartEntry newSFSentry = Part.LegSections[i].CurrentEntry;
 
                         if (Part.LegSections[i].SelectedValue != null)
                         {
@@ -9976,7 +10298,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.TEMPVEntries.Get(EntFullToChange.EntryId2.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
 
                             }
@@ -9999,7 +10324,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.TEMPVEntries.Get(EntFullToChange.EntryId3.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
                             }
                         }
@@ -10022,7 +10350,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.TEMPVEntries.Get(EntFullToChange.EntryId4.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
                             }
                         }
@@ -10044,7 +10375,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.TEMPVEntries.Get(EntFullToChange.EntryId5.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
                             }
                         }
@@ -10066,7 +10400,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.TEMPVEntries.Get(EntFullToChange.EntryId6.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
                             }
                         }
@@ -10092,7 +10429,7 @@ namespace WpfApp2.ViewModels
                     {
                         if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                         { break; }
-                        LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                        LegPartEntry newSFSentry = section.CurrentEntry;
                         newSFSentry.StructureID = section.SelectedValue.Id;
 
                         Data.TEMPVEntries.Add((TEMPVEntry)newSFSentry);
@@ -10144,7 +10481,7 @@ namespace WpfApp2.ViewModels
                         if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                         { break; }
 
-                        LegPartEntry newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                        LegPartEntry newSFSentry = Part.LegSections[i].CurrentEntry;
 
                         if (Part.LegSections[i].SelectedValue != null)
                         {
@@ -10191,7 +10528,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.PPVEntries.Get(EntFullToChange.EntryId2.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
 
                             }
@@ -10214,7 +10554,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.PPVEntries.Get(EntFullToChange.EntryId3.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
                             }
                         }
@@ -10237,7 +10580,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.PPVEntries.Get(EntFullToChange.EntryId4.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
                             }
                         }
@@ -10259,7 +10605,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.PPVEntries.Get(EntFullToChange.EntryId5.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
                             }
                         }
@@ -10281,7 +10630,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.PPVEntries.Get(EntFullToChange.EntryId6.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
                             }
                         }
@@ -10307,7 +10659,7 @@ namespace WpfApp2.ViewModels
                     {
                         if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                         { break; }
-                        LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                        LegPartEntry newSFSentry = section.CurrentEntry;
                         newSFSentry.StructureID = section.SelectedValue.Id;
 
                         Data.PPVEntries.Add((PPVEntry)newSFSentry);
@@ -10358,7 +10710,7 @@ namespace WpfApp2.ViewModels
                         if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                         { break; }
 
-                        LegPartEntry newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                        LegPartEntry newSFSentry = Part.LegSections[i].CurrentEntry;
 
                         if (Part.LegSections[i].SelectedValue != null)
                         {
@@ -10405,7 +10757,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.GVEntries.Get(EntFullToChange.EntryId2.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
 
                             }
@@ -10428,7 +10783,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.GVEntries.Get(EntFullToChange.EntryId3.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
                             }
                         }
@@ -10451,7 +10809,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.GVEntries.Get(EntFullToChange.EntryId4.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
                             }
                         }
@@ -10473,7 +10834,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.GVEntries.Get(EntFullToChange.EntryId5.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
                             }
                         }
@@ -10495,7 +10859,10 @@ namespace WpfApp2.ViewModels
                                     Data.Complete();
                                 }
                                 else
+                                {
                                     EntToChange = Data.GVEntries.Get(EntFullToChange.EntryId6.Value);
+                                }
+
                                 LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
                             }
                         }
@@ -10521,7 +10888,7 @@ namespace WpfApp2.ViewModels
                     {
                         if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                         { break; }
-                        LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                        LegPartEntry newSFSentry = section.CurrentEntry;
                         newSFSentry.StructureID = section.SelectedValue.Id;
 
                         Data.GVEntries.Add((GVEntry)newSFSentry);
@@ -10592,7 +10959,9 @@ namespace WpfApp2.ViewModels
                         if (aditionalStructureValue.HasDoubleSize)
                         {
                             if (!string.IsNullOrWhiteSpace(aditionalStructureValue.CurrentEntry.Comment))
+                            {
                                 bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + "*" + aditionalStructureValue.CurrentEntry.Size2 + aditionalStructureValue.SelectedValue.Metrics + ". " + aditionalStructureValue.SelectedValue.Text2 + " \nКомментарий : \"" + aditionalStructureValue.CurrentEntry.Comment + "\"");
+                            }
                             else
                             {
                                 bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + "*" + aditionalStructureValue.CurrentEntry.Size2 + aditionalStructureValue.SelectedValue.Metrics + ". " + aditionalStructureValue.SelectedValue.Text2 + "");
@@ -10602,7 +10971,9 @@ namespace WpfApp2.ViewModels
                         else
                         {
                             if (!string.IsNullOrWhiteSpace(aditionalStructureValue.CurrentEntry.Comment))
+                            {
                                 bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + aditionalStructureValue.SelectedValue.Metrics + ". " + aditionalStructureValue.SelectedValue.Text2 + " \nКомментарий : \"" + aditionalStructureValue.CurrentEntry.Comment + "\"");
+                            }
                             else
                             {
                                 bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + aditionalStructureValue.SelectedValue.Metrics + ". " + aditionalStructureValue.SelectedValue.Text2 + "");
@@ -10614,7 +10985,9 @@ namespace WpfApp2.ViewModels
                     else
                     {
                         if (!string.IsNullOrWhiteSpace(aditionalStructureValue.CurrentEntry.Comment))
+                        {
                             bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.SelectedValue.Text2 + " \nКомментарий : \"" + aditionalStructureValue.CurrentEntry.Comment + "\"");
+                        }
                         else
                         {
                             bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.SelectedValue.Text2 + "");
@@ -10645,7 +11018,9 @@ namespace WpfApp2.ViewModels
                         if (aditionalStructureValue.HasDoubleSize)
                         {
                             if (!string.IsNullOrWhiteSpace(aditionalStructureValue.CurrentEntry.Comment))
+                            {
                                 bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + "*" + aditionalStructureValue.CurrentEntry.Size2 + aditionalStructureValue.SelectedValue.Metrics + ". " + aditionalStructureValue.SelectedValue.Text2 + " \nКомментарий : \"" + aditionalStructureValue.CurrentEntry.Comment + "\"");
+                            }
                             else
                             {
                                 bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + "*" + aditionalStructureValue.CurrentEntry.Size2 + aditionalStructureValue.SelectedValue.Metrics + ". " + aditionalStructureValue.SelectedValue.Text2 + "");
@@ -10655,7 +11030,9 @@ namespace WpfApp2.ViewModels
                         else
                         {
                             if (!string.IsNullOrWhiteSpace(aditionalStructureValue.CurrentEntry.Comment))
+                            {
                                 bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + aditionalStructureValue.SelectedValue.Metrics + ". " + aditionalStructureValue.SelectedValue.Text2 + " \nКомментарий : \"" + aditionalStructureValue.CurrentEntry.Comment + "\"");
+                            }
                             else
                             {
                                 bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + aditionalStructureValue.SelectedValue.Metrics + ". " + aditionalStructureValue.SelectedValue.Text2 + "");
@@ -10667,7 +11044,9 @@ namespace WpfApp2.ViewModels
                     else
                     {
                         if (!string.IsNullOrWhiteSpace(aditionalStructureValue.CurrentEntry.Comment))
+                        {
                             bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.SelectedValue.Text2 + " \nКомментарий : \"" + aditionalStructureValue.CurrentEntry.Comment + "\"");
+                        }
                         else
                         {
                             bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.SelectedValue.Text2 + "");
@@ -10699,7 +11078,9 @@ namespace WpfApp2.ViewModels
                         if (aditionalStructureValue.HasDoubleSize)
                         {
                             if (!string.IsNullOrWhiteSpace(aditionalStructureValue.CurrentEntry.Comment))
+                            {
                                 bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + "*" + aditionalStructureValue.CurrentEntry.Size2 + aditionalStructureValue.SelectedValue.Metrics + ". " + aditionalStructureValue.SelectedValue.Text2 + " \nКомментарий : \"" + aditionalStructureValue.CurrentEntry.Comment + "\"");
+                            }
                             else
                             {
                                 bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + "*" + aditionalStructureValue.CurrentEntry.Size2 + aditionalStructureValue.SelectedValue.Metrics + ". " + aditionalStructureValue.SelectedValue.Text2 + "");
@@ -10709,7 +11090,9 @@ namespace WpfApp2.ViewModels
                         else
                         {
                             if (!string.IsNullOrWhiteSpace(aditionalStructureValue.CurrentEntry.Comment))
+                            {
                                 bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + aditionalStructureValue.SelectedValue.Metrics + ". " + aditionalStructureValue.SelectedValue.Text2 + " \nКомментарий : \"" + aditionalStructureValue.CurrentEntry.Comment + "\"");
+                            }
                             else
                             {
                                 bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + aditionalStructureValue.SelectedValue.Metrics + ". " + aditionalStructureValue.SelectedValue.Text2 + "");
@@ -10721,7 +11104,9 @@ namespace WpfApp2.ViewModels
                     else
                     {
                         if (!string.IsNullOrWhiteSpace(aditionalStructureValue.CurrentEntry.Comment))
+                        {
                             bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.SelectedValue.Text2 + " \nКомментарий : \"" + aditionalStructureValue.CurrentEntry.Comment + "\"");
+                        }
                         else
                         {
                             bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.SelectedValue.Text2 + "");
@@ -10752,7 +11137,9 @@ namespace WpfApp2.ViewModels
                         if (aditionalStructureValue.HasDoubleSize)
                         {
                             if (!string.IsNullOrWhiteSpace(aditionalStructureValue.CurrentEntry.Comment))
+                            {
                                 bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + "*" + aditionalStructureValue.CurrentEntry.Size2 + aditionalStructureValue.SelectedValue.Metrics + ". " + aditionalStructureValue.SelectedValue.Text2 + " \nКомментарий : \"" + aditionalStructureValue.CurrentEntry.Comment + "\"");
+                            }
                             else
                             {
                                 bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + "*" + aditionalStructureValue.CurrentEntry.Size2 + aditionalStructureValue.SelectedValue.Metrics + ". " + aditionalStructureValue.SelectedValue.Text2 + "");
@@ -10762,7 +11149,9 @@ namespace WpfApp2.ViewModels
                         else
                         {
                             if (!string.IsNullOrWhiteSpace(aditionalStructureValue.CurrentEntry.Comment))
+                            {
                                 bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + aditionalStructureValue.SelectedValue.Metrics + ". " + aditionalStructureValue.SelectedValue.Text2 + " \nКомментарий : \"" + aditionalStructureValue.CurrentEntry.Comment + "\"");
+                            }
                             else
                             {
                                 bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.CurrentEntry.Size + aditionalStructureValue.SelectedValue.Metrics + ". " + aditionalStructureValue.SelectedValue.Text2 + "");
@@ -10774,7 +11163,9 @@ namespace WpfApp2.ViewModels
                     else
                     {
                         if (!string.IsNullOrWhiteSpace(aditionalStructureValue.CurrentEntry.Comment))
+                        {
                             bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.SelectedValue.Text2 + " \nКомментарий : \"" + aditionalStructureValue.CurrentEntry.Comment + "\"");
+                        }
                         else
                         {
                             bufBpvLeftStr.Add(aditionalStructureValue.SelectedValue.Text1 + " " + aditionalStructureValue.SelectedValue.Text2 + "");
@@ -10804,7 +11195,9 @@ namespace WpfApp2.ViewModels
                         if (sender.LegSections[i].HasDoubleSize)
                         {
                             if (!string.IsNullOrWhiteSpace(sender.LegSections[i].CurrentEntry.Comment))
+                            {
                                 bufBpvLeftStr.Add(sender.LegSections[i].SelectedValue.Text1 + " " + sender.LegSections[i].CurrentEntry.Size + "*" + sender.LegSections[i].CurrentEntry.Size2 + sender.LegSections[i].SelectedValue.Metrics + ". " + sender.LegSections[i].SelectedValue.Text2 + " \nКомментарий : \"" + sender.LegSections[i].CurrentEntry.Comment + "\"");
+                            }
                             else
                             {
                                 bufBpvLeftStr.Add(sender.LegSections[i].SelectedValue.Text1 + " " + sender.LegSections[i].CurrentEntry.Size + "*" + sender.LegSections[i].CurrentEntry.Size2 + sender.LegSections[i].SelectedValue.Metrics + ". " + sender.LegSections[i].SelectedValue.Text2 + "");
@@ -10814,7 +11207,9 @@ namespace WpfApp2.ViewModels
                         else
                         {
                             if (!string.IsNullOrWhiteSpace(sender.LegSections[i].CurrentEntry.Comment))
+                            {
                                 bufBpvLeftStr.Add(sender.LegSections[i].SelectedValue.Text1 + " " + sender.LegSections[i].CurrentEntry.Size + sender.LegSections[i].SelectedValue.Metrics + ". " + sender.LegSections[i].SelectedValue.Text2 + " \nКомментарий : \"" + sender.LegSections[i].CurrentEntry.Comment + "\"");
+                            }
                             else
                             {
                                 bufBpvLeftStr.Add(sender.LegSections[i].SelectedValue.Text1 + " " + sender.LegSections[i].CurrentEntry.Size + sender.LegSections[i].SelectedValue.Metrics + ". " + sender.LegSections[i].SelectedValue.Text2 + "");
@@ -10826,7 +11221,9 @@ namespace WpfApp2.ViewModels
                     else
                     {
                         if (!string.IsNullOrWhiteSpace(sender.LegSections[i].CurrentEntry.Comment))
+                        {
                             bufBpvLeftStr.Add(sender.LegSections[i].SelectedValue.Text1 + " " + sender.LegSections[i].SelectedValue.Text2 + " \nКомментарий : \"" + sender.LegSections[i].CurrentEntry.Comment + "\"");
+                        }
                         else
                         {
                             bufBpvLeftStr.Add(sender.LegSections[i].SelectedValue.Text1 + " " + sender.LegSections[i].SelectedValue.Text2 + "");
@@ -10935,7 +11332,7 @@ namespace WpfApp2.ViewModels
         }
 
         public string mode;
-        bool isDelayStarted = false;
+        private bool isDelayStarted = false;
         private void Clear(object sender, object data)
         {
             TextOfEndBtn = "Завершить обследование";
@@ -11231,9 +11628,13 @@ namespace WpfApp2.ViewModels
             for (int i = 0; i < LeftTEMPV.LevelCount; i++)
             {
                 if (i != 0)
+                {
                     LeftTEMPV.LegSections.Add(new TEMPVSectionViewModel(Controller, LeftTEMPV.LegSections[i - 1], i + 1));
+                }
                 else
+                {
                     LeftTEMPV.LegSections.Add(new TEMPVSectionViewModel(Controller, null, i + 1));
+                }
             }
             RightTEMPV.FF_length = 0;
             RightTEMPV.IsEmpty = true;
@@ -11241,9 +11642,13 @@ namespace WpfApp2.ViewModels
             for (int i = 0; i < LeftTEMPV.LevelCount; i++)
             {
                 if (i != 0)
+                {
                     RightTEMPV.LegSections.Add(new TEMPVSectionViewModel(Controller, RightTEMPV.LegSections[i - 1], i + 1));
+                }
                 else
+                {
                     RightTEMPV.LegSections.Add(new TEMPVSectionViewModel(Controller, null, i + 1));
+                }
             }
 
 
@@ -11255,9 +11660,13 @@ namespace WpfApp2.ViewModels
             for (int i = 0; i < LeftMPV.LevelCount; i++)
             {
                 if (i != 0)
+                {
                     LeftMPV.LegSections.Add(new MPVSectionViewModel(Controller, LeftMPV.LegSections[i - 1], i + 1));
+                }
                 else
+                {
                     LeftMPV.LegSections.Add(new MPVSectionViewModel(Controller, null, i + 1));
+                }
             }
             RightMPV.Comment = "";
             RightMPV.IsEmpty = true;
@@ -11265,9 +11674,13 @@ namespace WpfApp2.ViewModels
             for (int i = 0; i < LeftMPV.LevelCount; i++)
             {
                 if (i != 0)
+                {
                     RightMPV.LegSections.Add(new MPVSectionViewModel(Controller, RightMPV.LegSections[i - 1], i + 1));
+                }
                 else
+                {
                     RightMPV.LegSections.Add(new MPVSectionViewModel(Controller, null, i + 1));
+                }
             }
             LeftZDSV.AdditionalStructure = new ZDSVAdditionalSectionViewModel(Controller, null, 0);
             LeftZDSV.Comment = "";
@@ -11276,9 +11689,13 @@ namespace WpfApp2.ViewModels
             for (int i = 0; i < LeftZDSV.LevelCount; i++)
             {
                 if (i != 0)
+                {
                     LeftZDSV.LegSections.Add(new ZDSVSectionViewModel(Controller, LeftZDSV.LegSections[i - 1], i + 1));
+                }
                 else
+                {
                     LeftZDSV.LegSections.Add(new ZDSVSectionViewModel(Controller, null, i + 1));
+                }
             }
             RightZDSV.AdditionalStructure = new ZDSVAdditionalSectionViewModel(Controller, null, 0);
             RightZDSV.Comment = "";
@@ -11287,9 +11704,13 @@ namespace WpfApp2.ViewModels
             for (int i = 0; i < LeftZDSV.LevelCount; i++)
             {
                 if (i != 0)
+                {
                     RightZDSV.LegSections.Add(new ZDSVSectionViewModel(Controller, RightZDSV.LegSections[i - 1], i + 1));
+                }
                 else
+                {
                     RightZDSV.LegSections.Add(new ZDSVSectionViewModel(Controller, null, i + 1));
+                }
             }
 
 
@@ -11299,9 +11720,13 @@ namespace WpfApp2.ViewModels
             for (int i = 0; i < LeftTibiaPerforate.LevelCount; i++)
             {
                 if (i != 0)
+                {
                     LeftTibiaPerforate.LegSections.Add(new TibiaPerforateSectionViewModel(Controller, LeftTibiaPerforate.LegSections[i - 1], i + 1));
+                }
                 else
+                {
                     LeftTibiaPerforate.LegSections.Add(new TibiaPerforateSectionViewModel(Controller, null, i + 1));
+                }
             }
             RightTibiaPerforate.Comment = "";
             RightTibiaPerforate.IsEmpty = true;
@@ -11309,9 +11734,13 @@ namespace WpfApp2.ViewModels
             for (int i = 0; i < LeftTibiaPerforate.LevelCount; i++)
             {
                 if (i != 0)
+                {
                     RightTibiaPerforate.LegSections.Add(new TibiaPerforateSectionViewModel(Controller, RightTibiaPerforate.LegSections[i - 1], i + 1));
+                }
                 else
+                {
                     RightTibiaPerforate.LegSections.Add(new TibiaPerforateSectionViewModel(Controller, null, i + 1));
+                }
             }
 
 
@@ -11322,9 +11751,13 @@ namespace WpfApp2.ViewModels
             for (int i = 0; i < LeftSPS.LevelCount; i++)
             {
                 if (i != 0)
+                {
                     LeftSPS.LegSections.Add(new SPSSectionViewModel(Controller, LeftSPS.LegSections[i - 1], i + 1));
+                }
                 else
+                {
                     LeftSPS.LegSections.Add(new SPSSectionViewModel(Controller, null, i + 1));
+                }
             }
             RightSPS.Comment = "";
             RightSPS.IsEmpty = true;
@@ -11333,9 +11766,13 @@ namespace WpfApp2.ViewModels
             for (int i = 0; i < LeftSPS.LevelCount; i++)
             {
                 if (i != 0)
+                {
                     RightSPS.LegSections.Add(new SPSSectionViewModel(Controller, RightSPS.LegSections[i - 1], i + 1));
+                }
                 else
+                {
                     RightSPS.LegSections.Add(new SPSSectionViewModel(Controller, null, i + 1));
+                }
             }
 
 
@@ -11346,9 +11783,13 @@ namespace WpfApp2.ViewModels
             for (int i = 0; i < LeftSFS.LevelCount; i++)
             {
                 if (i != 0)
+                {
                     LeftSFS.LegSections.Add(new SFSSectionViewModel(Controller, LeftSFS.LegSections[i - 1], i + 1));
+                }
                 else
+                {
                     LeftSFS.LegSections.Add(new SFSSectionViewModel(Controller, null, i + 1));
+                }
             }
             RightSFS.Comment = "";
             RightSFS.IsEmpty = true;
@@ -11356,9 +11797,13 @@ namespace WpfApp2.ViewModels
             for (int i = 0; i < LeftSFS.LevelCount; i++)
             {
                 if (i != 0)
+                {
                     RightSFS.LegSections.Add(new SFSSectionViewModel(Controller, RightSFS.LegSections[i - 1], i + 1));
+                }
                 else
+                {
                     RightSFS.LegSections.Add(new SFSSectionViewModel(Controller, null, i + 1));
+                }
             }
 
             LeftPDSV.Comment = "";
@@ -11368,9 +11813,13 @@ namespace WpfApp2.ViewModels
             for (int i = 0; i < LeftPDSV.LevelCount; i++)
             {
                 if (i != 0)
+                {
                     LeftPDSV.LegSections.Add(new PDSVSectionViewModel(Controller, LeftPDSV.LegSections[i - 1], i + 1));
+                }
                 else
+                {
                     LeftPDSV.LegSections.Add(new PDSVSectionViewModel(Controller, null, i + 1));
+                }
             }
             LeftPDSV.AdditionalStructure = new PDSVAdditionalSectionViewModel(Controller, null, 0);
             RightPDSV.Comment = "";
@@ -11379,9 +11828,13 @@ namespace WpfApp2.ViewModels
             for (int i = 0; i < LeftPDSV.LevelCount; i++)
             {
                 if (i != 0)
+                {
                     RightPDSV.LegSections.Add(new PDSVSectionViewModel(Controller, RightPDSV.LegSections[i - 1], i + 1));
+                }
                 else
+                {
                     RightPDSV.LegSections.Add(new PDSVSectionViewModel(Controller, null, i + 1));
+                }
             }
             RightPDSV.AdditionalStructure = new PDSVAdditionalSectionViewModel(Controller, null, 0);
 
@@ -11391,9 +11844,13 @@ namespace WpfApp2.ViewModels
             for (int i = 0; i < LeftGV.LevelCount; i++)
             {
                 if (i != 0)
+                {
                     LeftGV.LegSections.Add(new GVSectionViewModel(Controller, LeftGV.LegSections[i - 1], i + 1));
+                }
                 else
+                {
                     LeftGV.LegSections.Add(new GVSectionViewModel(Controller, null, i + 1));
+                }
             }
             RightGV.Comment = "";
             RightGV.IsEmpty = true;
@@ -11401,9 +11858,13 @@ namespace WpfApp2.ViewModels
             for (int i = 0; i < LeftGV.LevelCount; i++)
             {
                 if (i != 0)
+                {
                     RightGV.LegSections.Add(new GVSectionViewModel(Controller, RightGV.LegSections[i - 1], i + 1));
+                }
                 else
+                {
                     RightGV.LegSections.Add(new GVSectionViewModel(Controller, null, i + 1));
+                }
             }
 
 
@@ -11415,9 +11876,13 @@ namespace WpfApp2.ViewModels
             for (int i = 0; i < LeftPPV.LevelCount; i++)
             {
                 if (i != 0)
+                {
                     LeftPPV.LegSections.Add(new PPVSectionViewModel(Controller, LeftPPV.LegSections[i - 1], i + 1));
+                }
                 else
+                {
                     LeftPPV.LegSections.Add(new PPVSectionViewModel(Controller, null, i + 1));
+                }
             }
             RightPPV.Comment = "";
             RightPPV.IsEmpty = true;
@@ -11425,9 +11890,13 @@ namespace WpfApp2.ViewModels
             for (int i = 0; i < LeftPPV.LevelCount; i++)
             {
                 if (i != 0)
+                {
                     RightPPV.LegSections.Add(new PPVSectionViewModel(Controller, RightPPV.LegSections[i - 1], i + 1));
+                }
                 else
+                {
                     RightPPV.LegSections.Add(new PPVSectionViewModel(Controller, null, i + 1));
+                }
             }
 
 
@@ -11438,9 +11907,13 @@ namespace WpfApp2.ViewModels
             for (int i = 0; i < LeftPerforate.LevelCount; i++)
             {
                 if (i != 0)
+                {
                     LeftPerforate.LegSections.Add(new HipPerforateSectionViewModel(Controller, LeftPerforate.LegSections[i - 1], i + 1));
+                }
                 else
+                {
                     LeftPerforate.LegSections.Add(new HipPerforateSectionViewModel(Controller, null, i + 1));
+                }
             }
             RightPerforate.Comment = "";
             RightPerforate.IsEmpty = true;
@@ -11448,9 +11921,13 @@ namespace WpfApp2.ViewModels
             for (int i = 0; i < LeftPerforate.LevelCount; i++)
             {
                 if (i != 0)
+                {
                     RightPerforate.LegSections.Add(new HipPerforateSectionViewModel(Controller, RightPerforate.LegSections[i - 1], i + 1));
+                }
                 else
+                {
                     RightPerforate.LegSections.Add(new HipPerforateSectionViewModel(Controller, null, i + 1));
+                }
             }
 
 
@@ -11461,9 +11938,13 @@ namespace WpfApp2.ViewModels
             for (int i = 0; i < LeftBPVTibia.LevelCount; i++)
             {
                 if (i != 0)
+                {
                     LeftBPVTibia.LegSections.Add(new BPVTibiaSectionViewModel(Controller, LeftBPVTibia.LegSections[i - 1], i + 1));
+                }
                 else
+                {
                     LeftBPVTibia.LegSections.Add(new BPVTibiaSectionViewModel(Controller, null, i + 1));
+                }
             }
             RightBPVTibia.Comment = "";
             RightBPVTibia.IsEmpty = true;
@@ -11471,9 +11952,13 @@ namespace WpfApp2.ViewModels
             for (int i = 0; i < LeftBPVTibia.LevelCount; i++)
             {
                 if (i != 0)
+                {
                     RightBPVTibia.LegSections.Add(new BPVTibiaSectionViewModel(Controller, RightBPVTibia.LegSections[i - 1], i + 1));
+                }
                 else
+                {
                     RightBPVTibia.LegSections.Add(new BPVTibiaSectionViewModel(Controller, null, i + 1));
+                }
             }
 
 
@@ -11486,9 +11971,13 @@ namespace WpfApp2.ViewModels
             for (int i = 0; i < LeftBPVHip.LevelCount; i++)
             {
                 if (i != 0)
+                {
                     LeftBPVHip.LegSections.Add(new BPVHipSectionViewModel(Controller, LeftBPVHip.LegSections[i - 1], i + 1));
+                }
                 else
+                {
                     LeftBPVHip.LegSections.Add(new BPVHipSectionViewModel(Controller, null, i + 1));
+                }
             }
             LeftBPVHip.AdditionalStructure = new BPVHipAdditionalSectionViewModel(Controller, null, 0);
             RightBPVHip.Comment = "";
@@ -11497,9 +11986,13 @@ namespace WpfApp2.ViewModels
             for (int i = 0; i < LeftBPVHip.LevelCount; i++)
             {
                 if (i != 0)
+                {
                     RightBPVHip.LegSections.Add(new BPVHipSectionViewModel(Controller, RightBPVHip.LegSections[i - 1], i + 1));
+                }
                 else
+                {
                     RightBPVHip.LegSections.Add(new BPVHipSectionViewModel(Controller, null, i + 1));
+                }
             }
             RightBPVHip.AdditionalStructure = new BPVHipAdditionalSectionViewModel(Controller, null, 0);
             LeftAdditionalText = "";
@@ -11511,11 +12004,14 @@ namespace WpfApp2.ViewModels
             testThread = true;
             var acc = Data.Accaunt.Get(Acc_id);
             if (!isDelayStarted && (acc.isSecretar == null || !acc.isSecretar.Value))
+            {
                 DelayTest();
+            }
 
             isEdited = false;
         }
-        bool testThread = false;
+
+        private bool testThread = false;
         private void RemoveAllSaves()
         {
 
@@ -11625,7 +12121,10 @@ namespace WpfApp2.ViewModels
                         Data.Complete();
                     }
                     else
+                    {
                         EntToChange = Data.PDSVHipEntries.Get(EntFullToChange.EntryId0.Value);
+                    }
+
                     LeftSFSEntryFullbuf.EntryId0 = newSFSentry.Id;
 
                 }
@@ -11650,7 +12149,7 @@ namespace WpfApp2.ViewModels
                     if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                     { break; }
 
-                    newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                    newSFSentry = Part.LegSections[i].CurrentEntry;
 
                     if (Part.LegSections[i].SelectedValue != null)
                     {
@@ -11697,7 +12196,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.PDSVHipEntries.Get(EntFullToChange.EntryId2.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
 
                         }
@@ -11720,7 +12222,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.PDSVHipEntries.Get(EntFullToChange.EntryId3.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
                         }
                     }
@@ -11743,7 +12248,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.PDSVHipEntries.Get(EntFullToChange.EntryId4.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
                         }
                     }
@@ -11765,7 +12273,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.PDSVHipEntries.Get(EntFullToChange.EntryId5.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
                         }
                     }
@@ -11787,7 +12298,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.PDSVHipEntries.Get(EntFullToChange.EntryId6.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
                         }
                     }
@@ -11835,7 +12349,7 @@ namespace WpfApp2.ViewModels
                 {
                     if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                     { break; }
-                    newSFSentry = (LegPartEntry)section.CurrentEntry;
+                    newSFSentry = section.CurrentEntry;
                     newSFSentry.StructureID = section.SelectedValue.Id;
 
                     Data.PDSVHipEntries.Add((PDSVHipEntry)newSFSentry);
@@ -11913,7 +12427,10 @@ namespace WpfApp2.ViewModels
                         Data.Complete();
                     }
                     else
+                    {
                         EntToChange = Data.ZDSVEntries.Get(EntFullToChange.EntryId0.Value);
+                    }
+
                     LeftSFSEntryFullbuf.EntryId0 = newSFSentry.Id;
 
                 }
@@ -11931,7 +12448,7 @@ namespace WpfApp2.ViewModels
                     if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                     { break; }
 
-                    newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                    newSFSentry = Part.LegSections[i].CurrentEntry;
 
                     if (Part.LegSections[i].SelectedValue != null)
                     {
@@ -11978,7 +12495,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.ZDSVEntries.Get(EntFullToChange.EntryId2.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
 
                         }
@@ -12001,7 +12521,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.ZDSVEntries.Get(EntFullToChange.EntryId3.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
                         }
                     }
@@ -12024,7 +12547,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.ZDSVEntries.Get(EntFullToChange.EntryId4.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
                         }
                     }
@@ -12046,7 +12572,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.ZDSVEntries.Get(EntFullToChange.EntryId5.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
                         }
                     }
@@ -12068,7 +12597,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.ZDSVEntries.Get(EntFullToChange.EntryId6.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
                         }
                     }
@@ -12124,7 +12656,7 @@ namespace WpfApp2.ViewModels
                 {
                     if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                     { break; }
-                    newSFSentry = (LegPartEntry)section.CurrentEntry;
+                    newSFSentry = section.CurrentEntry;
                     newSFSentry.StructureID = section.SelectedValue.Id;
 
                     Data.ZDSVEntries.Add((ZDSVEntry)newSFSentry);
@@ -12176,7 +12708,7 @@ namespace WpfApp2.ViewModels
                     if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                     { break; }
 
-                    LegPartEntry newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                    LegPartEntry newSFSentry = Part.LegSections[i].CurrentEntry;
 
                     if (Part.LegSections[i].SelectedValue != null)
                     {
@@ -12223,7 +12755,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.Perforate_hipEntries.Get(EntFullToChange.EntryId2.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
 
                         }
@@ -12246,7 +12781,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.Perforate_hipEntries.Get(EntFullToChange.EntryId3.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
                         }
                     }
@@ -12269,7 +12807,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.Perforate_hipEntries.Get(EntFullToChange.EntryId4.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
                         }
                     }
@@ -12291,7 +12832,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.Perforate_hipEntries.Get(EntFullToChange.EntryId5.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
                         }
                     }
@@ -12313,7 +12857,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.Perforate_hipEntries.Get(EntFullToChange.EntryId6.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
                         }
                     }
@@ -12339,7 +12886,7 @@ namespace WpfApp2.ViewModels
                 {
                     if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                     { break; }
-                    LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                    LegPartEntry newSFSentry = section.CurrentEntry;
                     newSFSentry.StructureID = section.SelectedValue.Id;
 
                     Data.Perforate_hipEntries.Add((Perforate_hipEntry)newSFSentry);
@@ -12389,7 +12936,7 @@ namespace WpfApp2.ViewModels
                     if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                     { break; }
 
-                    LegPartEntry newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                    LegPartEntry newSFSentry = Part.LegSections[i].CurrentEntry;
 
                     if (Part.LegSections[i].SelectedValue != null)
                     {
@@ -12436,7 +12983,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.Perforate_shinEntries.Get(EntFullToChange.EntryId2.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
 
                         }
@@ -12459,7 +13009,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.Perforate_shinEntries.Get(EntFullToChange.EntryId3.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
                         }
                     }
@@ -12482,7 +13035,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.Perforate_shinEntries.Get(EntFullToChange.EntryId4.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
                         }
                     }
@@ -12504,7 +13060,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.Perforate_shinEntries.Get(EntFullToChange.EntryId5.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
                         }
                     }
@@ -12526,7 +13085,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.Perforate_shinEntries.Get(EntFullToChange.EntryId6.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
                         }
                     }
@@ -12552,7 +13114,7 @@ namespace WpfApp2.ViewModels
                 {
                     if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                     { break; }
-                    LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                    LegPartEntry newSFSentry = section.CurrentEntry;
                     newSFSentry.StructureID = section.SelectedValue.Id;
 
                     Data.Perforate_shinEntries.Add((Perforate_shinEntry)newSFSentry);
@@ -12638,7 +13200,10 @@ namespace WpfApp2.ViewModels
                         Data.Complete();
                     }
                     else
+                    {
                         EntToChange = Data.BPVHipEntries.Get(EntFullToChange.EntryId0.Value);
+                    }
+
                     LeftSFSEntryFullbuf.EntryId0 = newSFSentry.Id;
 
                 }
@@ -12658,7 +13223,7 @@ namespace WpfApp2.ViewModels
                     if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                     { break; }
 
-                    newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                    newSFSentry = Part.LegSections[i].CurrentEntry;
 
                     if (Part.LegSections[i].SelectedValue != null)
                     {
@@ -12705,7 +13270,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.BPVHipEntries.Get(EntFullToChange.EntryId2.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
 
                         }
@@ -12728,7 +13296,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.BPVHipEntries.Get(EntFullToChange.EntryId3.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
                         }
                     }
@@ -12751,7 +13322,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.BPVHipEntries.Get(EntFullToChange.EntryId4.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
                         }
                     }
@@ -12773,7 +13347,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.BPVHipEntries.Get(EntFullToChange.EntryId5.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
                         }
                     }
@@ -12796,7 +13373,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.BPVHipEntries.Get(EntFullToChange.EntryId6.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
                         }
                     }
@@ -12864,7 +13444,7 @@ namespace WpfApp2.ViewModels
                 {
                     if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                     { break; }
-                    newSFSentry = (LegPartEntry)section.CurrentEntry;
+                    newSFSentry = section.CurrentEntry;
                     newSFSentry.StructureID = section.SelectedValue.Id;
 
                     Data.BPVHipEntries.Add((BPVHipEntry)newSFSentry);
@@ -12924,7 +13504,7 @@ namespace WpfApp2.ViewModels
                     if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                     { break; }
 
-                    LegPartEntry newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                    LegPartEntry newSFSentry = Part.LegSections[i].CurrentEntry;
 
                     if (Part.LegSections[i].SelectedValue != null)
                     {
@@ -12971,7 +13551,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.SFSHipEntries.Get(EntFullToChange.EntryId2.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
 
                         }
@@ -12994,7 +13577,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.SFSHipEntries.Get(EntFullToChange.EntryId3.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
                         }
                     }
@@ -13017,7 +13603,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.SFSHipEntries.Get(EntFullToChange.EntryId4.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
                         }
                     }
@@ -13039,7 +13628,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.SFSHipEntries.Get(EntFullToChange.EntryId5.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
                         }
                     }
@@ -13061,7 +13653,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.SFSHipEntries.Get(EntFullToChange.EntryId6.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
                         }
                     }
@@ -13087,7 +13682,7 @@ namespace WpfApp2.ViewModels
                 {
                     if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                     { break; }
-                    LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                    LegPartEntry newSFSentry = section.CurrentEntry;
                     newSFSentry.StructureID = section.SelectedValue.Id;
 
                     Data.SFSHipEntries.Add((SFSHipEntry)newSFSentry);
@@ -13151,7 +13746,7 @@ namespace WpfApp2.ViewModels
                     if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                     { break; }
 
-                    LegPartEntry newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                    LegPartEntry newSFSentry = Part.LegSections[i].CurrentEntry;
 
                     if (Part.LegSections[i].SelectedValue != null)
                     {
@@ -13198,7 +13793,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.BPV_TibiaEntries.Get(EntFullToChange.EntryId2.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
 
                         }
@@ -13221,7 +13819,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.BPV_TibiaEntries.Get(EntFullToChange.EntryId3.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
                         }
                     }
@@ -13244,7 +13845,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.BPV_TibiaEntries.Get(EntFullToChange.EntryId4.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
                         }
                     }
@@ -13266,7 +13870,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.BPV_TibiaEntries.Get(EntFullToChange.EntryId5.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
                         }
                     }
@@ -13288,7 +13895,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.BPV_TibiaEntries.Get(EntFullToChange.EntryId6.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
                         }
                     }
@@ -13314,7 +13924,7 @@ namespace WpfApp2.ViewModels
                 {
                     if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                     { break; }
-                    LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                    LegPartEntry newSFSentry = section.CurrentEntry;
                     newSFSentry.StructureID = section.SelectedValue.Id;
 
                     Data.BPV_TibiaEntries.Add((BPV_TibiaEntry)newSFSentry);
@@ -13392,7 +14002,10 @@ namespace WpfApp2.ViewModels
                         Data.Complete();
                     }
                     else
+                    {
                         EntToChange = Data.SPSEntries.Get(EntFullToChange.EntryId0.Value);
+                    }
+
                     LeftSFSEntryFullbuf.EntryId0 = newSFSentry.Id;
 
                 }
@@ -13410,7 +14023,7 @@ namespace WpfApp2.ViewModels
                     if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                     { break; }
 
-                    newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                    newSFSentry = Part.LegSections[i].CurrentEntry;
 
                     if (Part.LegSections[i].SelectedValue != null)
                     {
@@ -13457,7 +14070,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.SPSEntries.Get(EntFullToChange.EntryId2.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
 
                         }
@@ -13480,7 +14096,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.SPSEntries.Get(EntFullToChange.EntryId3.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
                         }
                     }
@@ -13503,7 +14122,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.SPSEntries.Get(EntFullToChange.EntryId4.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
                         }
                     }
@@ -13525,7 +14147,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.SPSEntries.Get(EntFullToChange.EntryId5.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
                         }
                     }
@@ -13547,7 +14172,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.SPSEntries.Get(EntFullToChange.EntryId6.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
                         }
                     }
@@ -13607,7 +14235,7 @@ namespace WpfApp2.ViewModels
                 {
                     if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                     { break; }
-                    newSFSentry = (LegPartEntry)section.CurrentEntry;
+                    newSFSentry = section.CurrentEntry;
                     newSFSentry.StructureID = section.SelectedValue.Id;
 
                     Data.SPSEntries.Add((SPSHipEntry)newSFSentry);
@@ -13665,7 +14293,7 @@ namespace WpfApp2.ViewModels
                     if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                     { break; }
 
-                    LegPartEntry newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                    LegPartEntry newSFSentry = Part.LegSections[i].CurrentEntry;
 
                     if (Part.LegSections[i].SelectedValue != null)
                     {
@@ -13712,7 +14340,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.MPVEntries.Get(EntFullToChange.EntryId2.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
 
                         }
@@ -13735,7 +14366,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.MPVEntries.Get(EntFullToChange.EntryId3.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
                         }
                     }
@@ -13758,7 +14392,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.MPVEntries.Get(EntFullToChange.EntryId4.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
                         }
                     }
@@ -13780,7 +14417,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.MPVEntries.Get(EntFullToChange.EntryId5.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
                         }
                     }
@@ -13802,7 +14442,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.MPVEntries.Get(EntFullToChange.EntryId6.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
                         }
                     }
@@ -13828,7 +14471,7 @@ namespace WpfApp2.ViewModels
                 {
                     if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                     { break; }
-                    LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                    LegPartEntry newSFSentry = section.CurrentEntry;
                     newSFSentry.StructureID = section.SelectedValue.Id;
 
                     Data.MPVEntries.Add((MPVEntry)newSFSentry);
@@ -13879,7 +14522,7 @@ namespace WpfApp2.ViewModels
                     if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                     { break; }
 
-                    LegPartEntry newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                    LegPartEntry newSFSentry = Part.LegSections[i].CurrentEntry;
 
                     if (Part.LegSections[i].SelectedValue != null)
                     {
@@ -13926,7 +14569,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.TEMPVEntries.Get(EntFullToChange.EntryId2.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
 
                         }
@@ -13949,7 +14595,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.TEMPVEntries.Get(EntFullToChange.EntryId3.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
                         }
                     }
@@ -13972,7 +14621,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.TEMPVEntries.Get(EntFullToChange.EntryId4.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
                         }
                     }
@@ -13994,7 +14646,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.TEMPVEntries.Get(EntFullToChange.EntryId5.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
                         }
                     }
@@ -14016,7 +14671,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.TEMPVEntries.Get(EntFullToChange.EntryId6.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
                         }
                     }
@@ -14042,7 +14700,7 @@ namespace WpfApp2.ViewModels
                 {
                     if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                     { break; }
-                    LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                    LegPartEntry newSFSentry = section.CurrentEntry;
                     newSFSentry.StructureID = section.SelectedValue.Id;
 
                     Data.TEMPVEntries.Add((TEMPVEntry)newSFSentry);
@@ -14094,7 +14752,7 @@ namespace WpfApp2.ViewModels
                     if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                     { break; }
 
-                    LegPartEntry newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                    LegPartEntry newSFSentry = Part.LegSections[i].CurrentEntry;
 
                     if (Part.LegSections[i].SelectedValue != null)
                     {
@@ -14141,7 +14799,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.PPVEntries.Get(EntFullToChange.EntryId2.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
 
                         }
@@ -14164,7 +14825,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.PPVEntries.Get(EntFullToChange.EntryId3.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
                         }
                     }
@@ -14187,7 +14851,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.PPVEntries.Get(EntFullToChange.EntryId4.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
                         }
                     }
@@ -14209,7 +14876,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.PPVEntries.Get(EntFullToChange.EntryId5.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
                         }
                     }
@@ -14231,7 +14901,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.PPVEntries.Get(EntFullToChange.EntryId6.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
                         }
                     }
@@ -14257,7 +14930,7 @@ namespace WpfApp2.ViewModels
                 {
                     if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                     { break; }
-                    LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                    LegPartEntry newSFSentry = section.CurrentEntry;
                     newSFSentry.StructureID = section.SelectedValue.Id;
 
                     Data.PPVEntries.Add((PPVEntry)newSFSentry);
@@ -14308,7 +14981,7 @@ namespace WpfApp2.ViewModels
                     if (Part.LegSections[i].SelectedValue != null && Part.LegSections[i].SelectedValue.ToNextPart)
                     { break; }
 
-                    LegPartEntry newSFSentry = (LegPartEntry)Part.LegSections[i].CurrentEntry;
+                    LegPartEntry newSFSentry = Part.LegSections[i].CurrentEntry;
 
                     if (Part.LegSections[i].SelectedValue != null)
                     {
@@ -14355,7 +15028,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.GVEntries.Get(EntFullToChange.EntryId2.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId2 = newSFSentry.Id;
 
                         }
@@ -14378,7 +15054,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.GVEntries.Get(EntFullToChange.EntryId3.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId3 = newSFSentry.Id;
                         }
                     }
@@ -14401,7 +15080,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.GVEntries.Get(EntFullToChange.EntryId4.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId4 = newSFSentry.Id;
                         }
                     }
@@ -14423,7 +15105,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.GVEntries.Get(EntFullToChange.EntryId5.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId5 = newSFSentry.Id;
                         }
                     }
@@ -14445,7 +15130,10 @@ namespace WpfApp2.ViewModels
                                 Data.Complete();
                             }
                             else
+                            {
                                 EntToChange = Data.GVEntries.Get(EntFullToChange.EntryId6.Value);
+                            }
+
                             LeftSFSEntryFullbuf.EntryId6 = newSFSentry.Id;
                         }
                     }
@@ -14471,7 +15159,7 @@ namespace WpfApp2.ViewModels
                 {
                     if (section.SelectedValue == null || section.SelectedValue.ToNextPart)
                     { break; }
-                    LegPartEntry newSFSentry = (LegPartEntry)section.CurrentEntry;
+                    LegPartEntry newSFSentry = section.CurrentEntry;
                     newSFSentry.StructureID = section.SelectedValue.Id;
 
                     Data.GVEntries.Add((GVEntry)newSFSentry);
@@ -14548,7 +15236,7 @@ namespace WpfApp2.ViewModels
             }
         }
 
-        int Acc_id = 0;
+        private int Acc_id = 0;
         private void SaveExaminationToSavedTable()
         {
 
@@ -14618,77 +15306,174 @@ namespace WpfApp2.ViewModels
                 examnTotal.statementOverviewId = savedExamnTotal.statementOverviewId;
 
                 if (LegExamL.A == null)
+                {
                     LegExamL.A = savedLegExamL.A;
+                }
+
                 if (LegExamL.additionalText == null)
+                {
                     LegExamL.additionalText = savedLegExamL.additionalText;
+                }
+
                 if (LegExamL.BPVHip == null)
+                {
                     LegExamL.BPVHip = savedLegExamL.BPVHip;
+                }
+
                 if (LegExamL.BPVTibiaid == null)
+                {
                     LegExamL.BPVTibiaid = savedLegExamL.BPVTibiaid;
+                }
+
                 if (LegExamL.C == null)
+                {
                     LegExamL.C = savedLegExamL.C;
+                }
+
                 if (LegExamL.E == null)
+                {
                     LegExamL.E = savedLegExamL.E;
+                }
+
                 if (LegExamL.GVid == null)
+                {
                     LegExamL.GVid = savedLegExamL.GVid;
+                }
+
                 if (LegExamL.MPVid == null)
+                {
                     LegExamL.MPVid = savedLegExamL.MPVid;
+                }
+
                 if (LegExamL.P == null)
+                {
                     LegExamL.P = savedLegExamL.P;
+                }
+
                 if (LegExamL.PDSVid == null)
+                {
                     LegExamL.PDSVid = savedLegExamL.PDSVid;
+                }
+
                 if (LegExamL.PerforateHipid == null)
+                {
                     LegExamL.PerforateHipid = savedLegExamL.PerforateHipid;
+                }
+
                 if (LegExamL.PPVid == null)
+                {
                     LegExamL.PPVid = savedLegExamL.PPVid;
+                }
+
                 if (LegExamL.SFSid == null)
+                {
                     LegExamL.SFSid = savedLegExamL.SFSid;
+                }
+
                 if (LegExamL.SPSid == null)
+                {
                     LegExamL.SPSid = savedLegExamL.SPSid;
+                }
+
                 if (LegExamL.TEMPVid == null)
+                {
                     LegExamL.TEMPVid = savedLegExamL.TEMPVid;
+                }
+
                 if (LegExamL.TibiaPerforateid == null)
+                {
                     LegExamL.TibiaPerforateid = savedLegExamL.TibiaPerforateid;
+                }
+
                 if (LegExamL.ZDSVid == null)
+                {
                     LegExamL.ZDSVid = savedLegExamL.ZDSVid;
-
-
+                }
 
                 if (LegExamR.A == null)
+                {
                     LegExamR.A = savedLegExamR.A;
-                if (LegExamR.additionalText == null)
-                    LegExamR.additionalText = savedLegExamR.additionalText;
-                if (LegExamR.BPVHip == null)
-                    LegExamR.BPVHip = savedLegExamR.BPVHip;
-                if (LegExamR.BPVTibiaid == null)
-                    LegExamR.BPVTibiaid = savedLegExamR.BPVTibiaid;
-                if (LegExamR.C == null)
-                    LegExamR.C = savedLegExamR.C;
-                if (LegExamR.E == null)
-                    LegExamR.E = savedLegExamR.E;
-                if (LegExamR.GVid == null)
-                    LegExamR.GVid = savedLegExamR.GVid;
-                if (LegExamR.MPVid == null)
-                    LegExamR.MPVid = savedLegExamR.MPVid;
-                if (LegExamR.P == null)
-                    LegExamR.P = savedLegExamR.P;
-                if (LegExamR.PDSVid == null)
-                    LegExamR.PDSVid = savedLegExamR.PDSVid;
-                if (LegExamR.PerforateHipid == null)
-                    LegExamR.PerforateHipid = savedLegExamR.PerforateHipid;
-                if (LegExamR.PPVid == null)
-                    LegExamR.PPVid = savedLegExamR.PPVid;
-                if (LegExamR.SFSid == null)
-                    LegExamR.SFSid = savedLegExamR.SFSid;
-                if (LegExamR.SPSid == null)
-                    LegExamR.SPSid = savedLegExamR.SPSid;
-                if (LegExamR.TEMPVid == null)
-                    LegExamR.TEMPVid = savedLegExamR.TEMPVid;
-                if (LegExamR.TibiaPerforateid == null)
-                    LegExamR.TibiaPerforateid = savedLegExamR.TibiaPerforateid;
-                if (LegExamR.ZDSVid == null)
-                    LegExamR.ZDSVid = savedLegExamR.ZDSVid;
+                }
 
+                if (LegExamR.additionalText == null)
+                {
+                    LegExamR.additionalText = savedLegExamR.additionalText;
+                }
+
+                if (LegExamR.BPVHip == null)
+                {
+                    LegExamR.BPVHip = savedLegExamR.BPVHip;
+                }
+
+                if (LegExamR.BPVTibiaid == null)
+                {
+                    LegExamR.BPVTibiaid = savedLegExamR.BPVTibiaid;
+                }
+
+                if (LegExamR.C == null)
+                {
+                    LegExamR.C = savedLegExamR.C;
+                }
+
+                if (LegExamR.E == null)
+                {
+                    LegExamR.E = savedLegExamR.E;
+                }
+
+                if (LegExamR.GVid == null)
+                {
+                    LegExamR.GVid = savedLegExamR.GVid;
+                }
+
+                if (LegExamR.MPVid == null)
+                {
+                    LegExamR.MPVid = savedLegExamR.MPVid;
+                }
+
+                if (LegExamR.P == null)
+                {
+                    LegExamR.P = savedLegExamR.P;
+                }
+
+                if (LegExamR.PDSVid == null)
+                {
+                    LegExamR.PDSVid = savedLegExamR.PDSVid;
+                }
+
+                if (LegExamR.PerforateHipid == null)
+                {
+                    LegExamR.PerforateHipid = savedLegExamR.PerforateHipid;
+                }
+
+                if (LegExamR.PPVid == null)
+                {
+                    LegExamR.PPVid = savedLegExamR.PPVid;
+                }
+
+                if (LegExamR.SFSid == null)
+                {
+                    LegExamR.SFSid = savedLegExamR.SFSid;
+                }
+
+                if (LegExamR.SPSid == null)
+                {
+                    LegExamR.SPSid = savedLegExamR.SPSid;
+                }
+
+                if (LegExamR.TEMPVid == null)
+                {
+                    LegExamR.TEMPVid = savedLegExamR.TEMPVid;
+                }
+
+                if (LegExamR.TibiaPerforateid == null)
+                {
+                    LegExamR.TibiaPerforateid = savedLegExamR.TibiaPerforateid;
+                }
+
+                if (LegExamR.ZDSVid == null)
+                {
+                    LegExamR.ZDSVid = savedLegExamR.ZDSVid;
+                }
 
                 Data.Complete();
                 ////LegExamR.A = savedLegExamR.A;
@@ -15004,101 +15789,166 @@ namespace WpfApp2.ViewModels
 
 
             if (!LeftBPVHip.IsEmpty && LegExamL.BPVHip == null)
+            {
                 LegExamL.BPVHip = LeftBPVEntryFull.Id;
+            }
 
             if (!LeftBPVTibia.IsEmpty && LegExamL.BPVTibiaid == null)
+            {
                 LegExamL.BPVTibiaid = LeftBPV_TibiaEntryFull.Id;
-
+            }
 
             if (!LeftGV.IsEmpty && LegExamL.GVid == null)
+            {
                 LegExamL.GVid = LeftGVEntryFull.Id;
+            }
 
             if (!LeftMPV.IsEmpty && LegExamL.MPVid == null)
+            {
                 LegExamL.MPVid = LeftMPVEntryFull.Id;
+            }
 
             if (!LeftPDSV.IsEmpty && LegExamL.PDSVid == null)
+            {
                 LegExamL.PDSVid = LeftPDSVEntryFull.Id;
+            }
 
             if (!LeftPerforate.IsEmpty && LegExamL.PerforateHipid == null)
+            {
                 LegExamL.PerforateHipid = LeftPerforate_hipEntryFull.Id;
+            }
 
             if (!LeftPPV.IsEmpty && LegExamL.PPVid == null)
+            {
                 LegExamL.PPVid = LeftPPVEntryFull.Id;
+            }
 
             if (!LeftSFS.IsEmpty && LegExamL.SFSid == null)
+            {
                 LegExamL.SFSid = LeftSFSEntryFull.Id;
+            }
 
             if (!LeftSPS.IsEmpty && LegExamL.SPSid == null)
+            {
                 LegExamL.SPSid = LeftSPSEntryFull.Id;
+            }
 
             if (!LeftTEMPV.IsEmpty && LegExamL.TEMPVid == null)
+            {
                 LegExamL.TEMPVid = LeftTEMPVEntryFull.Id;
+            }
 
             if (!LeftTibiaPerforate.IsEmpty && LegExamL.TibiaPerforateid == null)
+            {
                 LegExamL.TibiaPerforateid = LeftPerforate_shinEntryFull.Id;
+            }
 
             if (!LeftZDSV.IsEmpty && LegExamL.ZDSVid == null)
+            {
                 LegExamL.ZDSVid = LeftZDSVEntryFull.Id;
+            }
 
             LegExamL.additionalText = LeftAdditionalText;
             if (LeftCEAR.LegSections[0].SelectedValue != null)
+            {
                 LegExamL.C = LeftCEAR.LegSections[0].SelectedValue.Id;
-            if (LeftCEAR.LegSections[1].SelectedValue != null)
-                LegExamL.E = LeftCEAR.LegSections[1].SelectedValue.Id;
-            if (LeftCEAR.LegSections[2].SelectedValue != null)
-                LegExamL.A = LeftCEAR.LegSections[2].SelectedValue.Id;
-            if (LeftCEAR.LegSections[3].SelectedValue != null)
-                LegExamL.P = LeftCEAR.LegSections[3].SelectedValue.Id;
+            }
 
+            if (LeftCEAR.LegSections[1].SelectedValue != null)
+            {
+                LegExamL.E = LeftCEAR.LegSections[1].SelectedValue.Id;
+            }
+
+            if (LeftCEAR.LegSections[2].SelectedValue != null)
+            {
+                LegExamL.A = LeftCEAR.LegSections[2].SelectedValue.Id;
+            }
+
+            if (LeftCEAR.LegSections[3].SelectedValue != null)
+            {
+                LegExamL.P = LeftCEAR.LegSections[3].SelectedValue.Id;
+            }
 
             if (!RightBPVHip.IsEmpty && LegExamR.BPVHip == null)
+            {
                 LegExamR.BPVHip = RightBPVEntryFull.Id;
+            }
 
             if (!RightBPVTibia.IsEmpty && LegExamR.BPVTibiaid == null)
+            {
                 LegExamR.BPVTibiaid = RightBPV_TibiaEntryFull.Id;
-
+            }
 
             if (!RightGV.IsEmpty && LegExamR.GVid == null)
+            {
                 LegExamR.GVid = RightGVEntryFull.Id;
+            }
 
             if (!RightMPV.IsEmpty && LegExamR.MPVid == null)
+            {
                 LegExamR.MPVid = RightMPVEntryFull.Id;
+            }
 
             if (!RightPDSV.IsEmpty && LegExamR.PDSVid == null)
+            {
                 LegExamR.PDSVid = RightPDSVEntryFull.Id;
+            }
 
             if (!RightPerforate.IsEmpty && LegExamR.PerforateHipid == null)
+            {
                 LegExamR.PerforateHipid = RightPerforate_hipEntryFull.Id;
+            }
 
             if (!RightPPV.IsEmpty && LegExamR.PPVid == null)
+            {
                 LegExamR.PPVid = RightPPVEntryFull.Id;
+            }
 
             if (!RightSFS.IsEmpty && LegExamR.SFSid == null)
+            {
                 LegExamR.SFSid = RightSFSEntryFull.Id;
+            }
 
             if (!RightSPS.IsEmpty && LegExamR.SPSid == null)
+            {
                 LegExamR.SPSid = RightSPSEntryFull.Id;
+            }
 
             if (!RightTEMPV.IsEmpty && LegExamR.TEMPVid == null)
+            {
                 LegExamR.TEMPVid = RightTEMPVEntryFull.Id;
+            }
 
             if (!RightTibiaPerforate.IsEmpty && LegExamR.TibiaPerforateid == null)
+            {
                 LegExamR.TibiaPerforateid = RightPerforate_shinEntryFull.Id;
+            }
 
             if (!RightZDSV.IsEmpty && LegExamR.ZDSVid == null)
+            {
                 LegExamR.ZDSVid = RightZDSVEntryFull.Id;
+            }
 
             LegExamR.additionalText = RightAdditionalText;
             if (RightCEAR.LegSections[0].SelectedValue != null)
+            {
                 LegExamR.C = RightCEAR.LegSections[0].SelectedValue.Id;
+            }
+
             if (RightCEAR.LegSections[1].SelectedValue != null)
+            {
                 LegExamR.E = RightCEAR.LegSections[1].SelectedValue.Id;
+            }
+
             if (RightCEAR.LegSections[2].SelectedValue != null)
+            {
                 LegExamR.A = RightCEAR.LegSections[2].SelectedValue.Id;
+            }
+
             if (RightCEAR.LegSections[3].SelectedValue != null)
+            {
                 LegExamR.P = RightCEAR.LegSections[3].SelectedValue.Id;
-
-
+            }
 
             examnTotal.PatientId = CurrentPatient.Id;
             //examnTotal.Date = DateTime.Now;
@@ -15347,7 +16197,8 @@ namespace WpfApp2.ViewModels
 
             SetAllBordersDefault();
         }
-        int obsid;
+
+        private int obsid;
         private void SetIdOfStatement(object sender, object data)
         {
             statementOverviewId = int.Parse(data.ToString());
@@ -15406,82 +16257,90 @@ namespace WpfApp2.ViewModels
 
                 BPVHipEntryFullRepository BPVEntryFullRep = new BPVHipEntryFullRepository(context);
                 if (leftLegExam.BPVHip != null)
+                {
                     GetLegPartFromEntry(BPVEntryFullRep.Get(leftLegExam.BPVHip.Value), LeftBPVHip, true);
-
+                }
 
                 BPV_TibiaEntryFullRepository BPVTibiaEntryFullRep = new BPV_TibiaEntryFullRepository(context);
                 if (leftLegExam.BPVTibiaid != null)
+                {
                     GetLegPartFromEntry(BPVTibiaEntryFullRep.Get(leftLegExam.BPVTibiaid.Value), LeftBPVTibia, true);
-
-
+                }
 
                 GVEntryFullRepository GVEntryFullRep = new GVEntryFullRepository(context);
                 if (leftLegExam.GVid != null)
+                {
                     GetLegPartFromEntry(GVEntryFullRep.Get(leftLegExam.GVid.Value), LeftGV, true);
-
+                }
 
                 MPVEntryFullRepository MPVEntryFullRep = new MPVEntryFullRepository(context);
                 if (leftLegExam.MPVid != null)
+                {
                     GetLegPartFromEntry(MPVEntryFullRep.Get(leftLegExam.MPVid.Value), LeftMPV, true);
-
+                }
 
                 Perforate_hipEntryFullRepository PerforateEntryFullRep = new Perforate_hipEntryFullRepository(context);
                 if (leftLegExam.PerforateHipid != null)
+                {
                     GetLegPartFromEntry(PerforateEntryFullRep.Get(leftLegExam.PerforateHipid.Value), LeftPerforate, true);
-
-
+                }
 
                 PPVEntryFullRepository PPVEntryFullRep = new PPVEntryFullRepository(context);
                 if (leftLegExam.PPVid != null)
+                {
                     GetLegPartFromEntry(PPVEntryFullRep.Get(leftLegExam.PPVid.Value), LeftPPV, true);
-
-
+                }
 
                 SFSHipEntryFullRepository SFSEntryFullRep = new SFSHipEntryFullRepository(context);
                 if (leftLegExam.SFSid != null)
+                {
                     GetLegPartFromEntry(SFSEntryFullRep.Get(leftLegExam.SFSid.Value), LeftSFS, true);
-
+                }
 
                 SPSHipEntryFullRepository SPSEntryFullRep = new SPSHipEntryFullRepository(context);
                 if (leftLegExam.SPSid != null)
+                {
                     GetLegPartFromEntry(SPSEntryFullRep.Get(leftLegExam.SPSid.Value), LeftSPS, true);
-
-
-
+                }
 
                 TEMPVEntryFullRepository TEMPVEntryFullRep = new TEMPVEntryFullRepository(context);
                 if (leftLegExam.TEMPVid != null)
+                {
                     GetLegPartFromEntry(TEMPVEntryFullRep.Get(leftLegExam.TEMPVid.Value), LeftTEMPV, true);
-
-
+                }
 
                 Perforate_shinEntryFullRepository TibiaPerforateEntryFullRep = new Perforate_shinEntryFullRepository(context);
                 if (leftLegExam.TibiaPerforateid != null)
+                {
                     GetLegPartFromEntry(TibiaPerforateEntryFullRep.Get(leftLegExam.TibiaPerforateid.Value), LeftTibiaPerforate, true);
-
-
-
-
+                }
 
                 ZDSVEntryFullRepository ZDSVEntryFullRep = new ZDSVEntryFullRepository(context);
 
                 if (leftLegExam.ZDSVid != null)
+                {
                     GetLegPartFromEntry(ZDSVEntryFullRep.Get(leftLegExam.ZDSVid.Value), LeftZDSV, true);
-
+                }
 
                 if (leftLegExam.C != null)
+                {
                     LeftCEAR.LegSections[0].SelectedValue = LettersRep.Get(leftLegExam.C.Value);
+                }
 
                 if (leftLegExam.E != null)
+                {
                     LeftCEAR.LegSections[1].SelectedValue = LettersRep.Get(leftLegExam.E.Value);
+                }
 
                 if (leftLegExam.A != null)
+                {
                     LeftCEAR.LegSections[2].SelectedValue = LettersRep.Get(leftLegExam.A.Value);
+                }
 
                 if (leftLegExam.P != null)
+                {
                     LeftCEAR.LegSections[3].SelectedValue = LettersRep.Get(leftLegExam.P.Value);
-
-
+                }
 
                 LeftCEAR.SaveCommand.Execute();
 
@@ -15502,75 +16361,84 @@ namespace WpfApp2.ViewModels
 
 
                 if (rightLegExam.PDSVid != null)
+                {
                     GetLegPartFromEntry(PDSVEntryFullRep.Get(rightLegExam.PDSVid.Value), RightPDSV, false);
-
-
-
+                }
 
                 if (rightLegExam.BPVHip != null)
+                {
                     GetLegPartFromEntry(BPVEntryFullRep.Get(rightLegExam.BPVHip.Value), RightBPVHip, false);
-
-
+                }
 
                 if (rightLegExam.BPVTibiaid != null)
+                {
                     GetLegPartFromEntry(BPVTibiaEntryFullRep.Get(rightLegExam.BPVTibiaid.Value), RightBPVTibia, false);
-
-
-
+                }
 
                 if (rightLegExam.GVid != null)
+                {
                     GetLegPartFromEntry(GVEntryFullRep.Get(rightLegExam.GVid.Value), RightGV, false);
-
-
+                }
 
                 if (rightLegExam.MPVid != null)
+                {
                     GetLegPartFromEntry(MPVEntryFullRep.Get(rightLegExam.MPVid.Value), RightMPV, false);
-
-
+                }
 
                 if (rightLegExam.PerforateHipid != null)
+                {
                     GetLegPartFromEntry(PerforateEntryFullRep.Get(rightLegExam.PerforateHipid.Value), RightPerforate, false);
-
-
-
+                }
 
                 if (rightLegExam.PPVid != null)
+                {
                     GetLegPartFromEntry(PPVEntryFullRep.Get(rightLegExam.PPVid.Value), RightPPV, false);
-
-
+                }
 
                 if (rightLegExam.SFSid != null)
+                {
                     GetLegPartFromEntry(SFSEntryFullRep.Get(rightLegExam.SFSid.Value), RightSFS, false);
-
-
+                }
 
                 if (rightLegExam.SPSid != null)
+                {
                     GetLegPartFromEntry(SPSEntryFullRep.Get(rightLegExam.SPSid.Value), RightSPS, false);
-
-
-
-
+                }
 
                 if (rightLegExam.TEMPVid != null)
+                {
                     GetLegPartFromEntry(TEMPVEntryFullRep.Get(rightLegExam.TEMPVid.Value), RightTEMPV, false);
+                }
 
                 if (rightLegExam.TibiaPerforateid != null)
+                {
                     GetLegPartFromEntry(TibiaPerforateEntryFullRep.Get(rightLegExam.TibiaPerforateid.Value), RightTibiaPerforate, false);
+                }
 
                 if (rightLegExam.ZDSVid != null)
+                {
                     GetLegPartFromEntry(ZDSVEntryFullRep.Get(rightLegExam.ZDSVid.Value), RightZDSV, false);
+                }
 
                 if (rightLegExam.C != null)
+                {
                     RightCEAR.LegSections[0].SelectedValue = LettersRep.Get(rightLegExam.C.Value);
+                }
 
                 if (rightLegExam.E != null)
+                {
                     RightCEAR.LegSections[1].SelectedValue = LettersRep.Get(rightLegExam.E.Value);
+                }
 
                 if (rightLegExam.A != null)
+                {
                     RightCEAR.LegSections[2].SelectedValue = LettersRep.Get(rightLegExam.A.Value);
+                }
 
                 if (rightLegExam.P != null)
+                {
                     RightCEAR.LegSections[3].SelectedValue = LettersRep.Get(rightLegExam.P.Value);
+                }
 
                 RightCEAR.SaveCommand.Execute();
 
@@ -15651,12 +16519,13 @@ namespace WpfApp2.ViewModels
             MessageBus.Default.Call("SetMode", this, "Normal");
             isEdited = false;
         }
+
         //  public ObservableCollection<>
         //кто присылает и что присылает
-        double ScrollSize;
-        double ScrollSizeRight;
-        bool isOneTime;
-        bool isOneTimeRight;
+        private double ScrollSize;
+        private double ScrollSizeRight;
+        private bool isOneTime;
+        private bool isOneTimeRight;
         private void SaveScrollSize(object sender, object data)
         {
             ScrollSize = (double)data;
@@ -15688,6 +16557,7 @@ namespace WpfApp2.ViewModels
             LegPartViewModel senderVM = (LegPartViewModel)sender;
             //  BPVHipEntryFull bpv = new BPVHipEntryFull();
             if (senderType == typeof(GVViewModel))
+            {
                 if (senderVM.CurrentLegSide == LegSide.Left)
                 {
                     GVLeftstr = new List<string>();
@@ -15730,11 +16600,10 @@ namespace WpfApp2.ViewModels
                         BGVL = null;
                     }
                 }
-
-
-
+            }
 
             if (senderType == typeof(MPVViewModel))
+            {
                 if (senderVM.CurrentLegSide == LegSide.Left)
                 {
                     MPVLeftstr = new List<string>();
@@ -15775,10 +16644,10 @@ namespace WpfApp2.ViewModels
                         BTEMPVL = null;
                     }
                 }
-
-
+            }
 
             if (senderType == typeof(PPVViewModel))
+            {
                 if (senderVM.CurrentLegSide == LegSide.Left)
                 {
                     PPVLeftstr = new List<string>();
@@ -15820,12 +16689,10 @@ namespace WpfApp2.ViewModels
                         BPPVL = null;
                     }
                 }
-
-
-
-
+            }
 
             if (senderType == typeof(TEMPVViewModel))
+            {
                 if (senderVM.CurrentLegSide == LegSide.Left)
                 {
                     TEMPVLeftstr = new List<string>();
@@ -15870,8 +16737,10 @@ namespace WpfApp2.ViewModels
 
 
                 }
+            }
             //sender проверять какого типа
             if (senderType == typeof(SFSViewModel))
+            {
                 if (senderVM.CurrentLegSide == LegSide.Left)
                 {
                     SFSLeftstr = new List<string>();
@@ -15911,11 +16780,13 @@ namespace WpfApp2.ViewModels
                         BPDSVL = null;
                     }
                 }
+            }
 
             //
 
 
             if (senderType == typeof(SPSViewModel))
+            {
                 if (senderVM.CurrentLegSide == LegSide.Left)
                 {
                     SPSLeftstr = new List<string>();
@@ -15956,9 +16827,10 @@ namespace WpfApp2.ViewModels
                         BPerforateGoleniL = null;
                     }
                 }
-
+            }
 
             if (senderType == typeof(TibiaPerforateViewModel))
+            {
                 if (senderVM.CurrentLegSide == LegSide.Left)
                 {
                     Perforate_shinLeftstr = new List<string>();
@@ -16003,6 +16875,7 @@ namespace WpfApp2.ViewModels
                     //    BPerforateGoleniL = null;
                     //}
                 }
+            }
 
 
 
@@ -16012,6 +16885,7 @@ namespace WpfApp2.ViewModels
 
 
             if (senderType == typeof(BPVHipViewModel))
+            {
                 if (senderVM.CurrentLegSide == LegSide.Left)
                 {
                     LeftBPVEntryFull = new BPVHipEntryFull();
@@ -16048,8 +16922,10 @@ namespace WpfApp2.ViewModels
                         BZDSVL = null;
                     }
                 }
+            }
 
             if (senderType == typeof(PDSVViewModel))
+            {
                 if (senderVM.CurrentLegSide == LegSide.Left)
                 {
                     LeftPDSVEntryFull = new PDSVHipEntryFull();
@@ -16093,9 +16969,11 @@ namespace WpfApp2.ViewModels
                     //}
 
                 }
+            }
 
             //
             if (senderType == typeof(ZDSVViewModel))
+            {
                 if (senderVM.CurrentLegSide == LegSide.Left)
                 {
                     LeftZDSVEntryFull = new ZDSVEntryFull();
@@ -16138,7 +17016,10 @@ namespace WpfApp2.ViewModels
 
 
                 }
+            }
+
             if (senderType == typeof(HipPerforateViewModel))
+            {
                 if (senderVM.CurrentLegSide == LegSide.Left)
                 {
                     LeftPerforate_hipEntryFull = new Perforate_hipEntryFull();
@@ -16177,7 +17058,10 @@ namespace WpfApp2.ViewModels
                     //    BPerforate1L = null;
                     //}
                 }
+            }
+
             if (senderType == typeof(BPVTibiaViewModel))
+            {
                 if (senderVM.CurrentLegSide == LegSide.Left)
                 {
                     LeftBPV_TibiaEntryFull = new BPV_TibiaEntryFull();
@@ -16214,8 +17098,10 @@ namespace WpfApp2.ViewModels
                         BPerforate1L = null;
                     }
                 }
+            }
 
             if (senderType == typeof(LettersViewModel))
+            {
                 if (senderVM.CurrentLegSide == LegSide.Left)
                 {
 
@@ -16299,7 +17185,11 @@ namespace WpfApp2.ViewModels
                         BCEARL = null;
                     }
                 }
-
+            }
         }
+
     }
+
+
+
 }
