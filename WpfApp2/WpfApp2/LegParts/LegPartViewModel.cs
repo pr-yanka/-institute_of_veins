@@ -110,6 +110,8 @@ namespace WpfApp2.LegParts
         public virtual List<LegSectionViewModel> LegSectionsSaved { get; set; }
         public DelegateCommand RevertCommand { set; get; }
         public DelegateCommand SaveCommand { set; get; }
+        public DelegateCommand NextCommand { set; get; }
+        public DelegateCommand OpenNextLegViewModelCommand { set; get; }
 
         private ICommand openDialogCommand = null;
         public ICommand OpenDialogCommand
@@ -669,7 +671,23 @@ namespace WpfApp2.LegParts
                     Controller.NavigateTo<ViewModelAddPhysical>();
                 }
             );
-
+            NextCommand = new DelegateCommand(
+                () =>
+                {
+                    if (SaveCommand != null)
+                    {
+                        SaveCommand.Execute();
+                    }
+                    if (OpenNextLegViewModelCommand != null)
+                    {
+                        OpenNextLegViewModelCommand.Execute();
+                    }
+                    else
+                    {
+                        RevertCommand.Execute();
+                    }
+                }
+            );
 
         }
 

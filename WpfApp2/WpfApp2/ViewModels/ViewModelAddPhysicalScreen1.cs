@@ -5002,6 +5002,31 @@ namespace WpfApp2.ViewModels
                     }
                 }
             );
+
+            // Set next section
+            LeftBPVHip.OpenNextLegViewModelCommand = ToLeftPDSVCommand;
+            RightBPVHip.OpenNextLegViewModelCommand = ToRightPDSVCommand;
+            LeftBPVTibia.OpenNextLegViewModelCommand = ToLeftTibiaPerforateCommand;
+            RightBPVTibia.OpenNextLegViewModelCommand = ToRightTibiaPerforateCommand;
+            LeftPerforate.OpenNextLegViewModelCommand = ToLeftBPVTibiaCommand;
+            RightPerforate.OpenNextLegViewModelCommand = ToRightBPVTibiaCommand;
+            LeftPPV.OpenNextLegViewModelCommand = ToLeftGVCommand;
+            RightPPV.OpenNextLegViewModelCommand = ToRightGVCommand;
+            LeftPDSV.OpenNextLegViewModelCommand = ToLeftZDSVCommand;
+            RightPDSV.OpenNextLegViewModelCommand = ToRightZDSVCommand;
+            LeftSFS.OpenNextLegViewModelCommand = ToLeftBPVHipCommand;
+            RightSFS.OpenNextLegViewModelCommand = ToRightBPVHipCommand;
+            LeftSPS.OpenNextLegViewModelCommand = ToLeftMPVCommand;
+            RightSPS.OpenNextLegViewModelCommand = ToRightMPVCommand;
+            LeftTibiaPerforate.OpenNextLegViewModelCommand = ToLeftSPSCommand;
+            RightTibiaPerforate.OpenNextLegViewModelCommand = ToRightSPSCommand;
+            LeftZDSV.OpenNextLegViewModelCommand = ToLeftPerforateCommand;
+            RightZDSV.OpenNextLegViewModelCommand = ToRightPerforateCommand;
+            LeftMPV.OpenNextLegViewModelCommand = ToLeftTEMPVCommand;
+            RightMPV.OpenNextLegViewModelCommand = ToRightTEMPVCommand;
+            LeftTEMPV.OpenNextLegViewModelCommand = ToLeftPPVCommand;
+            RightTEMPV.OpenNextLegViewModelCommand = ToRightPPVCommand;
+
         }
 
         private void SetAccID(object sender, object data)
