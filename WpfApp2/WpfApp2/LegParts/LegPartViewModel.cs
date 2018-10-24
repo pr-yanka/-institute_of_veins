@@ -112,6 +112,8 @@ namespace WpfApp2.LegParts
         public DelegateCommand SaveCommand { set; get; }
         public DelegateCommand NextCommand { set; get; }
         public DelegateCommand OpenNextLegViewModelCommand { set; get; }
+        public DelegateCommand PrevCommand { set; get; }
+        public DelegateCommand OpenPrevLegViewModelCommand { set; get; }
 
         private ICommand openDialogCommand = null;
         public ICommand OpenDialogCommand
@@ -674,10 +676,6 @@ namespace WpfApp2.LegParts
             NextCommand = new DelegateCommand(
                 () =>
                 {
-                    if (SaveCommand != null)
-                    {
-                        SaveCommand.Execute();
-                    }
                     if (OpenNextLegViewModelCommand != null)
                     {
                         OpenNextLegViewModelCommand.Execute();
@@ -688,7 +686,19 @@ namespace WpfApp2.LegParts
                     }
                 }
             );
-
+            PrevCommand = new DelegateCommand(
+                () =>
+                {
+                    if (OpenPrevLegViewModelCommand != null)
+                    {
+                        OpenPrevLegViewModelCommand.Execute();
+                    }
+                    else
+                    {
+                        RevertCommand.Execute();
+                    }
+                }
+            );            
         }
 
         public LegPartViewModel(NavigationController controller, LegSide side) : base(controller)

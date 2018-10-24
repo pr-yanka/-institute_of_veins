@@ -5003,30 +5003,68 @@ namespace WpfApp2.ViewModels
                 }
             );
 
-            // Set next section
+            // Set prev/next section
+            SetPrevNextCommands();
+
+        }
+
+        private void SetPrevNextCommands()
+        {
             LeftBPVHip.OpenNextLegViewModelCommand = ToLeftPDSVCommand;
+            LeftBPVHip.OpenPrevLegViewModelCommand = ToLeftSFSCommand;
             RightBPVHip.OpenNextLegViewModelCommand = ToRightPDSVCommand;
+            RightBPVHip.OpenPrevLegViewModelCommand = ToRightSFSCommand;
+
             LeftBPVTibia.OpenNextLegViewModelCommand = ToLeftTibiaPerforateCommand;
+            LeftBPVTibia.OpenPrevLegViewModelCommand = ToLeftPerforateCommand;
             RightBPVTibia.OpenNextLegViewModelCommand = ToRightTibiaPerforateCommand;
+            RightBPVTibia.OpenPrevLegViewModelCommand = ToRightPerforateCommand;
+
             LeftPerforate.OpenNextLegViewModelCommand = ToLeftBPVTibiaCommand;
+            LeftPerforate.OpenPrevLegViewModelCommand = ToLeftZDSVCommand;
             RightPerforate.OpenNextLegViewModelCommand = ToRightBPVTibiaCommand;
+            RightPerforate.OpenPrevLegViewModelCommand = ToRightZDSVCommand;
+
             LeftPPV.OpenNextLegViewModelCommand = ToLeftGVCommand;
+            LeftPPV.OpenPrevLegViewModelCommand = ToLeftTEMPVCommand;
             RightPPV.OpenNextLegViewModelCommand = ToRightGVCommand;
+            RightPPV.OpenPrevLegViewModelCommand = ToRightTEMPVCommand;
+
             LeftPDSV.OpenNextLegViewModelCommand = ToLeftZDSVCommand;
+            LeftPDSV.OpenPrevLegViewModelCommand = ToLeftBPVHipCommand;
             RightPDSV.OpenNextLegViewModelCommand = ToRightZDSVCommand;
+            RightPDSV.OpenPrevLegViewModelCommand = ToRightBPVHipCommand;
+
             LeftSFS.OpenNextLegViewModelCommand = ToLeftBPVHipCommand;
             RightSFS.OpenNextLegViewModelCommand = ToRightBPVHipCommand;
-            LeftSPS.OpenNextLegViewModelCommand = ToLeftMPVCommand;
-            RightSPS.OpenNextLegViewModelCommand = ToRightMPVCommand;
-            LeftTibiaPerforate.OpenNextLegViewModelCommand = ToLeftSPSCommand;
-            RightTibiaPerforate.OpenNextLegViewModelCommand = ToRightSPSCommand;
-            LeftZDSV.OpenNextLegViewModelCommand = ToLeftPerforateCommand;
-            RightZDSV.OpenNextLegViewModelCommand = ToRightPerforateCommand;
-            LeftMPV.OpenNextLegViewModelCommand = ToLeftTEMPVCommand;
-            RightMPV.OpenNextLegViewModelCommand = ToRightTEMPVCommand;
-            LeftTEMPV.OpenNextLegViewModelCommand = ToLeftPPVCommand;
-            RightTEMPV.OpenNextLegViewModelCommand = ToRightPPVCommand;
 
+            LeftSPS.OpenNextLegViewModelCommand = ToLeftMPVCommand;
+            LeftSPS.OpenPrevLegViewModelCommand = ToLeftTibiaPerforateCommand;
+            RightSPS.OpenNextLegViewModelCommand = ToRightMPVCommand;
+            RightSPS.OpenPrevLegViewModelCommand = ToRightTibiaPerforateCommand;
+
+            LeftTibiaPerforate.OpenNextLegViewModelCommand = ToLeftSPSCommand;
+            LeftTibiaPerforate.OpenPrevLegViewModelCommand = ToLeftBPVTibiaCommand;
+            RightTibiaPerforate.OpenNextLegViewModelCommand = ToRightSPSCommand;
+            RightTibiaPerforate.OpenPrevLegViewModelCommand = ToRightBPVTibiaCommand;
+
+            LeftZDSV.OpenNextLegViewModelCommand = ToLeftPerforateCommand;
+            LeftZDSV.OpenPrevLegViewModelCommand = ToLeftPDSVCommand;
+            RightZDSV.OpenNextLegViewModelCommand = ToRightPerforateCommand;
+            RightZDSV.OpenPrevLegViewModelCommand = ToRightPDSVCommand;
+
+            LeftMPV.OpenNextLegViewModelCommand = ToLeftTEMPVCommand;
+            LeftMPV.OpenPrevLegViewModelCommand = ToLeftSPSCommand;
+            RightMPV.OpenNextLegViewModelCommand = ToRightTEMPVCommand;
+            RightMPV.OpenPrevLegViewModelCommand = ToRightSPSCommand;
+
+            LeftTEMPV.OpenNextLegViewModelCommand = ToLeftPPVCommand;
+            LeftTEMPV.OpenPrevLegViewModelCommand = ToLeftMPVCommand;
+            RightTEMPV.OpenNextLegViewModelCommand = ToRightPPVCommand;
+            RightTEMPV.OpenPrevLegViewModelCommand = ToRightMPVCommand;
+
+            LeftGV.OpenPrevLegViewModelCommand = ToLeftPPVCommand;
+            RightGV.OpenPrevLegViewModelCommand = ToRightPPVCommand;
         }
 
         private void SetAccID(object sender, object data)
