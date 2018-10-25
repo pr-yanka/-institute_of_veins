@@ -389,22 +389,8 @@ namespace WpfApp2.LegParts.VMs
               {
                   if (LegSections[0].SelectedValue != null)
                   {
-                      bool test = true;
-                      foreach (var leg in LegSections)
-                      {
-                          if (leg.HasSize && leg.CurrentEntry.Size == 0)
-                          { test = false; }
-                          //if(leg.HasDoubleSize && leg.Size2 == 0)
-                          //{
-                          //    test = false;
-                          //}
-                      }
-                      if ((SelectedWayType != null && FF_length == 0) || (FF_length != 0 && SelectedWayType == null))
-                      {
-                          test = false;
-                          MessageBox.Show("Введите ход и протяжность");
-                      }
-                      if (test)
+                      bool isValid = Validate();
+                      if (isValid)
                       {
                           IsEmpty = false;
 
@@ -459,7 +445,6 @@ namespace WpfApp2.LegParts.VMs
                           MessageBus.Default.Call("LegDataSaved", this, this.GetType());
                           Controller.NavigateTo<ViewModelAddPhysical>();
                       }
-                      else { MessageBox.Show("Не все поля заполнены"); }
                   }
                   else
                   {
@@ -494,6 +479,35 @@ namespace WpfApp2.LegParts.VMs
         public TEMPVViewModel(NavigationController controller, LegSide side) : base(controller, side)
         {
             Initialize();
+        }
+
+        protected override bool Validate()
+        {
+            bool isValid = true;
+            if (LegSections[0].SelectedValue != null)
+            {
+                foreach (var leg in LegSections)
+                {
+                    if (leg.HasSize && leg.CurrentEntry.Size == 0)
+                    {
+                        isValid = false;
+                    }
+                    //if (leg.HasDoubleSize && leg.CurrentEntry.Size2 == 0)
+                    //{
+                    //    isValid = false;
+                    //}
+                }
+            }
+            if ((SelectedWayType != null && FF_length == 0) || (FF_length != 0 && SelectedWayType == null))
+            {
+                isValid = false;
+                MessageBox.Show("Введите ход и протяжность");
+            }
+            else if (!isValid)
+            {
+                MessageBox.Show("Не все поля заполнены");
+            }
+            return isValid;
         }
     }
 }

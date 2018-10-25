@@ -678,7 +678,10 @@ namespace WpfApp2.LegParts
                 {
                     if (OpenNextLegViewModelCommand != null)
                     {
-                        OpenNextLegViewModelCommand.Execute();
+                        if (Validate())
+                        {
+                            OpenNextLegViewModelCommand.Execute();
+                        }
                     }
                     else
                     {
@@ -691,7 +694,10 @@ namespace WpfApp2.LegParts
                 {
                     if (OpenPrevLegViewModelCommand != null)
                     {
-                        OpenPrevLegViewModelCommand.Execute();
+                        if (Validate())
+                        {
+                            OpenPrevLegViewModelCommand.Execute();
+                        }
                     }
                     else
                     {
@@ -796,5 +802,10 @@ namespace WpfApp2.LegParts
         public DelegateCommand<object> ClickOnWeight { get; private set; }
         public DelegateCommand<object> LostFocusOnProtiagnosy { get; private set; }
         public DelegateCommand<object> ClickOnProtiagnosy { get; private set; }
+
+        protected virtual bool Validate()
+        {
+            return true;
+        }
     }
 }
