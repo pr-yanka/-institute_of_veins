@@ -681,6 +681,13 @@ namespace WpfApp2.LegParts.VMs
                     //}
                 }
             }
+            if (AdditionalStructure.SelectedValue != null)
+            {
+                if (AdditionalStructure.HasSize && AdditionalStructure.CurrentEntry.Size == 0)
+                {
+                    isValid = false;
+                }
+            }
             if (!isValid)
             {
                 MessageBox.Show("Не все поля заполнены");
