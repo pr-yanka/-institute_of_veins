@@ -154,109 +154,98 @@ namespace WpfApp2.ViewModels
         private void GetCurrentDoctor(object sender, object data)
         {
 
-            using (var context = new MySqlContext())
+            Category = new ObservableCollection<СategoryType>();
+            Specializations = new ObservableCollection<SpecDataSoursForEdit>();
+            Scintifics = new ObservableCollection<SpecDataSoursForEdit>();
+            SpecializationsOld = new ObservableCollection<SpecDataSoursForEdit>();
+            ScintificsOld = new ObservableCollection<SpecDataSoursForEdit>();
+               
+            currentDoctor = Data.Doctor.Get((int)data);
+            Name = currentDoctor.Name;
+            Surname = currentDoctor.Sirname;
+            Patronimic = currentDoctor.Patronimic;
+            Aditional = currentDoctor.Aditional;
+            foreach (var category in Data.СategoryType.GetAll)
             {
-                Category = new ObservableCollection<СategoryType>();
-                Specializations = new ObservableCollection<SpecDataSoursForEdit>();
-                Scintifics = new ObservableCollection<SpecDataSoursForEdit>();
-                SpecializationsOld = new ObservableCollection<SpecDataSoursForEdit>();
-                ScintificsOld = new ObservableCollection<SpecDataSoursForEdit>();
-                СategoryTypeRepository ctRep = new СategoryTypeRepository(context);
-                DoctorRepository dcRep = new DoctorRepository(context);
-                SpecializationTypeRepository spRep = new SpecializationTypeRepository(context);
-                ScientificTitleTypeRepository scRep = new ScientificTitleTypeRepository(context);
-
-                DoctorsSpecializationsRepository dcspRep = new DoctorsSpecializationsRepository(context);
-                ScientificTitlesRepository dcscRep = new ScientificTitlesRepository(context);
-
-
-                currentDoctor = dcRep.Get((int)data);
-                Name = currentDoctor.Name;
-                Surname = currentDoctor.Sirname;
-                Patronimic = currentDoctor.Patronimic;
-                Aditional = currentDoctor.Aditional;
-                foreach (var category in ctRep.GetAll)
+                Category.Add(category);
+                if (category.Id == currentDoctor.категория)
                 {
-                    Category.Add(category);
-                    if (category.Id == currentDoctor.категория)
-                    {
-                        CategorySelectedId = Category.IndexOf(category);
-                        СategoryTypeSelectedText = Category[Category.IndexOf(category)].Str;
-                        СategoryTypeSelected = Category[Category.IndexOf(category)];
-                    }
+                    CategorySelectedId = Category.IndexOf(category);
+                    СategoryTypeSelectedText = Category[Category.IndexOf(category)].Str;
+                    СategoryTypeSelected = Category[Category.IndexOf(category)];
                 }
-
-
-
-                foreach (var spec in spRep.GetAll)
-                {
-                    Specializations.Add(new SpecDataSoursForEdit(spec.Str, spec.id_специлизации));
-                    SpecializationsOld.Add(new SpecDataSoursForEdit(spec.Str, spec.id_специлизации));
-                }
-
-                foreach (var title in scRep.GetAll)
-                {
-                    Scintifics.Add(new SpecDataSoursForEdit(title.Str, title.Id));
-                    ScintificsOld.Add(new SpecDataSoursForEdit(title.Str, title.Id));
-                }
-
-                foreach (var dcsp in dcspRep.GetAll)
-                {
-                    if (dcsp.id_doctor == currentDoctor.Id)
-                    {
-                        foreach (var spec in SpecializationsOld)
-                        {
-                            if (spec.id == dcsp.id_specialization)
-                            {
-                                spec.IsChecked = true;
-                            }
-                        }
-                    }
-                }
-
-                foreach (var dcsc in dcscRep.GetAll)
-                {
-                    if (dcsc.id_doctor == currentDoctor.Id)
-                    {
-                        foreach (var title in ScintificsOld)
-                        {
-                            if (title.id == dcsc.id_title)
-                            {
-                                title.IsChecked = true;
-                            }
-                        }
-                    }
-                }
-
-                foreach (var dcsp in dcspRep.GetAll)
-                {
-                    if (dcsp.id_doctor == currentDoctor.Id)
-                    {
-                        foreach (var spec in Specializations)
-                        {
-                            if (spec.id == dcsp.id_specialization)
-                            {
-                                spec.IsChecked = true;
-                            }
-                        }
-                    }
-                }
-
-                foreach (var dcsc in dcscRep.GetAll)
-                {
-                    if (dcsc.id_doctor == currentDoctor.Id)
-                    {
-                        foreach (var title in Scintifics)
-                        {
-                            if (title.id == dcsc.id_title)
-                            {
-                                title.IsChecked = true;
-                            }
-                        }
-                    }
-                }
-                nameOfButton = "К списку врачей";
             }
+
+
+
+            foreach (var spec in Data.SpecializationType.GetAll)
+            {
+                Specializations.Add(new SpecDataSoursForEdit(spec.Str, spec.id_специлизации));
+                SpecializationsOld.Add(new SpecDataSoursForEdit(spec.Str, spec.id_специлизации));
+            }
+
+            foreach (var title in Data.ScientificTitleType.GetAll)
+            {
+                Scintifics.Add(new SpecDataSoursForEdit(title.Str, title.Id));
+                ScintificsOld.Add(new SpecDataSoursForEdit(title.Str, title.Id));
+            }
+
+            foreach (var dcsp in Data.DoctorsSpecializations.GetAll)
+            {
+                if (dcsp.id_doctor == currentDoctor.Id)
+                {
+                    foreach (var spec in SpecializationsOld)
+                    {
+                        if (spec.id == dcsp.id_specialization)
+                        {
+                            spec.IsChecked = true;
+                        }
+                    }
+                }
+            }
+
+            foreach (var dcsc in Data.ScientificTitles.GetAll)
+            {
+                if (dcsc.id_doctor == currentDoctor.Id)
+                {
+                    foreach (var title in ScintificsOld)
+                    {
+                        if (title.id == dcsc.id_title)
+                        {
+                            title.IsChecked = true;
+                        }
+                    }
+                }
+            }
+
+            foreach (var dcsp in Data.DoctorsSpecializations.GetAll)
+            {
+                if (dcsp.id_doctor == currentDoctor.Id)
+                {
+                    foreach (var spec in Specializations)
+                    {
+                        if (spec.id == dcsp.id_specialization)
+                        {
+                            spec.IsChecked = true;
+                        }
+                    }
+                }
+            }
+
+            foreach (var dcsc in Data.ScientificTitles.GetAll)
+            {
+                if (dcsc.id_doctor == currentDoctor.Id)
+                {
+                    foreach (var title in Scintifics)
+                    {
+                        if (title.id == dcsc.id_title)
+                        {
+                            title.IsChecked = true;
+                        }
+                    }
+                }
+            }
+            nameOfButton = "К списку врачей";
         }
 
 

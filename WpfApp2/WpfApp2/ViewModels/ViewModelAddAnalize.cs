@@ -113,14 +113,9 @@ namespace WpfApp2.ViewModels
                     var DataSourceListbuf = AnalizeTypes;
                     AnalizeTypes = new ObservableCollection<AnalizeType>();
 
-                    using (var context = new MySqlContext())
+                    foreach (var HirurgInterupType in Data.AnalizeType.GetAll)
                     {
-                        AnalizeTypeRepository sRep = new AnalizeTypeRepository(context);
-                        foreach (var HirurgInterupType in sRep.GetAll)
-                        {
-                            AnalizeTypes.Add(HirurgInterupType);
-
-                        }
+                        AnalizeTypes.Add(HirurgInterupType);
                     }
                     SelectedIndexOfAnalizeType = AnalizeTypes.Count - 1;
                     //foreach (var RecomendationsType in Data.OperationForAmbulatornCard.GetAll)

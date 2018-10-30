@@ -191,15 +191,10 @@ namespace WpfApp2.ViewModels
         {
             DataSourceList = new ObservableCollection<SclerozListDataSource>();
             FullCopy = new List<SclerozListDataSource>();
-            using (var context = new MySqlContext())
+            foreach (var HirurgInterupType in Data.Sclezing.GetAll)
             {
-                SclezingRepository sRep = new SclezingRepository(context);
-
-                foreach (var HirurgInterupType in sRep.GetAll)
-                {
-                    DataSourceList.Add(new SclerozListDataSource(HirurgInterupType));
-                    FullCopy.Add(new SclerozListDataSource(HirurgInterupType));
-                }
+                DataSourceList.Add(new SclerozListDataSource(HirurgInterupType));
+                FullCopy.Add(new SclerozListDataSource(HirurgInterupType));
             }
         }
 
@@ -292,15 +287,10 @@ namespace WpfApp2.ViewModels
                     var DataSourceListbuf = DataSourceList;
                     DataSourceList = new ObservableCollection<SclerozListDataSource>();
                     FullCopy = new List<SclerozListDataSource>();
-                    using (var context = new MySqlContext())
+                    foreach (var HirurgInterupType in Data.Sclezing.GetAll)
                     {
-                        SclezingRepository sRep = new SclezingRepository(context);
-
-                        foreach (var HirurgInterupType in sRep.GetAll)
-                        {
-                            DataSourceList.Add(new SclerozListDataSource(HirurgInterupType));
-                            FullCopy.Add(new SclerozListDataSource(HirurgInterupType));
-                        }
+                        DataSourceList.Add(new SclerozListDataSource(HirurgInterupType));
+                        FullCopy.Add(new SclerozListDataSource(HirurgInterupType));
                     }
 
                     foreach (var DiagnosisType in DataSourceListbuf)

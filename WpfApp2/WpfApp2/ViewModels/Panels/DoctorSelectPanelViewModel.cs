@@ -56,20 +56,16 @@ namespace WpfApp2.ViewModels.Panels
         public DoctorSelectPanelViewModel(ViewModelBase parentVM) : base(parentVM.Controller)
         {
             DoctorSelectedId = 0;
-            using (var context = new MySqlContext())
-            {
-                DoctorRepository DoctorRep = new DoctorRepository(context);
-                Doctors = new ObservableCollection<Docs>();
+            Doctors = new ObservableCollection<Docs>();
 
-                foreach (var doc in DoctorRep.GetAll)
+            foreach (var doc in Data.Doctor.GetAll)
+            {
+                if (doc.isEnabled.Value)
                 {
-                    if (doc.isEnabled.Value)
-                    {
-                        Doctors.Add(new Docs(doc));
-                    }
+                    Doctors.Add(new Docs(doc));
                 }
-                DoctorSelectedId = Doctors.Count - 1;
             }
+            DoctorSelectedId = Doctors.Count - 1;
             ParentVM = parentVM;
 
         }
@@ -107,20 +103,16 @@ namespace WpfApp2.ViewModels.Panels
         internal void ClearPanel()
         {
             DoctorSelectedId = 0;
-            using (var context = new MySqlContext())
-            {
-                DoctorRepository DoctorRep = new DoctorRepository(context);
-                Doctors = new ObservableCollection<Docs>();
+            Doctors = new ObservableCollection<Docs>();
 
-                foreach (var doc in DoctorRep.GetAll)
+            foreach (var doc in Data.Doctor.GetAll)
+            {
+                if (doc.isEnabled.Value)
                 {
-                    if (doc.isEnabled.Value)
-                    {
-                        Doctors.Add(new Docs(doc));
-                    }
+                    Doctors.Add(new Docs(doc));
                 }
-                DoctorSelectedId = Doctors.Count - 1;
             }
+            DoctorSelectedId = Doctors.Count - 1;
             //LongText = "";
             ShortText = "";
         }

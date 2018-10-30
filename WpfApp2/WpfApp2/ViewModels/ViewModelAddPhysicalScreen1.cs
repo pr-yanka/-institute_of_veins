@@ -1390,409 +1390,399 @@ namespace WpfApp2.ViewModels
                     testThread = false;
                     //RemoveAllSaves();
                     Data.Complete();
-                    using (var context = new MySqlContext())
+
+                    SaveExaminationToSavedTable();
+
+                    Data.Complete();
+
+
+                        
+                    Examination examnTotal = Data.Examination.Get(obsid);
+                    ExaminationLeg leftLegExams = Data.ExaminationLeg.Get(examnTotal.idLeftLegExamination.Value);
+                    ExaminationLeg rightLegExams = Data.ExaminationLeg.Get(examnTotal.idRightLegExamination.Value);
+                    examnTotal.statementOverviewId = statementOverviewId;
+                    examnTotal.hirurgOverviewId = hirurgOverviewId;
+
+
+                    SavedExamination savedExamnTotal = Data.SavedExamination.GetAll.Where(e => e.acc_id == Acc_id).FirstOrDefault();
+                    SavedExaminationLeg savedLegExamL = Data.SavedExaminationLeg.Get(savedExamnTotal.idLeftLegExamination.Value);
+                    SavedExaminationLeg savedLegExamR = Data.SavedExaminationLeg.Get(savedExamnTotal.idRightLegExamination.Value);
+                    //savedExamnTotal.acc_id = Acc_id;
+                    examnTotal.height = savedExamnTotal.height;
+                    examnTotal.weight = savedExamnTotal.weight;
+                    // examnTotal.Comment = savedExamnTotal.Comment;
+                    //examnTotal.Date = (savedExamnTotal.Date != null) ? savedExamnTotal.Date.Value : DateTime.Now;
+                    //examnTotal.DoctorID = savedExamnTotal.DoctorID;
+                    examnTotal.hirurgOverviewId = savedExamnTotal.hirurgOverviewId;
+                    examnTotal.NB = savedExamnTotal.NB;
+                    // examnTotal.OperationType = savedExamnTotal.OperationType;
+                    examnTotal.PatientId = savedExamnTotal.PatientId;
+                    examnTotal.statementOverviewId = savedExamnTotal.statementOverviewId;
+
+
+                    leftLegExams.A = savedLegExamL.A;
+                    leftLegExams.additionalText = savedLegExamL.additionalText;
+                    leftLegExams.BPVHip = savedLegExamL.BPVHip;
+                    leftLegExams.BPVTibiaid = savedLegExamL.BPVTibiaid;
+                    leftLegExams.C = savedLegExamL.C;
+                    leftLegExams.E = savedLegExamL.E;
+                    leftLegExams.GVid = savedLegExamL.GVid;
+                    leftLegExams.MPVid = savedLegExamL.MPVid;
+                    leftLegExams.P = savedLegExamL.P;
+                    leftLegExams.PDSVid = savedLegExamL.PDSVid;
+                    leftLegExams.PerforateHipid = savedLegExamL.PerforateHipid;
+                    leftLegExams.PPVid = savedLegExamL.PPVid;
+                    leftLegExams.SFSid = savedLegExamL.SFSid;
+                    leftLegExams.SPSid = savedLegExamL.SPSid;
+                    leftLegExams.TEMPVid = savedLegExamL.TEMPVid;
+                    leftLegExams.TibiaPerforateid = savedLegExamL.TibiaPerforateid;
+                    leftLegExams.ZDSVid = savedLegExamL.ZDSVid;
+
+                    rightLegExams.A = savedLegExamR.A;
+                    rightLegExams.additionalText = savedLegExamR.additionalText;
+                    rightLegExams.BPVHip = savedLegExamR.BPVHip;
+                    rightLegExams.BPVTibiaid = savedLegExamR.BPVTibiaid;
+                    rightLegExams.C = savedLegExamR.C;
+                    rightLegExams.E = savedLegExamR.E;
+                    rightLegExams.GVid = savedLegExamR.GVid;
+                    rightLegExams.MPVid = savedLegExamR.MPVid;
+                    rightLegExams.P = savedLegExamR.P;
+                    rightLegExams.PDSVid = savedLegExamR.PDSVid;
+                    rightLegExams.PerforateHipid = savedLegExamR.PerforateHipid;
+                    rightLegExams.PPVid = savedLegExamR.PPVid;
+                    rightLegExams.SFSid = savedLegExamR.SFSid;
+                    rightLegExams.SPSid = savedLegExamR.SPSid;
+                    rightLegExams.TEMPVid = savedLegExamR.TEMPVid;
+                    rightLegExams.TibiaPerforateid = savedLegExamR.TibiaPerforateid;
+                    rightLegExams.ZDSVid = savedLegExamR.ZDSVid;
+                    //if (!LeftBPVHip.IsEmpty && leftLegExams.BPVHip == null)
+                    //    leftLegExams.BPVHip = LeftBPVEntryFull.Id;
+
+                    //if (!LeftBPVTibia.IsEmpty && leftLegExams.BPVTibiaid == null)
+                    //    leftLegExams.BPVTibiaid = LeftBPV_TibiaEntryFull.Id;
+
+
+                    //if (!LeftGV.IsEmpty && leftLegExams.GVid == null)
+                    //    leftLegExams.GVid = LeftGVEntryFull.Id;
+
+                    //if (!LeftMPV.IsEmpty && leftLegExams.MPVid == null)
+                    //    leftLegExams.MPVid = LeftMPVEntryFull.Id;
+
+                    //if (!LeftPDSV.IsEmpty && leftLegExams.PDSVid == null)
+                    //    leftLegExams.PDSVid = LeftPDSVEntryFull.Id;
+
+                    //if (!LeftPerforate.IsEmpty && leftLegExams.PerforateHipid == null)
+                    //    leftLegExams.PerforateHipid = LeftPerforate_hipEntryFull.Id;
+
+                    //if (!LeftPPV.IsEmpty && leftLegExams.PPVid == null)
+                    //    leftLegExams.PPVid = LeftPPVEntryFull.Id;
+
+                    //if (!LeftSFS.IsEmpty && leftLegExams.SFSid == null)
+                    //    leftLegExams.SFSid = LeftSFSEntryFull.Id;
+
+                    //if (!LeftSPS.IsEmpty && leftLegExams.SPSid == null)
+                    //    leftLegExams.SPSid = LeftSPSEntryFull.Id;
+
+                    //if (!LeftTEMPV.IsEmpty && leftLegExams.TEMPVid == null)
+                    //    leftLegExams.TEMPVid = LeftTEMPVEntryFull.Id;
+
+                    //if (!LeftTibiaPerforate.IsEmpty && leftLegExams.TibiaPerforateid == null)
+                    //    leftLegExams.TibiaPerforateid = LeftPerforate_shinEntryFull.Id;
+
+                    //if (!LeftZDSV.IsEmpty && leftLegExams.ZDSVid == null)
+                    //    leftLegExams.ZDSVid = LeftZDSVEntryFull.Id;
+
+                    //leftLegExams.additionalText = LeftAdditionalText;
+                    //if (LeftCEAR.LegSections[0].SelectedValue != null)
+                    //    leftLegExams.C = LeftCEAR.LegSections[0].SelectedValue.Id;
+                    //if (LeftCEAR.LegSections[1].SelectedValue != null)
+                    //    leftLegExams.E = LeftCEAR.LegSections[1].SelectedValue.Id;
+                    //if (LeftCEAR.LegSections[2].SelectedValue != null)
+                    //    leftLegExams.A = LeftCEAR.LegSections[2].SelectedValue.Id;
+                    //if (LeftCEAR.LegSections[3].SelectedValue != null)
+                    //    leftLegExams.P = LeftCEAR.LegSections[3].SelectedValue.Id;
+
+
+                    //if (!RightBPVHip.IsEmpty && rightLegExams.BPVHip == null)
+                    //    rightLegExams.BPVHip = RightBPVEntryFull.Id;
+
+                    //if (!RightBPVTibia.IsEmpty && rightLegExams.BPVTibiaid == null)
+                    //    rightLegExams.BPVTibiaid = RightBPV_TibiaEntryFull.Id;
+
+
+                    //if (!RightGV.IsEmpty && rightLegExams.GVid == null)
+                    //    rightLegExams.GVid = RightGVEntryFull.Id;
+
+                    //if (!RightMPV.IsEmpty && rightLegExams.MPVid == null)
+                    //    rightLegExams.MPVid = RightMPVEntryFull.Id;
+
+                    //if (!RightPDSV.IsEmpty && rightLegExams.PDSVid == null)
+                    //    rightLegExams.PDSVid = RightPDSVEntryFull.Id;
+
+                    //if (!RightPerforate.IsEmpty && rightLegExams.PerforateHipid == null)
+                    //    rightLegExams.PerforateHipid = RightPerforate_hipEntryFull.Id;
+
+                    //if (!RightPPV.IsEmpty && rightLegExams.PPVid == null)
+                    //    rightLegExams.PPVid = RightPPVEntryFull.Id;
+
+                    //if (!RightSFS.IsEmpty && rightLegExams.SFSid == null)
+                    //    rightLegExams.SFSid = RightSFSEntryFull.Id;
+
+                    //if (!RightSPS.IsEmpty && rightLegExams.SPSid == null)
+                    //    rightLegExams.SPSid = RightSPSEntryFull.Id;
+
+                    //if (!RightTEMPV.IsEmpty && rightLegExams.TEMPVid == null)
+                    //    rightLegExams.TEMPVid = RightTEMPVEntryFull.Id;
+
+                    //if (!RightTibiaPerforate.IsEmpty && rightLegExams.TibiaPerforateid == null)
+                    //    rightLegExams.TibiaPerforateid = RightPerforate_shinEntryFull.Id;
+
+                    //if (!RightZDSV.IsEmpty && rightLegExams.ZDSVid == null)
+                    //    rightLegExams.ZDSVid = RightZDSVEntryFull.Id;
+
+                    //rightLegExams.additionalText = RightAdditionalText;
+                    //if (RightCEAR.LegSections[0].SelectedValue != null)
+                    //    rightLegExams.C = RightCEAR.LegSections[0].SelectedValue.Id;
+                    //if (RightCEAR.LegSections[1].SelectedValue != null)
+                    //    rightLegExams.E = RightCEAR.LegSections[1].SelectedValue.Id;
+                    //if (RightCEAR.LegSections[2].SelectedValue != null)
+                    //    rightLegExams.A = RightCEAR.LegSections[2].SelectedValue.Id;
+                    //if (RightCEAR.LegSections[3].SelectedValue != null)
+                    //    rightLegExams.P = RightCEAR.LegSections[3].SelectedValue.Id;
+
+
+
+                    examnTotal.PatientId = CurrentPatient.Id;
+                    //examnTotal.Date = DateTime.Now;
+
+                    examnTotal.weight = float.Parse(Weight);
+                    examnTotal.NB = TextTip;
+                    examnTotal.height = float.Parse(Growth);
+
+                    //examnTotal.idLeftLegExamination = leftLegExams.Id;
+                    //examnTotal.idRightLegExamination = rightLegExams.Id;
+
+                    Data.Complete();
+                    bool test = false;
+                    if (LeftDiagnosisList != null)
                     {
 
-                        SaveExaminationToSavedTable();
-
-                        Data.Complete();
-
-
-                        ExaminationRepository ExamRep = new ExaminationRepository(context);
-                        ExaminationLegRepository LegExamRep = new ExaminationLegRepository(context);
-
-                        SavedExaminationRepository SavedExamRep = new SavedExaminationRepository(context);
-                        SavedExaminationLegRepository SavedLegExamRep = new SavedExaminationLegRepository(context);
-
-
-
-                        Examination examnTotal = Data.Examination.Get(obsid);
-                        ExaminationLeg leftLegExams = Data.ExaminationLeg.Get(examnTotal.idLeftLegExamination.Value);
-                        ExaminationLeg rightLegExams = Data.ExaminationLeg.Get(examnTotal.idRightLegExamination.Value);
-                        examnTotal.statementOverviewId = statementOverviewId;
-                        examnTotal.hirurgOverviewId = hirurgOverviewId;
-
-
-                        SavedExamination savedExamnTotal = SavedExamRep.GetAll.Where(e => e.acc_id == Acc_id).FirstOrDefault();
-                        SavedExaminationLeg savedLegExamL = SavedLegExamRep.Get(savedExamnTotal.idLeftLegExamination.Value);
-                        SavedExaminationLeg savedLegExamR = SavedLegExamRep.Get(savedExamnTotal.idRightLegExamination.Value);
-                        //savedExamnTotal.acc_id = Acc_id;
-                        examnTotal.height = savedExamnTotal.height;
-                        examnTotal.weight = savedExamnTotal.weight;
-                        // examnTotal.Comment = savedExamnTotal.Comment;
-                        //examnTotal.Date = (savedExamnTotal.Date != null) ? savedExamnTotal.Date.Value : DateTime.Now;
-                        //examnTotal.DoctorID = savedExamnTotal.DoctorID;
-                        examnTotal.hirurgOverviewId = savedExamnTotal.hirurgOverviewId;
-                        examnTotal.NB = savedExamnTotal.NB;
-                        // examnTotal.OperationType = savedExamnTotal.OperationType;
-                        examnTotal.PatientId = savedExamnTotal.PatientId;
-                        examnTotal.statementOverviewId = savedExamnTotal.statementOverviewId;
-
-
-                        leftLegExams.A = savedLegExamL.A;
-                        leftLegExams.additionalText = savedLegExamL.additionalText;
-                        leftLegExams.BPVHip = savedLegExamL.BPVHip;
-                        leftLegExams.BPVTibiaid = savedLegExamL.BPVTibiaid;
-                        leftLegExams.C = savedLegExamL.C;
-                        leftLegExams.E = savedLegExamL.E;
-                        leftLegExams.GVid = savedLegExamL.GVid;
-                        leftLegExams.MPVid = savedLegExamL.MPVid;
-                        leftLegExams.P = savedLegExamL.P;
-                        leftLegExams.PDSVid = savedLegExamL.PDSVid;
-                        leftLegExams.PerforateHipid = savedLegExamL.PerforateHipid;
-                        leftLegExams.PPVid = savedLegExamL.PPVid;
-                        leftLegExams.SFSid = savedLegExamL.SFSid;
-                        leftLegExams.SPSid = savedLegExamL.SPSid;
-                        leftLegExams.TEMPVid = savedLegExamL.TEMPVid;
-                        leftLegExams.TibiaPerforateid = savedLegExamL.TibiaPerforateid;
-                        leftLegExams.ZDSVid = savedLegExamL.ZDSVid;
-
-                        rightLegExams.A = savedLegExamR.A;
-                        rightLegExams.additionalText = savedLegExamR.additionalText;
-                        rightLegExams.BPVHip = savedLegExamR.BPVHip;
-                        rightLegExams.BPVTibiaid = savedLegExamR.BPVTibiaid;
-                        rightLegExams.C = savedLegExamR.C;
-                        rightLegExams.E = savedLegExamR.E;
-                        rightLegExams.GVid = savedLegExamR.GVid;
-                        rightLegExams.MPVid = savedLegExamR.MPVid;
-                        rightLegExams.P = savedLegExamR.P;
-                        rightLegExams.PDSVid = savedLegExamR.PDSVid;
-                        rightLegExams.PerforateHipid = savedLegExamR.PerforateHipid;
-                        rightLegExams.PPVid = savedLegExamR.PPVid;
-                        rightLegExams.SFSid = savedLegExamR.SFSid;
-                        rightLegExams.SPSid = savedLegExamR.SPSid;
-                        rightLegExams.TEMPVid = savedLegExamR.TEMPVid;
-                        rightLegExams.TibiaPerforateid = savedLegExamR.TibiaPerforateid;
-                        rightLegExams.ZDSVid = savedLegExamR.ZDSVid;
-                        //if (!LeftBPVHip.IsEmpty && leftLegExams.BPVHip == null)
-                        //    leftLegExams.BPVHip = LeftBPVEntryFull.Id;
-
-                        //if (!LeftBPVTibia.IsEmpty && leftLegExams.BPVTibiaid == null)
-                        //    leftLegExams.BPVTibiaid = LeftBPV_TibiaEntryFull.Id;
-
-
-                        //if (!LeftGV.IsEmpty && leftLegExams.GVid == null)
-                        //    leftLegExams.GVid = LeftGVEntryFull.Id;
-
-                        //if (!LeftMPV.IsEmpty && leftLegExams.MPVid == null)
-                        //    leftLegExams.MPVid = LeftMPVEntryFull.Id;
-
-                        //if (!LeftPDSV.IsEmpty && leftLegExams.PDSVid == null)
-                        //    leftLegExams.PDSVid = LeftPDSVEntryFull.Id;
-
-                        //if (!LeftPerforate.IsEmpty && leftLegExams.PerforateHipid == null)
-                        //    leftLegExams.PerforateHipid = LeftPerforate_hipEntryFull.Id;
-
-                        //if (!LeftPPV.IsEmpty && leftLegExams.PPVid == null)
-                        //    leftLegExams.PPVid = LeftPPVEntryFull.Id;
-
-                        //if (!LeftSFS.IsEmpty && leftLegExams.SFSid == null)
-                        //    leftLegExams.SFSid = LeftSFSEntryFull.Id;
-
-                        //if (!LeftSPS.IsEmpty && leftLegExams.SPSid == null)
-                        //    leftLegExams.SPSid = LeftSPSEntryFull.Id;
-
-                        //if (!LeftTEMPV.IsEmpty && leftLegExams.TEMPVid == null)
-                        //    leftLegExams.TEMPVid = LeftTEMPVEntryFull.Id;
-
-                        //if (!LeftTibiaPerforate.IsEmpty && leftLegExams.TibiaPerforateid == null)
-                        //    leftLegExams.TibiaPerforateid = LeftPerforate_shinEntryFull.Id;
-
-                        //if (!LeftZDSV.IsEmpty && leftLegExams.ZDSVid == null)
-                        //    leftLegExams.ZDSVid = LeftZDSVEntryFull.Id;
-
-                        //leftLegExams.additionalText = LeftAdditionalText;
-                        //if (LeftCEAR.LegSections[0].SelectedValue != null)
-                        //    leftLegExams.C = LeftCEAR.LegSections[0].SelectedValue.Id;
-                        //if (LeftCEAR.LegSections[1].SelectedValue != null)
-                        //    leftLegExams.E = LeftCEAR.LegSections[1].SelectedValue.Id;
-                        //if (LeftCEAR.LegSections[2].SelectedValue != null)
-                        //    leftLegExams.A = LeftCEAR.LegSections[2].SelectedValue.Id;
-                        //if (LeftCEAR.LegSections[3].SelectedValue != null)
-                        //    leftLegExams.P = LeftCEAR.LegSections[3].SelectedValue.Id;
-
-
-                        //if (!RightBPVHip.IsEmpty && rightLegExams.BPVHip == null)
-                        //    rightLegExams.BPVHip = RightBPVEntryFull.Id;
-
-                        //if (!RightBPVTibia.IsEmpty && rightLegExams.BPVTibiaid == null)
-                        //    rightLegExams.BPVTibiaid = RightBPV_TibiaEntryFull.Id;
-
-
-                        //if (!RightGV.IsEmpty && rightLegExams.GVid == null)
-                        //    rightLegExams.GVid = RightGVEntryFull.Id;
-
-                        //if (!RightMPV.IsEmpty && rightLegExams.MPVid == null)
-                        //    rightLegExams.MPVid = RightMPVEntryFull.Id;
-
-                        //if (!RightPDSV.IsEmpty && rightLegExams.PDSVid == null)
-                        //    rightLegExams.PDSVid = RightPDSVEntryFull.Id;
-
-                        //if (!RightPerforate.IsEmpty && rightLegExams.PerforateHipid == null)
-                        //    rightLegExams.PerforateHipid = RightPerforate_hipEntryFull.Id;
-
-                        //if (!RightPPV.IsEmpty && rightLegExams.PPVid == null)
-                        //    rightLegExams.PPVid = RightPPVEntryFull.Id;
-
-                        //if (!RightSFS.IsEmpty && rightLegExams.SFSid == null)
-                        //    rightLegExams.SFSid = RightSFSEntryFull.Id;
-
-                        //if (!RightSPS.IsEmpty && rightLegExams.SPSid == null)
-                        //    rightLegExams.SPSid = RightSPSEntryFull.Id;
-
-                        //if (!RightTEMPV.IsEmpty && rightLegExams.TEMPVid == null)
-                        //    rightLegExams.TEMPVid = RightTEMPVEntryFull.Id;
-
-                        //if (!RightTibiaPerforate.IsEmpty && rightLegExams.TibiaPerforateid == null)
-                        //    rightLegExams.TibiaPerforateid = RightPerforate_shinEntryFull.Id;
-
-                        //if (!RightZDSV.IsEmpty && rightLegExams.ZDSVid == null)
-                        //    rightLegExams.ZDSVid = RightZDSVEntryFull.Id;
-
-                        //rightLegExams.additionalText = RightAdditionalText;
-                        //if (RightCEAR.LegSections[0].SelectedValue != null)
-                        //    rightLegExams.C = RightCEAR.LegSections[0].SelectedValue.Id;
-                        //if (RightCEAR.LegSections[1].SelectedValue != null)
-                        //    rightLegExams.E = RightCEAR.LegSections[1].SelectedValue.Id;
-                        //if (RightCEAR.LegSections[2].SelectedValue != null)
-                        //    rightLegExams.A = RightCEAR.LegSections[2].SelectedValue.Id;
-                        //if (RightCEAR.LegSections[3].SelectedValue != null)
-                        //    rightLegExams.P = RightCEAR.LegSections[3].SelectedValue.Id;
-
-
-
-                        examnTotal.PatientId = CurrentPatient.Id;
-                        //examnTotal.Date = DateTime.Now;
-
-                        examnTotal.weight = float.Parse(Weight);
-                        examnTotal.NB = TextTip;
-                        examnTotal.height = float.Parse(Growth);
-
-                        //examnTotal.idLeftLegExamination = leftLegExams.Id;
-                        //examnTotal.idRightLegExamination = rightLegExams.Id;
-
-                        Data.Complete();
-                        bool test = false;
-                        if (LeftDiagnosisList != null)
+                        foreach (var dgOp in Data.DiagnosisObs.GetAll)
                         {
 
-                            foreach (var dgOp in Data.DiagnosisObs.GetAll)
+                            if (dgOp.id_leg_examination == examnTotal.Id && dgOp.isLeft == true)
                             {
-
-                                if (dgOp.id_leg_examination == examnTotal.Id && dgOp.isLeft == true)
+                                test = true;
+                                foreach (var diag in LeftDiagnosisList)
                                 {
-                                    test = true;
-                                    foreach (var diag in LeftDiagnosisList)
+                                    if (diag.IsChecked.Value && dgOp.id_diagnosis == diag.Data.Id)
                                     {
-                                        if (diag.IsChecked.Value && dgOp.id_diagnosis == diag.Data.Id)
-                                        {
-                                            test = false;
-                                            break;
-                                        }
-                                    }
-                                }
-                                if (test)
-                                {
-                                    Data.DiagnosisObs.Remove(dgOp);
-                                    Data.Complete();
-                                    test = false;
-                                }
-                            }
-                            test = false;
-                            // Data.Complete();
-
-                            foreach (var diag in LeftDiagnosisList)
-                            {
-                                if (diag.IsChecked.Value)
-                                {
-
-                                    test = true;
-                                    foreach (var dgOp in Data.DiagnosisObs.GetAll)
-                                    {
-
-                                        if (dgOp.id_diagnosis == diag.Data.Id && dgOp.id_leg_examination == examnTotal.Id && dgOp.isLeft == true)
-                                        {
-                                            test = false;
-                                            break;
-                                        }
-                                    }
-                                    if (test)
-                                    {
-                                        var newDiag = new DiagnosisObs();
-                                        newDiag.id_diagnosis = diag.Data.Id;
-                                        newDiag.id_leg_examination = examnTotal.Id;
-                                        newDiag.isLeft = true;
-                                        Data.DiagnosisObs.Add(newDiag);
-                                        Data.Complete();
-                                        //    test = false;
+                                        test = false;
+                                        break;
                                     }
                                 }
                             }
-
-                        }
-                        test = false;
-                        if (RightDiagnosisList != null)
-                        {
-                            foreach (var dgOp in Data.DiagnosisObs.GetAll)
+                            if (test)
                             {
-
-                                if (dgOp.id_leg_examination == examnTotal.Id && dgOp.isLeft == false)
-                                {
-                                    test = true;
-                                    foreach (var diag in RightDiagnosisList)
-                                    {
-                                        if (diag.IsChecked.Value && dgOp.id_diagnosis == diag.Data.Id)
-                                        {
-                                            test = false;
-                                            break;
-                                        }
-                                    }
-                                }
-                                if (test)
-                                {
-                                    Data.DiagnosisObs.Remove(dgOp);
-                                    Data.Complete();
-                                    test = false;
-                                }
-                            }
-                            test = false;
-                            //Data.Complete();
-                            foreach (var diag in RightDiagnosisList)
-                            {
-                                if (diag.IsChecked.Value)
-                                {
-                                    test = true;
-                                    foreach (var dgOp in Data.DiagnosisObs.GetAll)
-                                    {
-                                        if (dgOp.id_diagnosis == diag.Data.Id && dgOp.id_leg_examination == examnTotal.Id && dgOp.isLeft == false)
-                                        {
-                                            test = false;
-                                            break;
-                                        }
-                                    }
-                                    if (test)
-                                    {
-                                        var newDiag = new DiagnosisObs();
-                                        newDiag.id_diagnosis = diag.Data.Id;
-                                        newDiag.id_leg_examination = examnTotal.Id;
-                                        newDiag.isLeft = false;
-                                        Data.DiagnosisObs.Add(newDiag);
-                                        Data.Complete();
-                                    }
-                                }
+                                Data.DiagnosisObs.Remove(dgOp);
+                                Data.Complete();
+                                test = false;
                             }
                         }
                         test = false;
-                        if (RecomendationsList != null)
-                        {
+                        // Data.Complete();
 
-                            foreach (var dgOp in Data.RecomendationObs.GetAll)
+                        foreach (var diag in LeftDiagnosisList)
+                        {
+                            if (diag.IsChecked.Value)
                             {
 
-                                if (dgOp.id_examination == examnTotal.Id)
+                                test = true;
+                                foreach (var dgOp in Data.DiagnosisObs.GetAll)
                                 {
-                                    test = true;
-                                    foreach (var diag in RecomendationsList)
+
+                                    if (dgOp.id_diagnosis == diag.Data.Id && dgOp.id_leg_examination == examnTotal.Id && dgOp.isLeft == true)
                                     {
-                                        if (diag.IsChecked.Value && dgOp.id_recommendations == diag.Data.Id)
-                                        {
-                                            test = false;
-                                            break;
-                                        }
+                                        test = false;
+                                        break;
                                     }
                                 }
                                 if (test)
                                 {
-                                    Data.RecomendationObs.Remove(dgOp);
+                                    var newDiag = new DiagnosisObs();
+                                    newDiag.id_diagnosis = diag.Data.Id;
+                                    newDiag.id_leg_examination = examnTotal.Id;
+                                    newDiag.isLeft = true;
+                                    Data.DiagnosisObs.Add(newDiag);
                                     Data.Complete();
-                                    test = false;
-                                }
-                            }
-
-                            //   Data.Complete();
-                            test = false;
-
-                            foreach (var rec in RecomendationsList)
-                            {
-                                if (rec.IsChecked.Value)
-                                {
-                                    test = true;
-                                    foreach (var rcOp in Data.RecomendationObs.GetAll)
-                                    {
-                                        if (rcOp.id_recommendations == rec.Data.Id && rcOp.id_examination == examnTotal.Id.Value)
-                                        {
-                                            test = false;
-                                            break;
-                                        }
-                                    }
-                                    if (test)
-                                    {
-                                        var newRec = new RecomendationObs();
-                                        newRec.id_recommendations = rec.Data.Id;
-                                        newRec.id_examination = examnTotal.Id.Value;
-                                        Data.RecomendationObs.Add(newRec);
-                                        Data.Complete();
-                                    }
+                                    //    test = false;
                                 }
                             }
                         }
-                        test = false;
-                        if (ComplainsList != null)
-                        {
-                            foreach (var dgOp in Data.ComplanesObs.GetAll)
-                            {
 
-                                if (dgOp.id_Examination == examnTotal.Id)
-                                {
-                                    test = true;
-                                    foreach (var diag in ComplainsList)
-                                    {
-                                        if (diag.IsChecked.Value && dgOp.id_Complains == diag.Data.Id)
-                                        {
-                                            test = false;
-                                            break;
-                                        }
-                                    }
-                                }
-                                if (test)
-                                {
-                                    Data.ComplanesObs.Remove(dgOp);
-                                    Data.Complete();
-                                    test = false;
-                                }
-                            }
-
-                            //  Data.Complete();
-
-                            test = false;
-
-
-                            foreach (var cmp in ComplainsList)
-                            {
-                                if (cmp.IsChecked.Value)
-                                {
-                                    test = true;
-                                    foreach (var cmOp in Data.ComplanesObs.GetAll)
-                                    {
-                                        if (cmOp.id_Complains == cmp.Data.Id && cmOp.id_Examination == examnTotal.Id.Value)
-                                        {
-                                            test = false;
-                                            break;
-                                        }
-                                    }
-                                    if (test)
-                                    {
-                                        var newcmp = new ComplanesObs();
-                                        newcmp.id_Complains = cmp.Data.Id;
-                                        newcmp.id_Examination = examnTotal.Id.Value;
-                                        Data.ComplanesObs.Add(newcmp);
-                                        Data.Complete();
-                                    }
-                                }
-                            }
-                        }
-                        //   Data.Complete();
                     }
+                    test = false;
+                    if (RightDiagnosisList != null)
+                    {
+                        foreach (var dgOp in Data.DiagnosisObs.GetAll)
+                        {
+
+                            if (dgOp.id_leg_examination == examnTotal.Id && dgOp.isLeft == false)
+                            {
+                                test = true;
+                                foreach (var diag in RightDiagnosisList)
+                                {
+                                    if (diag.IsChecked.Value && dgOp.id_diagnosis == diag.Data.Id)
+                                    {
+                                        test = false;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (test)
+                            {
+                                Data.DiagnosisObs.Remove(dgOp);
+                                Data.Complete();
+                                test = false;
+                            }
+                        }
+                        test = false;
+                        //Data.Complete();
+                        foreach (var diag in RightDiagnosisList)
+                        {
+                            if (diag.IsChecked.Value)
+                            {
+                                test = true;
+                                foreach (var dgOp in Data.DiagnosisObs.GetAll)
+                                {
+                                    if (dgOp.id_diagnosis == diag.Data.Id && dgOp.id_leg_examination == examnTotal.Id && dgOp.isLeft == false)
+                                    {
+                                        test = false;
+                                        break;
+                                    }
+                                }
+                                if (test)
+                                {
+                                    var newDiag = new DiagnosisObs();
+                                    newDiag.id_diagnosis = diag.Data.Id;
+                                    newDiag.id_leg_examination = examnTotal.Id;
+                                    newDiag.isLeft = false;
+                                    Data.DiagnosisObs.Add(newDiag);
+                                    Data.Complete();
+                                }
+                            }
+                        }
+                    }
+                    test = false;
+                    if (RecomendationsList != null)
+                    {
+
+                        foreach (var dgOp in Data.RecomendationObs.GetAll)
+                        {
+
+                            if (dgOp.id_examination == examnTotal.Id)
+                            {
+                                test = true;
+                                foreach (var diag in RecomendationsList)
+                                {
+                                    if (diag.IsChecked.Value && dgOp.id_recommendations == diag.Data.Id)
+                                    {
+                                        test = false;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (test)
+                            {
+                                Data.RecomendationObs.Remove(dgOp);
+                                Data.Complete();
+                                test = false;
+                            }
+                        }
+
+                        //   Data.Complete();
+                        test = false;
+
+                        foreach (var rec in RecomendationsList)
+                        {
+                            if (rec.IsChecked.Value)
+                            {
+                                test = true;
+                                foreach (var rcOp in Data.RecomendationObs.GetAll)
+                                {
+                                    if (rcOp.id_recommendations == rec.Data.Id && rcOp.id_examination == examnTotal.Id.Value)
+                                    {
+                                        test = false;
+                                        break;
+                                    }
+                                }
+                                if (test)
+                                {
+                                    var newRec = new RecomendationObs();
+                                    newRec.id_recommendations = rec.Data.Id;
+                                    newRec.id_examination = examnTotal.Id.Value;
+                                    Data.RecomendationObs.Add(newRec);
+                                    Data.Complete();
+                                }
+                            }
+                        }
+                    }
+                    test = false;
+                    if (ComplainsList != null)
+                    {
+                        foreach (var dgOp in Data.ComplanesObs.GetAll)
+                        {
+
+                            if (dgOp.id_Examination == examnTotal.Id)
+                            {
+                                test = true;
+                                foreach (var diag in ComplainsList)
+                                {
+                                    if (diag.IsChecked.Value && dgOp.id_Complains == diag.Data.Id)
+                                    {
+                                        test = false;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (test)
+                            {
+                                Data.ComplanesObs.Remove(dgOp);
+                                Data.Complete();
+                                test = false;
+                            }
+                        }
+
+                        //  Data.Complete();
+
+                        test = false;
+
+
+                        foreach (var cmp in ComplainsList)
+                        {
+                            if (cmp.IsChecked.Value)
+                            {
+                                test = true;
+                                foreach (var cmOp in Data.ComplanesObs.GetAll)
+                                {
+                                    if (cmOp.id_Complains == cmp.Data.Id && cmOp.id_Examination == examnTotal.Id.Value)
+                                    {
+                                        test = false;
+                                        break;
+                                    }
+                                }
+                                if (test)
+                                {
+                                    var newcmp = new ComplanesObs();
+                                    newcmp.id_Complains = cmp.Data.Id;
+                                    newcmp.id_Examination = examnTotal.Id.Value;
+                                    Data.ComplanesObs.Add(newcmp);
+                                    Data.Complete();
+                                }
+                            }
+                        }
+                    }
+                    //   Data.Complete();
                     testThread = false;
                     RemoveAllSaves();
                     Data.Complete();
@@ -1812,7 +1802,7 @@ namespace WpfApp2.ViewModels
 
                     if (result == DialogResult.Yes)
                     {
-                        DialogPreOperationViewModel vm1 = new DialogPreOperationViewModel();
+                        DialogPreOperationViewModel vm1 = new DialogPreOperationViewModel(Data);
                         result = DialogService.DialogService.OpenDialog(vm1, parameter as Window);
 
 
@@ -2890,53 +2880,49 @@ namespace WpfApp2.ViewModels
                     document.Save();
                     // Release this document from memory.
                     byte[] bteToBD = File.ReadAllBytes(docName);
-                    using (var context = new MySqlContext())
+                    StatementObs Hv = new StatementObs();
+                    if (statementOverviewId != null && statementOverviewId != 0)
                     {
-                        StatementObsRepository StatementObsRep = new StatementObsRepository(context);
-                        StatementObs Hv = new StatementObs();
-                        if (statementOverviewId != null && statementOverviewId != 0)
-                        {
-                            Hv = Data.StatementObs.Get(statementOverviewId.Value);
+                        Hv = Data.StatementObs.Get(statementOverviewId.Value);
 
-                            Hv.DocTemplate = bteToBD;
+                        Hv.DocTemplate = bteToBD;
 
-                            Data.Complete();
-                        }
-                        else
-                        {
-
-                            Hv.DocTemplate = bteToBD;
-                            //Hv.DoctorId = int.Parse(p2.ToString());
-                            Data.StatementObs.Add(Hv);
-
-                            Data.Complete();
-                            statementOverviewId = Hv.Id;
-                        }
-                        //bool tester = true;
-                        //foreach (var x in HirurgOverviewRep.GetAll)
-                        //{
-
-                        //    if (x.PatientId == CurrentPatient.Id)
-                        //    {
-                        //        tester = false;
-                        //        Hv = Data.HirurgOverview.Get(x.Id);
-                        //        Hv.DocTemplate = bteToBD;
-
-                        //        Data.Complete();
-                        //        break;
-                        //    }
-
-                        //    // HirurgOverview Hv = new HirurgOverview();
-                        //}
-                        //if (tester)
-                        //{
-                        //    Hv.PatientId = CurrentPatient.Id;
-                        //    Hv.DocTemplate = bteToBD;
-                        //    Data.HirurgOverview.Add(Hv);
-                        //    Data.Complete();
-                        //}
-
+                        Data.Complete();
                     }
+                    else
+                    {
+
+                        Hv.DocTemplate = bteToBD;
+                        //Hv.DoctorId = int.Parse(p2.ToString());
+                        Data.StatementObs.Add(Hv);
+
+                        Data.Complete();
+                        statementOverviewId = Hv.Id;
+                    }
+                    //bool tester = true;
+                    //foreach (var x in HirurgOverviewRep.GetAll)
+                    //{
+
+                    //    if (x.PatientId == CurrentPatient.Id)
+                    //    {
+                    //        tester = false;
+                    //        Hv = Data.HirurgOverview.Get(x.Id);
+                    //        Hv.DocTemplate = bteToBD;
+
+                    //        Data.Complete();
+                    //        break;
+                    //    }
+
+                    //    // HirurgOverview Hv = new HirurgOverview();
+                    //}
+                    //if (tester)
+                    //{
+                    //    Hv.PatientId = CurrentPatient.Id;
+                    //    Hv.DocTemplate = bteToBD;
+                    //    Data.HirurgOverview.Add(Hv);
+                    //    Data.Complete();
+                    //}
+
                     MessageBus.Default.Call("GetStatementForStatementFILENAME", docName, null);
                     MessageBus.Default.Call("GetStatementForStatement", _fileNameOnly, statementOverviewId);
                 }
@@ -3920,15 +3906,11 @@ namespace WpfApp2.ViewModels
         {
             SetAllBordersDefault();
             CurrentPanelViewModel = new DoctorSelectPanelViewModel(this);
-            using (var context = new MySqlContext())
-            {
-                DoctorRepository DoctorRep = new DoctorRepository(context);
-                CurrentPanelViewModel.Doctors = new ObservableCollection<Docs>();
+            CurrentPanelViewModel.Doctors = new ObservableCollection<Docs>();
 
-                foreach (var doc in DoctorRep.GetAll)
-                {
-                    CurrentPanelViewModel.Doctors.Add(new Docs(doc));
-                }
+            foreach (var doc in Data.Doctor.GetAll)
+            {
+                CurrentPanelViewModel.Doctors.Add(new Docs(doc));
             }
             OpenCommand = new DelegateCommand(() =>
             {
@@ -5091,133 +5073,113 @@ namespace WpfApp2.ViewModels
             MessageBus.Default.Call("SetMode", this, "EDIT");
             obsid = (int)data;
 
-            using (var context = new MySqlContext())
+            SavedExamination Exam = Data.SavedExamination.Get(obsid);
+            statementOverviewId = Exam.statementOverviewId;
+            hirurgOverviewId = Exam.hirurgOverviewId;
+            SavedExaminationLeg leftLegExam = Data.SavedExaminationLeg.Get(Exam.idLeftLegExamination.Value);
+            SavedExaminationLeg rightLegExam = Data.SavedExaminationLeg.Get(Exam.idRightLegExamination.Value);
+            //IsVisibleTextTTT = Visibility.Visible;
+            //if (Exam.isNeedOperation.Value)
+            //{
+            //    TextOfPreOperation = "Предварительно назначена" + Data.OperationType.Get(Exam.OperationType.Value);
+
+            //}
+            //else
+            //{
+            //    TextOfPreOperation = "Предварительная операция не была назначена";
+            //}
+
+
+            Weight = Exam.weight.ToString();
+            Growth = Exam.height.ToString();
+            TextTip = Exam.NB;
+
+
+            LeftAdditionalText = leftLegExam.additionalText;
+
+            if (leftLegExam.PDSVid != null)
             {
-                SavedExaminationRepository ExamRep = new SavedExaminationRepository(context);
-                SavedExaminationLegRepository LegExamRep = new SavedExaminationLegRepository(context);
-                LettersRepository LettersRep = new LettersRepository(context);
-
-
-
-                SavedExamination Exam = ExamRep.Get(obsid);
-                statementOverviewId = Exam.statementOverviewId;
-                hirurgOverviewId = Exam.hirurgOverviewId;
-                SavedExaminationLeg leftLegExam = LegExamRep.Get(Exam.idLeftLegExamination.Value);
-                SavedExaminationLeg rightLegExam = LegExamRep.Get(Exam.idRightLegExamination.Value);
-                //IsVisibleTextTTT = Visibility.Visible;
-                //if (Exam.isNeedOperation.Value)
-                //{
-                //    TextOfPreOperation = "Предварительно назначена" + Data.OperationType.Get(Exam.OperationType.Value);
-
-                //}
-                //else
-                //{
-                //    TextOfPreOperation = "Предварительная операция не была назначена";
-                //}
-
-
-                Weight = Exam.weight.ToString();
-                Growth = Exam.height.ToString();
-                TextTip = Exam.NB;
-
-
-                LeftAdditionalText = leftLegExam.additionalText;
-
-                PDSVHipEntryFullRepository PDSVEntryFullRep = new PDSVHipEntryFullRepository(context);
-                if (leftLegExam.PDSVid != null)
-                {
-                    GetLegPartFromEntry(PDSVEntryFullRep.Get(leftLegExam.PDSVid.Value), LeftPDSV, true);
-                }
+                GetLegPartFromEntry(Data.PDSVFull.Get(leftLegExam.PDSVid.Value), LeftPDSV, true);
+            }
 
 
-                BPVHipEntryFullRepository BPVEntryFullRep = new BPVHipEntryFullRepository(context);
-                if (leftLegExam.BPVHip != null)
-                {
-                    GetLegPartFromEntry(BPVEntryFullRep.Get(leftLegExam.BPVHip.Value), LeftBPVHip, true);
-                }
+            if (leftLegExam.BPVHip != null)
+            {
+                GetLegPartFromEntry(Data.BPVHipsFull.Get(leftLegExam.BPVHip.Value), LeftBPVHip, true);
+            }
 
-                BPV_TibiaEntryFullRepository BPVTibiaEntryFullRep = new BPV_TibiaEntryFullRepository(context);
-                if (leftLegExam.BPVTibiaid != null)
-                {
-                    GetLegPartFromEntry(BPVTibiaEntryFullRep.Get(leftLegExam.BPVTibiaid.Value), LeftBPVTibia, true);
-                }
+            if (leftLegExam.BPVTibiaid != null)
+            {
+                GetLegPartFromEntry(Data.BPV_TibiaFull.Get(leftLegExam.BPVTibiaid.Value), LeftBPVTibia, true);
+            }
 
-                GVEntryFullRepository GVEntryFullRep = new GVEntryFullRepository(context);
-                if (leftLegExam.GVid != null)
-                {
-                    GetLegPartFromEntry(GVEntryFullRep.Get(leftLegExam.GVid.Value), LeftGV, true);
-                }
+            if (leftLegExam.GVid != null)
+            {
+                GetLegPartFromEntry(Data.GVFull.Get(leftLegExam.GVid.Value), LeftGV, true);
+            }
 
-                MPVEntryFullRepository MPVEntryFullRep = new MPVEntryFullRepository(context);
-                if (leftLegExam.MPVid != null)
-                {
-                    GetLegPartFromEntry(MPVEntryFullRep.Get(leftLegExam.MPVid.Value), LeftMPV, true);
-                }
+            if (leftLegExam.MPVid != null)
+            {
+                GetLegPartFromEntry(Data.MPVFull.Get(leftLegExam.MPVid.Value), LeftMPV, true);
+            }
 
-                Perforate_hipEntryFullRepository PerforateEntryFullRep = new Perforate_hipEntryFullRepository(context);
-                if (leftLegExam.PerforateHipid != null)
-                {
-                    GetLegPartFromEntry(PerforateEntryFullRep.Get(leftLegExam.PerforateHipid.Value), LeftPerforate, true);
-                }
+            if (leftLegExam.PerforateHipid != null)
+            {
+                GetLegPartFromEntry(Data.Perforate_hipFull.Get(leftLegExam.PerforateHipid.Value), LeftPerforate, true);
+            }
 
-                PPVEntryFullRepository PPVEntryFullRep = new PPVEntryFullRepository(context);
-                if (leftLegExam.PPVid != null)
-                {
-                    GetLegPartFromEntry(PPVEntryFullRep.Get(leftLegExam.PPVid.Value), LeftPPV, true);
-                }
+            if (leftLegExam.PPVid != null)
+            {
+                GetLegPartFromEntry(Data.PPVFull.Get(leftLegExam.PPVid.Value), LeftPPV, true);
+            }
 
-                SFSHipEntryFullRepository SFSEntryFullRep = new SFSHipEntryFullRepository(context);
-                if (leftLegExam.SFSid != null)
-                {
-                    GetLegPartFromEntry(SFSEntryFullRep.Get(leftLegExam.SFSid.Value), LeftSFS, true);
-                }
+            if (leftLegExam.SFSid != null)
+            {
+                GetLegPartFromEntry(Data.SFSFull.Get(leftLegExam.SFSid.Value), LeftSFS, true);
+            }
 
-                SPSHipEntryFullRepository SPSEntryFullRep = new SPSHipEntryFullRepository(context);
-                if (leftLegExam.SPSid != null)
-                {
-                    GetLegPartFromEntry(SPSEntryFullRep.Get(leftLegExam.SPSid.Value), LeftSPS, true);
-                }
+            if (leftLegExam.SPSid != null)
+            {
+                GetLegPartFromEntry(Data.SPSHipFull.Get(leftLegExam.SPSid.Value), LeftSPS, true);
+            }
 
-                TEMPVEntryFullRepository TEMPVEntryFullRep = new TEMPVEntryFullRepository(context);
-                if (leftLegExam.TEMPVid != null)
-                {
-                    GetLegPartFromEntry(TEMPVEntryFullRep.Get(leftLegExam.TEMPVid.Value), LeftTEMPV, true);
-                }
+            if (leftLegExam.TEMPVid != null)
+            {
+                GetLegPartFromEntry(Data.TEMPVFull.Get(leftLegExam.TEMPVid.Value), LeftTEMPV, true);
+            }
 
-                Perforate_shinEntryFullRepository TibiaPerforateEntryFullRep = new Perforate_shinEntryFullRepository(context);
-                if (leftLegExam.TibiaPerforateid != null)
-                {
-                    GetLegPartFromEntry(TibiaPerforateEntryFullRep.Get(leftLegExam.TibiaPerforateid.Value), LeftTibiaPerforate, true);
-                }
+            if (leftLegExam.TibiaPerforateid != null)
+            {
+                GetLegPartFromEntry(Data.Perforate_shinFull.Get(leftLegExam.TibiaPerforateid.Value), LeftTibiaPerforate, true);
+            }
 
-                ZDSVEntryFullRepository ZDSVEntryFullRep = new ZDSVEntryFullRepository(context);
+            if (leftLegExam.ZDSVid != null)
+            {
+                GetLegPartFromEntry(Data.ZDSVFull.Get(leftLegExam.ZDSVid.Value), LeftZDSV, true);
+            }
 
-                if (leftLegExam.ZDSVid != null)
-                {
-                    GetLegPartFromEntry(ZDSVEntryFullRep.Get(leftLegExam.ZDSVid.Value), LeftZDSV, true);
-                }
+            if (leftLegExam.C != null)
+            {
+                LeftCEAR.LegSections[0].SelectedValue = Data.Letters.Get(leftLegExam.C.Value);
+            }
 
-                if (leftLegExam.C != null)
-                {
-                    LeftCEAR.LegSections[0].SelectedValue = LettersRep.Get(leftLegExam.C.Value);
-                }
+            if (leftLegExam.E != null)
+            {
+                LeftCEAR.LegSections[1].SelectedValue = Data.Letters.Get(leftLegExam.E.Value);
+            }
 
-                if (leftLegExam.E != null)
-                {
-                    LeftCEAR.LegSections[1].SelectedValue = LettersRep.Get(leftLegExam.E.Value);
-                }
+            if (leftLegExam.A != null)
+            {
+                LeftCEAR.LegSections[2].SelectedValue = Data.Letters.Get(leftLegExam.A.Value);
+            }
 
-                if (leftLegExam.A != null)
-                {
-                    LeftCEAR.LegSections[2].SelectedValue = LettersRep.Get(leftLegExam.A.Value);
-                }
+            if (leftLegExam.P != null)
+            {
+                LeftCEAR.LegSections[3].SelectedValue = Data.Letters.Get(leftLegExam.P.Value);
+            }
 
-                if (leftLegExam.P != null)
-                {
-                    LeftCEAR.LegSections[3].SelectedValue = LettersRep.Get(leftLegExam.P.Value);
-                }
+            LeftCEAR.SaveCommand.Execute();
 
-                LeftCEAR.SaveCommand.Execute();
 
 
 
@@ -5230,92 +5192,92 @@ namespace WpfApp2.ViewModels
 
 
 
+            RightAdditionalText = rightLegExam.additionalText;
 
-                RightAdditionalText = rightLegExam.additionalText;
 
 
+            if (rightLegExam.PDSVid != null)
+            {
+                GetLegPartFromEntry(Data.PDSVFull.Get(rightLegExam.PDSVid.Value), RightPDSV, false);
+            }
 
-                if (rightLegExam.PDSVid != null)
-                {
-                    GetLegPartFromEntry(PDSVEntryFullRep.Get(rightLegExam.PDSVid.Value), RightPDSV, false);
-                }
+            if (rightLegExam.BPVHip != null)
+            {
+                GetLegPartFromEntry(Data.BPVHipsFull.Get(rightLegExam.BPVHip.Value), RightBPVHip, false);
+            }
 
-                if (rightLegExam.BPVHip != null)
-                {
-                    GetLegPartFromEntry(BPVEntryFullRep.Get(rightLegExam.BPVHip.Value), RightBPVHip, false);
-                }
+            if (rightLegExam.BPVTibiaid != null)
+            {
+                GetLegPartFromEntry(Data.BPV_TibiaFull.Get(rightLegExam.BPVTibiaid.Value), RightBPVTibia, false);
+            }
 
-                if (rightLegExam.BPVTibiaid != null)
-                {
-                    GetLegPartFromEntry(BPVTibiaEntryFullRep.Get(rightLegExam.BPVTibiaid.Value), RightBPVTibia, false);
-                }
+            if (rightLegExam.GVid != null)
+            {
+                GetLegPartFromEntry(Data.GVFull.Get(rightLegExam.GVid.Value), RightGV, false);
+            }
 
-                if (rightLegExam.GVid != null)
-                {
-                    GetLegPartFromEntry(GVEntryFullRep.Get(rightLegExam.GVid.Value), RightGV, false);
-                }
+            if (rightLegExam.MPVid != null)
+            {
+                GetLegPartFromEntry(Data.MPVFull.Get(rightLegExam.MPVid.Value), RightMPV, false);
+            }
 
-                if (rightLegExam.MPVid != null)
-                {
-                    GetLegPartFromEntry(MPVEntryFullRep.Get(rightLegExam.MPVid.Value), RightMPV, false);
-                }
+            if (rightLegExam.PerforateHipid != null)
+            {
+                GetLegPartFromEntry(Data.Perforate_hipFull.Get(rightLegExam.PerforateHipid.Value), RightPerforate, false);
+            }
 
-                if (rightLegExam.PerforateHipid != null)
-                {
-                    GetLegPartFromEntry(PerforateEntryFullRep.Get(rightLegExam.PerforateHipid.Value), RightPerforate, false);
-                }
+            if (rightLegExam.PPVid != null)
+            {
+                GetLegPartFromEntry(Data.PPVFull.Get(rightLegExam.PPVid.Value), RightPPV, false);
+            }
 
-                if (rightLegExam.PPVid != null)
-                {
-                    GetLegPartFromEntry(PPVEntryFullRep.Get(rightLegExam.PPVid.Value), RightPPV, false);
-                }
+            if (rightLegExam.SFSid != null)
+            {
+                GetLegPartFromEntry(Data.SFSFull.Get(rightLegExam.SFSid.Value), RightSFS, false);
+            }
 
-                if (rightLegExam.SFSid != null)
-                {
-                    GetLegPartFromEntry(SFSEntryFullRep.Get(rightLegExam.SFSid.Value), RightSFS, false);
-                }
+            if (rightLegExam.SPSid != null)
+            {
+                GetLegPartFromEntry(Data.SPSHipFull.Get(rightLegExam.SPSid.Value), RightSPS, false);
+            }
 
-                if (rightLegExam.SPSid != null)
-                {
-                    GetLegPartFromEntry(SPSEntryFullRep.Get(rightLegExam.SPSid.Value), RightSPS, false);
-                }
+            if (rightLegExam.TEMPVid != null)
+            {
+                GetLegPartFromEntry(Data.TEMPVFull.Get(rightLegExam.TEMPVid.Value), RightTEMPV, false);
+            }
 
-                if (rightLegExam.TEMPVid != null)
-                {
-                    GetLegPartFromEntry(TEMPVEntryFullRep.Get(rightLegExam.TEMPVid.Value), RightTEMPV, false);
-                }
+            if (rightLegExam.TibiaPerforateid != null)
+            {
+                GetLegPartFromEntry(Data.Perforate_shinFull.Get(rightLegExam.TibiaPerforateid.Value), RightTibiaPerforate, false);
+            }
 
-                if (rightLegExam.TibiaPerforateid != null)
-                {
-                    GetLegPartFromEntry(TibiaPerforateEntryFullRep.Get(rightLegExam.TibiaPerforateid.Value), RightTibiaPerforate, false);
-                }
+            if (rightLegExam.ZDSVid != null)
+            {
+                GetLegPartFromEntry(Data.ZDSVFull.Get(rightLegExam.ZDSVid.Value), RightZDSV, false);
+            }
 
-                if (rightLegExam.ZDSVid != null)
-                {
-                    GetLegPartFromEntry(ZDSVEntryFullRep.Get(rightLegExam.ZDSVid.Value), RightZDSV, false);
-                }
+            if (rightLegExam.C != null)
+            {
+                RightCEAR.LegSections[0].SelectedValue = Data.Letters.Get(rightLegExam.C.Value);
+            }
 
-                if (rightLegExam.C != null)
-                {
-                    RightCEAR.LegSections[0].SelectedValue = LettersRep.Get(rightLegExam.C.Value);
-                }
+            if (rightLegExam.E != null)
+            {
+                RightCEAR.LegSections[1].SelectedValue = Data.Letters.Get(rightLegExam.E.Value);
+            }
 
-                if (rightLegExam.E != null)
-                {
-                    RightCEAR.LegSections[1].SelectedValue = LettersRep.Get(rightLegExam.E.Value);
-                }
+            if (rightLegExam.A != null)
+            {
+                RightCEAR.LegSections[2].SelectedValue = Data.Letters.Get(rightLegExam.A.Value);
+            }
 
-                if (rightLegExam.A != null)
-                {
-                    RightCEAR.LegSections[2].SelectedValue = LettersRep.Get(rightLegExam.A.Value);
-                }
+            if (rightLegExam.P != null)
+            {
+                RightCEAR.LegSections[3].SelectedValue = Data.Letters.Get(rightLegExam.P.Value);
+            }
 
-                if (rightLegExam.P != null)
-                {
-                    RightCEAR.LegSections[3].SelectedValue = LettersRep.Get(rightLegExam.P.Value);
-                }
+            RightCEAR.SaveCommand.Execute();
 
-                RightCEAR.SaveCommand.Execute();
 
 
 
@@ -5326,80 +5288,73 @@ namespace WpfApp2.ViewModels
 
 
 
+            
+            LeftDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
 
-                SavedDiagnosisObsRepository diagRep = new SavedDiagnosisObsRepository(context);
-                SavedComplanesObsRepository compRep = new SavedComplanesObsRepository(context);
-                SavedRecomendationObsRepository recRep = new SavedRecomendationObsRepository(context);
 
+            DiagnosisDataSource diagDSourceBuf;
+            foreach (var diag in Data.SavedDiagnosisObs.GetAll.Where(s => s.isLeft == true && s.id_leg_examination == Exam.Id).ToList())
+            {
+                diagDSourceBuf = new DiagnosisDataSource(Data.DiagnosisTypes.Get(diag.id_diagnosis.Value));
+                diagDSourceBuf.IsChecked = true;
+                LeftDiagnosisList.Add(diagDSourceBuf);
+            }
 
+            RightDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
 
-                LeftDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
 
 
-                DiagnosisDataSource diagDSourceBuf;
-                foreach (var diag in Data.SavedDiagnosisObs.GetAll.Where(s => s.isLeft == true && s.id_leg_examination == Exam.Id).ToList())
-                {
-                    diagDSourceBuf = new DiagnosisDataSource(Data.DiagnosisTypes.Get(diag.id_diagnosis.Value));
-                    diagDSourceBuf.IsChecked = true;
-                    LeftDiagnosisList.Add(diagDSourceBuf);
-                }
+            foreach (var diag in Data.SavedDiagnosisObs.GetAll.Where(s => s.isLeft == false && s.id_leg_examination == Exam.Id).ToList())
+            {
+                diagDSourceBuf = new DiagnosisDataSource(Data.DiagnosisTypes.Get(diag.id_diagnosis.Value));
+                diagDSourceBuf.IsChecked = true;
+                RightDiagnosisList.Add(diagDSourceBuf);
+            }
 
-                RightDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
+            MessageBus.Default.Call("SetDiagnosisListBecauseOFEdit", LeftDiagnosisList, RightDiagnosisList);
 
+            ComplainsList = new ObservableCollection<ComplainsDataSource>();
+            ComplainsDataSource compDSourceBuf;
+            foreach (var diag in Data.SavedComplanesObs.GetAll.Where(s => s.id_Examination == Exam.Id).ToList())
+            {
+                compDSourceBuf = new ComplainsDataSource(Data.ComplainsTypes.Get(diag.id_Complains));
+                compDSourceBuf.IsChecked = true;
+                ComplainsList.Add(compDSourceBuf);
+            }
+            RecomendationsList = new ObservableCollection<RecomendationsDataSource>();
+            RecomendationsDataSource recDSourceBuf;
 
+            foreach (var diag in Data.SavedRecomendationObs.GetAll.Where(s => s.id_examination == Exam.Id).ToList())
+            {
+                recDSourceBuf = new RecomendationsDataSource(Data.RecomendationsTypes.Get(diag.id_recommendations));
+                recDSourceBuf.IsChecked = true;
+                RecomendationsList.Add(recDSourceBuf);
+            }
+            MessageBus.Default.Call("SetDRecomendationListBecauseOFEdit", this, RecomendationsList);
 
-                foreach (var diag in Data.SavedDiagnosisObs.GetAll.Where(s => s.isLeft == false && s.id_leg_examination == Exam.Id).ToList())
-                {
-                    diagDSourceBuf = new DiagnosisDataSource(Data.DiagnosisTypes.Get(diag.id_diagnosis.Value));
-                    diagDSourceBuf.IsChecked = true;
-                    RightDiagnosisList.Add(diagDSourceBuf);
-                }
+            MessageBus.Default.Call("SetDComplanesListBecauseOFEdit", this, ComplainsList);
 
-                MessageBus.Default.Call("SetDiagnosisListBecauseOFEdit", LeftDiagnosisList, RightDiagnosisList);
 
-                ComplainsList = new ObservableCollection<ComplainsDataSource>();
-                ComplainsDataSource compDSourceBuf;
-                foreach (var diag in Data.SavedComplanesObs.GetAll.Where(s => s.id_Examination == Exam.Id).ToList())
-                {
-                    compDSourceBuf = new ComplainsDataSource(Data.ComplainsTypes.Get(diag.id_Complains));
-                    compDSourceBuf.IsChecked = true;
-                    ComplainsList.Add(compDSourceBuf);
-                }
-                RecomendationsList = new ObservableCollection<RecomendationsDataSource>();
-                RecomendationsDataSource recDSourceBuf;
+            //leftLegExams.additionalText = LeftAdditionalText;
+            //if (LeftCEAR.LegSections[0].SelectedValue != null)
+            //    leftLegExams.C = LeftCEAR.LegSections[0].SelectedValue.Id;
+            //if (LeftCEAR.LegSections[1].SelectedValue != null)
+            //    leftLegExams.E = LeftCEAR.LegSections[1].SelectedValue.Id;
+            //if (LeftCEAR.LegSections[2].SelectedValue != null)
+            //    leftLegExams.A = LeftCEAR.LegSections[2].SelectedValue.Id;
+            //if (LeftCEAR.LegSections[3].SelectedValue != null)
+            //    leftLegExams.P = LeftCEAR.LegSections[3].SelectedValue.Id;
 
-                foreach (var diag in Data.SavedRecomendationObs.GetAll.Where(s => s.id_examination == Exam.Id).ToList())
-                {
-                    recDSourceBuf = new RecomendationsDataSource(Data.RecomendationsTypes.Get(diag.id_recommendations));
-                    recDSourceBuf.IsChecked = true;
-                    RecomendationsList.Add(recDSourceBuf);
-                }
-                MessageBus.Default.Call("SetDRecomendationListBecauseOFEdit", this, RecomendationsList);
-
-                MessageBus.Default.Call("SetDComplanesListBecauseOFEdit", this, ComplainsList);
-
-
-                //leftLegExams.additionalText = LeftAdditionalText;
-                //if (LeftCEAR.LegSections[0].SelectedValue != null)
-                //    leftLegExams.C = LeftCEAR.LegSections[0].SelectedValue.Id;
-                //if (LeftCEAR.LegSections[1].SelectedValue != null)
-                //    leftLegExams.E = LeftCEAR.LegSections[1].SelectedValue.Id;
-                //if (LeftCEAR.LegSections[2].SelectedValue != null)
-                //    leftLegExams.A = LeftCEAR.LegSections[2].SelectedValue.Id;
-                //if (LeftCEAR.LegSections[3].SelectedValue != null)
-                //    leftLegExams.P = LeftCEAR.LegSections[3].SelectedValue.Id;
-
-                MessageBus.Default.Call("SetMode", this, "Normal");
-                if (Exam.id_current_examination == null)
-                {
-                    mode = "Normal";
-                }
-                else
-                {
-                    mode = "EDIT";
-                    TextOfEndBtn = "Вернуться";
-                    obsid = Exam.id_current_examination.Value;
-                }
+            MessageBus.Default.Call("SetMode", this, "Normal");
+            if (Exam.id_current_examination == null)
+            {
+                mode = "Normal";
+            }
+            else
+            {
+                mode = "EDIT";
+                TextOfEndBtn = "Вернуться";
+                obsid = Exam.id_current_examination.Value;
             }
 
             Controller.NavigateTo<ViewModelAddPhysical>();
@@ -5611,106 +5566,99 @@ namespace WpfApp2.ViewModels
                     string lettersLeft = "";
                     string lettersRight = "";
 
-                    using (var context = new MySqlContext())
+                    var ExamsOfCurrPatient = Data.Examination.GetAll.ToList().Where(s => s.PatientId == CurrentPatient.Id).ToList();
+                    int xx = 0;
+                    foreach (var x in LeftDiagnosisList)
                     {
-                        ExaminationRepository ExamRep = new ExaminationRepository(context);
-                        ExaminationLegRepository LegExamRep = new ExaminationLegRepository(context);
-                        LettersRepository LettersRep = new LettersRepository(context);
-                        var ExamsOfCurrPatient = ExamRep.GetAll.ToList().Where(s => s.PatientId == CurrentPatient.Id).ToList();
-                        int xx = 0;
-                        foreach (var x in LeftDiagnosisList)
+                        if (xx == 0)
                         {
-                            if (xx == 0)
-                            {
-                                lettersLeft += FirstCharToLower(GetStrFixedForDocumemnt(x.Data.Str));
-                            }
-                            else
-                            {
-                                lettersLeft += ", " + FirstCharToLower(GetStrFixedForDocumemnt(x.Data.Str));
-                            }
-                            xx++;
+                            lettersLeft += FirstCharToLower(GetStrFixedForDocumemnt(x.Data.Str));
                         }
-                        char[] chararrbuF = lettersLeft.ToCharArray();
-                        if (chararrbuF[chararrbuF.Length - 1] == '.')
-                        { }
                         else
                         {
-                            lettersLeft += ".";
+                            lettersLeft += ", " + FirstCharToLower(GetStrFixedForDocumemnt(x.Data.Str));
                         }
+                        xx++;
+                    }
+                    char[] chararrbuF = lettersLeft.ToCharArray();
+                    if (chararrbuF[chararrbuF.Length - 1] == '.')
+                    { }
+                    else
+                    {
+                        lettersLeft += ".";
+                    }
 
 
-                        xx = 0;
-                        foreach (var x in RightDiagnosisList)
+                    xx = 0;
+                    foreach (var x in RightDiagnosisList)
+                    {
+                        if (xx == 0)
                         {
-                            if (xx == 0)
-                            {
-                                lettersRight += FirstCharToLower(GetStrFixedForDocumemnt(x.Data.Str));
-                            }
-                            else
-                            {
-                                lettersRight += ", " + FirstCharToLower(GetStrFixedForDocumemnt(x.Data.Str));
-                            }
-                            xx++;
+                            lettersRight += FirstCharToLower(GetStrFixedForDocumemnt(x.Data.Str));
                         }
-                        chararrbuF = lettersRight.ToCharArray();
-                        if (chararrbuF[chararrbuF.Length - 1] == '.')
-                        { }
                         else
                         {
-                            lettersRight += ".";
+                            lettersRight += ", " + FirstCharToLower(GetStrFixedForDocumemnt(x.Data.Str));
+                        }
+                        xx++;
+                    }
+                    chararrbuF = lettersRight.ToCharArray();
+                    if (chararrbuF[chararrbuF.Length - 1] == '.')
+                    { }
+                    else
+                    {
+                        lettersRight += ".";
+                    }
+
+                    lettersRight += " ";
+                    lettersLeft += " ";
+                    if (ExamsOfCurrPatient.Count > 0)
+                    {
+                        DateTime MaxExam = ExamsOfCurrPatient.Max(s => s.Date);
+                        var ExamsOfCurrPatientLatest = ExamsOfCurrPatient.Where(s => s.Date == MaxExam).ToList();
+                        ExaminationLeg leftLegExam = Data.ExaminationLeg.Get(ExamsOfCurrPatientLatest[0].idLeftLegExamination.Value);
+                        ExaminationLeg rightLegExam = Data.ExaminationLeg.Get(ExamsOfCurrPatientLatest[0].idRightLegExamination.Value);
+                        Letters bufLetter = new Letters();
+                        if (LeftCEAR.LegSections[0].SelectedValue != null)
+                        {
+                            bufLetter = LeftCEAR.LegSections[0].SelectedValue;
+                            lettersLeft += bufLetter.Leter + bufLetter.Text1 + "";
+                        }
+                        if (LeftCEAR.LegSections[1].SelectedValue != null)
+                        {
+                            bufLetter = LeftCEAR.LegSections[1].SelectedValue;
+                            lettersLeft += bufLetter.Leter + bufLetter.Text1 + "";
+                        }
+                        if (LeftCEAR.LegSections[2].SelectedValue != null)
+                        {
+                            bufLetter = LeftCEAR.LegSections[2].SelectedValue;
+                            lettersLeft += bufLetter.Leter + bufLetter.Text1 + "";
+                        }
+                        if (LeftCEAR.LegSections[3].SelectedValue != null)
+                        {
+                            bufLetter = LeftCEAR.LegSections[3].SelectedValue;
+                            lettersLeft += bufLetter.Leter + bufLetter.Text1 + "";
                         }
 
-                        lettersRight += " ";
-                        lettersLeft += " ";
-                        if (ExamsOfCurrPatient.Count > 0)
+                        if (RightCEAR.LegSections[0].SelectedValue != null)
                         {
-                            DateTime MaxExam = ExamsOfCurrPatient.Max(s => s.Date);
-                            var ExamsOfCurrPatientLatest = ExamsOfCurrPatient.Where(s => s.Date == MaxExam).ToList();
-                            ExaminationLeg leftLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idLeftLegExamination.Value);
-                            ExaminationLeg rightLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idRightLegExamination.Value);
-                            Letters bufLetter = new Letters();
-                            if (LeftCEAR.LegSections[0].SelectedValue != null)
-                            {
-                                bufLetter = LeftCEAR.LegSections[0].SelectedValue;
-                                lettersLeft += bufLetter.Leter + bufLetter.Text1 + "";
-                            }
-                            if (LeftCEAR.LegSections[1].SelectedValue != null)
-                            {
-                                bufLetter = LeftCEAR.LegSections[1].SelectedValue;
-                                lettersLeft += bufLetter.Leter + bufLetter.Text1 + "";
-                            }
-                            if (LeftCEAR.LegSections[2].SelectedValue != null)
-                            {
-                                bufLetter = LeftCEAR.LegSections[2].SelectedValue;
-                                lettersLeft += bufLetter.Leter + bufLetter.Text1 + "";
-                            }
-                            if (LeftCEAR.LegSections[3].SelectedValue != null)
-                            {
-                                bufLetter = LeftCEAR.LegSections[3].SelectedValue;
-                                lettersLeft += bufLetter.Leter + bufLetter.Text1 + "";
-                            }
-
-                            if (RightCEAR.LegSections[0].SelectedValue != null)
-                            {
-                                bufLetter = RightCEAR.LegSections[0].SelectedValue;
-                                lettersRight += bufLetter.Leter + bufLetter.Text1 + "";
-                            }
-                            if (RightCEAR.LegSections[1].SelectedValue != null)
-                            {
-                                bufLetter = RightCEAR.LegSections[1].SelectedValue;
-                                lettersRight += bufLetter.Leter + bufLetter.Text1 + "";
-                            }
-                            if (RightCEAR.LegSections[2].SelectedValue != null)
-                            {
-                                bufLetter = RightCEAR.LegSections[2].SelectedValue;
-                                lettersRight += bufLetter.Leter + bufLetter.Text1 + "";
-                            }
-                            if (RightCEAR.LegSections[3].SelectedValue != null)
-                            {
-                                bufLetter = RightCEAR.LegSections[3].SelectedValue;
-                                lettersRight += bufLetter.Leter + bufLetter.Text1 + "";
-                            }
-
+                            bufLetter = RightCEAR.LegSections[0].SelectedValue;
+                            lettersRight += bufLetter.Leter + bufLetter.Text1 + "";
+                        }
+                        if (RightCEAR.LegSections[1].SelectedValue != null)
+                        {
+                            bufLetter = RightCEAR.LegSections[1].SelectedValue;
+                            lettersRight += bufLetter.Leter + bufLetter.Text1 + "";
+                        }
+                        if (RightCEAR.LegSections[2].SelectedValue != null)
+                        {
+                            bufLetter = RightCEAR.LegSections[2].SelectedValue;
+                            lettersRight += bufLetter.Leter + bufLetter.Text1 + "";
+                        }
+                        if (RightCEAR.LegSections[3].SelectedValue != null)
+                        {
+                            bufLetter = RightCEAR.LegSections[3].SelectedValue;
+                            lettersRight += bufLetter.Leter + bufLetter.Text1 + "";
                         }
 
                     }
@@ -6142,53 +6090,49 @@ namespace WpfApp2.ViewModels
                     document.Save();
 
                     byte[] bteToBD = File.ReadAllBytes(fileName);
-                    using (var context = new MySqlContext())
+                    HirurgOverview Hv = new HirurgOverview();
+                    if (hirurgOverviewId != null && hirurgOverviewId != 0)
                     {
-                        HirurgOverviewRepository HirurgOverviewRep = new HirurgOverviewRepository(context);
-                        HirurgOverview Hv = new HirurgOverview();
-                        if (hirurgOverviewId != null && hirurgOverviewId != 0)
-                        {
-                            Hv = Data.HirurgOverview.Get(hirurgOverviewId.Value);
+                        Hv = Data.HirurgOverview.Get(hirurgOverviewId.Value);
 
-                            Hv.DocTemplate = bteToBD;
-                            Hv.DoctorId = int.Parse(p2.ToString());
-                            Data.Complete();
-                        }
-                        else
-                        {
-
-                            Hv.DocTemplate = bteToBD;
-                            Hv.DoctorId = int.Parse(p2.ToString());
-                            Data.HirurgOverview.Add(Hv);
-
-                            Data.Complete();
-                            hirurgOverviewId = Hv.Id;
-                        }
-                        //bool tester = true;
-                        //foreach (var x in HirurgOverviewRep.GetAll)
-                        //{
-
-                        //    if (x.PatientId == CurrentPatient.Id)
-                        //    {
-                        //        tester = false;
-                        //        Hv = Data.HirurgOverview.Get(x.Id);
-                        //        Hv.DocTemplate = bteToBD;
-
-                        //        Data.Complete();
-                        //        break;
-                        //    }
-
-                        //    // HirurgOverview Hv = new HirurgOverview();
-                        //}
-                        //if (tester)
-                        //{
-                        //    Hv.PatientId = CurrentPatient.Id;
-                        //    Hv.DocTemplate = bteToBD;
-                        //    Data.HirurgOverview.Add(Hv);
-                        //    Data.Complete();
-                        //}
-
+                        Hv.DocTemplate = bteToBD;
+                        Hv.DoctorId = int.Parse(p2.ToString());
+                        Data.Complete();
                     }
+                    else
+                    {
+
+                        Hv.DocTemplate = bteToBD;
+                        Hv.DoctorId = int.Parse(p2.ToString());
+                        Data.HirurgOverview.Add(Hv);
+
+                        Data.Complete();
+                        hirurgOverviewId = Hv.Id;
+                    }
+                    //bool tester = true;
+                    //foreach (var x in HirurgOverviewRep.GetAll)
+                    //{
+
+                    //    if (x.PatientId == CurrentPatient.Id)
+                    //    {
+                    //        tester = false;
+                    //        Hv = Data.HirurgOverview.Get(x.Id);
+                    //        Hv.DocTemplate = bteToBD;
+
+                    //        Data.Complete();
+                    //        break;
+                    //    }
+
+                    //    // HirurgOverview Hv = new HirurgOverview();
+                    //}
+                    //if (tester)
+                    //{
+                    //    Hv.PatientId = CurrentPatient.Id;
+                    //    Hv.DocTemplate = bteToBD;
+                    //    Data.HirurgOverview.Add(Hv);
+                    //    Data.Complete();
+                    //}
+
                     MessageBus.Default.Call("GetHirurgOverviewtForHirurgOverviewFILENAME", fileName, null);
 
                     MessageBus.Default.Call("GetHirurgOverviewForHirurgOverview", _fileNameOnly, hirurgOverviewId);
@@ -6927,934 +6871,905 @@ namespace WpfApp2.ViewModels
             {
                 throw new Exception("FullEntry is null");
             }
-            using (var context = new MySqlContext())
+            if (isLeft)
             {
-                PDSVHipEntryRepository PDSVEntryRep = new PDSVHipEntryRepository(context);
-                PDSVHipRepository PDSVStructRep = new PDSVHipRepository(context);
-                SFSHipEntryRepository SFSEntryRep = new SFSHipEntryRepository(context);
-                SFSHipRepository SFSStructRep = new SFSHipRepository(context);
-                BPVHipEntryRepository BPVHipEntryRep = new BPVHipEntryRepository(context);
-                BPVHipRepository BPVHipStructRep = new BPVHipRepository(context);
-                Perforate_hipEntryRepository Perforate_hipEntryRep = new Perforate_hipEntryRepository(context);
-                Perforate_hipRepository Perforate_hipStructRep = new Perforate_hipRepository(context);
-                ZDSVEntryRepository ZDSVEntryRep = new ZDSVEntryRepository(context);
-                ZDSVRepository ZDSVStructRep = new ZDSVRepository(context);
-                BPV_TibiaEntryRepository BPVTibiaEntryRep = new BPV_TibiaEntryRepository(context);
-                BPV_TibiaRepository BPVTibiaStructRep = new BPV_TibiaRepository(context);
-                SPSHipEntryRepository SPSEntryRep = new SPSHipEntryRepository(context);
-                SPSHipRepository SPSStructRep = new SPSHipRepository(context);
-                Perforate_shinEntryRepository Perforate_shinEntryRep = new Perforate_shinEntryRepository(context);
-                Perforate_shinRepository Perforate_shinStructRep = new Perforate_shinRepository(context);
-                MPVEntryRepository MPVEntryRep = new MPVEntryRepository(context);
-                MPVRepository MPVStructRep = new MPVRepository(context);
-                TEMPVEntryRepository TEMPVEntryRep = new TEMPVEntryRepository(context);
-                TEMPVRepository TEMPVStructRep = new TEMPVRepository(context);
-                GVEntryRepository GVEntryRep = new GVEntryRepository(context);
-                GVRepository GVStructRep = new GVRepository(context);
-                PPVEntryRepository PPVEntryRep = new PPVEntryRepository(context);
-                PPVRepository PPVStructRep = new PPVRepository(context);
 
-                if (isLeft)
+                if (Part is PDSVViewModel)
                 {
-
-                    if (Part is PDSVViewModel)
+                    if (FullEntry.EntryId0 != null)
                     {
-                        if (FullEntry.EntryId0 != null)
-                        {
-                            LeftPDSV.AdditionalStructure.CurrentEntry = PDSVEntryRep.Get(FullEntry.EntryId0.Value);
-                            LeftPDSV.AdditionalStructure.SelectedValue = PDSVStructRep.Get(LeftPDSV.AdditionalStructure.CurrentEntry.StructureID);
-
-                        }
-                        if (PDSVEntryRep.Get(FullEntry.EntryId1) != null)
-                        {
-                            LeftPDSV.LegSections[0].CurrentEntry = PDSVEntryRep.Get(FullEntry.EntryId1);
-                            LeftPDSV.LegSections[0].SelectedValue = PDSVStructRep.Get(LeftPDSV.LegSections[0].CurrentEntry.StructureID);
-                        }
-                        if (FullEntry.EntryId2 != null)
-                        {
-                            LeftPDSV.LegSections[1].CurrentEntry = PDSVEntryRep.Get(FullEntry.EntryId2.Value);
-                            LeftPDSV.LegSections[1].SelectedValue = PDSVStructRep.Get(LeftPDSV.LegSections[1].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId3 != null)
-                        {
-                            LeftPDSV.LegSections[2].CurrentEntry = PDSVEntryRep.Get(FullEntry.EntryId3.Value);
-                            LeftPDSV.LegSections[2].SelectedValue = PDSVStructRep.Get(LeftPDSV.LegSections[2].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.WayID != null)
-                        {
-                            LeftPDSV.SelectedWayType = LeftPDSV.PDSVWayType.Where(s => s.Id == FullEntry.WayID).ToList()[0];
-                        }
-
-                        LeftPDSV.IsEmpty = false;
-                        SaveSet result = SaveViewModel(LeftPDSV);
-                        PDSVLeftstr = result.stringList;
-                        IsVisiblePDSVleft = result.listVisibility;
-
+                        LeftPDSV.AdditionalStructure.CurrentEntry = Data.PDSVHipEntries.Get(FullEntry.EntryId0.Value);
+                        LeftPDSV.AdditionalStructure.SelectedValue = Data.PDSVHips.Get(LeftPDSV.AdditionalStructure.CurrentEntry.StructureID);
 
                     }
-                    else if (Part is SFSViewModel)
+                    if (Data.PDSVHipEntries.Get(FullEntry.EntryId1) != null)
                     {
-
-
-
-                        if (SFSEntryRep.Get(FullEntry.EntryId1) != null)
-                        {
-                            LeftSFS.LegSections[0].CurrentEntry = SFSEntryRep.Get(FullEntry.EntryId1);
-                            LeftSFS.LegSections[0].SelectedValue = SFSStructRep.Get(LeftSFS.LegSections[0].CurrentEntry.StructureID);
-                        }
-                        if (FullEntry.EntryId2 != null)
-                        {
-                            LeftSFS.LegSections[1].CurrentEntry = SFSEntryRep.Get(FullEntry.EntryId2.Value);
-                            LeftSFS.LegSections[1].SelectedValue = SFSStructRep.Get(LeftSFS.LegSections[1].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId3 != null)
-                        {
-                            LeftSFS.LegSections[2].CurrentEntry = SFSEntryRep.Get(FullEntry.EntryId3.Value);
-                            LeftSFS.LegSections[2].SelectedValue = SFSStructRep.Get(LeftSFS.LegSections[2].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId4 != null)
-                        {
-                            LeftSFS.LegSections[3].CurrentEntry = SFSEntryRep.Get(FullEntry.EntryId4.Value);
-                            LeftSFS.LegSections[3].SelectedValue = SFSStructRep.Get(LeftSFS.LegSections[3].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId5 != null)
-                        {
-                            LeftSFS.LegSections[4].CurrentEntry = SFSEntryRep.Get(FullEntry.EntryId5.Value);
-                            LeftSFS.LegSections[4].SelectedValue = SFSStructRep.Get(LeftSFS.LegSections[4].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId6 != null)
-                        {
-                            LeftSFS.LegSections[5].CurrentEntry = SFSEntryRep.Get(FullEntry.EntryId6.Value);
-                            LeftSFS.LegSections[5].SelectedValue = SFSStructRep.Get(LeftSFS.LegSections[5].CurrentEntry.StructureID);
-
-                        }
-
-                        LeftSFS.IsEmpty = false;
-                        SaveSet result = SaveViewModel(LeftSFS);
-                        SFSLeftstr = result.stringList;
-                        IsVisibleSFSleft = result.listVisibility;
+                        LeftPDSV.LegSections[0].CurrentEntry = Data.PDSVHipEntries.Get(FullEntry.EntryId1);
+                        LeftPDSV.LegSections[0].SelectedValue = Data.PDSVHips.Get(LeftPDSV.LegSections[0].CurrentEntry.StructureID);
+                    }
+                    if (FullEntry.EntryId2 != null)
+                    {
+                        LeftPDSV.LegSections[1].CurrentEntry = Data.PDSVHipEntries.Get(FullEntry.EntryId2.Value);
+                        LeftPDSV.LegSections[1].SelectedValue = Data.PDSVHips.Get(LeftPDSV.LegSections[1].CurrentEntry.StructureID);
 
                     }
-                    else if (Part is BPVHipViewModel)
+                    if (FullEntry.EntryId3 != null)
                     {
-
-                        if (FullEntry.EntryId0 != null)
-                        {
-                            LeftBPVHip.AdditionalStructure.CurrentEntry = BPVHipEntryRep.Get(FullEntry.EntryId0.Value);
-                            LeftBPVHip.AdditionalStructure.SelectedValue = BPVHipStructRep.Get(LeftBPVHip.AdditionalStructure.CurrentEntry.StructureID);
-
-                        }
-
-                        if (BPVHipEntryRep.Get(FullEntry.EntryId1) != null)
-                        {
-                            LeftBPVHip.LegSections[0].CurrentEntry = BPVHipEntryRep.Get(FullEntry.EntryId1);
-                            LeftBPVHip.LegSections[0].SelectedValue = BPVHipStructRep.Get(LeftBPVHip.LegSections[0].CurrentEntry.StructureID);
-                        }
-                        if (FullEntry.EntryId2 != null)
-                        {
-                            LeftBPVHip.LegSections[1].CurrentEntry = BPVHipEntryRep.Get(FullEntry.EntryId2.Value);
-                            LeftBPVHip.LegSections[1].SelectedValue = BPVHipStructRep.Get(LeftBPVHip.LegSections[1].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId3 != null)
-                        {
-                            LeftBPVHip.LegSections[2].CurrentEntry = BPVHipEntryRep.Get(FullEntry.EntryId3.Value);
-                            LeftBPVHip.LegSections[2].SelectedValue = BPVHipStructRep.Get(LeftBPVHip.LegSections[2].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId4 != null)
-                        {
-                            LeftBPVHip.LegSections[3].CurrentEntry = BPVHipEntryRep.Get(FullEntry.EntryId4.Value);
-                            LeftBPVHip.LegSections[3].SelectedValue = BPVHipStructRep.Get(LeftBPVHip.LegSections[3].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId5 != null)
-                        {
-                            LeftBPVHip.LegSections[4].CurrentEntry = BPVHipEntryRep.Get(FullEntry.EntryId5.Value);
-                            LeftBPVHip.LegSections[4].SelectedValue = BPVHipStructRep.Get(LeftBPVHip.LegSections[4].CurrentEntry.StructureID);
-
-                        }
-
-                        if (FullEntry.WayID != null)
-                        {
-                            LeftBPVHip.SelectedWayType = LeftBPVHip.BpvWayType.Where(s => s.Id == FullEntry.WayID).ToList()[0];
-                        }
-
-                        LeftBPVHip.IsEmpty = false;
-                        SaveSet result = SaveViewModel(LeftBPVHip);
-                        BpvLeftstr = result.stringList;
-                        IsVisibleBPVleft = result.listVisibility;
+                        LeftPDSV.LegSections[2].CurrentEntry = Data.PDSVHipEntries.Get(FullEntry.EntryId3.Value);
+                        LeftPDSV.LegSections[2].SelectedValue = Data.PDSVHips.Get(LeftPDSV.LegSections[2].CurrentEntry.StructureID);
 
                     }
-                    else if (Part is BPVTibiaViewModel)
+                    if (FullEntry.WayID != null)
                     {
-
-
-                        if (BPVTibiaEntryRep.Get(FullEntry.EntryId1) != null)
-                        {
-                            LeftBPVTibia.LegSections[0].CurrentEntry = BPVTibiaEntryRep.Get(FullEntry.EntryId1);
-                            LeftBPVTibia.LegSections[0].SelectedValue = BPVTibiaStructRep.Get(LeftBPVTibia.LegSections[0].CurrentEntry.StructureID);
-                        }
-                        if (FullEntry.EntryId2 != null)
-                        {
-                            LeftBPVTibia.LegSections[1].CurrentEntry = BPVTibiaEntryRep.Get(FullEntry.EntryId2.Value);
-                            LeftBPVTibia.LegSections[1].SelectedValue = BPVTibiaStructRep.Get(LeftBPVTibia.LegSections[1].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId3 != null)
-                        {
-                            LeftBPVTibia.LegSections[2].CurrentEntry = BPVTibiaEntryRep.Get(FullEntry.EntryId3.Value);
-                            LeftBPVTibia.LegSections[2].SelectedValue = BPVTibiaStructRep.Get(LeftBPVTibia.LegSections[2].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId4 != null)
-                        {
-                            LeftBPVTibia.LegSections[3].CurrentEntry = BPVTibiaEntryRep.Get(FullEntry.EntryId4.Value);
-                            LeftBPVTibia.LegSections[3].SelectedValue = BPVTibiaStructRep.Get(LeftBPVTibia.LegSections[3].CurrentEntry.StructureID);
-
-                        }
-
-
-                        LeftBPVTibia.IsEmpty = false;
-                        SaveSet result = SaveViewModel(LeftBPVTibia);
-                        BPV_TibiaLeftstr = result.stringList;
-                        IsVisibleBPV_Tibialeft = result.listVisibility;
-
-                    }
-                    else if (Part is HipPerforateViewModel)
-                    {
-
-
-
-                        if (Perforate_hipEntryRep.Get(FullEntry.EntryId1) != null)
-                        {
-                            LeftPerforate.LegSections[0].CurrentEntry = Perforate_hipEntryRep.Get(FullEntry.EntryId1);
-                            LeftPerforate.LegSections[0].SelectedValue = Perforate_hipStructRep.Get(LeftPerforate.LegSections[0].CurrentEntry.StructureID);
-                        }
-                        if (FullEntry.EntryId2 != null)
-                        {
-                            LeftPerforate.LegSections[1].CurrentEntry = Perforate_hipEntryRep.Get(FullEntry.EntryId2.Value);
-                            LeftPerforate.LegSections[1].SelectedValue = Perforate_hipStructRep.Get(LeftPerforate.LegSections[1].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId3 != null)
-                        {
-                            LeftPerforate.LegSections[2].CurrentEntry = Perforate_hipEntryRep.Get(FullEntry.EntryId3.Value);
-                            LeftPerforate.LegSections[2].SelectedValue = Perforate_hipStructRep.Get(LeftPerforate.LegSections[2].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId4 != null)
-                        {
-                            LeftPerforate.LegSections[3].CurrentEntry = Perforate_hipEntryRep.Get(FullEntry.EntryId4.Value);
-                            LeftPerforate.LegSections[3].SelectedValue = Perforate_hipStructRep.Get(LeftPerforate.LegSections[3].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId5 != null)
-                        {
-                            LeftPerforate.LegSections[4].CurrentEntry = Perforate_hipEntryRep.Get(FullEntry.EntryId5.Value);
-                            LeftPerforate.LegSections[4].SelectedValue = Perforate_hipStructRep.Get(LeftPerforate.LegSections[4].CurrentEntry.StructureID);
-
-                        }
-
-
-                        LeftPerforate.IsEmpty = false;
-                        SaveSet result = SaveViewModel(LeftPerforate);
-                        Perforate_hipLeftstr = result.stringList;
-                        IsVisiblePerforateHIPleft = result.listVisibility;
-
-                    }
-                    else if (Part is ZDSVViewModel)
-                    {
-
-                        if (FullEntry.EntryId0 != null)
-                        {
-                            LeftZDSV.AdditionalStructure.CurrentEntry = ZDSVEntryRep.Get(FullEntry.EntryId0.Value);
-                            LeftZDSV.AdditionalStructure.SelectedValue = ZDSVStructRep.Get(LeftZDSV.AdditionalStructure.CurrentEntry.StructureID);
-
-                        }
-
-                        if (ZDSVEntryRep.Get(FullEntry.EntryId1) != null)
-                        {
-                            LeftZDSV.LegSections[0].CurrentEntry = ZDSVEntryRep.Get(FullEntry.EntryId1);
-                            LeftZDSV.LegSections[0].SelectedValue = ZDSVStructRep.Get(LeftZDSV.LegSections[0].CurrentEntry.StructureID);
-                        }
-                        if (FullEntry.EntryId2 != null)
-                        {
-                            LeftZDSV.LegSections[1].CurrentEntry = ZDSVEntryRep.Get(FullEntry.EntryId2.Value);
-                            LeftZDSV.LegSections[1].SelectedValue = ZDSVStructRep.Get(LeftZDSV.LegSections[1].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId3 != null)
-                        {
-                            LeftZDSV.LegSections[2].CurrentEntry = ZDSVEntryRep.Get(FullEntry.EntryId3.Value);
-                            LeftZDSV.LegSections[2].SelectedValue = ZDSVStructRep.Get(LeftZDSV.LegSections[2].CurrentEntry.StructureID);
-
-                        }
-                        LeftZDSV.IsEmpty = false;
-                        SaveSet result = SaveViewModel(LeftZDSV);
-                        ZDSVLeftstr = result.stringList;
-                        IsVisibleZDSVleft = result.listVisibility;
-
-                    }
-                    else if (Part is SPSViewModel)
-                    {
-
-                        if (FullEntry.EntryId0 != null)
-                        {
-                            LeftSPS.AdditionalStructure.CurrentEntry = SPSEntryRep.Get(FullEntry.EntryId0.Value);
-                            LeftSPS.AdditionalStructure.SelectedValue = SPSStructRep.Get(LeftSPS.AdditionalStructure.CurrentEntry.StructureID);
-
-                        }
-
-                        if (SPSEntryRep.Get(FullEntry.EntryId1) != null)
-                        {
-                            LeftSPS.LegSections[0].CurrentEntry = SPSEntryRep.Get(FullEntry.EntryId1);
-                            LeftSPS.LegSections[0].SelectedValue = SPSStructRep.Get(LeftSPS.LegSections[0].CurrentEntry.StructureID);
-                        }
-                        if (FullEntry.EntryId2 != null)
-                        {
-                            LeftSPS.LegSections[1].CurrentEntry = SPSEntryRep.Get(FullEntry.EntryId2.Value);
-                            LeftSPS.LegSections[1].SelectedValue = SPSStructRep.Get(LeftSPS.LegSections[1].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId3 != null)
-                        {
-                            LeftSPS.LegSections[2].CurrentEntry = SPSEntryRep.Get(FullEntry.EntryId3.Value);
-                            LeftSPS.LegSections[2].SelectedValue = SPSStructRep.Get(LeftSPS.LegSections[2].CurrentEntry.StructureID);
-
-                        }
-
-                        LeftSPS.IsEmpty = false;
-                        SaveSet result = SaveViewModel(LeftSPS);
-                        SPSLeftstr = result.stringList;
-                        IsVisibleSPSleft = result.listVisibility;
-
-                    }
-                    else if (Part is TibiaPerforateViewModel)
-                    {
-
-
-
-                        if (Perforate_shinEntryRep.Get(FullEntry.EntryId1) != null)
-                        {
-                            LeftTibiaPerforate.LegSections[0].CurrentEntry = Perforate_shinEntryRep.Get(FullEntry.EntryId1);
-                            LeftTibiaPerforate.LegSections[0].SelectedValue = Perforate_shinStructRep.Get(LeftTibiaPerforate.LegSections[0].CurrentEntry.StructureID);
-                        }
-                        if (FullEntry.EntryId2 != null)
-                        {
-                            LeftTibiaPerforate.LegSections[1].CurrentEntry = Perforate_shinEntryRep.Get(FullEntry.EntryId2.Value);
-                            LeftTibiaPerforate.LegSections[1].SelectedValue = Perforate_shinStructRep.Get(LeftTibiaPerforate.LegSections[1].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId3 != null)
-                        {
-                            LeftTibiaPerforate.LegSections[2].CurrentEntry = Perforate_shinEntryRep.Get(FullEntry.EntryId3.Value);
-                            LeftTibiaPerforate.LegSections[2].SelectedValue = Perforate_shinStructRep.Get(LeftTibiaPerforate.LegSections[2].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId4 != null)
-                        {
-                            LeftTibiaPerforate.LegSections[3].CurrentEntry = Perforate_shinEntryRep.Get(FullEntry.EntryId4.Value);
-                            LeftTibiaPerforate.LegSections[3].SelectedValue = Perforate_shinStructRep.Get(LeftTibiaPerforate.LegSections[3].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId5 != null)
-                        {
-                            LeftTibiaPerforate.LegSections[4].CurrentEntry = Perforate_shinEntryRep.Get(FullEntry.EntryId5.Value);
-                            LeftTibiaPerforate.LegSections[4].SelectedValue = Perforate_shinStructRep.Get(LeftTibiaPerforate.LegSections[4].CurrentEntry.StructureID);
-
-                        }
-
-                        LeftTibiaPerforate.IsEmpty = false;
-                        SaveSet result = SaveViewModel(LeftTibiaPerforate);
-                        Perforate_shinLeftstr = result.stringList;
-                        IsVisiblePerforate_shinleft = result.listVisibility;
-
-                    }
-                    else if (Part is MPVViewModel)
-                    {
-
-
-
-                        if (MPVEntryRep.Get(FullEntry.EntryId1) != null)
-                        {
-                            LeftMPV.LegSections[0].CurrentEntry = MPVEntryRep.Get(FullEntry.EntryId1);
-                            LeftMPV.LegSections[0].SelectedValue = MPVStructRep.Get(LeftMPV.LegSections[0].CurrentEntry.StructureID);
-                        }
-                        if (FullEntry.EntryId2 != null)
-                        {
-                            LeftMPV.LegSections[1].CurrentEntry = MPVEntryRep.Get(FullEntry.EntryId2.Value);
-                            LeftMPV.LegSections[1].SelectedValue = MPVStructRep.Get(LeftMPV.LegSections[1].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId3 != null)
-                        {
-                            LeftMPV.LegSections[2].CurrentEntry = MPVEntryRep.Get(FullEntry.EntryId3.Value);
-                            LeftMPV.LegSections[2].SelectedValue = MPVStructRep.Get(LeftMPV.LegSections[2].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId4 != null)
-                        {
-                            LeftMPV.LegSections[3].CurrentEntry = MPVEntryRep.Get(FullEntry.EntryId4.Value);
-                            LeftMPV.LegSections[3].SelectedValue = MPVStructRep.Get(LeftMPV.LegSections[3].CurrentEntry.StructureID);
-
-                        }
-
-
-                        if (FullEntry.WayID != null)
-                        {
-                            LeftMPV.SelectedWayType = LeftMPV.MPVWayType.Where(s => s.Id == FullEntry.WayID).ToList()[0];
-                        }
-
-                        LeftMPV.IsEmpty = false;
-                        SaveSet result = SaveViewModel(LeftMPV);
-                        MPVLeftstr = result.stringList;
-                        IsVisibleMPVleft = result.listVisibility;
-
-                    }
-                    else if (Part is TEMPVViewModel)
-                    {
-
-
-
-                        if (TEMPVEntryRep.Get(FullEntry.EntryId1) != null)
-                        {
-                            LeftTEMPV.LegSections[0].CurrentEntry = TEMPVEntryRep.Get(FullEntry.EntryId1);
-                            LeftTEMPV.LegSections[0].SelectedValue = TEMPVStructRep.Get(LeftTEMPV.LegSections[0].CurrentEntry.StructureID);
-                        }
-                        if (FullEntry.EntryId2 != null)
-                        {
-                            LeftTEMPV.LegSections[1].CurrentEntry = TEMPVEntryRep.Get(FullEntry.EntryId2.Value);
-                            LeftTEMPV.LegSections[1].SelectedValue = TEMPVStructRep.Get(LeftTEMPV.LegSections[1].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId3 != null)
-                        {
-                            LeftTEMPV.LegSections[2].CurrentEntry = TEMPVEntryRep.Get(FullEntry.EntryId3.Value);
-                            LeftTEMPV.LegSections[2].SelectedValue = TEMPVStructRep.Get(LeftTEMPV.LegSections[2].CurrentEntry.StructureID);
-
-                        }
-
-                        if (FullEntry.WayID != null)
-                        {
-                            LeftTEMPV.SelectedWayType = LeftTEMPV.TEMPVWayType.Where(s => s.Id == FullEntry.WayID).ToList()[0];
-                        }
-
-                        LeftTEMPV.FF_length = ((TEMPVEntryFull)FullEntry).FF_Length;
-                        LeftTEMPV.IsEmpty = false;
-                        SaveSet result = SaveViewModel(LeftTEMPV);
-                        TEMPVLeftstr = result.stringList;
-                        IsVisibleTEMPVleft = result.listVisibility;
-
-                    }
-                    else if (Part is GVViewModel)
-                    {
-
-
-
-                        if (GVEntryRep.Get(FullEntry.EntryId1) != null)
-                        {
-                            LeftGV.LegSections[0].CurrentEntry = GVEntryRep.Get(FullEntry.EntryId1);
-                            LeftGV.LegSections[0].SelectedValue = GVStructRep.Get(LeftGV.LegSections[0].CurrentEntry.StructureID);
-                        }
-                        if (FullEntry.EntryId2 != null)
-                        {
-                            LeftGV.LegSections[1].CurrentEntry = GVEntryRep.Get(FullEntry.EntryId2.Value);
-                            LeftGV.LegSections[1].SelectedValue = GVStructRep.Get(LeftGV.LegSections[1].CurrentEntry.StructureID);
-
-                        }
-
-
-
-                        LeftGV.IsEmpty = false;
-                        SaveSet result = SaveViewModel(LeftGV);
-                        GVLeftstr = result.stringList;
-                        IsVisibleGVleft = result.listVisibility;
-
-                    }
-                    else if (Part is PPVViewModel)
-                    {
-
-
-
-                        if (PPVEntryRep.Get(FullEntry.EntryId1) != null)
-                        {
-                            LeftPPV.LegSections[0].CurrentEntry = PPVEntryRep.Get(FullEntry.EntryId1);
-                            LeftPPV.LegSections[0].SelectedValue = PPVStructRep.Get(LeftPPV.LegSections[0].CurrentEntry.StructureID);
-                        }
-                        if (FullEntry.EntryId2 != null)
-                        {
-                            LeftPPV.LegSections[1].CurrentEntry = PPVEntryRep.Get(FullEntry.EntryId2.Value);
-                            LeftPPV.LegSections[1].SelectedValue = PPVStructRep.Get(LeftPPV.LegSections[1].CurrentEntry.StructureID);
-
-                        }
-
-
-                        LeftPPV.IsEmpty = false;
-                        SaveSet result = SaveViewModel(LeftPPV);
-                        PPVLeftstr = result.stringList;
-                        IsVisiblePPVleft = result.listVisibility;
-
+                        LeftPDSV.SelectedWayType = LeftPDSV.PDSVWayType.Where(s => s.Id == FullEntry.WayID).ToList()[0];
                     }
 
-                }
-                else
-                {
-                    if (Part is PDSVViewModel)
-                    {
-                        if (FullEntry.EntryId0 != null)
-                        {
-                            RightPDSV.AdditionalStructure.CurrentEntry = PDSVEntryRep.Get(FullEntry.EntryId0.Value);
-                            RightPDSV.AdditionalStructure.SelectedValue = PDSVStructRep.Get(RightPDSV.AdditionalStructure.CurrentEntry.StructureID);
-                        }
-                        if (PDSVEntryRep.Get(FullEntry.EntryId1) != null)
-                        {
-                            RightPDSV.LegSections[0].CurrentEntry = PDSVEntryRep.Get(FullEntry.EntryId1);
-                            RightPDSV.LegSections[0].SelectedValue = PDSVStructRep.Get(RightPDSV.LegSections[0].CurrentEntry.StructureID);
-                        }
-                        if (FullEntry.EntryId2 != null)
-                        {
-                            RightPDSV.LegSections[1].CurrentEntry = PDSVEntryRep.Get(FullEntry.EntryId2.Value);
-                            RightPDSV.LegSections[1].SelectedValue = PDSVStructRep.Get(RightPDSV.LegSections[1].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId3 != null)
-                        {
-                            RightPDSV.LegSections[2].CurrentEntry = PDSVEntryRep.Get(FullEntry.EntryId3.Value);
-                            RightPDSV.LegSections[2].SelectedValue = PDSVStructRep.Get(RightPDSV.LegSections[2].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.WayID != null)
-                        {
-                            RightPDSV.SelectedWayType = RightPDSV.PDSVWayType.Where(s => s.Id == FullEntry.WayID).ToList()[0];
-                        }
-
-                        RightPDSV.IsEmpty = false;
-                        SaveSet result = SaveViewModel(RightPDSV);
-                        PDSVRightstr = result.stringList;
-                        IsVisiblePDSVright = result.listVisibility;
-
-
-                    }
-                    else if (Part is SFSViewModel)
-                    {
-
-
-
-                        if (SFSEntryRep.Get(FullEntry.EntryId1) != null)
-                        {
-                            RightSFS.LegSections[0].CurrentEntry = SFSEntryRep.Get(FullEntry.EntryId1);
-                            RightSFS.LegSections[0].SelectedValue = SFSStructRep.Get(RightSFS.LegSections[0].CurrentEntry.StructureID);
-                        }
-                        if (FullEntry.EntryId2 != null)
-                        {
-                            RightSFS.LegSections[1].CurrentEntry = SFSEntryRep.Get(FullEntry.EntryId2.Value);
-                            RightSFS.LegSections[1].SelectedValue = SFSStructRep.Get(RightSFS.LegSections[1].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId3 != null)
-                        {
-                            RightSFS.LegSections[2].CurrentEntry = SFSEntryRep.Get(FullEntry.EntryId3.Value);
-                            RightSFS.LegSections[2].SelectedValue = SFSStructRep.Get(RightSFS.LegSections[2].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId4 != null)
-                        {
-                            RightSFS.LegSections[3].CurrentEntry = SFSEntryRep.Get(FullEntry.EntryId4.Value);
-                            RightSFS.LegSections[3].SelectedValue = SFSStructRep.Get(RightSFS.LegSections[3].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId5 != null)
-                        {
-                            RightSFS.LegSections[4].CurrentEntry = SFSEntryRep.Get(FullEntry.EntryId5.Value);
-                            RightSFS.LegSections[4].SelectedValue = SFSStructRep.Get(RightSFS.LegSections[4].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId6 != null)
-                        {
-                            RightSFS.LegSections[5].CurrentEntry = SFSEntryRep.Get(FullEntry.EntryId6.Value);
-                            RightSFS.LegSections[5].SelectedValue = SFSStructRep.Get(RightSFS.LegSections[5].CurrentEntry.StructureID);
-
-                        }
-
-                        RightSFS.IsEmpty = false;
-                        SaveSet result = SaveViewModel(RightSFS);
-                        SFSRightstr = result.stringList;
-                        IsVisibleSFSRight = result.listVisibility;
-
-                    }
-                    else if (Part is BPVHipViewModel)
-                    {
-                        if (FullEntry.EntryId0 != null)
-                        {
-                            RightBPVHip.AdditionalStructure.CurrentEntry = BPVHipEntryRep.Get(FullEntry.EntryId0.Value);
-                            //var xs = BPVHipStructRep.Get(RightBPVHip.AdditionalStructure.CurrentEntry.StructureID);
-                            RightBPVHip.AdditionalStructure.SelectedValue = BPVHipStructRep.Get(RightBPVHip.AdditionalStructure.CurrentEntry.StructureID);
-
-                        }
-
-
-                        if (BPVHipEntryRep.Get(FullEntry.EntryId1) != null)
-                        {
-                            RightBPVHip.LegSections[0].CurrentEntry = BPVHipEntryRep.Get(FullEntry.EntryId1);
-                            RightBPVHip.LegSections[0].SelectedValue = BPVHipStructRep.Get(RightBPVHip.LegSections[0].CurrentEntry.StructureID);
-                        }
-                        if (FullEntry.EntryId2 != null)
-                        {
-                            RightBPVHip.LegSections[1].CurrentEntry = BPVHipEntryRep.Get(FullEntry.EntryId2.Value);
-                            RightBPVHip.LegSections[1].SelectedValue = BPVHipStructRep.Get(RightBPVHip.LegSections[1].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId3 != null)
-                        {
-                            RightBPVHip.LegSections[2].CurrentEntry = BPVHipEntryRep.Get(FullEntry.EntryId3.Value);
-                            RightBPVHip.LegSections[2].SelectedValue = BPVHipStructRep.Get(RightBPVHip.LegSections[2].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId4 != null)
-                        {
-                            RightBPVHip.LegSections[3].CurrentEntry = BPVHipEntryRep.Get(FullEntry.EntryId4.Value);
-                            RightBPVHip.LegSections[3].SelectedValue = BPVHipStructRep.Get(RightBPVHip.LegSections[3].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId5 != null)
-                        {
-                            RightBPVHip.LegSections[4].CurrentEntry = BPVHipEntryRep.Get(FullEntry.EntryId5.Value);
-                            RightBPVHip.LegSections[4].SelectedValue = BPVHipStructRep.Get(RightBPVHip.LegSections[4].CurrentEntry.StructureID);
-
-                        }
-
-                        if (FullEntry.WayID != null)
-                        {
-                            RightBPVHip.SelectedWayType = RightBPVHip.BpvWayType.Where(s => s.Id == FullEntry.WayID).ToList()[0];
-                        }
-
-                        RightBPVHip.IsEmpty = false;
-                        SaveSet result = SaveViewModel(RightBPVHip);
-                        BpvRightstr = result.stringList;
-                        IsVisibleBPVRight = result.listVisibility;
-
-                    }
-                    else if (Part is BPVTibiaViewModel)
-                    {
-
-
-                        if (BPVTibiaEntryRep.Get(FullEntry.EntryId1) != null)
-                        {
-                            RightBPVTibia.LegSections[0].CurrentEntry = BPVTibiaEntryRep.Get(FullEntry.EntryId1);
-                            RightBPVTibia.LegSections[0].SelectedValue = BPVTibiaStructRep.Get(RightBPVTibia.LegSections[0].CurrentEntry.StructureID);
-                        }
-                        if (FullEntry.EntryId2 != null)
-                        {
-                            RightBPVTibia.LegSections[1].CurrentEntry = BPVTibiaEntryRep.Get(FullEntry.EntryId2.Value);
-                            RightBPVTibia.LegSections[1].SelectedValue = BPVTibiaStructRep.Get(RightBPVTibia.LegSections[1].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId3 != null)
-                        {
-                            RightBPVTibia.LegSections[2].CurrentEntry = BPVTibiaEntryRep.Get(FullEntry.EntryId3.Value);
-                            RightBPVTibia.LegSections[2].SelectedValue = BPVTibiaStructRep.Get(RightBPVTibia.LegSections[2].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId4 != null)
-                        {
-                            RightBPVTibia.LegSections[3].CurrentEntry = BPVTibiaEntryRep.Get(FullEntry.EntryId4.Value);
-                            RightBPVTibia.LegSections[3].SelectedValue = BPVTibiaStructRep.Get(RightBPVTibia.LegSections[3].CurrentEntry.StructureID);
-
-                        }
-
-
-                        RightBPVTibia.IsEmpty = false;
-                        SaveSet result = SaveViewModel(RightBPVTibia);
-                        BPV_TibiaRightstr = result.stringList;
-                        IsVisibleBPV_Tibiaright = result.listVisibility;
-
-                    }
-                    else if (Part is HipPerforateViewModel)
-                    {
-
-
-
-                        if (Perforate_hipEntryRep.Get(FullEntry.EntryId1) != null)
-                        {
-                            RightPerforate.LegSections[0].CurrentEntry = Perforate_hipEntryRep.Get(FullEntry.EntryId1);
-                            RightPerforate.LegSections[0].SelectedValue = Perforate_hipStructRep.Get(RightPerforate.LegSections[0].CurrentEntry.StructureID);
-                        }
-                        if (FullEntry.EntryId2 != null)
-                        {
-                            RightPerforate.LegSections[1].CurrentEntry = Perforate_hipEntryRep.Get(FullEntry.EntryId2.Value);
-                            RightPerforate.LegSections[1].SelectedValue = Perforate_hipStructRep.Get(RightPerforate.LegSections[1].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId3 != null)
-                        {
-                            RightPerforate.LegSections[2].CurrentEntry = Perforate_hipEntryRep.Get(FullEntry.EntryId3.Value);
-                            RightPerforate.LegSections[2].SelectedValue = Perforate_hipStructRep.Get(RightPerforate.LegSections[2].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId4 != null)
-                        {
-                            RightPerforate.LegSections[3].CurrentEntry = Perforate_hipEntryRep.Get(FullEntry.EntryId4.Value);
-                            RightPerforate.LegSections[3].SelectedValue = Perforate_hipStructRep.Get(RightPerforate.LegSections[3].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId5 != null)
-                        {
-                            RightPerforate.LegSections[4].CurrentEntry = Perforate_hipEntryRep.Get(FullEntry.EntryId5.Value);
-                            RightPerforate.LegSections[4].SelectedValue = Perforate_hipStructRep.Get(RightPerforate.LegSections[4].CurrentEntry.StructureID);
-
-                        }
-
-
-                        RightPerforate.IsEmpty = false;
-                        SaveSet result = SaveViewModel(RightPerforate);
-                        Perforate_hipRightstr = result.stringList;
-                        IsVisiblePerforateHIPright = result.listVisibility;
-
-                    }
-                    else if (Part is ZDSVViewModel)
-                    {
-
-
-                        if (FullEntry.EntryId0 != null)
-                        {
-                            RightZDSV.AdditionalStructure.CurrentEntry = ZDSVEntryRep.Get(FullEntry.EntryId0.Value);
-                            RightZDSV.AdditionalStructure.SelectedValue = ZDSVStructRep.Get(RightZDSV.AdditionalStructure.CurrentEntry.StructureID);
-
-                        }
-
-                        if (ZDSVEntryRep.Get(FullEntry.EntryId1) != null)
-                        {
-                            RightZDSV.LegSections[0].CurrentEntry = ZDSVEntryRep.Get(FullEntry.EntryId1);
-                            RightZDSV.LegSections[0].SelectedValue = ZDSVStructRep.Get(RightZDSV.LegSections[0].CurrentEntry.StructureID);
-                        }
-                        if (FullEntry.EntryId2 != null)
-                        {
-                            RightZDSV.LegSections[1].CurrentEntry = ZDSVEntryRep.Get(FullEntry.EntryId2.Value);
-                            RightZDSV.LegSections[1].SelectedValue = ZDSVStructRep.Get(RightZDSV.LegSections[1].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId3 != null)
-                        {
-                            RightZDSV.LegSections[2].CurrentEntry = ZDSVEntryRep.Get(FullEntry.EntryId3.Value);
-                            RightZDSV.LegSections[2].SelectedValue = ZDSVStructRep.Get(RightZDSV.LegSections[2].CurrentEntry.StructureID);
-
-                        }
-                        RightZDSV.IsEmpty = false;
-                        SaveSet result = SaveViewModel(RightZDSV);
-                        ZDSVRightstr = result.stringList;
-                        IsVisibleZDSVright = result.listVisibility;
-
-                    }
-                    else if (Part is SPSViewModel)
-                    {
-                        if (FullEntry.EntryId0 != null)
-                        {
-                            RightSPS.AdditionalStructure.CurrentEntry = SPSEntryRep.Get(FullEntry.EntryId0.Value);
-                            RightSPS.AdditionalStructure.SelectedValue = SPSStructRep.Get(RightSPS.AdditionalStructure.CurrentEntry.StructureID);
-
-                        }
-
-
-                        if (SPSEntryRep.Get(FullEntry.EntryId1) != null)
-                        {
-                            RightSPS.LegSections[0].CurrentEntry = SPSEntryRep.Get(FullEntry.EntryId1);
-                            RightSPS.LegSections[0].SelectedValue = SPSStructRep.Get(RightSPS.LegSections[0].CurrentEntry.StructureID);
-                        }
-                        if (FullEntry.EntryId2 != null)
-                        {
-                            RightSPS.LegSections[1].CurrentEntry = SPSEntryRep.Get(FullEntry.EntryId2.Value);
-                            RightSPS.LegSections[1].SelectedValue = SPSStructRep.Get(RightSPS.LegSections[1].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId3 != null)
-                        {
-                            RightSPS.LegSections[2].CurrentEntry = SPSEntryRep.Get(FullEntry.EntryId3.Value);
-                            RightSPS.LegSections[2].SelectedValue = SPSStructRep.Get(RightSPS.LegSections[2].CurrentEntry.StructureID);
-
-                        }
-
-                        RightSPS.IsEmpty = false;
-                        SaveSet result = SaveViewModel(RightSPS);
-                        SPSRightstr = result.stringList;
-                        IsVisibleSPSRight = result.listVisibility;
-
-                    }
-                    else if (Part is TibiaPerforateViewModel)
-                    {
-
-
-
-                        if (Perforate_shinEntryRep.Get(FullEntry.EntryId1) != null)
-                        {
-                            RightTibiaPerforate.LegSections[0].CurrentEntry = Perforate_shinEntryRep.Get(FullEntry.EntryId1);
-                            RightTibiaPerforate.LegSections[0].SelectedValue = Perforate_shinStructRep.Get(RightTibiaPerforate.LegSections[0].CurrentEntry.StructureID);
-                        }
-                        if (FullEntry.EntryId2 != null)
-                        {
-                            RightTibiaPerforate.LegSections[1].CurrentEntry = Perforate_shinEntryRep.Get(FullEntry.EntryId2.Value);
-                            RightTibiaPerforate.LegSections[1].SelectedValue = Perforate_shinStructRep.Get(RightTibiaPerforate.LegSections[1].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId3 != null)
-                        {
-                            RightTibiaPerforate.LegSections[2].CurrentEntry = Perforate_shinEntryRep.Get(FullEntry.EntryId3.Value);
-                            RightTibiaPerforate.LegSections[2].SelectedValue = Perforate_shinStructRep.Get(RightTibiaPerforate.LegSections[2].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId4 != null)
-                        {
-                            RightTibiaPerforate.LegSections[3].CurrentEntry = Perforate_shinEntryRep.Get(FullEntry.EntryId4.Value);
-                            RightTibiaPerforate.LegSections[3].SelectedValue = Perforate_shinStructRep.Get(RightTibiaPerforate.LegSections[3].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId5 != null)
-                        {
-                            RightTibiaPerforate.LegSections[4].CurrentEntry = Perforate_shinEntryRep.Get(FullEntry.EntryId5.Value);
-                            RightTibiaPerforate.LegSections[4].SelectedValue = Perforate_shinStructRep.Get(RightTibiaPerforate.LegSections[4].CurrentEntry.StructureID);
-
-                        }
-
-                        RightTibiaPerforate.IsEmpty = false;
-                        SaveSet result = SaveViewModel(RightTibiaPerforate);
-                        Perforate_shinRightstr = result.stringList;
-                        IsVisiblePerforate_shinRight = result.listVisibility;
-
-                    }
-                    else if (Part is MPVViewModel)
-                    {
-
-
-
-                        if (MPVEntryRep.Get(FullEntry.EntryId1) != null)
-                        {
-                            RightMPV.LegSections[0].CurrentEntry = MPVEntryRep.Get(FullEntry.EntryId1);
-                            RightMPV.LegSections[0].SelectedValue = MPVStructRep.Get(RightMPV.LegSections[0].CurrentEntry.StructureID);
-                        }
-                        if (FullEntry.EntryId2 != null)
-                        {
-                            RightMPV.LegSections[1].CurrentEntry = MPVEntryRep.Get(FullEntry.EntryId2.Value);
-                            RightMPV.LegSections[1].SelectedValue = MPVStructRep.Get(RightMPV.LegSections[1].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId3 != null)
-                        {
-                            RightMPV.LegSections[2].CurrentEntry = MPVEntryRep.Get(FullEntry.EntryId3.Value);
-                            RightMPV.LegSections[2].SelectedValue = MPVStructRep.Get(RightMPV.LegSections[2].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId4 != null)
-                        {
-                            RightMPV.LegSections[3].CurrentEntry = MPVEntryRep.Get(FullEntry.EntryId4.Value);
-                            RightMPV.LegSections[3].SelectedValue = MPVStructRep.Get(RightMPV.LegSections[3].CurrentEntry.StructureID);
-
-                        }
-
-
-                        if (FullEntry.WayID != null)
-                        {
-                            RightMPV.SelectedWayType = RightMPV.MPVWayType.Where(s => s.Id == FullEntry.WayID).ToList()[0];
-                        }
-
-                        RightMPV.IsEmpty = false;
-                        SaveSet result = SaveViewModel(RightMPV);
-                        MPVRightstr = result.stringList;
-                        IsVisibleMPVRight = result.listVisibility;
-
-                    }
-                    else if (Part is TEMPVViewModel)
-                    {
-
-
-
-                        if (TEMPVEntryRep.Get(FullEntry.EntryId1) != null)
-                        {
-                            RightTEMPV.LegSections[0].CurrentEntry = TEMPVEntryRep.Get(FullEntry.EntryId1);
-                            RightTEMPV.LegSections[0].SelectedValue = TEMPVStructRep.Get(RightTEMPV.LegSections[0].CurrentEntry.StructureID);
-                        }
-                        if (FullEntry.EntryId2 != null)
-                        {
-                            RightTEMPV.LegSections[1].CurrentEntry = TEMPVEntryRep.Get(FullEntry.EntryId2.Value);
-                            RightTEMPV.LegSections[1].SelectedValue = TEMPVStructRep.Get(RightTEMPV.LegSections[1].CurrentEntry.StructureID);
-
-                        }
-                        if (FullEntry.EntryId3 != null)
-                        {
-                            RightTEMPV.LegSections[2].CurrentEntry = TEMPVEntryRep.Get(FullEntry.EntryId3.Value);
-                            RightTEMPV.LegSections[2].SelectedValue = TEMPVStructRep.Get(RightTEMPV.LegSections[2].CurrentEntry.StructureID);
-
-                        }
-
-                        if (FullEntry.WayID != null)
-                        {
-                            RightTEMPV.SelectedWayType = RightTEMPV.TEMPVWayType.Where(s => s.Id == FullEntry.WayID).ToList()[0];
-                        }
-
-                        RightTEMPV.FF_length = ((TEMPVEntryFull)FullEntry).FF_Length;
-                        RightTEMPV.IsEmpty = false;
-                        SaveSet result = SaveViewModel(RightTEMPV);
-                        TEMPVRightstr = result.stringList;
-                        IsVisibleTEMPVRight = result.listVisibility;
-
-                    }
-                    else if (Part is GVViewModel)
-                    {
-
-
-
-                        if (GVEntryRep.Get(FullEntry.EntryId1) != null)
-                        {
-                            RightGV.LegSections[0].CurrentEntry = GVEntryRep.Get(FullEntry.EntryId1);
-                            RightGV.LegSections[0].SelectedValue = GVStructRep.Get(RightGV.LegSections[0].CurrentEntry.StructureID);
-                        }
-                        if (FullEntry.EntryId2 != null)
-                        {
-                            RightGV.LegSections[1].CurrentEntry = GVEntryRep.Get(FullEntry.EntryId2.Value);
-                            RightGV.LegSections[1].SelectedValue = GVStructRep.Get(RightGV.LegSections[1].CurrentEntry.StructureID);
-
-                        }
-
-
-
-                        RightGV.IsEmpty = false;
-                        SaveSet result = SaveViewModel(RightGV);
-                        GVRightstr = result.stringList;
-                        IsVisibleGVRight = result.listVisibility;
-
-                    }
-                    else if (Part is PPVViewModel)
-                    {
-
-
-
-                        if (PPVEntryRep.Get(FullEntry.EntryId1) != null)
-                        {
-                            RightPPV.LegSections[0].CurrentEntry = PPVEntryRep.Get(FullEntry.EntryId1);
-                            RightPPV.LegSections[0].SelectedValue = PPVStructRep.Get(RightPPV.LegSections[0].CurrentEntry.StructureID);
-                        }
-                        if (FullEntry.EntryId2 != null)
-                        {
-                            RightPPV.LegSections[1].CurrentEntry = PPVEntryRep.Get(FullEntry.EntryId2.Value);
-                            RightPPV.LegSections[1].SelectedValue = PPVStructRep.Get(RightPPV.LegSections[1].CurrentEntry.StructureID);
-
-                        }
-
-
-                        RightPPV.IsEmpty = false;
-                        SaveSet result = SaveViewModel(RightPPV);
-                        PPVRightstr = result.stringList;
-                        IsVisiblePPVRight = result.listVisibility;
-
-                    }
+                    LeftPDSV.IsEmpty = false;
+                    SaveSet result = SaveViewModel(LeftPDSV);
+                    PDSVLeftstr = result.stringList;
+                    IsVisiblePDSVleft = result.listVisibility;
 
 
                 }
+                else if (Part is SFSViewModel)
+                {
+
+
+
+                    if (Data.SFSHipEntries.Get(FullEntry.EntryId1) != null)
+                    {
+                        LeftSFS.LegSections[0].CurrentEntry = Data.SFSHipEntries.Get(FullEntry.EntryId1);
+                        LeftSFS.LegSections[0].SelectedValue = Data.SFSHips.Get(LeftSFS.LegSections[0].CurrentEntry.StructureID);
+                    }
+                    if (FullEntry.EntryId2 != null)
+                    {
+                        LeftSFS.LegSections[1].CurrentEntry = Data.SFSHipEntries.Get(FullEntry.EntryId2.Value);
+                        LeftSFS.LegSections[1].SelectedValue = Data.SFSHips.Get(LeftSFS.LegSections[1].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId3 != null)
+                    {
+                        LeftSFS.LegSections[2].CurrentEntry = Data.SFSHipEntries.Get(FullEntry.EntryId3.Value);
+                        LeftSFS.LegSections[2].SelectedValue = Data.SFSHips.Get(LeftSFS.LegSections[2].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId4 != null)
+                    {
+                        LeftSFS.LegSections[3].CurrentEntry = Data.SFSHipEntries.Get(FullEntry.EntryId4.Value);
+                        LeftSFS.LegSections[3].SelectedValue = Data.SFSHips.Get(LeftSFS.LegSections[3].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId5 != null)
+                    {
+                        LeftSFS.LegSections[4].CurrentEntry = Data.SFSHipEntries.Get(FullEntry.EntryId5.Value);
+                        LeftSFS.LegSections[4].SelectedValue = Data.SFSHips.Get(LeftSFS.LegSections[4].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId6 != null)
+                    {
+                        LeftSFS.LegSections[5].CurrentEntry = Data.SFSHipEntries.Get(FullEntry.EntryId6.Value);
+                        LeftSFS.LegSections[5].SelectedValue = Data.SFSHips.Get(LeftSFS.LegSections[5].CurrentEntry.StructureID);
+
+                    }
+
+                    LeftSFS.IsEmpty = false;
+                    SaveSet result = SaveViewModel(LeftSFS);
+                    SFSLeftstr = result.stringList;
+                    IsVisibleSFSleft = result.listVisibility;
+
+                }
+                else if (Part is BPVHipViewModel)
+                {
+
+                    if (FullEntry.EntryId0 != null)
+                    {
+                        LeftBPVHip.AdditionalStructure.CurrentEntry = Data.BPVHipEntries.Get(FullEntry.EntryId0.Value);
+                        LeftBPVHip.AdditionalStructure.SelectedValue = Data.BPVHips.Get(LeftBPVHip.AdditionalStructure.CurrentEntry.StructureID);
+
+                    }
+
+                    if (Data.BPVHipEntries.Get(FullEntry.EntryId1) != null)
+                    {
+                        LeftBPVHip.LegSections[0].CurrentEntry = Data.BPVHipEntries.Get(FullEntry.EntryId1);
+                        LeftBPVHip.LegSections[0].SelectedValue = Data.BPVHips.Get(LeftBPVHip.LegSections[0].CurrentEntry.StructureID);
+                    }
+                    if (FullEntry.EntryId2 != null)
+                    {
+                        LeftBPVHip.LegSections[1].CurrentEntry = Data.BPVHipEntries.Get(FullEntry.EntryId2.Value);
+                        LeftBPVHip.LegSections[1].SelectedValue = Data.BPVHips.Get(LeftBPVHip.LegSections[1].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId3 != null)
+                    {
+                        LeftBPVHip.LegSections[2].CurrentEntry = Data.BPVHipEntries.Get(FullEntry.EntryId3.Value);
+                        LeftBPVHip.LegSections[2].SelectedValue = Data.BPVHips.Get(LeftBPVHip.LegSections[2].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId4 != null)
+                    {
+                        LeftBPVHip.LegSections[3].CurrentEntry = Data.BPVHipEntries.Get(FullEntry.EntryId4.Value);
+                        LeftBPVHip.LegSections[3].SelectedValue = Data.BPVHips.Get(LeftBPVHip.LegSections[3].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId5 != null)
+                    {
+                        LeftBPVHip.LegSections[4].CurrentEntry = Data.BPVHipEntries.Get(FullEntry.EntryId5.Value);
+                        LeftBPVHip.LegSections[4].SelectedValue = Data.BPVHips.Get(LeftBPVHip.LegSections[4].CurrentEntry.StructureID);
+
+                    }
+
+                    if (FullEntry.WayID != null)
+                    {
+                        LeftBPVHip.SelectedWayType = LeftBPVHip.BpvWayType.Where(s => s.Id == FullEntry.WayID).ToList()[0];
+                    }
+
+                    LeftBPVHip.IsEmpty = false;
+                    SaveSet result = SaveViewModel(LeftBPVHip);
+                    BpvLeftstr = result.stringList;
+                    IsVisibleBPVleft = result.listVisibility;
+
+                }
+                else if (Part is BPVTibiaViewModel)
+                {
+
+
+                    if (Data.BPV_TibiaEntries.Get(FullEntry.EntryId1) != null)
+                    {
+                        LeftBPVTibia.LegSections[0].CurrentEntry = Data.BPV_TibiaEntries.Get(FullEntry.EntryId1);
+                        LeftBPVTibia.LegSections[0].SelectedValue = Data.BPV_Tibia.Get(LeftBPVTibia.LegSections[0].CurrentEntry.StructureID);
+                    }
+                    if (FullEntry.EntryId2 != null)
+                    {
+                        LeftBPVTibia.LegSections[1].CurrentEntry = Data.BPV_TibiaEntries.Get(FullEntry.EntryId2.Value);
+                        LeftBPVTibia.LegSections[1].SelectedValue = Data.BPV_Tibia.Get(LeftBPVTibia.LegSections[1].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId3 != null)
+                    {
+                        LeftBPVTibia.LegSections[2].CurrentEntry = Data.BPV_TibiaEntries.Get(FullEntry.EntryId3.Value);
+                        LeftBPVTibia.LegSections[2].SelectedValue = Data.BPV_Tibia.Get(LeftBPVTibia.LegSections[2].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId4 != null)
+                    {
+                        LeftBPVTibia.LegSections[3].CurrentEntry = Data.BPV_TibiaEntries.Get(FullEntry.EntryId4.Value);
+                        LeftBPVTibia.LegSections[3].SelectedValue = Data.BPV_Tibia.Get(LeftBPVTibia.LegSections[3].CurrentEntry.StructureID);
+
+                    }
+
+
+                    LeftBPVTibia.IsEmpty = false;
+                    SaveSet result = SaveViewModel(LeftBPVTibia);
+                    BPV_TibiaLeftstr = result.stringList;
+                    IsVisibleBPV_Tibialeft = result.listVisibility;
+
+                }
+                else if (Part is HipPerforateViewModel)
+                {
+
+
+
+                    if (Data.Perforate_hipEntries.Get(FullEntry.EntryId1) != null)
+                    {
+                        LeftPerforate.LegSections[0].CurrentEntry = Data.Perforate_hipEntries.Get(FullEntry.EntryId1);
+                        LeftPerforate.LegSections[0].SelectedValue = Data.Perforate_hip.Get(LeftPerforate.LegSections[0].CurrentEntry.StructureID);
+                    }
+                    if (FullEntry.EntryId2 != null)
+                    {
+                        LeftPerforate.LegSections[1].CurrentEntry = Data.Perforate_hipEntries.Get(FullEntry.EntryId2.Value);
+                        LeftPerforate.LegSections[1].SelectedValue = Data.Perforate_hip.Get(LeftPerforate.LegSections[1].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId3 != null)
+                    {
+                        LeftPerforate.LegSections[2].CurrentEntry = Data.Perforate_hipEntries.Get(FullEntry.EntryId3.Value);
+                        LeftPerforate.LegSections[2].SelectedValue = Data.Perforate_hip.Get(LeftPerforate.LegSections[2].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId4 != null)
+                    {
+                        LeftPerforate.LegSections[3].CurrentEntry = Data.Perforate_hipEntries.Get(FullEntry.EntryId4.Value);
+                        LeftPerforate.LegSections[3].SelectedValue = Data.Perforate_hip.Get(LeftPerforate.LegSections[3].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId5 != null)
+                    {
+                        LeftPerforate.LegSections[4].CurrentEntry = Data.Perforate_hipEntries.Get(FullEntry.EntryId5.Value);
+                        LeftPerforate.LegSections[4].SelectedValue = Data.Perforate_hip.Get(LeftPerforate.LegSections[4].CurrentEntry.StructureID);
+
+                    }
+
+
+                    LeftPerforate.IsEmpty = false;
+                    SaveSet result = SaveViewModel(LeftPerforate);
+                    Perforate_hipLeftstr = result.stringList;
+                    IsVisiblePerforateHIPleft = result.listVisibility;
+
+                }
+                else if (Part is ZDSVViewModel)
+                {
+
+                    if (FullEntry.EntryId0 != null)
+                    {
+                        LeftZDSV.AdditionalStructure.CurrentEntry = Data.ZDSVEntries.Get(FullEntry.EntryId0.Value);
+                        LeftZDSV.AdditionalStructure.SelectedValue = Data.ZDSV.Get(LeftZDSV.AdditionalStructure.CurrentEntry.StructureID);
+
+                    }
+
+                    if (Data.ZDSVEntries.Get(FullEntry.EntryId1) != null)
+                    {
+                        LeftZDSV.LegSections[0].CurrentEntry = Data.ZDSVEntries.Get(FullEntry.EntryId1);
+                        LeftZDSV.LegSections[0].SelectedValue = Data.ZDSV.Get(LeftZDSV.LegSections[0].CurrentEntry.StructureID);
+                    }
+                    if (FullEntry.EntryId2 != null)
+                    {
+                        LeftZDSV.LegSections[1].CurrentEntry = Data.ZDSVEntries.Get(FullEntry.EntryId2.Value);
+                        LeftZDSV.LegSections[1].SelectedValue = Data.ZDSV.Get(LeftZDSV.LegSections[1].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId3 != null)
+                    {
+                        LeftZDSV.LegSections[2].CurrentEntry = Data.ZDSVEntries.Get(FullEntry.EntryId3.Value);
+                        LeftZDSV.LegSections[2].SelectedValue = Data.ZDSV.Get(LeftZDSV.LegSections[2].CurrentEntry.StructureID);
+
+                    }
+                    LeftZDSV.IsEmpty = false;
+                    SaveSet result = SaveViewModel(LeftZDSV);
+                    ZDSVLeftstr = result.stringList;
+                    IsVisibleZDSVleft = result.listVisibility;
+
+                }
+                else if (Part is SPSViewModel)
+                {
+
+                    if (FullEntry.EntryId0 != null)
+                    {
+                        LeftSPS.AdditionalStructure.CurrentEntry = Data.SPSEntries.Get(FullEntry.EntryId0.Value);
+                        LeftSPS.AdditionalStructure.SelectedValue = Data.SPS.Get(LeftSPS.AdditionalStructure.CurrentEntry.StructureID);
+
+                    }
+
+                    if (Data.SPSEntries.Get(FullEntry.EntryId1) != null)
+                    {
+                        LeftSPS.LegSections[0].CurrentEntry = Data.SPSEntries.Get(FullEntry.EntryId1);
+                        LeftSPS.LegSections[0].SelectedValue = Data.SPS.Get(LeftSPS.LegSections[0].CurrentEntry.StructureID);
+                    }
+                    if (FullEntry.EntryId2 != null)
+                    {
+                        LeftSPS.LegSections[1].CurrentEntry = Data.SPSEntries.Get(FullEntry.EntryId2.Value);
+                        LeftSPS.LegSections[1].SelectedValue = Data.SPS.Get(LeftSPS.LegSections[1].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId3 != null)
+                    {
+                        LeftSPS.LegSections[2].CurrentEntry = Data.SPSEntries.Get(FullEntry.EntryId3.Value);
+                        LeftSPS.LegSections[2].SelectedValue = Data.SPS.Get(LeftSPS.LegSections[2].CurrentEntry.StructureID);
+
+                    }
+
+                    LeftSPS.IsEmpty = false;
+                    SaveSet result = SaveViewModel(LeftSPS);
+                    SPSLeftstr = result.stringList;
+                    IsVisibleSPSleft = result.listVisibility;
+
+                }
+                else if (Part is TibiaPerforateViewModel)
+                {
+
+
+
+                    if (Data.Perforate_shinEntries.Get(FullEntry.EntryId1) != null)
+                    {
+                        LeftTibiaPerforate.LegSections[0].CurrentEntry = Data.Perforate_shinEntries.Get(FullEntry.EntryId1);
+                        LeftTibiaPerforate.LegSections[0].SelectedValue = Data.Perforate_shin.Get(LeftTibiaPerforate.LegSections[0].CurrentEntry.StructureID);
+                    }
+                    if (FullEntry.EntryId2 != null)
+                    {
+                        LeftTibiaPerforate.LegSections[1].CurrentEntry = Data.Perforate_shinEntries.Get(FullEntry.EntryId2.Value);
+                        LeftTibiaPerforate.LegSections[1].SelectedValue = Data.Perforate_shin.Get(LeftTibiaPerforate.LegSections[1].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId3 != null)
+                    {
+                        LeftTibiaPerforate.LegSections[2].CurrentEntry = Data.Perforate_shinEntries.Get(FullEntry.EntryId3.Value);
+                        LeftTibiaPerforate.LegSections[2].SelectedValue = Data.Perforate_shin.Get(LeftTibiaPerforate.LegSections[2].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId4 != null)
+                    {
+                        LeftTibiaPerforate.LegSections[3].CurrentEntry = Data.Perforate_shinEntries.Get(FullEntry.EntryId4.Value);
+                        LeftTibiaPerforate.LegSections[3].SelectedValue = Data.Perforate_shin.Get(LeftTibiaPerforate.LegSections[3].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId5 != null)
+                    {
+                        LeftTibiaPerforate.LegSections[4].CurrentEntry = Data.Perforate_shinEntries.Get(FullEntry.EntryId5.Value);
+                        LeftTibiaPerforate.LegSections[4].SelectedValue = Data.Perforate_shin.Get(LeftTibiaPerforate.LegSections[4].CurrentEntry.StructureID);
+
+                    }
+
+                    LeftTibiaPerforate.IsEmpty = false;
+                    SaveSet result = SaveViewModel(LeftTibiaPerforate);
+                    Perforate_shinLeftstr = result.stringList;
+                    IsVisiblePerforate_shinleft = result.listVisibility;
+
+                }
+                else if (Part is MPVViewModel)
+                {
+
+
+
+                    if (Data.MPVEntries.Get(FullEntry.EntryId1) != null)
+                    {
+                        LeftMPV.LegSections[0].CurrentEntry = Data.MPVEntries.Get(FullEntry.EntryId1);
+                        LeftMPV.LegSections[0].SelectedValue = Data.MPV.Get(LeftMPV.LegSections[0].CurrentEntry.StructureID);
+                    }
+                    if (FullEntry.EntryId2 != null)
+                    {
+                        LeftMPV.LegSections[1].CurrentEntry = Data.MPVEntries.Get(FullEntry.EntryId2.Value);
+                        LeftMPV.LegSections[1].SelectedValue = Data.MPV.Get(LeftMPV.LegSections[1].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId3 != null)
+                    {
+                        LeftMPV.LegSections[2].CurrentEntry = Data.MPVEntries.Get(FullEntry.EntryId3.Value);
+                        LeftMPV.LegSections[2].SelectedValue = Data.MPV.Get(LeftMPV.LegSections[2].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId4 != null)
+                    {
+                        LeftMPV.LegSections[3].CurrentEntry = Data.MPVEntries.Get(FullEntry.EntryId4.Value);
+                        LeftMPV.LegSections[3].SelectedValue = Data.MPV.Get(LeftMPV.LegSections[3].CurrentEntry.StructureID);
+
+                    }
+
+
+                    if (FullEntry.WayID != null)
+                    {
+                        LeftMPV.SelectedWayType = LeftMPV.MPVWayType.Where(s => s.Id == FullEntry.WayID).ToList()[0];
+                    }
+
+                    LeftMPV.IsEmpty = false;
+                    SaveSet result = SaveViewModel(LeftMPV);
+                    MPVLeftstr = result.stringList;
+                    IsVisibleMPVleft = result.listVisibility;
+
+                }
+                else if (Part is TEMPVViewModel)
+                {
+
+
+
+                    if (Data.TEMPVEntries.Get(FullEntry.EntryId1) != null)
+                    {
+                        LeftTEMPV.LegSections[0].CurrentEntry = Data.TEMPVEntries.Get(FullEntry.EntryId1);
+                        LeftTEMPV.LegSections[0].SelectedValue = Data.TEMPV.Get(LeftTEMPV.LegSections[0].CurrentEntry.StructureID);
+                    }
+                    if (FullEntry.EntryId2 != null)
+                    {
+                        LeftTEMPV.LegSections[1].CurrentEntry = Data.TEMPVEntries.Get(FullEntry.EntryId2.Value);
+                        LeftTEMPV.LegSections[1].SelectedValue = Data.TEMPV.Get(LeftTEMPV.LegSections[1].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId3 != null)
+                    {
+                        LeftTEMPV.LegSections[2].CurrentEntry = Data.TEMPVEntries.Get(FullEntry.EntryId3.Value);
+                        LeftTEMPV.LegSections[2].SelectedValue = Data.TEMPV.Get(LeftTEMPV.LegSections[2].CurrentEntry.StructureID);
+
+                    }
+
+                    if (FullEntry.WayID != null)
+                    {
+                        LeftTEMPV.SelectedWayType = LeftTEMPV.TEMPVWayType.Where(s => s.Id == FullEntry.WayID).ToList()[0];
+                    }
+
+                    LeftTEMPV.FF_length = ((TEMPVEntryFull)FullEntry).FF_Length;
+                    LeftTEMPV.IsEmpty = false;
+                    SaveSet result = SaveViewModel(LeftTEMPV);
+                    TEMPVLeftstr = result.stringList;
+                    IsVisibleTEMPVleft = result.listVisibility;
+
+                }
+                else if (Part is GVViewModel)
+                {
+
+
+
+                    if (Data.GVEntries.Get(FullEntry.EntryId1) != null)
+                    {
+                        LeftGV.LegSections[0].CurrentEntry = Data.GVEntries.Get(FullEntry.EntryId1);
+                        LeftGV.LegSections[0].SelectedValue = Data.GV.Get(LeftGV.LegSections[0].CurrentEntry.StructureID);
+                    }
+                    if (FullEntry.EntryId2 != null)
+                    {
+                        LeftGV.LegSections[1].CurrentEntry = Data.GVEntries.Get(FullEntry.EntryId2.Value);
+                        LeftGV.LegSections[1].SelectedValue = Data.GV.Get(LeftGV.LegSections[1].CurrentEntry.StructureID);
+
+                    }
+
+
+
+                    LeftGV.IsEmpty = false;
+                    SaveSet result = SaveViewModel(LeftGV);
+                    GVLeftstr = result.stringList;
+                    IsVisibleGVleft = result.listVisibility;
+
+                }
+                else if (Part is PPVViewModel)
+                {
+
+
+
+                    if (Data.PPVEntries.Get(FullEntry.EntryId1) != null)
+                    {
+                        LeftPPV.LegSections[0].CurrentEntry = Data.PPVEntries.Get(FullEntry.EntryId1);
+                        LeftPPV.LegSections[0].SelectedValue = Data.PPV.Get(LeftPPV.LegSections[0].CurrentEntry.StructureID);
+                    }
+                    if (FullEntry.EntryId2 != null)
+                    {
+                        LeftPPV.LegSections[1].CurrentEntry = Data.PPVEntries.Get(FullEntry.EntryId2.Value);
+                        LeftPPV.LegSections[1].SelectedValue = Data.PPV.Get(LeftPPV.LegSections[1].CurrentEntry.StructureID);
+
+                    }
+
+
+                    LeftPPV.IsEmpty = false;
+                    SaveSet result = SaveViewModel(LeftPPV);
+                    PPVLeftstr = result.stringList;
+                    IsVisiblePPVleft = result.listVisibility;
+
+                }
+
+            }
+            else
+            {
+                if (Part is PDSVViewModel)
+                {
+                    if (FullEntry.EntryId0 != null)
+                    {
+                        RightPDSV.AdditionalStructure.CurrentEntry = Data.PDSVHipEntries.Get(FullEntry.EntryId0.Value);
+                        RightPDSV.AdditionalStructure.SelectedValue = Data.PDSVHips.Get(RightPDSV.AdditionalStructure.CurrentEntry.StructureID);
+                    }
+                    if (Data.PDSVHipEntries.Get(FullEntry.EntryId1) != null)
+                    {
+                        RightPDSV.LegSections[0].CurrentEntry = Data.PDSVHipEntries.Get(FullEntry.EntryId1);
+                        RightPDSV.LegSections[0].SelectedValue = Data.PDSVHips.Get(RightPDSV.LegSections[0].CurrentEntry.StructureID);
+                    }
+                    if (FullEntry.EntryId2 != null)
+                    {
+                        RightPDSV.LegSections[1].CurrentEntry = Data.PDSVHipEntries.Get(FullEntry.EntryId2.Value);
+                        RightPDSV.LegSections[1].SelectedValue = Data.PDSVHips.Get(RightPDSV.LegSections[1].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId3 != null)
+                    {
+                        RightPDSV.LegSections[2].CurrentEntry = Data.PDSVHipEntries.Get(FullEntry.EntryId3.Value);
+                        RightPDSV.LegSections[2].SelectedValue = Data.PDSVHips.Get(RightPDSV.LegSections[2].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.WayID != null)
+                    {
+                        RightPDSV.SelectedWayType = RightPDSV.PDSVWayType.Where(s => s.Id == FullEntry.WayID).ToList()[0];
+                    }
+
+                    RightPDSV.IsEmpty = false;
+                    SaveSet result = SaveViewModel(RightPDSV);
+                    PDSVRightstr = result.stringList;
+                    IsVisiblePDSVright = result.listVisibility;
+
+
+                }
+                else if (Part is SFSViewModel)
+                {
+
+
+
+                    if (Data.SFSHipEntries.Get(FullEntry.EntryId1) != null)
+                    {
+                        RightSFS.LegSections[0].CurrentEntry = Data.SFSHipEntries.Get(FullEntry.EntryId1);
+                        RightSFS.LegSections[0].SelectedValue = Data.SFSHips.Get(RightSFS.LegSections[0].CurrentEntry.StructureID);
+                    }
+                    if (FullEntry.EntryId2 != null)
+                    {
+                        RightSFS.LegSections[1].CurrentEntry = Data.SFSHipEntries.Get(FullEntry.EntryId2.Value);
+                        RightSFS.LegSections[1].SelectedValue = Data.SFSHips.Get(RightSFS.LegSections[1].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId3 != null)
+                    {
+                        RightSFS.LegSections[2].CurrentEntry = Data.SFSHipEntries.Get(FullEntry.EntryId3.Value);
+                        RightSFS.LegSections[2].SelectedValue = Data.SFSHips.Get(RightSFS.LegSections[2].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId4 != null)
+                    {
+                        RightSFS.LegSections[3].CurrentEntry = Data.SFSHipEntries.Get(FullEntry.EntryId4.Value);
+                        RightSFS.LegSections[3].SelectedValue = Data.SFSHips.Get(RightSFS.LegSections[3].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId5 != null)
+                    {
+                        RightSFS.LegSections[4].CurrentEntry = Data.SFSHipEntries.Get(FullEntry.EntryId5.Value);
+                        RightSFS.LegSections[4].SelectedValue = Data.SFSHips.Get(RightSFS.LegSections[4].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId6 != null)
+                    {
+                        RightSFS.LegSections[5].CurrentEntry = Data.SFSHipEntries.Get(FullEntry.EntryId6.Value);
+                        RightSFS.LegSections[5].SelectedValue = Data.SFSHips.Get(RightSFS.LegSections[5].CurrentEntry.StructureID);
+
+                    }
+
+                    RightSFS.IsEmpty = false;
+                    SaveSet result = SaveViewModel(RightSFS);
+                    SFSRightstr = result.stringList;
+                    IsVisibleSFSRight = result.listVisibility;
+
+                }
+                else if (Part is BPVHipViewModel)
+                {
+                    if (FullEntry.EntryId0 != null)
+                    {
+                        RightBPVHip.AdditionalStructure.CurrentEntry = Data.BPVHipEntries.Get(FullEntry.EntryId0.Value);
+                        //var xs = Data.BPVHips.Get(RightBPVHip.AdditionalStructure.CurrentEntry.StructureID);
+                        RightBPVHip.AdditionalStructure.SelectedValue = Data.BPVHips.Get(RightBPVHip.AdditionalStructure.CurrentEntry.StructureID);
+
+                    }
+
+
+                    if (Data.BPVHipEntries.Get(FullEntry.EntryId1) != null)
+                    {
+                        RightBPVHip.LegSections[0].CurrentEntry = Data.BPVHipEntries.Get(FullEntry.EntryId1);
+                        RightBPVHip.LegSections[0].SelectedValue = Data.BPVHips.Get(RightBPVHip.LegSections[0].CurrentEntry.StructureID);
+                    }
+                    if (FullEntry.EntryId2 != null)
+                    {
+                        RightBPVHip.LegSections[1].CurrentEntry = Data.BPVHipEntries.Get(FullEntry.EntryId2.Value);
+                        RightBPVHip.LegSections[1].SelectedValue = Data.BPVHips.Get(RightBPVHip.LegSections[1].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId3 != null)
+                    {
+                        RightBPVHip.LegSections[2].CurrentEntry = Data.BPVHipEntries.Get(FullEntry.EntryId3.Value);
+                        RightBPVHip.LegSections[2].SelectedValue = Data.BPVHips.Get(RightBPVHip.LegSections[2].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId4 != null)
+                    {
+                        RightBPVHip.LegSections[3].CurrentEntry = Data.BPVHipEntries.Get(FullEntry.EntryId4.Value);
+                        RightBPVHip.LegSections[3].SelectedValue = Data.BPVHips.Get(RightBPVHip.LegSections[3].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId5 != null)
+                    {
+                        RightBPVHip.LegSections[4].CurrentEntry = Data.BPVHipEntries.Get(FullEntry.EntryId5.Value);
+                        RightBPVHip.LegSections[4].SelectedValue = Data.BPVHips.Get(RightBPVHip.LegSections[4].CurrentEntry.StructureID);
+
+                    }
+
+                    if (FullEntry.WayID != null)
+                    {
+                        RightBPVHip.SelectedWayType = RightBPVHip.BpvWayType.Where(s => s.Id == FullEntry.WayID).ToList()[0];
+                    }
+
+                    RightBPVHip.IsEmpty = false;
+                    SaveSet result = SaveViewModel(RightBPVHip);
+                    BpvRightstr = result.stringList;
+                    IsVisibleBPVRight = result.listVisibility;
+
+                }
+                else if (Part is BPVTibiaViewModel)
+                {
+
+
+                    if (Data.BPV_TibiaEntries.Get(FullEntry.EntryId1) != null)
+                    {
+                        RightBPVTibia.LegSections[0].CurrentEntry = Data.BPV_TibiaEntries.Get(FullEntry.EntryId1);
+                        RightBPVTibia.LegSections[0].SelectedValue = Data.BPV_Tibia.Get(RightBPVTibia.LegSections[0].CurrentEntry.StructureID);
+                    }
+                    if (FullEntry.EntryId2 != null)
+                    {
+                        RightBPVTibia.LegSections[1].CurrentEntry = Data.BPV_TibiaEntries.Get(FullEntry.EntryId2.Value);
+                        RightBPVTibia.LegSections[1].SelectedValue = Data.BPV_Tibia.Get(RightBPVTibia.LegSections[1].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId3 != null)
+                    {
+                        RightBPVTibia.LegSections[2].CurrentEntry = Data.BPV_TibiaEntries.Get(FullEntry.EntryId3.Value);
+                        RightBPVTibia.LegSections[2].SelectedValue = Data.BPV_Tibia.Get(RightBPVTibia.LegSections[2].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId4 != null)
+                    {
+                        RightBPVTibia.LegSections[3].CurrentEntry = Data.BPV_TibiaEntries.Get(FullEntry.EntryId4.Value);
+                        RightBPVTibia.LegSections[3].SelectedValue = Data.BPV_Tibia.Get(RightBPVTibia.LegSections[3].CurrentEntry.StructureID);
+
+                    }
+
+
+                    RightBPVTibia.IsEmpty = false;
+                    SaveSet result = SaveViewModel(RightBPVTibia);
+                    BPV_TibiaRightstr = result.stringList;
+                    IsVisibleBPV_Tibiaright = result.listVisibility;
+
+                }
+                else if (Part is HipPerforateViewModel)
+                {
+
+
+
+                    if (Data.Perforate_hipEntries.Get(FullEntry.EntryId1) != null)
+                    {
+                        RightPerforate.LegSections[0].CurrentEntry = Data.Perforate_hipEntries.Get(FullEntry.EntryId1);
+                        RightPerforate.LegSections[0].SelectedValue = Data.Perforate_hip.Get(RightPerforate.LegSections[0].CurrentEntry.StructureID);
+                    }
+                    if (FullEntry.EntryId2 != null)
+                    {
+                        RightPerforate.LegSections[1].CurrentEntry = Data.Perforate_hipEntries.Get(FullEntry.EntryId2.Value);
+                        RightPerforate.LegSections[1].SelectedValue = Data.Perforate_hip.Get(RightPerforate.LegSections[1].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId3 != null)
+                    {
+                        RightPerforate.LegSections[2].CurrentEntry = Data.Perforate_hipEntries.Get(FullEntry.EntryId3.Value);
+                        RightPerforate.LegSections[2].SelectedValue = Data.Perforate_hip.Get(RightPerforate.LegSections[2].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId4 != null)
+                    {
+                        RightPerforate.LegSections[3].CurrentEntry = Data.Perforate_hipEntries.Get(FullEntry.EntryId4.Value);
+                        RightPerforate.LegSections[3].SelectedValue = Data.Perforate_hip.Get(RightPerforate.LegSections[3].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId5 != null)
+                    {
+                        RightPerforate.LegSections[4].CurrentEntry = Data.Perforate_hipEntries.Get(FullEntry.EntryId5.Value);
+                        RightPerforate.LegSections[4].SelectedValue = Data.Perforate_hip.Get(RightPerforate.LegSections[4].CurrentEntry.StructureID);
+
+                    }
+
+
+                    RightPerforate.IsEmpty = false;
+                    SaveSet result = SaveViewModel(RightPerforate);
+                    Perforate_hipRightstr = result.stringList;
+                    IsVisiblePerforateHIPright = result.listVisibility;
+
+                }
+                else if (Part is ZDSVViewModel)
+                {
+
+
+                    if (FullEntry.EntryId0 != null)
+                    {
+                        RightZDSV.AdditionalStructure.CurrentEntry = Data.ZDSVEntries.Get(FullEntry.EntryId0.Value);
+                        RightZDSV.AdditionalStructure.SelectedValue = Data.ZDSV.Get(RightZDSV.AdditionalStructure.CurrentEntry.StructureID);
+
+                    }
+
+                    if (Data.ZDSVEntries.Get(FullEntry.EntryId1) != null)
+                    {
+                        RightZDSV.LegSections[0].CurrentEntry = Data.ZDSVEntries.Get(FullEntry.EntryId1);
+                        RightZDSV.LegSections[0].SelectedValue = Data.ZDSV.Get(RightZDSV.LegSections[0].CurrentEntry.StructureID);
+                    }
+                    if (FullEntry.EntryId2 != null)
+                    {
+                        RightZDSV.LegSections[1].CurrentEntry = Data.ZDSVEntries.Get(FullEntry.EntryId2.Value);
+                        RightZDSV.LegSections[1].SelectedValue = Data.ZDSV.Get(RightZDSV.LegSections[1].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId3 != null)
+                    {
+                        RightZDSV.LegSections[2].CurrentEntry = Data.ZDSVEntries.Get(FullEntry.EntryId3.Value);
+                        RightZDSV.LegSections[2].SelectedValue = Data.ZDSV.Get(RightZDSV.LegSections[2].CurrentEntry.StructureID);
+
+                    }
+                    RightZDSV.IsEmpty = false;
+                    SaveSet result = SaveViewModel(RightZDSV);
+                    ZDSVRightstr = result.stringList;
+                    IsVisibleZDSVright = result.listVisibility;
+
+                }
+                else if (Part is SPSViewModel)
+                {
+                    if (FullEntry.EntryId0 != null)
+                    {
+                        RightSPS.AdditionalStructure.CurrentEntry = Data.SPSEntries.Get(FullEntry.EntryId0.Value);
+                        RightSPS.AdditionalStructure.SelectedValue = Data.SPS.Get(RightSPS.AdditionalStructure.CurrentEntry.StructureID);
+
+                    }
+
+
+                    if (Data.SPSEntries.Get(FullEntry.EntryId1) != null)
+                    {
+                        RightSPS.LegSections[0].CurrentEntry = Data.SPSEntries.Get(FullEntry.EntryId1);
+                        RightSPS.LegSections[0].SelectedValue = Data.SPS.Get(RightSPS.LegSections[0].CurrentEntry.StructureID);
+                    }
+                    if (FullEntry.EntryId2 != null)
+                    {
+                        RightSPS.LegSections[1].CurrentEntry = Data.SPSEntries.Get(FullEntry.EntryId2.Value);
+                        RightSPS.LegSections[1].SelectedValue = Data.SPS.Get(RightSPS.LegSections[1].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId3 != null)
+                    {
+                        RightSPS.LegSections[2].CurrentEntry = Data.SPSEntries.Get(FullEntry.EntryId3.Value);
+                        RightSPS.LegSections[2].SelectedValue = Data.SPS.Get(RightSPS.LegSections[2].CurrentEntry.StructureID);
+
+                    }
+
+                    RightSPS.IsEmpty = false;
+                    SaveSet result = SaveViewModel(RightSPS);
+                    SPSRightstr = result.stringList;
+                    IsVisibleSPSRight = result.listVisibility;
+
+                }
+                else if (Part is TibiaPerforateViewModel)
+                {
+
+
+
+                    if (Data.Perforate_shinEntries.Get(FullEntry.EntryId1) != null)
+                    {
+                        RightTibiaPerforate.LegSections[0].CurrentEntry = Data.Perforate_shinEntries.Get(FullEntry.EntryId1);
+                        RightTibiaPerforate.LegSections[0].SelectedValue = Data.Perforate_shin.Get(RightTibiaPerforate.LegSections[0].CurrentEntry.StructureID);
+                    }
+                    if (FullEntry.EntryId2 != null)
+                    {
+                        RightTibiaPerforate.LegSections[1].CurrentEntry = Data.Perforate_shinEntries.Get(FullEntry.EntryId2.Value);
+                        RightTibiaPerforate.LegSections[1].SelectedValue = Data.Perforate_shin.Get(RightTibiaPerforate.LegSections[1].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId3 != null)
+                    {
+                        RightTibiaPerforate.LegSections[2].CurrentEntry = Data.Perforate_shinEntries.Get(FullEntry.EntryId3.Value);
+                        RightTibiaPerforate.LegSections[2].SelectedValue = Data.Perforate_shin.Get(RightTibiaPerforate.LegSections[2].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId4 != null)
+                    {
+                        RightTibiaPerforate.LegSections[3].CurrentEntry = Data.Perforate_shinEntries.Get(FullEntry.EntryId4.Value);
+                        RightTibiaPerforate.LegSections[3].SelectedValue = Data.Perforate_shin.Get(RightTibiaPerforate.LegSections[3].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId5 != null)
+                    {
+                        RightTibiaPerforate.LegSections[4].CurrentEntry = Data.Perforate_shinEntries.Get(FullEntry.EntryId5.Value);
+                        RightTibiaPerforate.LegSections[4].SelectedValue = Data.Perforate_shin.Get(RightTibiaPerforate.LegSections[4].CurrentEntry.StructureID);
+
+                    }
+
+                    RightTibiaPerforate.IsEmpty = false;
+                    SaveSet result = SaveViewModel(RightTibiaPerforate);
+                    Perforate_shinRightstr = result.stringList;
+                    IsVisiblePerforate_shinRight = result.listVisibility;
+
+                }
+                else if (Part is MPVViewModel)
+                {
+
+
+
+                    if (Data.MPVEntries.Get(FullEntry.EntryId1) != null)
+                    {
+                        RightMPV.LegSections[0].CurrentEntry = Data.MPVEntries.Get(FullEntry.EntryId1);
+                        RightMPV.LegSections[0].SelectedValue = Data.MPV.Get(RightMPV.LegSections[0].CurrentEntry.StructureID);
+                    }
+                    if (FullEntry.EntryId2 != null)
+                    {
+                        RightMPV.LegSections[1].CurrentEntry = Data.MPVEntries.Get(FullEntry.EntryId2.Value);
+                        RightMPV.LegSections[1].SelectedValue = Data.MPV.Get(RightMPV.LegSections[1].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId3 != null)
+                    {
+                        RightMPV.LegSections[2].CurrentEntry = Data.MPVEntries.Get(FullEntry.EntryId3.Value);
+                        RightMPV.LegSections[2].SelectedValue = Data.MPV.Get(RightMPV.LegSections[2].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId4 != null)
+                    {
+                        RightMPV.LegSections[3].CurrentEntry = Data.MPVEntries.Get(FullEntry.EntryId4.Value);
+                        RightMPV.LegSections[3].SelectedValue = Data.MPV.Get(RightMPV.LegSections[3].CurrentEntry.StructureID);
+
+                    }
+
+
+                    if (FullEntry.WayID != null)
+                    {
+                        RightMPV.SelectedWayType = RightMPV.MPVWayType.Where(s => s.Id == FullEntry.WayID).ToList()[0];
+                    }
+
+                    RightMPV.IsEmpty = false;
+                    SaveSet result = SaveViewModel(RightMPV);
+                    MPVRightstr = result.stringList;
+                    IsVisibleMPVRight = result.listVisibility;
+
+                }
+                else if (Part is TEMPVViewModel)
+                {
+
+
+
+                    if (Data.TEMPVEntries.Get(FullEntry.EntryId1) != null)
+                    {
+                        RightTEMPV.LegSections[0].CurrentEntry = Data.TEMPVEntries.Get(FullEntry.EntryId1);
+                        RightTEMPV.LegSections[0].SelectedValue = Data.TEMPV.Get(RightTEMPV.LegSections[0].CurrentEntry.StructureID);
+                    }
+                    if (FullEntry.EntryId2 != null)
+                    {
+                        RightTEMPV.LegSections[1].CurrentEntry = Data.TEMPVEntries.Get(FullEntry.EntryId2.Value);
+                        RightTEMPV.LegSections[1].SelectedValue = Data.TEMPV.Get(RightTEMPV.LegSections[1].CurrentEntry.StructureID);
+
+                    }
+                    if (FullEntry.EntryId3 != null)
+                    {
+                        RightTEMPV.LegSections[2].CurrentEntry = Data.TEMPVEntries.Get(FullEntry.EntryId3.Value);
+                        RightTEMPV.LegSections[2].SelectedValue = Data.TEMPV.Get(RightTEMPV.LegSections[2].CurrentEntry.StructureID);
+
+                    }
+
+                    if (FullEntry.WayID != null)
+                    {
+                        RightTEMPV.SelectedWayType = RightTEMPV.TEMPVWayType.Where(s => s.Id == FullEntry.WayID).ToList()[0];
+                    }
+
+                    RightTEMPV.FF_length = ((TEMPVEntryFull)FullEntry).FF_Length;
+                    RightTEMPV.IsEmpty = false;
+                    SaveSet result = SaveViewModel(RightTEMPV);
+                    TEMPVRightstr = result.stringList;
+                    IsVisibleTEMPVRight = result.listVisibility;
+
+                }
+                else if (Part is GVViewModel)
+                {
+
+
+
+                    if (Data.GVEntries.Get(FullEntry.EntryId1) != null)
+                    {
+                        RightGV.LegSections[0].CurrentEntry = Data.GVEntries.Get(FullEntry.EntryId1);
+                        RightGV.LegSections[0].SelectedValue = Data.GV.Get(RightGV.LegSections[0].CurrentEntry.StructureID);
+                    }
+                    if (FullEntry.EntryId2 != null)
+                    {
+                        RightGV.LegSections[1].CurrentEntry = Data.GVEntries.Get(FullEntry.EntryId2.Value);
+                        RightGV.LegSections[1].SelectedValue = Data.GV.Get(RightGV.LegSections[1].CurrentEntry.StructureID);
+
+                    }
+
+
+
+                    RightGV.IsEmpty = false;
+                    SaveSet result = SaveViewModel(RightGV);
+                    GVRightstr = result.stringList;
+                    IsVisibleGVRight = result.listVisibility;
+
+                }
+                else if (Part is PPVViewModel)
+                {
+
+
+
+                    if (Data.PPVEntries.Get(FullEntry.EntryId1) != null)
+                    {
+                        RightPPV.LegSections[0].CurrentEntry = Data.PPVEntries.Get(FullEntry.EntryId1);
+                        RightPPV.LegSections[0].SelectedValue = Data.PPV.Get(RightPPV.LegSections[0].CurrentEntry.StructureID);
+                    }
+                    if (FullEntry.EntryId2 != null)
+                    {
+                        RightPPV.LegSections[1].CurrentEntry = Data.PPVEntries.Get(FullEntry.EntryId2.Value);
+                        RightPPV.LegSections[1].SelectedValue = Data.PPV.Get(RightPPV.LegSections[1].CurrentEntry.StructureID);
+
+                    }
+
+
+                    RightPPV.IsEmpty = false;
+                    SaveSet result = SaveViewModel(RightPPV);
+                    PPVRightstr = result.stringList;
+                    IsVisiblePPVRight = result.listVisibility;
+
+                }
+
 
             }
 
@@ -16279,306 +16194,272 @@ namespace WpfApp2.ViewModels
             MessageBus.Default.Call("SetMode", this, "EDIT");
             obsid = (int)data;
 
-            using (var context = new MySqlContext())
+            Examination Exam = Data.Examination.Get(obsid);
+            statementOverviewId = Exam.statementOverviewId;
+            hirurgOverviewId = Exam.hirurgOverviewId;
+            ExaminationLeg leftLegExam = Data.ExaminationLeg.Get(Exam.idLeftLegExamination.Value);
+            ExaminationLeg rightLegExam = Data.ExaminationLeg.Get(Exam.idRightLegExamination.Value);
+            IsVisibleTextTTT = Visibility.Visible;
+            if (Exam.isNeedOperation)
             {
-                ExaminationRepository ExamRep = new ExaminationRepository(context);
-                ExaminationLegRepository LegExamRep = new ExaminationLegRepository(context);
-                LettersRepository LettersRep = new LettersRepository(context);
-
-
-
-                Examination Exam = ExamRep.Get(obsid);
-                statementOverviewId = Exam.statementOverviewId;
-                hirurgOverviewId = Exam.hirurgOverviewId;
-                ExaminationLeg leftLegExam = LegExamRep.Get(Exam.idLeftLegExamination.Value);
-                ExaminationLeg rightLegExam = LegExamRep.Get(Exam.idRightLegExamination.Value);
-                IsVisibleTextTTT = Visibility.Visible;
-                if (Exam.isNeedOperation)
-                {
-                    TextOfPreOperation = "Предварительно назначена" + Data.OperationType.Get(Exam.OperationType.Value);
-
-                }
-                else
-                {
-                    TextOfPreOperation = "Предварительная операция не была назначена";
-                }
-
-
-                Weight = Exam.weight.ToString();
-                Growth = Exam.height.ToString();
-                TextTip = Exam.NB;
-
-
-                LeftAdditionalText = leftLegExam.additionalText;
-
-                PDSVHipEntryFullRepository PDSVEntryFullRep = new PDSVHipEntryFullRepository(context);
-                if (leftLegExam.PDSVid != null)
-                {
-                    GetLegPartFromEntry(PDSVEntryFullRep.Get(leftLegExam.PDSVid.Value), LeftPDSV, true);
-                }
-
-
-                BPVHipEntryFullRepository BPVEntryFullRep = new BPVHipEntryFullRepository(context);
-                if (leftLegExam.BPVHip != null)
-                {
-                    GetLegPartFromEntry(BPVEntryFullRep.Get(leftLegExam.BPVHip.Value), LeftBPVHip, true);
-                }
-
-                BPV_TibiaEntryFullRepository BPVTibiaEntryFullRep = new BPV_TibiaEntryFullRepository(context);
-                if (leftLegExam.BPVTibiaid != null)
-                {
-                    GetLegPartFromEntry(BPVTibiaEntryFullRep.Get(leftLegExam.BPVTibiaid.Value), LeftBPVTibia, true);
-                }
-
-                GVEntryFullRepository GVEntryFullRep = new GVEntryFullRepository(context);
-                if (leftLegExam.GVid != null)
-                {
-                    GetLegPartFromEntry(GVEntryFullRep.Get(leftLegExam.GVid.Value), LeftGV, true);
-                }
-
-                MPVEntryFullRepository MPVEntryFullRep = new MPVEntryFullRepository(context);
-                if (leftLegExam.MPVid != null)
-                {
-                    GetLegPartFromEntry(MPVEntryFullRep.Get(leftLegExam.MPVid.Value), LeftMPV, true);
-                }
-
-                Perforate_hipEntryFullRepository PerforateEntryFullRep = new Perforate_hipEntryFullRepository(context);
-                if (leftLegExam.PerforateHipid != null)
-                {
-                    GetLegPartFromEntry(PerforateEntryFullRep.Get(leftLegExam.PerforateHipid.Value), LeftPerforate, true);
-                }
-
-                PPVEntryFullRepository PPVEntryFullRep = new PPVEntryFullRepository(context);
-                if (leftLegExam.PPVid != null)
-                {
-                    GetLegPartFromEntry(PPVEntryFullRep.Get(leftLegExam.PPVid.Value), LeftPPV, true);
-                }
-
-                SFSHipEntryFullRepository SFSEntryFullRep = new SFSHipEntryFullRepository(context);
-                if (leftLegExam.SFSid != null)
-                {
-                    GetLegPartFromEntry(SFSEntryFullRep.Get(leftLegExam.SFSid.Value), LeftSFS, true);
-                }
-
-                SPSHipEntryFullRepository SPSEntryFullRep = new SPSHipEntryFullRepository(context);
-                if (leftLegExam.SPSid != null)
-                {
-                    GetLegPartFromEntry(SPSEntryFullRep.Get(leftLegExam.SPSid.Value), LeftSPS, true);
-                }
-
-                TEMPVEntryFullRepository TEMPVEntryFullRep = new TEMPVEntryFullRepository(context);
-                if (leftLegExam.TEMPVid != null)
-                {
-                    GetLegPartFromEntry(TEMPVEntryFullRep.Get(leftLegExam.TEMPVid.Value), LeftTEMPV, true);
-                }
-
-                Perforate_shinEntryFullRepository TibiaPerforateEntryFullRep = new Perforate_shinEntryFullRepository(context);
-                if (leftLegExam.TibiaPerforateid != null)
-                {
-                    GetLegPartFromEntry(TibiaPerforateEntryFullRep.Get(leftLegExam.TibiaPerforateid.Value), LeftTibiaPerforate, true);
-                }
-
-                ZDSVEntryFullRepository ZDSVEntryFullRep = new ZDSVEntryFullRepository(context);
-
-                if (leftLegExam.ZDSVid != null)
-                {
-                    GetLegPartFromEntry(ZDSVEntryFullRep.Get(leftLegExam.ZDSVid.Value), LeftZDSV, true);
-                }
-
-                if (leftLegExam.C != null)
-                {
-                    LeftCEAR.LegSections[0].SelectedValue = LettersRep.Get(leftLegExam.C.Value);
-                }
-
-                if (leftLegExam.E != null)
-                {
-                    LeftCEAR.LegSections[1].SelectedValue = LettersRep.Get(leftLegExam.E.Value);
-                }
-
-                if (leftLegExam.A != null)
-                {
-                    LeftCEAR.LegSections[2].SelectedValue = LettersRep.Get(leftLegExam.A.Value);
-                }
-
-                if (leftLegExam.P != null)
-                {
-                    LeftCEAR.LegSections[3].SelectedValue = LettersRep.Get(leftLegExam.P.Value);
-                }
-
-                LeftCEAR.SaveCommand.Execute();
-
-
-
-
-
-
-
-
-
-
-
-
-
-                RightAdditionalText = rightLegExam.additionalText;
-
-
-
-                if (rightLegExam.PDSVid != null)
-                {
-                    GetLegPartFromEntry(PDSVEntryFullRep.Get(rightLegExam.PDSVid.Value), RightPDSV, false);
-                }
-
-                if (rightLegExam.BPVHip != null)
-                {
-                    GetLegPartFromEntry(BPVEntryFullRep.Get(rightLegExam.BPVHip.Value), RightBPVHip, false);
-                }
-
-                if (rightLegExam.BPVTibiaid != null)
-                {
-                    GetLegPartFromEntry(BPVTibiaEntryFullRep.Get(rightLegExam.BPVTibiaid.Value), RightBPVTibia, false);
-                }
-
-                if (rightLegExam.GVid != null)
-                {
-                    GetLegPartFromEntry(GVEntryFullRep.Get(rightLegExam.GVid.Value), RightGV, false);
-                }
-
-                if (rightLegExam.MPVid != null)
-                {
-                    GetLegPartFromEntry(MPVEntryFullRep.Get(rightLegExam.MPVid.Value), RightMPV, false);
-                }
-
-                if (rightLegExam.PerforateHipid != null)
-                {
-                    GetLegPartFromEntry(PerforateEntryFullRep.Get(rightLegExam.PerforateHipid.Value), RightPerforate, false);
-                }
-
-                if (rightLegExam.PPVid != null)
-                {
-                    GetLegPartFromEntry(PPVEntryFullRep.Get(rightLegExam.PPVid.Value), RightPPV, false);
-                }
-
-                if (rightLegExam.SFSid != null)
-                {
-                    GetLegPartFromEntry(SFSEntryFullRep.Get(rightLegExam.SFSid.Value), RightSFS, false);
-                }
-
-                if (rightLegExam.SPSid != null)
-                {
-                    GetLegPartFromEntry(SPSEntryFullRep.Get(rightLegExam.SPSid.Value), RightSPS, false);
-                }
-
-                if (rightLegExam.TEMPVid != null)
-                {
-                    GetLegPartFromEntry(TEMPVEntryFullRep.Get(rightLegExam.TEMPVid.Value), RightTEMPV, false);
-                }
-
-                if (rightLegExam.TibiaPerforateid != null)
-                {
-                    GetLegPartFromEntry(TibiaPerforateEntryFullRep.Get(rightLegExam.TibiaPerforateid.Value), RightTibiaPerforate, false);
-                }
-
-                if (rightLegExam.ZDSVid != null)
-                {
-                    GetLegPartFromEntry(ZDSVEntryFullRep.Get(rightLegExam.ZDSVid.Value), RightZDSV, false);
-                }
-
-                if (rightLegExam.C != null)
-                {
-                    RightCEAR.LegSections[0].SelectedValue = LettersRep.Get(rightLegExam.C.Value);
-                }
-
-                if (rightLegExam.E != null)
-                {
-                    RightCEAR.LegSections[1].SelectedValue = LettersRep.Get(rightLegExam.E.Value);
-                }
-
-                if (rightLegExam.A != null)
-                {
-                    RightCEAR.LegSections[2].SelectedValue = LettersRep.Get(rightLegExam.A.Value);
-                }
-
-                if (rightLegExam.P != null)
-                {
-                    RightCEAR.LegSections[3].SelectedValue = LettersRep.Get(rightLegExam.P.Value);
-                }
-
-                RightCEAR.SaveCommand.Execute();
-
-
-
-
-
-
-
-
-
-
-
-                DiagnosisObsRepository diagRep = new DiagnosisObsRepository(context);
-                ComplanesObsRepository compRep = new ComplanesObsRepository(context);
-                RecomendationObsRepository recRep = new RecomendationObsRepository(context);
-
-
-
-                LeftDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
-
-
-                DiagnosisDataSource diagDSourceBuf;
-                foreach (var diag in Data.DiagnosisObs.GetAll.Where(s => s.isLeft == true && s.id_leg_examination == Exam.Id).ToList())
-                {
-                    diagDSourceBuf = new DiagnosisDataSource(Data.DiagnosisTypes.Get(diag.id_diagnosis.Value));
-                    diagDSourceBuf.IsChecked = true;
-                    LeftDiagnosisList.Add(diagDSourceBuf);
-                }
-
-                RightDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
-
-
-
-                foreach (var diag in Data.DiagnosisObs.GetAll.Where(s => s.isLeft == false && s.id_leg_examination == Exam.Id).ToList())
-                {
-                    diagDSourceBuf = new DiagnosisDataSource(Data.DiagnosisTypes.Get(diag.id_diagnosis.Value));
-                    diagDSourceBuf.IsChecked = true;
-                    RightDiagnosisList.Add(diagDSourceBuf);
-                }
-
-                MessageBus.Default.Call("SetDiagnosisListBecauseOFEdit", LeftDiagnosisList, RightDiagnosisList);
-
-                ComplainsList = new ObservableCollection<ComplainsDataSource>();
-                ComplainsDataSource compDSourceBuf;
-                foreach (var diag in Data.ComplanesObs.GetAll.Where(s => s.id_Examination == Exam.Id).ToList())
-                {
-                    compDSourceBuf = new ComplainsDataSource(Data.ComplainsTypes.Get(diag.id_Complains));
-                    compDSourceBuf.IsChecked = true;
-                    ComplainsList.Add(compDSourceBuf);
-                }
-                RecomendationsList = new ObservableCollection<RecomendationsDataSource>();
-                RecomendationsDataSource recDSourceBuf;
-
-                foreach (var diag in Data.RecomendationObs.GetAll.Where(s => s.id_examination == Exam.Id).ToList())
-                {
-                    recDSourceBuf = new RecomendationsDataSource(Data.RecomendationsTypes.Get(diag.id_recommendations));
-                    recDSourceBuf.IsChecked = true;
-                    RecomendationsList.Add(recDSourceBuf);
-                }
-                MessageBus.Default.Call("SetDRecomendationListBecauseOFEdit", this, RecomendationsList);
-
-                MessageBus.Default.Call("SetDComplanesListBecauseOFEdit", this, ComplainsList);
-
-
-                //leftLegExams.additionalText = LeftAdditionalText;
-                //if (LeftCEAR.LegSections[0].SelectedValue != null)
-                //    leftLegExams.C = LeftCEAR.LegSections[0].SelectedValue.Id;
-                //if (LeftCEAR.LegSections[1].SelectedValue != null)
-                //    leftLegExams.E = LeftCEAR.LegSections[1].SelectedValue.Id;
-                //if (LeftCEAR.LegSections[2].SelectedValue != null)
-                //    leftLegExams.A = LeftCEAR.LegSections[2].SelectedValue.Id;
-                //if (LeftCEAR.LegSections[3].SelectedValue != null)
-                //    leftLegExams.P = LeftCEAR.LegSections[3].SelectedValue.Id;
-
+                TextOfPreOperation = "Предварительно назначена" + Data.OperationType.Get(Exam.OperationType.Value);
 
             }
+            else
+            {
+                TextOfPreOperation = "Предварительная операция не была назначена";
+            }
+
+
+            Weight = Exam.weight.ToString();
+            Growth = Exam.height.ToString();
+            TextTip = Exam.NB;
+
+
+            LeftAdditionalText = leftLegExam.additionalText;
+
+            if (leftLegExam.PDSVid != null)
+            {
+                GetLegPartFromEntry(Data.PDSVFull.Get(leftLegExam.PDSVid.Value), LeftPDSV, true);
+            }
+
+
+            if (leftLegExam.BPVHip != null)
+            {
+                GetLegPartFromEntry(Data.BPVHipsFull.Get(leftLegExam.BPVHip.Value), LeftBPVHip, true);
+            }
+
+            if (leftLegExam.BPVTibiaid != null)
+            {
+                GetLegPartFromEntry(Data.BPV_TibiaFull.Get(leftLegExam.BPVTibiaid.Value), LeftBPVTibia, true);
+            }
+
+            if (leftLegExam.GVid != null)
+            {
+                GetLegPartFromEntry(Data.GVFull.Get(leftLegExam.GVid.Value), LeftGV, true);
+            }
+
+            if (leftLegExam.MPVid != null)
+            {
+                GetLegPartFromEntry(Data.MPVFull.Get(leftLegExam.MPVid.Value), LeftMPV, true);
+            }
+
+            if (leftLegExam.PerforateHipid != null)
+            {
+                GetLegPartFromEntry(Data.Perforate_hipFull.Get(leftLegExam.PerforateHipid.Value), LeftPerforate, true);
+            }
+
+            if (leftLegExam.PPVid != null)
+            {
+                GetLegPartFromEntry(Data.PPVFull.Get(leftLegExam.PPVid.Value), LeftPPV, true);
+            }
+
+            if (leftLegExam.SFSid != null)
+            {
+                GetLegPartFromEntry(Data.SFSFull.Get(leftLegExam.SFSid.Value), LeftSFS, true);
+            }
+
+            if (leftLegExam.SPSid != null)
+            {
+                GetLegPartFromEntry(Data.SPSHipFull.Get(leftLegExam.SPSid.Value), LeftSPS, true);
+            }
+
+            if (leftLegExam.TEMPVid != null)
+            {
+                GetLegPartFromEntry(Data.TEMPVFull.Get(leftLegExam.TEMPVid.Value), LeftTEMPV, true);
+            }
+
+            if (leftLegExam.TibiaPerforateid != null)
+            {
+                GetLegPartFromEntry(Data.Perforate_shinFull.Get(leftLegExam.TibiaPerforateid.Value), LeftTibiaPerforate, true);
+            }
+
+            if (leftLegExam.ZDSVid != null)
+            {
+                GetLegPartFromEntry(Data.ZDSVFull.Get(leftLegExam.ZDSVid.Value), LeftZDSV, true);
+            }
+
+            if (leftLegExam.C != null)
+            {
+                LeftCEAR.LegSections[0].SelectedValue = Data.Letters.Get(leftLegExam.C.Value);
+            }
+
+            if (leftLegExam.E != null)
+            {
+                LeftCEAR.LegSections[1].SelectedValue = Data.Letters.Get(leftLegExam.E.Value);
+            }
+
+            if (leftLegExam.A != null)
+            {
+                LeftCEAR.LegSections[2].SelectedValue = Data.Letters.Get(leftLegExam.A.Value);
+            }
+
+            if (leftLegExam.P != null)
+            {
+                LeftCEAR.LegSections[3].SelectedValue = Data.Letters.Get(leftLegExam.P.Value);
+            }
+
+            LeftCEAR.SaveCommand.Execute();
+
+
+
+
+
+
+
+
+
+
+
+
+
+            RightAdditionalText = rightLegExam.additionalText;
+
+
+
+            if (rightLegExam.PDSVid != null)
+            {
+                GetLegPartFromEntry(Data.PDSVFull.Get(rightLegExam.PDSVid.Value), RightPDSV, false);
+            }
+
+            if (rightLegExam.BPVHip != null)
+            {
+                GetLegPartFromEntry(Data.BPVHipsFull.Get(rightLegExam.BPVHip.Value), RightBPVHip, false);
+            }
+
+            if (rightLegExam.BPVTibiaid != null)
+            {
+                GetLegPartFromEntry(Data.BPV_TibiaFull.Get(rightLegExam.BPVTibiaid.Value), RightBPVTibia, false);
+            }
+
+            if (rightLegExam.GVid != null)
+            {
+                GetLegPartFromEntry(Data.GVFull.Get(rightLegExam.GVid.Value), RightGV, false);
+            }
+
+            if (rightLegExam.MPVid != null)
+            {
+                GetLegPartFromEntry(Data.MPVFull.Get(rightLegExam.MPVid.Value), RightMPV, false);
+            }
+
+            if (rightLegExam.PerforateHipid != null)
+            {
+                GetLegPartFromEntry(Data.Perforate_hipFull.Get(rightLegExam.PerforateHipid.Value), RightPerforate, false);
+            }
+
+            if (rightLegExam.PPVid != null)
+            {
+                GetLegPartFromEntry(Data.PPVFull.Get(rightLegExam.PPVid.Value), RightPPV, false);
+            }
+
+            if (rightLegExam.SFSid != null)
+            {
+                GetLegPartFromEntry(Data.SFSFull.Get(rightLegExam.SFSid.Value), RightSFS, false);
+            }
+
+            if (rightLegExam.SPSid != null)
+            {
+                GetLegPartFromEntry(Data.SPSHipFull.Get(rightLegExam.SPSid.Value), RightSPS, false);
+            }
+
+            if (rightLegExam.TEMPVid != null)
+            {
+                GetLegPartFromEntry(Data.TEMPVFull.Get(rightLegExam.TEMPVid.Value), RightTEMPV, false);
+            }
+
+            if (rightLegExam.TibiaPerforateid != null)
+            {
+                GetLegPartFromEntry(Data.BPV_TibiaFull.Get(rightLegExam.TibiaPerforateid.Value), RightTibiaPerforate, false);
+            }
+
+            if (rightLegExam.ZDSVid != null)
+            {
+                GetLegPartFromEntry(Data.ZDSVFull.Get(rightLegExam.ZDSVid.Value), RightZDSV, false);
+            }
+
+            if (rightLegExam.C != null)
+            {
+                RightCEAR.LegSections[0].SelectedValue = Data.Letters.Get(rightLegExam.C.Value);
+            }
+
+            if (rightLegExam.E != null)
+            {
+                RightCEAR.LegSections[1].SelectedValue = Data.Letters.Get(rightLegExam.E.Value);
+            }
+
+            if (rightLegExam.A != null)
+            {
+                RightCEAR.LegSections[2].SelectedValue = Data.Letters.Get(rightLegExam.A.Value);
+            }
+
+            if (rightLegExam.P != null)
+            {
+                RightCEAR.LegSections[3].SelectedValue = Data.Letters.Get(rightLegExam.P.Value);
+            }
+
+            RightCEAR.SaveCommand.Execute();
+
+                
+                
+
+
+            LeftDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
+
+
+            DiagnosisDataSource diagDSourceBuf;
+            foreach (var diag in Data.DiagnosisObs.GetAll.Where(s => s.isLeft == true && s.id_leg_examination == Exam.Id).ToList())
+            {
+                diagDSourceBuf = new DiagnosisDataSource(Data.DiagnosisTypes.Get(diag.id_diagnosis.Value));
+                diagDSourceBuf.IsChecked = true;
+                LeftDiagnosisList.Add(diagDSourceBuf);
+            }
+
+            RightDiagnosisList = new ObservableCollection<DiagnosisDataSource>();
+
+
+
+            foreach (var diag in Data.DiagnosisObs.GetAll.Where(s => s.isLeft == false && s.id_leg_examination == Exam.Id).ToList())
+            {
+                diagDSourceBuf = new DiagnosisDataSource(Data.DiagnosisTypes.Get(diag.id_diagnosis.Value));
+                diagDSourceBuf.IsChecked = true;
+                RightDiagnosisList.Add(diagDSourceBuf);
+            }
+
+            MessageBus.Default.Call("SetDiagnosisListBecauseOFEdit", LeftDiagnosisList, RightDiagnosisList);
+
+            ComplainsList = new ObservableCollection<ComplainsDataSource>();
+            ComplainsDataSource compDSourceBuf;
+            foreach (var diag in Data.ComplanesObs.GetAll.Where(s => s.id_Examination == Exam.Id).ToList())
+            {
+                compDSourceBuf = new ComplainsDataSource(Data.ComplainsTypes.Get(diag.id_Complains));
+                compDSourceBuf.IsChecked = true;
+                ComplainsList.Add(compDSourceBuf);
+            }
+            RecomendationsList = new ObservableCollection<RecomendationsDataSource>();
+            RecomendationsDataSource recDSourceBuf;
+
+            foreach (var diag in Data.RecomendationObs.GetAll.Where(s => s.id_examination == Exam.Id).ToList())
+            {
+                recDSourceBuf = new RecomendationsDataSource(Data.RecomendationsTypes.Get(diag.id_recommendations));
+                recDSourceBuf.IsChecked = true;
+                RecomendationsList.Add(recDSourceBuf);
+            }
+            MessageBus.Default.Call("SetDRecomendationListBecauseOFEdit", this, RecomendationsList);
+
+            MessageBus.Default.Call("SetDComplanesListBecauseOFEdit", this, ComplainsList);
+
+
+            //leftLegExams.additionalText = LeftAdditionalText;
+            //if (LeftCEAR.LegSections[0].SelectedValue != null)
+            //    leftLegExams.C = LeftCEAR.LegSections[0].SelectedValue.Id;
+            //if (LeftCEAR.LegSections[1].SelectedValue != null)
+            //    leftLegExams.E = LeftCEAR.LegSections[1].SelectedValue.Id;
+            //if (LeftCEAR.LegSections[2].SelectedValue != null)
+            //    leftLegExams.A = LeftCEAR.LegSections[2].SelectedValue.Id;
+            //if (LeftCEAR.LegSections[3].SelectedValue != null)
+            //    leftLegExams.P = LeftCEAR.LegSections[3].SelectedValue.Id;
+
+
             MessageBus.Default.Call("SetMode", this, "Normal");
             isEdited = false;
         }

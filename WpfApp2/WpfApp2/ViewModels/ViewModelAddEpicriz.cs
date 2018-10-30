@@ -260,116 +260,101 @@ namespace WpfApp2.ViewModels
             { DoctorsSelected = new List<DoctorDataSource>(); }
             Doctors = new ObservableCollection<Docs>();
             //
-            using (var context = new MySqlContext())
+            List<String> buff3 = new List<string>();
+            foreach (var x in Data.Svetovod.GetAll)
+                buff3.Add(x.Str);
+            SvetofvodCommentList = buff3;
+
+            Operation = Data.Operation.Get((int)data);
+            operationId = (int)data;
+            //DateTime bufTime = DateTime.Parse(Operation.Time);
+
+            //Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
+            Date = Data.OperationDateTime.Get(Operation.Datetime_id.Value).Datetime;
+            AnticogulantSelected = new ObservableCollection<Anticogulants>();
+            SclerozSelected = new ObservableCollection<Sclezing>();
+            CurrentPatient = Data.Patients.Get(Operation.PatientId);
+            foreach (var doc in Data.Doctor.GetAll)
             {
+                Doctors.Add(new Docs(doc));
+            }
+            foreach (var doc in Data.Anticogulants.GetAll)
+            {
+                AnticogulantSelected.Add(doc);
 
-                List<String> buff3 = new List<string>();
-                foreach (var x in Data.Svetovod.GetAll)
-                    buff3.Add(x.Str);
-                SvetofvodCommentList = buff3;
+            }
+            Anticogulants emptyA = new Anticogulants();
+            emptyA.Str = "";
+            AnticogulantSelected.Add(emptyA);
+            foreach (var doc in Data.Sclezing.GetAll)
+            {
+                SclerozSelected.Add(doc);
 
-                OperationRepository Oprep = new OperationRepository(context);
-                Operation = Oprep.Get((int)data);
-                operationId = (int)data;
-                //DateTime bufTime = DateTime.Parse(Operation.Time);
 
-                //Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
-                Date = Data.OperationDateTime.Get(Operation.Datetime_id.Value).Datetime;
-                AnticogulantSelected = new ObservableCollection<Anticogulants>();
-                SclerozSelected = new ObservableCollection<Sclezing>();
-                PatientsRepository PatientsRep = new PatientsRepository(context);
-                CurrentPatient = PatientsRep.Get(Operation.PatientId);
-                SclezingRepository SclezingRep = new SclezingRepository(context);
-                AnticogulantsRepository AntcgRep = new AnticogulantsRepository(context);
-                DoctorRepository DoctorRep = new DoctorRepository(context);
-                foreach (var doc in DoctorRep.GetAll)
+            }
+            Sclezing empty = new Sclezing();
+            empty.Str = "";
+            SclerozSelected.Add(empty);
+            if (Operation.EpicrizId != null && Operation.EpicrizId != 0)
+            {
+                IsDocAdded = Visibility.Visible;
+                TextForDoWhat = "";
+                CurrentDocument = Data.EpicrizOperation.Get(Operation.EpicrizId.Value);
+                if (CurrentDocument.Commentary != null)
                 {
-                    Doctors.Add(new Docs(doc));
-                }
-                foreach (var doc in AntcgRep.GetAll)
-                {
-                    AnticogulantSelected.Add(doc);
-
-                }
-                Anticogulants emptyA = new Anticogulants();
-                emptyA.Str = "";
-                AnticogulantSelected.Add(emptyA);
-                foreach (var doc in SclezingRep.GetAll)
-                {
-                    SclerozSelected.Add(doc);
-
-
-                }
-                Sclezing empty = new Sclezing();
-                empty.Str = "";
-                SclerozSelected.Add(empty);
-                if (Operation.EpicrizId != null && Operation.EpicrizId != 0)
-                {
-                    IsDocAdded = Visibility.Visible;
-                    TextForDoWhat = "";
-                    EpicrizOperationRepository StatementRep = new EpicrizOperationRepository(context);
-
-                    CurrentDocument = StatementRep.Get(Operation.EpicrizId.Value);
-                    if (CurrentDocument.Commentary != null)
-                    {
-                        CommentaryForDock = CurrentDocument.Commentary;
-                    }
-                    else
-                    {
-                        CommentaryForDock = "";
-                    }
-                    Days = CurrentDocument.CountDays;
-                    Svetoootvod = CurrentDocument.Light;
-                    E1 = CurrentDocument.VT;
-                    E2 = CurrentDocument.DJSM;
-                    // SelectedLeg = CurrentDocument.FirstIsRightIfNull;
-
-                    if (CurrentDocument.SclezingId != null && CurrentDocument.SclezingId != 0)
-                    {
-                        var doc = SclezingRep.Get(CurrentDocument.SclezingId.Value);
-                        foreach (var docs in SclerozSelected)
-                        {
-                            if (docs.Id == doc.Id)
-                            {
-                                SclezingIdSelected = SclerozSelected.IndexOf(docs);
-                            }
-                        }
-                    }
-
-                    if (CurrentDocument.AnticogulantId != null && CurrentDocument.AnticogulantId != 0)
-                    {
-                        var doc = AntcgRep.Get(CurrentDocument.AnticogulantId.Value);
-                        foreach (var docs in AnticogulantSelected)
-                        {
-                            if (docs.Id == doc.Id)
-                            {
-                                AnticogulantIdSelected = AnticogulantSelected.IndexOf(docs);
-                            }
-                        }
-                    }
-
-                    if (CurrentDocument.DoctorId != 0)
-                    {
-                        var doc = DoctorRep.Get(CurrentDocument.DoctorId);
-                        foreach (var docs in Doctors)
-                        {
-                            if (docs.doc.Id == doc.Id)
-                            {
-                                SelectedDoctor = Doctors.IndexOf(docs);
-                            }
-                        }
-                    }
+                    CommentaryForDock = CurrentDocument.Commentary;
                 }
                 else
                 {
-                    SelectedDoctor = 0;
-                    IsDocAdded = Visibility.Hidden;
-                    TextForDoWhat = "Сформируйте или загрузите документ";
+                    CommentaryForDock = "";
+                }
+                Days = CurrentDocument.CountDays;
+                Svetoootvod = CurrentDocument.Light;
+                E1 = CurrentDocument.VT;
+                E2 = CurrentDocument.DJSM;
+                // SelectedLeg = CurrentDocument.FirstIsRightIfNull;
+
+                if (CurrentDocument.SclezingId != null && CurrentDocument.SclezingId != 0)
+                {
+                    var doc = Data.Sclezing.Get(CurrentDocument.SclezingId.Value);
+                    foreach (var docs in SclerozSelected)
+                    {
+                        if (docs.Id == doc.Id)
+                        {
+                            SclezingIdSelected = SclerozSelected.IndexOf(docs);
+                        }
+                    }
                 }
 
+                if (CurrentDocument.AnticogulantId != null && CurrentDocument.AnticogulantId != 0)
+                {
+                    var doc = Data.Anticogulants.Get(CurrentDocument.AnticogulantId.Value);
+                    foreach (var docs in AnticogulantSelected)
+                    {
+                        if (docs.Id == doc.Id)
+                        {
+                            AnticogulantIdSelected = AnticogulantSelected.IndexOf(docs);
+                        }
+                    }
+                }
 
-
-
+                if (CurrentDocument.DoctorId != 0)
+                {
+                    var doc = Data.Doctor.Get(CurrentDocument.DoctorId);
+                    foreach (var docs in Doctors)
+                    {
+                        if (docs.doc.Id == doc.Id)
+                        {
+                            SelectedDoctor = Doctors.IndexOf(docs);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                SelectedDoctor = 0;
+                IsDocAdded = Visibility.Hidden;
+                TextForDoWhat = "Сформируйте или загрузите документ";
             }
             ////
             //Operation = Data.Operation.Get((int)data);
@@ -559,172 +544,163 @@ namespace WpfApp2.ViewModels
                         string lettersRight = "";
                         //string BPVRight = "";
                         //string BPVLeft = "";
-                        using (var context = new MySqlContext())
+                        //BPV
+
+                        var ExamsOfCurrPatient = Data.Examination.GetAll.ToList().Where(s => s.PatientId == CurrentPatient.Id).ToList();
+
+                        if (ExamsOfCurrPatient.Count > 0)
                         {
-                            ExaminationRepository ExamRep = new ExaminationRepository(context);
-                            ExaminationLegRepository LegExamRep = new ExaminationLegRepository(context);
-                            //BPV
+                            DateTime MaxExam = ExamsOfCurrPatient.Max(s => s.Date);
+                            var ExamsOfCurrPatientLatest = ExamsOfCurrPatient.Where(s => s.Date == MaxExam).ToList();
+                            ExaminationLeg leftLegExam = Data.ExaminationLeg.Get(ExamsOfCurrPatientLatest[0].idLeftLegExamination.Value);
+                            ExaminationLeg rightLegExam = Data.ExaminationLeg.Get(ExamsOfCurrPatientLatest[0].idRightLegExamination.Value);
+                            Letters bufLetter = new Letters();
 
-                            LettersRepository LettersRep = new LettersRepository(context);
-                            var ExamsOfCurrPatient = ExamRep.GetAll.ToList().Where(s => s.PatientId == CurrentPatient.Id).ToList();
-
-                            if (ExamsOfCurrPatient.Count > 0)
+                            if (leftLegExam.BPVHip != null)
                             {
-                                DateTime MaxExam = ExamsOfCurrPatient.Max(s => s.Date);
-                                var ExamsOfCurrPatientLatest = ExamsOfCurrPatient.Where(s => s.Date == MaxExam).ToList();
-                                ExaminationLeg leftLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idLeftLegExamination.Value);
-                                ExaminationLeg rightLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idRightLegExamination.Value);
-                                BPVHipEntryFullRepository BPVRep = new BPVHipEntryFullRepository(context);
-                                BPVHipWayRepository BPVWayRep = new BPVHipWayRepository(context);
-                                Letters bufLetter = new Letters();
+                                var bpvLeft = Data.BPVHipsFull.Get(leftLegExam.BPVHip.Value);
+                                if (bpvLeft.WayID != null)
+                                {
+                                    document.ReplaceText("«Гибрид2»", Data.BPVHipWay.Get(bpvLeft.WayID.Value).Name);
+                                }
+                            }
+                            else
+                            {
+                                document.ReplaceText("«Гибрид2»", "");
 
-                                if (leftLegExam.BPVHip != null)
+                            }
+                            if (rightLegExam.BPVHip != null)
+                            {
+                                var bpvRight = Data.BPVHipsFull.Get(rightLegExam.BPVHip.Value);
+                                if (bpvRight.WayID != null)
                                 {
-                                    var bpvLeft = BPVRep.Get(leftLegExam.BPVHip.Value);
-                                    if (bpvLeft.WayID != null)
-                                    {
-                                        document.ReplaceText("«Гибрид2»", BPVWayRep.Get(bpvLeft.WayID.Value).Name);
-                                    }
+                                    document.ReplaceText("«Гибрид»", Data.BPVHipWay.Get(bpvRight.WayID.Value).Name);
                                 }
-                                else
-                                {
-                                    document.ReplaceText("«Гибрид2»", "");
-
-                                }
-                                if (rightLegExam.BPVHip != null)
-                                {
-                                    var bpvRight = BPVRep.Get(rightLegExam.BPVHip.Value);
-                                    if (bpvRight.WayID != null)
-                                    {
-                                        document.ReplaceText("«Гибрид»", BPVWayRep.Get(bpvRight.WayID.Value).Name);
-                                    }
-                                }
-                                else
-                                {
-                                    document.ReplaceText("«Гибрид»", "");
-                                }
-                                List<DiagnosisType> LeftDiagnosisList = new List<DiagnosisType>();
-
-                                foreach (var diag in Data.Diagnosis.GetAll.Where(s => s.isLeft == true && s.id_operation == Operation.Id).ToList())
-                                {
-
-                                    LeftDiagnosisList.Add(Data.DiagnosisTypes.Get(diag.id_diagnosis.Value));
-                                }
-
-                                List<DiagnosisType> RightDiagnosisList = new List<DiagnosisType>();
-
-
-
-                                foreach (var diag in Data.Diagnosis.GetAll.Where(s => s.isLeft == false && s.id_operation == Operation.Id).ToList())
-                                {
-
-                                    RightDiagnosisList.Add(Data.DiagnosisTypes.Get(diag.id_diagnosis.Value));
-                                }
-
-                                int xx = 0;
-                                foreach (var x in LeftDiagnosisList)
-                                {
-                                    if (xx == 0)
-                                    {
-                                        lettersLeft += FirstCharToUpper(GetStrFixedForDocumemnt(x.Str));
-                                    }
-                                    else
-                                    {
-                                        lettersLeft += ", " + GetStrFixedForDocumemnt(x.Str);
-                                    }
-                                    xx++;
-                                }
-                                char[] chararrbuF = lettersLeft.ToCharArray();
-                                if (chararrbuF.Length != 0 && chararrbuF[0] == ' ')
-                                {
-                                    lettersLeft = lettersLeft.Remove(0, 1);
-
-                                }
-                                if (chararrbuF.Length != 0 && chararrbuF[chararrbuF.Length - 1] == '.')
-                                { }
-                                else
-                                {
-                                    //  lettersLeft += ".";
-                                }
-
-                                lettersLeft += " ";
-                                xx = 0;
-                                foreach (var x in RightDiagnosisList)
-                                {
-                                    if (xx == 0)
-                                    {
-                                        lettersRight += GetStrFixedForDocumemnt(x.Str);
-                                    }
-                                    else
-                                    {
-                                        lettersRight += ", " + GetStrFixedForDocumemnt(x.Str);
-                                    }
-                                    xx++;
-                                }
-                                chararrbuF = lettersRight.ToCharArray();
-                                if (chararrbuF.Length != 0 && chararrbuF[0] == ' ')
-                                {
-                                    lettersRight = lettersRight.Remove(0, 1);
-
-                                }
-                                if (chararrbuF.Length != 0 && chararrbuF[chararrbuF.Length - 1] == '.')
-                                { }
-                                else
-                                {
-                                    //  lettersRight += ".";
-                                }
-
-                                lettersRight += " ";
-
-                                if (leftLegExam.C != null)
-                                {
-                                    bufLetter = LettersRep.Get(leftLegExam.C.Value);
-                                    lettersLeft += bufLetter.Leter + bufLetter.Text1 + " ";
-                                }
-                                if (leftLegExam.A != null)
-                                {
-                                    bufLetter = LettersRep.Get(leftLegExam.A.Value);
-                                    lettersLeft += bufLetter.Leter + bufLetter.Text1 + " ";
-                                }
-                                if (leftLegExam.E != null)
-                                {
-                                    bufLetter = LettersRep.Get(leftLegExam.E.Value);
-                                    lettersLeft += bufLetter.Leter + bufLetter.Text1 + " ";
-                                }
-                                if (leftLegExam.P != null)
-                                {
-                                    bufLetter = LettersRep.Get(leftLegExam.P.Value);
-                                    lettersLeft += bufLetter.Leter + bufLetter.Text1 + " ";
-                                }
-
-                                if (rightLegExam.C != null)
-                                {
-                                    bufLetter = LettersRep.Get(rightLegExam.C.Value);
-                                    lettersRight += bufLetter.Leter + bufLetter.Text1 + " ";
-                                }
-                                if (rightLegExam.A != null)
-                                {
-                                    bufLetter = LettersRep.Get(rightLegExam.A.Value);
-                                    lettersRight += bufLetter.Leter + bufLetter.Text1 + " ";
-                                }
-                                if (rightLegExam.E != null)
-                                {
-                                    bufLetter = LettersRep.Get(rightLegExam.E.Value);
-                                    lettersRight += bufLetter.Leter + bufLetter.Text1 + " ";
-                                }
-                                if (rightLegExam.P != null)
-                                {
-                                    bufLetter = LettersRep.Get(rightLegExam.P.Value);
-                                    lettersRight += bufLetter.Leter + bufLetter.Text1 + " ";
-                                }
-
                             }
                             else
                             {
                                 document.ReplaceText("«Гибрид»", "");
-                                document.ReplaceText("«Гибрид2»", "");
+                            }
+                            List<DiagnosisType> LeftDiagnosisList = new List<DiagnosisType>();
+
+                            foreach (var diag in Data.Diagnosis.GetAll.Where(s => s.isLeft == true && s.id_operation == Operation.Id).ToList())
+                            {
+
+                                LeftDiagnosisList.Add(Data.DiagnosisTypes.Get(diag.id_diagnosis.Value));
+                            }
+
+                            List<DiagnosisType> RightDiagnosisList = new List<DiagnosisType>();
+
+
+
+                            foreach (var diag in Data.Diagnosis.GetAll.Where(s => s.isLeft == false && s.id_operation == Operation.Id).ToList())
+                            {
+
+                                RightDiagnosisList.Add(Data.DiagnosisTypes.Get(diag.id_diagnosis.Value));
+                            }
+
+                            int xx = 0;
+                            foreach (var x in LeftDiagnosisList)
+                            {
+                                if (xx == 0)
+                                {
+                                    lettersLeft += FirstCharToUpper(GetStrFixedForDocumemnt(x.Str));
+                                }
+                                else
+                                {
+                                    lettersLeft += ", " + GetStrFixedForDocumemnt(x.Str);
+                                }
+                                xx++;
+                            }
+                            char[] chararrbuF = lettersLeft.ToCharArray();
+                            if (chararrbuF.Length != 0 && chararrbuF[0] == ' ')
+                            {
+                                lettersLeft = lettersLeft.Remove(0, 1);
 
                             }
+                            if (chararrbuF.Length != 0 && chararrbuF[chararrbuF.Length - 1] == '.')
+                            { }
+                            else
+                            {
+                                //  lettersLeft += ".";
+                            }
+
+                            lettersLeft += " ";
+                            xx = 0;
+                            foreach (var x in RightDiagnosisList)
+                            {
+                                if (xx == 0)
+                                {
+                                    lettersRight += GetStrFixedForDocumemnt(x.Str);
+                                }
+                                else
+                                {
+                                    lettersRight += ", " + GetStrFixedForDocumemnt(x.Str);
+                                }
+                                xx++;
+                            }
+                            chararrbuF = lettersRight.ToCharArray();
+                            if (chararrbuF.Length != 0 && chararrbuF[0] == ' ')
+                            {
+                                lettersRight = lettersRight.Remove(0, 1);
+
+                            }
+                            if (chararrbuF.Length != 0 && chararrbuF[chararrbuF.Length - 1] == '.')
+                            { }
+                            else
+                            {
+                                //  lettersRight += ".";
+                            }
+
+                            lettersRight += " ";
+
+                            if (leftLegExam.C != null)
+                            {
+                                bufLetter = Data.Letters.Get(leftLegExam.C.Value);
+                                lettersLeft += bufLetter.Leter + bufLetter.Text1 + " ";
+                            }
+                            if (leftLegExam.A != null)
+                            {
+                                bufLetter = Data.Letters.Get(leftLegExam.A.Value);
+                                lettersLeft += bufLetter.Leter + bufLetter.Text1 + " ";
+                            }
+                            if (leftLegExam.E != null)
+                            {
+                                bufLetter = Data.Letters.Get(leftLegExam.E.Value);
+                                lettersLeft += bufLetter.Leter + bufLetter.Text1 + " ";
+                            }
+                            if (leftLegExam.P != null)
+                            {
+                                bufLetter = Data.Letters.Get(leftLegExam.P.Value);
+                                lettersLeft += bufLetter.Leter + bufLetter.Text1 + " ";
+                            }
+
+                            if (rightLegExam.C != null)
+                            {
+                                bufLetter = Data.Letters.Get(rightLegExam.C.Value);
+                                lettersRight += bufLetter.Leter + bufLetter.Text1 + " ";
+                            }
+                            if (rightLegExam.A != null)
+                            {
+                                bufLetter = Data.Letters.Get(rightLegExam.A.Value);
+                                lettersRight += bufLetter.Leter + bufLetter.Text1 + " ";
+                            }
+                            if (rightLegExam.E != null)
+                            {
+                                bufLetter = Data.Letters.Get(rightLegExam.E.Value);
+                                lettersRight += bufLetter.Leter + bufLetter.Text1 + " ";
+                            }
+                            if (rightLegExam.P != null)
+                            {
+                                bufLetter = Data.Letters.Get(rightLegExam.P.Value);
+                                lettersRight += bufLetter.Leter + bufLetter.Text1 + " ";
+                            }
+
+                        }
+                        else
+                        {
+                            document.ReplaceText("«Гибрид»", "");
+                            document.ReplaceText("«Гибрид2»", "");
 
                         }
 
@@ -923,72 +899,68 @@ namespace WpfApp2.ViewModels
                         document.Save();
                         byte[] bteToBD = File.ReadAllBytes(fileName);
                         //Release this document from memory.
-                        using (var context = new MySqlContext())
+                        EpicrizOperation Hv = new EpicrizOperation();
+
+                        bool xtestx = false;
+                        foreach (var x in SvetofvodCommentList)
                         {
-                            EpicrizOperationRepository HirurgOverviewRep = new EpicrizOperationRepository(context);
-                            EpicrizOperation Hv = new EpicrizOperation();
-
-                            bool xtestx = false;
-                            foreach (var x in SvetofvodCommentList)
+                            if (x == Svetoootvod)
                             {
-                                if (x == Svetoootvod)
-                                {
-                                    xtestx = true;
-                                    break;
-                                }
+                                xtestx = true;
+                                break;
                             }
-                            if (!xtestx)
+                        }
+                        if (!xtestx)
+                        {
+                            if (!string.IsNullOrWhiteSpace(Svetoootvod))
                             {
-                                if (!string.IsNullOrWhiteSpace(Svetoootvod))
-                                {
-                                    var bff = new Svetovod();
-                                    bff.Str = Svetoootvod;
-                                    Data.Svetovod.Add(bff);
-                                    Data.Complete();
-                                }
-                            }
-
-
-                            if (Operation.EpicrizId != null && Operation.EpicrizId != 0)
-                            {
-                                Hv = Data.EpicrizOperation.Get(Operation.EpicrizId.Value);
-                                Hv.CountDays = Days;
-                                Hv.VT = E1;
-                                Hv.DJSM = E2;
-                                Hv.Light = Svetoootvod;
-                                Hv.Commentary = CommentaryForDock;
-                                try
-                                {
-                                    Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
-                                    Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
-                                }
-                                catch { }
-                                Hv.DocTemplate = bteToBD;
-                                Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
+                                var bff = new Svetovod();
+                                bff.Str = Svetoootvod;
+                                Data.Svetovod.Add(bff);
                                 Data.Complete();
                             }
-                            else
-                            {
-                                Hv.Commentary = CommentaryForDock;
-                                Hv.DocTemplate = bteToBD;
-                                Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
-                                Hv.CountDays = Days;
-                                Hv.VT = E1;
-                                Hv.DJSM = E2;
-                                Hv.Light = Svetoootvod;
-                                try
-                                {
-                                    Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
-                                    Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
-                                }
-                                catch { }
-                                Data.EpicrizOperation.Add(Hv);
+                        }
 
-                                Data.Complete();
-                                Operation = Data.Operation.Get(Operation.Id);
-                                Operation.EpicrizId = Hv.Id;
-                                Data.Complete();
+
+                        if (Operation.EpicrizId != null && Operation.EpicrizId != 0)
+                        {
+                            Hv = Data.EpicrizOperation.Get(Operation.EpicrizId.Value);
+                            Hv.CountDays = Days;
+                            Hv.VT = E1;
+                            Hv.DJSM = E2;
+                            Hv.Light = Svetoootvod;
+                            Hv.Commentary = CommentaryForDock;
+                            try
+                            {
+                                Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
+                                Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
                             }
+                            catch { }
+                            Hv.DocTemplate = bteToBD;
+                            Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
+                            Data.Complete();
+                        }
+                        else
+                        {
+                            Hv.Commentary = CommentaryForDock;
+                            Hv.DocTemplate = bteToBD;
+                            Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
+                            Hv.CountDays = Days;
+                            Hv.VT = E1;
+                            Hv.DJSM = E2;
+                            Hv.Light = Svetoootvod;
+                            try
+                            {
+                                Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
+                                Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
+                            }
+                            catch { }
+                            Data.EpicrizOperation.Add(Hv);
+
+                            Data.Complete();
+                            Operation = Data.Operation.Get(Operation.Id);
+                            Operation.EpicrizId = Hv.Id;
+                            Data.Complete();
                         }
                         //Release this document from memory.
                         IsDocAdded = Visibility.Visible;
@@ -1055,77 +1027,72 @@ namespace WpfApp2.ViewModels
                         if (!string.IsNullOrWhiteSpace(FileName))
                         {
                             byte[] bteToBD = File.ReadAllBytes(FileName);
-                            using (var context = new MySqlContext())
+                            EpicrizOperation Hv = new EpicrizOperation();
+
+                            bool xtestx = false;
+                            foreach (var x in SvetofvodCommentList)
                             {
-                                EpicrizOperationRepository HirurgOverviewRep = new EpicrizOperationRepository(context);
-                                EpicrizOperation Hv = new EpicrizOperation();
-
-                                bool xtestx = false;
-                                foreach (var x in SvetofvodCommentList)
+                                if (x == Svetoootvod)
                                 {
-                                    if (x == Svetoootvod)
-                                    {
-                                        xtestx = true;
-                                        break;
-                                    }
+                                    xtestx = true;
+                                    break;
                                 }
-                                if (!xtestx)
+                            }
+                            if (!xtestx)
+                            {
+                                if (!string.IsNullOrWhiteSpace(Svetoootvod))
                                 {
-                                    if (!string.IsNullOrWhiteSpace(Svetoootvod))
-                                    {
-                                        var bff = new Svetovod();
-                                        bff.Str = Svetoootvod;
-                                        Data.Svetovod.Add(bff);
-                                        Data.Complete();
-                                    }
-                                }
-
-                                if (CurrentDocument.Id != 0)
-                                {
-                                    Hv = Data.EpicrizOperation.Get(Operation.EpicrizId.Value);
-                                    Hv.CountDays = Days;
-                                    Hv.VT = E1;
-                                    Hv.DJSM = E2;
-                                    Hv.Light = Svetoootvod;
-                                    Hv.Commentary = CommentaryForDock;
-                                    try
-                                    {
-                                        Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
-                                        Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
-                                    }
-                                    catch { }
-                                    Hv.DocTemplate = bteToBD;
-                                    Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
-                                    Data.Complete();
-                                    CurrentDocument.DocTemplate = Hv.DocTemplate;
-                                    CurrentDocument.Id = Hv.Id;
-                                }
-                                else
-                                {
-
-                                    Hv.DocTemplate = bteToBD;
-                                    Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
-                                    Hv.CountDays = Days;
-                                    Hv.VT = E1;
-                                    Hv.Commentary = CommentaryForDock;
-                                    Hv.DJSM = E2;
-                                    Hv.Light = Svetoootvod;
-                                    try
-                                    {
-                                        Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
-                                        Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
-                                    }
-                                    catch { }
-                                    Data.EpicrizOperation.Add(Hv);
-
-                                    Data.Complete();
-                                    CurrentDocument.Id = Hv.Id;
-                                    CurrentDocument.DocTemplate = Hv.DocTemplate;
-                                    Operation = Data.Operation.Get(Operation.Id);
-                                    Operation.EpicrizId = Hv.Id;
+                                    var bff = new Svetovod();
+                                    bff.Str = Svetoootvod;
+                                    Data.Svetovod.Add(bff);
                                     Data.Complete();
                                 }
+                            }
 
+                            if (CurrentDocument.Id != 0)
+                            {
+                                Hv = Data.EpicrizOperation.Get(Operation.EpicrizId.Value);
+                                Hv.CountDays = Days;
+                                Hv.VT = E1;
+                                Hv.DJSM = E2;
+                                Hv.Light = Svetoootvod;
+                                Hv.Commentary = CommentaryForDock;
+                                try
+                                {
+                                    Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
+                                    Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
+                                }
+                                catch { }
+                                Hv.DocTemplate = bteToBD;
+                                Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
+                                Data.Complete();
+                                CurrentDocument.DocTemplate = Hv.DocTemplate;
+                                CurrentDocument.Id = Hv.Id;
+                            }
+                            else
+                            {
+
+                                Hv.DocTemplate = bteToBD;
+                                Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
+                                Hv.CountDays = Days;
+                                Hv.VT = E1;
+                                Hv.Commentary = CommentaryForDock;
+                                Hv.DJSM = E2;
+                                Hv.Light = Svetoootvod;
+                                try
+                                {
+                                    Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
+                                    Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
+                                }
+                                catch { }
+                                Data.EpicrizOperation.Add(Hv);
+
+                                Data.Complete();
+                                CurrentDocument.Id = Hv.Id;
+                                CurrentDocument.DocTemplate = Hv.DocTemplate;
+                                Operation = Data.Operation.Get(Operation.Id);
+                                Operation.EpicrizId = Hv.Id;
+                                Data.Complete();
                             }
 
                             TextForDoWhat = "Изменения в " + _fileNameOnly + " были сохранены";
@@ -1156,98 +1123,94 @@ namespace WpfApp2.ViewModels
              _fileNameOnly = openFileDialog.SafeFileName;
              FileName = openFileDialog.FileName;
              byte[] bteToBD = File.ReadAllBytes(FileName);
-             using (var context = new MySqlContext())
-             {
-                 EpicrizOperationRepository HirurgOverviewRep = new EpicrizOperationRepository(context);
-                 EpicrizOperation Hv = new EpicrizOperation();
-                 //CurrentPatient.Sugar = Sugar;
-                 bool xtestx = false;
-                 foreach (var x in SvetofvodCommentList)
-                 {
-                     if (x == Svetoootvod)
-                     {
-                         xtestx = true;
-                         break;
-                     }
-                 }
-                 if (!xtestx)
-                 {
-                     if (!string.IsNullOrWhiteSpace(Svetoootvod))
-                     {
-                         var bff = new Svetovod();
-                         bff.Str = Svetoootvod;
-                         Data.Svetovod.Add(bff);
-                         Data.Complete();
-                     }
-                 }
-                 if (CurrentDocument.Id != 0)
-                 {
-                     Hv = Data.EpicrizOperation.Get(Operation.EpicrizId.Value);
-                     Hv.CountDays = Days;
-                     Hv.VT = E1;
-                     Hv.DJSM = E2;
-                     Hv.Commentary = CommentaryForDock;
-                     Hv.Light = Svetoootvod;
-                     try
-                     {
-                         Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
-                         Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
-                     }
-                     catch { }
-                     Hv.DocTemplate = bteToBD;
-                     Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
-                     Data.Complete();
-                     CurrentDocument.Id = Hv.Id;
-                 }
-                 else
-                 {
+                EpicrizOperation Hv = new EpicrizOperation();
+                //CurrentPatient.Sugar = Sugar;
+                bool xtestx = false;
+                foreach (var x in SvetofvodCommentList)
+                {
+                    if (x == Svetoootvod)
+                    {
+                        xtestx = true;
+                        break;
+                    }
+                }
+                if (!xtestx)
+                {
+                    if (!string.IsNullOrWhiteSpace(Svetoootvod))
+                    {
+                        var bff = new Svetovod();
+                        bff.Str = Svetoootvod;
+                        Data.Svetovod.Add(bff);
+                        Data.Complete();
+                    }
+                }
+                if (CurrentDocument.Id != 0)
+                {
+                    Hv = Data.EpicrizOperation.Get(Operation.EpicrizId.Value);
+                    Hv.CountDays = Days;
+                    Hv.VT = E1;
+                    Hv.DJSM = E2;
+                    Hv.Commentary = CommentaryForDock;
+                    Hv.Light = Svetoootvod;
+                    try
+                    {
+                        Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
+                        Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
+                    }
+                    catch { }
+                    Hv.DocTemplate = bteToBD;
+                    Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
+                    Data.Complete();
+                    CurrentDocument.Id = Hv.Id;
+                }
+                else
+                {
 
-                     Hv.DocTemplate = bteToBD;
-                     Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
-                     Hv.CountDays = Days;
-                     Hv.VT = E1;
-                     Hv.DJSM = E2;
-                     Hv.Commentary = CommentaryForDock;
-                     Hv.Light = Svetoootvod;
-                     try
-                     {
-                         Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
-                         Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
-                     }
-                     catch { }
-                     Data.EpicrizOperation.Add(Hv);
+                    Hv.DocTemplate = bteToBD;
+                    Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
+                    Hv.CountDays = Days;
+                    Hv.VT = E1;
+                    Hv.DJSM = E2;
+                    Hv.Commentary = CommentaryForDock;
+                    Hv.Light = Svetoootvod;
+                    try
+                    {
+                        Hv.SclezingId = SclerozSelected[SclezingIdSelected].Id;
+                        Hv.AnticogulantId = AnticogulantSelected[AnticogulantIdSelected].Id;
+                    }
+                    catch { }
+                    Data.EpicrizOperation.Add(Hv);
 
-                     Data.Complete();
-                     CurrentDocument.Id = Hv.Id;
-                     Operation = Data.Operation.Get(Operation.Id);
-                     Operation.EpicrizId = Hv.Id;
-                     Data.Complete();
-                 }
-                 //    Hv = Data.EpicrizOperation.Get(CurrentDocument.Id);
+                    Data.Complete();
+                    CurrentDocument.Id = Hv.Id;
+                    Operation = Data.Operation.Get(Operation.Id);
+                    Operation.EpicrizId = Hv.Id;
+                    Data.Complete();
+                }
+                //    Hv = Data.EpicrizOperation.Get(CurrentDocument.Id);
 
-                 //    Hv.DocTemplate = bteToBD;
-                 //    Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
-                 //    Hv.FirstIsRightIfNull = SelectedLeg;
-                 //    Hv.CountDays = Days;
-                 //    Data.Complete();
-                 //    CurrentDocument.Id = Hv.Id;
-                 //}
-                 //else
-                 //{
-                 //    Hv.DocTemplate = bteToBD;
-                 //    Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
-                 //    Hv.FirstIsRightIfNull = SelectedLeg;
-                 //    Hv.CountDays = Days;
-                 //    Data.StatementOperation.Add(Hv);
+                //    Hv.DocTemplate = bteToBD;
+                //    Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
+                //    Hv.FirstIsRightIfNull = SelectedLeg;
+                //    Hv.CountDays = Days;
+                //    Data.Complete();
+                //    CurrentDocument.Id = Hv.Id;
+                //}
+                //else
+                //{
+                //    Hv.DocTemplate = bteToBD;
+                //    Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
+                //    Hv.FirstIsRightIfNull = SelectedLeg;
+                //    Hv.CountDays = Days;
+                //    Data.StatementOperation.Add(Hv);
 
-                 //    Data.Complete();
-                 //    CurrentDocument.Id = Hv.Id;
-                 //    Operation = Data.Operation.Get(Operation.Id);
-                 //    Operation.StatementId = Hv.Id;
-                 //    Data.Complete();
-                 //}
-                 GetOperationid(DoctorsSelected, Operation.Id);
-             }
+                //    Data.Complete();
+                //    CurrentDocument.Id = Hv.Id;
+                //    Operation = Data.Operation.Get(Operation.Id);
+                //    Operation.StatementId = Hv.Id;
+                //    Data.Complete();
+                //}
+                GetOperationid(DoctorsSelected, Operation.Id);
 
              TextForDoWhat = "Был загружен документ " + _fileNameOnly;
          }

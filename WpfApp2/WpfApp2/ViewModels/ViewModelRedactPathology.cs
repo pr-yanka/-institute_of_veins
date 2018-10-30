@@ -363,55 +363,44 @@ namespace WpfApp2.ViewModels
 
             isNewTypeAvalible = Visibility.Hidden;
             isReadOnly = false;
-            using (var context = new MySqlContext())
+
+            PatologyTypes = new ObservableCollection<string>();
+
+            PatologyTypesId = new ObservableCollection<int>();
+
+            foreach (var Patology in Data.PatologyType.GetAll)
             {
+                PatologyTypes.Add(Patology.Str);
+                PatologyTypesId.Add(Patology.Id);
+            }
 
-                PatologyTypes = new ObservableCollection<string>();
-
-                PatologyTypesId = new ObservableCollection<int>();
-
-
-                PatologyTypeRepository PatType = new PatologyTypeRepository(context);
-                PatologyRepository PatRep = new PatologyRepository(context);
-                PatientsRepository PatsRep = new PatientsRepository(context);
-
-
-
-                foreach (var Patology in PatType.GetAll)
+            CurrentPatology = (Patology)data;
+            CurrentPatient = Data.Patients.Get(CurrentPatology.id_пациента);
+            foreach (var Patology in PatologyTypesId)
+            {
+                if (CurrentPatology.id_патологии == Patology)
                 {
-                    PatologyTypes.Add(Patology.Str);
-                    PatologyTypesId.Add(Patology.Id);
+                    Index = PatologyTypesId.IndexOf(Patology);
+                    break;
                 }
-
-                CurrentPatology = (Patology)data;
-                CurrentPatient = PatsRep.Get(CurrentPatology.id_пациента);
-                foreach (var Patology in PatologyTypesId)
-                {
-                    if (CurrentPatology.id_патологии == Patology)
-                    {
-                        Index = PatologyTypesId.IndexOf(Patology);
-                        break;
-                    }
-                }
+            }
               
-                YearSelectedId = Year.IndexOf(CurrentPatology.YearAppear.Value.Year.ToString());
-                MonthSelectedId = Month.IndexOf(getmonthNameClassic(CurrentPatology.MonthAppear.Value.Month));
+            YearSelectedId = Year.IndexOf(CurrentPatology.YearAppear.Value.Year.ToString());
+            MonthSelectedId = Month.IndexOf(getmonthNameClassic(CurrentPatology.MonthAppear.Value.Month));
 
-                try
-                {
-                    YearDissapearSelectedId = Yeard.IndexOf(CurrentPatology.YearDisappear.Value.Year.ToString());
-                    MonthDissapearSelectedId = Monthd.IndexOf(getmonthNameClassic(CurrentPatology.MonthDisappear.Value.Month));
-
-                }
-                catch
-                {
-                    YearDissapearSelectedId = Yeard.Count - 1;
-                    MonthDissapearSelectedId = Monthd.Count - 1;
-
-                }
-
+            try
+            {
+                YearDissapearSelectedId = Yeard.IndexOf(CurrentPatology.YearDisappear.Value.Year.ToString());
+                MonthDissapearSelectedId = Monthd.IndexOf(getmonthNameClassic(CurrentPatology.MonthDisappear.Value.Month));
 
             }
+            catch
+            {
+                YearDissapearSelectedId = Yeard.Count - 1;
+                MonthDissapearSelectedId = Monthd.Count - 1;
+
+            }
+
             TextAddOrSave = "Вернуться";
 
         }

@@ -76,58 +76,45 @@ namespace WpfApp2.ViewModels
         private void SetCurrentPatientID(object sender, object data)
         {
 
+            CurrentPatient = Data.Patients.Get((int)data);
+            PatientBirthday = CurrentPatient.Birthday.Day.ToString() + "." + CurrentPatient.Birthday.Month.ToString() + "." + CurrentPatient.Birthday.Year.ToString();
 
-            using (var context = new MySqlContext())
+            Town = "Город: " + Data.Cities.Get(CurrentPatient.City).Str;
+            if (CurrentPatient.District != null)
             {
-                PatientsRepository PatientsRep = new PatientsRepository(context);
-
-                CurrentPatient = PatientsRep.Get((int)data);
-                PatientBirthday = CurrentPatient.Birthday.Day.ToString() + "."
-                + CurrentPatient.Birthday.Month.ToString() + "." + CurrentPatient.Birthday.Year.ToString();
-
-
-                CitiesRepository ctRep = new CitiesRepository(context);
-                RegionsRepository regRep = new RegionsRepository(context);
-                DistrictsRepository distRep = new DistrictsRepository(context);
-                StreetsRepository strtRep = new StreetsRepository(context);
-                Town = "Город: " + ctRep.Get(CurrentPatient.City).Str;
-                if (CurrentPatient.District != null)
+                District = "Регион: " + Data.Districts.Get(CurrentPatient.District.Value).Str;
+                IsDistrict = Visibility.Visible;
+            }
+            else
+            {
+                IsDistrict = Visibility.Hidden;
+            }
+            Region = "Область: " + Data.Regions.Get(CurrentPatient.Region).Str;
+            Street = "Улица: " + Data.Streets.Get(CurrentPatient.Street).Str + " " + CurrentPatient.House + " кв. " + CurrentPatient.Flat;
+            char[] chararr = CurrentPatient.Age.ToString().ToCharArray();
+            try
+            {
+                string agelastNumb = chararr[chararr.Length - 1].ToString();
+                float buff = 0f;
+                if (float.TryParse(agelastNumb, out buff))
                 {
-                    District = "Регион: " + distRep.Get(CurrentPatient.District.Value).Str;
-                    IsDistrict = Visibility.Visible;
-                }
-                else
-                {
-                    IsDistrict = Visibility.Hidden;
-                }
-                Region = "Область: " + regRep.Get(CurrentPatient.Region).Str;
-                Street = "Улица: " + strtRep.Get(CurrentPatient.Street).Str + " " + CurrentPatient.House + " кв. " + CurrentPatient.Flat;
-                char[] chararr = CurrentPatient.Age.ToString().ToCharArray();
-                try
-                {
-                    string agelastNumb = chararr[chararr.Length - 1].ToString();
-                    float buff = 0f;
-                    if (float.TryParse(agelastNumb, out buff))
+                    if (CurrentPatient.Age >= 10 && CurrentPatient.Age <= 19)
                     {
-                        if (CurrentPatient.Age >= 10 && CurrentPatient.Age <= 19)
-                        {
-                            AgeText = " лет ";
-                        }
-                        else if (buff == 1)
-                        { AgeText = " год "; }
-                        else if (buff >= 2 && buff <= 4)
-                        {
-                            AgeText = " года ";
-                        }
-                        else if (buff == 0 || (buff >= 5 && buff <= 9))
-                        {
-                            AgeText = " лет ";
-                        }
+                        AgeText = " лет ";
+                    }
+                    else if (buff == 1)
+                    { AgeText = " год "; }
+                    else if (buff >= 2 && buff <= 4)
+                    {
+                        AgeText = " года ";
+                    }
+                    else if (buff == 0 || (buff >= 5 && buff <= 9))
+                    {
+                        AgeText = " лет ";
                     }
                 }
-                catch { }
             }
-
+            catch { }
         }
 
         public ViewModelCurrentPatient(NavigationController controller) : base(controller)

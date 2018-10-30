@@ -414,56 +414,51 @@ namespace WpfApp2.ViewModels
             CurrentPanelViewModel.PanelOpened = true;
 
             TextForDate = "Время не выбрано";
-            using (var context = new MySqlContext())
+            LeftDiagnosisList = new CollectionViewSource();
+
+            RightDiagnosisList = new CollectionViewSource();
+
+            LeftOperationList = new CollectionViewSource();
+
+            RightOperationList = new CollectionViewSource();
+
+
+            MessageBus.Default.Call("SetClearDiagnosisListLeftRightOperation", null, null);
+            MessageBus.Default.Call("SetClearOperationListLeftRightOperation", null, null);
+
+            Operation = new Operation();
+            // Operation.Date = DateTime.Now;
+            CurrentPatient = Data.Patients.Get((int)data);
+            initials = " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
+
+            OprTypes = new ObservableCollection<string>();
+            AnestethicTypes = new ObservableCollection<string>();
+            Doctors = new ObservableCollection<DoctorDataSource>();
+            OprTypesId = new ObservableCollection<int>();
+            AnestethicTypesID = new ObservableCollection<int>();
+            foreach (var Doctor in Data.Doctor.GetAll)
             {
-                LeftDiagnosisList = new CollectionViewSource();
-
-                RightDiagnosisList = new CollectionViewSource();
-
-                LeftOperationList = new CollectionViewSource();
-
-                RightOperationList = new CollectionViewSource();
-
-
-                MessageBus.Default.Call("SetClearDiagnosisListLeftRightOperation", null, null);
-                MessageBus.Default.Call("SetClearOperationListLeftRightOperation", null, null);
-
-                MedPersonalRepository MedPersonalRep = new MedPersonalRepository(context);
-                DoctorRepository DoctorRep = new DoctorRepository(context);
-                Operation = new Operation();
-                // Operation.Date = DateTime.Now;
-                CurrentPatient = Data.Patients.Get((int)data);
-                initials = " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
-
-                OprTypes = new ObservableCollection<string>();
-                AnestethicTypes = new ObservableCollection<string>();
-                Doctors = new ObservableCollection<DoctorDataSource>();
-                OprTypesId = new ObservableCollection<int>();
-                AnestethicTypesID = new ObservableCollection<int>();
-                foreach (var Doctor in DoctorRep.GetAll)
+                if (Doctor.isEnabled.Value)
                 {
-                    if (Doctor.isEnabled.Value)
-                    {
-                        Doctors.Add(new DoctorDataSource(Doctor.Name, Doctor.Sirname, Doctor.Patronimic, true, Doctor.Id));
-                    }
+                    Doctors.Add(new DoctorDataSource(Doctor.Name, Doctor.Sirname, Doctor.Patronimic, true, Doctor.Id));
                 }
-                foreach (var Meds in MedPersonalRep.GetAll)
+            }
+            foreach (var Meds in Data.MedPersonal.GetAll)
+            {
+                if (Meds.isEnabled.Value)
                 {
-                    if (Meds.isEnabled.Value)
-                    {
-                        Doctors.Add(new DoctorDataSource(Meds.Name, Meds.Surname, Meds.Patronimic, false, Meds.Id));
-                    }
+                    Doctors.Add(new DoctorDataSource(Meds.Name, Meds.Surname, Meds.Patronimic, false, Meds.Id));
                 }
-                foreach (var OprType in Data.OperationType.GetAll)
-                {
-                    OprTypes.Add(OprType.LongName);
-                    OprTypesId.Add(OprType.Id);
-                }
-                foreach (var AnestethicType in Data.Anestethic.GetAll)
-                {
-                    AnestethicTypes.Add(AnestethicType.Str);
-                    AnestethicTypesID.Add(AnestethicType.Id);
-                }
+            }
+            foreach (var OprType in Data.OperationType.GetAll)
+            {
+                OprTypes.Add(OprType.LongName);
+                OprTypesId.Add(OprType.Id);
+            }
+            foreach (var AnestethicType in Data.Anestethic.GetAll)
+            {
+                AnestethicTypes.Add(AnestethicType.Str);
+                AnestethicTypesID.Add(AnestethicType.Id);
             }
         }
         #endregion
@@ -546,99 +541,83 @@ namespace WpfApp2.ViewModels
 
 
 
-            using (var context = new MySqlContext())
+            var timeItem = Data.OperationDateTime.GetAll.Where(e => e.Operation_id == 0);
+            foreach (var OpTImeWithNULL in timeItem)
             {
-                var timeItem = Data.OperationDateTime.GetAll.Where(e => e.Operation_id == 0);
-                foreach (var OpTImeWithNULL in timeItem)
+                if (Data.OperationDateTime.GetAll.Where(e => e.Operation_id != null && e.Operation_id != 0 && e.Datetime.Year == OpTImeWithNULL.Datetime.Year && e.Datetime.Month == OpTImeWithNULL.Datetime.Month && e.Datetime.Day == OpTImeWithNULL.Datetime.Day).FirstOrDefault() == null)
                 {
-                    if (Data.OperationDateTime.GetAll.Where(e => e.Operation_id != null && e.Operation_id != 0 && e.Datetime.Year == OpTImeWithNULL.Datetime.Year && e.Datetime.Month == OpTImeWithNULL.Datetime.Month && e.Datetime.Day == OpTImeWithNULL.Datetime.Day).FirstOrDefault() == null)
+                    foreach (var opDate in Data.OperationDateTime.GetAll.Where(e => e.Datetime.Year == OpTImeWithNULL.Datetime.Year && e.Datetime.Month == OpTImeWithNULL.Datetime.Month && e.Datetime.Day == OpTImeWithNULL.Datetime.Day))
                     {
-                        foreach (var opDate in Data.OperationDateTime.GetAll.Where(e => e.Datetime.Year == OpTImeWithNULL.Datetime.Year && e.Datetime.Month == OpTImeWithNULL.Datetime.Month && e.Datetime.Day == OpTImeWithNULL.Datetime.Day))
-                        {
-                            Data.OperationDateTime.Remove(Data.OperationDateTime.Get(opDate.Id));
-                        }
-                    }
-                    else
-                    {
-                        var opDate1 = Data.OperationDateTime.Get(OpTImeWithNULL.Id);
-                        opDate1.Doctor_id = null;
-                        opDate1.Note = "Время свободно";
-                        opDate1.Operation_id = null;
-                        Data.Complete();
+                        Data.OperationDateTime.Remove(Data.OperationDateTime.Get(opDate.Id));
                     }
                 }
-                Data.Complete();
+                else
+                {
+                    var opDate1 = Data.OperationDateTime.Get(OpTImeWithNULL.Id);
+                    opDate1.Doctor_id = null;
+                    opDate1.Note = "Время свободно";
+                    opDate1.Operation_id = null;
+                    Data.Complete();
+                }
             }
-
-
+            Data.Complete();
 
 
             GetLeftFromLastObs = new DelegateCommand(
                 () =>
                 {
-                    using (var context = new MySqlContext())
+                    var ExamsOfCurrPatient = Data.Examination.GetAll.ToList().Where(s => s.PatientId == CurrentPatient.Id).ToList();
+
+                    if (ExamsOfCurrPatient.Count > 0)
                     {
-                        DiagnosisObsRepository DiagObsRep = new DiagnosisObsRepository(context);
-                        ExaminationRepository ExamRep = new ExaminationRepository(context);
-                        var ExamsOfCurrPatient = ExamRep.GetAll.ToList().Where(s => s.PatientId == CurrentPatient.Id).ToList();
+                        DateTime MaxExam = ExamsOfCurrPatient.Max(s => s.Date);
+                        var ExamsOfCurrPatientLatest = ExamsOfCurrPatient.Where(s => s.Date == MaxExam).ToList();
+                        List<DiagnosisObs> DiagOfCurrPatienLt = Data.DiagnosisObs.GetAll.ToList().Where(s => s.id_leg_examination == ExamsOfCurrPatientLatest[0].Id && s.isLeft == true).ToList();
+                        //  List<DiagnosisObs> DiagOfCurrPatientRt = DiagObsRep.GetAll.ToList().Where(s => s.id_обследование_ноги == ExamsOfCurrPatientLatest[0].Id && s.isLeft == false).ToList();
 
-                        if (ExamsOfCurrPatient.Count > 0)
-                        {
-                            DateTime MaxExam = ExamsOfCurrPatient.Max(s => s.Date);
-                            var ExamsOfCurrPatientLatest = ExamsOfCurrPatient.Where(s => s.Date == MaxExam).ToList();
-                            List<DiagnosisObs> DiagOfCurrPatienLt = DiagObsRep.GetAll.ToList().Where(s => s.id_leg_examination == ExamsOfCurrPatientLatest[0].Id && s.isLeft == true).ToList();
-                            //  List<DiagnosisObs> DiagOfCurrPatientRt = DiagObsRep.GetAll.ToList().Where(s => s.id_обследование_ноги == ExamsOfCurrPatientLatest[0].Id && s.isLeft == false).ToList();
-
-                            //   MessageBus.Default.Call("SetDiagnosisListRight", null, DiagOfCurrPatientRt);
-                            MessageBus.Default.Call("SetDiagnosisListLeft", null, DiagOfCurrPatienLt);
+                        //   MessageBus.Default.Call("SetDiagnosisListRight", null, DiagOfCurrPatientRt);
+                        MessageBus.Default.Call("SetDiagnosisListLeft", null, DiagOfCurrPatienLt);
 
 
-                            // ExaminationLeg leftLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idLeftLegExamination.Value);
-                            // ExaminationLeg rightLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idRightLegExamination.Value);
+                        // ExaminationLeg leftLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idLeftLegExamination.Value);
+                        // ExaminationLeg rightLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idRightLegExamination.Value);
 
-                            // Letters bufLetter = new Letters();
-                            Controller.NavigateTo<ViewModelAddOperation>();
+                        // Letters bufLetter = new Letters();
+                        Controller.NavigateTo<ViewModelAddOperation>();
 
-                        }
-                        else
-                        {
-                            MessageBox.Show("Нет диагноза слева последнего обследования");
-                        }
-
+                    }
+                    else
+                    {
+                        MessageBox.Show("Нет диагноза слева последнего обследования");
                     }
                 }
             );
             GetRightFromLastObs = new DelegateCommand(
                 () =>
                 {
-                    using (var context = new MySqlContext())
+                    var ExamsOfCurrPatient = Data.Examination.GetAll.ToList().Where(s => s.PatientId == CurrentPatient.Id).ToList();
+
+                    if (ExamsOfCurrPatient.Count > 0)
                     {
-                        DiagnosisObsRepository DiagObsRep = new DiagnosisObsRepository(context);
-                        ExaminationRepository ExamRep = new ExaminationRepository(context);
-                        var ExamsOfCurrPatient = ExamRep.GetAll.ToList().Where(s => s.PatientId == CurrentPatient.Id).ToList();
+                        DateTime MaxExam = ExamsOfCurrPatient.Max(s => s.Date);
+                        var ExamsOfCurrPatientLatest = ExamsOfCurrPatient.Where(s => s.Date == MaxExam).ToList();
+                        //  List<DiagnosisObs> DiagOfCurrPatienLt = DiagObsRep.GetAll.ToList().Where(s => s.id_обследование_ноги == ExamsOfCurrPatientLatest[0].Id && s.isLeft == true).ToList();
+                        List<DiagnosisObs> DiagOfCurrPatientRt = Data.DiagnosisObs.GetAll.ToList().Where(s => s.id_leg_examination == ExamsOfCurrPatientLatest[0].Id && s.isLeft == false).ToList();
 
-                        if (ExamsOfCurrPatient.Count > 0)
-                        {
-                            DateTime MaxExam = ExamsOfCurrPatient.Max(s => s.Date);
-                            var ExamsOfCurrPatientLatest = ExamsOfCurrPatient.Where(s => s.Date == MaxExam).ToList();
-                            //  List<DiagnosisObs> DiagOfCurrPatienLt = DiagObsRep.GetAll.ToList().Where(s => s.id_обследование_ноги == ExamsOfCurrPatientLatest[0].Id && s.isLeft == true).ToList();
-                            List<DiagnosisObs> DiagOfCurrPatientRt = DiagObsRep.GetAll.ToList().Where(s => s.id_leg_examination == ExamsOfCurrPatientLatest[0].Id && s.isLeft == false).ToList();
-
-                            MessageBus.Default.Call("SetDiagnosisListRight", null, DiagOfCurrPatientRt);
-                            // MessageBus.Default.Call("SetDiagnosisListLeft", null, DiagOfCurrPatienLt);
+                        MessageBus.Default.Call("SetDiagnosisListRight", null, DiagOfCurrPatientRt);
+                        // MessageBus.Default.Call("SetDiagnosisListLeft", null, DiagOfCurrPatienLt);
 
 
-                            // ExaminationLeg leftLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idLeftLegExamination.Value);
-                            // ExaminationLeg rightLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idRightLegExamination.Value);
+                        // ExaminationLeg leftLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idLeftLegExamination.Value);
+                        // ExaminationLeg rightLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idRightLegExamination.Value);
 
-                            // Letters bufLetter = new Letters();
-                            Controller.NavigateTo<ViewModelAddOperation>();
+                        // Letters bufLetter = new Letters();
+                        Controller.NavigateTo<ViewModelAddOperation>();
 
-                        }
-                        else
-                        {
-                            MessageBox.Show("Нет диагноза справа последнего обследования");
-                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Нет диагноза справа последнего обследования");
                     }
                 }
             );
@@ -653,18 +632,16 @@ namespace WpfApp2.ViewModels
                         OpDate.Note = "Время свободно";
                         OpDate.Operation_id = null;
                         Data.Complete();
-                        using (var context = new MySqlContext())
+
+                        var timeItem1 = Data.OperationDateTime.Where(e => e.Operation_id != null && e.Datetime.Year == OpDate.Datetime.Year && e.Datetime.Month == OpDate.Datetime.Month && e.Datetime.Day == OpDate.Datetime.Day).FirstOrDefault();
+                        if (timeItem1 == null)
                         {
-                            var timeItem1 = context.Set<OperationDateTime>().Where(e => e.Operation_id != null && e.Datetime.Year == OpDate.Datetime.Year && e.Datetime.Month == OpDate.Datetime.Month && e.Datetime.Day == OpDate.Datetime.Day).FirstOrDefault();
-                            if (timeItem1 == null)
+                            foreach (var opDate in Data.OperationDateTime.Where(e => e.Datetime.Year == OpDate.Datetime.Year && e.Datetime.Month == OpDate.Datetime.Month && e.Datetime.Day == OpDate.Datetime.Day))
                             {
-                                foreach (var opDate in context.Set<OperationDateTime>().Where(e => e.Datetime.Year == OpDate.Datetime.Year && e.Datetime.Month == OpDate.Datetime.Month && e.Datetime.Day == OpDate.Datetime.Day))
-                                {
-                                    Data.OperationDateTime.Remove(Data.OperationDateTime.Get(opDate.Id));
-                                }
+                                Data.OperationDateTime.Remove(Data.OperationDateTime.Get(opDate.Id));
                             }
-                            Data.Complete();
                         }
+                        Data.Complete();
 
                         CurrentPanelSelectTime.SelectedOpTimeView = null;
                         CurrentPanelSelectTime.SelectedOpTimeViewCopy = null;
@@ -740,18 +717,12 @@ namespace WpfApp2.ViewModels
                         Data.Complete();
                         opDate.Operation_id = Operation.Id;
 
-                        using (var context = new MySqlContext())
-                        {
-
-                            //    var opDataToRemove = new OperationDateTime();
-                            //    var test = true;
-                            //    var OperationRep = new OperationRepository(context);
-                            var OperationDateTimeRep = new OperationDateTimeRepository(context);
-                            var SelectedOpDate = OperationDateTimeRep.Get(Operation.Datetime_id.Value);
-                            opDate.Doctor_id = SelectedOpDate.Doctor_id;
-                            opDate.Note = SelectedOpDate.Note;
-                        }
-
+                        //    var opDataToRemove = new OperationDateTime();
+                        //    var test = true;
+                        //    var OperationRep = new OperationRepository(context);
+                        var SelectedOpDate = Data.OperationDateTime.Get(Operation.Datetime_id.Value);
+                        opDate.Doctor_id = SelectedOpDate.Doctor_id;
+                        opDate.Note = SelectedOpDate.Note;
 
                         foreach (var Doctor in DoctorsSelected)
                         {

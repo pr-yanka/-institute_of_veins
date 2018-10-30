@@ -29,7 +29,7 @@ namespace WpfApp2.ViewModels
         public DelegateCommand ToObs { get; set; }
         public DelegateCommand ToPt { get; set; }
 
-        public ObsStruct(DelegateCommand ToObs, DelegateCommand ToPt, Examination Ex, MySqlContext context)
+        public ObsStruct(DelegateCommand ToObs, DelegateCommand ToPt, Examination Ex, Patient CurrentPatient)
         {
             this.Ex = Ex;
             this.ToObs = ToObs;
@@ -46,9 +46,6 @@ namespace WpfApp2.ViewModels
             IsOperationSeted = Ex.isNeedOperation ? "Да" : "Нет";
 
         
-                PatientsRepository PtRep = new PatientsRepository(context);
-
-                var CurrentPatient = PtRep.Get(Ex.PatientId.Value);
                 Patient = CurrentPatient.Sirname + " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
 
 
@@ -124,120 +121,110 @@ namespace WpfApp2.ViewModels
 
         private void SetSelectedMedOrDocOps(object sender, object data)
         {
-         
-            using (var context = new MySqlContext())
+            try
             {
-                try
+
+                //DocsAndMedsList = new List<docsAndMeds>();
+
+                Exams = new ObservableCollection<ObsStruct>();
+
+                //bool test = true;
+
+                var Examsbuf = new ObservableCollection<ObsStruct>();
+                foreach (var Exam in Data.Examination.GetAll)
                 {
-
-                    //DocsAndMedsList = new List<docsAndMeds>();
-
-
-
-
-
-
-
-                    ExaminationRepository ExamRp = new ExaminationRepository(context);
-
-
-
-                    Exams = new ObservableCollection<ObsStruct>();
-
-
-
-                    //bool test = true;
-
-                    var Examsbuf = new ObservableCollection<ObsStruct>();
-                    foreach (var Exam in ExamRp.GetAll)
-                    {
-                        DelegateCommand buferToPt = new DelegateCommand(
-                          () =>
-                          {
-                             
-                          MessageBus.Default.Call("OpenCurrentPatient", this, Exam.PatientId);
-                          Controller.NavigateTo<ViewModelCurrentPatient>();
-   
-                          }
-                      );
-
-
-                        DelegateCommand bufer = new DelegateCommand(
+                    DelegateCommand buferToPt = new DelegateCommand(
                         () =>
                         {
-                            MessageBus.Default.Call("GetCurrentPatientIdForOperation", this, Exam.PatientId);
-                            MessageBus.Default.Call("GetObsForOverview", this, Exam.Id.Value);
-                            Controller.NavigateTo<ViewModelAddPhysical>();
-
+                             
+                        MessageBus.Default.Call("OpenCurrentPatient", this, Exam.PatientId);
+                        Controller.NavigateTo<ViewModelCurrentPatient>();
+   
                         }
                     );
 
 
-
-                        TimeSpan span = Exam.Date - DateTime.Now;
-
-                        if (_sortId == 0 && Exam.Date.Year == DateTime.Now.Year && Exam.Date.Month == DateTime.Now.Month && Exam.Date.Day == DateTime.Now.Day)
-                        {
-                            Exams.Add(new ObsStruct(bufer, buferToPt, Exam, context));
-                        }
-                        else if (_sortId == 1 && span.Days > 0 && span.Days <= 3)
-                        {
-                            Exams.Add(new ObsStruct(bufer, buferToPt, Exam, context));
-                        }
-                        else if (_sortId == 2 && span.Days > 0 && span.Days <= 7)
-                        {
-                            Exams.Add(new ObsStruct(bufer, buferToPt, Exam, context));
-                        }
-                        else if (_sortId == 3 && span.Days > 0 && span.Days <= 32)
-                        {
-                            Exams.Add(new ObsStruct(bufer, buferToPt, Exam, context));
-                        }
-                        else if (_sortId == 4)
-                        {
-                            Exams.Add(new ObsStruct(bufer, buferToPt, Exam, context));
-                        }
-
-
-
-                    }
-
-
-
-                    if (Exams.Count == 0)
+                    DelegateCommand bufer = new DelegateCommand(
+                    () =>
                     {
-                        VisOfNothingFaund = Visibility.Visible;
+                        MessageBus.Default.Call("GetCurrentPatientIdForOperation", this, Exam.PatientId);
+                        MessageBus.Default.Call("GetObsForOverview", this, Exam.Id.Value);
+                        Controller.NavigateTo<ViewModelAddPhysical>();
+
                     }
-                    else
+                );
+
+
+
+                    TimeSpan span = Exam.Date - DateTime.Now;
+
+
+                    if (_sortId == 0 && Exam.Date.Year == DateTime.Now.Year && Exam.Date.Month == DateTime.Now.Month && Exam.Date.Day == DateTime.Now.Day)
                     {
-                        VisOfNothingFaund = Visibility.Collapsed;
+                        var CurrentPatient = Data.Patients.Get(Exam.PatientId.Value);
+                        Exams.Add(new ObsStruct(bufer, buferToPt, Exam, CurrentPatient));
                     }
-
-                    ViewSource.Source = Exams;
-
-
-                    if (_isSortByData == true)
+                    else if (_sortId == 1 && span.Days > 0 && span.Days <= 3)
                     {
-
-                        ViewSource.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Descending));
-
-                        // Let the UI control refresh in order for changes to take place.
-                        ViewSource.View.Refresh();
-
+                        var CurrentPatient = Data.Patients.Get(Exam.PatientId.Value);
+                        Exams.Add(new ObsStruct(bufer, buferToPt, Exam, CurrentPatient));
                     }
-                    else
+                    else if (_sortId == 2 && span.Days > 0 && span.Days <= 7)
                     {
-                        ViewSource.SortDescriptions.Clear();
-                        ViewSource.View.Refresh();
+                        var CurrentPatient = Data.Patients.Get(Exam.PatientId.Value);
+                        Exams.Add(new ObsStruct(bufer, buferToPt, Exam, CurrentPatient));
                     }
-                    Controller.NavigateTo<ViewModelPhysicalTable>();
+                    else if (_sortId == 3 && span.Days > 0 && span.Days <= 32)
+                    {
+                        var CurrentPatient = Data.Patients.Get(Exam.PatientId.Value);
+                        Exams.Add(new ObsStruct(bufer, buferToPt, Exam, CurrentPatient));
+                    }
+                    else if (_sortId == 4)
+                    {
+                        var CurrentPatient = Data.Patients.Get(Exam.PatientId.Value);
+                        Exams.Add(new ObsStruct(bufer, buferToPt, Exam, CurrentPatient));
+                    }
+
+
+
                 }
-                catch (Exception exc)
+
+
+
+                if (Exams.Count == 0)
                 {
-                    Exams = new ObservableCollection<ObsStruct>();
-                    ViewSource.Source = Exams;
+                    VisOfNothingFaund = Visibility.Visible;
+                }
+                else
+                {
+                    VisOfNothingFaund = Visibility.Collapsed;
+                }
+
+                ViewSource.Source = Exams;
+
+
+                if (_isSortByData == true)
+                {
+
+                    ViewSource.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Descending));
+
+                    // Let the UI control refresh in order for changes to take place.
+                    ViewSource.View.Refresh();
+
+                }
+                else
+                {
                     ViewSource.SortDescriptions.Clear();
                     ViewSource.View.Refresh();
                 }
+                Controller.NavigateTo<ViewModelPhysicalTable>();
+            }
+            catch (Exception exc)
+            {
+                Exams = new ObservableCollection<ObsStruct>();
+                ViewSource.Source = Exams;
+                ViewSource.SortDescriptions.Clear();
+                ViewSource.View.Refresh();
             }
             _filterText = "";
             OnPropertyChanged("FilterText");

@@ -58,17 +58,13 @@ namespace WpfApp2.DialogPreOperation
                 OnPropertyChanged();
             }
         }
-        public DialogPreOperationViewModel()
+        public DialogPreOperationViewModel(IUnitOfWork UnitOfWork)
         {
 
             CurrentPanelViewModel = new OperationTypePanelViewModel(this);
             SelectedOpTypeID = 0;
             Commentary = "";
-            using (var context = new MySqlContext())
-            {
-                OperationTypeRepository OptRep = new OperationTypeRepository(context);
-                OpTypes = new ObservableCollection<OperationType>(OptRep.GetAll.ToList());
-            }
+            OpTypes = new ObservableCollection<OperationType>(UnitOfWork.OperationType.GetAll.ToList());
 
             this.confirmCommand = new RelayCommand(OnReturnClicked);
             this.returnCommand = new RelayCommand(OnConfirmClicked);
@@ -83,11 +79,7 @@ namespace WpfApp2.DialogPreOperation
             {
                 OperationType newType = CurrentPanelViewModel.GetPanelType();
                 MessageBus.Default.Call("AddOperationTypeForDialogBox", this, newType);
-                using (var context = new MySqlContext())
-                {
-                    OperationTypeRepository OptRep = new OperationTypeRepository(context);
-                    OpTypes = new ObservableCollection<OperationType>(OptRep.GetAll.ToList());
-                }
+                OpTypes = new ObservableCollection<OperationType>(UnitOfWork.OperationType.GetAll.ToList());
                 SelectedOpTypeID = OpTypes.Count - 1;
                 CurrentPanelViewModel.ClearPanel();
                 CurrentPanelViewModel.PanelOpened = false;

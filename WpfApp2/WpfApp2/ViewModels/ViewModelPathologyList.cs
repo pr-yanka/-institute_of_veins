@@ -116,56 +116,50 @@ namespace WpfApp2.ViewModels
         {
 
             PatologyList = new ObservableCollection<PatologyDataSource>();
-            using (var context = new MySqlContext())
+            CurrentPatient = Data.Patients.Get((int)data);
+            Initials = "Пациент: " + CurrentPatient.Sirname + " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ". ";
+
+            foreach (var Patology in Data.Patology.GetAll)
             {
-                PatologyTypeRepository ptTRep = new PatologyTypeRepository(context);
-                PatologyRepository ptRep = new PatologyRepository(context);
-                PatientsRepository ptentRep = new PatientsRepository(context);
-                CurrentPatient = ptentRep.Get((int)data);
-                Initials = "Пациент: " + CurrentPatient.Sirname + " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ". ";
-
-                foreach (var Patology in ptRep.GetAll)
+                //Patology sadasew
+                if (Patology.id_пациента == CurrentPatient.Id)
                 {
-                    //Patology sadasew
-                    if (Patology.id_пациента == CurrentPatient.Id)
+                    foreach (var PatoType in Data.PatologyType.GetAll)
                     {
-                        foreach (var PatoType in ptTRep.GetAll)
+                        if (PatoType.Id == Patology.id_патологии)
                         {
-                            if (PatoType.Id == Patology.id_патологии)
+                            float OpacityBuf = 0.0f;
+                            if (Patology.isArchivatied == true)
+                                OpacityBuf = 0.38f;
+
+
+                            string DateAppear = getmonthName(Patology.MonthAppear.Value.Month) + " " + Patology.YearAppear.Value.Year.ToString() + " года";
+                            string DateDisappear = "";
+                            try
                             {
-                                float OpacityBuf = 0.0f;
-                                if (Patology.isArchivatied == true)
-                                    OpacityBuf = 0.38f;
-
-
-                                string DateAppear = getmonthName(Patology.MonthAppear.Value.Month) + " " + Patology.YearAppear.Value.Year.ToString() + " года";
-                                string DateDisappear = "";
-                                try
-                                {
-                                    DateDisappear = getmonthName(Patology.MonthDisappear.Value.Month) + " " + Patology.YearDisappear.Value.Year.ToString() + " года";
-                                }
-                                catch { }
-                                DelegateCommand ToRedactP = new DelegateCommand(
-                                    () =>
-                                    {
-                                        MessageBus.Default.Call("GetPatologyForRedactPatology", this, Patology);
-                                        Controller.NavigateTo<ViewModelRedactPathology>();
-
-                                    }
-                                    );
-                                DelegateCommand ToArchiveP = new DelegateCommand(
-                                    () =>
-                                    {
-
-                                        MessageBus.Default.Call("GetPatologyForArchivePatology", this, Patology);
-                                        Controller.NavigateTo<ViewModelArchivePathology>();
-                                    }
-                                    );
-                                PatologyList.Add(new PatologyDataSource(PatoType.Str, DateAppear, DateDisappear, ToArchiveP, ToRedactP, Patology, OpacityBuf));
+                                DateDisappear = getmonthName(Patology.MonthDisappear.Value.Month) + " " + Patology.YearDisappear.Value.Year.ToString() + " года";
                             }
-                        }
+                            catch { }
+                            DelegateCommand ToRedactP = new DelegateCommand(
+                                () =>
+                                {
+                                    MessageBus.Default.Call("GetPatologyForRedactPatology", this, Patology);
+                                    Controller.NavigateTo<ViewModelRedactPathology>();
 
+                                }
+                                );
+                            DelegateCommand ToArchiveP = new DelegateCommand(
+                                () =>
+                                {
+
+                                    MessageBus.Default.Call("GetPatologyForArchivePatology", this, Patology);
+                                    Controller.NavigateTo<ViewModelArchivePathology>();
+                                }
+                                );
+                            PatologyList.Add(new PatologyDataSource(PatoType.Str, DateAppear, DateDisappear, ToArchiveP, ToRedactP, Patology, OpacityBuf));
+                        }
                     }
+
                 }
             }
 

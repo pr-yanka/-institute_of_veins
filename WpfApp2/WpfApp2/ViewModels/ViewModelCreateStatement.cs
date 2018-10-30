@@ -178,56 +178,44 @@ namespace WpfApp2.ViewModels
             //TextResultCancle = "Итоги операции"; 
             CurrentDocument = new StatementOperation();
 
-            using (var context = new MySqlContext())
+            Operation = Data.Operation.Get((int)data);
+            operationId = (int)data;
+            //DateTime bufTime = DateTime.Parse(Operation.Time);
+
+            //Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
+            Date = Data.OperationDateTime.Get(Operation.Datetime_id.Value).Datetime;
+
+            CurrentPatient = Data.Patients.Get(Operation.PatientId);
+
+            foreach (var doc in Data.Doctor.GetAll)
             {
-                OperationRepository Oprep = new OperationRepository(context);
-                Operation = Oprep.Get((int)data);
-                operationId = (int)data;
-                //DateTime bufTime = DateTime.Parse(Operation.Time);
-
-                //Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
-                Date = Data.OperationDateTime.Get(Operation.Datetime_id.Value).Datetime;
-
-                PatientsRepository PatientsRep = new PatientsRepository(context);
-                CurrentPatient = PatientsRep.Get(Operation.PatientId);
-
-                DoctorRepository DoctorRep = new DoctorRepository(context);
-                foreach (var doc in DoctorRep.GetAll)
+                Doctors.Add(new Docs(doc));
+            }
+            if (Operation.StatementId != null && Operation.StatementId != 0)
+            {
+                IsDocAdded = Visibility.Visible;
+                TextForDoWhat = "";
+                CurrentDocument = Data.StatementOperation.Get(Operation.StatementId.Value);
+                Days = CurrentDocument.CountDays;
+                SelectedLeg = CurrentDocument.FirstIsRightIfNull;
+                if (CurrentDocument.DoctorId != 0)
                 {
-                    Doctors.Add(new Docs(doc));
-                }
-                if (Operation.StatementId != null && Operation.StatementId != 0)
-                {
-                    IsDocAdded = Visibility.Visible;
-                    TextForDoWhat = "";
-                    StatementOperationRepository StatementRep = new StatementOperationRepository(context);
-
-                    CurrentDocument = StatementRep.Get(Operation.StatementId.Value);
-                    Days = CurrentDocument.CountDays;
-                    SelectedLeg = CurrentDocument.FirstIsRightIfNull;
-                    if (CurrentDocument.DoctorId != 0)
+                    var doc = Data.Doctor.Get(CurrentDocument.DoctorId);
+                    foreach (var docs in Doctors)
                     {
-                        var doc = DoctorRep.Get(CurrentDocument.DoctorId);
-                        foreach (var docs in Doctors)
+                        if (docs.doc.Id == doc.Id)
                         {
-                            if (docs.doc.Id == doc.Id)
-                            {
-                                SelectedDoctor = Doctors.IndexOf(docs);
-                            }
+                            SelectedDoctor = Doctors.IndexOf(docs);
                         }
                     }
-
-                }
-                else
-                {
-                    SelectedDoctor = 0;
-                    IsDocAdded = Visibility.Hidden;
-                    TextForDoWhat = "Сформируйте или загрузите документ";
                 }
 
-
-
-
+            }
+            else
+            {
+                SelectedDoctor = 0;
+                IsDocAdded = Visibility.Hidden;
+                TextForDoWhat = "Сформируйте или загрузите документ";
             }
         }
         private string _fileName;
@@ -257,42 +245,37 @@ namespace WpfApp2.ViewModels
                            if (!string.IsNullOrWhiteSpace(FileName))
                            {
                                byte[] bteToBD = File.ReadAllBytes(FileName);
-                               using (var context = new MySqlContext())
-                               {
-                                   StatementOperationRepository HirurgOverviewRep = new StatementOperationRepository(context);
-                                   StatementOperation Hv = new StatementOperation();
-                                   //bool tester = true;
+                                StatementOperation Hv = new StatementOperation();
+                                //bool tester = true;
 
-                                   if (CurrentDocument.Id != 0)
-                                   {
-                                       Hv = Data.StatementOperation.Get(CurrentDocument.Id);
-                                       CurrentDocument.DocTemplate = bteToBD;
-                                       Hv.DocTemplate = bteToBD;
-                                       Hv.FirstIsRightIfNull = SelectedLeg;
-                                       Hv.CountDays = Days;
-                                       Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
-                                       Data.Complete();
-                                   }
-                                   else
-                                   {
+                                if (CurrentDocument.Id != 0)
+                                {
+                                    Hv = Data.StatementOperation.Get(CurrentDocument.Id);
+                                    CurrentDocument.DocTemplate = bteToBD;
+                                    Hv.DocTemplate = bteToBD;
+                                    Hv.FirstIsRightIfNull = SelectedLeg;
+                                    Hv.CountDays = Days;
+                                    Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
+                                    Data.Complete();
+                                }
+                                else
+                                {
 
-                                       Hv.FirstIsRightIfNull = SelectedLeg;
-                                       Hv.CountDays = Days;
-                                       Hv.DocTemplate = bteToBD;
-                                       Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
-                                       CurrentDocument.DocTemplate = bteToBD;
-                                       Data.StatementOperation.Add(Hv);
+                                    Hv.FirstIsRightIfNull = SelectedLeg;
+                                    Hv.CountDays = Days;
+                                    Hv.DocTemplate = bteToBD;
+                                    Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
+                                    CurrentDocument.DocTemplate = bteToBD;
+                                    Data.StatementOperation.Add(Hv);
 
-                                       Data.Complete();
-                                       Operation = Data.Operation.Get(Operation.Id);
-                                       Operation.StatementId = Hv.Id;
-                                       //    Operation.StatementId = Hv.Id;
-                                       CurrentDocument.Id = Hv.Id;
-                                       Data.Complete();
-                                       //   MessageBus.Default.Call("SetIdOfOverview", null, CurrentDocument.Id);
-                                   }
-
-                               }
+                                    Data.Complete();
+                                    Operation = Data.Operation.Get(Operation.Id);
+                                    Operation.StatementId = Hv.Id;
+                                    //    Operation.StatementId = Hv.Id;
+                                    CurrentDocument.Id = Hv.Id;
+                                    Data.Complete();
+                                    //   MessageBus.Default.Call("SetIdOfOverview", null, CurrentDocument.Id);
+                                }
 
                                TextForDoWhat = "Изменения в " + _fileNameOnly + " были сохранены";
                                CurrentSavePanelViewModel.PanelOpened = false;
@@ -332,38 +315,34 @@ namespace WpfApp2.ViewModels
                   _fileNameOnly = openFileDialog.SafeFileName;
                   FileName = openFileDialog.FileName;
                   byte[] bteToBD = File.ReadAllBytes(FileName);
-                  using (var context = new MySqlContext())
-                  {
-                      StatementOperationRepository HirurgOverviewRep = new StatementOperationRepository(context);
-                      StatementOperation Hv = new StatementOperation();
+                    StatementOperation Hv = new StatementOperation();
 
-                      if (CurrentDocument.Id != 0)
-                      {
-                          Hv = Data.StatementOperation.Get(CurrentDocument.Id);
+                    if (CurrentDocument.Id != 0)
+                    {
+                        Hv = Data.StatementOperation.Get(CurrentDocument.Id);
 
-                          Hv.DocTemplate = bteToBD;
-                          Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
-                          Hv.FirstIsRightIfNull = SelectedLeg;
-                          Hv.CountDays = Days;
-                          Data.Complete();
-                          CurrentDocument.Id = Hv.Id;
-                      }
-                      else
-                      {
-                          Hv.DocTemplate = bteToBD;
-                          Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
-                          Hv.FirstIsRightIfNull = SelectedLeg;
-                          Hv.CountDays = Days;
-                          Data.StatementOperation.Add(Hv);
+                        Hv.DocTemplate = bteToBD;
+                        Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
+                        Hv.FirstIsRightIfNull = SelectedLeg;
+                        Hv.CountDays = Days;
+                        Data.Complete();
+                        CurrentDocument.Id = Hv.Id;
+                    }
+                    else
+                    {
+                        Hv.DocTemplate = bteToBD;
+                        Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
+                        Hv.FirstIsRightIfNull = SelectedLeg;
+                        Hv.CountDays = Days;
+                        Data.StatementOperation.Add(Hv);
 
-                          Data.Complete();
-                          CurrentDocument.Id = Hv.Id;
-                          Operation = Data.Operation.Get(Operation.Id);
-                          Operation.StatementId = Hv.Id;
-                          Data.Complete();
-                      }
-                      GetOperationid(null, Operation.Id);
-                  }
+                        Data.Complete();
+                        CurrentDocument.Id = Hv.Id;
+                        Operation = Data.Operation.Get(Operation.Id);
+                        Operation.StatementId = Hv.Id;
+                        Data.Complete();
+                    }
+                    GetOperationid(null, Operation.Id);
 
                   TextForDoWhat = "Был загружен документ " + _fileNameOnly;
               }
@@ -555,178 +534,168 @@ namespace WpfApp2.ViewModels
                         }
 
 
-                        using (var context = new MySqlContext())
+                        var PatologysOfCurrPatient = Data.Patology.GetAll.ToList().Where(s => s.id_пациента == CurrentPatient.Id && s.isArchivatied == false).ToList();
+
+                        int zz = 0;
+                        foreach (var x in PatologysOfCurrPatient)
                         {
-                            PatologyRepository PtRep = new PatologyRepository(context);
-                            PatologyTypeRepository PtTypeRep = new PatologyTypeRepository(context);
-                            ExaminationRepository ExamRep = new ExaminationRepository(context);
-                            ExaminationLegRepository LegExamRep = new ExaminationLegRepository(context);
-                            LettersRepository LettersRep = new LettersRepository(context);
-                            // LettersRep = new LettersRepository(context);
-                            var PatologysOfCurrPatient = PtRep.GetAll.ToList().Where(s => s.id_пациента == CurrentPatient.Id && s.isArchivatied == false).ToList();
-
-                            int zz = 0;
-                            foreach (var x in PatologysOfCurrPatient)
-                            {
-                                //zz++;
-                                if (zz != PatologysOfCurrPatient.Count - 1)
-                                    patologis += GetStrFixedForDocumemnt(PtTypeRep.Get(x.id_патологии).Str) + ", ";
-                                else
-                                    patologis += GetStrFixedForDocumemnt(PtTypeRep.Get(x.id_патологии).Str);
-                                zz++;
-                            }
-
-                            char[] chararrbuF12 = patologis.ToCharArray();
-
-                            if (chararrbuF12.Length != 0 && chararrbuF12[0] == ' ')
-                            {
-                                patologis = patologis.Remove(0, 1);
-
-                            }
-                            if (chararrbuF12.Length != 0 && chararrbuF12[chararrbuF12.Length - 1] == '.')
-                            { }
+                            //zz++;
+                            if (zz != PatologysOfCurrPatient.Count - 1)
+                                patologis += GetStrFixedForDocumemnt(Data.PatologyType.Get(x.id_патологии).Str) + ", ";
                             else
-                            {
-                                patologis += ".";
-                            }
-                            if (!string.IsNullOrWhiteSpace(patologis) && patologis != ".")
-                            {
-                                document.ReplaceText("Патологии", "Патологии: " + patologis + "\n");
-                            }
-                            else
-                            {
-                                document.ReplaceText("Патологии", "");
-                            }
-                            //if(patologis == ".")
-                            //{
-                            //    document.ReplaceText("Патологии", "");
-                            //}
-                            diabet += CurrentPatient.Sugar;
-                            if (!string.IsNullOrWhiteSpace(diabet))
-                            {
-                                document.ReplaceText("Диабет", "Сахарный диабет: " + diabet + "\n");
-                            }
-                            else
-                            {
+                                patologis += GetStrFixedForDocumemnt(Data.PatologyType.Get(x.id_патологии).Str);
+                            zz++;
+                        }
 
-                                document.ReplaceText("Диабет", "");
-                            }
+                        char[] chararrbuF12 = patologis.ToCharArray();
 
-                            var ExamsOfCurrPatient = ExamRep.GetAll.ToList().Where(s => s.PatientId == CurrentPatient.Id).ToList();
+                        if (chararrbuF12.Length != 0 && chararrbuF12[0] == ' ')
+                        {
+                            patologis = patologis.Remove(0, 1);
 
-                            if (ExamsOfCurrPatient.Count > 0)
+                        }
+                        if (chararrbuF12.Length != 0 && chararrbuF12[chararrbuF12.Length - 1] == '.')
+                        { }
+                        else
+                        {
+                            patologis += ".";
+                        }
+                        if (!string.IsNullOrWhiteSpace(patologis) && patologis != ".")
+                        {
+                            document.ReplaceText("Патологии", "Патологии: " + patologis + "\n");
+                        }
+                        else
+                        {
+                            document.ReplaceText("Патологии", "");
+                        }
+                        //if(patologis == ".")
+                        //{
+                        //    document.ReplaceText("Патологии", "");
+                        //}
+                        diabet += CurrentPatient.Sugar;
+                        if (!string.IsNullOrWhiteSpace(diabet))
+                        {
+                            document.ReplaceText("Диабет", "Сахарный диабет: " + diabet + "\n");
+                        }
+                        else
+                        {
+
+                            document.ReplaceText("Диабет", "");
+                        }
+
+                        var ExamsOfCurrPatient = Data.Examination.GetAll.ToList().Where(s => s.PatientId == CurrentPatient.Id).ToList();
+
+                        if (ExamsOfCurrPatient.Count > 0)
+                        {
+
+                            DateTime MaxExam = ExamsOfCurrPatient.Max(s => s.Date);
+                            var ExamsOfCurrPatientLatest = ExamsOfCurrPatient.Where(s => s.Date == MaxExam).ToList();
+                            ExaminationLeg leftLegExam = Data.ExaminationLeg.Get(ExamsOfCurrPatientLatest[0].idLeftLegExamination.Value);
+                            ExaminationLeg rightLegExam = Data.ExaminationLeg.Get(ExamsOfCurrPatientLatest[0].idRightLegExamination.Value);
+                            List<ComplainsType> ComplainsList = new List<ComplainsType>();
+
+                            foreach (var diag in Data.ComplanesObs.GetAll.Where(s => s.id_Examination == ExamsOfCurrPatientLatest[0].Id).ToList())
                             {
-
-                                DateTime MaxExam = ExamsOfCurrPatient.Max(s => s.Date);
-                                var ExamsOfCurrPatientLatest = ExamsOfCurrPatient.Where(s => s.Date == MaxExam).ToList();
-                                ExaminationLeg leftLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idLeftLegExamination.Value);
-                                ExaminationLeg rightLegExam = LegExamRep.Get(ExamsOfCurrPatientLatest[0].idRightLegExamination.Value);
-                                List<ComplainsType> ComplainsList = new List<ComplainsType>();
-
-                                foreach (var diag in Data.ComplanesObs.GetAll.Where(s => s.id_Examination == ExamsOfCurrPatientLatest[0].Id).ToList())
+                                ComplainsList.Add(Data.ComplainsTypes.Get(diag.id_Complains));
+                            }
+                            string complanes = "";
+                            if (ComplainsList != null)
+                            {
+                                int xxx = 0;
+                                foreach (var rec in ComplainsList)
                                 {
-                                    ComplainsList.Add(Data.ComplainsTypes.Get(diag.id_Complains));
-                                }
-                                string complanes = "";
-                                if (ComplainsList != null)
-                                {
-                                    int xxx = 0;
-                                    foreach (var rec in ComplainsList)
+
+                                    if (xxx == 0)
                                     {
-
-                                        if (xxx == 0)
-                                        {
-                                            complanes += GetStrFixedForDocumemnt(rec.Str);
-                                        }
-                                        else
-                                        {
-                                            complanes += ", " + GetStrFixedForDocumemnt(rec.Str);
-                                        }
-                                        xxx++;
-
-
-
+                                        complanes += GetStrFixedForDocumemnt(rec.Str);
                                     }
-                                    char[] chararrbuF1 = complanes.ToCharArray();
-                                    if (chararrbuF1.Length != 0 && chararrbuF1[0] == ' ')
-                                    {
-                                        complanes = complanes.Remove(0, 1);
-
-                                    }
-                                    if (chararrbuF1.Length != 0 && chararrbuF1[chararrbuF1.Length - 1] == '.')
-                                    { }
                                     else
                                     {
-                                        complanes += ".";
+                                        complanes += ", " + GetStrFixedForDocumemnt(rec.Str);
                                     }
+                                    xxx++;
+
+
+
                                 }
-                                document.ReplaceText("«Жалобы»", complanes);
-
-
-
-
-
-
-
-
-
-                                //document.ReplaceText("«Жалобы»", complanes);
-
-
-
-
-
-
-
-                                Letters bufLetter = new Letters();
-                                if (leftLegExam.C != null)
+                                char[] chararrbuF1 = complanes.ToCharArray();
+                                if (chararrbuF1.Length != 0 && chararrbuF1[0] == ' ')
                                 {
-                                    bufLetter = LettersRep.Get(leftLegExam.C.Value);
-                                    lettersLeft += bufLetter.Leter + bufLetter.Text1 + " ";
-                                }
-                                if (leftLegExam.A != null)
-                                {
-                                    bufLetter = LettersRep.Get(leftLegExam.A.Value);
-                                    lettersLeft += bufLetter.Leter + bufLetter.Text1 + " ";
-                                }
-                                if (leftLegExam.E != null)
-                                {
-                                    bufLetter = LettersRep.Get(leftLegExam.E.Value);
-                                    lettersLeft += bufLetter.Leter + bufLetter.Text1 + " ";
-                                }
-                                if (leftLegExam.P != null)
-                                {
-                                    bufLetter = LettersRep.Get(leftLegExam.P.Value);
-                                    lettersLeft += bufLetter.Leter + bufLetter.Text1 + " ";
-                                }
+                                    complanes = complanes.Remove(0, 1);
 
-                                if (rightLegExam.C != null)
-                                {
-                                    bufLetter = LettersRep.Get(rightLegExam.C.Value);
-                                    lettersRight += bufLetter.Leter + bufLetter.Text1 + " ";
                                 }
-                                if (rightLegExam.A != null)
+                                if (chararrbuF1.Length != 0 && chararrbuF1[chararrbuF1.Length - 1] == '.')
+                                { }
+                                else
                                 {
-                                    bufLetter = LettersRep.Get(rightLegExam.A.Value);
-                                    lettersRight += bufLetter.Leter + bufLetter.Text1 + " ";
+                                    complanes += ".";
                                 }
-                                if (rightLegExam.E != null)
-                                {
-                                    bufLetter = LettersRep.Get(rightLegExam.E.Value);
-                                    lettersRight += bufLetter.Leter + bufLetter.Text1 + " ";
-                                }
-                                if (rightLegExam.P != null)
-                                {
-                                    bufLetter = LettersRep.Get(rightLegExam.P.Value);
-                                    lettersRight += bufLetter.Leter + bufLetter.Text1 + " ";
-                                }
-
                             }
-                            else
+                            document.ReplaceText("«Жалобы»", complanes);
+
+
+
+
+
+
+
+
+
+                            //document.ReplaceText("«Жалобы»", complanes);
+
+
+
+
+
+
+
+                            Letters bufLetter = new Letters();
+                            if (leftLegExam.C != null)
                             {
-                                document.ReplaceText("«Жалобы»", "");
-
+                                bufLetter = Data.Letters.Get(leftLegExam.C.Value);
+                                lettersLeft += bufLetter.Leter + bufLetter.Text1 + " ";
                             }
+                            if (leftLegExam.A != null)
+                            {
+                                bufLetter = Data.Letters.Get(leftLegExam.A.Value);
+                                lettersLeft += bufLetter.Leter + bufLetter.Text1 + " ";
+                            }
+                            if (leftLegExam.E != null)
+                            {
+                                bufLetter = Data.Letters.Get(leftLegExam.E.Value);
+                                lettersLeft += bufLetter.Leter + bufLetter.Text1 + " ";
+                            }
+                            if (leftLegExam.P != null)
+                            {
+                                bufLetter = Data.Letters.Get(leftLegExam.P.Value);
+                                lettersLeft += bufLetter.Leter + bufLetter.Text1 + " ";
+                            }
+
+                            if (rightLegExam.C != null)
+                            {
+                                bufLetter = Data.Letters.Get(rightLegExam.C.Value);
+                                lettersRight += bufLetter.Leter + bufLetter.Text1 + " ";
+                            }
+                            if (rightLegExam.A != null)
+                            {
+                                bufLetter = Data.Letters.Get(rightLegExam.A.Value);
+                                lettersRight += bufLetter.Leter + bufLetter.Text1 + " ";
+                            }
+                            if (rightLegExam.E != null)
+                            {
+                                bufLetter = Data.Letters.Get(rightLegExam.E.Value);
+                                lettersRight += bufLetter.Leter + bufLetter.Text1 + " ";
+                            }
+                            if (rightLegExam.P != null)
+                            {
+                                bufLetter = Data.Letters.Get(rightLegExam.P.Value);
+                                lettersRight += bufLetter.Leter + bufLetter.Text1 + " ";
+                            }
+
+                        }
+                        else
+                        {
+                            document.ReplaceText("«Жалобы»", "");
 
                         }
 
@@ -1021,33 +990,29 @@ namespace WpfApp2.ViewModels
 
                         document.Save();
                         byte[] bteToBD = File.ReadAllBytes(fileName);
-                        using (var context = new MySqlContext())
+                        StatementOperation Hv = new StatementOperation();
+                        if (Operation.StatementId != null && Operation.StatementId != 0)
                         {
-                            StatementOperationRepository HirurgOverviewRep = new StatementOperationRepository(context);
-                            StatementOperation Hv = new StatementOperation();
-                            if (Operation.StatementId != null && Operation.StatementId != 0)
-                            {
-                                Hv = Data.StatementOperation.Get(Operation.StatementId.Value);
-                                Hv.FirstIsRightIfNull = SelectedLeg;
-                                Hv.CountDays = Days;
-                                Hv.DocTemplate = bteToBD;
-                                Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
-                                Data.Complete();
-                            }
-                            else
-                            {
+                            Hv = Data.StatementOperation.Get(Operation.StatementId.Value);
+                            Hv.FirstIsRightIfNull = SelectedLeg;
+                            Hv.CountDays = Days;
+                            Hv.DocTemplate = bteToBD;
+                            Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
+                            Data.Complete();
+                        }
+                        else
+                        {
 
-                                Hv.DocTemplate = bteToBD;
-                                Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
-                                Hv.CountDays = Days;
-                                Hv.FirstIsRightIfNull = SelectedLeg;
-                                Data.StatementOperation.Add(Hv);
+                            Hv.DocTemplate = bteToBD;
+                            Hv.DoctorId = Doctors[SelectedDoctor].doc.Id;
+                            Hv.CountDays = Days;
+                            Hv.FirstIsRightIfNull = SelectedLeg;
+                            Data.StatementOperation.Add(Hv);
 
-                                Data.Complete();
-                                Operation = Data.Operation.Get(Operation.Id);
-                                Operation.StatementId = Hv.Id;
-                                Data.Complete();
-                            }
+                            Data.Complete();
+                            Operation = Data.Operation.Get(Operation.Id);
+                            Operation.StatementId = Hv.Id;
+                            Data.Complete();
                         }
                         //Release this document from memory.
                         IsDocAdded = Visibility.Visible;

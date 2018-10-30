@@ -97,12 +97,7 @@ namespace WpfApp2.ViewModels
 
         private void SetCurrentPatientIDRealyThisTime(object sender, object data)
         {
-            using (var context = new MySqlContext())
-            {
-                PatientsRepository PtRep = new PatientsRepository(context);
-
-                CurrentPatient = PtRep.Get((int)data);
-            }
+            CurrentPatient = Data.Patients.Get((int)data);
         }
         private void SetCurrentPatientID(object sender, object data)
         {
@@ -114,49 +109,41 @@ namespace WpfApp2.ViewModels
             CurrentDocument = new AdditionalInfoDocument();
             try
             {
-                using (var context = new MySqlContext())
+                // CurrentPatient = PtRep.Get((int)data);CurrentDocument
+                Doctors = new ObservableCollection<Docs>();
+                //bool tester = true;
+                foreach (var doc in Data.Doctor.GetAll)
                 {
-                    AdditionalInfoDocumentRepository HVRep = new AdditionalInfoDocumentRepository(context);
-                    DoctorRepository DoctorRep = new DoctorRepository(context);
-                    PatientsRepository PtRep = new PatientsRepository(context);
-
-                    // CurrentPatient = PtRep.Get((int)data);CurrentDocument
-                    Doctors = new ObservableCollection<Docs>();
-                    //bool tester = true;
-                    foreach (var doc in DoctorRep.GetAll)
+                    if (doc.isEnabled.Value)
                     {
-                        if (doc.isEnabled.Value)
-                        {
-                            Doctors.Add(new Docs(doc));
-                        }
+                        Doctors.Add(new Docs(doc));
                     }
+                }
 
 
-                    if (data != null && int.Parse(data.ToString()) != 0)
+                if (data != null && int.Parse(data.ToString()) != 0)
+                {
+                    CurrentDocument = Data.AdditionalInfoDocument.Get(int.Parse(data.ToString()));
+                    if (CurrentDocument.DoctorId != 0)
                     {
-                        CurrentDocument = HVRep.Get(int.Parse(data.ToString()));
-                        if (CurrentDocument.DoctorId != 0)
+                        var doc = Data.Doctor.Get(CurrentDocument.DoctorId);
+                        foreach (var docs in Doctors)
                         {
-                            var doc = DoctorRep.Get(CurrentDocument.DoctorId);
-                            foreach (var docs in Doctors)
+                            if (docs.doc.Id == doc.Id)
                             {
-                                if (docs.doc.Id == doc.Id)
-                                {
-                                    DoctorSelectedId = Doctors.IndexOf(docs);
-                                }
+                                DoctorSelectedId = Doctors.IndexOf(docs);
                             }
                         }
-                        // DoctorSelectedId = CurrentDocument.DoctorId;
-                        IsDocAdded = Visibility.Visible;
-                        TextForDoWhat = "";
                     }
-                    else
-                    {
-                        DoctorSelectedId = 0;
-                        IsDocAdded = Visibility.Hidden;
-                        TextForDoWhat = "Сформируйте или загрузите документ";
-
-                    }
+                    // DoctorSelectedId = CurrentDocument.DoctorId;
+                    IsDocAdded = Visibility.Visible;
+                    TextForDoWhat = "";
+                }
+                else
+                {
+                    DoctorSelectedId = 0;
+                    IsDocAdded = Visibility.Hidden;
+                    TextForDoWhat = "Сформируйте или загрузите документ";
 
                 }
             }
@@ -305,34 +292,29 @@ namespace WpfApp2.ViewModels
                     if (!string.IsNullOrWhiteSpace(FileName))
                     {
                         byte[] bteToBD = File.ReadAllBytes(FileName);
-                        using (var context = new MySqlContext())
+                        AdditionalInfoDocument Hv = new AdditionalInfoDocument();
+
+                        //bool tester = true;
+
+                        if (CurrentDocument.Id != 0)
                         {
-                            AdditionalInfoDocumentRepository HirurgOverviewRep = new AdditionalInfoDocumentRepository(context);
-                            AdditionalInfoDocument Hv = new AdditionalInfoDocument();
+                            Hv = Data.AdditionalInfoDocument.Get(CurrentDocument.Id);
+                            CurrentDocument.DocTemplate = bteToBD;
+                            Hv.DocTemplate = bteToBD;
+                            Hv.DoctorId = Doctors[DoctorSelectedId].doc.Id;
+                            Data.Complete();
+                        }
+                        else
+                        {
 
-                            //bool tester = true;
+                            Hv.DocTemplate = bteToBD;
+                            Hv.DoctorId = Doctors[DoctorSelectedId].doc.Id;
+                            CurrentDocument.DocTemplate = bteToBD;
+                            Data.AdditionalInfoDocument.Add(Hv);
 
-                            if (CurrentDocument.Id != 0)
-                            {
-                                Hv = Data.AdditionalInfoDocument.Get(CurrentDocument.Id);
-                                CurrentDocument.DocTemplate = bteToBD;
-                                Hv.DocTemplate = bteToBD;
-                                Hv.DoctorId = Doctors[DoctorSelectedId].doc.Id;
-                                Data.Complete();
-                            }
-                            else
-                            {
-
-                                Hv.DocTemplate = bteToBD;
-                                Hv.DoctorId = Doctors[DoctorSelectedId].doc.Id;
-                                CurrentDocument.DocTemplate = bteToBD;
-                                Data.AdditionalInfoDocument.Add(Hv);
-
-                                Data.Complete();
-                                CurrentDocument.Id = Hv.Id;
-                                MessageBus.Default.Call("SetIdOfAdditionalInfoDoc", null, CurrentDocument.Id);
-                            }
-
+                            Data.Complete();
+                            CurrentDocument.Id = Hv.Id;
+                            MessageBus.Default.Call("SetIdOfAdditionalInfoDoc", null, CurrentDocument.Id);
                         }
                         CurrentSavePanelViewModel.PanelOpened = false;
                         TextForDoWhat = "Изменения в " + _fileNameOnly + " были сохранены";
@@ -358,31 +340,26 @@ namespace WpfApp2.ViewModels
                     _fileNameOnly = openFileDialog.SafeFileName;
                     FileName = openFileDialog.FileName;
                     byte[] bteToBD = File.ReadAllBytes(FileName);
-                    using (var context = new MySqlContext())
+                    AdditionalInfoDocument Hv = new AdditionalInfoDocument();
+
+                    if (CurrentDocument.Id != 0)
                     {
-                        AdditionalInfoDocumentRepository HirurgOverviewRep = new AdditionalInfoDocumentRepository(context);
-                        AdditionalInfoDocument Hv = new AdditionalInfoDocument();
+                        Hv = Data.AdditionalInfoDocument.Get(CurrentDocument.Id);
 
-                        if (CurrentDocument.Id != 0)
-                        {
-                            Hv = Data.AdditionalInfoDocument.Get(CurrentDocument.Id);
+                        Hv.DocTemplate = bteToBD;
+                        Hv.DoctorId = Doctors[DoctorSelectedId].doc.Id;
+                        Data.Complete();
+                    }
+                    else
+                    {
 
-                            Hv.DocTemplate = bteToBD;
-                            Hv.DoctorId = Doctors[DoctorSelectedId].doc.Id;
-                            Data.Complete();
-                        }
-                        else
-                        {
+                        Hv.DocTemplate = bteToBD;
+                        Hv.DoctorId = Doctors[DoctorSelectedId].doc.Id;
+                        Data.AdditionalInfoDocument.Add(Hv);
 
-                            Hv.DocTemplate = bteToBD;
-                            Hv.DoctorId = Doctors[DoctorSelectedId].doc.Id;
-                            Data.AdditionalInfoDocument.Add(Hv);
-
-                            Data.Complete();
-                            CurrentDocument.Id = Hv.Id;
-                            MessageBus.Default.Call("SetIdOfAdditionalInfoDoc", null, CurrentDocument.Id);
-                        }
-
+                        Data.Complete();
+                        CurrentDocument.Id = Hv.Id;
+                        MessageBus.Default.Call("SetIdOfAdditionalInfoDoc", null, CurrentDocument.Id);
                     }
 
                     MessageBus.Default.Call("GetAdditionalInfoDocForHirurgOverview", null, CurrentDocument.Id);

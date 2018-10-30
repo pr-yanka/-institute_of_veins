@@ -137,173 +137,157 @@ namespace WpfApp2.ViewModels
         }
         private void GetOperation(object sender, object data)
         {
-            using (var context = new MySqlContext())
+            Operation = Data.Operation.Get((int)data);
+
+
+
+            //DateTime bufTime = DateTime.Parse(Operation.Time);
+
+            //Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
+
+
+            if (Operation.operation_result == null)
             {
-                OperationTypeOperationsRepository OperationOpRep = new OperationTypeOperationsRepository(context);
-                DiagnosisRepository DiagnosisRep = new DiagnosisRepository(context);
-                DiagnosisTypeRepository DiagnosisTypeRep = new DiagnosisTypeRepository(context);
-                MedPersonalRepository MedPersonalRep = new MedPersonalRepository(context);
-                DoctorRepository DoctorRep = new DoctorRepository(context);
-                OperationRepository OperationRp = new OperationRepository(context);
-
-                AnestethicRepository AnestethicRep = new AnestethicRepository(context);
-                OperationTypeRepository OperationTypeRep = new OperationTypeRepository(context);
-                PatientsRepository PatientsRep = new PatientsRepository(context);
-
-                BrigadeRepository BrigadeRep = new BrigadeRepository(context);
-                BrigadeMedPersonalRepository BrigadeMedRep = new BrigadeMedPersonalRepository(context);
-
-                Operation = OperationRp.Get((int)data);
-
-
-
-                //DateTime bufTime = DateTime.Parse(Operation.Time);
-
-                //Operation.Date = new DateTime(Operation.Date.Year, Operation.Date.Month, Operation.Date.Day, bufTime.Hour, bufTime.Minute, bufTime.Second);
-
-
-                if (Operation.operation_result == null)
+                OperationResults = "Операция еще не проведена";
+                VisiBIlityOfAddResult = Visibility.Visible;
+                VisiBIlityOfAddCancle = Visibility.Visible;
+                ResultButtonName = "Добавить итоги";
+                ToAddOperationResultCommand = new DelegateCommand(() =>
                 {
-                    OperationResults = "Операция еще не проведена";
-                    VisiBIlityOfAddResult = Visibility.Visible;
-                    VisiBIlityOfAddCancle = Visibility.Visible;
-                    ResultButtonName = "Добавить итоги";
-                    ToAddOperationResultCommand = new DelegateCommand(() =>
-                    {
-                        MessageBus.Default.Call("GetOperationIDForAddOperationResult", this, Operation.Id);
-                        Controller.NavigateTo<ViewModelAddOperationResult>();
-                    });
+                    MessageBus.Default.Call("GetOperationIDForAddOperationResult", this, Operation.Id);
+                    Controller.NavigateTo<ViewModelAddOperationResult>();
+                });
+            }
+            else
+            {
+                OperationResults = "Операция проведена";
+                VisiBIlityOfAddResult = Visibility.Visible;
+                VisiBIlityOfAddCancle = Visibility.Hidden;
+                ResultButtonName = "Добавить итоги";
+                ToAddOperationResultCommand = new DelegateCommand(() =>
+                {
+                    MessageBus.Default.Call("GetOperationIDForAddOperationResult", this, Operation.Id);
+                    Controller.NavigateTo<ViewModelAddOperationResult>();
+                });
+            }
+
+            if (Operation.operation_result != null)
+            {
+
+                OperationResults = "Итоги добавлены";
+                VisiBIlityOfAddResult = Visibility.Visible;
+                VisiBIlityOfAddCancle = Visibility.Hidden;
+                ResultButtonName = "Посмотреть итоги";
+                ToAddOperationResultCommand = new DelegateCommand(() =>
+                {
+                    //MessageBus.Default.Call("GetOprForOprResultOverview", this, Operation.Id);
+                    //Controller.NavigateTo<ViewModelOperationResultOverview>();
+                    MessageBus.Default.Call("GetOperationIDForAddOperationResult", this, Operation.Id);
+                    Controller.NavigateTo<ViewModelAddOperationResult>();
+
+                });
+            }
+
+            if (Operation.cancel_operations != null)
+            {
+                OperationResults = "Операция отменена";
+                VisiBIlityOfAddResult = Visibility.Hidden;
+                VisiBIlityOfAddCancle = Visibility.Hidden;
+            }
+            LeftDiagnosisList = new List<DiagnosisDataSource>();
+            RightDiagnosisList = new List<DiagnosisDataSource>();
+            DoctorsSelected = new List<DoctorDataSource>();
+            RightOperationList = new List<OperationTypesDataSource>();
+            LeftOperationList = new List<OperationTypesDataSource>();
+            AnesteticSelected = Data.Anestethic.Get(Operation.AnestheticId).Str;
+
+
+            //OprTypeSelected = OperationTypeRep.Get(Operation.OperationTypeId).LongName;
+
+
+            CurrentPatient = Data.Patients.Get(Operation.PatientId);
+
+
+            initials = " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
+
+
+            foreach (var Brigade in Data.Brigade.GetAll)
+            {
+                if (Brigade.id_operation == Operation.Id)
+                {
+                    var doctor = Data.Doctor.Get(Brigade.id_doctor.Value);
+                    var buf = new DoctorDataSource(doctor.Name, doctor.Sirname, doctor.Patronimic, true, doctor.Id);
+                    buf.IsChecked = true;
+                    DoctorsSelected.Add(buf);
                 }
-                else
+            }
+            foreach (var Brigade in Data.BrigadeMedPersonal.GetAll)
+            {
+                if (Brigade.id_operation == Operation.Id)
                 {
-                    OperationResults = "Операция проведена";
-                    VisiBIlityOfAddResult = Visibility.Visible;
-                    VisiBIlityOfAddCancle = Visibility.Hidden;
-                    ResultButtonName = "Добавить итоги";
-                    ToAddOperationResultCommand = new DelegateCommand(() =>
-                    {
-                        MessageBus.Default.Call("GetOperationIDForAddOperationResult", this, Operation.Id);
-                        Controller.NavigateTo<ViewModelAddOperationResult>();
-                    });
+                    var medPersonal = Data.MedPersonal.Get(Brigade.id_med_staff.Value);
+                    var buf = new DoctorDataSource(medPersonal.Name, medPersonal.Surname, medPersonal.Patronimic, false, medPersonal.Id);
+                    buf.IsChecked = true;
+                    DoctorsSelected.Add(buf);
                 }
+            }
 
-                if (Operation.operation_result != null)
+
+
+            foreach (var Diagnosis in Data.Diagnosis.GetAll)
+            {
+                if (Diagnosis.id_operation == Operation.Id)
                 {
-
-                    OperationResults = "Итоги добавлены";
-                    VisiBIlityOfAddResult = Visibility.Visible;
-                    VisiBIlityOfAddCancle = Visibility.Hidden;
-                    ResultButtonName = "Посмотреть итоги";
-                    ToAddOperationResultCommand = new DelegateCommand(() =>
+                    if (Diagnosis.isLeft == true)
                     {
-                        //MessageBus.Default.Call("GetOprForOprResultOverview", this, Operation.Id);
-                        //Controller.NavigateTo<ViewModelOperationResultOverview>();
-                        MessageBus.Default.Call("GetOperationIDForAddOperationResult", this, Operation.Id);
-                        Controller.NavigateTo<ViewModelAddOperationResult>();
-
-                    });
-                }
-
-                if (Operation.cancel_operations != null)
-                {
-                    OperationResults = "Операция отменена";
-                    VisiBIlityOfAddResult = Visibility.Hidden;
-                    VisiBIlityOfAddCancle = Visibility.Hidden;
-                }
-                LeftDiagnosisList = new List<DiagnosisDataSource>();
-                RightDiagnosisList = new List<DiagnosisDataSource>();
-                DoctorsSelected = new List<DoctorDataSource>();
-                RightOperationList = new List<OperationTypesDataSource>();
-                LeftOperationList = new List<OperationTypesDataSource>();
-                AnesteticSelected = AnestethicRep.Get(Operation.AnestheticId).Str;
-
-
-                //OprTypeSelected = OperationTypeRep.Get(Operation.OperationTypeId).LongName;
-
-
-                CurrentPatient = PatientsRep.Get(Operation.PatientId);
-
-
-                initials = " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
-
-
-                foreach (var Brigade in BrigadeRep.GetAll)
-                {
-                    if (Brigade.id_operation == Operation.Id)
+                        var buf1 = new DiagnosisDataSource(Data.DiagnosisTypes.Get(Diagnosis.id_diagnosis.Value));
+                        buf1.IsChecked = true;
+                        LeftDiagnosisList.Add(buf1);
+                    }
+                    else
                     {
-                        var buf = new DoctorDataSource(DoctorRep.Get(Brigade.id_doctor.Value).Name, DoctorRep.Get(Brigade.id_doctor.Value).Sirname, DoctorRep.Get(Brigade.id_doctor.Value).Patronimic, true, DoctorRep.Get(Brigade.id_doctor.Value).Id);
-                        buf.IsChecked = true;
-                        DoctorsSelected.Add(buf);
+                        var buf2 = new DiagnosisDataSource(Data.DiagnosisTypes.Get(Diagnosis.id_diagnosis.Value));
+                        buf2.IsChecked = true;
+                        RightDiagnosisList.Add(buf2);
                     }
                 }
-                foreach (var Brigade in BrigadeMedRep.GetAll)
+            }
+
+
+
+
+            foreach (var Diagnosis in Data.OperationTypeOperations.GetAll)
+            {
+                if (Diagnosis.id_operation == Operation.Id)
                 {
-                    if (Brigade.id_operation == Operation.Id)
+                    if (Diagnosis.isLeft == true)
                     {
-                        var buf = new DoctorDataSource(MedPersonalRep.Get(Brigade.id_med_staff.Value).Name, MedPersonalRep.Get(Brigade.id_med_staff.Value).Surname, MedPersonalRep.Get(Brigade.id_med_staff.Value).Patronimic, false, MedPersonalRep.Get(Brigade.id_med_staff.Value).Id);
-                        buf.IsChecked = true;
-                        DoctorsSelected.Add(buf);
+                        var buf1 = new OperationTypesDataSource(Data.OperationType.Get(Diagnosis.id_operation_type.Value));
+                        buf1.IsChecked = true;
+                        LeftOperationList.Add(buf1);
+                    }
+                    else
+                    {
+                        var buf2 = new OperationTypesDataSource(Data.OperationType.Get(Diagnosis.id_operation_type.Value));
+                        buf2.IsChecked = true;
+                        RightOperationList.Add(buf2);
                     }
                 }
-
-
-
-                foreach (var Diagnosis in DiagnosisRep.GetAll)
-                {
-                    if (Diagnosis.id_operation == Operation.Id)
-                    {
-                        if (Diagnosis.isLeft == true)
-                        {
-                            var buf1 = new DiagnosisDataSource(DiagnosisTypeRep.Get(Diagnosis.id_diagnosis.Value));
-                            buf1.IsChecked = true;
-                            LeftDiagnosisList.Add(buf1);
-                        }
-                        else
-                        {
-                            var buf2 = new DiagnosisDataSource(DiagnosisTypeRep.Get(Diagnosis.id_diagnosis.Value));
-                            buf2.IsChecked = true;
-                            RightDiagnosisList.Add(buf2);
-                        }
-                    }
-                }
-
-
-
-
-                foreach (var Diagnosis in OperationOpRep.GetAll)
-                {
-                    if (Diagnosis.id_operation == Operation.Id)
-                    {
-                        if (Diagnosis.isLeft == true)
-                        {
-                            var buf1 = new OperationTypesDataSource(OperationTypeRep.Get(Diagnosis.id_operation_type.Value));
-                            buf1.IsChecked = true;
-                            LeftOperationList.Add(buf1);
-                        }
-                        else
-                        {
-                            var buf2 = new OperationTypesDataSource(OperationTypeRep.Get(Diagnosis.id_operation_type.Value));
-                            buf2.IsChecked = true;
-                            RightOperationList.Add(buf2);
-                        }
-                    }
-                }
-                if (Operation.OnWhatLegOp == "0")
-                {
-                    IsLeftLegInOperation = Visibility.Visible;
-                    IsRightLegInOperation = Visibility.Collapsed;
-                }
-                if (Operation.OnWhatLegOp == "1")
-                {
-                    IsLeftLegInOperation = Visibility.Collapsed;
-                    IsRightLegInOperation = Visibility.Visible;
-                }
-                if (Operation.OnWhatLegOp == "2")
-                {
-                    IsLeftLegInOperation = Visibility.Visible;
-                    IsRightLegInOperation = Visibility.Visible;
-                }
-
+            }
+            if (Operation.OnWhatLegOp == "0")
+            {
+                IsLeftLegInOperation = Visibility.Visible;
+                IsRightLegInOperation = Visibility.Collapsed;
+            }
+            if (Operation.OnWhatLegOp == "1")
+            {
+                IsLeftLegInOperation = Visibility.Collapsed;
+                IsRightLegInOperation = Visibility.Visible;
+            }
+            if (Operation.OnWhatLegOp == "2")
+            {
+                IsLeftLegInOperation = Visibility.Visible;
+                IsRightLegInOperation = Visibility.Visible;
             }
         }
 

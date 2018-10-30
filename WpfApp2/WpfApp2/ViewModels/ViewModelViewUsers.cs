@@ -81,50 +81,40 @@ namespace WpfApp2.ViewModels
             TooltipText = "Архивация позволяет отключить пользователя от системы";
             DataSource = new ObservableCollection<UsersDataSource>();
 
-
-            using (MySqlContext context = new MySqlContext())
+            foreach (var User in Data.Accaunt.GetAll)
             {
-                AccauntRepository accRep = new AccauntRepository(context);
-
-
-
-
-                foreach (var User in accRep.GetAll)
+                DelegateCommand Redact = new DelegateCommand(
+                () =>
                 {
-                    DelegateCommand Redact = new DelegateCommand(
-                  () =>
-                  {
 
-                      MessageBus.Default.Call("GetUserForEditUser", this, User.Id);
-                      Controller.NavigateTo<ViewModelEditUser>();
-                  }
-                  );
-
-                    string BtnName = "Разархивировать";
-                    DelegateCommand Archivate = new DelegateCommand(
-                        () =>
-                        {
-                            Data.Accaunt.Get(User.Id).isEnabled = true;
-                            Data.Complete();
-                            MessageBus.Default.Call("OpenUsers", this, "");
-                        }
-                        );
-                    if (User.isEnabled == true)
-                    {
-                        BtnName = "Архивировать";
-                        Archivate = new DelegateCommand(
-                       () =>
-                       {
-                           Data.Accaunt.Get(User.Id).isEnabled = false;
-                           Data.Complete();
-                           MessageBus.Default.Call("OpenUsers", this, "");
-                       }
-                       );
-                    }
-                    DataSource.Add(new UsersDataSource(Redact, User.Name, Archivate, BtnName));
+                    MessageBus.Default.Call("GetUserForEditUser", this, User.Id);
+                    Controller.NavigateTo<ViewModelEditUser>();
                 }
-            }
+                );
 
+                string BtnName = "Разархивировать";
+                DelegateCommand Archivate = new DelegateCommand(
+                    () =>
+                    {
+                        Data.Accaunt.Get(User.Id).isEnabled = true;
+                        Data.Complete();
+                        MessageBus.Default.Call("OpenUsers", this, "");
+                    }
+                    );
+                if (User.isEnabled == true)
+                {
+                    BtnName = "Архивировать";
+                    Archivate = new DelegateCommand(
+                    () =>
+                    {
+                        Data.Accaunt.Get(User.Id).isEnabled = false;
+                        Data.Complete();
+                        MessageBus.Default.Call("OpenUsers", this, "");
+                    }
+                    );
+                }
+                DataSource.Add(new UsersDataSource(Redact, User.Name, Archivate, BtnName));
+            }
         }
 
         public ViewModelViewUsers(NavigationController controller) : base(controller)

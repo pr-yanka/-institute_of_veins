@@ -114,19 +114,15 @@ namespace WpfApp2.ViewModels
                       Data.Complete();
 
 
-                      using (var context = new MySqlContext())
-                      {
-                          var timeItem = context.Set<OperationDateTime>().Where(e => e.Operation_id != null && e.Datetime.Year == opDate.Datetime.Year && e.Datetime.Month == opDate.Datetime.Month && e.Datetime.Day == opDate.Datetime.Day).FirstOrDefault();
-                          if (timeItem == null)
-                          {
-                              foreach (var opDate1 in context.Set<OperationDateTime>().Where(e => e.Datetime.Year == opDate.Datetime.Year && e.Datetime.Month == opDate.Datetime.Month && e.Datetime.Day == opDate.Datetime.Day))
-                              {
-                                  Data.OperationDateTime.Remove(Data.OperationDateTime.Get(opDate1.Id));
-                              }
-                          }
-                          Data.Complete();
-                      }
-
+                        var timeItem = Data.OperationDateTime.Where(e => e.Operation_id != null && e.Datetime.Year == opDate.Datetime.Year && e.Datetime.Month == opDate.Datetime.Month && e.Datetime.Day == opDate.Datetime.Day).FirstOrDefault();
+                        if (timeItem == null)
+                        {
+                            foreach (var opDate1 in Data.OperationDateTime.Where(e => e.Datetime.Year == opDate.Datetime.Year && e.Datetime.Month == opDate.Datetime.Month && e.Datetime.Day == opDate.Datetime.Day))
+                            {
+                                Data.OperationDateTime.Remove(Data.OperationDateTime.Get(opDate1.Id));
+                            }
+                        }
+                        Data.Complete();
                   }
                   MessageBus.Default.Call("SetCurrentACCOp", this, null);
                   MessageBus.Default.Call("GetOperationForOverwiev", this, operationId);
@@ -175,18 +171,16 @@ namespace WpfApp2.ViewModels
                         opDate.Note = "Время свободно";
                         opDate.Operation_id = null;
                         Data.Complete();
-                        using (var context = new MySqlContext())
+
+                        var timeItem = Data.OperationDateTime.Where(e => e.Operation_id != null && e.Datetime.Year == opDate.Datetime.Year && e.Datetime.Month == opDate.Datetime.Month && e.Datetime.Day == opDate.Datetime.Day).FirstOrDefault();
+                        if (timeItem == null)
                         {
-                            var timeItem = context.Set<OperationDateTime>().Where(e => e.Operation_id != null && e.Datetime.Year == opDate.Datetime.Year && e.Datetime.Month == opDate.Datetime.Month && e.Datetime.Day == opDate.Datetime.Day).FirstOrDefault();
-                            if (timeItem == null)
+                            foreach (var opDate1 in Data.OperationDateTime.Where(e => e.Datetime.Year == opDate.Datetime.Year && e.Datetime.Month == opDate.Datetime.Month && e.Datetime.Day == opDate.Datetime.Day))
                             {
-                                foreach (var opDate1 in context.Set<OperationDateTime>().Where(e => e.Datetime.Year == opDate.Datetime.Year && e.Datetime.Month == opDate.Datetime.Month && e.Datetime.Day == opDate.Datetime.Day))
-                                {
-                                    Data.OperationDateTime.Remove(Data.OperationDateTime.Get(opDate1.Id));
-                                }
+                                Data.OperationDateTime.Remove(Data.OperationDateTime.Get(opDate1.Id));
                             }
-                            Data.Complete();
                         }
+                        Data.Complete();
                     }
                     MessageBus.Default.Call("SetCurrentACCOp", this, null);
                     MessageBus.Default.Call("ConfirmCancle", null, null);

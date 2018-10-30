@@ -62,16 +62,8 @@ namespace WpfApp2.ViewModels
         private void SetCurrentAnalizeID(object sender, object data)
         {
             IsAnalizeLoadedVisibility = Visibility.Hidden;
-            using (MySqlContext context = new MySqlContext())
-            {
-                AnalizeRepository AnRep = new AnalizeRepository(context);
-                AnalizeTypeRepository AnTpRep = new AnalizeTypeRepository(context);
-                Analize = AnRep.Get((int)data);
-                AnalizeType = AnTpRep.Get(Analize.analyzeType);
-            }
-
-
-
+            Analize = Data.Analize.Get((int)data);
+            AnalizeType = Data.AnalizeType.Get(Analize.analyzeType);
         }
         public Byte[] ImageToByte(BitmapImage imageSource)
         {

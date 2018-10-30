@@ -80,50 +80,44 @@ namespace WpfApp2.ViewModels
 
         private void SetCurrentPatientID(object sender, object data)
         {
-            using (var context = new MySqlContext())
+            TextAddUserOrPersonalOrMed = "Добавить Медперсонал";
+            TooltipText = "Архивация позволяет отключить медсотрудника от системы";
+            DataSource = new ObservableCollection<MedPatientDataSource>();
+
+
+            foreach (var Med in Data.MedPersonal.GetAll)
             {
+                DelegateCommand Redact = new DelegateCommand(
+            () =>
+            {
+                MessageBus.Default.Call("GetMedForMedEdit", this, Med.Id);
+                Controller.NavigateTo<ViewModelEditMedPersonal>();
+            }
+            );
 
-                TextAddUserOrPersonalOrMed = "Добавить Медперсонал";
-                TooltipText = "Архивация позволяет отключить медсотрудника от системы";
-                DataSource = new ObservableCollection<MedPatientDataSource>();
-
-                MedPersonalRepository medRep = new MedPersonalRepository(context);
-
-
-                foreach (var Med in medRep.GetAll)
-                {
-                    DelegateCommand Redact = new DelegateCommand(
-                () =>
-                {
-                    MessageBus.Default.Call("GetMedForMedEdit", this, Med.Id);
-                    Controller.NavigateTo<ViewModelEditMedPersonal>();
-                }
-                );
-
-                    string BtnName = "Разархивировать";
-                    DelegateCommand Archivate = new DelegateCommand(
-                        () =>
-                        {
-                            Data.MedPersonal.Get(Med.Id).isEnabled = true;
-                            Data.Complete();
-                            MessageBus.Default.Call("OpenMeds", this, "");
-                        }
-                        );
-                    if (Med.isEnabled == true)
+                string BtnName = "Разархивировать";
+                DelegateCommand Archivate = new DelegateCommand(
+                    () =>
                     {
-                        BtnName = "Архивировать";
-                        Archivate = new DelegateCommand(
-                       () =>
-                       {
-                           Data.MedPersonal.Get(Med.Id).isEnabled = false;
-                           Data.Complete();
-                           MessageBus.Default.Call("OpenMeds", this, "");
-                       }
-                       );
+                        Data.MedPersonal.Get(Med.Id).isEnabled = true;
+                        Data.Complete();
+                        MessageBus.Default.Call("OpenMeds", this, "");
                     }
-                    string initials = " " + Med.Name.ToCharArray()[0].ToString() + ". " + Med.Patronimic.ToCharArray()[0].ToString() + ". ";
-                    DataSource.Add(new MedPatientDataSource(Redact, Med.Surname + initials, Archivate, BtnName));
+                    );
+                if (Med.isEnabled == true)
+                {
+                    BtnName = "Архивировать";
+                    Archivate = new DelegateCommand(
+                    () =>
+                    {
+                        Data.MedPersonal.Get(Med.Id).isEnabled = false;
+                        Data.Complete();
+                        MessageBus.Default.Call("OpenMeds", this, "");
+                    }
+                    );
                 }
+                string initials = " " + Med.Name.ToCharArray()[0].ToString() + ". " + Med.Patronimic.ToCharArray()[0].ToString() + ". ";
+                DataSource.Add(new MedPatientDataSource(Redact, Med.Surname + initials, Archivate, BtnName));
             }
         }
 

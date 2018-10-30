@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql;
 using System.Data.Entity.Core;
+using System.Linq.Expressions;
 
 namespace WpfApp2.Db.Models
 {
@@ -13,7 +14,7 @@ namespace WpfApp2.Db.Models
     {
         protected readonly DbContext dbContext;
 
-        public IEnumerable<TEntity> GetAll
+        public virtual IEnumerable<TEntity> GetAll
         {
             get
             {
@@ -21,13 +22,13 @@ namespace WpfApp2.Db.Models
                 return dbContext.Set<TEntity>().ToList();
             }
         }
-
+                
         public Repository(DbContext context)
         {
             dbContext = context;
         }
 
-        public TEntity Get(int id)
+        public virtual TEntity Get(int id)
         {
             try  {
                 return dbContext.Set<TEntity>().Find(id);
@@ -57,5 +58,15 @@ namespace WpfApp2.Db.Models
         {
             dbContext.Set<TEntity>().RemoveRange(entities);
         }
+        public IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate)
+        {
+            return dbContext.Set<TEntity>().Where(predicate);
+        }
+
+        public IQueryable<TEntity> Take(int count)
+        {
+            return dbContext.Set<TEntity>().Take(count);
+        }
+
     }
 }

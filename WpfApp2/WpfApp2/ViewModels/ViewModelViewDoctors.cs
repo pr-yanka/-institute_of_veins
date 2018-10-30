@@ -85,46 +85,40 @@ namespace WpfApp2.ViewModels
             TooltipText = "Архивация позволяет отключить врача от системы";
             DataSource = new ObservableCollection<DoctorsDataSource>();
 
-            using (var context = new MySqlContext())
+            foreach (var Doctors in Data.Doctor.GetAll)
             {
-                DoctorRepository dcRep = new DoctorRepository(context);
-
-                foreach (var Doctors in dcRep.GetAll)
+                DelegateCommand Redact = new DelegateCommand(
+                () =>
                 {
-                    DelegateCommand Redact = new DelegateCommand(
+
+                    MessageBus.Default.Call("GetDoctorForEditDoctor", this, Doctors.Id);
+                    Controller.NavigateTo<ViewModelEditDoctor>();
+                }
+                );
+                string BtnName = "Разархивировать";
+                DelegateCommand Archivate = new DelegateCommand(
                     () =>
                     {
-
-                        MessageBus.Default.Call("GetDoctorForEditDoctor", this, Doctors.Id);
-                        Controller.NavigateTo<ViewModelEditDoctor>();
+                        Data.Doctor.Get(Doctors.Id).isEnabled = true;
+                        Data.Complete();
+                        MessageBus.Default.Call("OpenDoctors", this, "");
                     }
                     );
-                    string BtnName = "Разархивировать";
-                    DelegateCommand Archivate = new DelegateCommand(
-                        () =>
-                        {
-                            Data.Doctor.Get(Doctors.Id).isEnabled = true;
-                            Data.Complete();
-                            MessageBus.Default.Call("OpenDoctors", this, "");
-                        }
-                        );
-                    if (Doctors.isEnabled == true)
+                if (Doctors.isEnabled == true)
+                {
+                    BtnName = "Архивировать";
+                    Archivate = new DelegateCommand(
+                    () =>
                     {
-                        BtnName = "Архивировать";
-                        Archivate = new DelegateCommand(
-                       () =>
-                       {
-                           Data.Doctor.Get(Doctors.Id).isEnabled = false;
-                           Data.Complete();
-                           MessageBus.Default.Call("OpenDoctors", this, "");
-                       }
-                       );
+                        Data.Doctor.Get(Doctors.Id).isEnabled = false;
+                        Data.Complete();
+                        MessageBus.Default.Call("OpenDoctors", this, "");
                     }
-                    string initials = " " + Doctors.Name.ToCharArray()[0].ToString() + ". " + Doctors.Patronimic.ToCharArray()[0].ToString() + ". ";
-                    DataSource.Add(new DoctorsDataSource(Redact, Doctors.Sirname + initials, Archivate, BtnName));
+                    );
                 }
+                string initials = " " + Doctors.Name.ToCharArray()[0].ToString() + ". " + Doctors.Patronimic.ToCharArray()[0].ToString() + ". ";
+                DataSource.Add(new DoctorsDataSource(Redact, Doctors.Sirname + initials, Archivate, BtnName));
             }
-
         }
 
         public ViewModelViewDoctors(NavigationController controller) : base(controller)

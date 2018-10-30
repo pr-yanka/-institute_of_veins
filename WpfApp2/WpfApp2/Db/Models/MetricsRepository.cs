@@ -29,12 +29,22 @@ namespace WpfApp2.Db.Models
 
         public MetricsRepository(DbContext context) : base(context)
         {
-            _emptyId = dbContext.Set<Metrics>().Where(entry => (entry.Str == "")).Select(entry => entry.Id).First();
+            dbContext.Set<Metrics>().Load();
+            _emptyId = dbContext.Set<Metrics>().Local.Where(entry => (entry.Str == "")).Select(entry => entry.Id).First();
         }
         public string GetStr(int? id)
         {
             if (id == null || id == _emptyId) return "";
-            else return Get(id.Value).Str;
+            else return dbContext.Set<Metrics>().Local.First(entry => entry.Id == id.Value).Str;
+        }
+
+        public override IEnumerable<Metrics> GetAll
+        {
+            get
+            {
+
+                return dbContext.Set<Metrics>().Local.ToList();
+            }
         }
     }
 }

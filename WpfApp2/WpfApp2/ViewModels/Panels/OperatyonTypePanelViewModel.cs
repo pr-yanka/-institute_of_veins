@@ -43,15 +43,11 @@ namespace WpfApp2.ViewModels.Panels
 
         public OperatyonTypePanelViewModel(ViewModelBase parentVM) : base(parentVM.Controller)
         {
-            using (var context = new MySqlContext())
-            {
-                OperationTypeRepository DoctorRep = new OperationTypeRepository(context);
-                Doctors = new ObservableCollection<OperationType>();
+            Doctors = new ObservableCollection<OperationType>();
 
-                foreach (var doc in DoctorRep.GetAll)
-                {
-                    Doctors.Add(doc);
-                }
+            foreach (var doc in Data.OperationType.GetAll)
+            {
+                Doctors.Add(doc);
             }
             ParentVM = parentVM;
 
