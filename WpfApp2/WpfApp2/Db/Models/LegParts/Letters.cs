@@ -40,7 +40,7 @@ namespace WpfApp2.Db.Models
     {
         public LettersRepository(DbContext context) : base(context)
         {
-            dbContext.Set<Letters>().AsNoTracking().Load();
+            dbContext.Set<Letters>().Load();
         }
 
         public override Letters Get(int id)
