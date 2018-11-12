@@ -398,128 +398,111 @@ namespace WpfApp2.ViewModels
         #region MessageBus
         private void GetTowns()
         {
-            using (var context = new MySqlContext())
+            curOblID = 0;
+            foreach (var Ton in Data.Regions.GetAll)
             {
-                RegionsRepository regRep = new RegionsRepository(context);
-
-                curOblID = 0;
-                foreach (var Ton in regRep.GetAll)
+                if (Ton.Str == Region)
                 {
-                    if (Ton.Str == Region)
-                    {
-                        curOblID = Ton.Id;
-                    }
+                    curOblID = Ton.Id;
                 }
-
-                if (curOblID != 0)
-                {
-                    TownsList = context.Set<Cities>().Where(entry => (entry.OblId == curOblID)).OrderBy(entry => entry.Str).Select(entry => entry.Str).ToList();
-                    //TownsList = context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_города where Область = " + curOblID + " ORDER BY название").ToList();
-                    //  TownListID = context.Database.SqlQuery<int>("SELECT id FROM med_db.справочник_города where Область = " + curOblID).ToList();
-                    DistrictList = context.Set<Districts>().Where(entry => (entry.IdCity == curOblID)).OrderBy(entry => entry.Str).Select(entry => entry.Str).ToList();
-                    // DistrictList = context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_районы where Город = " + curOblID + " ORDER BY название").ToList();
-
-                }
-                else
-                {
-                    DistrictList = new List<string>();
-                    TownsList = new List<string>();
-                }
-                Controller.NavigateTo<ViewModelNewPatient>();
             }
+
+            if (curOblID != 0)
+            {
+                TownsList = Data.Cities.Where(entry => (entry.OblId == curOblID)).OrderBy(entry => entry.Str).Select(entry => entry.Str).ToList();
+                //TownsList = context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_города where Область = " + curOblID + " ORDER BY название").ToList();
+                //  TownListID = context.Database.SqlQuery<int>("SELECT id FROM med_db.справочник_города where Область = " + curOblID).ToList();
+                DistrictList = Data.Districts.Where(entry => (entry.IdCity == curOblID)).OrderBy(entry => entry.Str).Select(entry => entry.Str).ToList();
+                // DistrictList = context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_районы where Город = " + curOblID + " ORDER BY название").ToList();
+
+            }
+            else
+            {
+                DistrictList = new List<string>();
+                TownsList = new List<string>();
+            }
+            Controller.NavigateTo<ViewModelNewPatient>();
         }
 
         private void GetStreetAnDistrict()
         {
-            using (var context = new MySqlContext())
+            curTwnID = 0;
+
+
+            curTwnID = Data.Cities.Where(entry => (entry.Str == Town && entry.OblId == curOblID)).OrderBy(entry => entry.Str).Select(entry => entry.Id).FirstOrDefault();
+
+            // curTwnID = context.Database.SqlQuery<int>("SELECT id FROM med_db.справочник_города where название = '" + Town + "' and Область = " + curOblID + " ORDER BY название").ToList().FirstOrDefault();
+
+            // context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_города where Область = ").ToList();
+
+
+            if (curTwnID != 0)
             {
-                curTwnID = 0;
+                StreetList = Data.Streets.Where(entry => (entry.IdCity == curTwnID)).OrderBy(entry => entry.Str).Select(entry => entry.Str).ToList();
 
+                //    StreetList = context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_улицы where Город = " + curTwnID + " ORDER BY название").ToList();
 
-                curTwnID = context.Set<Cities>().Where(entry => (entry.Str == Town && entry.OblId == curOblID)).OrderBy(entry => entry.Str).Select(entry => entry.Id).FirstOrDefault();
-
-                // curTwnID = context.Database.SqlQuery<int>("SELECT id FROM med_db.справочник_города where название = '" + Town + "' and Область = " + curOblID + " ORDER BY название").ToList().FirstOrDefault();
-
-                // context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_города where Область = ").ToList();
-
-
-                if (curTwnID != 0)
-                {
-                    StreetList = context.Set<Streets>().Where(entry => (entry.IdCity == curTwnID)).OrderBy(entry => entry.Str).Select(entry => entry.Str).ToList();
-
-                    //    StreetList = context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_улицы where Город = " + curTwnID + " ORDER BY название").ToList();
-
-                    // DistrictList = DistrictListbuf;
-                }
-                else
-                {
-                    List<string> DistrictListbuf = new List<string>();
-                    List<string> StreetListbuf = new List<string>();
-                    StreetList = StreetListbuf;
-                    DistrictList = DistrictListbuf;
-                }
-                Controller.NavigateTo<ViewModelNewPatient>();
+                // DistrictList = DistrictListbuf;
             }
+            else
+            {
+                List<string> DistrictListbuf = new List<string>();
+                List<string> StreetListbuf = new List<string>();
+                StreetList = StreetListbuf;
+                DistrictList = DistrictListbuf;
+            }
+            Controller.NavigateTo<ViewModelNewPatient>();
         }
         private void GetDictionary(object sender, object data)
         {
+            CurrentPatientFlat = "";
 
-            using (var context = new MySqlContext())
-            {
-                CurrentPatientFlat = "";
+            Name = "";
 
-                Name = "";
+            Surname = "";
 
-                Surname = "";
+            District = "";
 
-                District = "";
+            Region = "";
 
-                Region = "";
+            Patronimic = "";
 
-                Patronimic = "";
+            Date = DateTime.Now;
 
-                Date = DateTime.Now;
+            Town = "";
 
-                Town = "";
+            Street = "";
 
-                Street = "";
+            House = "";
 
-                House = "";
+            Phone = "";
 
-                Phone = "";
+            email = "";
+            Town = "";
+            District = "";
+            Region = "";
+            Street = "";
 
-                email = "";
-                Town = "";
-                District = "";
-                Region = "";
-                Street = "";
-
-                nameOfButton = "Добавить";
-                Date = DateTime.Now;
+            nameOfButton = "Добавить";
+            Date = DateTime.Now;
 
 
-                List<string> TownsListbuf = new List<string>();
-                List<string> RegionListbuf = new List<string>();
+            List<string> TownsListbuf = new List<string>();
+            List<string> RegionListbuf = new List<string>();
 
 
 
 
 
-                RegionList = context.Set<Regions>().OrderBy(entry => entry.Str).Select(entry => entry.Str).ToList();
-                // RegionList = context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_область ORDER BY название").ToList(); ;
+            RegionList = Data.Regions.GetAll.OrderBy(entry => entry.Str).Select(entry => entry.Str).ToList();
+            // RegionList = context.Database.SqlQuery<string>("SELECT название FROM med_db.справочник_область ORDER BY название").ToList(); ;
 
 
 
 
-                TownsList = TownsListbuf;
-                DistrictList = TownsListbuf;
-                StreetList = TownsListbuf;
-
-
-            }
-
-
-
+            TownsList = TownsListbuf;
+            DistrictList = TownsListbuf;
+            StreetList = TownsListbuf;
         }
         #endregion
 
@@ -603,108 +586,103 @@ namespace WpfApp2.ViewModels
                         //CurrentPatient.Patronimic = Patronimic;
                         //CurrentPatient.Birthday = Date;
 
-                        using (var context = new MySqlContext())
+                        //CurrentPatient = Data.Patients.Get(CurrentPatient.Id);
+                        ////CitiesRepository ctRep = new CitiesRepository(context);
+                        //DistrictsRepository distRep = new DistrictsRepository(context);
+                        //               StreetsRepository strtRep = new StreetsRepository(context);
+                        CurrentPatient.Name = Name;
+                        CurrentPatient.Sirname = Surname;
+                        CurrentPatient.Patronimic = Patronimic;
+                        CurrentPatient.Birthday = Date;
+
+                        bool isExist = false;
+                        foreach (var Region1 in Data.Regions.GetAll)
                         {
-
-                            //CurrentPatient = Data.Patients.Get(CurrentPatient.Id);
-                            ////CitiesRepository ctRep = new CitiesRepository(context);
-                            RegionsRepository regRep = new RegionsRepository(context);
-                            //DistrictsRepository distRep = new DistrictsRepository(context);
-                            //               StreetsRepository strtRep = new StreetsRepository(context);
-                            CurrentPatient.Name = Name;
-                            CurrentPatient.Sirname = Surname;
-                            CurrentPatient.Patronimic = Patronimic;
-                            CurrentPatient.Birthday = Date;
-
-                            bool isExist = false;
-                            foreach (var Region1 in regRep.GetAll)
+                            if (Region1.Str == Region)
                             {
-                                if (Region1.Str == Region)
-                                {
-                                    isExist = true;
-                                    CurrentPatient.Region = Region1.Id;
-                                    break;
-                                }
+                                isExist = true;
+                                CurrentPatient.Region = Region1.Id;
+                                break;
                             }
-                            if (isExist == false)
-                            {
-                                Regions bufRegions = new Regions();
-                                bufRegions.Str = Region;
-                                Data.Regions.Add(bufRegions);
-                                Data.Complete();
-                                curOblID = bufRegions.Id;
-                                CurrentPatient.Region = bufRegions.Id;
-                            }
-
-                            isExist = false;
-
-                            var townsbuflist = context.Set<Cities>().Where(entry => (entry.OblId == curOblID)).OrderBy(entry => entry.Str).ToList();
-                            foreach (var Town1 in townsbuflist)
-                            {
-                                if (Town1.Str == Town && Town1.OblId == curOblID)
-                                {
-                                    isExist = true;
-                                    CurrentPatient.City = Town1.Id;
-                                    break;
-                                }
-                            }
-
-                            if (isExist == false)
-                            {
-                                Cities bufCity = new Cities();
-                                bufCity.Str = Town;
-                                bufCity.OblId = curOblID;
-                                Data.Cities.Add(bufCity);
-                                Data.Complete();
-                                curTwnID = bufCity.Id;
-                                CurrentPatient.City = bufCity.Id;
-                            }
-                            isExist = false;
-                            //StreetsForQuery
-                            var streetbuflist = context.Set<Streets>().Where(entry => (entry.IdCity == curTwnID)).OrderBy(entry => entry.Str).ToList();
-
-                            foreach (var Street1 in streetbuflist)
-                            {
-                                if (Street1.Str == Street && Street1.IdCity == curTwnID)
-                                {
-                                    isExist = true;
-                                    CurrentPatient.Street = Street1.Id;
-                                    break;
-                                }
-                            }
-                            if (isExist == false)
-                            {
-                                Streets bufStreet = new Streets();
-                                bufStreet.Str = Street;
-                                bufStreet.IdCity = curTwnID;
-                                Data.Streets.Add(bufStreet);
-                                Data.Complete();
-                                CurrentPatient.Street = bufStreet.Id;
-                            }
-                            //DistrictsForQuery
-                            isExist = false;
-                            var districtbuflist = context.Set<Districts>().Where(entry => (entry.IdCity == curOblID)).OrderBy(entry => entry.Str).ToList();
-
-                            foreach (var District1 in districtbuflist)
-                            {
-                                if (District1.Str == District && District1.IdCity == curOblID)
-                                {
-                                    isExist = true;
-                                    CurrentPatient.District = District1.Id;
-                                    break;
-                                }
-                            }
-                            if (isExist == false)
-                            {
-                                Districts bufDistricts = new Districts();
-                                bufDistricts.Str = District;
-                                bufDistricts.IdCity = curOblID;
-                                Data.Districts.Add(bufDistricts);
-                                Data.Complete();
-                                CurrentPatient.District = bufDistricts.Id;
-                            }
-
                         }
+                        if (isExist == false)
+                        {
+                            Regions bufRegions = new Regions();
+                            bufRegions.Str = Region;
+                            Data.Regions.Add(bufRegions);
+                            Data.Complete();
+                            curOblID = bufRegions.Id;
+                            CurrentPatient.Region = bufRegions.Id;
+                        }
+
+                        isExist = false;
+
+                        var townsbuflist = Data.Cities.Where(entry => (entry.OblId == curOblID)).OrderBy(entry => entry.Str).ToList();
+                        foreach (var Town1 in townsbuflist)
+                        {
+                            if (Town1.Str == Town && Town1.OblId == curOblID)
+                            {
+                                isExist = true;
+                                CurrentPatient.City = Town1.Id;
+                                break;
+                            }
+                        }
+
+                        if (isExist == false)
+                        {
+                            Cities bufCity = new Cities();
+                            bufCity.Str = Town;
+                            bufCity.OblId = curOblID;
+                            Data.Cities.Add(bufCity);
+                            Data.Complete();
+                            curTwnID = bufCity.Id;
+                            CurrentPatient.City = bufCity.Id;
+                        }
+                        isExist = false;
+                        //StreetsForQuery
+                        var streetbuflist = Data.Streets.Where(entry => (entry.IdCity == curTwnID)).OrderBy(entry => entry.Str).ToList();
+
+                        foreach (var Street1 in streetbuflist)
+                        {
+                            if (Street1.Str == Street && Street1.IdCity == curTwnID)
+                            {
+                                isExist = true;
+                                CurrentPatient.Street = Street1.Id;
+                                break;
+                            }
+                        }
+                        if (isExist == false)
+                        {
+                            Streets bufStreet = new Streets();
+                            bufStreet.Str = Street;
+                            bufStreet.IdCity = curTwnID;
+                            Data.Streets.Add(bufStreet);
+                            Data.Complete();
+                            CurrentPatient.Street = bufStreet.Id;
+                        }
+                        //DistrictsForQuery
+                        isExist = false;
+                        var districtbuflist = Data.Districts.Where(entry => (entry.IdCity == curOblID)).OrderBy(entry => entry.Str).ToList();
+
+                        foreach (var District1 in districtbuflist)
+                        {
+                            if (District1.Str == District && District1.IdCity == curOblID)
+                            {
+                                isExist = true;
+                                CurrentPatient.District = District1.Id;
+                                break;
+                            }
+                        }
+                        if (isExist == false)
+                        {
+                            Districts bufDistricts = new Districts();
+                            bufDistricts.Str = District;
+                            bufDistricts.IdCity = curOblID;
+                            Data.Districts.Add(bufDistricts);
+                            Data.Complete();
+                            CurrentPatient.District = bufDistricts.Id;
+                        }
+                        
                         CurrentPatient.House = House;
                         CurrentPatient.Phone = Phone;
 

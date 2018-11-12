@@ -48,19 +48,14 @@ namespace WpfApp2.ViewModels
 
         private void GetListOfPatients(object sender, object data)
         {
-
-            using (var context = new MySqlContext())
+            FullCopy = new List<ViewModelPatient>();
+            Patients = new ObservableCollection<ViewModelPatient>();
+            foreach (var patient in Data.Patients.GetAll)
             {
-                PatientsRepository PatientsRep = new PatientsRepository(context);
-                FullCopy = new List<ViewModelPatient>();
-                Patients = new ObservableCollection<ViewModelPatient>();
-                foreach (var patient in PatientsRep.GetAll)
-                {
-                    Patients.Add(new ViewModelPatient((NavigationController)data, patient));
-                    FullCopy.Add(new ViewModelPatient((NavigationController)data, patient));
-                }
-                ViewSource.Source = Patients;
+                Patients.Add(new ViewModelPatient((NavigationController)data, patient));
+                FullCopy.Add(new ViewModelPatient((NavigationController)data, patient));
             }
+            ViewSource.Source = Patients;
             FilterText = "";
         }
         #endregion

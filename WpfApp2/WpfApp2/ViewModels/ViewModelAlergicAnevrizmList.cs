@@ -196,24 +196,20 @@ namespace WpfApp2.ViewModels
         {
             DataSourceList = new ObservableCollection<AlergicAnevrizmListDataSource>();
             FullCopy = new List<AlergicAnevrizmListDataSource>();
-            using (var context = new MySqlContext())
+            bool test = true;
+            foreach (var HirurgInterupType in Data.AlergicAnevrizm.GetAll)
             {
-                AlergicAnevrizmRepository sRep = new AlergicAnevrizmRepository(context);
-                bool test = true;
-                foreach (var HirurgInterupType in sRep.GetAll)
+                foreach (var x in DataSourceList)
                 {
-                    foreach (var x in DataSourceList)
+                    if (x.Data.Str == HirurgInterupType.Str)
                     {
-                        if (x.Data.Str == HirurgInterupType.Str)
-                        {
-                            test = false;
-                        }
+                        test = false;
                     }
-                    if (test)
-                    {
-                        DataSourceList.Add(new AlergicAnevrizmListDataSource(HirurgInterupType));
-                        FullCopy.Add(new AlergicAnevrizmListDataSource(HirurgInterupType));
-                    }
+                }
+                if (test)
+                {
+                    DataSourceList.Add(new AlergicAnevrizmListDataSource(HirurgInterupType));
+                    FullCopy.Add(new AlergicAnevrizmListDataSource(HirurgInterupType));
                 }
             }
         }
@@ -310,24 +306,20 @@ namespace WpfApp2.ViewModels
                     var DataSourceListbuf = DataSourceList;
                     DataSourceList = new ObservableCollection<AlergicAnevrizmListDataSource>();
                     FullCopy = new List<AlergicAnevrizmListDataSource>();
-                    using (var context = new MySqlContext())
+                    bool test = true;
+                    foreach (var HirurgInterupType in Data.AlergicAnevrizm.GetAll)
                     {
-                        AlergicAnevrizmRepository sRep = new AlergicAnevrizmRepository(context);
-                        bool test = true;
-                        foreach (var HirurgInterupType in sRep.GetAll)
+                        foreach (var x in DataSourceList)
                         {
-                            foreach (var x in DataSourceList)
+                            if (x.Data.Str == HirurgInterupType.Str)
                             {
-                                if (x.Data.Str == HirurgInterupType.Str)
-                                {
-                                    test = false;
-                                }
+                                test = false;
                             }
-                            if (test)
-                            {
-                                DataSourceList.Add(new AlergicAnevrizmListDataSource(HirurgInterupType));
-                                FullCopy.Add(new AlergicAnevrizmListDataSource(HirurgInterupType));
-                            }
+                        }
+                        if (test)
+                        {
+                            DataSourceList.Add(new AlergicAnevrizmListDataSource(HirurgInterupType));
+                            FullCopy.Add(new AlergicAnevrizmListDataSource(HirurgInterupType));
                         }
                     }
 

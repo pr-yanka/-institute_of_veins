@@ -119,49 +119,40 @@ namespace WpfApp2.ViewModels
             isNewTypeAvalible = Visibility.Visible;
             isReadOnly = true;
             CurrentPatient = Data.Patients.Get((int)data);
-            using (var context = new MySqlContext())
+            PatologyTypesId = new ObservableCollection<int>();
+            PatologyTypes = new ObservableCollection<string>();
+            ObservableCollection<Patology> PatologyTypesbuf = new ObservableCollection<Patology>();
+
+            foreach (Patology Patology in Data.Patology.GetAll)
             {
-                PatologyTypesId = new ObservableCollection<int>();
-                PatologyTypes = new ObservableCollection<string>();
-                ObservableCollection<Patology> PatologyTypesbuf = new ObservableCollection<Patology>();
-
-
-                PatologyRepository ptRep = new PatologyRepository(context);
-                PatientsRepository ptentRep = new PatientsRepository(context);
-                PatologyTypeRepository PatType = new PatologyTypeRepository(context);
-
-                foreach (Patology Patology in ptRep.GetAll)
+                //Patology sadasew
+                if (Patology.id_пациента == CurrentPatient.Id)
                 {
-                    //Patology sadasew
-                    if (Patology.id_пациента == CurrentPatient.Id)
+                    foreach (var PatoType in Data.PatologyType.GetAll)
                     {
-                        foreach (var PatoType in PatType.GetAll)
+                        if (PatoType.Id == Patology.id_патологии)
                         {
-                            if (PatoType.Id == Patology.id_патологии)
-                            {
-                                PatologyTypesbuf.Add(Patology);
-                            }
+                            PatologyTypesbuf.Add(Patology);
                         }
-
                     }
+
                 }
-                bool result = true;
-                foreach (PatologyType PatoType in PatType.GetAll)
+            }
+            bool result = true;
+            foreach (PatologyType PatoType in Data.PatologyType.GetAll)
+            {
+                result = true;
+
+                foreach (var PatoTypeBuff in PatologyTypesbuf)
                 {
-                    result = true;
-
-                    foreach (var PatoTypeBuff in PatologyTypesbuf)
-                    {
-                        if (PatoType.Id == PatoTypeBuff.id_патологии && PatoTypeBuff.isArchivatied != true)
-                            result = false;
-                    }
-                    if (result == true)
-                    {
-                        PatologyTypes.Add(PatoType.Str);
-                        PatologyTypesId.Add(PatoType.Id);
-                    }
+                    if (PatoType.Id == PatoTypeBuff.id_патологии && PatoTypeBuff.isArchivatied != true)
+                        result = false;
                 }
-
+                if (result == true)
+                {
+                    PatologyTypes.Add(PatoType.Str);
+                    PatologyTypesId.Add(PatoType.Id);
+                }
             }
 
             Index = 0;

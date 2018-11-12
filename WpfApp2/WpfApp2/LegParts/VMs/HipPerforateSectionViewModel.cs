@@ -14,17 +14,11 @@ namespace WpfApp2.LegParts.VMs
     {
         public HipPerforateSectionViewModel(NavigationController controller, LegSectionViewModel prev, int number) : base(controller, prev)
         {
-            using (MySqlContext context = new MySqlContext())
+            ListNumber = number;
+            StructureSource = new ObservableCollection<LegPartDbStructure>(Data.Perforate_hip.LevelStructures(number).ToList());
+            foreach (var structure in StructureSource)
             {
-                Perforate_hipRepository Perforate_hip = new Perforate_hipRepository(context);
-                MetricsRepository Metrics = new MetricsRepository(context);
-
-                ListNumber = number;
-                StructureSource = new ObservableCollection<LegPartDbStructure>(Perforate_hip.LevelStructures(number).ToList());
-                foreach (var structure in StructureSource)
-                {
-                    structure.Metrics = Metrics.GetStr(structure.Size);
-                }
+                structure.Metrics = Data.Metrics.GetStr(structure.Size);
             }
             AddCustomObject(typeof(Perforate_hipStructure));
             AddNextPartObject(typeof(Perforate_hipStructure));

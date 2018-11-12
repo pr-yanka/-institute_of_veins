@@ -191,15 +191,10 @@ namespace WpfApp2.ViewModels
         {
             DataSourceList = new ObservableCollection<AnticogulanyListDataSource>();
             FullCopy = new List<AnticogulanyListDataSource>();
-            using (var context = new MySqlContext())
+            foreach (var HirurgInterupType in Data.Anticogulants.GetAll)
             {
-                AnticogulantsRepository sRep = new AnticogulantsRepository(context);
-
-                foreach (var HirurgInterupType in sRep.GetAll)
-                {
-                    DataSourceList.Add(new AnticogulanyListDataSource(HirurgInterupType));
-                    FullCopy.Add(new AnticogulanyListDataSource(HirurgInterupType));
-                }
+                DataSourceList.Add(new AnticogulanyListDataSource(HirurgInterupType));
+                FullCopy.Add(new AnticogulanyListDataSource(HirurgInterupType));
             }
         }
 
@@ -292,15 +287,10 @@ namespace WpfApp2.ViewModels
                     var DataSourceListbuf = DataSourceList;
                     DataSourceList = new ObservableCollection<AnticogulanyListDataSource>();
                     FullCopy = new List<AnticogulanyListDataSource>();
-                    using (var context = new MySqlContext())
+                    foreach (var HirurgInterupType in Data.Anticogulants.GetAll)
                     {
-                        AnticogulantsRepository sRep = new AnticogulantsRepository(context);
-
-                        foreach (var HirurgInterupType in sRep.GetAll)
-                        {
-                            DataSourceList.Add(new AnticogulanyListDataSource(HirurgInterupType));
-                            FullCopy.Add(new AnticogulanyListDataSource(HirurgInterupType));
-                        }
+                        DataSourceList.Add(new AnticogulanyListDataSource(HirurgInterupType));
+                        FullCopy.Add(new AnticogulanyListDataSource(HirurgInterupType));
                     }
 
                     foreach (var DiagnosisType in DataSourceListbuf)

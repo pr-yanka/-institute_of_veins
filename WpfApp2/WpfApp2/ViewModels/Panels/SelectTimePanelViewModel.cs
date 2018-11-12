@@ -340,18 +340,16 @@ namespace WpfApp2.ViewModels.Panels
                         {
                             Data.OperationDateTime.Remove(OpDate);
                             Data.Complete();
-                            using (var context = new MySqlContext())
+
+                            var timeItem = Data.OperationDateTime.Where(e => e.Operation_id != null && e.Datetime.Year == OpDate.Datetime.Year && e.Datetime.Month == OpDate.Datetime.Month && e.Datetime.Day == OpDate.Datetime.Day).FirstOrDefault();
+                            if (timeItem == null)
                             {
-                                var timeItem = context.Set<OperationDateTime>().Where(e => e.Operation_id != null && e.Datetime.Year == OpDate.Datetime.Year && e.Datetime.Month == OpDate.Datetime.Month && e.Datetime.Day == OpDate.Datetime.Day).FirstOrDefault();
-                                if (timeItem == null)
+                                foreach (var opDate in Data.OperationDateTime.Where(e => e.Datetime.Year == OpDate.Datetime.Year && e.Datetime.Month == OpDate.Datetime.Month && e.Datetime.Day == OpDate.Datetime.Day))
                                 {
-                                    foreach (var opDate in context.Set<OperationDateTime>().Where(e => e.Datetime.Year == OpDate.Datetime.Year && e.Datetime.Month == OpDate.Datetime.Month && e.Datetime.Day == OpDate.Datetime.Day))
-                                    {
-                                        Data.OperationDateTime.Remove(Data.OperationDateTime.Get(opDate.Id));
-                                    }
+                                    Data.OperationDateTime.Remove(Data.OperationDateTime.Get(opDate.Id));
                                 }
-                                Data.Complete();
                             }
+                            Data.Complete();
                         }
                     }
                 }
@@ -425,133 +423,122 @@ namespace WpfApp2.ViewModels.Panels
 
         public void LoadTimeTable()
         {
-            using (var context = new MySqlContext())
+            OpViewList = new ObservableCollection<OperationTimeView>();
+            //try
+            //{
+            //bool ultraTest = false;
+            OperationTimeView opViewElement;
+
+            //context.Set<OperationDateTime>().Where(e => e.Datetime.Year == Date.Year && e.Datetime.Month == Date.Month && e.Datetime.Day == Date.Day)
+            foreach (var opDate in Data.OperationDateTimeTemplate.GetAll.ToArray())
             {
-                OpViewList = new ObservableCollection<OperationTimeView>();
-                //try
-                //{
-                //bool ultraTest = false;
-                var DoctorRep = new DoctorRepository(context);
-                var OperationRep = new OperationRepository(context);
-                var OperationDateTimeRep = new OperationDateTimeRepository(context);
-                var PatientRep = new PatientsRepository(context);
-                var OpDateTimeTemplateRep = new OperationDateTimeTemplateRepository(context);
-                OperationTimeView opViewElement;
 
-                //context.Set<OperationDateTime>().Where(e => e.Datetime.Year == Date.Year && e.Datetime.Month == Date.Month && e.Datetime.Day == Date.Day)
-                foreach (var opDate in OpDateTimeTemplateRep.GetAll.ToArray())
-                {
+                opViewElement = new OperationTimeView(opDate.Id, new System.DateTime(Date.Year, Date.Month, Date.Day, opDate.TimeRow.Hour, opDate.TimeRow.Minute, 0));
 
-                    opViewElement = new OperationTimeView(opDate.Id, new System.DateTime(Date.Year, Date.Month, Date.Day, opDate.TimeRow.Hour, opDate.TimeRow.Minute, 0));
+                SetDefaultFunctions(ref opViewElement);
 
-                    SetDefaultFunctions(ref opViewElement);
+                OpViewList.Add(opViewElement);
 
-                    OpViewList.Add(opViewElement);
-
-                }
-                OpViewList = new ObservableCollection<OperationTimeView>(OpViewList.OrderBy(i => i.Datetime));
-
-
-
-                //ViewSource.Source = OpViewList;
-
-                //ViewSource.View.Refresh();
             }
+            OpViewList = new ObservableCollection<OperationTimeView>(OpViewList.OrderBy(i => i.Datetime));
+
+
+
+            //ViewSource.Source = OpViewList;
+
+            //ViewSource.View.Refresh();
         }
 
         public void UpdateTimeTable()
         {
-            using (var context = new MySqlContext())
+            var OpTimesOnCurrentDay = Data.OperationDateTime.Where(e => e.Datetime.Year == Date.Year && e.Datetime.Month == Date.Month && e.Datetime.Day == Date.Day);
+            if (OpTimesOnCurrentDay.FirstOrDefault() != null)
             {
-                var OpTimesOnCurrentDay = context.Set<OperationDateTime>().Where(e => e.Datetime.Year == Date.Year && e.Datetime.Month == Date.Month && e.Datetime.Day == Date.Day);
-                if (OpTimesOnCurrentDay.FirstOrDefault() != null)
+                SaveChangesBtnVis = true;
+                OperationTimeView opViewElement;
+                var Patient = new Patient();
+                OpViewList = new ObservableCollection<OperationTimeView>();
+                foreach (var opDate in OpTimesOnCurrentDay)
                 {
-                    SaveChangesBtnVis = true;
-                    OperationTimeView opViewElement;
-                    var Patient = new Patient();
-                    OpViewList = new ObservableCollection<OperationTimeView>();
-                    foreach (var opDate in OpTimesOnCurrentDay)
+                    if (opDate.Operation_id != null && opDate.Operation_id != 0)
                     {
-                        if (opDate.Operation_id != null && opDate.Operation_id != 0)
+                        opViewElement = new OperationTimeView(opDate.Id, opDate.Datetime);
+
+                        SetDefaultFunctions(ref opViewElement);
+
+                        opViewElement.Delete = new DelegateCommand(() =>
                         {
-                            opViewElement = new OperationTimeView(opDate.Id, opDate.Datetime);
+                            var dialogResult = MessageBox.Show("Отменить операцию?", "", MessageBoxButton.YesNo);
 
-                            SetDefaultFunctions(ref opViewElement);
-
-                            opViewElement.Delete = new DelegateCommand(() =>
+                            if (dialogResult == MessageBoxResult.Yes)
                             {
-                                var dialogResult = MessageBox.Show("Отменить операцию?", "", MessageBoxButton.YesNo);
+                                ForCancleOpTimeView = OpViewList.Where(e => e.Operation != null && e.Operation.Id == opDate.Operation_id && opDate.Datetime.Hour == e.Datetime.Hour && opDate.Datetime.Minute == e.Datetime.Minute).FirstOrDefault();
+                                MessageBus.Default.Call("SetFunctionsToReturnToOpCreation", null, null);
+                                MessageBus.Default.Call("GetOperationIDForAddCancel", this, opDate.Operation_id);
+                                Controller.NavigateTo<ViewModelCancelOperations>();
+                                // a lot of work to do
+                            }
+                        });
 
-                                if (dialogResult == MessageBoxResult.Yes)
-                                {
-                                    ForCancleOpTimeView = OpViewList.Where(e => e.Operation != null && e.Operation.Id == opDate.Operation_id && opDate.Datetime.Hour == e.Datetime.Hour && opDate.Datetime.Minute == e.Datetime.Minute).FirstOrDefault();
-                                    MessageBus.Default.Call("SetFunctionsToReturnToOpCreation", null, null);
-                                    MessageBus.Default.Call("GetOperationIDForAddCancel", this, opDate.Operation_id);
-                                    Controller.NavigateTo<ViewModelCancelOperations>();
-                                    // a lot of work to do
-                                }
-                            });
-
-                            opViewElement.Select = new DelegateCommand(() =>
-                            {
-                                MessageBox.Show("Сначала отмените операцию");
-                            });
-
-                            opViewElement.Operation = Data.Operation.Get(opDate.Operation_id.Value);
-
-                            if (opDate.Doctor_id != null && opDate.Doctor_id.Value != 0)
-                                opViewElement.Doctor = Data.Doctor.Get(opDate.Doctor_id.Value);
-                            //opViewElement.IsFree = false;
-
-                            Patient = Data.Patients.Get(opViewElement.Operation.PatientId);
-                            opViewElement.PatientFullName = Patient.Sirname + " " + Patient.Name.ToCharArray()[0] + ". " + Patient.Patronimic.ToCharArray()[0] + ".";
-                            opViewElement.PatientNumber = Patient.Phone;
-                            opViewElement.Note = opDate.Note;
-                        }
-                        else
+                        opViewElement.Select = new DelegateCommand(() =>
                         {
-                            opViewElement = new OperationTimeView(opDate.Id, opDate.Datetime);
-                            SetDefaultFunctions(ref opViewElement);
-                        }
-                        OpViewList.Add(opViewElement);
+                            MessageBox.Show("Сначала отмените операцию");
+                        });
 
-                        //}
-                    }
-                    OpViewList = new ObservableCollection<OperationTimeView>(OpViewList.OrderBy(i => i.Datetime));
-                }
-                else
-                {
-                    SaveChangesBtnVis = false;
-                    LoadTimeTable();
-                }
-                if (SelectedOpTimeViewCopy != null && SelectedOpTimeViewCopy.Datetime.Year == Date.Year && SelectedOpTimeViewCopy.Datetime.Month == Date.Month && SelectedOpTimeViewCopy.Datetime.Day == Date.Day)
-                {
-                    SaveChangesBtnVis = true;
-                    var itemSelected = OpViewList.Where(e => e.Datetime.Hour == SelectedOpTimeViewCopy.Datetime.Hour && e.Datetime.Minute == SelectedOpTimeViewCopy.Datetime.Minute).FirstOrDefault();
-                    if (itemSelected != null)
-                    {
-                        itemSelected.Delete = SelectedOpTimeViewCopy.Delete;
-                        itemSelected.Doctor = SelectedOpTimeViewCopy.Doctor;
-                        itemSelected.Note = SelectedOpTimeViewCopy.Note;
-                        itemSelected.Operation = SelectedOpTimeViewCopy.Operation;
-                        itemSelected.PatientFullName = SelectedOpTimeViewCopy.PatientFullName;
-                        itemSelected.Datetime = SelectedOpTimeViewCopy.Datetime;
-                        itemSelected.PatientNumber = SelectedOpTimeViewCopy.PatientNumber;
+                        opViewElement.Operation = Data.Operation.Get(opDate.Operation_id.Value);
+
+                        if (opDate.Doctor_id != null && opDate.Doctor_id.Value != 0)
+                            opViewElement.Doctor = Data.Doctor.Get(opDate.Doctor_id.Value);
+                        //opViewElement.IsFree = false;
+
+                        Patient = Data.Patients.Get(opViewElement.Operation.PatientId);
+                        opViewElement.PatientFullName = Patient.Sirname + " " + Patient.Name.ToCharArray()[0] + ". " + Patient.Patronimic.ToCharArray()[0] + ".";
+                        opViewElement.PatientNumber = Patient.Phone;
+                        opViewElement.Note = opDate.Note;
                     }
                     else
                     {
-                        var opViewElement = new OperationTimeView(SelectedOpTimeViewCopy.Id, SelectedOpTimeViewCopy.Datetime);
+                        opViewElement = new OperationTimeView(opDate.Id, opDate.Datetime);
                         SetDefaultFunctions(ref opViewElement);
-                        opViewElement.Delete = SelectedOpTimeViewCopy.Delete;
-                        opViewElement.Doctor = SelectedOpTimeViewCopy.Doctor;
-                        opViewElement.Note = SelectedOpTimeViewCopy.Note;
-                        opViewElement.Operation = SelectedOpTimeViewCopy.Operation;
-                        opViewElement.PatientFullName = SelectedOpTimeViewCopy.PatientFullName;
-                        opViewElement.Datetime = SelectedOpTimeViewCopy.Datetime;
-                        opViewElement.PatientNumber = SelectedOpTimeViewCopy.PatientNumber;
-                        OpViewList.Add(opViewElement);
-                        OpViewList = new ObservableCollection<OperationTimeView>(OpViewList.OrderBy(i => i.Datetime));
                     }
+                    OpViewList.Add(opViewElement);
+
+                    //}
+                }
+                OpViewList = new ObservableCollection<OperationTimeView>(OpViewList.OrderBy(i => i.Datetime));
+            }
+            else
+            {
+                SaveChangesBtnVis = false;
+                LoadTimeTable();
+            }
+            if (SelectedOpTimeViewCopy != null && SelectedOpTimeViewCopy.Datetime.Year == Date.Year && SelectedOpTimeViewCopy.Datetime.Month == Date.Month && SelectedOpTimeViewCopy.Datetime.Day == Date.Day)
+            {
+                SaveChangesBtnVis = true;
+                var itemSelected = OpViewList.Where(e => e.Datetime.Hour == SelectedOpTimeViewCopy.Datetime.Hour && e.Datetime.Minute == SelectedOpTimeViewCopy.Datetime.Minute).FirstOrDefault();
+                if (itemSelected != null)
+                {
+                    itemSelected.Delete = SelectedOpTimeViewCopy.Delete;
+                    itemSelected.Doctor = SelectedOpTimeViewCopy.Doctor;
+                    itemSelected.Note = SelectedOpTimeViewCopy.Note;
+                    itemSelected.Operation = SelectedOpTimeViewCopy.Operation;
+                    itemSelected.PatientFullName = SelectedOpTimeViewCopy.PatientFullName;
+                    itemSelected.Datetime = SelectedOpTimeViewCopy.Datetime;
+                    itemSelected.PatientNumber = SelectedOpTimeViewCopy.PatientNumber;
+                }
+                else
+                {
+                    var opViewElement = new OperationTimeView(SelectedOpTimeViewCopy.Id, SelectedOpTimeViewCopy.Datetime);
+                    SetDefaultFunctions(ref opViewElement);
+                    opViewElement.Delete = SelectedOpTimeViewCopy.Delete;
+                    opViewElement.Doctor = SelectedOpTimeViewCopy.Doctor;
+                    opViewElement.Note = SelectedOpTimeViewCopy.Note;
+                    opViewElement.Operation = SelectedOpTimeViewCopy.Operation;
+                    opViewElement.PatientFullName = SelectedOpTimeViewCopy.PatientFullName;
+                    opViewElement.Datetime = SelectedOpTimeViewCopy.Datetime;
+                    opViewElement.PatientNumber = SelectedOpTimeViewCopy.PatientNumber;
+                    OpViewList.Add(opViewElement);
+                    OpViewList = new ObservableCollection<OperationTimeView>(OpViewList.OrderBy(i => i.Datetime));
                 }
             }
         }
@@ -762,142 +749,139 @@ namespace WpfApp2.ViewModels.Panels
 
             SaveAllCommand = new DelegateCommand(() =>
             {
-                using (var context = new MySqlContext())
+                OperationDateTime ToModify;
+                bool testToDelete = true;
+                //var timeItem1 = context.Set<OperationDateTime>().Where(e => e.Operation_id != null && e.Datetime.Year == Date.Year && e.Datetime.Month == Date.Month && e.Datetime.Day == Date.Day).FirstOrDefault();
+                //if (timeItem1 == null)
+                //{
+                //    ((ViewModelAddOperation)ParentVM).SaveSelectTimeCommand.Execute();
+                //    return;
+                //}
+                foreach (var OpTimeInDb in Data.OperationDateTime.Where(e => e.Datetime.Year == Date.Year && e.Datetime.Month == Date.Month && e.Datetime.Day == Date.Day))
                 {
-                    OperationDateTime ToModify;
-                    bool testToDelete = true;
-                    //var timeItem1 = context.Set<OperationDateTime>().Where(e => e.Operation_id != null && e.Datetime.Year == Date.Year && e.Datetime.Month == Date.Month && e.Datetime.Day == Date.Day).FirstOrDefault();
-                    //if (timeItem1 == null)
-                    //{
-                    //    ((ViewModelAddOperation)ParentVM).SaveSelectTimeCommand.Execute();
-                    //    return;
-                    //}
-                    foreach (var OpTimeInDb in context.Set<OperationDateTime>().Where(e => e.Datetime.Year == Date.Year && e.Datetime.Month == Date.Month && e.Datetime.Day == Date.Day))
+                    foreach (var OpTime in OpViewList)
                     {
-                        foreach (var OpTime in OpViewList)
+                        if (OpTimeInDb.Id == OpTime.Id && (SelectedOpTimeView == null || OpTime.Id != SelectedOpTimeView.Id))
                         {
-                            if (OpTimeInDb.Id == OpTime.Id && (SelectedOpTimeView == null || OpTime.Id != SelectedOpTimeView.Id))
-                            {
-                                testToDelete = false;
-                                ToModify = Data.OperationDateTime.Get(OpTimeInDb.Id);
-                                ToModify.Datetime = new System.DateTime(Date.Year, Date.Month, Date.Day, OpTime.Datetime.Hour, OpTime.Datetime.Minute, OpTime.Datetime.Second);
-                                ToModify.Note = OpTime.Note;
-                                Data.Complete();
-                            }
-                            if (OpTime.Id == 0)
-                            {
-                                ToModify = new OperationDateTime
-                                {
-                                    Datetime = new System.DateTime(Date.Year, Date.Month, Date.Day, OpTime.Datetime.Hour, OpTime.Datetime.Minute, OpTime.Datetime.Second),
-                                    Note = OpTime.Note,
-                                };
-                                if (OpTime.Doctor != null)
-                                    ToModify.Doctor_id = OpTime.Doctor.Id;
-                                if (OpTime.Operation != null)
-                                    ToModify.Operation_id = OpTime.Operation.Id;
-                                Data.OperationDateTime.Add(ToModify);
-                                Data.Complete();
-                                OpTime.Id = ToModify.Id;
-                            }
-                        }
-
-                        if (testToDelete)
-                        {
-                            Data.OperationDateTime.Remove(Data.OperationDateTime.Get(OpTimeInDb.Id));
+                            testToDelete = false;
+                            ToModify = Data.OperationDateTime.Get(OpTimeInDb.Id);
+                            ToModify.Datetime = new System.DateTime(Date.Year, Date.Month, Date.Day, OpTime.Datetime.Hour, OpTime.Datetime.Minute, OpTime.Datetime.Second);
+                            ToModify.Note = OpTime.Note;
                             Data.Complete();
                         }
-                        testToDelete = true;
+                        if (OpTime.Id == 0)
+                        {
+                            ToModify = new OperationDateTime
+                            {
+                                Datetime = new System.DateTime(Date.Year, Date.Month, Date.Day, OpTime.Datetime.Hour, OpTime.Datetime.Minute, OpTime.Datetime.Second),
+                                Note = OpTime.Note,
+                            };
+                            if (OpTime.Doctor != null)
+                                ToModify.Doctor_id = OpTime.Doctor.Id;
+                            if (OpTime.Operation != null)
+                                ToModify.Operation_id = OpTime.Operation.Id;
+                            Data.OperationDateTime.Add(ToModify);
+                            Data.Complete();
+                            OpTime.Id = ToModify.Id;
+                        }
                     }
 
-
-
-                    // //using (var context = new MySqlContext())
-                    // //{
-
-                    //  // var opDataToModify = new OperationDateTime();
-                    //    var opDataToRemove = new OperationDateTime();
-                    //    var test = true;
-                    //    var OperationRep = new OperationRepository(context);
-                    //    var OperationDateTimeRep = new OperationDateTimeRepository(context);
-                    //    foreach (var opDate in context.Set<OperationDateTime>().Where(e => e.Datetime.Year == Date.Year && e.Datetime.Month == Date.Month && e.Datetime.Day == Date.Day))
-                    //    {
-                    //        test = true;
-                    //        foreach (var opDateModified in OpViewList)
-                    //        {
-                    //            if (opDate.Id == opDateModified.id)
-                    //            {
-                    //                if ((SelectedOpTimeView != null && opDate.Id != SelectedOpTimeView.id) || SelectedOpTimeView == null)
-                    //                {
-                    //                    test = false;
-                    //                    opDataToModify = Data.OperationDateTime.Get(opDate.Id);
-                    //                    opDataToModify.Doctor_id = opDateModified.Doctor.Id;
-                    //                    opDataToModify.Note = opDateModified.Note;
-                    //                    opDataToModify.Operation_id = opDateModified.Operation.Id;
-                    //                    opDataToModify.Datetime = opDateModified.Datetime;
-                    //                    Data.Complete();
-                    //                    break;
-                    //                }
-                    //            }
-                    //        }
-                    //        if (test && (SelectedOpTimeView != null && opDate.Id != SelectedOpTimeView.id) || (SelectedOpTimeView == null && test))
-                    //        {
-                    //            opDataToRemove = Data.OperationDateTime.Get(opDate.Id);
-                    //            Data.OperationDateTime.Remove(opDataToRemove);
-                    //            Data.Complete();
-                    //        }
-                    //    }
-                    //}
-
-                    if (SelectedOpTimeView != null) /*&& ((ViewModelAddOperation)ParentVM).Operation.Datetime_id == null)*/
+                    if (testToDelete)
                     {
-                        //var timeItem = context.Set<OperationDateTime>().Where(e => e.Operation_id == null && e.Datetime.Hour == SelectedOpTimeView.Datetime.Hour && e.Datetime.Minute == SelectedOpTimeView.Datetime.Minute).FirstOrDefault();
-                        //if (timeItem == null)
-                        // {
+                        Data.OperationDateTime.Remove(Data.OperationDateTime.Get(OpTimeInDb.Id));
+                        Data.Complete();
+                    }
+                    testToDelete = true;
+                }
 
-                        OperationDateTime TimeRow;
-                        var timeItem = context.Set<OperationDateTime>().Where(e => e.Operation_id == null && e.Datetime.Year == Date.Year && e.Datetime.Month == Date.Month && e.Datetime.Day == Date.Day);
-                        foreach (var Optime in OpViewList.Where(e => e.Operation == null))
-                        {
-                            if (timeItem.Where(e => e.Datetime.Hour == Optime.Datetime.Hour && e.Datetime.Minute == Optime.Datetime.Minute).FirstOrDefault() == null)
-                            {
-                                TimeRow = new OperationDateTime
-                                {
-                                    Datetime = new System.DateTime(Date.Year, Date.Month, Date.Day, Optime.Datetime.Hour, Optime.Datetime.Minute, Optime.Datetime.Second),
-                                    Note = Optime.Note,
-                                };
-                                Data.OperationDateTime.Add(TimeRow);
-                                Data.Complete();
-                            }
-                        }
-                        var timeForSelectedInDb = timeItem.Where(e => e.Datetime.Hour == SelectedOpTimeView.Datetime.Hour && e.Datetime.Minute == SelectedOpTimeView.Datetime.Minute).FirstOrDefault();
-                        if (timeForSelectedInDb != null)
-                        {
-                            timeForSelectedInDb = Data.OperationDateTime.Get(timeForSelectedInDb.Id);
-                            timeForSelectedInDb.Datetime = SelectedOpTimeView.Datetime;
-                            timeForSelectedInDb.Note = SelectedOpTimeView.Note;
-                            timeForSelectedInDb.Doctor_id = SelectedOpTimeView.Doctor.Id;
-                            timeForSelectedInDb.Operation_id = SelectedOpTimeView.Operation.Id;
-                            Data.Complete();
-                            SelectedOpTimeView.Id = timeForSelectedInDb.Id;
-                            //Data.Complete();
-                        }
-                        else
+
+
+                // //using (var context = new MySqlContext())
+                // //{
+
+                //  // var opDataToModify = new OperationDateTime();
+                //    var opDataToRemove = new OperationDateTime();
+                //    var test = true;
+                //    var OperationRep = new OperationRepository(context);
+                //    var OperationDateTimeRep = new OperationDateTimeRepository(context);
+                //    foreach (var opDate in context.Set<OperationDateTime>().Where(e => e.Datetime.Year == Date.Year && e.Datetime.Month == Date.Month && e.Datetime.Day == Date.Day))
+                //    {
+                //        test = true;
+                //        foreach (var opDateModified in OpViewList)
+                //        {
+                //            if (opDate.Id == opDateModified.id)
+                //            {
+                //                if ((SelectedOpTimeView != null && opDate.Id != SelectedOpTimeView.id) || SelectedOpTimeView == null)
+                //                {
+                //                    test = false;
+                //                    opDataToModify = Data.OperationDateTime.Get(opDate.Id);
+                //                    opDataToModify.Doctor_id = opDateModified.Doctor.Id;
+                //                    opDataToModify.Note = opDateModified.Note;
+                //                    opDataToModify.Operation_id = opDateModified.Operation.Id;
+                //                    opDataToModify.Datetime = opDateModified.Datetime;
+                //                    Data.Complete();
+                //                    break;
+                //                }
+                //            }
+                //        }
+                //        if (test && (SelectedOpTimeView != null && opDate.Id != SelectedOpTimeView.id) || (SelectedOpTimeView == null && test))
+                //        {
+                //            opDataToRemove = Data.OperationDateTime.Get(opDate.Id);
+                //            Data.OperationDateTime.Remove(opDataToRemove);
+                //            Data.Complete();
+                //        }
+                //    }
+                //}
+
+                if (SelectedOpTimeView != null) /*&& ((ViewModelAddOperation)ParentVM).Operation.Datetime_id == null)*/
+                {
+                    //var timeItem = context.Set<OperationDateTime>().Where(e => e.Operation_id == null && e.Datetime.Hour == SelectedOpTimeView.Datetime.Hour && e.Datetime.Minute == SelectedOpTimeView.Datetime.Minute).FirstOrDefault();
+                    //if (timeItem == null)
+                    // {
+
+                    OperationDateTime TimeRow;
+                    var timeItem = Data.OperationDateTime.Where(e => e.Operation_id == null && e.Datetime.Year == Date.Year && e.Datetime.Month == Date.Month && e.Datetime.Day == Date.Day);
+                    foreach (var Optime in OpViewList.Where(e => e.Operation == null))
+                    {
+                        if (timeItem.Where(e => e.Datetime.Hour == Optime.Datetime.Hour && e.Datetime.Minute == Optime.Datetime.Minute).FirstOrDefault() == null)
                         {
                             TimeRow = new OperationDateTime
                             {
-                                Datetime = SelectedOpTimeView.Datetime,
-                                Note = SelectedOpTimeView.Note,
-                                Doctor_id = SelectedOpTimeView.Doctor.Id,
-                                Operation_id = SelectedOpTimeView.Operation.Id
+                                Datetime = new System.DateTime(Date.Year, Date.Month, Date.Day, Optime.Datetime.Hour, Optime.Datetime.Minute, Optime.Datetime.Second),
+                                Note = Optime.Note,
                             };
                             Data.OperationDateTime.Add(TimeRow);
                             Data.Complete();
-                            SelectedOpTimeView.Id = TimeRow.Id;
                         }
-
-
-                        // }
                     }
+                    var timeForSelectedInDb = timeItem.Where(e => e.Datetime.Hour == SelectedOpTimeView.Datetime.Hour && e.Datetime.Minute == SelectedOpTimeView.Datetime.Minute).FirstOrDefault();
+                    if (timeForSelectedInDb != null)
+                    {
+                        timeForSelectedInDb = Data.OperationDateTime.Get(timeForSelectedInDb.Id);
+                        timeForSelectedInDb.Datetime = SelectedOpTimeView.Datetime;
+                        timeForSelectedInDb.Note = SelectedOpTimeView.Note;
+                        timeForSelectedInDb.Doctor_id = SelectedOpTimeView.Doctor.Id;
+                        timeForSelectedInDb.Operation_id = SelectedOpTimeView.Operation.Id;
+                        Data.Complete();
+                        SelectedOpTimeView.Id = timeForSelectedInDb.Id;
+                        //Data.Complete();
+                    }
+                    else
+                    {
+                        TimeRow = new OperationDateTime
+                        {
+                            Datetime = SelectedOpTimeView.Datetime,
+                            Note = SelectedOpTimeView.Note,
+                            Doctor_id = SelectedOpTimeView.Doctor.Id,
+                            Operation_id = SelectedOpTimeView.Operation.Id
+                        };
+                        Data.OperationDateTime.Add(TimeRow);
+                        Data.Complete();
+                        SelectedOpTimeView.Id = TimeRow.Id;
+                    }
+
+
+                    // }
                 }
 
                 ((ViewModelAddOperation)ParentVM).SaveSelectTimeCommand.Execute();
@@ -1013,18 +997,16 @@ namespace WpfApp2.ViewModels.Panels
                             OpDate.Note = "Время свободно";
                             OpDate.Operation_id = null;
                             Data.Complete();
-                            using (var context = new MySqlContext())
+
+                            var timeItem = Data.OperationDateTime.Where(e => e.Operation_id != null && e.Datetime.Year == OpDate.Datetime.Year && e.Datetime.Month == OpDate.Datetime.Month && e.Datetime.Day == OpDate.Datetime.Day).FirstOrDefault();
+                            if (timeItem == null)
                             {
-                                var timeItem = context.Set<OperationDateTime>().Where(e => e.Operation_id != null && e.Datetime.Year == OpDate.Datetime.Year && e.Datetime.Month == OpDate.Datetime.Month && e.Datetime.Day == OpDate.Datetime.Day).FirstOrDefault();
-                                if (timeItem == null)
+                                foreach (var opDate in Data.OperationDateTime.Where(e => e.Datetime.Year == OpDate.Datetime.Year && e.Datetime.Month == OpDate.Datetime.Month && e.Datetime.Day == OpDate.Datetime.Day))
                                 {
-                                    foreach (var opDate in context.Set<OperationDateTime>().Where(e => e.Datetime.Year == OpDate.Datetime.Year && e.Datetime.Month == OpDate.Datetime.Month && e.Datetime.Day == OpDate.Datetime.Day))
-                                    {
-                                        Data.OperationDateTime.Remove(Data.OperationDateTime.Get(opDate.Id));
-                                    }
+                                    Data.OperationDateTime.Remove(Data.OperationDateTime.Get(opDate.Id));
                                 }
-                                Data.Complete();
                             }
+                            Data.Complete();
                         }
                     }
                     SelectedOpTimeViewCopy = null;

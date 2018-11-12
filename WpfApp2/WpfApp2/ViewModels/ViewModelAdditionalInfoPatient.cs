@@ -313,52 +313,46 @@ namespace WpfApp2.ViewModels
         private void SetPatologyList(object sender, object data)
         {
             PatologyList = new ObservableCollection<PatologyDataSource>();
-            using (var context = new MySqlContext())
+            foreach (var Patology in Data.Patology.GetAll)
             {
-                
-                PatologyTypeRepository ptTRep = new PatologyTypeRepository(context);
-                PatologyRepository ptRep = new PatologyRepository(context);
-                foreach (var Patology in ptRep.GetAll)
+                //Patology sadasew
+                if (Patology.id_пациента == CurrentPatient.Id)
                 {
-                    //Patology sadasew
-                    if (Patology.id_пациента == CurrentPatient.Id)
+                    foreach (var PatoType in Data.PatologyType.GetAll)
                     {
-                        foreach (var PatoType in ptTRep.GetAll)
+                        if (PatoType.Id == Patology.id_патологии)
                         {
-                            if (PatoType.Id == Patology.id_патологии)
+
+                            if (Patology.isArchivatied != true)
                             {
+                                float OpacityBuf = 0.0f;
 
-                                if (Patology.isArchivatied != true)
+                                string DateAppear = getmonthName(Patology.MonthAppear.Value.Month) + " " + Patology.YearAppear.Value.Year.ToString() + " года";
+                                string DateDisappear = "";
+                                try
                                 {
-                                    float OpacityBuf = 0.0f;
-
-                                    string DateAppear = getmonthName(Patology.MonthAppear.Value.Month) + " " + Patology.YearAppear.Value.Year.ToString() + " года";
-                                    string DateDisappear = "";
-                                    try
-                                    {
-                                        DateDisappear = getmonthName(Patology.MonthDisappear.Value.Month) + " " + Patology.YearDisappear.Value.Year.ToString() + " года";
-                                    }
-                                    catch { }
-                                    DelegateCommand ToRedactP = new DelegateCommand(
-                                        () =>
-                                        {
-
-
-                                        }
-                                        );
-                                    DelegateCommand ToArchiveP = new DelegateCommand(
-                                        () =>
-                                        {
-
-
-                                        }
-                                        );
-                                    PatologyList.Add(new PatologyDataSource(PatoType.Str, DateAppear, DateDisappear, ToArchiveP, ToRedactP, Patology, OpacityBuf));
+                                    DateDisappear = getmonthName(Patology.MonthDisappear.Value.Month) + " " + Patology.YearDisappear.Value.Year.ToString() + " года";
                                 }
+                                catch { }
+                                DelegateCommand ToRedactP = new DelegateCommand(
+                                    () =>
+                                    {
+
+
+                                    }
+                                    );
+                                DelegateCommand ToArchiveP = new DelegateCommand(
+                                    () =>
+                                    {
+
+
+                                    }
+                                    );
+                                PatologyList.Add(new PatologyDataSource(PatoType.Str, DateAppear, DateDisappear, ToArchiveP, ToRedactP, Patology, OpacityBuf));
                             }
                         }
-
                     }
+
                 }
             }
         }
@@ -511,309 +505,288 @@ namespace WpfApp2.ViewModels
             HirurgInteruptList = new CollectionViewSource();
             //OperationForAmbCard = new CollectionViewSource();
             PatologyList = new ObservableCollection<PatologyDataSource>();
-            using (var context = new MySqlContext())
+
+            //BloodExchange { get; }
+
+            try
             {
-                PatientsRepository PatientsRep = new PatientsRepository(context);
-                PatologyTypeRepository ptTRep = new PatologyTypeRepository(context);
-                PatologyRepository ptRep = new PatologyRepository(context);
-                //OperationForAmbulatornCardPatientsRepository OperationForAmbulatornCardPatients = new OperationForAmbulatornCardPatientsRepository(context);
-                //OperationForAmbulatornCardRepository OperationForAmbulatornCard = new OperationForAmbulatornCardRepository(context);
-                AlergicAnevrizmRepository AlergicAnevrizm = new AlergicAnevrizmRepository(context);
-                AlergicAnevrizmPatientsRepository AlergicAnevrizmPatients = new AlergicAnevrizmPatientsRepository(context);
-                BloodExchangeRepository BloodExchangeRep = new BloodExchangeRepository(context);
-                BloodExchangePatientsRepository BloodExchangePatients = new BloodExchangePatientsRepository(context);
+                CurrentPatient = Data.Patients.Get((int)data);
 
 
 
-                HirurgInteruptRepository HirurgInterup = new HirurgInteruptRepository(context);
-                HirurgInteruptPatientsRepository HirurgInterupPatients = new HirurgInteruptPatientsRepository(context);
-
-
-                PreparateHateRepository PreparateHate = new PreparateHateRepository(context);
-                PreparateHatePatientsRepository PreparateHatePatients = new PreparateHatePatientsRepository(context);
-                //BloodExchange { get; }
-
-                try
+                foreach (var Patology in Data.Patology.GetAll)
                 {
-                    CurrentPatient = PatientsRep.Get((int)data);
-
-
-
-                    foreach (var Patology in ptRep.GetAll)
+                    //Patology sadasew
+                    if (Patology.id_пациента == CurrentPatient.Id)
                     {
-                        //Patology sadasew
-                        if (Patology.id_пациента == CurrentPatient.Id)
+                        foreach (var PatoType in Data.PatologyType.GetAll)
                         {
-                            foreach (var PatoType in ptTRep.GetAll)
+                            if (PatoType.Id == Patology.id_патологии)
                             {
-                                if (PatoType.Id == Patology.id_патологии)
-                                {
 
-                                    if (Patology.isArchivatied != true)
+                                if (Patology.isArchivatied != true)
+                                {
+                                    float OpacityBuf = 0.0f;
+
+                                    string DateAppear = getmonthName(Patology.MonthAppear.Value.Month) + " " + Patology.YearAppear.Value.Year.ToString() + " года";
+                                    string DateDisappear = "";
+                                    try
                                     {
-                                        float OpacityBuf = 0.0f;
-
-                                        string DateAppear = getmonthName(Patology.MonthAppear.Value.Month) + " " + Patology.YearAppear.Value.Year.ToString() + " года";
-                                        string DateDisappear = "";
-                                        try
-                                        {
-                                            DateDisappear = getmonthName(Patology.MonthDisappear.Value.Month) + " " + Patology.YearDisappear.Value.Year.ToString() + " года";
-                                        }
-                                        catch { }
-                                        DelegateCommand ToRedactP = new DelegateCommand(
-                                            () =>
-                                            {
-
-
-                                            }
-                                            );
-                                        DelegateCommand ToArchiveP = new DelegateCommand(
-                                            () =>
-                                            {
-
-
-                                            }
-                                            );
-                                        PatologyList.Add(new PatologyDataSource(PatoType.Str, DateAppear, DateDisappear, ToArchiveP, ToRedactP, Patology, OpacityBuf));
+                                        DateDisappear = getmonthName(Patology.MonthDisappear.Value.Month) + " " + Patology.YearDisappear.Value.Year.ToString() + " года";
                                     }
+                                    catch { }
+                                    DelegateCommand ToRedactP = new DelegateCommand(
+                                        () =>
+                                        {
+
+
+                                        }
+                                        );
+                                    DelegateCommand ToArchiveP = new DelegateCommand(
+                                        () =>
+                                        {
+
+
+                                        }
+                                        );
+                                    PatologyList.Add(new PatologyDataSource(PatoType.Str, DateAppear, DateDisappear, ToArchiveP, ToRedactP, Patology, OpacityBuf));
                                 }
                             }
-
                         }
+
                     }
-
-
-                    hirurgOverviewId = CurrentPatient.Амбулаторная_карта_документ_id;
-                    Initials = "Пациент: " + CurrentPatient.Sirname + " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ". ";
-
-                    if (CurrentPatient.IsPositiveGroupType != null && CurrentPatient.IsPositiveGroupType.Value == false)
-                    {
-                        IsPositiveGroupTypeID = 1;
-                    }
-                    else
-                    {
-                        IsPositiveGroupTypeID = 0;
-                    }
-
-                    if (!string.IsNullOrWhiteSpace(CurrentPatient.BloodGroup) && CurrentPatient.BloodGroup == "1")
-                    {
-                        BloodGroupID = 0;
-                    }
-                    else if (!string.IsNullOrWhiteSpace(CurrentPatient.BloodGroup) && CurrentPatient.BloodGroup == "2")
-                    {
-                        BloodGroupID = 1;
-                    }
-                    else if (!string.IsNullOrWhiteSpace(CurrentPatient.BloodGroup) && CurrentPatient.BloodGroup == "3")
-                    {
-                        BloodGroupID = 2;
-                    }
-                    else if (!string.IsNullOrWhiteSpace(CurrentPatient.BloodGroup) && CurrentPatient.BloodGroup == "4")
-                    {
-                        BloodGroupID = 3;
-                    }
-
-
-
-
-                    if (CurrentPatient.Sugar != null)
-                        Sugar = CurrentPatient.Sugar;
-                    //var opList = OperationForAmbulatornCardPatients.GetAll.Where(s => s.id_пациента == CurrentPatient.Id).ToList();
-                    //foreach (var x in opList)
-                    //{
-                    //    var z = new OperationForAmbullatorCardDataSource(OperationForAmbulatornCard.Get(x.id_операции));
-                    //    DelegateCommand DelThis = new DelegateCommand(() =>
-                    //    {
-                    //        for (int i = 0; i < ((ObservableCollection<OperationForAmbullatorCardDataSource>)OperationForAmbCard.Source).Count; i++)
-                    //        {
-                    //            if (((ObservableCollection<OperationForAmbullatorCardDataSource>)OperationForAmbCard.Source)[i].Data.Id == z.Data.Id)
-                    //            {
-                    //                ((ObservableCollection<OperationForAmbullatorCardDataSource>)OperationForAmbCard.Source).RemoveAt(i);
-                    //            }
-                    //        }
-                    //        MessageBus.Default.Call("SetOprerationForAmbCardListBecauseOFEdit", null, OperationForAmbulatornCardBuf);
-                    //        MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null);
-                    //    });
-
-
-
-                    //    z.DeleteCommand = DelThis;
-                    //    z.IsChecked = true;
-                    //    OperationForAmbulatornCardBuf.Add(z);
-                    //}
-                    //OperationForAmbCard.Source = OperationForAmbulatornCardBuf;
-                    //OperationForAmbCard.View.Refresh();
-                    //MessageBus.Default.Call("SetOprerationForAmbCardListBecauseOFEdit", null, OperationForAmbulatornCardBuf);
-
-
-
-
-
-
-
-
-
-
-
-                    var alList = AlergicAnevrizmPatients.GetAll.Where(s => s.id_patient == CurrentPatient.Id).ToList();
-                    foreach (var x in alList)
-                    {
-                        var z = new AlergicAnevrizmListDataSource(AlergicAnevrizm.Get(x.id_amnestic));
-                        DelegateCommand DelThis = new DelegateCommand(() =>
-                        {
-                            for (int i = 0; i < ((ObservableCollection<AlergicAnevrizmListDataSource>)AlergicAnevrizmList.Source).Count; i++)
-                            {
-                                if (((ObservableCollection<AlergicAnevrizmListDataSource>)AlergicAnevrizmList.Source)[i].Data.Id == z.Data.Id)
-                                {
-                                    ((ObservableCollection<AlergicAnevrizmListDataSource>)AlergicAnevrizmList.Source).RemoveAt(i);
-                                }
-                            }
-                            MessageBus.Default.Call("SetAlergicAnevrizmListBecauseOFEdit", null, AlergicAnevrizmBuf.ToList());
-                            MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null);
-                        });
-
-                        z.DeleteCommand = DelThis;
-                        z.IsChecked = true;
-                        AlergicAnevrizmBuf.Add(z);
-                    }
-                    AlergicAnevrizmList.Source = AlergicAnevrizmBuf;
-                    AlergicAnevrizmList.View.Refresh();
-                    MessageBus.Default.Call("SetAlergicAnevrizmListBecauseOFEdit", null, AlergicAnevrizmBuf.ToList());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    var blList = BloodExchangePatients.GetAll.Where(s => s.id_patient == CurrentPatient.Id).ToList();
-                    foreach (var x in blList)
-                    {
-                        DelegateCommand DelThis = new DelegateCommand(() =>
-                        {
-                            for (int i = 0; i < ((ObservableCollection<BloodExchangeListDataSource>)BloodExchangeList.Source).Count; i++)
-                            {
-                                if (((ObservableCollection<BloodExchangeListDataSource>)BloodExchangeList.Source)[i].Data.Id == x.id_transfer)
-                                {
-                                    ((ObservableCollection<BloodExchangeListDataSource>)BloodExchangeList.Source).RemoveAt(i);
-                                }
-                            }
-
-                            MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null);
-
-
-                        });
-                        var z = new BloodExchangeListDataSource(BloodExchangeRep.Get(x.id_transfer), DelThis);
-                        z.BloodExchangeCommentList = BloodExchangeCommentList;
-                        z.Commentary = x.comment;
-                        z.IsChecked = true;
-                        BloodExchange.Add(z);
-                        BloodExchangeBuf.Add(z);
-                    }
-                    BloodExchangeList.Source = BloodExchange;
-                    BloodExchangeList.View.Refresh();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    var hpList = HirurgInterupPatients.GetAll.Where(s => s.id_patient == CurrentPatient.Id).ToList();
-                    foreach (var x in hpList)
-                    {
-                        var z = new HirurgInterruptDataSource(HirurgInterup.Get(x.id_intervention));
-                        DelegateCommand DelThis = new DelegateCommand(() =>
-                        {
-                            for (int i = 0; i < ((ObservableCollection<HirurgInterruptDataSource>)HirurgInteruptList.Source).Count; i++)
-                            {
-                                if (((ObservableCollection<HirurgInterruptDataSource>)HirurgInteruptList.Source)[i].Data.Id == z.Data.Id)
-                                {
-                                    ((ObservableCollection<HirurgInterruptDataSource>)HirurgInteruptList.Source).RemoveAt(i);
-                                }
-                            }
-                            MessageBus.Default.Call("SetHirurgInterruptListBecauseOFEdit", null, HirurgInteruptBuf.ToList());
-                            MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null);
-                        });
-
-                        z.DeleteCommand = DelThis;
-                        z.IsChecked = true;
-                        HirurgInteruptBuf.Add(z);
-                    }
-                    HirurgInteruptList.Source = HirurgInteruptBuf;
-                    HirurgInteruptList.View.Refresh();
-                    MessageBus.Default.Call("SetHirurgInterruptListBecauseOFEdit", null, HirurgInteruptBuf.ToList());
-
-
-
-
-
-                    var phList = PreparateHatePatients.GetAll.Where(s => s.id_patient == CurrentPatient.Id).ToList();
-                    foreach (var x in phList)
-                    {
-                        var z = new PreparateHateDataSource(PreparateHate.Get(x.id_drug));
-                        DelegateCommand DelThis = new DelegateCommand(() =>
-                        {
-                            for (int i = 0; i < ((ObservableCollection<PreparateHateDataSource>)PreparateHateList.Source).Count; i++)
-                            {
-                                if (((ObservableCollection<PreparateHateDataSource>)PreparateHateList.Source)[i].Data.Id == z.Data.Id)
-                                {
-                                    ((ObservableCollection<PreparateHateDataSource>)PreparateHateList.Source).RemoveAt(i);
-                                }
-                            }
-                            MessageBus.Default.Call("SetPreparateHateListBecauseOFEdit", null, PreparateHateBuf.ToList());
-                            MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null);
-                        });
-
-                        z.DeleteCommand = DelThis;
-                        z.IsChecked = true;
-                        z.Commentary = x.comment;
-                        PreparateHateBuf.Add(z);
-                    }
-                    PreparateHateList.Source = PreparateHateBuf;
-                    PreparateHateList.View.Refresh();
-                    MessageBus.Default.Call("SetPreparateHateListBecauseOFEdit", null, PreparateHateBuf.ToList());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    NameOfButton = "Вернуться";
                 }
-                catch (Exception ex)
+
+
+                hirurgOverviewId = CurrentPatient.Амбулаторная_карта_документ_id;
+                Initials = "Пациент: " + CurrentPatient.Sirname + " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ". ";
+
+                if (CurrentPatient.IsPositiveGroupType != null && CurrentPatient.IsPositiveGroupType.Value == false)
                 {
-
+                    IsPositiveGroupTypeID = 1;
                 }
+                else
+                {
+                    IsPositiveGroupTypeID = 0;
+                }
+
+                if (!string.IsNullOrWhiteSpace(CurrentPatient.BloodGroup) && CurrentPatient.BloodGroup == "1")
+                {
+                    BloodGroupID = 0;
+                }
+                else if (!string.IsNullOrWhiteSpace(CurrentPatient.BloodGroup) && CurrentPatient.BloodGroup == "2")
+                {
+                    BloodGroupID = 1;
+                }
+                else if (!string.IsNullOrWhiteSpace(CurrentPatient.BloodGroup) && CurrentPatient.BloodGroup == "3")
+                {
+                    BloodGroupID = 2;
+                }
+                else if (!string.IsNullOrWhiteSpace(CurrentPatient.BloodGroup) && CurrentPatient.BloodGroup == "4")
+                {
+                    BloodGroupID = 3;
+                }
+
+
+
+
+                if (CurrentPatient.Sugar != null)
+                    Sugar = CurrentPatient.Sugar;
+                //var opList = OperationForAmbulatornCardPatients.GetAll.Where(s => s.id_пациента == CurrentPatient.Id).ToList();
+                //foreach (var x in opList)
+                //{
+                //    var z = new OperationForAmbullatorCardDataSource(OperationForAmbulatornCard.Get(x.id_операции));
+                //    DelegateCommand DelThis = new DelegateCommand(() =>
+                //    {
+                //        for (int i = 0; i < ((ObservableCollection<OperationForAmbullatorCardDataSource>)OperationForAmbCard.Source).Count; i++)
+                //        {
+                //            if (((ObservableCollection<OperationForAmbullatorCardDataSource>)OperationForAmbCard.Source)[i].Data.Id == z.Data.Id)
+                //            {
+                //                ((ObservableCollection<OperationForAmbullatorCardDataSource>)OperationForAmbCard.Source).RemoveAt(i);
+                //            }
+                //        }
+                //        MessageBus.Default.Call("SetOprerationForAmbCardListBecauseOFEdit", null, OperationForAmbulatornCardBuf);
+                //        MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null);
+                //    });
+
+
+
+                //    z.DeleteCommand = DelThis;
+                //    z.IsChecked = true;
+                //    OperationForAmbulatornCardBuf.Add(z);
+                //}
+                //OperationForAmbCard.Source = OperationForAmbulatornCardBuf;
+                //OperationForAmbCard.View.Refresh();
+                //MessageBus.Default.Call("SetOprerationForAmbCardListBecauseOFEdit", null, OperationForAmbulatornCardBuf);
+
+
+
+
+
+
+
+
+
+
+
+                var alList = Data.AlergicAnevrizmPatients.GetAll.Where(s => s.id_patient == CurrentPatient.Id).ToList();
+                foreach (var x in alList)
+                {
+                    var z = new AlergicAnevrizmListDataSource(Data.AlergicAnevrizm.Get(x.id_amnestic));
+                    DelegateCommand DelThis = new DelegateCommand(() =>
+                    {
+                        for (int i = 0; i < ((ObservableCollection<AlergicAnevrizmListDataSource>)AlergicAnevrizmList.Source).Count; i++)
+                        {
+                            if (((ObservableCollection<AlergicAnevrizmListDataSource>)AlergicAnevrizmList.Source)[i].Data.Id == z.Data.Id)
+                            {
+                                ((ObservableCollection<AlergicAnevrizmListDataSource>)AlergicAnevrizmList.Source).RemoveAt(i);
+                            }
+                        }
+                        MessageBus.Default.Call("SetAlergicAnevrizmListBecauseOFEdit", null, AlergicAnevrizmBuf.ToList());
+                        MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null);
+                    });
+
+                    z.DeleteCommand = DelThis;
+                    z.IsChecked = true;
+                    AlergicAnevrizmBuf.Add(z);
+                }
+                AlergicAnevrizmList.Source = AlergicAnevrizmBuf;
+                AlergicAnevrizmList.View.Refresh();
+                MessageBus.Default.Call("SetAlergicAnevrizmListBecauseOFEdit", null, AlergicAnevrizmBuf.ToList());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                var blList = Data.BloodExchangePatients.GetAll.Where(s => s.id_patient == CurrentPatient.Id).ToList();
+                foreach (var x in blList)
+                {
+                    DelegateCommand DelThis = new DelegateCommand(() =>
+                    {
+                        for (int i = 0; i < ((ObservableCollection<BloodExchangeListDataSource>)BloodExchangeList.Source).Count; i++)
+                        {
+                            if (((ObservableCollection<BloodExchangeListDataSource>)BloodExchangeList.Source)[i].Data.Id == x.id_transfer)
+                            {
+                                ((ObservableCollection<BloodExchangeListDataSource>)BloodExchangeList.Source).RemoveAt(i);
+                            }
+                        }
+
+                        MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null);
+
+
+                    });
+                    var z = new BloodExchangeListDataSource(Data.BloodExchange.Get(x.id_transfer), DelThis);
+                    z.BloodExchangeCommentList = BloodExchangeCommentList;
+                    z.Commentary = x.comment;
+                    z.IsChecked = true;
+                    BloodExchange.Add(z);
+                    BloodExchangeBuf.Add(z);
+                }
+                BloodExchangeList.Source = BloodExchange;
+                BloodExchangeList.View.Refresh();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                var hpList = Data.HirurgInterupPatients.GetAll.Where(s => s.id_patient == CurrentPatient.Id).ToList();
+                foreach (var x in hpList)
+                {
+                    var z = new HirurgInterruptDataSource(Data.HirurgInterup.Get(x.id_intervention));
+                    DelegateCommand DelThis = new DelegateCommand(() =>
+                    {
+                        for (int i = 0; i < ((ObservableCollection<HirurgInterruptDataSource>)HirurgInteruptList.Source).Count; i++)
+                        {
+                            if (((ObservableCollection<HirurgInterruptDataSource>)HirurgInteruptList.Source)[i].Data.Id == z.Data.Id)
+                            {
+                                ((ObservableCollection<HirurgInterruptDataSource>)HirurgInteruptList.Source).RemoveAt(i);
+                            }
+                        }
+                        MessageBus.Default.Call("SetHirurgInterruptListBecauseOFEdit", null, HirurgInteruptBuf.ToList());
+                        MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null);
+                    });
+
+                    z.DeleteCommand = DelThis;
+                    z.IsChecked = true;
+                    HirurgInteruptBuf.Add(z);
+                }
+                HirurgInteruptList.Source = HirurgInteruptBuf;
+                HirurgInteruptList.View.Refresh();
+                MessageBus.Default.Call("SetHirurgInterruptListBecauseOFEdit", null, HirurgInteruptBuf.ToList());
+
+
+
+
+
+                var phList = Data.PreparateHatePatients.GetAll.Where(s => s.id_patient == CurrentPatient.Id).ToList();
+                foreach (var x in phList)
+                {
+                    var z = new PreparateHateDataSource(Data.PreparateHate.Get(x.id_drug), Data);
+                    DelegateCommand DelThis = new DelegateCommand(() =>
+                    {
+                        for (int i = 0; i < ((ObservableCollection<PreparateHateDataSource>)PreparateHateList.Source).Count; i++)
+                        {
+                            if (((ObservableCollection<PreparateHateDataSource>)PreparateHateList.Source)[i].Data.Id == z.Data.Id)
+                            {
+                                ((ObservableCollection<PreparateHateDataSource>)PreparateHateList.Source).RemoveAt(i);
+                            }
+                        }
+                        MessageBus.Default.Call("SetPreparateHateListBecauseOFEdit", null, PreparateHateBuf.ToList());
+                        MessageBus.Default.Call("SetnameOfButtonForAmbCard", null, null);
+                    });
+
+                    z.DeleteCommand = DelThis;
+                    z.IsChecked = true;
+                    z.Commentary = x.comment;
+                    PreparateHateBuf.Add(z);
+                }
+                PreparateHateList.Source = PreparateHateBuf;
+                PreparateHateList.View.Refresh();
+                MessageBus.Default.Call("SetPreparateHateListBecauseOFEdit", null, PreparateHateBuf.ToList());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                NameOfButton = "Вернуться";
             }
-            NameOfButton = "Вернуться";
+            catch (Exception ex)
+            {
+
+            }
             //     Controller.NavigateTo<ViewModelAdditionalInfoPatient>();
             NameOfButton = "Вернуться";
         }
@@ -1926,15 +1899,15 @@ namespace WpfApp2.ViewModels
                             }
                             xx++;
                         }
-                        char[] chararrbuF = hintrpt.ToCharArray();
-                        if (chararrbuF.Length != 0 && chararrbuF[0] == ' ')
+                        char[] chararrbuF1 = hintrpt.ToCharArray();
+                        if (chararrbuF1.Length != 0 && chararrbuF1[0] == ' ')
                         {
                             hintrpt = hintrpt.Remove(0, 1);
 
                         }
-                        if (chararrbuF.Length != 0 && chararrbuF[chararrbuF.Length - 1] == '.')
+                        if (chararrbuF1.Length != 0 && chararrbuF1[chararrbuF1.Length - 1] == '.')
                         { }
-                        else if (chararrbuF.Length != 0)
+                        else if (chararrbuF1.Length != 0)
                         {
                             hintrpt += ".";
                         }
@@ -1958,15 +1931,15 @@ namespace WpfApp2.ViewModels
                             }
                             xx++;
                         }
-                        char[] chararrbuF = hintrpt.ToCharArray();
-                        if (chararrbuF.Length != 0 && chararrbuF[0] == ' ')
+                        char[] chararrbuF2 = hintrpt.ToCharArray();
+                        if (chararrbuF2.Length != 0 && chararrbuF2[0] == ' ')
                         {
                             alergi = hintrpt.Remove(0, 1);
 
                         }
-                        if (chararrbuF.Length != 0 && chararrbuF[chararrbuF.Length - 1] == '.')
+                        if (chararrbuF2.Length != 0 && chararrbuF2[chararrbuF2.Length - 1] == '.')
                         { }
-                        else if (chararrbuF.Length != 0)
+                        else if (chararrbuF2.Length != 0)
                         {
                             alergi += ".";
                         }
@@ -1992,15 +1965,15 @@ namespace WpfApp2.ViewModels
                             }
                             xx++;
                         }
-                        char[] chararrbuF = hintrpt.ToCharArray();
-                        if (chararrbuF.Length != 0 && chararrbuF[0] == ' ')
+                        char[] chararrbuF3 = hintrpt.ToCharArray();
+                        if (chararrbuF3.Length != 0 && chararrbuF3[0] == ' ')
                         {
                             alergi = hintrpt.Remove(0, 1);
 
                         }
-                        if (chararrbuF.Length != 0 && chararrbuF[chararrbuF.Length - 1] == '.')
+                        if (chararrbuF3.Length != 0 && chararrbuF3[chararrbuF3.Length - 1] == '.')
                         { }
-                        else if (chararrbuF.Length != 0)
+                        else if (chararrbuF3.Length != 0)
                         {
                             alergi += ".";
                         }
@@ -2019,102 +1992,96 @@ namespace WpfApp2.ViewModels
                         document.ReplaceText("«Врач»", "");
                     }
 
-                    using (var context = new MySqlContext())
+                    // PatientsRepository ptentRep = new PatientsRepository(context);
+                    //CurrentPatient = ptentRep.Get((int)data);
+                    //Initials = "Пациент: " + CurrentPatient.Sirname + " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ". ";
+                    string ptlogy = ""; xx = 0;
+                    foreach (var Patology in Data.Patology.GetAll)
                     {
-                        PatologyTypeRepository ptTRep = new PatologyTypeRepository(context);
-                        PatologyRepository ptRep = new PatologyRepository(context);
-                        // PatientsRepository ptentRep = new PatientsRepository(context);
-                        //CurrentPatient = ptentRep.Get((int)data);
-                        //Initials = "Пациент: " + CurrentPatient.Sirname + " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ". ";
-                        string ptlogy = ""; xx = 0;
-                        foreach (var Patology in ptRep.GetAll)
+                        //Patology sadasew
+
+                        if (Patology.id_пациента == CurrentPatient.Id)
                         {
-                            //Patology sadasew
-
-                            if (Patology.id_пациента == CurrentPatient.Id)
+                            foreach (var PatoType in Data.PatologyType.GetAll)
                             {
-                                foreach (var PatoType in ptTRep.GetAll)
+                                if (PatoType.Id == Patology.id_патологии)
                                 {
-                                    if (PatoType.Id == Patology.id_патологии)
+                                    //  float OpacityBuf = 0.0f;
+                                    if (Patology.isArchivatied != true)
                                     {
-                                        //  float OpacityBuf = 0.0f;
-                                        if (Patology.isArchivatied != true)
-                                        {
-                                            // OpacityBuf = 0.38f;
+                                        // OpacityBuf = 0.38f;
 
 
-                                            string DateAppear = getmonthName(Patology.MonthAppear.Value.Month) + " " + Patology.YearAppear.Value.Year.ToString() + " года";
-                                            //string DateDisappear = "";
-                                            //try
-                                            //{
-                                            //    DateDisappear = getmonthName(Patology.MonthDisappear.Value.Month) + " " + Patology.YearDisappear.Value.Year.ToString() + " года";
-                                            //}
-                                            //catch { }
+                                        string DateAppear = getmonthName(Patology.MonthAppear.Value.Month) + " " + Patology.YearAppear.Value.Year.ToString() + " года";
+                                        //string DateDisappear = "";
+                                        //try
+                                        //{
+                                        //    DateDisappear = getmonthName(Patology.MonthDisappear.Value.Month) + " " + Patology.YearDisappear.Value.Year.ToString() + " года";
+                                        //}
+                                        //catch { }
 
-                                            if (xx == 0) { ptlogy += PatoType.Str + " " + DateAppear; } else { ptlogy += ", " + PatoType.Str + " " + DateAppear; }
-                                            xx++;
-                                        }
+                                        if (xx == 0) { ptlogy += PatoType.Str + " " + DateAppear; } else { ptlogy += ", " + PatoType.Str + " " + DateAppear; }
+                                        xx++;
                                     }
                                 }
-
                             }
-                        }
 
-                        char[] chararrbuF = ptlogy.ToCharArray();
-                        if (chararrbuF.Length != 0 && chararrbuF[0] == ' ')
+                        }
+                    }
+
+                    char[] chararrbuF = ptlogy.ToCharArray();
+                    if (chararrbuF.Length != 0 && chararrbuF[0] == ' ')
+                    {
+                        ptlogy = ptlogy.Remove(0, 1);
+
+                    }
+                    if (chararrbuF.Length != 0 && chararrbuF[chararrbuF.Length - 1] == '.')
+                    { }
+                    else if (chararrbuF.Length != 0)
+                    {
+                        ptlogy += ".";
+                    }
+
+
+                    document.ReplaceText("“PTS”", " : " + ptlogy);
+                    document.Save();
+                    Process.Start("WINWORD.EXE", fileName);
+                    byte[] bteToBD = File.ReadAllBytes(fileName);
+
+                    AdditionalInfoDocument Hv = new AdditionalInfoDocument();
+                    if (hirurgOverviewId != null && hirurgOverviewId != 0)
+                    {
+                        Hv = Data.AdditionalInfoDocument.Get(hirurgOverviewId.Value);
+
+                        Hv.DocTemplate = bteToBD;
+                        try
                         {
-                            ptlogy = ptlogy.Remove(0, 1);
+                            Hv.DoctorId = int.Parse(data.ToString());
 
                         }
-                        if (chararrbuF.Length != 0 && chararrbuF[chararrbuF.Length - 1] == '.')
-                        { }
-                        else if (chararrbuF.Length != 0)
+                        catch
                         {
-                            ptlogy += ".";
                         }
 
+                        Data.Complete();
+                        hirurgOverviewId = Hv.Id;
+                    }
+                    else
+                    {
 
-                        document.ReplaceText("“PTS”", " : " + ptlogy);
-                        document.Save();
-                        Process.Start("WINWORD.EXE", fileName);
-                        byte[] bteToBD = File.ReadAllBytes(fileName);
-
-                        AdditionalInfoDocumentRepository HirurgOverviewRep = new AdditionalInfoDocumentRepository(context);
-                        AdditionalInfoDocument Hv = new AdditionalInfoDocument();
-                        if (hirurgOverviewId != null && hirurgOverviewId != 0)
+                        Hv.DocTemplate = bteToBD;
+                        try
                         {
-                            Hv = Data.AdditionalInfoDocument.Get(hirurgOverviewId.Value);
+                            Hv.DoctorId = int.Parse(data.ToString());
 
-                            Hv.DocTemplate = bteToBD;
-                            try
-                            {
-                                Hv.DoctorId = int.Parse(data.ToString());
-
-                            }
-                            catch
-                            {
-                            }
-
-                            Data.Complete();
-                            hirurgOverviewId = Hv.Id;
                         }
-                        else
+                        catch
                         {
-
-                            Hv.DocTemplate = bteToBD;
-                            try
-                            {
-                                Hv.DoctorId = int.Parse(data.ToString());
-
-                            }
-                            catch
-                            {
-                            }
-                            Data.AdditionalInfoDocument.Add(Hv);
-
-                            Data.Complete();
-                            hirurgOverviewId = Hv.Id;
                         }
+                        Data.AdditionalInfoDocument.Add(Hv);
+
+                        Data.Complete();
+                        hirurgOverviewId = Hv.Id;
                     }
                     MessageBus.Default.Call("GeAdditionalInfoDocFILENAME", fileName, null);
 

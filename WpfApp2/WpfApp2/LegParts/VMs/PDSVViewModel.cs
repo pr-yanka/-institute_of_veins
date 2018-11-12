@@ -204,102 +204,97 @@ namespace WpfApp2.LegParts.VMs
         private void RebuildFirst(object sender, object data)
         {
 
-            if (((LegPartViewModel)Controller.CurrentViewModel.Controller.LegViewModel).CurrentLegSide != this.CurrentLegSide) return; using (MySqlContext context = new MySqlContext())
+            if (((LegPartViewModel)Controller.CurrentViewModel.Controller.LegViewModel).CurrentLegSide != this.CurrentLegSide) return; 
+            var bufSaveLegSection = new List<int?>();
+            float savedValue = -1;
+            int bufSaveLegAdditionalSection = -1;
+            if (AdditionalStructure.SelectedValue != null)
             {
-                
-                PDSVHipRepository PDSVHips = new PDSVHipRepository(context);
-                MetricsRepository Metrics = new MetricsRepository(context);
-                var bufSaveLegSection = new List<int?>();
-                float savedValue = -1;
-                int bufSaveLegAdditionalSection = -1;
-                if (AdditionalStructure.SelectedValue != null)
+                bufSaveLegAdditionalSection = AdditionalStructure.SelectedValue.Id;
+                if (AdditionalStructure.CurrentEntry != null)
                 {
-                    bufSaveLegAdditionalSection = AdditionalStructure.SelectedValue.Id;
-                    if (AdditionalStructure.CurrentEntry != null)
-                    {
-                        savedValue = AdditionalStructure.CurrentEntry.Size;
-                    }
+                    savedValue = AdditionalStructure.CurrentEntry.Size;
                 }
-                AdditionalStructure = new PDSVAdditionalSectionViewModel(Controller, null, 0);
-                if (bufSaveLegAdditionalSection != -1)
+            }
+            AdditionalStructure = new PDSVAdditionalSectionViewModel(Controller, null, 0);
+            if (bufSaveLegAdditionalSection != -1)
+            {
+                for (int j = 0; j < AdditionalStructure.StructureSource.Count; ++j)
                 {
-                    for (int j = 0; j < AdditionalStructure.StructureSource.Count; ++j)
+                    if (AdditionalStructure.StructureSource[j].Id == bufSaveLegAdditionalSection && AdditionalStructure.StructureSource[j].Text1 != "Свой вариант ответа")
                     {
-                        if (AdditionalStructure.StructureSource[j].Id == bufSaveLegAdditionalSection && AdditionalStructure.StructureSource[j].Text1 != "Свой вариант ответа")
-                        {
-                            bufSaveLegAdditionalSection = j;
-                            break;
-                        }
-                    }
-
-                    //   if (bufSaveLegAdditionalSection != -1)
-                    AdditionalStructure.SelectedValue = AdditionalStructure.StructureSource[bufSaveLegAdditionalSection];
-                    if (savedValue != -1)
-                    {
-                        AdditionalStructure.CurrentEntry.Size = savedValue;
-                    }
-                }
-                foreach (var x in LegSections)
-                {
-                    if (x.SelectedValue != null)
-                        bufSaveLegSection.Add(x.SelectedValue.Id);
-                    else
-                    {
-                        bufSaveLegSection.Add(null);
+                        bufSaveLegAdditionalSection = j;
+                        break;
                     }
                 }
 
-                for (int i = 0; i < LegSections.Count; ++i)
+                //   if (bufSaveLegAdditionalSection != -1)
+                AdditionalStructure.SelectedValue = AdditionalStructure.StructureSource[bufSaveLegAdditionalSection];
+                if (savedValue != -1)
                 {
-                    var bufSave = new ObservableCollection<LegPartDbStructure>();
-                    bufSave = LegSections[i].StructureSource;
+                    AdditionalStructure.CurrentEntry.Size = savedValue;
+                }
+            }
+            foreach (var x in LegSections)
+            {
+                if (x.SelectedValue != null)
+                    bufSaveLegSection.Add(x.SelectedValue.Id);
+                else
+                {
+                    bufSaveLegSection.Add(null);
+                }
+            }
 
-                    LegSections[i].StructureSource = new ObservableCollection<LegPartDbStructure>(PDSVHips.LevelStructures(i + 1).ToList());
+            for (int i = 0; i < LegSections.Count; ++i)
+            {
+                var bufSave = new ObservableCollection<LegPartDbStructure>();
+                bufSave = LegSections[i].StructureSource;
 
-                    int selectedIndex = -1;
-                    if (bufSaveLegSection[i] != null)
+                LegSections[i].StructureSource = new ObservableCollection<LegPartDbStructure>(Data.PDSVHips.LevelStructures(i + 1).ToList());
+
+                int selectedIndex = -1;
+                if (bufSaveLegSection[i] != null)
+                {
+                    for (int j = 0; j < LegSections[i].StructureSource.Count; ++j)
                     {
-                        for (int j = 0; j < LegSections[i].StructureSource.Count; ++j)
+                        if (LegSections[i].StructureSource[j].Id == bufSaveLegSection[i])
                         {
-                            if (LegSections[i].StructureSource[j].Id == bufSaveLegSection[i])
-                            {
-                                selectedIndex = j;
-                            }
+                            selectedIndex = j;
                         }
                     }
+                }
 
 
 
 
-                    if (selectedIndex != -1)
-                        LegSections[i].SelectedValue = LegSections[i].StructureSource[selectedIndex];
+                if (selectedIndex != -1)
+                    LegSections[i].SelectedValue = LegSections[i].StructureSource[selectedIndex];
 
 
-                    foreach (var variant in bufSave)
+                foreach (var variant in bufSave)
+                {
+
+                    if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
                     {
-
-                        if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
+                        if (variant.Text1 == "Переход к следующему разделу" && i == 0)
+                        { }
+                        else
                         {
-                            if (variant.Text1 == "Переход к следующему разделу" && i == 0)
-                            { }
-                            else
-                            {
-                                LegSections[i].StructureSource.Add(variant);
-                            }
+                            LegSections[i].StructureSource.Add(variant);
                         }
-                        else if (variant.Text1 == "" && variant.Text2 == "")
-                        { LegSections[i].StructureSource.Add(variant); }
-
-
                     }
-                    foreach (var structure in LegSections[i].StructureSource)
-                    {
-                        structure.Metrics = Metrics.GetStr(structure.Size);
-                    }
+                    else if (variant.Text1 == "" && variant.Text2 == "")
+                    { LegSections[i].StructureSource.Add(variant); }
 
+
+                }
+                foreach (var structure in LegSections[i].StructureSource)
+                {
+                    structure.Metrics = Data.Metrics.GetStr(structure.Size);
                 }
 
             }
+
             MessageBus.Default.Call("LegDataSaved", this, this.GetType());
             FF_lengthSave = FF_length;
             SelectedWayTypeSave = SelectedWayType;
@@ -500,17 +495,8 @@ namespace WpfApp2.LegParts.VMs
               {
                   if (LegSections[0].SelectedValue != null)
                   {
-                      bool test = true;
-                      foreach (var leg in LegSections)
-                      {
-                          if (leg.HasSize && leg.CurrentEntry.Size == 0)
-                          { test = false; }
-                          //if(leg.HasDoubleSize && leg.Size2 == 0)
-                          //{
-                          //    test = false;
-                          //}
-                      }
-                      if (test)
+                      bool isValid = Validate();
+                      if (isValid)
                       {
                           IsEmpty = false;
 
@@ -565,7 +551,6 @@ namespace WpfApp2.LegParts.VMs
                           MessageBus.Default.Call("LegDataSaved", this, this.GetType());
                           Controller.NavigateTo<ViewModelAddPhysical>();
                       }
-                      else { MessageBox.Show("Не все поля заполнены"); }
                   }
                   else
                   {
@@ -601,6 +586,30 @@ namespace WpfApp2.LegParts.VMs
         public PDSVViewModel(NavigationController controller, LegSide side) : base(controller, side)
         {
             Initialize();
+        }
+
+        protected override bool Validate()
+        {
+            bool isValid = true;
+            if (LegSections[0].SelectedValue != null)
+            {
+                foreach (var leg in LegSections)
+                {
+                    if (leg.HasSize && leg.CurrentEntry.Size == 0)
+                    {
+                        isValid = false;
+                    }
+                    //if (leg.HasDoubleSize && leg.CurrentEntry.Size2 == 0)
+                    //{
+                    //    isValid = false;
+                    //}
+                }
+            }
+            if (!isValid)
+            {
+                MessageBox.Show("Не все поля заполнены");
+            }
+            return isValid;
         }
     }
 }

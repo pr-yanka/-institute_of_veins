@@ -209,7 +209,26 @@ namespace WpfApp2.Db.Models
         public PreparateHateCommentRepository PreparateHateComment { get; }
         public BloodExchangeCommentRepository BloodExchangeComment { get; }
 
-        public UnitOfWork(MySqlContext context)
+        private static UnitOfWork _instance = null;
+
+        private static object _mutex = new object();
+
+        public static UnitOfWork Instance(MySqlContext context)
+        {
+            if (_instance == null)
+            {
+                lock (_mutex)
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new UnitOfWork(context);
+                    }
+                }
+            }
+            return _instance;
+        }
+
+        private UnitOfWork(MySqlContext context)
         {
             _context = context;
             OperationDateTimeTemplate = new OperationDateTimeTemplateRepository(_context);

@@ -186,17 +186,13 @@ namespace WpfApp2.ViewModels
 
                 result = false;
             }
-            using (MySqlContext context = new MySqlContext())
+            foreach (var ac in Data.Accaunt.GetAll)
             {
-                AccauntRepository acRep = new AccauntRepository(context);
-                foreach (var ac in acRep.GetAll)
+                if (Name == ac.Name)
                 {
-                    if (Name == ac.Name)
-                    {
-                        result = false;
-                        MessageBox.Show("Такое имя занято");
-                        break;
-                    }
+                    result = false;
+                    MessageBox.Show("Такое имя занято");
+                    break;
                 }
             }
 
@@ -224,208 +220,186 @@ namespace WpfApp2.ViewModels
 
         private void UpdateAccsEmptyAddMeds(object sender, object data)
         {
-            using (var context = new MySqlContext())
+            //Name = "";
+            int curDocId = (int)sender;
+            MedsDataSource = new ObservableCollection<DocDataSoursForNewUser>();
+            DocsDataSource = new ObservableCollection<DocDataSoursForNewUser>();
+            bool test = true;
+            foreach (var doc in Data.Doctor.GetAll)
             {
-                //Name = "";
-                int curDocId = (int)sender;
-                MedsDataSource = new ObservableCollection<DocDataSoursForNewUser>();
-                DocsDataSource = new ObservableCollection<DocDataSoursForNewUser>();
-                MedPersonalRepository medRip = new MedPersonalRepository(context);
-                AccauntRepository acRep = new AccauntRepository(context);
-                DoctorRepository dcRep = new DoctorRepository(context);
-                bool test = true;
-                foreach (var doc in dcRep.GetAll)
+                test = true;
+
+                foreach (var acc in Data.Accaunt.GetAll)
                 {
-                    test = true;
-
-                    foreach (var acc in acRep.GetAll)
+                    if (acc.isDoctor != null && acc.isDoctor.Value && doc.isEnabled != null && doc.isEnabled.Value == true)
                     {
-                        if (acc.isDoctor != null && acc.isDoctor.Value && doc.isEnabled != null && doc.isEnabled.Value == true)
+                        if (doc.Id == acc.idврач)
                         {
-                            if (doc.Id == acc.idврач)
-                            {
-                                test = false;
-                            }
+                            test = false;
                         }
-                    }
-                    if (test)
-                    {
-
-                        string initials = " " + doc.Name.ToCharArray()[0].ToString() + ". " + doc.Patronimic.ToCharArray()[0].ToString() + ". ";
-                        DocDataSoursForNewUser buf = new DocDataSoursForNewUser(doc.Sirname + initials, doc.Id);
-
-                        DocsDataSource.Add(buf);
-
                     }
                 }
-                foreach (var doc in medRip.GetAll)
+                if (test)
                 {
-                    test = true;
 
-                    foreach (var acc in acRep.GetAll)
+                    string initials = " " + doc.Name.ToCharArray()[0].ToString() + ". " + doc.Patronimic.ToCharArray()[0].ToString() + ". ";
+                    DocDataSoursForNewUser buf = new DocDataSoursForNewUser(doc.Sirname + initials, doc.Id);
+
+                    DocsDataSource.Add(buf);
+
+                }
+            }
+            foreach (var doc in Data.MedPersonal.GetAll)
+            {
+                test = true;
+
+                foreach (var acc in Data.Accaunt.GetAll)
+                {
+                    if (acc.isMedPersonal != null && acc.isMedPersonal.Value && doc.isEnabled != null && doc.isEnabled.Value == true)
                     {
-                        if (acc.isMedPersonal != null && acc.isMedPersonal.Value && doc.isEnabled != null && doc.isEnabled.Value == true)
+                        if (doc.Id == acc.idмедперсонал)
                         {
-                            if (doc.Id == acc.idмедперсонал)
-                            {
-                                test = false;
-                            }
+                            test = false;
                         }
-                    }
-                    if (test)
-                    {
-                        string initials = " " + doc.Name.ToCharArray()[0].ToString() + ". " + doc.Patronimic.ToCharArray()[0].ToString() + ". ";
-                        DocDataSoursForNewUser buf = new DocDataSoursForNewUser(doc.Surname + initials, doc.Id);
-                        if (curDocId == doc.Id)
-                        {
-                            buf.IsChecked = true;
-                        }
-                        MedsDataSource.Add(buf);
-                        if (MedsDataSource.IndexOf(buf) != 0)
-                        {
-                            var bff = MedsDataSource[0];
-                            int bufint = MedsDataSource.IndexOf(buf);
-                            MedsDataSource[0] = MedsDataSource[MedsDataSource.IndexOf(buf)];
-                            MedsDataSource[bufint] = bff;
-                        }
-
-
                     }
                 }
+                if (test)
+                {
+                    string initials = " " + doc.Name.ToCharArray()[0].ToString() + ". " + doc.Patronimic.ToCharArray()[0].ToString() + ". ";
+                    DocDataSoursForNewUser buf = new DocDataSoursForNewUser(doc.Surname + initials, doc.Id);
+                    if (curDocId == doc.Id)
+                    {
+                        buf.IsChecked = true;
+                    }
+                    MedsDataSource.Add(buf);
+                    if (MedsDataSource.IndexOf(buf) != 0)
+                    {
+                        var bff = MedsDataSource[0];
+                        int bufint = MedsDataSource.IndexOf(buf);
+                        MedsDataSource[0] = MedsDataSource[MedsDataSource.IndexOf(buf)];
+                        MedsDataSource[bufint] = bff;
+                    }
 
-                //MedsDataSource.Reverse()
+
+                }
             }
 
+            //MedsDataSource.Reverse()
         }
 
         private void UpdateAccsEmptyAddDocs(object sender, object data)
         {
-            using (var context = new MySqlContext())
+            //Name = "";
+            int curDocId = (int)sender;
+            MedsDataSource = new ObservableCollection<DocDataSoursForNewUser>();
+            DocsDataSource = new ObservableCollection<DocDataSoursForNewUser>();
+            bool test = true;
+            foreach (var doc in Data.Doctor.GetAll)
             {
-                //Name = "";
-                int curDocId = (int)sender;
-                MedsDataSource = new ObservableCollection<DocDataSoursForNewUser>();
-                DocsDataSource = new ObservableCollection<DocDataSoursForNewUser>();
-                MedPersonalRepository medRip = new MedPersonalRepository(context);
-                AccauntRepository acRep = new AccauntRepository(context);
-                DoctorRepository dcRep = new DoctorRepository(context);
-                bool test = true;
-                foreach (var doc in dcRep.GetAll)
+                test = true;
+
+                foreach (var acc in Data.Accaunt.GetAll)
                 {
-                    test = true;
-
-                    foreach (var acc in acRep.GetAll)
+                    if (acc.isDoctor != null && acc.isDoctor.Value && doc.isEnabled != null && doc.isEnabled.Value == true)
                     {
-                        if (acc.isDoctor != null && acc.isDoctor.Value && doc.isEnabled != null && doc.isEnabled.Value == true)
+                        if (doc.Id == acc.idврач)
                         {
-                            if (doc.Id == acc.idврач)
-                            {
-                                test = false;
-                            }
-                        }
-                    }
-                    if (test)
-                    {
-
-                        string initials = " " + doc.Name.ToCharArray()[0].ToString() + ". " + doc.Patronimic.ToCharArray()[0].ToString() + ". ";
-
-                        DocDataSoursForNewUser buf = new DocDataSoursForNewUser(doc.Sirname + initials, doc.Id);
-                        if (curDocId == doc.Id)
-                        {
-                            buf.IsChecked = true;
-                        }
-                        DocsDataSource.Add(buf);
-                        if (DocsDataSource.IndexOf(buf) != 0)
-                        {
-                            var bff = DocsDataSource[0];
-                            int bufint = DocsDataSource.IndexOf(buf);
-                            DocsDataSource[0] = DocsDataSource[DocsDataSource.IndexOf(buf)];
-                            DocsDataSource[bufint] = bff;
+                            test = false;
                         }
                     }
                 }
-                foreach (var doc in medRip.GetAll)
+                if (test)
                 {
-                    test = true;
 
-                    foreach (var acc in acRep.GetAll)
+                    string initials = " " + doc.Name.ToCharArray()[0].ToString() + ". " + doc.Patronimic.ToCharArray()[0].ToString() + ". ";
+
+                    DocDataSoursForNewUser buf = new DocDataSoursForNewUser(doc.Sirname + initials, doc.Id);
+                    if (curDocId == doc.Id)
                     {
-                        if (acc.isMedPersonal != null && acc.isMedPersonal.Value && doc.isEnabled != null && doc.isEnabled.Value == true)
-                        {
-                            if (doc.Id == acc.idмедперсонал)
-                            {
-                                test = false;
-                            }
-                        }
+                        buf.IsChecked = true;
                     }
-                    if (test)
+                    DocsDataSource.Add(buf);
+                    if (DocsDataSource.IndexOf(buf) != 0)
                     {
-                        string initials = " " + doc.Name.ToCharArray()[0].ToString() + ". " + doc.Patronimic.ToCharArray()[0].ToString() + ". ";
-
-                        MedsDataSource.Add(new DocDataSoursForNewUser(doc.Surname + initials, doc.Id));
+                        var bff = DocsDataSource[0];
+                        int bufint = DocsDataSource.IndexOf(buf);
+                        DocsDataSource[0] = DocsDataSource[DocsDataSource.IndexOf(buf)];
+                        DocsDataSource[bufint] = bff;
                     }
                 }
+            }
+            foreach (var doc in Data.MedPersonal.GetAll)
+            {
+                test = true;
 
-                //MedsDataSource.Reverse()
+                foreach (var acc in Data.Accaunt.GetAll)
+                {
+                    if (acc.isMedPersonal != null && acc.isMedPersonal.Value && doc.isEnabled != null && doc.isEnabled.Value == true)
+                    {
+                        if (doc.Id == acc.idмедперсонал)
+                        {
+                            test = false;
+                        }
+                    }
+                }
+                if (test)
+                {
+                    string initials = " " + doc.Name.ToCharArray()[0].ToString() + ". " + doc.Patronimic.ToCharArray()[0].ToString() + ". ";
+
+                    MedsDataSource.Add(new DocDataSoursForNewUser(doc.Surname + initials, doc.Id));
+                }
             }
 
+            //MedsDataSource.Reverse()
         }
         private void UpdateAccsEmpty(object sender, object data)
         {
-            using (var context = new MySqlContext())
+            Name = "";
+            MedsDataSource = new ObservableCollection<DocDataSoursForNewUser>();
+            DocsDataSource = new ObservableCollection<DocDataSoursForNewUser>();
+            bool test = true;
+            foreach (var doc in Data.Doctor.GetAll)
             {
-                Name = "";
-                MedsDataSource = new ObservableCollection<DocDataSoursForNewUser>();
-                DocsDataSource = new ObservableCollection<DocDataSoursForNewUser>();
-                MedPersonalRepository medRip = new MedPersonalRepository(context);
-                AccauntRepository acRep = new AccauntRepository(context);
-                DoctorRepository dcRep = new DoctorRepository(context);
-                bool test = true;
-                foreach (var doc in dcRep.GetAll)
-                {
-                    test = true;
+                test = true;
 
-                    foreach (var acc in acRep.GetAll)
+                foreach (var acc in Data.Accaunt.GetAll)
+                {
+                    if (acc.isDoctor != null && acc.isDoctor.Value && doc.isEnabled != null && doc.isEnabled.Value == true)
                     {
-                        if (acc.isDoctor != null && acc.isDoctor.Value && doc.isEnabled != null && doc.isEnabled.Value == true)
+                        if (doc.Id == acc.idврач)
                         {
-                            if (doc.Id == acc.idврач)
-                            {
-                                test = false;
-                            }
+                            test = false;
                         }
                     }
-                    if (test)
-                    {
-                        string initials = " " + doc.Name.ToCharArray()[0].ToString() + ". " + doc.Patronimic.ToCharArray()[0].ToString() + ". ";
-
-                        DocsDataSource.Add(new DocDataSoursForNewUser(doc.Sirname + initials, doc.Id));
-                    }
                 }
-                foreach (var doc in medRip.GetAll)
+                if (test)
                 {
-                    test = true;
+                    string initials = " " + doc.Name.ToCharArray()[0].ToString() + ". " + doc.Patronimic.ToCharArray()[0].ToString() + ". ";
 
-                    foreach (var acc in acRep.GetAll)
-                    {
-                        if (acc.isMedPersonal != null && acc.isMedPersonal.Value && doc.isEnabled != null && doc.isEnabled.Value == true)
-                        {
-                            if (doc.Id == acc.idмедперсонал)
-                            {
-                                test = false;
-                            }
-                        }
-                    }
-                    if (test)
-                    {
-                        string initials = " " + doc.Name.ToCharArray()[0].ToString() + ". " + doc.Patronimic.ToCharArray()[0].ToString() + ". ";
-
-                        MedsDataSource.Add(new DocDataSoursForNewUser(doc.Surname + initials, doc.Id));
-                    }
+                    DocsDataSource.Add(new DocDataSoursForNewUser(doc.Sirname + initials, doc.Id));
                 }
-
             }
+            foreach (var doc in Data.MedPersonal.GetAll)
+            {
+                test = true;
 
+                foreach (var acc in Data.Accaunt.GetAll)
+                {
+                    if (acc.isMedPersonal != null && acc.isMedPersonal.Value && doc.isEnabled != null && doc.isEnabled.Value == true)
+                    {
+                        if (doc.Id == acc.idмедперсонал)
+                        {
+                            test = false;
+                        }
+                    }
+                }
+                if (test)
+                {
+                    string initials = " " + doc.Name.ToCharArray()[0].ToString() + ". " + doc.Patronimic.ToCharArray()[0].ToString() + ". ";
+
+                    MedsDataSource.Add(new DocDataSoursForNewUser(doc.Surname + initials, doc.Id));
+                }
+            }
         }
         #endregion
         public ViewModelAddUser(NavigationController controller) : base(controller)

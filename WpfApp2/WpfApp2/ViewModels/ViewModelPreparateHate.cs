@@ -42,18 +42,14 @@ namespace WpfApp2.ViewModels
             }
             set { _isChecked = value; OnPropertyChanged(); }
         }
-        public PreparateHateDataSource(PreparateHate Recomendations)
+        public PreparateHateDataSource(PreparateHate Recomendations, IUnitOfWork UnitOfWork)
         {
-            using (var context = new MySqlContext())
-            {
-                PreparateHateCommentRepository prpH = new PreparateHateCommentRepository(context);
-                List<string> buff2 = new List<string>();
-                foreach (var x in prpH.GetAll)
-                    buff2.Add(x.Str);
+            List<string> buff2 = new List<string>();
+            foreach (var x in UnitOfWork.PreparateHateComment.GetAll)
+                buff2.Add(x.Str);
 
 
-                PreparateHateCommentList = buff2;
-            }
+            PreparateHateCommentList = buff2;
 
             IsVisibleTotal = true;
             this.Data = Recomendations;
@@ -209,26 +205,21 @@ namespace WpfApp2.ViewModels
         {
             DataSourceList = new ObservableCollection<PreparateHateDataSource>();
             FullCopy = new List<PreparateHateDataSource>();
-            using (var context = new MySqlContext())
+            bool test = true;
+            foreach (var HirurgInterupType in Data.PreparateHate.GetAll)
             {
-                PreparateHateRepository sRep = new PreparateHateRepository(context);
 
-                bool test = true;
-                foreach (var HirurgInterupType in sRep.GetAll)
+                foreach (var x in DataSourceList)
                 {
-
-                    foreach (var x in DataSourceList)
+                    if (x.Data.Str == HirurgInterupType.Str)
                     {
-                        if (x.Data.Str == HirurgInterupType.Str)
-                        {
-                            test = false;
-                        }
+                        test = false;
                     }
-                    if (test)
-                    {
-                        DataSourceList.Add(new PreparateHateDataSource(HirurgInterupType));
-                        FullCopy.Add(new PreparateHateDataSource(HirurgInterupType));
-                    }
+                }
+                if (test)
+                {
+                    DataSourceList.Add(new PreparateHateDataSource(HirurgInterupType, Data));
+                    FullCopy.Add(new PreparateHateDataSource(HirurgInterupType, Data));
                 }
             }
         }
@@ -269,7 +260,7 @@ namespace WpfApp2.ViewModels
             DataSourceList = new ObservableCollection<PreparateHateDataSource>();
             foreach (var RecomendationsType in Data.PreparateHate.GetAll)
             {
-                DataSourceList.Add(new PreparateHateDataSource(RecomendationsType));
+                DataSourceList.Add(new PreparateHateDataSource(RecomendationsType, Data));
             }
 
             ToPhysicalCommand = new DelegateCommand(
@@ -320,25 +311,20 @@ namespace WpfApp2.ViewModels
                     var DataSourceListbuf = DataSourceList;
                     DataSourceList = new ObservableCollection<PreparateHateDataSource>();
                     FullCopy = new List<PreparateHateDataSource>();
-                    using (var context = new MySqlContext())
+                    bool test = true;
+                    foreach (var HirurgInterupType in Data.PreparateHate.GetAll)
                     {
-                        PreparateHateRepository sRep = new PreparateHateRepository(context);
-
-                        bool test = true;
-                        foreach (var HirurgInterupType in sRep.GetAll)
+                        foreach (var x in DataSourceList)
                         {
-                            foreach (var x in DataSourceList)
+                            if (x.Data.Str == HirurgInterupType.Str)
                             {
-                                if (x.Data.Str == HirurgInterupType.Str)
-                                {
-                                    test = false;
-                                }
+                                test = false;
                             }
-                            if (test)
-                            {
-                                DataSourceList.Add(new PreparateHateDataSource(HirurgInterupType));
-                                FullCopy.Add(new PreparateHateDataSource(HirurgInterupType));
-                            }
+                        }
+                        if (test)
+                        {
+                            DataSourceList.Add(new PreparateHateDataSource(HirurgInterupType, Data));
+                            FullCopy.Add(new PreparateHateDataSource(HirurgInterupType, Data));
                         }
                     }
 

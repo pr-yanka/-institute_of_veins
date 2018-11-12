@@ -204,25 +204,20 @@ namespace WpfApp2.ViewModels
         {
             DataSourceList = new ObservableCollection<HirurgInterruptDataSource>();
             FullCopy = new List<HirurgInterruptDataSource>();
-            using (var context = new MySqlContext())
+            bool test = true;
+            foreach (var HirurgInterupType in Data.HirurgInterup.GetAll)
             {
-                bool test = true;
-                HirurgInteruptRepository sRep = new HirurgInteruptRepository(context);
-                foreach (var HirurgInterupType in sRep.GetAll)
+                foreach (var x in DataSourceList)
                 {
-                    foreach (var x in DataSourceList)
-                    {
-                        if (x.Data.Str == HirurgInterupType.Str)
-                        { test = false; }
-                    }
-                    if (test)
-                    {
-                        DataSourceList.Add(new HirurgInterruptDataSource(HirurgInterupType));
-                        FullCopy.Add(new HirurgInterruptDataSource(HirurgInterupType));
-                    }
+                    if (x.Data.Str == HirurgInterupType.Str)
+                    { test = false; }
+                }
+                if (test)
+                {
+                    DataSourceList.Add(new HirurgInterruptDataSource(HirurgInterupType));
+                    FullCopy.Add(new HirurgInterruptDataSource(HirurgInterupType));
                 }
             }
-
         }
         private void SetDRecomendationListBecauseOFEdit(object sender, object data)
         {
@@ -312,22 +307,18 @@ namespace WpfApp2.ViewModels
                     var DataSourceListbuf = DataSourceList;
                     DataSourceList = new ObservableCollection<HirurgInterruptDataSource>();
                     FullCopy = new List<HirurgInterruptDataSource>();
-                    using (var context = new MySqlContext())
+                    bool test = true;
+                    foreach (var HirurgInterupType in Data.HirurgInterup.GetAll)
                     {
-                        bool test = true;
-                        HirurgInteruptRepository sRep = new HirurgInteruptRepository(context);
-                        foreach (var HirurgInterupType in sRep.GetAll)
+                        foreach (var x in DataSourceList)
                         {
-                            foreach (var x in DataSourceList)
-                            {
-                                if (x.Data.Str == HirurgInterupType.Str)
-                                { test = false; }
-                            }
-                            if (test)
-                            {
-                                DataSourceList.Add(new HirurgInterruptDataSource(HirurgInterupType));
-                                FullCopy.Add(new HirurgInterruptDataSource(HirurgInterupType));
-                            }
+                            if (x.Data.Str == HirurgInterupType.Str)
+                            { test = false; }
+                        }
+                        if (test)
+                        {
+                            DataSourceList.Add(new HirurgInterruptDataSource(HirurgInterupType));
+                            FullCopy.Add(new HirurgInterruptDataSource(HirurgInterupType));
                         }
                     }
 

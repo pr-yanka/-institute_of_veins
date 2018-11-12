@@ -15,16 +15,11 @@ namespace WpfApp2.LegParts.VMs
     {
         public GVSectionViewModel(NavigationController controller, LegSectionViewModel prev, int number) : base(controller, prev)
         {
-            using (MySqlContext context = new MySqlContext())
+            ListNumber = number;
+            StructureSource = new ObservableCollection<LegPartDbStructure>(Data.GV.LevelStructures(number).ToList());
+            foreach (var structure in StructureSource)
             {
-                GVRepository GV = new GVRepository(context);
-                MetricsRepository Metrics = new MetricsRepository(context);
-                ListNumber = number;
-                StructureSource = new ObservableCollection<LegPartDbStructure>(GV.LevelStructures(number).ToList());
-                foreach (var structure in StructureSource)
-                {
-                    structure.Metrics = Metrics.GetStr(structure.Size);
-                }
+                structure.Metrics = Data.Metrics.GetStr(structure.Size);
             }
             AddCustomObject(typeof(GVStructure));
             AddNextPartObject(typeof(GVStructure));

@@ -19,71 +19,67 @@ namespace WpfApp2.LegParts.VMs
         public void RebuildFirst(object sender, object data)
         {
 
-            if (((LegPartViewModel)Controller.CurrentViewModel.Controller.LegViewModel).CurrentLegSide != this.CurrentLegSide) return; using (MySqlContext context = new MySqlContext())
+            if (((LegPartViewModel)Controller.CurrentViewModel.Controller.LegViewModel).CurrentLegSide != this.CurrentLegSide) return;
+            var bufSaveLegSection = new List<int?>();
+
+            foreach (var x in LegSections)
             {
-                Perforate_hipRepository Perforate_hip = new Perforate_hipRepository(context);
-                MetricsRepository Metrics = new MetricsRepository(context);
-                var bufSaveLegSection = new List<int?>();
-
-                foreach (var x in LegSections)
+                if (x.SelectedValue != null)
+                    bufSaveLegSection.Add(x.SelectedValue.Id);
+                else
                 {
-                    if (x.SelectedValue != null)
-                        bufSaveLegSection.Add(x.SelectedValue.Id);
-                    else
-                    {
-                        bufSaveLegSection.Add(null);
-                    }
+                    bufSaveLegSection.Add(null);
                 }
-                for (int i = 0; i < LegSections.Count; ++i)
+            }
+            for (int i = 0; i < LegSections.Count; ++i)
+            {
+                var bufSave = new ObservableCollection<LegPartDbStructure>();
+                bufSave = LegSections[i].StructureSource;
+
+
+
+                LegSections[i].StructureSource = new ObservableCollection<LegPartDbStructure>(Data.Perforate_hip.LevelStructures(i + 1).ToList());
+
+                int selectedIndex = -1;
+                if (bufSaveLegSection[i] != null)
                 {
-                    var bufSave = new ObservableCollection<LegPartDbStructure>();
-                    bufSave = LegSections[i].StructureSource;
-
-
-
-                    LegSections[i].StructureSource = new ObservableCollection<LegPartDbStructure>(Perforate_hip.LevelStructures(i + 1).ToList());
-
-                    int selectedIndex = -1;
-                    if (bufSaveLegSection[i] != null)
+                    for (int j = 0; j < LegSections[i].StructureSource.Count; ++j)
                     {
-                        for (int j = 0; j < LegSections[i].StructureSource.Count; ++j)
+                        if (LegSections[i].StructureSource[j].Id == bufSaveLegSection[i])
                         {
-                            if (LegSections[i].StructureSource[j].Id == bufSaveLegSection[i])
-                            {
-                                selectedIndex = j;
-                            }
+                            selectedIndex = j;
                         }
                     }
+                }
 
 
 
 
-                    if (selectedIndex != -1)
-                        LegSections[i].SelectedValue = LegSections[i].StructureSource[selectedIndex];
+                if (selectedIndex != -1)
+                    LegSections[i].SelectedValue = LegSections[i].StructureSource[selectedIndex];
 
-                    foreach (var variant in bufSave)
+                foreach (var variant in bufSave)
+                {
+
+                    if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
                     {
-
-                        if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
+                        if (variant.Text1 == "Переход к следующему разделу" && i == 0)
+                        { }
+                        else
                         {
-                            if (variant.Text1 == "Переход к следующему разделу" && i == 0)
-                            { }
-                            else
-                            {
-                                LegSections[i].StructureSource.Add(variant);
-                            }
+                            LegSections[i].StructureSource.Add(variant);
                         }
-                        else if (variant.Text1 == "" && variant.Text2 == "")
-                        { LegSections[i].StructureSource.Add(variant); }
-
-
                     }
-                    foreach (var structure in LegSections[i].StructureSource)
-                    {
-                        structure.Metrics = Metrics.GetStr(structure.Size);
-                    }
+                    else if (variant.Text1 == "" && variant.Text2 == "")
+                    { LegSections[i].StructureSource.Add(variant); }
+
 
                 }
+                foreach (var structure in LegSections[i].StructureSource)
+                {
+                    structure.Metrics = Data.Metrics.GetStr(structure.Size);
+                }
+
             }
             MessageBus.Default.Call("LegDataSaved", this, this.GetType());
 
@@ -161,98 +157,93 @@ namespace WpfApp2.LegParts.VMs
 
                         var bufSave = new ObservableCollection<LegPartDbStructure>();
                         bufSave = LegSections[section.ListNumber].StructureSource;
-                       using (MySqlContext context = new MySqlContext())
+                            
+                        LegSections[section.ListNumber].StructureSource = new ObservableCollection<LegPartDbStructure>(Data.Perforate_hip.LevelStructures(LegSections[section.ListNumber].ListNumber).ToList());
+
+                        foreach (var variant in bufSave)
                         {
-                            Perforate_hipRepository Perforate_hip = new Perforate_hipRepository(context);
-                            Perforate_hipComboRepository Perforate_hipCombos = new Perforate_hipComboRepository(context);
-                            MetricsRepository Metrics = new MetricsRepository(context);
 
-                            LegSections[section.ListNumber].StructureSource = new ObservableCollection<LegPartDbStructure>(Perforate_hip.LevelStructures(LegSections[section.ListNumber].ListNumber).ToList());
-
-                            foreach (var variant in bufSave)
+                            if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
                             {
-
-                                if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
-                                {
-                                    LegSections[section.ListNumber].StructureSource.Add(variant);
-                                }
-                                else if (variant.Text1 == "" && variant.Text2 == "")
-                                { LegSections[section.ListNumber].StructureSource.Add(variant); }
-
-
+                                LegSections[section.ListNumber].StructureSource.Add(variant);
                             }
-                            foreach (var structure in LegSections[section.ListNumber].StructureSource)
-                            {
-                                structure.Metrics = Metrics.GetStr(structure.Size);
-                            }
-                            // StructureSource = new ObservableCollection<LegPartDbStructure>();
-                            foreach (var Combo in Perforate_hipCombos.GetAll)
-                            {
-                                if (section.ListNumber == 1)
-                                {
-                                    try
-                                    {
-                                        selectCombo = Combo.IdStr1;
-                                        selectComboNext = Combo.IdStr2.Value;
-                                    }
-                                    catch { continue; }
-                                }
-                                if (section.ListNumber == 2)
-                                {
-                                    try
-                                    {
-                                        selectCombo = Combo.IdStr2.Value;
-                                        selectComboNext = Combo.IdStr3.Value;
-                                    }
-                                    catch { continue; }
-                                }
-                                else if (section.ListNumber == 3)
-                                {
-                                    try
-                                    {
-                                        selectCombo = Combo.IdStr3.Value;
-                                        selectComboNext = Combo.IdStr4.Value;
-                                    }
-                                    catch { continue; }
-                                }
-                                else if (section.ListNumber == 4)
-                                {
-                                    try
-                                    {
-                                        selectCombo = Combo.IdStr4.Value;
-                                        selectComboNext = Combo.IdStr5.Value;
-                                    }
-                                    catch { continue; }
-                                }
+                            else if (variant.Text1 == "" && variant.Text2 == "")
+                            { LegSections[section.ListNumber].StructureSource.Add(variant); }
 
 
-
-
-                                if (section.SelectedValue.Id == selectCombo)
-                                {
-                                    test = true;
-
-                                    foreach (var bufId in StructureSourceBuf)
-                                    {
-
-                                        if (bufId == selectComboNext)
-                                        {
-                                            test = false;
-                                            break;
-                                        }
-
-                                    }
-                                    if (test)
-                                    {
-                                        StructureSourceBuf.Add(selectComboNext);
-                                    }
-
-
-                                }
-
-
-                            }
                         }
+                        foreach (var structure in LegSections[section.ListNumber].StructureSource)
+                        {
+                            structure.Metrics = Data.Metrics.GetStr(structure.Size);
+                        }
+                        // StructureSource = new ObservableCollection<LegPartDbStructure>();
+                        foreach (var Combo in Data.Perforate_hipCombos.GetAll)
+                        {
+                            if (section.ListNumber == 1)
+                            {
+                                try
+                                {
+                                    selectCombo = Combo.IdStr1;
+                                    selectComboNext = Combo.IdStr2.Value;
+                                }
+                                catch { continue; }
+                            }
+                            if (section.ListNumber == 2)
+                            {
+                                try
+                                {
+                                    selectCombo = Combo.IdStr2.Value;
+                                    selectComboNext = Combo.IdStr3.Value;
+                                }
+                                catch { continue; }
+                            }
+                            else if (section.ListNumber == 3)
+                            {
+                                try
+                                {
+                                    selectCombo = Combo.IdStr3.Value;
+                                    selectComboNext = Combo.IdStr4.Value;
+                                }
+                                catch { continue; }
+                            }
+                            else if (section.ListNumber == 4)
+                            {
+                                try
+                                {
+                                    selectCombo = Combo.IdStr4.Value;
+                                    selectComboNext = Combo.IdStr5.Value;
+                                }
+                                catch { continue; }
+                            }
+
+
+
+
+                            if (section.SelectedValue.Id == selectCombo)
+                            {
+                                test = true;
+
+                                foreach (var bufId in StructureSourceBuf)
+                                {
+
+                                    if (bufId == selectComboNext)
+                                    {
+                                        test = false;
+                                        break;
+                                    }
+
+                                }
+                                if (test)
+                                {
+                                    StructureSourceBuf.Add(selectComboNext);
+                                }
+
+
+                            }
+
+
+                        }
+
                         List<LegPartDbStructure> buf = LegSections[section.ListNumber].StructureSource.ToList();
                         foreach (var variant in buf)
                         {
@@ -342,16 +333,8 @@ namespace WpfApp2.LegParts.VMs
              {
                  if (LegSections[0].SelectedValue != null)
                  {
-                     bool test = true;
-                     foreach (var leg in LegSections)
-                     {
-                         if (leg.HasSize && leg.CurrentEntry.Size == 0)
-                         { test = false; }
-                         if (leg.HasDoubleSize && leg.CurrentEntry.Size2 == 0)
-                         { test = false; }
-
-                     }
-                     if (test)
+                     bool isValid = Validate();
+                     if (isValid)
                      {
                          IsEmpty = false;
 
@@ -410,7 +393,6 @@ namespace WpfApp2.LegParts.VMs
                          MessageBus.Default.Call("LegDataSaved", this, this.GetType());
                          Controller.NavigateTo<ViewModelAddPhysical>();
                      }
-                     else { MessageBox.Show("Не все поля заполнены"); }
                  }
                  else
                  {
@@ -438,5 +420,31 @@ namespace WpfApp2.LegParts.VMs
         {
             Initialize();
         }
+
+        protected override bool Validate()
+        {
+            bool isValid = true;
+            if (LegSections[0].SelectedValue != null)
+            {
+                foreach (var leg in LegSections)
+                {
+                    if (leg.HasSize && leg.CurrentEntry.Size == 0)
+                    {
+                        isValid = false;
+                    }
+                    if (leg.HasDoubleSize && leg.CurrentEntry.Size2 == 0)
+                    {
+                        isValid = false;
+                    }
+
+                }
+            }
+            if (!isValid)
+            {
+                MessageBox.Show("Не все поля заполнены");
+            }
+            return isValid;
+        }
+
     }
 }

@@ -40,7 +40,21 @@ namespace WpfApp2.Db.Models
     {
         public LettersRepository(DbContext context) : base(context)
         {
+            dbContext.Set<Letters>().Load();
+        }
 
+        public override Letters Get(int id)
+        {
+            return dbContext.Set<Letters>().Local.First(entry => entry.Id == id);
+        }
+
+        public override IEnumerable<Letters> GetAll
+        {
+            get
+            {
+
+                return dbContext.Set<Letters>().Local.ToList();
+            }
         }
     }
 }

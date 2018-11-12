@@ -156,12 +156,7 @@ namespace WpfApp2.ViewModels
         //Сформируйте или загрузите документ TextForDoWhat
         private void SetCurrentPatientIDRealyThisTime(object sender, object data)
         {
-            using (var context = new MySqlContext())
-            {
-                PatientsRepository PtRep = new PatientsRepository(context);
-
-                CurrentPatient = PtRep.Get((int)data);
-            }
+            CurrentPatient = Data.Patients.Get((int)data);
         }
         private void GetStatementForStatementFILENAME(object sender, object data)
         {
@@ -176,88 +171,80 @@ namespace WpfApp2.ViewModels
             CurrentDocument = new StatementObs();
             try
             {
-
-                using (var context = new MySqlContext())
+                Doctors = new ObservableCollection<Docs>();
+                //bool tester = true;
+                foreach (var doc in Data.Doctor.GetAll)
                 {
-                    StatementObsRepository HVRep = new StatementObsRepository(context);
-                    DoctorRepository DoctorRep = new DoctorRepository(context);
-                    //  DoctorRepository DoctorRep = new DoctorRepository(context);
-                    PatientsRepository PtRep = new PatientsRepository(context);
-                    Doctors = new ObservableCollection<Docs>();
-                    //bool tester = true;
-                    foreach (var doc in DoctorRep.GetAll)
+                    if (doc.isEnabled.Value)
                     {
-                        if (doc.isEnabled.Value)
-                        {
-                            Doctors.Add(new Docs(doc));
-                        }
+                        Doctors.Add(new Docs(doc));
                     }
-                    // CurrentPatient = PtRep.Get((int)data);CurrentDocument
-                    //Doctors = new ObservableCollection<Docs>();
-                    ////bool tester = true;
-                    //foreach (var doc in DoctorRep.GetAll)
-                    //{
-                    //    if (doc.isEnabled.Value)
-                    //    {
-                    //        Doctors.Add(new Docs(doc));
-                    //    }
-                    //}
-
-
-                    if (data != null && int.Parse(data.ToString()) != 0)
-                    {
-                        CurrentDocument = HVRep.Get(int.Parse(data.ToString()));
-                        //if (CurrentDocument.DoctorId != 0)
-                        //{
-                        //    var doc = DoctorRep.Get(CurrentDocument.DoctorId);
-                        //    foreach (var docs in Doctors)
-                        //    {
-                        //        if (docs.doc.Id == doc.Id)
-                        //        {
-                        //            DoctorSelectedId = Doctors.IndexOf(docs);
-                        //        }
-                        //    }
-                        //}
-                        // DoctorSelectedId = CurrentDocument.DoctorId;
-                        IsDocAdded = Visibility.Visible;
-                        if (IsVisibleForSecretary != Visibility.Hidden)
-                            IsDocAddedSave = Visibility.Visible;
-                        TextForDoWhat = "";
-                    }
-                    else
-                    {
-                        //DoctorSelectedId = 0;
-                        IsDocAdded = Visibility.Hidden;
-                        IsDocAddedSave = Visibility.Hidden;
-                        TextForDoWhat = "Сформируйте или загрузите документ";
-
-                    }
-                    //foreach (var x in HVRep.GetAll)
-                    //{
-
-                    //    if (x.PatientId == CurrentPatient.Id)
-                    //    {
-                    //        tester = false;
-                    //        CurrentDocument = x;
-
-                    //        break;
-                    //    }
-
-                    //    // StatementObs Hv = new StatementObs();
-                    //}
-
-
-                    //if (tester)
-                    //{
-                    //    IsDocAdded = Visibility.Hidden;
-                    //    TextForDoWhat = "Сформируйте или загрузите документ";
-                    //}
-                    //else
-                    //{
-                    //    IsDocAdded = Visibility.Visible;
-
-                    //}
                 }
+                // CurrentPatient = PtRep.Get((int)data);CurrentDocument
+                //Doctors = new ObservableCollection<Docs>();
+                ////bool tester = true;
+                //foreach (var doc in DoctorRep.GetAll)
+                //{
+                //    if (doc.isEnabled.Value)
+                //    {
+                //        Doctors.Add(new Docs(doc));
+                //    }
+                //}
+
+
+                if (data != null && int.Parse(data.ToString()) != 0)
+                {
+                    CurrentDocument = Data.StatementObs.Get(int.Parse(data.ToString()));
+                    //if (CurrentDocument.DoctorId != 0)
+                    //{
+                    //    var doc = DoctorRep.Get(CurrentDocument.DoctorId);
+                    //    foreach (var docs in Doctors)
+                    //    {
+                    //        if (docs.doc.Id == doc.Id)
+                    //        {
+                    //            DoctorSelectedId = Doctors.IndexOf(docs);
+                    //        }
+                    //    }
+                    //}
+                    // DoctorSelectedId = CurrentDocument.DoctorId;
+                    IsDocAdded = Visibility.Visible;
+                    if (IsVisibleForSecretary != Visibility.Hidden)
+                        IsDocAddedSave = Visibility.Visible;
+                    TextForDoWhat = "";
+                }
+                else
+                {
+                    //DoctorSelectedId = 0;
+                    IsDocAdded = Visibility.Hidden;
+                    IsDocAddedSave = Visibility.Hidden;
+                    TextForDoWhat = "Сформируйте или загрузите документ";
+
+                }
+                //foreach (var x in HVRep.GetAll)
+                //{
+
+                //    if (x.PatientId == CurrentPatient.Id)
+                //    {
+                //        tester = false;
+                //        CurrentDocument = x;
+
+                //        break;
+                //    }
+
+                //    // StatementObs Hv = new StatementObs();
+                //}
+
+
+                //if (tester)
+                //{
+                //    IsDocAdded = Visibility.Hidden;
+                //    TextForDoWhat = "Сформируйте или загрузите документ";
+                //}
+                //else
+                //{
+                //    IsDocAdded = Visibility.Visible;
+
+                //}
             }
             catch
             {
@@ -416,57 +403,53 @@ namespace WpfApp2.ViewModels
                     if (!string.IsNullOrWhiteSpace(FileName))
                     {
                         byte[] bteToBD = File.ReadAllBytes(FileName);
-                        using (var context = new MySqlContext())
+                        StatementObs Hv = new StatementObs();
+                        //HirurgOverviewRepository HirurgOverviewRep = new HirurgOverviewRepository(context);
+                        //StatementObs Hv = new StatementObs();
+                        //bool tester = true;
+
+                        if (CurrentDocument.Id != 0)
                         {
-                            StatementObsRepository HirurgOverviewRep = new StatementObsRepository(context);
-                            StatementObs Hv = new StatementObs();
-                            //HirurgOverviewRepository HirurgOverviewRep = new HirurgOverviewRepository(context);
-                            //StatementObs Hv = new StatementObs();
-                            //bool tester = true;
-
-                            if (CurrentDocument.Id != 0)
-                            {
-                                Hv = Data.StatementObs.Get(CurrentDocument.Id);
-                                CurrentDocument.DocTemplate = bteToBD;
-                                Hv.DocTemplate = bteToBD;
-                                //Hv.DoctorId = DoctorSelectedId;
-                                Data.Complete();
-                            }
-                            else
-                            {
-
-                                Hv.DocTemplate = bteToBD;
-                                //  Hv.DoctorId = DoctorSelectedId;
-                                CurrentDocument.DocTemplate = bteToBD;
-                                Data.StatementObs.Add(Hv);
-
-                                Data.Complete();
-                                CurrentDocument.Id = Hv.Id;
-                                MessageBus.Default.Call("SetIdOfStatement", null, CurrentDocument.Id);
-                            }
-                            //foreach (var x in HirurgOverviewRep.GetAll)
-                            //{
-
-                            //    if (x.PatientId == CurrentPatient.Id)
-                            //    {
-                            //        tester = false;
-                            //        Hv = x;
-                            //        Hv.DocTemplate = bteToBD;
-                            //        Data.Complete();
-                            //        break;
-                            //    }
-
-                            //    // StatementObs Hv = new StatementObs();
-                            //}
-                            //if (tester)
-                            //{
-                            //    Hv.PatientId = CurrentPatient.Id;
-                            //    Hv.DocTemplate = bteToBD;
-                            //    Data.StatementObs.Add(Hv);
-                            //    Data.Complete();
-                            //}
-
+                            Hv = Data.StatementObs.Get(CurrentDocument.Id);
+                            CurrentDocument.DocTemplate = bteToBD;
+                            Hv.DocTemplate = bteToBD;
+                            //Hv.DoctorId = DoctorSelectedId;
+                            Data.Complete();
                         }
+                        else
+                        {
+
+                            Hv.DocTemplate = bteToBD;
+                            //  Hv.DoctorId = DoctorSelectedId;
+                            CurrentDocument.DocTemplate = bteToBD;
+                            Data.StatementObs.Add(Hv);
+
+                            Data.Complete();
+                            CurrentDocument.Id = Hv.Id;
+                            MessageBus.Default.Call("SetIdOfStatement", null, CurrentDocument.Id);
+                        }
+                        //foreach (var x in HirurgOverviewRep.GetAll)
+                        //{
+
+                        //    if (x.PatientId == CurrentPatient.Id)
+                        //    {
+                        //        tester = false;
+                        //        Hv = x;
+                        //        Hv.DocTemplate = bteToBD;
+                        //        Data.Complete();
+                        //        break;
+                        //    }
+
+                        //    // StatementObs Hv = new StatementObs();
+                        //}
+                        //if (tester)
+                        //{
+                        //    Hv.PatientId = CurrentPatient.Id;
+                        //    Hv.DocTemplate = bteToBD;
+                        //    Data.StatementObs.Add(Hv);
+                        //    Data.Complete();
+                        //}
+
                         //int bff = 0;
                         //if (CurrentDocument.DoctorId > 0)
                         //    bff = CurrentDocument.DoctorId;
@@ -520,54 +503,50 @@ namespace WpfApp2.ViewModels
                     _fileNameOnly = openFileDialog.SafeFileName;
                     FileName = openFileDialog.FileName;
                     byte[] bteToBD = File.ReadAllBytes(FileName);
-                    using (var context = new MySqlContext())
+                    //StatementObsRepository HirurgOverviewRep = new StatementObsRepository(context);
+                    StatementObs Hv = new StatementObs();
+
+                    if (CurrentDocument.Id != 0)
                     {
-                        //StatementObsRepository HirurgOverviewRep = new StatementObsRepository(context);
-                        StatementObs Hv = new StatementObs();
+                        Hv = Data.StatementObs.Get(CurrentDocument.Id);
 
-                        if (CurrentDocument.Id != 0)
-                        {
-                            Hv = Data.StatementObs.Get(CurrentDocument.Id);
-
-                            Hv.DocTemplate = bteToBD;
-                            //Hv.DoctorId = DoctorSelectedId;
-                            Data.Complete();
-                        }
-                        else
-                        {
-
-                            Hv.DocTemplate = bteToBD;
-                            //Hv.DoctorId = DoctorSelectedId;
-                            Data.StatementObs.Add(Hv);
-
-                            Data.Complete();
-                            CurrentDocument.Id = Hv.Id;
-                            MessageBus.Default.Call("SetIdOfOverview", null, CurrentDocument.Id);
-                        }
-                        //bool tester = true;
-                        //foreach (var x in HirurgOverviewRep.GetAll)
-                        //{
-
-                        //    if (x.PatientId == CurrentPatient.Id)
-                        //    {
-                        //        tester = false;
-                        //        Hv = Data.StatementObs.Get(x.Id);
-                        //        Hv.DocTemplate = bteToBD;
-                        //        Data.Complete();
-                        //        break;
-                        //    }
-
-                        //    // StatementObs Hv = new StatementObs();
-                        //}
-                        //if (tester)
-                        //{
-                        //    Hv.PatientId = CurrentPatient.Id;
-                        //    Hv.DocTemplate = bteToBD;
-                        //    Data.StatementObs.Add(Hv);
-                        //    Data.Complete();
-                        //}
-
+                        Hv.DocTemplate = bteToBD;
+                        //Hv.DoctorId = DoctorSelectedId;
+                        Data.Complete();
                     }
+                    else
+                    {
+
+                        Hv.DocTemplate = bteToBD;
+                        //Hv.DoctorId = DoctorSelectedId;
+                        Data.StatementObs.Add(Hv);
+
+                        Data.Complete();
+                        CurrentDocument.Id = Hv.Id;
+                        MessageBus.Default.Call("SetIdOfOverview", null, CurrentDocument.Id);
+                    }
+                    //bool tester = true;
+                    //foreach (var x in HirurgOverviewRep.GetAll)
+                    //{
+
+                    //    if (x.PatientId == CurrentPatient.Id)
+                    //    {
+                    //        tester = false;
+                    //        Hv = Data.StatementObs.Get(x.Id);
+                    //        Hv.DocTemplate = bteToBD;
+                    //        Data.Complete();
+                    //        break;
+                    //    }
+
+                    //    // StatementObs Hv = new StatementObs();
+                    //}
+                    //if (tester)
+                    //{
+                    //    Hv.PatientId = CurrentPatient.Id;
+                    //    Hv.DocTemplate = bteToBD;
+                    //    Data.StatementObs.Add(Hv);
+                    //    Data.Complete();
+                    //}
 
                     MessageBus.Default.Call("GetStatementForStatement", null, CurrentDocument.Id);
                     TextForDoWhat = "Был загружен документ " + _fileNameOnly;

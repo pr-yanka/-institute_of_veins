@@ -74,12 +74,8 @@ namespace WpfApp2.Db.Models
 
                 if (_size != null)
                 {
-                    using (var context = new MySqlContext())
-                    {
-                        MetricsRepository metricsRep = new MetricsRepository(context);
-                        Metrics = metricsRep.Get(Size.Value).Str;
-                    }
-
+                    var Data = UnitOfWork.Instance(new MySqlContext());
+                    Metrics = Data.Metrics.GetStr(Size.Value);
                 }
 
 

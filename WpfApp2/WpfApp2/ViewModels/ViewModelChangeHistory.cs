@@ -45,7 +45,7 @@ namespace WpfApp2.ViewModels
 
 
 
-        public ChangeHistoryClass(ChangeHistory Ch, MySqlContext context)
+        public ChangeHistoryClass(ChangeHistory Ch, IUnitOfWork UnitOfWork)
         {
             this.Ch = Ch;
             AccName = "";
@@ -90,9 +90,7 @@ namespace WpfApp2.ViewModels
             // Time = buf1.Hour.ToString() + ":" + buf1.Minute.ToString();
             Date = Ch.дата_изменения;
 
-            AccauntRepository acRep = new AccauntRepository(context);
-            ChangesInDBTypeRepository chindbRep = new ChangesInDBTypeRepository(context);
-            Accaunt CurAcc = acRep.Get(Ch.id_аккаунта);
+            Accaunt CurAcc = UnitOfWork.Accaunt.Get(Ch.id_аккаунта);
 
             AccName = CurAcc.Name;
 
@@ -110,7 +108,7 @@ namespace WpfApp2.ViewModels
                 AccPost = "Медперсонал";
             }
 
-            ChangeType = chindbRep.Get(Ch.тип_изменения).Str;
+            ChangeType = UnitOfWork.ChangesInDBType.Get(Ch.тип_изменения).Str;
             //var CurrentPatient = PtRep.Get(Ex.PatientId.Value);
             //Patient = CurrentPatient.Sirname + " " + CurrentPatient.Name.ToCharArray()[0].ToString() + ". " + CurrentPatient.Patronimic.ToCharArray()[0].ToString() + ".";
 
@@ -367,138 +365,133 @@ namespace WpfApp2.ViewModels
         List<ChangeHistoryClass> FullCopy;
         private void SetChangesInDB(object sender, object data)
         {
-            using (MySqlContext context = new MySqlContext())
+            try
             {
-                try
+                if (FullCopy != null && Changes != null && Changes.Count != FullCopy.Count)
+                    Changes = new ObservableCollection<ChangeHistoryClass>(FullCopy);
+                //FullCopy = new List<ChangeHistoryClass>();
+                //  Changes = new ObservableCollection<ChangeHistoryClass>();
+                //  ViewSource = new CollectionViewSource();
+                test = true;
+
+                // string query = "SELECT * FROM med_db.история_изменений ORDER BY id DESC";
+                int limit = 0;
+                if (SortId == 0)
                 {
-                    ChangeHistoryRepository ChangeRp = new ChangeHistoryRepository(context);
-
-                    if (FullCopy != null && Changes != null && Changes.Count != FullCopy.Count)
-                        Changes = new ObservableCollection<ChangeHistoryClass>(FullCopy);
-                    //FullCopy = new List<ChangeHistoryClass>();
-                    //  Changes = new ObservableCollection<ChangeHistoryClass>();
-                    //  ViewSource = new CollectionViewSource();
-                    test = true;
-
-                    // string query = "SELECT * FROM med_db.история_изменений ORDER BY id DESC";
-                    int limit = 0;
-                    if (SortId == 0)
-                    {
-                        limit = 5;
-                        //query += " LIMIT " + limit.ToString();
-                    }
-                    else if (SortId == 1)
-                    {
-                        limit = 10;
-                        // query +=  " LIMIT " + limit.ToString();
-                    }
-                    else if (SortId == 2)
-                    {
-                        limit = 20;
-                        //  query +=  " LIMIT " + limit.ToString();
-                    }
-                    else if (SortId == 3)
-                    {
-                        limit = 30;
-                        //  query +=  " LIMIT " + limit.ToString();
-                    }
-                    else if (SortId == 4)
-                    {
-                        limit = 40;
-                        //query +=  " LIMIT " + limit.ToString();
-                    }
-                    else if (SortId == 5)
-                    {
-                        limit = 50;
-                        //query +=  " LIMIT " + limit.ToString();
-                    }//
-                    else if (SortId == 6)
-                    {
-                        limit = 100;
-                        //query +=  " LIMIT " + limit.ToString();
-                    }
-                    else if (SortId == 7)
-                    {
-                        limit = 200;
-                        //query +=  " LIMIT " + limit.ToString();
-                    }
-                    List<ChangeHistory> buflist = new List<ChangeHistory>();
-                    if (SortId == 8)
-                    {
-                        buflist = context.Set<ChangeHistory>().OrderByDescending(entry => entry.id).ToList();
-
-                    }
-                    else
-                    {
-                        buflist = context.Set<ChangeHistory>().Take(limit).OrderByDescending(entry => entry.id).ToList();
-                    }
-                    Changes = new ObservableCollection<ChangeHistoryClass>();
-                    FullCopy = new List<ChangeHistoryClass>();
-                    foreach (ChangeHistory Ch in buflist)
-                    {
-
-
-                        //test = true;
-                        //for (int i = 0; i < Changes.Count; ++i)
-                        //{
-
-                        //    if (Changes[i].Ch.id == Ch.id)
-                        //    { test = false;break; }
-
-                        //}
-                        //if (test)
-                        //{
-                        ChangeHistoryClass buf = new ChangeHistoryClass(Ch, context);
-                        FullCopy.Add(buf);
-                        Changes.Add(buf);
-                        //}
-
-
-                    }
-
-
-
-                    if (Changes.Count == 0)
-                    {
-                        VisOfNothingFaund = Visibility.Visible;
-                    }
-                    else
-                    {
-                        VisOfNothingFaund = Visibility.Collapsed;
-                    }
-                    if (ViewSource != null)
-                        ViewSource.Source = Changes;
-                    else
-                        ViewSource = new CollectionViewSource();
-                    if (_isSortByData == true)
-                    {
-
-                        ViewSource.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Descending));
-
-                        // Let the UI control refresh in order for changes to take place.
-                        ViewSource.View.Refresh();
-
-                    }
-                    else
-                    {
-                        ViewSource.SortDescriptions.Clear();
-                        if (ViewSource.View != null)
-                            ViewSource.View.Refresh();
-                    }
-                    //    Controller.NavigateTo<ViewModelChangesHistoy>();
+                    limit = 5;
+                    //query += " LIMIT " + limit.ToString();
                 }
-                catch (Exception exc)
+                else if (SortId == 1)
                 {
+                    limit = 10;
+                    // query +=  " LIMIT " + limit.ToString();
+                }
+                else if (SortId == 2)
+                {
+                    limit = 20;
+                    //  query +=  " LIMIT " + limit.ToString();
+                }
+                else if (SortId == 3)
+                {
+                    limit = 30;
+                    //  query +=  " LIMIT " + limit.ToString();
+                }
+                else if (SortId == 4)
+                {
+                    limit = 40;
+                    //query +=  " LIMIT " + limit.ToString();
+                }
+                else if (SortId == 5)
+                {
+                    limit = 50;
+                    //query +=  " LIMIT " + limit.ToString();
+                }//
+                else if (SortId == 6)
+                {
+                    limit = 100;
+                    //query +=  " LIMIT " + limit.ToString();
+                }
+                else if (SortId == 7)
+                {
+                    limit = 200;
+                    //query +=  " LIMIT " + limit.ToString();
+                }
+                List<ChangeHistory> buflist = new List<ChangeHistory>();
+                if (SortId == 8)
+                {
+                    buflist = Data.ChangeHistory.GetAll.OrderByDescending(entry => entry.id).ToList();
+
+                }
+                else
+                {
+                    buflist = Data.ChangeHistory.Take(limit).OrderByDescending(entry => entry.id).ToList();
+                }
+                Changes = new ObservableCollection<ChangeHistoryClass>();
+                FullCopy = new List<ChangeHistoryClass>();
+                foreach (ChangeHistory Ch in buflist)
+                {
+
+
+                    //test = true;
+                    //for (int i = 0; i < Changes.Count; ++i)
+                    //{
+
+                    //    if (Changes[i].Ch.id == Ch.id)
+                    //    { test = false;break; }
+
+                    //}
+                    //if (test)
+                    //{
+                    ChangeHistoryClass buf = new ChangeHistoryClass(Ch, Data);
+                    FullCopy.Add(buf);
+                    Changes.Add(buf);
+                    //}
+
+
+                }
+
+
+
+                if (Changes.Count == 0)
+                {
+                    VisOfNothingFaund = Visibility.Visible;
+                }
+                else
+                {
+                    VisOfNothingFaund = Visibility.Collapsed;
+                }
+                if (ViewSource != null)
+                    ViewSource.Source = Changes;
+                else
                     ViewSource = new CollectionViewSource();
-                    Changes = new ObservableCollection<ChangeHistoryClass>();
-                    if (ViewSource != null)
-                        ViewSource.Source = Changes;
-                    else
-                        ViewSource = new CollectionViewSource();
+                if (_isSortByData == true)
+                {
+
+                    ViewSource.SortDescriptions.Add(new SortDescription("Date", ListSortDirection.Descending));
+
+                    // Let the UI control refresh in order for changes to take place.
+                    ViewSource.View.Refresh();
+
+                }
+                else
+                {
                     ViewSource.SortDescriptions.Clear();
                     if (ViewSource.View != null)
                         ViewSource.View.Refresh();
                 }
+                //    Controller.NavigateTo<ViewModelChangesHistoy>();
+            }
+            catch (Exception exc)
+            {
+                ViewSource = new CollectionViewSource();
+                Changes = new ObservableCollection<ChangeHistoryClass>();
+                if (ViewSource != null)
+                    ViewSource.Source = Changes;
+                else
+                    ViewSource = new CollectionViewSource();
+                ViewSource.SortDescriptions.Clear();
+                if (ViewSource.View != null)
+                    ViewSource.View.Refresh();
             }
             _filterText = "";
             OnPropertyChanged("FilterText");

@@ -202,6 +202,7 @@
     <Compile Include="Controls\AddReport.xaml.cs">
       <DependentUpon>AddReport.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ComboBoxAutoFill.cs" />
     <Compile Include="Db\Models\OperationDateTimeTemplateRepository.cs" />
     <Compile Include="Db\Models\ProgramVersionRepository.cs" />
     <Compile Include="Db\Models\OperationDateTime.cs" />
@@ -766,39 +767,6 @@
     <Resource Include="Images\analize.png" />
     <Resource Include="Images\forward.png" />
     <Resource Include="Images\history.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="docs\MySqlTransaction.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="docs\MySqlParameterCollection.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="docs\MySqlParameter.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="docs\MySqlHelper.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="docs\MySqlException.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="docs\MySqlDataReader.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="docs\MySqlDataAdapter.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="docs\MySqlConnectionStringBuilder.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="docs\MySqlConnection.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="docs\MySqlCommandBuilder.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="docs\MySqlCommand.xml" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">

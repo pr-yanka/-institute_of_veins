@@ -148,361 +148,341 @@ namespace WpfApp2.ViewModels
         private void RefreshDataForDoctorsForEditUser(object sender, object data)
         {
 
-            using (var context = new MySqlContext())
+            Name = "";
+
+            Surname = "";
+
+            Patronimic = "";
+            Aditional = "";
+            СategoryTypeSelectedText = "";
+            Category = new ObservableCollection<СategoryType>();
+            Specializations = new ObservableCollection<SpecDataSours>();
+            Scintifics = new ObservableCollection<SpecDataSours>();
+
+            foreach (var category in Data.СategoryType.GetAll)
             {
-                Name = "";
+                Category.Add(category);
+            }
 
-                Surname = "";
+            foreach (var spec in Data.SpecializationType.GetAll)
+            {
+                Specializations.Add(new SpecDataSours(spec.Str, spec.id_специлизации));
+            }
 
-                Patronimic = "";
-                Aditional = "";
-                СategoryTypeSelectedText = "";
-                Category = new ObservableCollection<СategoryType>();
-                Specializations = new ObservableCollection<SpecDataSours>();
-                Scintifics = new ObservableCollection<SpecDataSours>();
-                СategoryTypeRepository ctRep = new СategoryTypeRepository(context);
-                SpecializationTypeRepository spRep = new SpecializationTypeRepository(context);
-                ScientificTitleTypeRepository scRep = new ScientificTitleTypeRepository(context);
-
-                foreach (var category in ctRep.GetAll)
-                {
-                    Category.Add(category);
-                }
-
-                foreach (var spec in spRep.GetAll)
-                {
-                    Specializations.Add(new SpecDataSours(spec.Str, spec.id_специлизации));
-                }
-
-                foreach (var title in scRep.GetAll)
-                {
-                    Scintifics.Add(new SpecDataSours(title.Str, title.Id));
-                }
-                CategorySelectedId = 0;
-                СategoryTypeSelected = Category[CategorySelectedId];
-                GoToDoctorListCommand = new DelegateCommand(
-   () =>
-   {
+            foreach (var title in Data.ScientificTitleType.GetAll)
+            {
+                Scintifics.Add(new SpecDataSours(title.Str, title.Id));
+            }
+            CategorySelectedId = 0;
+            СategoryTypeSelected = Category[CategorySelectedId];
+            GoToDoctorListCommand = new DelegateCommand(
+() =>
+{
 
 
-       Controller.NavigateTo<ViewModelEditUser>();
+    Controller.NavigateTo<ViewModelEditUser>();
 
 
-   }
+}
 );
-                SaveAndGoDoctorListCommand = new DelegateCommand(
-               () =>
-               {
-                   if (TestRequiredFields())
-                   {
-                       currentDoctor = new Doctor();
-                       bool test = true;
-                       foreach (var Category in Data.СategoryType.GetAll)
-                       {
-                           if (Category.Str == СategoryTypeSelectedText)
-                           {
-                               test = false;
-                               currentDoctor.категория = Category.Id;
-                               break;
-                           }
-                       }
-                       if (test)
-                       {
-                           СategoryType newСategory = new СategoryType();
-                           newСategory.Str = СategoryTypeSelectedText;
-                           Data.СategoryType.Add(newСategory);
-                           Data.Complete();
-                           currentDoctor.категория = newСategory.Id;
-                       }
+            SaveAndGoDoctorListCommand = new DelegateCommand(
+            () =>
+            {
+                if (TestRequiredFields())
+                {
+                    currentDoctor = new Doctor();
+                    bool test = true;
+                    foreach (var Category in Data.СategoryType.GetAll)
+                    {
+                        if (Category.Str == СategoryTypeSelectedText)
+                        {
+                            test = false;
+                            currentDoctor.категория = Category.Id;
+                            break;
+                        }
+                    }
+                    if (test)
+                    {
+                        СategoryType newСategory = new СategoryType();
+                        newСategory.Str = СategoryTypeSelectedText;
+                        Data.СategoryType.Add(newСategory);
+                        Data.Complete();
+                        currentDoctor.категория = newСategory.Id;
+                    }
 
-                       currentDoctor.Name = Name;
-                       currentDoctor.Sirname = Surname;
-                       currentDoctor.Patronimic = Patronimic;
-                       currentDoctor.Aditional = Aditional;
-                       currentDoctor.isEnabled = true;
+                    currentDoctor.Name = Name;
+                    currentDoctor.Sirname = Surname;
+                    currentDoctor.Patronimic = Patronimic;
+                    currentDoctor.Aditional = Aditional;
+                    currentDoctor.isEnabled = true;
 
-                       Data.Doctor.Add(currentDoctor);
-                       Data.Complete();
-                       foreach (var spec in Specializations)
-                       {
-                           if (spec.IsChecked == true)
-                           {
-                               DoctorsSpecializations DoctorSpec = new DoctorsSpecializations();
-                               DoctorSpec.id_doctor = currentDoctor.Id;
-                               DoctorSpec.id_specialization = spec.id;
-                               Data.DoctorsSpecializations.Add(DoctorSpec);
-                               Data.Complete();
+                    Data.Doctor.Add(currentDoctor);
+                    Data.Complete();
+                    foreach (var spec in Specializations)
+                    {
+                        if (spec.IsChecked == true)
+                        {
+                            DoctorsSpecializations DoctorSpec = new DoctorsSpecializations();
+                            DoctorSpec.id_doctor = currentDoctor.Id;
+                            DoctorSpec.id_specialization = spec.id;
+                            Data.DoctorsSpecializations.Add(DoctorSpec);
+                            Data.Complete();
 
-                           }
+                        }
 
-                       }
-                       Data.Complete();
-                       foreach (var Tytle in Scintifics)
-                       {
-                           if (Tytle.IsChecked == true)
-                           {
-                               ScientificTitles DoctorTitle = new ScientificTitles();
-                               DoctorTitle.id_doctor = currentDoctor.Id;
-                               DoctorTitle.id_title = Tytle.id;
-                               Data.ScientificTitles.Add(DoctorTitle);
+                    }
+                    Data.Complete();
+                    foreach (var Tytle in Scintifics)
+                    {
+                        if (Tytle.IsChecked == true)
+                        {
+                            ScientificTitles DoctorTitle = new ScientificTitles();
+                            DoctorTitle.id_doctor = currentDoctor.Id;
+                            DoctorTitle.id_title = Tytle.id;
+                            Data.ScientificTitles.Add(DoctorTitle);
 
-                           }
+                        }
 
-                       }
-                       Data.Complete();
-                       //  MessageBus.Default.Call("OpenDoctors", this, "");
-                       MessageBus.Default.Call("UpdateAccsEmptyForNewUserForAddNewMed", currentDoctor.Id, null);
-                       Controller.NavigateTo<ViewModelEditUser>();
-                   }
-                   else
-                   {
+                    }
+                    Data.Complete();
+                    //  MessageBus.Default.Call("OpenDoctors", this, "");
+                    MessageBus.Default.Call("UpdateAccsEmptyForNewUserForAddNewMed", currentDoctor.Id, null);
+                    Controller.NavigateTo<ViewModelEditUser>();
+                }
+                else
+                {
 
-                       MessageBox.Show("Не все поля заполнены");
-                   }
+                    MessageBox.Show("Не все поля заполнены");
+                }
 
-               }
+            }
            );
                 //СategoryTypeSelectedText = СategoryTypeSelected.Str;
-            }
         }
         private void RefreshDataForDoctorsForAddUser(object sender, object data)
         {
+            Name = "";
 
-            using (var context = new MySqlContext())
+            Surname = "";
+
+            Patronimic = "";
+            Aditional = "";
+            СategoryTypeSelectedText = "";
+            Category = new ObservableCollection<СategoryType>();
+            Specializations = new ObservableCollection<SpecDataSours>();
+            Scintifics = new ObservableCollection<SpecDataSours>();
+
+            foreach (var category in Data.СategoryType.GetAll)
             {
-                Name = "";
-
-                Surname = "";
-
-                Patronimic = "";
-                Aditional = "";
-                СategoryTypeSelectedText = "";
-                Category = new ObservableCollection<СategoryType>();
-                Specializations = new ObservableCollection<SpecDataSours>();
-                Scintifics = new ObservableCollection<SpecDataSours>();
-                СategoryTypeRepository ctRep = new СategoryTypeRepository(context);
-                SpecializationTypeRepository spRep = new SpecializationTypeRepository(context);
-                ScientificTitleTypeRepository scRep = new ScientificTitleTypeRepository(context);
-
-                foreach (var category in ctRep.GetAll)
-                {
-                    Category.Add(category);
-                }
-
-                foreach (var spec in spRep.GetAll)
-                {
-                    Specializations.Add(new SpecDataSours(spec.Str, spec.id_специлизации));
-                }
-
-                foreach (var title in scRep.GetAll)
-                {
-                    Scintifics.Add(new SpecDataSours(title.Str, title.Id));
-                }
-                CategorySelectedId = 0;
-                СategoryTypeSelected = Category[CategorySelectedId];
-                GoToDoctorListCommand = new DelegateCommand(
-   () =>
-   {
-
-
-       Controller.NavigateTo<ViewModelAddUser>();
-
-
-   }
-);
-                SaveAndGoDoctorListCommand = new DelegateCommand(
-               () =>
-               {
-                   if (TestRequiredFields())
-                   {
-                       currentDoctor = new Doctor();
-                       bool test = true;
-                       foreach (var Category in Data.СategoryType.GetAll)
-                       {
-                           if (Category.Str == СategoryTypeSelectedText)
-                           {
-                               test = false;
-                               currentDoctor.категория = Category.Id;
-                               break;
-                           }
-                       }
-                       if (test)
-                       {
-                           СategoryType newСategory = new СategoryType();
-                           newСategory.Str = СategoryTypeSelectedText;
-                           Data.СategoryType.Add(newСategory);
-                           Data.Complete();
-                           currentDoctor.категория = newСategory.Id;
-                       }
-
-                       currentDoctor.Name = Name;
-                       currentDoctor.Sirname = Surname;
-                       currentDoctor.Patronimic = Patronimic;
-                       currentDoctor.Aditional = Aditional;
-                       currentDoctor.isEnabled = true;
-
-                       Data.Doctor.Add(currentDoctor);
-                       Data.Complete();
-                       foreach (var spec in Specializations)
-                       {
-                           if (spec.IsChecked == true)
-                           {
-                               DoctorsSpecializations DoctorSpec = new DoctorsSpecializations();
-                               DoctorSpec.id_doctor = currentDoctor.Id;
-                               DoctorSpec.id_specialization = spec.id;
-                               Data.DoctorsSpecializations.Add(DoctorSpec);
-                               Data.Complete();
-
-                           }
-
-                       }
-                       Data.Complete();
-                       foreach (var Tytle in Scintifics)
-                       {
-                           if (Tytle.IsChecked == true)
-                           {
-                               ScientificTitles DoctorTitle = new ScientificTitles();
-                               DoctorTitle.id_doctor = currentDoctor.Id;
-                               DoctorTitle.id_title = Tytle.id;
-                               Data.ScientificTitles.Add(DoctorTitle);
-
-                           }
-
-                       }
-                       Data.Complete();
-                       //  MessageBus.Default.Call("OpenDoctors", this, "");
-                       MessageBus.Default.Call("UpdateAccsEmptyForNewUserForAddNewMed", currentDoctor.Id, null);
-                       Controller.NavigateTo<ViewModelAddUser>();
-                   }
-                   else
-                   {
-
-                       MessageBox.Show("Не все поля заполнены");
-                   }
-
-               }
-           );
-                //СategoryTypeSelectedText = СategoryTypeSelected.Str;
+                Category.Add(category);
             }
+
+            foreach (var spec in Data.SpecializationType.GetAll)
+            {
+                Specializations.Add(new SpecDataSours(spec.Str, spec.id_специлизации));
+            }
+
+            foreach (var title in Data.ScientificTitleType.GetAll)
+            {
+                Scintifics.Add(new SpecDataSours(title.Str, title.Id));
+            }
+            CategorySelectedId = 0;
+            СategoryTypeSelected = Category[CategorySelectedId];
+            GoToDoctorListCommand = new DelegateCommand(
+() =>
+{
+
+
+    Controller.NavigateTo<ViewModelAddUser>();
+
+
+}
+);
+            SaveAndGoDoctorListCommand = new DelegateCommand(
+            () =>
+            {
+                if (TestRequiredFields())
+                {
+                    currentDoctor = new Doctor();
+                    bool test = true;
+                    foreach (var Category in Data.СategoryType.GetAll)
+                    {
+                        if (Category.Str == СategoryTypeSelectedText)
+                        {
+                            test = false;
+                            currentDoctor.категория = Category.Id;
+                            break;
+                        }
+                    }
+                    if (test)
+                    {
+                        СategoryType newСategory = new СategoryType();
+                        newСategory.Str = СategoryTypeSelectedText;
+                        Data.СategoryType.Add(newСategory);
+                        Data.Complete();
+                        currentDoctor.категория = newСategory.Id;
+                    }
+
+                    currentDoctor.Name = Name;
+                    currentDoctor.Sirname = Surname;
+                    currentDoctor.Patronimic = Patronimic;
+                    currentDoctor.Aditional = Aditional;
+                    currentDoctor.isEnabled = true;
+
+                    Data.Doctor.Add(currentDoctor);
+                    Data.Complete();
+                    foreach (var spec in Specializations)
+                    {
+                        if (spec.IsChecked == true)
+                        {
+                            DoctorsSpecializations DoctorSpec = new DoctorsSpecializations();
+                            DoctorSpec.id_doctor = currentDoctor.Id;
+                            DoctorSpec.id_specialization = spec.id;
+                            Data.DoctorsSpecializations.Add(DoctorSpec);
+                            Data.Complete();
+
+                        }
+
+                    }
+                    Data.Complete();
+                    foreach (var Tytle in Scintifics)
+                    {
+                        if (Tytle.IsChecked == true)
+                        {
+                            ScientificTitles DoctorTitle = new ScientificTitles();
+                            DoctorTitle.id_doctor = currentDoctor.Id;
+                            DoctorTitle.id_title = Tytle.id;
+                            Data.ScientificTitles.Add(DoctorTitle);
+
+                        }
+
+                    }
+                    Data.Complete();
+                    //  MessageBus.Default.Call("OpenDoctors", this, "");
+                    MessageBus.Default.Call("UpdateAccsEmptyForNewUserForAddNewMed", currentDoctor.Id, null);
+                    Controller.NavigateTo<ViewModelAddUser>();
+                }
+                else
+                {
+
+                    MessageBox.Show("Не все поля заполнены");
+                }
+
+            }
+        );
+            //СategoryTypeSelectedText = СategoryTypeSelected.Str;
         }
         private void RefreshDataForDoctors(object sender, object data)
         {
+            Name = "";
 
-            using (var context = new MySqlContext())
+            Surname = "";
+
+            Patronimic = "";
+            Aditional = "";
+            СategoryTypeSelectedText = "";
+            Category = new ObservableCollection<СategoryType>();
+            Specializations = new ObservableCollection<SpecDataSours>();
+            Scintifics = new ObservableCollection<SpecDataSours>();
+                
+            foreach (var category in Data.СategoryType.GetAll)
             {
-                Name = "";
-
-                Surname = "";
-
-                Patronimic = "";
-                Aditional = "";
-                СategoryTypeSelectedText = "";
-                Category = new ObservableCollection<СategoryType>();
-                Specializations = new ObservableCollection<SpecDataSours>();
-                Scintifics = new ObservableCollection<SpecDataSours>();
-                СategoryTypeRepository ctRep = new СategoryTypeRepository(context);
-                SpecializationTypeRepository spRep = new SpecializationTypeRepository(context);
-                ScientificTitleTypeRepository scRep = new ScientificTitleTypeRepository(context);
-
-                foreach (var category in ctRep.GetAll)
-                {
-                    Category.Add(category);
-                }
-
-                foreach (var spec in spRep.GetAll)
-                {
-                    Specializations.Add(new SpecDataSours(spec.Str, spec.id_специлизации));
-                }
-
-                foreach (var title in scRep.GetAll)
-                {
-                    Scintifics.Add(new SpecDataSours(title.Str, title.Id));
-                }
-                CategorySelectedId = 0;
-                СategoryTypeSelected = Category[CategorySelectedId];
-                GoToDoctorListCommand = new DelegateCommand(
-   () =>
-   {
-
-       MessageBus.Default.Call("OpenDoctors", this, "");
-       Controller.NavigateTo<ViewModelViewDoctors>();
-
-
-   }
-);
-                SaveAndGoDoctorListCommand = new DelegateCommand(
-             () =>
-             {
-                 if (TestRequiredFields())
-                 {
-                     currentDoctor = new Doctor();
-                     bool test = true;
-                     foreach (var Category in Data.СategoryType.GetAll)
-                     {
-                         if (Category.Str == СategoryTypeSelectedText)
-                         {
-                             test = false;
-                             currentDoctor.категория = Category.Id;
-                             break;
-                         }
-                     }
-                     if (test)
-                     {
-                         СategoryType newСategory = new СategoryType();
-                         newСategory.Str = СategoryTypeSelectedText;
-                         Data.СategoryType.Add(newСategory);
-                         Data.Complete();
-                         currentDoctor.категория = newСategory.Id;
-                     }
-
-                     currentDoctor.Name = Name;
-                     currentDoctor.Sirname = Surname;
-                     currentDoctor.Patronimic = Patronimic;
-                     currentDoctor.Aditional = Aditional;
-                     currentDoctor.isEnabled = true;
-
-                     Data.Doctor.Add(currentDoctor);
-                     Data.Complete();
-                     foreach (var spec in Specializations)
-                     {
-                         if (spec.IsChecked == true)
-                         {
-                             DoctorsSpecializations DoctorSpec = new DoctorsSpecializations();
-                             DoctorSpec.id_doctor = currentDoctor.Id;
-                             DoctorSpec.id_specialization = spec.id;
-                             Data.DoctorsSpecializations.Add(DoctorSpec);
-                             Data.Complete();
-
-                         }
-
-                     }
-                     Data.Complete();
-                     foreach (var Tytle in Scintifics)
-                     {
-                         if (Tytle.IsChecked == true)
-                         {
-                             ScientificTitles DoctorTitle = new ScientificTitles();
-                             DoctorTitle.id_doctor = currentDoctor.Id;
-                             DoctorTitle.id_title = Tytle.id;
-                             Data.ScientificTitles.Add(DoctorTitle);
-
-                         }
-
-                     }
-                     Data.Complete();
-                     MessageBus.Default.Call("OpenDoctors", this, "");
-                     Controller.NavigateTo<ViewModelViewDoctors>();
-                 }
-                 else
-                 {
-
-                     MessageBox.Show("Не все поля заполнены");
-                 }
-
-             }
-         );
-                //СategoryTypeSelectedText = СategoryTypeSelected.Str;
+                Category.Add(category);
             }
+
+            foreach (var spec in Data.SpecializationType.GetAll)
+            {
+                Specializations.Add(new SpecDataSours(spec.Str, spec.id_специлизации));
+            }
+
+            foreach (var title in Data.ScientificTitleType.GetAll)
+            {
+                Scintifics.Add(new SpecDataSours(title.Str, title.Id));
+            }
+            CategorySelectedId = 0;
+            СategoryTypeSelected = Category[CategorySelectedId];
+            GoToDoctorListCommand = new DelegateCommand(
+() =>
+{
+
+    MessageBus.Default.Call("OpenDoctors", this, "");
+    Controller.NavigateTo<ViewModelViewDoctors>();
+
+
+}
+);
+            SaveAndGoDoctorListCommand = new DelegateCommand(
+            () =>
+            {
+                if (TestRequiredFields())
+                {
+                    currentDoctor = new Doctor();
+                    bool test = true;
+                    foreach (var Category in Data.СategoryType.GetAll)
+                    {
+                        if (Category.Str == СategoryTypeSelectedText)
+                        {
+                            test = false;
+                            currentDoctor.категория = Category.Id;
+                            break;
+                        }
+                    }
+                    if (test)
+                    {
+                        СategoryType newСategory = new СategoryType();
+                        newСategory.Str = СategoryTypeSelectedText;
+                        Data.СategoryType.Add(newСategory);
+                        Data.Complete();
+                        currentDoctor.категория = newСategory.Id;
+                    }
+
+                    currentDoctor.Name = Name;
+                    currentDoctor.Sirname = Surname;
+                    currentDoctor.Patronimic = Patronimic;
+                    currentDoctor.Aditional = Aditional;
+                    currentDoctor.isEnabled = true;
+
+                    Data.Doctor.Add(currentDoctor);
+                    Data.Complete();
+                    foreach (var spec in Specializations)
+                    {
+                        if (spec.IsChecked == true)
+                        {
+                            DoctorsSpecializations DoctorSpec = new DoctorsSpecializations();
+                            DoctorSpec.id_doctor = currentDoctor.Id;
+                            DoctorSpec.id_specialization = spec.id;
+                            Data.DoctorsSpecializations.Add(DoctorSpec);
+                            Data.Complete();
+
+                        }
+
+                    }
+                    Data.Complete();
+                    foreach (var Tytle in Scintifics)
+                    {
+                        if (Tytle.IsChecked == true)
+                        {
+                            ScientificTitles DoctorTitle = new ScientificTitles();
+                            DoctorTitle.id_doctor = currentDoctor.Id;
+                            DoctorTitle.id_title = Tytle.id;
+                            Data.ScientificTitles.Add(DoctorTitle);
+
+                        }
+
+                    }
+                    Data.Complete();
+                    MessageBus.Default.Call("OpenDoctors", this, "");
+                    Controller.NavigateTo<ViewModelViewDoctors>();
+                }
+                else
+                {
+
+                    MessageBox.Show("Не все поля заполнены");
+                }
+
+            }
+        );
+            //СategoryTypeSelectedText = СategoryTypeSelected.Str;
         }
         #endregion
         private bool TestRequiredFields()

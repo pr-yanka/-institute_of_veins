@@ -18,70 +18,67 @@ namespace WpfApp2.LegParts.VMs
 
         private void RebuildFirst(object sender, object data)
         {
-            if (((LegPartViewModel)Controller.CurrentViewModel.Controller.LegViewModel).CurrentLegSide != this.CurrentLegSide) return; using (MySqlContext context = new MySqlContext())
+            if (((LegPartViewModel)Controller.CurrentViewModel.Controller.LegViewModel).CurrentLegSide != this.CurrentLegSide) return; 
+            var bufSaveLegSection = new List<int?>();
+
+            foreach (var x in LegSections)
             {
-                Perforate_shinRepository Perforate_shin = new Perforate_shinRepository(context);
-                MetricsRepository Metrics = new MetricsRepository(context);
-                var bufSaveLegSection = new List<int?>();
-
-                foreach (var x in LegSections)
+                if (x.SelectedValue != null)
+                    bufSaveLegSection.Add(x.SelectedValue.Id);
+                else
                 {
-                    if (x.SelectedValue != null)
-                        bufSaveLegSection.Add(x.SelectedValue.Id);
-                    else
-                    {
-                        bufSaveLegSection.Add(null);
-                    }
-                }
-
-                for (int i = 0; i < LegSections.Count; ++i)
-                {
-                    var bufSave = new ObservableCollection<LegPartDbStructure>();
-                    bufSave = LegSections[i].StructureSource;
-
-                    LegSections[i].StructureSource = new ObservableCollection<LegPartDbStructure>(Perforate_shin.LevelStructures(i + 1).ToList());
-                    int selectedIndex = -1;
-                    if (bufSaveLegSection[i] != null)
-                    {
-                        for (int j = 0; j < LegSections[i].StructureSource.Count; ++j)
-                        {
-                            if (LegSections[i].StructureSource[j].Id == bufSaveLegSection[i])
-                            {
-                                selectedIndex = j;
-                            }
-                        }
-                    }
-
-
-
-
-                    if (selectedIndex != -1)
-                        LegSections[i].SelectedValue = LegSections[i].StructureSource[selectedIndex];
-
-                    foreach (var variant in bufSave)
-                    {
-
-                        if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
-                        {
-                            if (variant.Text1 == "Переход к следующему разделу" && i == 0)
-                            { }
-                            else
-                            {
-                                LegSections[i].StructureSource.Add(variant);
-                            }
-                        }
-                        else if (variant.Text1 == "" && variant.Text2 == "")
-                        { LegSections[i].StructureSource.Add(variant); }
-
-
-                    }
-                    foreach (var structure in LegSections[i].StructureSource)
-                    {
-                        structure.Metrics = Metrics.GetStr(structure.Size);
-                    }
-
+                    bufSaveLegSection.Add(null);
                 }
             }
+
+            for (int i = 0; i < LegSections.Count; ++i)
+            {
+                var bufSave = new ObservableCollection<LegPartDbStructure>();
+                bufSave = LegSections[i].StructureSource;
+
+                LegSections[i].StructureSource = new ObservableCollection<LegPartDbStructure>(Data.Perforate_shin.LevelStructures(i + 1).ToList());
+                int selectedIndex = -1;
+                if (bufSaveLegSection[i] != null)
+                {
+                    for (int j = 0; j < LegSections[i].StructureSource.Count; ++j)
+                    {
+                        if (LegSections[i].StructureSource[j].Id == bufSaveLegSection[i])
+                        {
+                            selectedIndex = j;
+                        }
+                    }
+                }
+
+
+
+
+                if (selectedIndex != -1)
+                    LegSections[i].SelectedValue = LegSections[i].StructureSource[selectedIndex];
+
+                foreach (var variant in bufSave)
+                {
+
+                    if (variant.Text1 == "Свой вариант ответа" || variant.Text1 == "Переход к следующему разделу")
+                    {
+                        if (variant.Text1 == "Переход к следующему разделу" && i == 0)
+                        { }
+                        else
+                        {
+                            LegSections[i].StructureSource.Add(variant);
+                        }
+                    }
+                    else if (variant.Text1 == "" && variant.Text2 == "")
+                    { LegSections[i].StructureSource.Add(variant); }
+
+
+                }
+                foreach (var structure in LegSections[i].StructureSource)
+                {
+                    structure.Metrics = Data.Metrics.GetStr(structure.Size);
+                }
+
+            }
+
             MessageBus.Default.Call("LegDataSaved", this, this.GetType());
         }
         private void Rebuild(object sender, object data)
@@ -314,16 +311,8 @@ namespace WpfApp2.LegParts.VMs
              {
                  if (LegSections[0].SelectedValue != null)
                  {
-                     bool test = true;
-                     foreach (var leg in LegSections)
-                     {
-                         if (leg.HasSize && leg.CurrentEntry.Size == 0)
-                         { test = false; }
-                         if (leg.HasDoubleSize && leg.CurrentEntry.Size2 == 0)
-                         { test = false; }
-
-                     }
-                     if (test)
+                     bool isValid = Validate();
+                     if (isValid)
                      {
                          IsEmpty = false;
 
@@ -382,7 +371,6 @@ namespace WpfApp2.LegParts.VMs
                          MessageBus.Default.Call("LegDataSaved", this, this.GetType());
                          Controller.NavigateTo<ViewModelAddPhysical>();
                      }
-                     else { MessageBox.Show("Не все поля заполнены"); }
                  }
                  else
                  {
@@ -409,6 +397,30 @@ namespace WpfApp2.LegParts.VMs
         public TibiaPerforateViewModel(NavigationController controller, LegSide side) : base(controller, side)
         {
             Initialize();
+        }
+
+        protected override bool Validate()
+        {
+            bool isValid = true;
+            if (LegSections[0].SelectedValue != null)
+            {
+                foreach (var leg in LegSections)
+                {
+                    if (leg.HasSize && leg.CurrentEntry.Size == 0)
+                    {
+                        isValid = false;
+                    }
+                    if (leg.HasDoubleSize && leg.CurrentEntry.Size2 == 0)
+                    {
+                        isValid = false;
+                    }
+                }
+            }
+            if (!isValid)
+            {
+                MessageBox.Show("Не все поля заполнены");
+            }
+            return isValid;
         }
     }
 }

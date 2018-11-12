@@ -123,12 +123,11 @@ namespace WpfApp2.ViewModels
             OtmenOrProv = "Проведённая ";
             if (Operation.operation_result != null)
             {
-                using (var context = new MySqlContext())
+                var operationResult = Data.OperationResult.Get(Operation.operation_result.Value);
+                comment = operationResult.Str;
+                if (operationResult.Date != null)
                 {
-                    OperationResultRepository opResRep = new OperationResultRepository(context);
-                    comment = opResRep.Get(Operation.operation_result.Value).Str;
-                    if(opResRep.Get(Operation.operation_result.Value).Date != null)
-                    Date = opResRep.Get(Operation.operation_result.Value).Date.Value;
+                    Date = operationResult.Date.Value;
                 }
             }
         }
@@ -144,57 +143,51 @@ namespace WpfApp2.ViewModels
 
                     if (Operation.operation_result != null)
                     {
-                        using (var context = new MySqlContext())
+                        var Res = Data.OperationResult.Get(Operation.operation_result.Value);
+                        if (Res.IdNextOperation == null)
                         {
-                            OperationResultRepository opResRep = new OperationResultRepository(context);
-
-                            var Res = opResRep.Get(Operation.operation_result.Value);
-                            if (Res.IdNextOperation == null)
+                            var result1 = MessageBox.Show("Назначить ещё одну операцию?", "", MessageBoxButton.YesNo);
+                            if (result1 == System.Windows.MessageBoxResult.Yes)
                             {
-                                var result1 = MessageBox.Show("Назначить ещё одну операцию?", "", MessageBoxButton.YesNo);
-                                if (result1 == System.Windows.MessageBoxResult.Yes)
-                                {
 
-                                    // Closes the parent form.
-                                    var buf = Data.OperationResult.Get(Res.Id);
-                                    buf.Str = comment;
-                                    buf.Date = Date;
-                                    //Operation.итоги_операции = buf.Id;
-                                    Data.Complete();
-                                    MessageBus.Default.Call("SetCurrentACCOp", this, null);
-                                    MessageBus.Default.Call("SetCurrentPatientForOperation", this, Operation.PatientId);
-                                    MessageBus.Default.Call("SetOperationResult", this, buf);
-                                    Controller.NavigateTo<ViewModelAddOperation>();
+                                // Closes the parent form.
+                                var buf = Data.OperationResult.Get(Res.Id);
+                                buf.Str = comment;
+                                buf.Date = Date;
+                                //Operation.итоги_операции = buf.Id;
+                                Data.Complete();
+                                MessageBus.Default.Call("SetCurrentACCOp", this, null);
+                                MessageBus.Default.Call("SetCurrentPatientForOperation", this, Operation.PatientId);
+                                MessageBus.Default.Call("SetOperationResult", this, buf);
+                                Controller.NavigateTo<ViewModelAddOperation>();
 
 
-                                }
-                                else
-                                {
-                                    var buf = Data.OperationResult.Get(Res.Id);
-                                    buf.Str = comment;
-                                    buf.Date = Date;
-                                    // Data.OperationResult.Add(buf);
-                                    //   Operation.итоги_операции = buf.Id;
-                                    Data.Complete();
-                                    MessageBus.Default.Call("SetCurrentACCOp", this, null);
-                                    MessageBus.Default.Call("GetOprForOprResultOverview", this, operationId);
-                                    MessageBus.Default.Call("GetOperationForOverwiev", null, operationId);
-                                    Controller.NavigateTo<ViewModelOperationOverview>();
-
-                                }
                             }
                             else
                             {
                                 var buf = Data.OperationResult.Get(Res.Id);
                                 buf.Str = comment;
                                 buf.Date = Date;
+                                // Data.OperationResult.Add(buf);
+                                //   Operation.итоги_операции = buf.Id;
                                 Data.Complete();
                                 MessageBus.Default.Call("SetCurrentACCOp", this, null);
                                 MessageBus.Default.Call("GetOprForOprResultOverview", this, operationId);
-                                //       MessageBus.Default.Call("GetOperationForOverwiev", null, operationId);
+                                MessageBus.Default.Call("GetOperationForOverwiev", null, operationId);
                                 Controller.NavigateTo<ViewModelOperationOverview>();
-                            }
 
+                            }
+                        }
+                        else
+                        {
+                            var buf = Data.OperationResult.Get(Res.Id);
+                            buf.Str = comment;
+                            buf.Date = Date;
+                            Data.Complete();
+                            MessageBus.Default.Call("SetCurrentACCOp", this, null);
+                            MessageBus.Default.Call("GetOprForOprResultOverview", this, operationId);
+                            //       MessageBus.Default.Call("GetOperationForOverwiev", null, operationId);
+                            Controller.NavigateTo<ViewModelOperationOverview>();
                         }
                     }
                     else

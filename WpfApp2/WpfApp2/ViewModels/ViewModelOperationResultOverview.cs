@@ -91,15 +91,8 @@ namespace WpfApp2.ViewModels
             LeftOperationList = new List<OperationTypesDataSource>();
             RightOperationListPlaned = new List<OperationTypesDataSource>();
             LeftOperationListPlaned = new List<OperationTypesDataSource>();
-            OperationResult oprresult;
-            using (var context = new MySqlContext())
-            {
-                OperationRepository opRep = new OperationRepository(context);
-                Operation = opRep.Get((int)data);
-                OperationResultRepository opResRep = new OperationResultRepository(context);
-              
-                oprresult = opResRep.Get(Operation.operation_result.Value);
-            }
+            Operation = Data.Operation.Get((int)data);
+            OperationResult oprresult = Data.OperationResult.Get(Operation.operation_result.Value);
             HeaderName = "Итоги операции";
             ResultOrOtmenaName = "Операция проведена";
             int i1 = 0;

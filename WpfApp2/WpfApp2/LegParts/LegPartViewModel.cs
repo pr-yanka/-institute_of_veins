@@ -110,6 +110,10 @@ namespace WpfApp2.LegParts
         public virtual List<LegSectionViewModel> LegSectionsSaved { get; set; }
         public DelegateCommand RevertCommand { set; get; }
         public DelegateCommand SaveCommand { set; get; }
+        public DelegateCommand NextCommand { set; get; }
+        public DelegateCommand OpenNextLegViewModelCommand { set; get; }
+        public DelegateCommand PrevCommand { set; get; }
+        public DelegateCommand OpenPrevLegViewModelCommand { set; get; }
 
         private ICommand openDialogCommand = null;
         public ICommand OpenDialogCommand
@@ -669,8 +673,38 @@ namespace WpfApp2.LegParts
                     Controller.NavigateTo<ViewModelAddPhysical>();
                 }
             );
-
-
+            NextCommand = new DelegateCommand(
+                () =>
+                {
+                    if (OpenNextLegViewModelCommand != null)
+                    {
+                        if (Validate())
+                        {
+                            OpenNextLegViewModelCommand.Execute();
+                        }
+                    }
+                    else
+                    {
+                        RevertCommand.Execute();
+                    }
+                }
+            );
+            PrevCommand = new DelegateCommand(
+                () =>
+                {
+                    if (OpenPrevLegViewModelCommand != null)
+                    {
+                        if (Validate())
+                        {
+                            OpenPrevLegViewModelCommand.Execute();
+                        }
+                    }
+                    else
+                    {
+                        RevertCommand.Execute();
+                    }
+                }
+            );            
         }
 
         public LegPartViewModel(NavigationController controller, LegSide side) : base(controller)
@@ -768,5 +802,10 @@ namespace WpfApp2.LegParts
         public DelegateCommand<object> ClickOnWeight { get; private set; }
         public DelegateCommand<object> LostFocusOnProtiagnosy { get; private set; }
         public DelegateCommand<object> ClickOnProtiagnosy { get; private set; }
+
+        protected virtual bool Validate()
+        {
+            return true;
+        }
     }
 }
